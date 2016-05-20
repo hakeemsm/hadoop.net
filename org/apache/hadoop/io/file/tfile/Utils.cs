@@ -1,0 +1,569 @@
+using Sharpen;
+
+namespace org.apache.hadoop.io.file.tfile
+{
+	/// <summary>Supporting Utility classes used by TFile, and shared by users of TFile.</summary>
+	public sealed class Utils
+	{
+		/// <summary>Prevent the instantiation of Utils.</summary>
+		private Utils()
+		{
+		}
+
+		// nothing
+		/// <summary>Encoding an integer into a variable-length encoding format.</summary>
+		/// <remarks>
+		/// Encoding an integer into a variable-length encoding format. Synonymous to
+		/// <code>Utils#writeVLong(out, n)</code>.
+		/// </remarks>
+		/// <param name="out">output stream</param>
+		/// <param name="n">The integer to be encoded</param>
+		/// <exception cref="System.IO.IOException"/>
+		/// <seealso cref="writeVLong(java.io.DataOutput, long)"/>
+		public static void writeVInt(java.io.DataOutput @out, int n)
+		{
+			writeVLong(@out, n);
+		}
+
+		/// <summary>Encoding a Long integer into a variable-length encoding format.</summary>
+		/// <remarks>
+		/// Encoding a Long integer into a variable-length encoding format.
+		/// <ul>
+		/// <li>if n in [-32, 127): encode in one byte with the actual value.
+		/// Otherwise,
+		/// <li>if n in [-20*2^8, 20*2^8): encode in two bytes: byte[0] = n/256 - 52;
+		/// byte[1]=n&0xff. Otherwise,
+		/// <li>if n IN [-16*2^16, 16*2^16): encode in three bytes: byte[0]=n/2^16 -
+		/// 88; byte[1]=(n&gt;&gt;8)&0xff; byte[2]=n&0xff. Otherwise,
+		/// <li>if n in [-8*2^24, 8*2^24): encode in four bytes: byte[0]=n/2^24 - 112;
+		/// byte[1] = (n&gt;&gt;16)&0xff; byte[2] = (n&gt;&gt;8)&0xff; byte[3]=n&0xff. Otherwise:
+		/// <li>if n in [-2^31, 2^31): encode in five bytes: byte[0]=-125; byte[1] =
+		/// (n&gt;&gt;24)&0xff; byte[2]=(n&gt;&gt;16)&0xff; byte[3]=(n&gt;&gt;8)&0xff; byte[4]=n&0xff;
+		/// <li>if n in [-2^39, 2^39): encode in six bytes: byte[0]=-124; byte[1] =
+		/// (n&gt;&gt;32)&0xff; byte[2]=(n&gt;&gt;24)&0xff; byte[3]=(n&gt;&gt;16)&0xff;
+		/// byte[4]=(n&gt;&gt;8)&0xff; byte[5]=n&0xff
+		/// <li>if n in [-2^47, 2^47): encode in seven bytes: byte[0]=-123; byte[1] =
+		/// (n&gt;&gt;40)&0xff; byte[2]=(n&gt;&gt;32)&0xff; byte[3]=(n&gt;&gt;24)&0xff;
+		/// byte[4]=(n&gt;&gt;16)&0xff; byte[5]=(n&gt;&gt;8)&0xff; byte[6]=n&0xff;
+		/// <li>if n in [-2^55, 2^55): encode in eight bytes: byte[0]=-122; byte[1] =
+		/// (n&gt;&gt;48)&0xff; byte[2] = (n&gt;&gt;40)&0xff; byte[3]=(n&gt;&gt;32)&0xff;
+		/// byte[4]=(n&gt;&gt;24)&0xff; byte[5]=(n&gt;&gt;16)&0xff; byte[6]=(n&gt;&gt;8)&0xff;
+		/// byte[7]=n&0xff;
+		/// <li>if n in [-2^63, 2^63): encode in nine bytes: byte[0]=-121; byte[1] =
+		/// (n&gt;&gt;54)&0xff; byte[2] = (n&gt;&gt;48)&0xff; byte[3] = (n&gt;&gt;40)&0xff;
+		/// byte[4]=(n&gt;&gt;32)&0xff; byte[5]=(n&gt;&gt;24)&0xff; byte[6]=(n&gt;&gt;16)&0xff;
+		/// byte[7]=(n&gt;&gt;8)&0xff; byte[8]=n&0xff;
+		/// </ul>
+		/// </remarks>
+		/// <param name="out">output stream</param>
+		/// <param name="n">the integer number</param>
+		/// <exception cref="System.IO.IOException"/>
+		public static void writeVLong(java.io.DataOutput @out, long n)
+		{
+			if ((n < 128) && (n >= -32))
+			{
+				@out.writeByte((int)n);
+				return;
+			}
+			long un = (n < 0) ? ~n : n;
+			// how many bytes do we need to represent the number with sign bit?
+			int len = (long.SIZE - long.numberOfLeadingZeros(un)) / 8 + 1;
+			int firstByte = (int)(n >> ((len - 1) * 8));
+			switch (len)
+			{
+				case 1:
+				{
+					// fall it through to firstByte==-1, len=2.
+					firstByte >>= 8;
+					goto case 2;
+				}
+
+				case 2:
+				{
+					if ((firstByte < 20) && (firstByte >= -20))
+					{
+						@out.writeByte(firstByte - 52);
+						@out.writeByte((int)n);
+						return;
+					}
+					// fall it through to firstByte==0/-1, len=3.
+					firstByte >>= 8;
+					goto case 3;
+				}
+
+				case 3:
+				{
+					if ((firstByte < 16) && (firstByte >= -16))
+					{
+						@out.writeByte(firstByte - 88);
+						@out.writeShort((int)n);
+						return;
+					}
+					// fall it through to firstByte==0/-1, len=4.
+					firstByte >>= 8;
+					goto case 4;
+				}
+
+				case 4:
+				{
+					if ((firstByte < 8) && (firstByte >= -8))
+					{
+						@out.writeByte(firstByte - 112);
+						@out.writeShort((int)(((uint)((int)n)) >> 8));
+						@out.writeByte((int)n);
+						return;
+					}
+					@out.writeByte(len - 129);
+					@out.writeInt((int)n);
+					return;
+				}
+
+				case 5:
+				{
+					@out.writeByte(len - 129);
+					@out.writeInt((int)((long)(((ulong)n) >> 8)));
+					@out.writeByte((int)n);
+					return;
+				}
+
+				case 6:
+				{
+					@out.writeByte(len - 129);
+					@out.writeInt((int)((long)(((ulong)n) >> 16)));
+					@out.writeShort((int)n);
+					return;
+				}
+
+				case 7:
+				{
+					@out.writeByte(len - 129);
+					@out.writeInt((int)((long)(((ulong)n) >> 24)));
+					@out.writeShort((int)((long)(((ulong)n) >> 8)));
+					@out.writeByte((int)n);
+					return;
+				}
+
+				case 8:
+				{
+					@out.writeByte(len - 129);
+					@out.writeLong(n);
+					return;
+				}
+
+				default:
+				{
+					throw new System.Exception("Internel error");
+				}
+			}
+		}
+
+		/// <summary>Decoding the variable-length integer.</summary>
+		/// <remarks>
+		/// Decoding the variable-length integer. Synonymous to
+		/// <code>(int)Utils#readVLong(in)</code>.
+		/// </remarks>
+		/// <param name="in">input stream</param>
+		/// <returns>the decoded integer</returns>
+		/// <exception cref="System.IO.IOException"/>
+		/// <seealso cref="readVLong(java.io.DataInput)"/>
+		public static int readVInt(java.io.DataInput @in)
+		{
+			long ret = readVLong(@in);
+			if ((ret > int.MaxValue) || (ret < int.MinValue))
+			{
+				throw new System.Exception("Number too large to be represented as Integer");
+			}
+			return (int)ret;
+		}
+
+		/// <summary>Decoding the variable-length integer.</summary>
+		/// <remarks>
+		/// Decoding the variable-length integer. Suppose the value of the first byte
+		/// is FB, and the following bytes are NB[*].
+		/// <ul>
+		/// <li>if (FB &gt;= -32), return (long)FB;
+		/// <li>if (FB in [-72, -33]), return (FB+52)&lt;&lt;8 + NB[0]&0xff;
+		/// <li>if (FB in [-104, -73]), return (FB+88)&lt;&lt;16 + (NB[0]&0xff)&lt;&lt;8 +
+		/// NB[1]&0xff;
+		/// <li>if (FB in [-120, -105]), return (FB+112)&lt;&lt;24 + (NB[0]&0xff)&lt;&lt;16 +
+		/// (NB[1]&0xff)&lt;&lt;8 + NB[2]&0xff;
+		/// <li>if (FB in [-128, -121]), return interpret NB[FB+129] as a signed
+		/// big-endian integer.
+		/// </remarks>
+		/// <param name="in">input stream</param>
+		/// <returns>the decoded long integer.</returns>
+		/// <exception cref="System.IO.IOException"/>
+		public static long readVLong(java.io.DataInput @in)
+		{
+			int firstByte = @in.readByte();
+			if (firstByte >= -32)
+			{
+				return firstByte;
+			}
+			switch ((firstByte + 128) / 8)
+			{
+				case 11:
+				case 10:
+				case 9:
+				case 8:
+				case 7:
+				{
+					return ((firstByte + 52) << 8) | @in.readUnsignedByte();
+				}
+
+				case 6:
+				case 5:
+				case 4:
+				case 3:
+				{
+					return ((firstByte + 88) << 16) | @in.readUnsignedShort();
+				}
+
+				case 2:
+				case 1:
+				{
+					return ((firstByte + 112) << 24) | (@in.readUnsignedShort() << 8) | @in.readUnsignedByte
+						();
+				}
+
+				case 0:
+				{
+					int len = firstByte + 129;
+					switch (len)
+					{
+						case 4:
+						{
+							return @in.readInt();
+						}
+
+						case 5:
+						{
+							return ((long)@in.readInt()) << 8 | @in.readUnsignedByte();
+						}
+
+						case 6:
+						{
+							return ((long)@in.readInt()) << 16 | @in.readUnsignedShort();
+						}
+
+						case 7:
+						{
+							return ((long)@in.readInt()) << 24 | (@in.readUnsignedShort() << 8) | @in.readUnsignedByte
+								();
+						}
+
+						case 8:
+						{
+							return @in.readLong();
+						}
+
+						default:
+						{
+							throw new System.IO.IOException("Corrupted VLong encoding");
+						}
+					}
+					goto default;
+				}
+
+				default:
+				{
+					throw new System.Exception("Internal error");
+				}
+			}
+		}
+
+		/// <summary>Write a String as a VInt n, followed by n Bytes as in Text format.</summary>
+		/// <param name="out"/>
+		/// <param name="s"/>
+		/// <exception cref="System.IO.IOException"/>
+		public static void writeString(java.io.DataOutput @out, string s)
+		{
+			if (s != null)
+			{
+				org.apache.hadoop.io.Text text = new org.apache.hadoop.io.Text(s);
+				byte[] buffer = text.getBytes();
+				int len = text.getLength();
+				writeVInt(@out, len);
+				@out.write(buffer, 0, len);
+			}
+			else
+			{
+				writeVInt(@out, -1);
+			}
+		}
+
+		/// <summary>Read a String as a VInt n, followed by n Bytes in Text format.</summary>
+		/// <param name="in">The input stream.</param>
+		/// <returns>The string</returns>
+		/// <exception cref="System.IO.IOException"/>
+		public static string readString(java.io.DataInput @in)
+		{
+			int length = readVInt(@in);
+			if (length == -1)
+			{
+				return null;
+			}
+			byte[] buffer = new byte[length];
+			@in.readFully(buffer);
+			return org.apache.hadoop.io.Text.decode(buffer);
+		}
+
+		/// <summary>A generic Version class.</summary>
+		/// <remarks>
+		/// A generic Version class. We suggest applications built on top of TFile use
+		/// this class to maintain version information in their meta blocks.
+		/// A version number consists of a major version and a minor version. The
+		/// suggested usage of major and minor version number is to increment major
+		/// version number when the new storage format is not backward compatible, and
+		/// increment the minor version otherwise.
+		/// </remarks>
+		public sealed class Version : java.lang.Comparable<org.apache.hadoop.io.file.tfile.Utils.Version
+			>
+		{
+			private readonly short major;
+
+			private readonly short minor;
+
+			/// <summary>Construct the Version object by reading from the input stream.</summary>
+			/// <param name="in">input stream</param>
+			/// <exception cref="System.IO.IOException"/>
+			public Version(java.io.DataInput @in)
+			{
+				major = @in.readShort();
+				minor = @in.readShort();
+			}
+
+			/// <summary>Constructor.</summary>
+			/// <param name="major">major version.</param>
+			/// <param name="minor">minor version.</param>
+			public Version(short major, short minor)
+			{
+				this.major = major;
+				this.minor = minor;
+			}
+
+			/// <summary>Write the objec to a DataOutput.</summary>
+			/// <remarks>
+			/// Write the objec to a DataOutput. The serialized format of the Version is
+			/// major version followed by minor version, both as big-endian short
+			/// integers.
+			/// </remarks>
+			/// <param name="out">The DataOutput object.</param>
+			/// <exception cref="System.IO.IOException"/>
+			public void write(java.io.DataOutput @out)
+			{
+				@out.writeShort(major);
+				@out.writeShort(minor);
+			}
+
+			/// <summary>Get the major version.</summary>
+			/// <returns>Major version.</returns>
+			public int getMajor()
+			{
+				return major;
+			}
+
+			/// <summary>Get the minor version.</summary>
+			/// <returns>The minor version.</returns>
+			public int getMinor()
+			{
+				return minor;
+			}
+
+			/// <summary>Get the size of the serialized Version object.</summary>
+			/// <returns>serialized size of the version object.</returns>
+			public static int size()
+			{
+				return (short.SIZE + short.SIZE) / byte.SIZE;
+			}
+
+			/// <summary>Return a string representation of the version.</summary>
+			public override string ToString()
+			{
+				return new java.lang.StringBuilder("v").Append(major).Append(".").Append(minor).ToString
+					();
+			}
+
+			/// <summary>Test compatibility.</summary>
+			/// <param name="other">The Version object to test compatibility with.</param>
+			/// <returns>
+			/// true if both versions have the same major version number; false
+			/// otherwise.
+			/// </returns>
+			public bool compatibleWith(org.apache.hadoop.io.file.tfile.Utils.Version other)
+			{
+				return major == other.major;
+			}
+
+			/// <summary>Compare this version with another version.</summary>
+			public int compareTo(org.apache.hadoop.io.file.tfile.Utils.Version that)
+			{
+				if (major != that.major)
+				{
+					return major - that.major;
+				}
+				return minor - that.minor;
+			}
+
+			public override bool Equals(object other)
+			{
+				if (this == other)
+				{
+					return true;
+				}
+				if (!(other is org.apache.hadoop.io.file.tfile.Utils.Version))
+				{
+					return false;
+				}
+				return compareTo((org.apache.hadoop.io.file.tfile.Utils.Version)other) == 0;
+			}
+
+			public override int GetHashCode()
+			{
+				return (major << 16 + minor);
+			}
+		}
+
+		/// <summary>Lower bound binary search.</summary>
+		/// <remarks>
+		/// Lower bound binary search. Find the index to the first element in the list
+		/// that compares greater than or equal to key.
+		/// </remarks>
+		/// <?/>
+		/// <param name="list">The list</param>
+		/// <param name="key">The input key.</param>
+		/// <param name="cmp">Comparator for the key.</param>
+		/// <returns>
+		/// The index to the desired element if it exists; or list.size()
+		/// otherwise.
+		/// </returns>
+		public static int lowerBound<T, _T1, _T2>(System.Collections.Generic.IList<_T1> list
+			, T key, java.util.Comparator<_T2> cmp)
+			where _T1 : T
+		{
+			int low = 0;
+			int high = list.Count;
+			while (low < high)
+			{
+				int mid = (int)(((uint)(low + high)) >> 1);
+				T midVal = list[mid];
+				int ret = cmp.compare(midVal, key);
+				if (ret < 0)
+				{
+					low = mid + 1;
+				}
+				else
+				{
+					high = mid;
+				}
+			}
+			return low;
+		}
+
+		/// <summary>Upper bound binary search.</summary>
+		/// <remarks>
+		/// Upper bound binary search. Find the index to the first element in the list
+		/// that compares greater than the input key.
+		/// </remarks>
+		/// <?/>
+		/// <param name="list">The list</param>
+		/// <param name="key">The input key.</param>
+		/// <param name="cmp">Comparator for the key.</param>
+		/// <returns>
+		/// The index to the desired element if it exists; or list.size()
+		/// otherwise.
+		/// </returns>
+		public static int upperBound<T, _T1, _T2>(System.Collections.Generic.IList<_T1> list
+			, T key, java.util.Comparator<_T2> cmp)
+			where _T1 : T
+		{
+			int low = 0;
+			int high = list.Count;
+			while (low < high)
+			{
+				int mid = (int)(((uint)(low + high)) >> 1);
+				T midVal = list[mid];
+				int ret = cmp.compare(midVal, key);
+				if (ret <= 0)
+				{
+					low = mid + 1;
+				}
+				else
+				{
+					high = mid;
+				}
+			}
+			return low;
+		}
+
+		/// <summary>Lower bound binary search.</summary>
+		/// <remarks>
+		/// Lower bound binary search. Find the index to the first element in the list
+		/// that compares greater than or equal to key.
+		/// </remarks>
+		/// <?/>
+		/// <param name="list">The list</param>
+		/// <param name="key">The input key.</param>
+		/// <returns>
+		/// The index to the desired element if it exists; or list.size()
+		/// otherwise.
+		/// </returns>
+		public static int lowerBound<T, _T1>(System.Collections.Generic.IList<_T1> list, 
+			T key)
+			where _T1 : java.lang.Comparable<T>
+		{
+			int low = 0;
+			int high = list.Count;
+			while (low < high)
+			{
+				int mid = (int)(((uint)(low + high)) >> 1);
+				java.lang.Comparable<T> midVal = list[mid];
+				int ret = midVal.compareTo(key);
+				if (ret < 0)
+				{
+					low = mid + 1;
+				}
+				else
+				{
+					high = mid;
+				}
+			}
+			return low;
+		}
+
+		/// <summary>Upper bound binary search.</summary>
+		/// <remarks>
+		/// Upper bound binary search. Find the index to the first element in the list
+		/// that compares greater than the input key.
+		/// </remarks>
+		/// <?/>
+		/// <param name="list">The list</param>
+		/// <param name="key">The input key.</param>
+		/// <returns>
+		/// The index to the desired element if it exists; or list.size()
+		/// otherwise.
+		/// </returns>
+		public static int upperBound<T, _T1>(System.Collections.Generic.IList<_T1> list, 
+			T key)
+			where _T1 : java.lang.Comparable<T>
+		{
+			int low = 0;
+			int high = list.Count;
+			while (low < high)
+			{
+				int mid = (int)(((uint)(low + high)) >> 1);
+				java.lang.Comparable<T> midVal = list[mid];
+				int ret = midVal.compareTo(key);
+				if (ret <= 0)
+				{
+					low = mid + 1;
+				}
+				else
+				{
+					high = mid;
+				}
+			}
+			return low;
+		}
+	}
+}
