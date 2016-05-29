@@ -1,0 +1,289 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Com.Google.Common.Base;
+using Org.Apache.Hadoop.Classification;
+using Sharpen;
+
+namespace Org.Apache.Hadoop.Yarn.Api.Records
+{
+	/// <summary>
+	/// <p><code>ContainerId</code> represents a globally unique identifier
+	/// for a
+	/// <see cref="Container"/>
+	/// in the cluster.</p>
+	/// </summary>
+	public abstract class ContainerId : Comparable<ContainerId>
+	{
+		public const long ContainerIdBitmask = unchecked((long)(0xffffffffffL));
+
+		private static readonly Splitter Splitter = Splitter.On('_').TrimResults();
+
+		private const string ContainerPrefix = "container";
+
+		private const string EpochPrefix = "e";
+
+		[InterfaceAudience.Private]
+		[InterfaceStability.Unstable]
+		public static ContainerId NewContainerId(ApplicationAttemptId appAttemptId, long 
+			containerId)
+		{
+			ContainerId id = Org.Apache.Hadoop.Yarn.Util.Records.NewRecord<ContainerId>();
+			id.SetContainerId(containerId);
+			id.SetApplicationAttemptId(appAttemptId);
+			id.Build();
+			return id;
+		}
+
+		[InterfaceAudience.Private]
+		[Obsolete]
+		[InterfaceStability.Unstable]
+		public static ContainerId NewInstance(ApplicationAttemptId appAttemptId, int containerId
+			)
+		{
+			ContainerId id = Org.Apache.Hadoop.Yarn.Util.Records.NewRecord<ContainerId>();
+			id.SetContainerId(containerId);
+			id.SetApplicationAttemptId(appAttemptId);
+			id.Build();
+			return id;
+		}
+
+		/// <summary>
+		/// Get the <code>ApplicationAttemptId</code> of the application to which the
+		/// <code>Container</code> was assigned.
+		/// </summary>
+		/// <remarks>
+		/// Get the <code>ApplicationAttemptId</code> of the application to which the
+		/// <code>Container</code> was assigned.
+		/// <p>
+		/// Note: If containers are kept alive across application attempts via
+		/// <see cref="ApplicationSubmissionContext.SetKeepContainersAcrossApplicationAttempts(bool)
+		/// 	"/>
+		/// the <code>ContainerId</code> does not necessarily contain the current
+		/// running application attempt's <code>ApplicationAttemptId</code> This
+		/// container can be allocated by previously exited application attempt and
+		/// managed by the current running attempt thus have the previous application
+		/// attempt's <code>ApplicationAttemptId</code>.
+		/// </p>
+		/// </remarks>
+		/// <returns>
+		/// <code>ApplicationAttemptId</code> of the application to which the
+		/// <code>Container</code> was assigned
+		/// </returns>
+		[InterfaceAudience.Public]
+		[InterfaceStability.Stable]
+		public abstract ApplicationAttemptId GetApplicationAttemptId();
+
+		[InterfaceAudience.Private]
+		[InterfaceStability.Unstable]
+		protected internal abstract void SetApplicationAttemptId(ApplicationAttemptId atId
+			);
+
+		/// <summary>
+		/// Get the lower 32 bits of identifier of the <code>ContainerId</code>,
+		/// which doesn't include epoch.
+		/// </summary>
+		/// <remarks>
+		/// Get the lower 32 bits of identifier of the <code>ContainerId</code>,
+		/// which doesn't include epoch. Note that this method will be marked as
+		/// deprecated, so please use <code>getContainerId</code> instead.
+		/// </remarks>
+		/// <returns>lower 32 bits of identifier of the <code>ContainerId</code></returns>
+		[InterfaceAudience.Public]
+		[Obsolete]
+		[InterfaceStability.Stable]
+		public abstract int GetId();
+
+		/// <summary>Get the identifier of the <code>ContainerId</code>.</summary>
+		/// <remarks>
+		/// Get the identifier of the <code>ContainerId</code>. Upper 24 bits are
+		/// reserved as epoch of cluster, and lower 40 bits are reserved as
+		/// sequential number of containers.
+		/// </remarks>
+		/// <returns>identifier of the <code>ContainerId</code></returns>
+		[InterfaceAudience.Public]
+		[InterfaceStability.Unstable]
+		public abstract long GetContainerId();
+
+		[InterfaceAudience.Private]
+		[InterfaceStability.Unstable]
+		protected internal abstract void SetContainerId(long id);
+
+		private sealed class _ThreadLocal_120 : ThreadLocal<NumberFormat>
+		{
+			public _ThreadLocal_120()
+			{
+			}
+
+			// TODO: fail the app submission if attempts are more than 10 or something
+			protected override NumberFormat InitialValue()
+			{
+				NumberFormat fmt = NumberFormat.GetInstance();
+				fmt.SetGroupingUsed(false);
+				fmt.SetMinimumIntegerDigits(2);
+				return fmt;
+			}
+		}
+
+		private static readonly ThreadLocal<NumberFormat> appAttemptIdAndEpochFormat = new 
+			_ThreadLocal_120();
+
+		private sealed class _ThreadLocal_132 : ThreadLocal<NumberFormat>
+		{
+			public _ThreadLocal_132()
+			{
+			}
+
+			// TODO: Why thread local?
+			// ^ NumberFormat instances are not threadsafe
+			protected override NumberFormat InitialValue()
+			{
+				NumberFormat fmt = NumberFormat.GetInstance();
+				fmt.SetGroupingUsed(false);
+				fmt.SetMinimumIntegerDigits(6);
+				return fmt;
+			}
+		}
+
+		private static readonly ThreadLocal<NumberFormat> containerIdFormat = new _ThreadLocal_132
+			();
+
+		public override int GetHashCode()
+		{
+			// Generated by IntelliJ IDEA 13.1.
+			int result = (int)(GetContainerId() ^ ((long)(((ulong)GetContainerId()) >> 32)));
+			result = 31 * result + GetApplicationAttemptId().GetHashCode();
+			return result;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (this == obj)
+			{
+				return true;
+			}
+			if (obj == null)
+			{
+				return false;
+			}
+			if (GetType() != obj.GetType())
+			{
+				return false;
+			}
+			ContainerId other = (ContainerId)obj;
+			if (!this.GetApplicationAttemptId().Equals(other.GetApplicationAttemptId()))
+			{
+				return false;
+			}
+			if (this.GetContainerId() != other.GetContainerId())
+			{
+				return false;
+			}
+			return true;
+		}
+
+		public virtual int CompareTo(ContainerId other)
+		{
+			if (this.GetApplicationAttemptId().CompareTo(other.GetApplicationAttemptId()) == 
+				0)
+			{
+				return Sharpen.Extensions.ValueOf(GetContainerId()).CompareTo(Sharpen.Extensions.ValueOf
+					(other.GetContainerId()));
+			}
+			else
+			{
+				return this.GetApplicationAttemptId().CompareTo(other.GetApplicationAttemptId());
+			}
+		}
+
+		/// <returns>
+		/// A string representation of containerId. The format is
+		/// container_e*epoch*_*clusterTimestamp*_*appId*_*attemptId*_*containerId
+		/// when epoch is larger than 0
+		/// (e.g. container_e17_1410901177871_0001_01_000005).
+		/// *epoch* is increased when RM restarts or fails over.
+		/// When epoch is 0, epoch is omitted
+		/// (e.g. container_1410901177871_0001_01_000005).
+		/// </returns>
+		public override string ToString()
+		{
+			StringBuilder sb = new StringBuilder();
+			sb.Append(ContainerPrefix + "_");
+			long epoch = GetContainerId() >> 40;
+			if (epoch > 0)
+			{
+				sb.Append(EpochPrefix).Append(appAttemptIdAndEpochFormat.Get().Format(epoch)).Append
+					("_");
+			}
+			ApplicationId appId = GetApplicationAttemptId().GetApplicationId();
+			sb.Append(appId.GetClusterTimestamp()).Append("_");
+			sb.Append(ApplicationId.appIdFormat.Get().Format(appId.GetId())).Append("_");
+			sb.Append(appAttemptIdAndEpochFormat.Get().Format(GetApplicationAttemptId().GetAttemptId
+				())).Append("_");
+			sb.Append(containerIdFormat.Get().Format(ContainerIdBitmask & GetContainerId()));
+			return sb.ToString();
+		}
+
+		[InterfaceAudience.Public]
+		[InterfaceStability.Unstable]
+		public static ContainerId FromString(string containerIdStr)
+		{
+			IEnumerator<string> it = Splitter.Split(containerIdStr).GetEnumerator();
+			if (!it.Next().Equals(ContainerPrefix))
+			{
+				throw new ArgumentException("Invalid ContainerId prefix: " + containerIdStr);
+			}
+			try
+			{
+				string epochOrClusterTimestampStr = it.Next();
+				long epoch = 0;
+				ApplicationAttemptId appAttemptID = null;
+				if (epochOrClusterTimestampStr.StartsWith(EpochPrefix))
+				{
+					string epochStr = epochOrClusterTimestampStr;
+					epoch = System.Convert.ToInt32(Sharpen.Runtime.Substring(epochStr, EpochPrefix.Length
+						));
+					appAttemptID = ToApplicationAttemptId(it);
+				}
+				else
+				{
+					string clusterTimestampStr = epochOrClusterTimestampStr;
+					long clusterTimestamp = long.Parse(clusterTimestampStr);
+					appAttemptID = ToApplicationAttemptId(clusterTimestamp, it);
+				}
+				long id = long.Parse(it.Next());
+				long cid = (epoch << 40) | id;
+				ContainerId containerId = ContainerId.NewContainerId(appAttemptID, cid);
+				return containerId;
+			}
+			catch (FormatException n)
+			{
+				throw new ArgumentException("Invalid ContainerId: " + containerIdStr, n);
+			}
+			catch (NoSuchElementException e)
+			{
+				throw new ArgumentException("Invalid ContainerId: " + containerIdStr, e);
+			}
+		}
+
+		/// <exception cref="System.FormatException"/>
+		private static ApplicationAttemptId ToApplicationAttemptId(IEnumerator<string> it
+			)
+		{
+			return ToApplicationAttemptId(long.Parse(it.Next()), it);
+		}
+
+		/// <exception cref="System.FormatException"/>
+		private static ApplicationAttemptId ToApplicationAttemptId(long clusterTimestamp, 
+			IEnumerator<string> it)
+		{
+			ApplicationId appId = ApplicationId.NewInstance(clusterTimestamp, System.Convert.ToInt32
+				(it.Next()));
+			ApplicationAttemptId appAttemptId = ApplicationAttemptId.NewInstance(appId, System.Convert.ToInt32
+				(it.Next()));
+			return appAttemptId;
+		}
+
+		protected internal abstract void Build();
+	}
+}
