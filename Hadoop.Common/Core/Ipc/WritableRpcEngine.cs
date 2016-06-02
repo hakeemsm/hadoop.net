@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Hadoop.Common.Core.IO;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;

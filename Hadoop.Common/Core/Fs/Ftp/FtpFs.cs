@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.Fs.Ftp;
 using Org.Apache.Commons.Net.Ftp;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;

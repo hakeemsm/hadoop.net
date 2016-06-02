@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;

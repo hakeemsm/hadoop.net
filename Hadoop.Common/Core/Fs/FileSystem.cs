@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Com.Google.Common.Annotations;
-using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
+using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+using Options = Org.Apache.Hadoop.FS.Options;
+using Path = Org.Apache.Hadoop.FS.Path;
 
-namespace Org.Apache.Hadoop.FS
+namespace Hadoop.Common.Core.Fs
 {
 	/// <summary>An abstract base class for a fairly generic filesystem.</summary>
 	/// <remarks>
@@ -37,8 +37,7 @@ namespace Org.Apache.Hadoop.FS
 
 		public const string DefaultFs = CommonConfigurationKeys.FsDefaultNameDefault;
 
-		public static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.FS.FileSystem
-			));
+		public static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog(typeof(FileSystem));
 
 		/// <summary>Priority of the FileSystem shutdown hook.</summary>
 		public const int ShutdownHookPriority = 10;
@@ -74,8 +73,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <param name="conf">the configuration to store it under</param>
 		/// <param name="fs">the file system to store</param>
 		/// <exception cref="System.IO.IOException"/>
-		internal static void AddFileSystemForTesting(URI uri, Configuration conf, Org.Apache.Hadoop.FS.FileSystem
-			 fs)
+		internal static void AddFileSystemForTesting(Uri uri, Configuration conf, FileSystem fs)
 		{
 			Cache.map[new FileSystem.Cache.Key(uri, conf)] = fs;
 		}
@@ -90,7 +88,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <returns>the filesystem instance</returns>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		public static Org.Apache.Hadoop.FS.FileSystem Get(URI uri, Configuration conf, string
+		public static FileSystem Get(URI uri, Configuration conf, string
 			 user)
 		{
 			string ticketCachePath = conf.Get(CommonConfigurationKeys.KerberosTicketCachePath
@@ -99,7 +97,7 @@ namespace Org.Apache.Hadoop.FS
 			return ugi.DoAs(new _PrivilegedExceptionAction_157(uri, conf));
 		}
 
-		private sealed class _PrivilegedExceptionAction_157 : PrivilegedExceptionAction<Org.Apache.Hadoop.FS.FileSystem
+		private sealed class _PrivilegedExceptionAction_157 : PrivilegedExceptionAction<FileSystem
 			>
 		{
 			public _PrivilegedExceptionAction_157(URI uri, Configuration conf)
@@ -109,9 +107,9 @@ namespace Org.Apache.Hadoop.FS
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public Org.Apache.Hadoop.FS.FileSystem Run()
+			public FileSystem Run()
 			{
-				return Org.Apache.Hadoop.FS.FileSystem.Get(uri, conf);
+				return FileSystem.Get(uri, conf);
 			}
 
 			private readonly URI uri;
@@ -122,7 +120,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <summary>Returns the configured filesystem implementation.</summary>
 		/// <param name="conf">the configuration to use</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.FileSystem Get(Configuration conf)
+		public static FileSystem Get(Configuration conf)
 		{
 			return Get(GetDefaultUri(conf), conf);
 		}
@@ -158,9 +156,9 @@ namespace Org.Apache.Hadoop.FS
 		/// </param>
 		/// <param name="conf">the configuration</param>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Initialize(URI name, Configuration conf)
+		public virtual void Initialize(Uri name, Configuration conf)
 		{
-			statistics = GetStatistics(name.GetScheme(), GetType());
+			statistics = GetStatistics(name.Scheme, GetType());
 			resolveSymlinks = conf.GetBoolean(CommonConfigurationKeys.FsClientResolveRemoteSymlinksKey
 				, CommonConfigurationKeys.FsClientResolveRemoteSymlinksDefault);
 		}
@@ -235,7 +233,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
 		/// <exception cref="System.IO.IOException"/>
-		protected internal static Org.Apache.Hadoop.FS.FileSystem GetFSofPath(Path absOrFqPath
+		protected internal static FileSystem GetFSofPath(Path absOrFqPath
 			, Configuration conf)
 		{
 			absOrFqPath.CheckNotSchemeWithRelative();
@@ -268,15 +266,15 @@ namespace Org.Apache.Hadoop.FS
 				, GetDefaultPort()) : null;
 		}
 
-		[System.ObsoleteAttribute(@"call #getUri() instead.")]
+		[Obsolete(@"call #getUri() instead.")]
 		public virtual string GetName()
 		{
 			return GetUri().ToString();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[System.ObsoleteAttribute(@"call #get(URI,Configuration) instead.")]
-		public static Org.Apache.Hadoop.FS.FileSystem GetNamed(string name, Configuration
+		[Obsolete(@"call #get(URI,Configuration) instead.")]
+		public static FileSystem GetNamed(string name, Configuration
 			 conf)
 		{
 			return Get(URI.Create(FixName(name)), conf);
@@ -328,7 +326,7 @@ namespace Org.Apache.Hadoop.FS
 		/// The entire URI is passed to the FileSystem instance's initialize method.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.FileSystem Get(URI uri, Configuration conf)
+		public static FileSystem Get(URI uri, Configuration conf)
 		{
 			string scheme = uri.GetScheme();
 			string authority = uri.GetAuthority();
@@ -372,7 +370,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <returns>filesystem instance</returns>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		public static Org.Apache.Hadoop.FS.FileSystem NewInstance(URI uri, Configuration 
+		public static FileSystem NewInstance(URI uri, Configuration 
 			conf, string user)
 		{
 			string ticketCachePath = conf.Get(CommonConfigurationKeys.KerberosTicketCachePath
@@ -381,7 +379,7 @@ namespace Org.Apache.Hadoop.FS
 			return ugi.DoAs(new _PrivilegedExceptionAction_390(uri, conf));
 		}
 
-		private sealed class _PrivilegedExceptionAction_390 : PrivilegedExceptionAction<Org.Apache.Hadoop.FS.FileSystem
+		private sealed class _PrivilegedExceptionAction_390 : PrivilegedExceptionAction<FileSystem
 			>
 		{
 			public _PrivilegedExceptionAction_390(URI uri, Configuration conf)
@@ -391,9 +389,9 @@ namespace Org.Apache.Hadoop.FS
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public Org.Apache.Hadoop.FS.FileSystem Run()
+			public FileSystem Run()
 			{
-				return Org.Apache.Hadoop.FS.FileSystem.NewInstance(uri, conf);
+				return FileSystem.NewInstance(uri, conf);
 			}
 
 			private readonly URI uri;
@@ -410,7 +408,7 @@ namespace Org.Apache.Hadoop.FS
 		/// This always returns a new FileSystem object.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.FileSystem NewInstance(URI uri, Configuration 
+		public static FileSystem NewInstance(URI uri, Configuration 
 			conf)
 		{
 			string scheme = uri.GetScheme();
@@ -442,7 +440,7 @@ namespace Org.Apache.Hadoop.FS
 		/// </remarks>
 		/// <param name="conf">the configuration to use</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.FileSystem NewInstance(Configuration conf)
+		public static FileSystem NewInstance(Configuration conf)
 		{
 			return NewInstance(GetDefaultUri(conf), conf);
 		}
@@ -569,10 +567,10 @@ namespace Org.Apache.Hadoop.FS
 				}
 			}
 			// Now collect the tokens from the children
-			Org.Apache.Hadoop.FS.FileSystem[] children = GetChildFileSystems();
+			FileSystem[] children = GetChildFileSystems();
 			if (children != null)
 			{
-				foreach (Org.Apache.Hadoop.FS.FileSystem fs in children)
+				foreach (FileSystem fs in children)
 				{
 					fs.CollectDelegationTokens(renewer, credentials, tokens);
 				}
@@ -588,7 +586,7 @@ namespace Org.Apache.Hadoop.FS
 		/// </remarks>
 		/// <returns>FileSystems used by this FileSystem</returns>
 		[VisibleForTesting]
-		public virtual Org.Apache.Hadoop.FS.FileSystem[] GetChildFileSystems()
+		public virtual FileSystem[] GetChildFileSystems()
 		{
 			return null;
 		}
@@ -612,7 +610,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <param name="permission">the permission of the file</param>
 		/// <returns>an output stream</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static FSDataOutputStream Create(Org.Apache.Hadoop.FS.FileSystem fs, Path 
+		public static FSDataOutputStream Create(FileSystem fs, Path 
 			file, FsPermission permission)
 		{
 			// create the file with default permission
@@ -627,14 +625,14 @@ namespace Org.Apache.Hadoop.FS
 		/// The permission of the directory is set to be the provided permission as in
 		/// setPermission, not permission&~umask
 		/// </summary>
-		/// <seealso cref="Create(FileSystem, Path, Org.Apache.Hadoop.FS.Permission.FsPermission)
+		/// <seealso cref="Create(FileSystem, System.IO.Path, Org.Apache.Hadoop.FS.Permission.FsPermission)
 		/// 	"/>
 		/// <param name="fs">file system handle</param>
 		/// <param name="dir">the name of the directory to be created</param>
 		/// <param name="permission">the permission of the directory</param>
 		/// <returns>true if the directory creation succeeds; false otherwise</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static bool Mkdirs(Org.Apache.Hadoop.FS.FileSystem fs, Path dir, FsPermission
+		public static bool Mkdirs(FileSystem fs, Path dir, FsPermission
 			 permission)
 		{
 			// create the directory using the default permission
@@ -772,7 +770,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <summary>Return a set of server default configuration values</summary>
 		/// <returns>server default configuration values</returns>
 		/// <exception cref="System.IO.IOException"/>
-		[System.ObsoleteAttribute(@"use GetServerDefaults(Path) instead")]
+		[Obsolete(@"use GetServerDefaults(Path) instead")]
 		public virtual FsServerDefaults GetServerDefaults()
 		{
 			Configuration conf = GetConf();
@@ -1155,7 +1153,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		/// <seealso cref="SetPermission(Path, Org.Apache.Hadoop.FS.Permission.FsPermission)"
 		/// 	/>
-		[System.ObsoleteAttribute(@"API only for 0.20-append")]
+		[Obsolete(@"API only for 0.20-append")]
 		public virtual FSDataOutputStream CreateNonRecursive(Path f, bool overwrite, int 
 			bufferSize, short replication, long blockSize, Progressable progress)
 		{
@@ -1185,7 +1183,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		/// <seealso cref="SetPermission(Path, Org.Apache.Hadoop.FS.Permission.FsPermission)"
 		/// 	/>
-		[System.ObsoleteAttribute(@"API only for 0.20-append")]
+		[Obsolete(@"API only for 0.20-append")]
 		public virtual FSDataOutputStream CreateNonRecursive(Path f, FsPermission permission
 			, bool overwrite, int bufferSize, short replication, long blockSize, Progressable
 			 progress)
@@ -1218,7 +1216,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		/// <seealso cref="SetPermission(Path, Org.Apache.Hadoop.FS.Permission.FsPermission)"
 		/// 	/>
-		[System.ObsoleteAttribute(@"API only for 0.20-append")]
+		[Obsolete(@"API only for 0.20-append")]
 		public virtual FSDataOutputStream CreateNonRecursive(Path f, FsPermission permission
 			, EnumSet<CreateFlag> flags, int bufferSize, short replication, long blockSize, 
 			Progressable progress)
@@ -1294,7 +1292,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <param name="src">file name</param>
 		/// <returns>file replication</returns>
 		/// <exception cref="System.IO.IOException"/>
-		[System.ObsoleteAttribute(@"Use getFileStatus() instead")]
+		[Obsolete(@"Use getFileStatus() instead")]
 		public virtual short GetReplication(Path src)
 		{
 			return GetFileStatus(src).GetReplication();
@@ -1461,7 +1459,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Delete a file</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[System.ObsoleteAttribute(@"Use Delete(Path, bool) instead.")]
+		[Obsolete(@"Use Delete(Path, bool) instead.")]
 		public virtual bool Delete(Path f)
 		{
 			return Delete(f, true);
@@ -1599,7 +1597,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// f does not exist
 		/// <exception cref="System.IO.IOException"/>
-		[System.ObsoleteAttribute(@"Use getFileStatus() instead")]
+		[Obsolete(@"Use getFileStatus() instead")]
 		public virtual long GetLength(Path f)
 		{
 			return GetFileStatus(f).GetLen();
@@ -2300,7 +2298,7 @@ namespace Org.Apache.Hadoop.FS
 			)
 		{
 			Configuration conf = GetConf();
-			Org.Apache.Hadoop.FS.FileSystem local = null;
+			FileSystem local = null;
 			if (useRawLocalFileSystem)
 			{
 				local = GetLocal(conf).GetRawFileSystem();
@@ -2369,7 +2367,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[System.ObsoleteAttribute(@"Use getFileStatus() instead")]
+		[Obsolete(@"Use getFileStatus() instead")]
 		public virtual long GetBlockSize(Path f)
 		{
 			return GetFileStatus(f).GetBlockSize();
@@ -2379,7 +2377,7 @@ namespace Org.Apache.Hadoop.FS
 		/// Return the number of bytes that large input files should be optimally
 		/// be split into to minimize i/o time.
 		/// </summary>
-		[System.ObsoleteAttribute(@"use GetDefaultBlockSize(Path) instead")]
+		[Obsolete(@"use GetDefaultBlockSize(Path) instead")]
 		public virtual long GetDefaultBlockSize()
 		{
 			// default to 32MB: large enough to minimize the impact of seeks
@@ -2403,7 +2401,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Get the default replication.</summary>
-		[System.ObsoleteAttribute(@"use GetDefaultReplication(Path) instead")]
+		[Obsolete(@"use GetDefaultReplication(Path) instead")]
 		public virtual short GetDefaultReplication()
 		{
 			return 1;
@@ -2957,13 +2955,13 @@ namespace Org.Apache.Hadoop.FS
 		// making it volatile to be able to do a double checked locking
 		private static void LoadFileSystems()
 		{
-			lock (typeof(Org.Apache.Hadoop.FS.FileSystem))
+			lock (typeof(FileSystem))
 			{
 				if (!FileSystemsLoaded)
 				{
-					ServiceLoader<Org.Apache.Hadoop.FS.FileSystem> serviceLoader = ServiceLoader.Load
-						<Org.Apache.Hadoop.FS.FileSystem>();
-					foreach (Org.Apache.Hadoop.FS.FileSystem fs in serviceLoader)
+					ServiceLoader<FileSystem> serviceLoader = ServiceLoader.Load
+						<FileSystem>();
+					foreach (FileSystem fs in serviceLoader)
 					{
 						ServiceFileSystems[fs.GetScheme()] = fs.GetType();
 					}
@@ -2996,11 +2994,11 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static Org.Apache.Hadoop.FS.FileSystem CreateFileSystem(URI uri, Configuration
+		private static FileSystem CreateFileSystem(URI uri, Configuration
 			 conf)
 		{
 			Type clazz = GetFileSystemClass(uri.GetScheme(), conf);
-			Org.Apache.Hadoop.FS.FileSystem fs = (Org.Apache.Hadoop.FS.FileSystem)ReflectionUtils
+			FileSystem fs = (FileSystem)ReflectionUtils
 				.NewInstance(clazz, conf);
 			fs.Initialize(uri, conf);
 			return fs;
@@ -3766,7 +3764,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Get the Map of Statistics object indexed by URI Scheme.</summary>
 		/// <returns>a Map having a key as URI scheme and value as Statistics object</returns>
-		[System.ObsoleteAttribute(@"use GetAllStatistics() instead")]
+		[Obsolete(@"use GetAllStatistics() instead")]
 		public static IDictionary<string, FileSystem.Statistics> GetStatistics()
 		{
 			lock (typeof(FileSystem))

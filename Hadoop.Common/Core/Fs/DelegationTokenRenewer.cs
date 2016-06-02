@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Security.Token;

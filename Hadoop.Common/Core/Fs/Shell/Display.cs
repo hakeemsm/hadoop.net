@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Avro;
 using Org.Apache.Avro.File;
 using Org.Apache.Avro.Generic;

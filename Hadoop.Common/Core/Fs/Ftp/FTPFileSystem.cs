@@ -1,5 +1,6 @@
 using System.IO;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Commons.Net.Ftp;
 using Org.Apache.Hadoop.Conf;
@@ -14,7 +15,7 @@ namespace Org.Apache.Hadoop.FS.Ftp
 	/// <summary>
 	/// <p>
 	/// A
-	/// <see cref="Org.Apache.Hadoop.FS.FileSystem"/>
+	/// <see cref="FileSystem"/>
 	/// backed by an FTP client provided by &lt;a
 	/// href="http://commons.apache.org/net/"&gt;Apache Commons Net</a>.
 	/// </p>

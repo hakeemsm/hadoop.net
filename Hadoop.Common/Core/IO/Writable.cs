@@ -1,7 +1,4 @@
-using System.IO;
-using Sharpen;
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>
 	/// A serializable object which implements a simple, efficient, serialization

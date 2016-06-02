@@ -8,6 +8,7 @@ using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
 using Com.Google.Common.Util.Concurrent;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.IO;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
@@ -27,10 +28,10 @@ namespace Org.Apache.Hadoop.Ipc
 	/// <summary>A client for an IPC service.</summary>
 	/// <remarks>
 	/// A client for an IPC service.  IPC calls take a single
-	/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+	/// <see cref="Writable"/>
 	/// as a
 	/// parameter, and return a
-	/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+	/// <see cref="Writable"/>
 	/// as their value.  A service runs on
 	/// a port and is defined by a parameter class and a value class.
 	/// </remarks>
@@ -1545,7 +1546,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Construct an IPC client whose values are of the given
-		/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+		/// <see cref="Writable"/>
 		/// class.
 		/// </summary>
 		public Client(Type valueClass, Configuration conf, SocketFactory factory)
@@ -1615,7 +1616,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as
-		/// <see cref="Call(RpcKind, Org.Apache.Hadoop.IO.Writable, ConnectionId)"/>
+		/// <see cref="Call(RpcKind, Writable, ConnectionId)"/>
 		/// for RPC_BUILTIN
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
@@ -1692,7 +1693,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as
-		/// <see cref="Call(RpcKind, Org.Apache.Hadoop.IO.Writable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="Call(RpcKind, Writable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Org.Apache.Hadoop.Conf.Configuration)
 		/// 	"/>
 		/// except that rpcKind is writable.
 		/// </summary>
@@ -1707,7 +1708,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as
-		/// <see cref="Call(Org.Apache.Hadoop.IO.Writable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="Call(Writable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Org.Apache.Hadoop.Conf.Configuration)
 		/// 	"/>
 		/// except that specifying serviceClass.
 		/// </summary>
@@ -1747,7 +1748,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as {link
-		/// <see cref="Call(RpcKind, Org.Apache.Hadoop.IO.Writable, ConnectionId)"/>
+		/// <see cref="Call(RpcKind, Writable, ConnectionId)"/>
 		/// except the rpcKind is RPC_BUILTIN
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>

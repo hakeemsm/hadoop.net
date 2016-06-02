@@ -1,4 +1,5 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO

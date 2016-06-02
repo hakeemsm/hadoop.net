@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Org.Apache.Hadoop.Conf;
+using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+using Options = Org.Apache.Hadoop.FS.Options;
 
-namespace Org.Apache.Hadoop.FS
+namespace Hadoop.Common.Core.Fs
 {
 	/// <summary>
 	/// A <code>FilterFileSystem</code> contains
@@ -61,7 +62,7 @@ namespace Org.Apache.Hadoop.FS
 		/// </param>
 		/// <param name="conf">the configuration</param>
 		/// <exception cref="System.IO.IOException"/>
-		public override void Initialize(URI name, Configuration conf)
+		public override void Initialize(Uri name, Configuration conf)
 		{
 			base.Initialize(name, conf);
 			// this is less than ideal, but existing filesystems sometimes neglect

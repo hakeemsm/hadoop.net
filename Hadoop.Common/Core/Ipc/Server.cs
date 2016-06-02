@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using Com.Google.Common.Annotations;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.IO;
 using Javax.Security.Sasl;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
@@ -28,10 +29,10 @@ namespace Org.Apache.Hadoop.Ipc
 	/// <summary>An abstract IPC service.</summary>
 	/// <remarks>
 	/// An abstract IPC service.  IPC calls take a single
-	/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+	/// <see cref="Writable"/>
 	/// as a
 	/// parameter, and return a
-	/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+	/// <see cref="Writable"/>
 	/// as their value.  A service runs on
 	/// a port and is defined by a parameter class and a value class.
 	/// </remarks>
@@ -188,9 +189,9 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <summary>Returns the server instance called under or null.</summary>
 		/// <remarks>
 		/// Returns the server instance called under or null.  May be called under
-		/// <see cref="Call(Org.Apache.Hadoop.IO.Writable, long)"/>
+		/// <see cref="Call(Writable, long)"/>
 		/// implementations, and under
-		/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+		/// <see cref="Writable"/>
 		/// methods of paramters and return values.  Permits applications to access
 		/// the server context.
 		/// </remarks>

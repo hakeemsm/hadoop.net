@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Codec.Binary;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;

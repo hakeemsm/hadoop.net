@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
@@ -66,7 +67,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// If true, the last modified time, last access time,
 		/// owner, group and permission information of the source
 		/// file will be preserved as far as target
-		/// <see cref="Org.Apache.Hadoop.FS.FileSystem"/>
+		/// <see cref="FileSystem"/>
 		/// implementation allows.
 		/// </summary>
 		protected internal virtual void SetPreserve(bool preserve)

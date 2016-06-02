@@ -1,8 +1,7 @@
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
 
-namespace Org.Apache.Hadoop.FS.Ftp
+namespace Hadoop.Common.Core.Fs.Ftp
 {
 	/// <summary>
 	/// This class contains constants for configuration keys used

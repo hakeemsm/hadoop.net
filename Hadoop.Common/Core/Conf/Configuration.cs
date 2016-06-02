@@ -6,6 +6,8 @@ using System.Security;
 using System.Text;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Fs;
+using Hadoop.Common.Core.IO;
 using Javax.Xml.Parsers;
 using Javax.Xml.Transform;
 using Javax.Xml.Transform.Dom;

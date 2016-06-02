@@ -5,6 +5,7 @@ using System.Net;
 using System.Reflection;
 using Com.Google.Common.Annotations;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.IO;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;

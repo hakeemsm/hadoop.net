@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
@@ -12,11 +13,11 @@ namespace Org.Apache.Hadoop.IO.Serializer
 	/// A
 	/// <see cref="Serialization{T}"/>
 	/// for
-	/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+	/// <see cref="Writable"/>
 	/// s that delegates to
-	/// <see cref="Org.Apache.Hadoop.IO.Writable.Write(System.IO.DataOutput)"/>
+	/// <see cref="Writable.Write(System.IO.DataOutput)"/>
 	/// and
-	/// <see cref="Org.Apache.Hadoop.IO.Writable.ReadFields(System.IO.DataInput)"/>
+	/// <see cref="Writable.ReadFields(System.IO.DataInput)"/>
 	/// .
 	/// </summary>
 	public class WritableSerialization : Configured, Serialization<Writable>

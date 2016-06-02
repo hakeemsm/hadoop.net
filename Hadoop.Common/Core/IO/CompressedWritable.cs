@@ -1,4 +1,5 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using Sharpen;
 

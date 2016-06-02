@@ -1,55 +1,57 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using Com.Google.Common.Annotations;
+using System.Runtime.CompilerServices;
+using Apache.NMS.Util;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+using Org.Apache.Hadoop.IO;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
-	/// <summary>
-	/// Abstract base class for MapWritable and SortedMapWritable
-	/// Unlike org.apache.nutch.crawl.MapWritable, this class allows creation of
-	/// MapWritable&lt;Writable, MapWritable&gt; so the CLASS_TO_ID and ID_TO_CLASS
-	/// maps travel with the class instead of being static.
-	/// </summary>
-	/// <remarks>
-	/// Abstract base class for MapWritable and SortedMapWritable
-	/// Unlike org.apache.nutch.crawl.MapWritable, this class allows creation of
-	/// MapWritable&lt;Writable, MapWritable&gt; so the CLASS_TO_ID and ID_TO_CLASS
-	/// maps travel with the class instead of being static.
-	/// Class ids range from 1 to 127 so there can be at most 127 distinct classes
-	/// in any specific map instance.
-	/// </remarks>
-	public abstract class AbstractMapWritable : Writable, Configurable
+    /// <summary>
+    /// Abstract base class for MapWritable and SortedMapWritable
+    /// Unlike org.apache.nutch.crawl.MapWritable, this class allows creation of
+    /// MapWritable&lt;Writable, MapWritable&gt; so the CLASS_TO_ID and ID_TO_CLASS
+    /// maps travel with the class instead of being static.
+    /// </summary>
+    /// <remarks>
+    /// Abstract base class for MapWritable and SortedMapWritable
+    /// Unlike org.apache.nutch.crawl.MapWritable, this class allows creation of
+    /// MapWritable&lt;Writable, MapWritable&gt; so the CLASS_TO_ID and ID_TO_CLASS
+    /// maps travel with the class instead of being static.
+    /// Class ids range from 1 to 127 so there can be at most 127 distinct classes
+    /// in any specific map instance.
+    /// </remarks>
+    
+    public abstract class AbstractMapWritable : Writable, Configurable
 	{
 		private AtomicReference<Configuration> conf;
 
-		[VisibleForTesting]
-		internal IDictionary<Type, byte> classToIdMap = new ConcurrentHashMap<Type, byte>
-			();
+		
+		internal IDictionary<Type, byte> classToIdMap = new ConcurrentDictionary<Type, byte>();
 
-		[VisibleForTesting]
-		internal IDictionary<byte, Type> idToClassMap = new ConcurrentHashMap<byte, Type>
-			();
+		
+		internal IDictionary<byte, Type> idToClassMap = new ConcurrentDictionary<byte, Type>();
 
-		private volatile byte newClasses = 0;
+		private volatile byte _newClasses = 0;
+        private readonly object _lockObj;
 
-		/* Class to id mappings */
+        /* Class to id mappings */
 		/* Id to Class mappings */
 		/* The number of new classes (those not established by the constructor) */
 		/// <returns>the number of known classes</returns>
 		internal virtual byte GetNewClasses()
 		{
-			return newClasses;
+			return _newClasses;
 		}
 
 		/// <summary>Used to add "predefined" classes and by Writable to copy "new" classes.</summary>
 		private void AddToMap(Type clazz, byte id)
 		{
-			lock (this)
+			lock (_lockObj)
 			{
-				if (classToIdMap.Contains(clazz))
+				if (classToIdMap.ContainsKey(clazz))
 				{
 					byte b = classToIdMap[clazz];
 					if (b != id)
@@ -58,10 +60,10 @@ namespace Org.Apache.Hadoop.IO
 							 + b + " and not " + id);
 					}
 				}
-				if (idToClassMap.Contains(id))
+				if (idToClassMap.ContainsKey(id))
 				{
 					Type c = idToClassMap[id];
-					if (!c.Equals(clazz))
+					if (!(c == clazz))
 					{
 						throw new ArgumentException("Id " + id + " exists but maps to " + c.FullName + " and not "
 							 + clazz.FullName);
@@ -77,16 +79,16 @@ namespace Org.Apache.Hadoop.IO
 		{
 			lock (this)
 			{
-				if (classToIdMap.Contains(clazz))
+				if (classToIdMap.ContainsKey(clazz))
 				{
 					return;
 				}
-				if (newClasses + 1 > byte.MaxValue)
+				if (_newClasses + 1 > byte.MaxValue)
 				{
 					throw new IndexOutOfRangeException("adding an additional class would" + " exceed the maximum number allowed"
 						);
 				}
-				byte id = ++newClasses;
+				byte id = ++_newClasses;
 				AddToMap(clazz, id);
 			}
 		}
@@ -100,7 +102,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <returns>the id for the specified Class</returns>
 		protected internal virtual byte GetId(Type clazz)
 		{
-			return classToIdMap.Contains(clazz) ? classToIdMap[clazz] : -1;
+			return (byte) (classToIdMap.ContainsKey(clazz) ? classToIdMap[clazz] : -1);
 		}
 
 		/// <summary>Used by child copy constructors.</summary>
@@ -131,11 +133,13 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>constructor.</summary>
-		protected internal AbstractMapWritable()
+		protected internal AbstractMapWritable(object lockObj)
 		{
-			this.conf = new AtomicReference<Configuration>();
-			AddToMap(typeof(ArrayWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-127)));
-			AddToMap(typeof(BooleanWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-126)));
+		    _lockObj = lockObj;
+		    this.conf = new AtomicReference<Configuration>();
+			
+			AddToMap(typeof(ArrayWritable), Convert.ToByte(-127));
+			AddToMap(typeof(BooleanWritable), Convert.ToByte(-126));
 			AddToMap(typeof(BytesWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-125)));
 			AddToMap(typeof(FloatWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-124)));
 			AddToMap(typeof(IntWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-123)));
@@ -144,11 +148,9 @@ namespace Org.Apache.Hadoop.IO
 			AddToMap(typeof(MD5Hash), byte.ValueOf(Sharpen.Extensions.ValueOf(-120)));
 			AddToMap(typeof(NullWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-119)));
 			AddToMap(typeof(ObjectWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-118)));
-			AddToMap(typeof(SortedMapWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-117)
-				));
+			AddToMap(typeof(SortedMapWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-117)));
 			AddToMap(typeof(Text), byte.ValueOf(Sharpen.Extensions.ValueOf(-116)));
-			AddToMap(typeof(TwoDArrayWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-115)
-				));
+			AddToMap(typeof(TwoDArrayWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-115)));
 			// UTF8 is deprecated so we don't support it
 			AddToMap(typeof(VIntWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-114)));
 			AddToMap(typeof(VLongWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-113)));
@@ -157,22 +159,22 @@ namespace Org.Apache.Hadoop.IO
 		/// <returns>the conf</returns>
 		public virtual Configuration GetConf()
 		{
-			return conf.Get();
+			return conf.Value;
 		}
 
 		/// <param name="conf">the conf to set</param>
 		public virtual void SetConf(Configuration conf)
 		{
-			this.conf.Set(conf);
+			this.conf.Value = (conf);
 		}
-
+        
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void Write(DataOutput @out)
 		{
 			// First write out the size of the class table and any classes that are
 			// "unknown" classes
-			@out.WriteByte(newClasses);
-			for (byte i = 1; ((sbyte)i) <= newClasses; i++)
+			@out.WriteByte(_newClasses);
+			for (byte i = 1; ((sbyte)i) <= _newClasses; i++)
 			{
 				@out.WriteByte(i);
 				@out.WriteUTF(GetClass(i).FullName);
@@ -183,9 +185,9 @@ namespace Org.Apache.Hadoop.IO
 		public virtual void ReadFields(DataInput @in)
 		{
 			// Get the number of "unknown" classes
-			newClasses = @in.ReadByte();
+			_newClasses = @in.ReadByte();
 			// Then read in the class names and add them to our tables
-			for (int i = 0; i < newClasses; i++)
+			for (int i = 0; i < _newClasses; i++)
 			{
 				byte id = @in.ReadByte();
 				string className = @in.ReadUTF();

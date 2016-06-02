@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
@@ -100,7 +101,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 
 		/// <summary>
 		/// This is the  constructor with the signature needed by
-		/// <see cref="Org.Apache.Hadoop.FS.FileSystem.CreateFileSystem(Sharpen.URI, Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="FileSystem.CreateFileSystem(Sharpen.URI, Org.Apache.Hadoop.Conf.Configuration)
 		/// 	"/>
 		/// After this constructor is called initialize() is called.
 		/// </summary>

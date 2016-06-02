@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Shell;
@@ -306,7 +307,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 
 		/// <summary>
 		/// Returns the
-		/// <see cref="Org.Apache.Hadoop.FS.FileSystem"/>
+		/// <see cref="FileSystem"/>
 		/// associated with the
 		/// <see cref="Org.Apache.Hadoop.FS.Shell.PathData"/>
 		/// item.

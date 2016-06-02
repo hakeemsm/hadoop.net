@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Logging;
 using Sharpen;
 

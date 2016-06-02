@@ -1,13 +1,15 @@
+using System;
 using System.IO;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+using Org.Apache.Hadoop.FS;
+using Path = Org.Apache.Hadoop.FS.Path;
 
-namespace Org.Apache.Hadoop.FS
+namespace Hadoop.Common.Core.Fs
 {
 	/// <summary>Implement the FileSystem API for the checksumed local filesystem.</summary>
 	public class LocalFileSystem : ChecksumFileSystem
 	{
-		internal static readonly URI Name = URI.Create("file:///");
+		internal static readonly Uri Name =  new Uri("file:///");
 
 		private static Random rand = new Random();
 
@@ -17,14 +19,14 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void Initialize(URI name, Configuration conf)
+		public override void Initialize(Uri name, Configuration conf)
 		{
 			if (fs.GetConf() == null)
 			{
 				fs.Initialize(name, conf);
 			}
-			string scheme = name.GetScheme();
-			if (!scheme.Equals(fs.GetUri().GetScheme()))
+			string scheme = name.Scheme;
+			if (!scheme.Equals(fs.GetUri().Scheme))
 			{
 				swapScheme = scheme;
 			}

@@ -1,11 +1,12 @@
 using System;
 using System.IO;
 using Org.Apache.Hadoop.Conf;
+using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+using Path = Org.Apache.Hadoop.FS.Path;
 
-namespace Org.Apache.Hadoop.FS
+namespace Hadoop.Common.Core.Fs
 {
 	/// <summary>Abstract Checksumed FileSystem.</summary>
 	/// <remarks>

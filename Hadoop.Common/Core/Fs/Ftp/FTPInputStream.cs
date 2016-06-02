@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Net.Ftp;
 using Org.Apache.Hadoop.FS;
 using Sharpen;

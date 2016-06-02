@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
 using Sharpen;

@@ -5,6 +5,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.IO;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop;
@@ -33,7 +34,7 @@ namespace Org.Apache.Hadoop.Ipc
 	/// <see cref="string"/>
 	/// ; or</li>
 	/// <li>a
-	/// <see cref="Org.Apache.Hadoop.IO.Writable"/>
+	/// <see cref="Writable"/>
 	/// ; or</li>
 	/// <li>an array of the above types</li> </ul>
 	/// All methods in the protocol should throw only IOException.  No field data of

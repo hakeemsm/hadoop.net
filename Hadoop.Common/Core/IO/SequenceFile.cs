@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Fs;
+using Hadoop.Common.Core.IO;
 using Java.Rmi.Server;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;

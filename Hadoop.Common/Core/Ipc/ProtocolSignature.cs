@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
 using Sharpen;
 
