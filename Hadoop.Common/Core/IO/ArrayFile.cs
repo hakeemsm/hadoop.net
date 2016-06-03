@@ -1,12 +1,11 @@
 using System;
 using Hadoop.Common.Core.Fs;
-using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
+using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A dense file-based mapping from integers to values.</summary>
 	public class ArrayFile : MapFile

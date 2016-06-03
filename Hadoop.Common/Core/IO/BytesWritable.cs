@@ -1,9 +1,8 @@
 using System;
-using System.IO;
 using System.Text;
-using Sharpen;
+using Org.Apache.Hadoop.IO;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A byte sequence that is usable as a key or value.</summary>
 	/// <remarks>
@@ -12,8 +11,7 @@ namespace Org.Apache.Hadoop.IO
 	/// the current capacity. The hash function is the front of the md5 of the
 	/// buffer. The sort order is the same as memcmp.
 	/// </remarks>
-	public class BytesWritable : BinaryComparable, WritableComparable<BinaryComparable
-		>
+	public class BytesWritable : BinaryComparable, WritableComparable<BinaryComparable>
 	{
 		private const int LengthBytes = 4;
 
@@ -80,7 +78,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Get the data from the BytesWritable.</summary>
-		[System.ObsoleteAttribute(@"Use GetBytes() instead.")]
+		[Obsolete(@"Use GetBytes() instead.")]
 		public virtual byte[] Get()
 		{
 			return GetBytes();
@@ -93,7 +91,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Get the current size of the buffer.</summary>
-		[System.ObsoleteAttribute(@"Use GetLength() instead.")]
+		[Obsolete(@"Use GetLength() instead.")]
 		public virtual int GetSize()
 		{
 			return GetLength();
@@ -150,7 +148,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>Set the BytesWritable to the contents of the given newData.</summary>
 		/// <param name="newData">the value to set this BytesWritable to.</param>
-		public virtual void Set(Org.Apache.Hadoop.IO.BytesWritable newData)
+		public virtual void Set(BytesWritable newData)
 		{
 			Set(newData.bytes, 0, newData.size);
 		}
@@ -192,7 +190,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>Are the two byte sequences equal?</summary>
 		public override bool Equals(object right_obj)
 		{
-			if (right_obj is Org.Apache.Hadoop.IO.BytesWritable)
+			if (right_obj is BytesWritable)
 			{
 				return base.Equals(right_obj);
 			}

@@ -114,11 +114,11 @@ namespace Hadoop.Common.Core.IO
 				{
 					try
 					{
-						DataOutputBuffer @out = new DataOutputBuffer();
-						other.Write(@out);
-						DataInputBuffer @in = new DataInputBuffer();
-						@in.Reset(@out.GetData(), @out.GetLength());
-						ReadFields(@in);
+						DataOutputBuffer outputBuffer = new DataOutputBuffer();
+						other.Write(outputBuffer);
+						DataInputBuffer inputBuffer = new DataInputBuffer();
+						inputBuffer.Reset(outputBuffer.GetData(), outputBuffer.GetLength());
+						ReadFields(inputBuffer);
 					}
 					catch (IOException e)
 					{
@@ -140,20 +140,20 @@ namespace Hadoop.Common.Core.IO
 			
 			AddToMap(typeof(ArrayWritable), Convert.ToByte(-127));
 			AddToMap(typeof(BooleanWritable), Convert.ToByte(-126));
-			AddToMap(typeof(BytesWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-125)));
-			AddToMap(typeof(FloatWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-124)));
-			AddToMap(typeof(IntWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-123)));
-			AddToMap(typeof(LongWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-122)));
-			AddToMap(typeof(MapWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-121)));
-			AddToMap(typeof(MD5Hash), byte.ValueOf(Sharpen.Extensions.ValueOf(-120)));
-			AddToMap(typeof(NullWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-119)));
-			AddToMap(typeof(ObjectWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-118)));
-			AddToMap(typeof(SortedMapWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-117)));
-			AddToMap(typeof(Text), byte.ValueOf(Sharpen.Extensions.ValueOf(-116)));
-			AddToMap(typeof(TwoDArrayWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-115)));
+			AddToMap(typeof(BytesWritable), Convert.ToByte(-125));
+			AddToMap(typeof(FloatWritable), Convert.ToByte(-124));
+			AddToMap(typeof(IntWritable), Convert.ToByte(-123));
+			AddToMap(typeof(LongWritable), Convert.ToByte(-122));
+			AddToMap(typeof(MapWritable), Convert.ToByte(-121));
+			AddToMap(typeof(MD5Hash), Convert.ToByte(-120));
+			AddToMap(typeof(NullWritable), Convert.ToByte(-119));
+			AddToMap(typeof(ObjectWritable), Convert.ToByte(-118));
+			AddToMap(typeof(SortedMapWritable), Convert.ToByte(-117));
+			AddToMap(typeof(Text), Convert.ToByte(-116));
+			AddToMap(typeof(TwoDArrayWritable), Convert.ToByte(-115));
 			// UTF8 is deprecated so we don't support it
-			AddToMap(typeof(VIntWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-114)));
-			AddToMap(typeof(VLongWritable), byte.ValueOf(Sharpen.Extensions.ValueOf(-113)));
+			AddToMap(typeof(VIntWritable), Convert.ToByte(-114));
+			AddToMap(typeof(VLongWritable), Convert.ToByte(-113));
 		}
 
 		/// <returns>the conf</returns>

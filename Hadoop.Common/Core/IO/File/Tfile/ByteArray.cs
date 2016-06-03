@@ -1,4 +1,5 @@
 using System;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
 using Sharpen;
 
@@ -18,7 +19,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 		/// <summary>
 		/// Constructing a ByteArray from a
-		/// <see cref="Org.Apache.Hadoop.IO.BytesWritable"/>
+		/// <see cref="BytesWritable"/>
 		/// .
 		/// </summary>
 		/// <param name="other"/>
