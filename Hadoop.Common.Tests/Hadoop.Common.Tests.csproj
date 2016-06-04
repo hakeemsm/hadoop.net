@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Should">
+      <HintPath>..\lib\Should\Should.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,6 +41,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit.core">
+      <HintPath>..\lib\xUnit\xunit.core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auth\Security\Authentication\Client\AuthenticatorTestCase.cs" />
@@ -563,6 +569,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Annotations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hadoop.Common\Hadoop.Common.csproj">
+      <Project>{C0BD1C7D-75BD-49BC-A7D6-C3372487D4D6}</Project>
+      <Name>Hadoop.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

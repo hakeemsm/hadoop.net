@@ -1,10 +1,11 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A WritableComparable for shorts.</summary>
-	public class ShortWritable : WritableComparable<Org.Apache.Hadoop.IO.ShortWritable
+	public class ShortWritable : IWritableComparable<Org.Apache.Hadoop.IO.ShortWritable
 		>
 	{
 		private short value;

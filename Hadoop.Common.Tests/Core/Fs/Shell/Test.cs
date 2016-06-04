@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Hadoop.Common.Core.Fs.Shell;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.FS.Shell

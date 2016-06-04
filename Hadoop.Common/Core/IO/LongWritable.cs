@@ -1,10 +1,11 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A WritableComparable for longs.</summary>
-	public class LongWritable : WritableComparable<Org.Apache.Hadoop.IO.LongWritable>
+	public class LongWritable : IWritableComparable<Org.Apache.Hadoop.IO.LongWritable>
 	{
 		private long value;
 
@@ -89,7 +90,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>A decreasing Comparator optimized for LongWritable.</summary>
 		public class DecreasingComparator : LongWritable.Comparator
 		{
-			public override int Compare(WritableComparable a, WritableComparable b)
+			public override int Compare(IWritableComparable<> a, IWritableComparable<> b)
 			{
 				return base.Compare(b, a);
 			}

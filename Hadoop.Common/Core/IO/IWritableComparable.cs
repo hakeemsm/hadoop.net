@@ -1,7 +1,6 @@
-using Hadoop.Common.Core.IO;
-using Sharpen;
+using System;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>
 	/// A
@@ -47,7 +46,7 @@ namespace Org.Apache.Hadoop.IO
 	/// }
 	/// </pre></blockquote></p>
 	/// </summary>
-	public interface WritableComparable<T> : IWritable, Comparable<T>
+	public interface IWritableComparable<T> : IWritable, IComparable<T>
 	{
 	}
 }

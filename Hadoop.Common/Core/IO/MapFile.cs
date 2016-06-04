@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.IO
 
 			private DataOutputBuffer outBuf = new DataOutputBuffer();
 
-			private WritableComparable lastKey;
+			private IWritableComparable<> lastKey;
 
 			/// <summary>What's the position (in bytes) we wrote when we got the last index</summary>
 			private long lastIndexPos = -1;
@@ -304,7 +304,7 @@ namespace Org.Apache.Hadoop.IO
 			/// to the previous key added to the map.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Append(WritableComparable key, IWritable val)
+			public virtual void Append(IWritableComparable<> key, IWritable val)
 			{
 				lock (this)
 				{
@@ -327,7 +327,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			private void CheckKey(WritableComparable key)
+			private void CheckKey(IWritableComparable<> key)
 			{
 				// check that keys are well-ordered
 				if (size != 0 && comparator.Compare(lastKey, key) > 0)
@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.IO
 
 			private WritableComparator comparator;
 
-			private WritableComparable nextKey;
+			private IWritableComparable<> nextKey;
 
 			private long seekPosition = -1;
 
@@ -373,7 +373,7 @@ namespace Org.Apache.Hadoop.IO
 
 			private int count = -1;
 
-			private WritableComparable[] keys;
+			private IWritableComparable<>[] keys;
 
 			private long[] positions;
 
@@ -459,7 +459,7 @@ namespace Org.Apache.Hadoop.IO
 					if (comparator == null)
 					{
 						Type cls;
-						cls = data.GetKeyClass().AsSubclass<WritableComparable>();
+						cls = data.GetKeyClass().AsSubclass<IWritableComparable<>>();
 						this.comparator = WritableComparator.Get(cls, conf);
 					}
 					else
@@ -501,12 +501,12 @@ namespace Org.Apache.Hadoop.IO
 				{
 					int skip = IndexSkip;
 					LongWritable position = new LongWritable();
-					WritableComparable lastKey = null;
+					IWritableComparable<> lastKey = null;
 					long lastIndex = -1;
-					AList<WritableComparable> keyBuilder = new AList<WritableComparable>(1024);
+					AList<IWritableComparable<>> keyBuilder = new AList<IWritableComparable<>>(1024);
 					while (true)
 					{
-						WritableComparable k = comparator.NewKey();
+						IWritableComparable<> k = comparator.NewKey();
 						if (!index.Next(k, position))
 						{
 							break;
@@ -543,7 +543,7 @@ namespace Org.Apache.Hadoop.IO
 						positions[count] = position.Get();
 						count++;
 					}
-					this.keys = Sharpen.Collections.ToArray(keyBuilder, new WritableComparable[count]
+					this.keys = Sharpen.Collections.ToArray(keyBuilder, new IWritableComparable<>[count]
 						);
 					positions = Arrays.CopyOf(positions, count);
 				}
@@ -575,7 +575,7 @@ namespace Org.Apache.Hadoop.IO
 			/// file is empty.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual WritableComparable MidKey()
+			public virtual IWritableComparable<> MidKey()
 			{
 				lock (this)
 				{
@@ -591,7 +591,7 @@ namespace Org.Apache.Hadoop.IO
 			/// <summary>Reads the final key from the file.</summary>
 			/// <param name="key">key to read into</param>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void FinalKey(WritableComparable key)
+			public virtual void FinalKey(IWritableComparable<> key)
 			{
 				lock (this)
 				{
@@ -634,7 +634,7 @@ namespace Org.Apache.Hadoop.IO
 			/// in this map.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual bool Seek(WritableComparable key)
+			public virtual bool Seek(IWritableComparable<> key)
 			{
 				lock (this)
 				{
@@ -652,7 +652,7 @@ namespace Org.Apache.Hadoop.IO
 			/// 1   - no more records in file
 			/// </returns>
 			/// <exception cref="System.IO.IOException"/>
-			private int SeekInternal(WritableComparable key)
+			private int SeekInternal(IWritableComparable<> key)
 			{
 				lock (this)
 				{
@@ -676,7 +676,7 @@ namespace Org.Apache.Hadoop.IO
 			/// 1   - no more records in file
 			/// </returns>
 			/// <exception cref="System.IO.IOException"/>
-			private int SeekInternal(WritableComparable key, bool before)
+			private int SeekInternal(IWritableComparable<> key, bool before)
 			{
 				lock (this)
 				{
@@ -757,14 +757,14 @@ namespace Org.Apache.Hadoop.IO
 				}
 			}
 
-			private int BinarySearch(WritableComparable key)
+			private int BinarySearch(IWritableComparable<> key)
 			{
 				int low = 0;
 				int high = count - 1;
 				while (low <= high)
 				{
 					int mid = (int)(((uint)(low + high)) >> 1);
-					WritableComparable midVal = keys[mid];
+					IWritableComparable<> midVal = keys[mid];
 					int cmp = comparator.Compare(midVal, key);
 					if (cmp < 0)
 					{
@@ -797,7 +797,7 @@ namespace Org.Apache.Hadoop.IO
 			/// the end of the map
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual bool Next(WritableComparable key, IWritable val)
+			public virtual bool Next(IWritableComparable<> key, IWritable val)
 			{
 				lock (this)
 				{
@@ -807,7 +807,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Return the value for the named key, or null if none exists.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual IWritable Get(WritableComparable key, IWritable val)
+			public virtual IWritable Get(IWritableComparable<> key, IWritable val)
 			{
 				lock (this)
 				{
@@ -833,7 +833,7 @@ namespace Org.Apache.Hadoop.IO
 			/// -     * @return          - the key that was the closest match or null if eof.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual WritableComparable GetClosest(WritableComparable key, IWritable val
+			public virtual IWritableComparable<> GetClosest(IWritableComparable<> key, IWritable val
 				)
 			{
 				lock (this)
@@ -852,7 +852,7 @@ namespace Org.Apache.Hadoop.IO
 			/// </param>
 			/// <returns>- the key that was the closest match or null if eof.</returns>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual WritableComparable GetClosest(WritableComparable key, IWritable val
+			public virtual IWritableComparable<> GetClosest(IWritableComparable<> key, IWritable val
 				, bool before)
 			{
 				lock (this)
@@ -1063,7 +1063,7 @@ namespace Org.Apache.Hadoop.IO
 				if (comparator == null)
 				{
 					Type cls;
-					cls = keyClass.AsSubclass<WritableComparable>();
+					cls = keyClass.AsSubclass<IWritableComparable<>>();
 					this.comparator = WritableComparator.Get(cls, conf);
 				}
 				else
@@ -1095,7 +1095,7 @@ namespace Org.Apache.Hadoop.IO
 			private void MergePass()
 			{
 				// re-usable array
-				WritableComparable[] keys = new WritableComparable[inReaders.Length];
+				IWritableComparable<>[] keys = new IWritableComparable<>[inReaders.Length];
 				IWritable[] values = new IWritable[inReaders.Length];
 				// Read first key/value from all inputs
 				for (int i = 0; i < inReaders.Length; i++)
@@ -1112,7 +1112,7 @@ namespace Org.Apache.Hadoop.IO
 				do
 				{
 					int currentEntry = -1;
-					WritableComparable currentKey = null;
+					IWritableComparable<> currentKey = null;
 					IWritable currentValue = null;
 					for (int i_1 = 0; i_1 < keys.Length; i_1++)
 					{
@@ -1181,10 +1181,9 @@ namespace Org.Apache.Hadoop.IO
 			try
 			{
 				reader = new MapFile.Reader(fs, @in, conf);
-				writer = new MapFile.Writer(conf, fs, @out, reader.GetKeyClass().AsSubclass<WritableComparable
-					>(), reader.GetValueClass());
-				WritableComparable key = ReflectionUtils.NewInstance(reader.GetKeyClass().AsSubclass
-					<WritableComparable>(), conf);
+				writer = new MapFile.Writer(conf, fs, @out, reader.GetKeyClass().AsSubclass<IWritableComparable<>>(), reader.GetValueClass());
+				IWritableComparable<> key = ReflectionUtils.NewInstance(reader.GetKeyClass().AsSubclass
+					<IWritableComparable<>>(), conf);
 				IWritable value = ReflectionUtils.NewInstance(reader.GetValueClass().AsSubclass<IWritable
 					>(), conf);
 				while (reader.Next(key, value))

@@ -1,4 +1,5 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
@@ -10,7 +11,7 @@ namespace Org.Apache.Hadoop.IO
 	/// Such values take between one and five bytes.  Smaller values take fewer bytes.
 	/// </remarks>
 	/// <seealso cref="WritableUtils.ReadVInt(System.IO.BinaryReader)"/>
-	public class VIntWritable : WritableComparable<Org.Apache.Hadoop.IO.VIntWritable>
+	public class VIntWritable : IWritableComparable<Org.Apache.Hadoop.IO.VIntWritable>
 	{
 		private int value;
 

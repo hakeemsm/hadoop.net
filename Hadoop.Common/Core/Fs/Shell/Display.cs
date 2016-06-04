@@ -1,23 +1,15 @@
 using System.Collections.Generic;
-using System.IO;
 using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Hadoop.Common.Core.Util;
-using Org.Apache.Avro;
-using Org.Apache.Avro.File;
-using Org.Apache.Avro.Generic;
-using Org.Apache.Avro.IO;
-using Org.Apache.Commons.IO;
-using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
+using Org.Apache.Hadoop.FS.Shell;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
-using Org.Codehaus.Jackson;
-using Org.Codehaus.Jackson.Util;
-using Sharpen;
+using Path = Org.Apache.Hadoop.FS.Path;
 
-namespace Org.Apache.Hadoop.FS.Shell
+namespace Hadoop.Common.Core.Fs.Shell
 {
 	/// <summary>Display contents or checksums of files</summary>
 	internal class Display : FsCommand
@@ -199,7 +191,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		{
 			internal SequenceFile.Reader r;
 
-			internal WritableComparable<object> key;
+			internal IWritableComparable<object> key;
 
 			internal IWritable val;
 
@@ -214,8 +206,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 				Path fpath = f.GetPath();
 				Configuration lconf = this._enclosing.GetConf();
 				this.r = new SequenceFile.Reader(lconf, SequenceFile.Reader.File(fpath));
-				this.key = ReflectionUtils.NewInstance(this.r.GetKeyClass().AsSubclass<WritableComparable
-					>(), lconf);
+				this.key = ReflectionUtils.NewInstance(this.r.GetKeyClass().AsSubclass<IWritableComparable<>>(), lconf);
 				this.val = ReflectionUtils.NewInstance(this.r.GetValueClass().AsSubclass<IWritable
 					>(), lconf);
 				this.inbuf = new DataInputBuffer();

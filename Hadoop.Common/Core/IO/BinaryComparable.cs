@@ -1,10 +1,11 @@
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>
 	/// Interface supported by
-	/// <see cref="WritableComparable{T}"/>
+	/// <see cref="IWritableComparable{T}"/>
 	/// types supporting ordering/permutation by a representative set of bytes.
 	/// </summary>
 	public abstract class BinaryComparable : Comparable<BinaryComparable>

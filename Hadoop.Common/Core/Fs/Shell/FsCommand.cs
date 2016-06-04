@@ -1,10 +1,10 @@
 using System;
 using Hadoop.Common.Core.Conf;
-using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+using Org.Apache.Hadoop.FS.Shell;
+using Stat = Org.Apache.Hadoop.FS.Shell.Stat;
 
-namespace Org.Apache.Hadoop.FS.Shell
+namespace Hadoop.Common.Core.Fs.Shell
 {
 	/// <summary>Base class for all "hadoop fs" commands</summary>
 	public abstract class FsCommand : Command
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			throw new RuntimeException("not supposed to get here");
 		}
 
-		[System.ObsoleteAttribute(@"use Command.Run(string[])")]
+		[Obsolete(@"use Command.Run(string[])")]
 		public override int RunAll()
 		{
 			return Run(args);

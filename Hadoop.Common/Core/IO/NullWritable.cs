@@ -1,10 +1,11 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>Singleton Writable with no data.</summary>
-	public class NullWritable : WritableComparable<Org.Apache.Hadoop.IO.NullWritable>
+	public class NullWritable : IWritableComparable<Org.Apache.Hadoop.IO.NullWritable>
 	{
 		private static readonly Org.Apache.Hadoop.IO.NullWritable This = new Org.Apache.Hadoop.IO.NullWritable
 			();

@@ -1,10 +1,11 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A WritableComparable for ints.</summary>
-	public class IntWritable : WritableComparable<Org.Apache.Hadoop.IO.IntWritable>
+	public class IntWritable : IWritableComparable<Org.Apache.Hadoop.IO.IntWritable>
 	{
 		private int value;
 

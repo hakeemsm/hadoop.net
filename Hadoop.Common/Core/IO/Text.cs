@@ -17,7 +17,7 @@ namespace Hadoop.Common.Core.IO
 	/// byte array contains valid UTF8 code, calculating the length of an encoded
 	/// string.
 	/// </remarks>
-	public class Text : BinaryComparable, WritableComparable<BinaryComparable>
+	public class Text : BinaryComparable, IWritableComparable<BinaryComparable>
 	{
 	    ThreadLocal<UTF8Encoding> _encoder = new ThreadLocal<UTF8Encoding>();
         

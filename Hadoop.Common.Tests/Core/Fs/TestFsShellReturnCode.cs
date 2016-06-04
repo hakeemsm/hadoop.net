@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using NUnit.Framework;
-using Org.Apache.Commons.Logging;
-using Org.Apache.Hadoop.Conf;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Fs;
+using Hadoop.Common.Core.Fs.Shell;
+using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Shell;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+using Path = Org.Apache.Hadoop.FS.Path;
 
-namespace Org.Apache.Hadoop.FS
+namespace Hadoop.Common.Tests.Core.Fs
 {
 	/// <summary>This test validates that chmod, chown, chgrp returning correct exit codes
 	/// 	</summary>
 	public class TestFsShellReturnCode
 	{
-		private static readonly Log Log = LogFactory.GetLog("org.apache.hadoop.fs.TestFsShellReturnCode"
+		private static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog("org.apache.hadoop.fs.TestFsShellReturnCode"
 			);
 
 		private static readonly Configuration conf = new Configuration();

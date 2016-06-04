@@ -11,11 +11,11 @@ namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>
 	/// A Comparator for
-	/// <see cref="WritableComparable{T}"/>
+	/// <see cref="IWritableComparable{T}"/>
 	/// s.
 	/// <p>This base implemenation uses the natural ordering.  To define alternate
 	/// orderings, override
-	/// <see cref="Compare(WritableComparable{T}, WritableComparable{T})"/>
+	/// <see cref="Compare(IWritableComparable{T}, IWritableComparable{T})"/>
 	/// .
 	/// <p>One may optimize compare-intensive operations by overriding
 	/// <see cref="Compare(byte[], int, int, byte[], int, int)"/>
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Get a comparator for a
-		/// <see cref="WritableComparable{T}"/>
+		/// <see cref="IWritableComparable{T}"/>
 		/// implementation.
 		/// </summary>
 		public static Org.Apache.Hadoop.IO.WritableComparator Get(Type c, Configuration conf
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Register an optimized comparator for a
-		/// <see cref="WritableComparable{T}"/>
+		/// <see cref="IWritableComparable{T}"/>
 		/// implementation. Comparators registered with this method must be
 		/// thread-safe.
 		/// </summary>
@@ -107,9 +107,9 @@ namespace Org.Apache.Hadoop.IO
 
 		private readonly Type keyClass;
 
-		private readonly WritableComparable key1;
+		private readonly IWritableComparable<> key1;
 
-		private readonly WritableComparable key2;
+		private readonly IWritableComparable<> key2;
 
 		private readonly DataInputBuffer buffer;
 
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Construct for a
-		/// <see cref="WritableComparable{T}"/>
+		/// <see cref="IWritableComparable{T}"/>
 		/// implementation.
 		/// </summary>
 		protected internal WritableComparator(Type keyClass)
@@ -159,10 +159,10 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Construct a new
-		/// <see cref="WritableComparable{T}"/>
+		/// <see cref="IWritableComparable{T}"/>
 		/// instance.
 		/// </summary>
-		public virtual WritableComparable NewKey()
+		public virtual IWritableComparable<> NewKey()
 		{
 			return ReflectionUtils.NewInstance(keyClass, conf);
 		}
@@ -171,11 +171,11 @@ namespace Org.Apache.Hadoop.IO
 		/// <remarks>
 		/// Optimization hook.  Override this to make SequenceFile.Sorter's scream.
 		/// <p>The default implementation reads the data into two
-		/// <see cref="WritableComparable{T}"/>
+		/// <see cref="IWritableComparable{T}"/>
 		/// s (using
 		/// <see cref="IWritable.ReadFields(System.IO.BinaryReader)"/>
 		/// , then calls
-		/// <see cref="Compare(WritableComparable{T}, WritableComparable{T})"/>
+		/// <see cref="Compare(IWritableComparable{T}, IWritableComparable{T})"/>
 		/// .
 		/// </remarks>
 		public virtual int Compare(byte[] b1, int s1, int l1, byte[] b2, int s2, int l2)
@@ -206,14 +206,14 @@ namespace Org.Apache.Hadoop.IO
 		/// <see cref="System.IComparable{T}.CompareTo(object)"/>
 		/// .
 		/// </remarks>
-		public virtual int Compare(WritableComparable a, WritableComparable b)
+		public virtual int Compare(IWritableComparable<> a, IWritableComparable<> b)
 		{
 			return a.CompareTo(b);
 		}
 
 		public virtual int Compare(object a, object b)
 		{
-			return Compare((WritableComparable)a, (WritableComparable)b);
+			return Compare((IWritableComparable<>)a, (IWritableComparable<>)b);
 		}
 
 		/// <summary>Lexicographic order of binary data.</summary>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Shell;

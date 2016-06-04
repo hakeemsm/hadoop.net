@@ -200,7 +200,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// </remarks>
 		/// <param name="args">the command line arguments</param>
 		/// <exception cref="System.IO.IOException"/>
-		protected internal virtual void ProcessOptions(List<string> args)
+		protected internal virtual void ProcessOptions(LinkedList<string> linkedList)
 		{
 		}
 

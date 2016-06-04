@@ -1,10 +1,11 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A WritableComparable for floats.</summary>
-	public class FloatWritable : WritableComparable<Org.Apache.Hadoop.IO.FloatWritable
+	public class FloatWritable : IWritableComparable<Org.Apache.Hadoop.IO.FloatWritable
 		>
 	{
 		private float value;

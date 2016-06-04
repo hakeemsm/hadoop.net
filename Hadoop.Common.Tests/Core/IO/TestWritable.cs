@@ -1,4 +1,5 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
@@ -61,7 +62,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		public class SimpleWritableComparable : TestWritable.SimpleWritable, WritableComparable
+		public class SimpleWritableComparable : TestWritable.SimpleWritable, IWritableComparable
 			<TestWritable.SimpleWritableComparable>, Configurable
 		{
 			private Configuration conf;
@@ -145,7 +146,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		private class Frob : WritableComparable<TestWritable.Frob>
+		private class Frob : IWritableComparable<TestWritable.Frob>
 		{
 			static Frob()
 			{

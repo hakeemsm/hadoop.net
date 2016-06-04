@@ -63,13 +63,13 @@ namespace Org.Apache.Hadoop.FS.Shell
 			return parameters;
 		}
 
-		/// <summary>Parse parameters from the given list of args.</summary>
-		/// <remarks>
-		/// Parse parameters from the given list of args.  The list is
-		/// destructively modified to remove the options.
-		/// </remarks>
-		/// <param name="args">as a list of input arguments</param>
-		public virtual void Parse(IList<string> args)
+	    /// <summary>Parse parameters from the given list of args.</summary>
+	    /// <remarks>
+	    /// Parse parameters from the given list of args.  The list is
+	    /// destructively modified to remove the options.
+	    /// </remarks>
+	    /// <param name="args">as a list of input arguments</param>
+	    public virtual void Parse(List<string> args)
 		{
 			int pos = 0;
 			while (pos < args.Count)

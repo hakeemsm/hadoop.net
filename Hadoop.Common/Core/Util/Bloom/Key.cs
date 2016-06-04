@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
 using Sharpen;
 
@@ -7,7 +8,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 {
 	/// <summary>The general behavior of a key that must be stored in a filter.</summary>
 	/// <seealso cref="Filter">The general behavior of a filter</seealso>
-	public class Key : WritableComparable<Org.Apache.Hadoop.Util.Bloom.Key>
+	public class Key : IWritableComparable<Org.Apache.Hadoop.Util.Bloom.Key>
 	{
 		/// <summary>Byte value of key</summary>
 		internal byte[] bytes;

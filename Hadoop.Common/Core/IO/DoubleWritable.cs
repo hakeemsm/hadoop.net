@@ -1,10 +1,11 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>Writable for Double values.</summary>
-	public class DoubleWritable : WritableComparable<Org.Apache.Hadoop.IO.DoubleWritable
+	public class DoubleWritable : IWritableComparable<Org.Apache.Hadoop.IO.DoubleWritable
 		>
 	{
 		private double value = 0.0;

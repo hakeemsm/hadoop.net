@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+using Org.Apache.Hadoop.FS.Shell;
 
-namespace Org.Apache.Hadoop.FS.Shell
+namespace Hadoop.Common.Core.Fs.Shell
 {
 	/// <summary>Truncates a file to a new size</summary>
 	public class Truncate : FsCommand
@@ -28,14 +29,15 @@ namespace Org.Apache.Hadoop.FS.Shell
 		protected internal bool waitOpt = false;
 
 		/// <exception cref="System.IO.IOException"/>
-		protected internal override void ProcessOptions(List<string> args)
+		protected internal override void ProcessOptions(LinkedList<string> args)
 		{
 			CommandFormat cf = new CommandFormat(2, int.MaxValue, "w");
-			cf.Parse(args);
+			cf.Parse(new List<string>(args));
 			waitOpt = cf.GetOpt("w");
 			try
 			{
-				newLength = long.Parse(args.RemoveFirst());
+				newLength = long.Parse(args.First.Value);
+                args.RemoveFirst();
 			}
 			catch (FormatException nfe)
 			{
@@ -79,7 +81,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			{
 				if (waitOpt)
 				{
-					waitList.AddItem(item);
+					waitList.Add(item);
 				}
 				else
 				{
@@ -106,7 +108,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 					}
 					try
 					{
-						Sharpen.Thread.Sleep(1000);
+						Thread.Sleep(1000);
 					}
 					catch (Exception)
 					{

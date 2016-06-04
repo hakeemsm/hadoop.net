@@ -1,10 +1,11 @@
 using System.IO;
-using Org.Apache.Commons.IO;
-using Org.Apache.Hadoop.Conf;
-using Org.Apache.Hadoop.FS;
-using Sharpen;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Fs.Shell;
+using Org.Apache.Hadoop.FS.Shell;
+using Org.Apache.Hadoop.IO;
+using Path = Org.Apache.Hadoop.FS.Path;
 
-namespace Org.Apache.Hadoop.FS.Shell
+namespace Hadoop.Common.Tests.Core.Fs.Shell
 {
 	/// <summary>
 	/// This class tests the logic for displaying the binary formats supported
@@ -15,8 +16,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		private static readonly string TestRootDir = Runtime.GetProperty("test.build.data"
 			, "build/test/data/") + "/testText";
 
-		private static readonly string AvroFilename = new Path(TestRootDir, "weather.avro"
-			).ToUri().GetPath();
+		private static readonly string AvroFilename = new Path(TestRootDir, "weather.avro").ToUri().GetPath();
 
 		private static readonly string TextFilename = new Path(TestRootDir, "testtextfile.txt"
 			).ToUri().GetPath();
@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// <exception cref="System.Exception"/>
 		public virtual void TestEmptyTextFil()
 		{
-			byte[] emptyContents = new byte[] {  };
+			byte[] emptyContents = {  };
 			string output = ReadUsingTextCommand(TextFilename, emptyContents);
 			NUnit.Framework.Assert.IsTrue(string.Empty.Equals(output));
 		}
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// <exception cref="System.Exception"/>
 		public virtual void TestOneByteTextFil()
 		{
-			byte[] oneByteContents = new byte[] { (byte)('x') };
+			byte[] oneByteContents = { (byte)('x') };
 			string output = ReadUsingTextCommand(TextFilename, oneByteContents);
 			NUnit.Framework.Assert.IsTrue(Sharpen.Runtime.GetStringForBytes(oneByteContents).
 				Equals(output));
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// <exception cref="System.Exception"/>
 		public virtual void TestTwoByteTextFil()
 		{
-			byte[] twoByteContents = new byte[] { (byte)('x'), (byte)('y') };
+			byte[] twoByteContents = { (byte)('x'), (byte)('y') };
 			string output = ReadUsingTextCommand(TextFilename, twoByteContents);
 			NUnit.Framework.Assert.IsTrue(Sharpen.Runtime.GetStringForBytes(twoByteContents).
 				Equals(output));
@@ -84,11 +84,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 
 		private sealed class _Text_111 : Display.Text
 		{
-			public _Text_111()
-			{
-			}
-
-			/// <exception cref="System.IO.IOException"/>
+		    /// <exception cref="System.IO.IOException"/>
 			protected internal override InputStream GetInputStream(PathData item)
 			{
 				return base.GetInputStream(item);
@@ -117,186 +113,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		private byte[] GenerateWeatherAvroBinaryData()
 		{
 			// The contents of a simple binary Avro file with weather records.
-			byte[] contents = new byte[] { unchecked((byte)unchecked((int)(0x4f))), unchecked(
-				(byte)unchecked((int)(0x62))), unchecked((byte)unchecked((int)(0x6a))), unchecked(
-				(byte)unchecked((int)(0x1))), unchecked((byte)unchecked((int)(0x4))), unchecked(
-				(byte)unchecked((int)(0x14))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x76))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x6f))), unchecked((byte)unchecked((int)(0x2e))), unchecked(
-				(byte)unchecked((int)(0x63))), unchecked((byte)unchecked((int)(0x6f))), unchecked(
-				(byte)unchecked((int)(0x64))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x63))), unchecked((byte)unchecked((int)(0x8))), unchecked(
-				(byte)unchecked((int)(0x6e))), unchecked((byte)unchecked((int)(0x75))), unchecked(
-				(byte)unchecked((int)(0x6c))), unchecked((byte)unchecked((int)(0x6c))), unchecked(
-				(byte)unchecked((int)(0x16))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x76))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x6f))), unchecked((byte)unchecked((int)(0x2e))), unchecked(
-				(byte)unchecked((int)(0x73))), unchecked((byte)unchecked((int)(0x63))), unchecked(
-				(byte)unchecked((int)(0x68))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x6d))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0xf2))), unchecked((byte)unchecked((int)(0x2))), unchecked(
-				(byte)unchecked((int)(0x7b))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x79))), unchecked(
-				(byte)unchecked((int)(0x70))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x63))), unchecked(
-				(byte)unchecked((int)(0x6f))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x64))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x2c))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x6e))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x6d))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x57))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x68))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x2c))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x6e))), unchecked(
-				(byte)unchecked((int)(0x61))), unchecked((byte)unchecked((int)(0x6d))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x73))), unchecked(
-				(byte)unchecked((int)(0x70))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x63))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x74))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x73))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x2c))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x66))), unchecked((byte)unchecked((int)(0x69))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x6c))), unchecked(
-				(byte)unchecked((int)(0x64))), unchecked((byte)unchecked((int)(0x73))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x5b))), unchecked((byte)unchecked((int)(0x7b))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x6e))), unchecked(
-				(byte)unchecked((int)(0x61))), unchecked((byte)unchecked((int)(0x6d))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x3a))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x73))), unchecked((byte)unchecked((int)(0x74))), unchecked(
-				(byte)unchecked((int)(0x61))), unchecked((byte)unchecked((int)(0x74))), unchecked(
-				(byte)unchecked((int)(0x69))), unchecked((byte)unchecked((int)(0x6f))), unchecked(
-				(byte)unchecked((int)(0x6e))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x2c))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x79))), unchecked(
-				(byte)unchecked((int)(0x70))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x73))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x69))), unchecked((byte)unchecked((int)(0x6e))), unchecked(
-				(byte)unchecked((int)(0x67))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x7d))), unchecked((byte)unchecked((int)(0x2c))), unchecked(
-				(byte)unchecked((int)(0x7b))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x6e))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x6d))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x74))), unchecked(
-				(byte)unchecked((int)(0x69))), unchecked((byte)unchecked((int)(0x6d))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x2c))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x79))), unchecked(
-				(byte)unchecked((int)(0x70))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x6c))), unchecked(
-				(byte)unchecked((int)(0x6f))), unchecked((byte)unchecked((int)(0x6e))), unchecked(
-				(byte)unchecked((int)(0x67))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x7d))), unchecked((byte)unchecked((int)(0x2c))), unchecked(
-				(byte)unchecked((int)(0x7b))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x6e))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x6d))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x74))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x6d))), unchecked(
-				(byte)unchecked((int)(0x70))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x2c))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x79))), unchecked(
-				(byte)unchecked((int)(0x70))), unchecked((byte)unchecked((int)(0x65))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x69))), unchecked(
-				(byte)unchecked((int)(0x6e))), unchecked((byte)unchecked((int)(0x74))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x7d))), unchecked(
-				(byte)unchecked((int)(0x5d))), unchecked((byte)unchecked((int)(0x2c))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x64))), unchecked(
-				(byte)unchecked((int)(0x6f))), unchecked((byte)unchecked((int)(0x63))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x3a))), unchecked(
-				(byte)unchecked((int)(0x22))), unchecked((byte)unchecked((int)(0x41))), unchecked(
-				(byte)unchecked((int)(0x20))), unchecked((byte)unchecked((int)(0x77))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x74))), unchecked((byte)unchecked((int)(0x68))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x20))), unchecked((byte)unchecked((int)(0x72))), unchecked(
-				(byte)unchecked((int)(0x65))), unchecked((byte)unchecked((int)(0x61))), unchecked(
-				(byte)unchecked((int)(0x64))), unchecked((byte)unchecked((int)(0x69))), unchecked(
-				(byte)unchecked((int)(0x6e))), unchecked((byte)unchecked((int)(0x67))), unchecked(
-				(byte)unchecked((int)(0x2e))), unchecked((byte)unchecked((int)(0x22))), unchecked(
-				(byte)unchecked((int)(0x7d))), unchecked((byte)unchecked((int)(0x0))), unchecked(
-				(byte)unchecked((int)(0xb0))), unchecked((byte)unchecked((int)(0x81))), unchecked(
-				(byte)unchecked((int)(0xb3))), unchecked((byte)unchecked((int)(0xc4))), unchecked(
-				(byte)unchecked((int)(0xa))), unchecked((byte)unchecked((int)(0xc))), unchecked(
-				(byte)unchecked((int)(0xf6))), unchecked((byte)unchecked((int)(0x62))), unchecked(
-				(byte)unchecked((int)(0xfa))), unchecked((byte)unchecked((int)(0xc9))), unchecked(
-				(byte)unchecked((int)(0x38))), unchecked((byte)unchecked((int)(0xfd))), unchecked(
-				(byte)unchecked((int)(0x7e))), unchecked((byte)unchecked((int)(0x52))), unchecked(
-				(byte)unchecked((int)(0x0))), unchecked((byte)unchecked((int)(0xa7))), unchecked(
-				(byte)unchecked((int)(0xa))), unchecked((byte)unchecked((int)(0xcc))), unchecked(
-				(byte)unchecked((int)(0x1))), unchecked((byte)unchecked((int)(0x18))), unchecked(
-				(byte)unchecked((int)(0x30))), unchecked((byte)unchecked((int)(0x31))), unchecked(
-				(byte)unchecked((int)(0x31))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x30))), unchecked(
-				(byte)unchecked((int)(0x2d))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0xff))), unchecked((byte)unchecked((int)(0xa3))), unchecked(
-				(byte)unchecked((int)(0x90))), unchecked((byte)unchecked((int)(0xe8))), unchecked(
-				(byte)unchecked((int)(0x87))), unchecked((byte)unchecked((int)(0x24))), unchecked(
-				(byte)unchecked((int)(0x0))), unchecked((byte)unchecked((int)(0x18))), unchecked(
-				(byte)unchecked((int)(0x30))), unchecked((byte)unchecked((int)(0x31))), unchecked(
-				(byte)unchecked((int)(0x31))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x30))), unchecked(
-				(byte)unchecked((int)(0x2d))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0xff))), unchecked((byte)unchecked((int)(0x81))), unchecked(
-				(byte)unchecked((int)(0xfb))), unchecked((byte)unchecked((int)(0xd6))), unchecked(
-				(byte)unchecked((int)(0x87))), unchecked((byte)unchecked((int)(0x24))), unchecked(
-				(byte)unchecked((int)(0x2c))), unchecked((byte)unchecked((int)(0x18))), unchecked(
-				(byte)unchecked((int)(0x30))), unchecked((byte)unchecked((int)(0x31))), unchecked(
-				(byte)unchecked((int)(0x31))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x30))), unchecked(
-				(byte)unchecked((int)(0x2d))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0xff))), unchecked((byte)unchecked((int)(0xa5))), unchecked(
-				(byte)unchecked((int)(0xae))), unchecked((byte)unchecked((int)(0xc2))), unchecked(
-				(byte)unchecked((int)(0x87))), unchecked((byte)unchecked((int)(0x24))), unchecked(
-				(byte)unchecked((int)(0x15))), unchecked((byte)unchecked((int)(0x18))), unchecked(
-				(byte)unchecked((int)(0x30))), unchecked((byte)unchecked((int)(0x31))), unchecked(
-				(byte)unchecked((int)(0x32))), unchecked((byte)unchecked((int)(0x36))), unchecked(
-				(byte)unchecked((int)(0x35))), unchecked((byte)unchecked((int)(0x30))), unchecked(
-				(byte)unchecked((int)(0x2d))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0xff))), unchecked((byte)unchecked((int)(0xb7))), unchecked(
-				(byte)unchecked((int)(0xa2))), unchecked((byte)unchecked((int)(0x8b))), unchecked(
-				(byte)unchecked((int)(0x94))), unchecked((byte)unchecked((int)(0x26))), unchecked(
-				(byte)unchecked((int)(0xde))), unchecked((byte)unchecked((int)(0x1))), unchecked(
-				(byte)unchecked((int)(0x18))), unchecked((byte)unchecked((int)(0x30))), unchecked(
-				(byte)unchecked((int)(0x31))), unchecked((byte)unchecked((int)(0x32))), unchecked(
-				(byte)unchecked((int)(0x36))), unchecked((byte)unchecked((int)(0x35))), unchecked(
-				(byte)unchecked((int)(0x30))), unchecked((byte)unchecked((int)(0x2d))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0x39))), unchecked(
-				(byte)unchecked((int)(0x39))), unchecked((byte)unchecked((int)(0xff))), unchecked(
-				(byte)unchecked((int)(0xdb))), unchecked((byte)unchecked((int)(0xd5))), unchecked(
-				(byte)unchecked((int)(0xf6))), unchecked((byte)unchecked((int)(0x93))), unchecked(
-				(byte)unchecked((int)(0x26))), unchecked((byte)unchecked((int)(0x9c))), unchecked(
-				(byte)unchecked((int)(0x1))), unchecked((byte)unchecked((int)(0xb0))), unchecked(
-				(byte)unchecked((int)(0x81))), unchecked((byte)unchecked((int)(0xb3))), unchecked(
-				(byte)unchecked((int)(0xc4))), unchecked((byte)unchecked((int)(0xa))), unchecked(
-				(byte)unchecked((int)(0xc))), unchecked((byte)unchecked((int)(0xf6))), unchecked(
-				(byte)unchecked((int)(0x62))), unchecked((byte)unchecked((int)(0xfa))), unchecked(
-				(byte)unchecked((int)(0xc9))), unchecked((byte)unchecked((int)(0x38))), unchecked(
-				(byte)unchecked((int)(0xfd))), unchecked((byte)unchecked((int)(0x7e))), unchecked(
-				(byte)unchecked((int)(0x52))), unchecked((byte)unchecked((int)(0x0))), unchecked(
-				(byte)unchecked((int)(0xa7))) };
+			byte[] contents = { 0x4f, 0x62, 0x6a, 0x1, 0x4, 0x14, 0x61, 0x76, 0x72, 0x6f, 0x2e, 0x63, 0x6f, 0x64, 0x65, 0x63, 0x8, 0x6e, 0x75, 0x6c, 0x6c, 0x16, 0x61, 0x76, 0x72, 0x6f, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x61, 0xf2, 0x2, 0x7b, 0x22, 0x74, 0x79, 0x70, 0x65, 0x22, 0x3a, 0x22, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x22, 0x2c, 0x22, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x3a, 0x22, 0x57, 0x65, 0x61, 0x74, 0x68, 0x65, 0x72, 0x22, 0x2c, 0x22, 0x6e, 0x61, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x63, 0x65, 0x22, 0x3a, 0x22, 0x74, 0x65, 0x73, 0x74, 0x22, 0x2c, 0x22, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x22, 0x3a, 0x5b, 0x7b, 0x22, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x3a, 0x22, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x2c, 0x22, 0x74, 0x79, 0x70, 0x65, 0x22, 0x3a, 0x22, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x22, 0x7d, 0x2c, 0x7b, 0x22, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x3a, 0x22, 0x74, 0x69, 0x6d, 0x65, 0x22, 0x2c, 0x22, 0x74, 0x79, 0x70, 0x65, 0x22, 0x3a, 0x22, 0x6c, 0x6f, 0x6e, 0x67, 0x22, 0x7d, 0x2c, 0x7b, 0x22, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x3a, 0x22, 0x74, 0x65, 0x6d, 0x70, 0x22, 0x2c, 0x22, 0x74, 0x79, 0x70, 0x65, 0x22, 0x3a, 0x22, 0x69, 0x6e, 0x74, 0x22, 0x7d, 0x5d, 0x2c, 0x22, 0x64, 0x6f, 0x63, 0x22, 0x3a, 0x22, 0x41, 0x20, 0x77, 0x65, 0x61, 0x74, 0x68, 0x65, 0x72, 0x20, 0x72, 0x65, 0x61, 0x64, 0x69, 0x6e, 0x67, 0x2e, 0x22, 0x7d, 0x0, 0xb0, 0x81, 0xb3, 0xc4, 0xa, 0xc, 0xf6, 0x62, 0xfa, 0xc9, 0x38, 0xfd, 0x7e, 0x52, 0x0, 0xa7, 0xa, 0xcc, 0x1, 0x18, 0x30, 0x31, 0x31, 0x39, 0x39, 0x30, 0x2d, 0x39, 0x39, 0x39, 0x39, 0x39, 0xff, 0xa3, 0x90, 0xe8, 0x87, 0x24, 0x0, 0x18, 0x30, 0x31, 0x31, 0x39, 0x39, 0x30, 0x2d, 0x39, 0x39, 0x39, 0x39, 0x39, 0xff, 0x81, 0xfb, 0xd6, 0x87, 0x24, 0x2c, 0x18, 0x30, 0x31, 0x31, 0x39, 0x39, 0x30, 0x2d, 0x39, 0x39, 0x39, 0x39, 0x39, 0xff, 0xa5, 0xae, 0xc2, 0x87, 0x24, 0x15, 0x18, 0x30, 0x31, 0x32, 0x36, 0x35, 0x30, 0x2d, 0x39, 0x39, 0x39, 0x39, 0x39, 0xff, 0xb7, 0xa2, 0x8b, 0x94, 0x26, 0xde, 0x1, 0x18, 0x30, 0x31, 0x32, 0x36, 0x35, 0x30, 0x2d, 0x39, 0x39, 0x39, 0x39, 0x39, 0xff, 0xdb, 0xd5, 0xf6, 0x93, 0x26, 0x9c, 0x1, 0xb0, 0x81, 0xb3, 0xc4, 0xa, 0xc, 0xf6, 0x62, 0xfa, 0xc9, 0x38, 0xfd, 0x7e, 0x52, 0x0, 0xa7 };
 			return contents;
 		}
 	}

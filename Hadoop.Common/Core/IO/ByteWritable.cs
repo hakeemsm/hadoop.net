@@ -1,10 +1,11 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A WritableComparable for a single byte.</summary>
-	public class ByteWritable : WritableComparable<Org.Apache.Hadoop.IO.ByteWritable>
+	public class ByteWritable : IWritableComparable<Org.Apache.Hadoop.IO.ByteWritable>
 	{
 		private byte value;
 

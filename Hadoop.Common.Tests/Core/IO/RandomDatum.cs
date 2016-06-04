@@ -1,11 +1,12 @@
 using System;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
-	public class RandomDatum : WritableComparable<Org.Apache.Hadoop.IO.RandomDatum>
+	public class RandomDatum : IWritableComparable<Org.Apache.Hadoop.IO.RandomDatum>
 	{
 		private int length;
 

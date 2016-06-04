@@ -11,7 +11,7 @@ namespace Hadoop.Common.Core.IO
 	/// the current capacity. The hash function is the front of the md5 of the
 	/// buffer. The sort order is the same as memcmp.
 	/// </remarks>
-	public class BytesWritable : BinaryComparable, WritableComparable<BinaryComparable>
+	public class BytesWritable : BinaryComparable, IWritableComparable<BinaryComparable>
 	{
 		private const int LengthBytes = 4;
 

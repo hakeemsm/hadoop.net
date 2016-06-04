@@ -1,4 +1,5 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
@@ -9,7 +10,7 @@ namespace Org.Apache.Hadoop.IO
 	/// between one and five bytes.  Smaller values take fewer bytes.
 	/// </remarks>
 	/// <seealso cref="WritableUtils.ReadVLong(System.IO.BinaryReader)"/>
-	public class VLongWritable : WritableComparable<Org.Apache.Hadoop.IO.VLongWritable
+	public class VLongWritable : IWritableComparable<Org.Apache.Hadoop.IO.VLongWritable
 		>
 	{
 		private long value;

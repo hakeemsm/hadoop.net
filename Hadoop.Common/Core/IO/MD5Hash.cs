@@ -1,12 +1,13 @@
 using System;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.IO;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A Writable for MD5 hash values.</summary>
-	public class MD5Hash : WritableComparable<Org.Apache.Hadoop.IO.MD5Hash>
+	public class MD5Hash : IWritableComparable<Org.Apache.Hadoop.IO.MD5Hash>
 	{
 		public const int Md5Len = 16;
 

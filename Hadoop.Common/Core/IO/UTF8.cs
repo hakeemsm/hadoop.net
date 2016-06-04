@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
 using Sharpen;
@@ -15,7 +16,7 @@ namespace Org.Apache.Hadoop.IO
 	/// UTF-8: see http://en.wikipedia.org/wiki/CESU-8
 	/// </remarks>
 	[System.ObsoleteAttribute(@"replaced by Text")]
-	public class UTF8 : WritableComparable<UTF8>
+	public class UTF8 : IWritableComparable<UTF8>
 	{
 		private static readonly Log Log = LogFactory.GetLog(typeof(UTF8));
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;

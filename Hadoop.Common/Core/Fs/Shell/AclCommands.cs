@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop;
 using Org.Apache.Hadoop.FS.Permission;
 using Sharpen;

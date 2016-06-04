@@ -1,13 +1,12 @@
 using System.IO;
-using Sharpen;
+using Org.Apache.Hadoop.IO;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A WritableComparable for booleans.</summary>
-	public class BooleanWritable : WritableComparable<Org.Apache.Hadoop.IO.BooleanWritable
-		>
+	public class BooleanWritable : IWritableComparable<BooleanWritable>
 	{
-		private bool value;
+		private bool _value;
 
 		public BooleanWritable()
 		{
@@ -15,59 +14,50 @@ namespace Org.Apache.Hadoop.IO
 
 		public BooleanWritable(bool value)
 		{
-			Set(value);
+		    Value = value;
 		}
+		
 
-		/// <summary>Set the value of the BooleanWritable</summary>
-		public virtual void Set(bool value)
-		{
-			this.value = value;
-		}
+        /// <summary>Returns the value of the BooleanWritable</summary>
+        public virtual bool Value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
 
-		/// <summary>Returns the value of the BooleanWritable</summary>
-		public virtual bool Get()
-		{
-			return value;
-		}
+	    public void Write(BinaryWriter writer)
+	    {
+	        writer.Write(_value);
+	    }
 
-		/// <exception cref="System.IO.IOException"/>
+	    /// <exception cref="System.IO.IOException"/>
 		public virtual void ReadFields(BinaryReader @in)
 		{
-			value = @in.ReadBoolean();
+			_value = @in.ReadBoolean();
 		}
-
-		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
-		{
-			@out.WriteBoolean(value);
-		}
+		
 
 		public override bool Equals(object o)
 		{
-			if (!(o is Org.Apache.Hadoop.IO.BooleanWritable))
-			{
-				return false;
-			}
-			Org.Apache.Hadoop.IO.BooleanWritable other = (Org.Apache.Hadoop.IO.BooleanWritable
-				)o;
-			return this.value == other.value;
+		    BooleanWritable other = o as BooleanWritable;
+			return _value == other?._value;
 		}
 
 		public override int GetHashCode()
 		{
-			return value ? 0 : 1;
+			return _value ? 0 : 1;
 		}
 
-		public virtual int CompareTo(Org.Apache.Hadoop.IO.BooleanWritable o)
+		public virtual int CompareTo(BooleanWritable o)
 		{
-			bool a = this.value;
-			bool b = o.value;
+			bool a = this._value;
+			bool b = o._value;
 			return ((a == b) ? 0 : (a == false) ? -1 : 1);
 		}
 
 		public override string ToString()
 		{
-			return bool.ToString(Get());
+			return _value.ToString();
 		}
 
 		/// <summary>A Comparator optimized for BooleanWritable.</summary>
@@ -86,8 +76,7 @@ namespace Org.Apache.Hadoop.IO
 
 		static BooleanWritable()
 		{
-			WritableComparator.Define(typeof(BooleanWritable), new BooleanWritable.Comparator
-				());
+			WritableComparator.Define(typeof(BooleanWritable), new Comparator());
 		}
 	}
 }
