@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Javax.Security.Auth.X500;
 using Mono.Math;
 using Org.Apache.Hadoop.Conf;

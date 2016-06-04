@@ -1,6 +1,7 @@
 using System.IO;
 using System.Text;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
@@ -195,7 +196,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(DataInput @in)
+		public override void ReadFields(BinaryReader @in)
 		{
 			byte version = @in.ReadByte();
 			if (version != Version)

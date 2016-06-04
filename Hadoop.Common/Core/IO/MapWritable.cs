@@ -1,21 +1,22 @@
 using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Util;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A Writable Map.</summary>
-	public class MapWritable : AbstractMapWritable, IDictionary<Writable, Writable>
+	public class MapWritable : AbstractMapWritable, IDictionary<IWritable, IWritable>
 	{
-		private IDictionary<Writable, Writable> instance;
+		private IDictionary<IWritable, IWritable> instance;
 
 		/// <summary>Default constructor.</summary>
 		public MapWritable()
 			: base()
 		{
-			this.instance = new Dictionary<Writable, Writable>();
+			this.instance = new Dictionary<IWritable, IWritable>();
 		}
 
 		/// <summary>Copy constructor.</summary>
@@ -41,7 +42,7 @@ namespace Org.Apache.Hadoop.IO
 			return instance.ContainsValue(value);
 		}
 
-		public virtual ICollection<KeyValuePair<Writable, Writable>> EntrySet()
+		public virtual ICollection<KeyValuePair<IWritable, IWritable>> EntrySet()
 		{
 			return instance;
 		}
@@ -64,7 +65,7 @@ namespace Org.Apache.Hadoop.IO
 			return false;
 		}
 
-		public virtual Writable Get(object key)
+		public virtual IWritable Get(object key)
 		{
 			return instance[key];
 		}
@@ -79,7 +80,7 @@ namespace Org.Apache.Hadoop.IO
 			return instance.IsEmpty();
 		}
 
-		public virtual ICollection<Writable> Keys
+		public virtual ICollection<IWritable> Keys
 		{
 			get
 			{
@@ -87,7 +88,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		public virtual Writable Put(Writable key, Writable value)
+		public virtual IWritable Put(IWritable key, IWritable value)
 		{
 			AddToMap(key.GetType());
 			AddToMap(value.GetType());
@@ -95,15 +96,15 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		public virtual void PutAll<_T0>(IDictionary<_T0> t)
-			where _T0 : Writable
+			where _T0 : IWritable
 		{
-			foreach (KeyValuePair<Writable, Writable> e in t)
+			foreach (KeyValuePair<IWritable, IWritable> e in t)
 			{
 				this[e.Key] = e.Value;
 			}
 		}
 
-		public virtual Writable Remove(object key)
+		public virtual IWritable Remove(object key)
 		{
 			return Sharpen.Collections.Remove(instance, key);
 		}
@@ -116,7 +117,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		public virtual ICollection<Writable> Values
+		public virtual ICollection<IWritable> Values
 		{
 			get
 			{
@@ -132,7 +133,7 @@ namespace Org.Apache.Hadoop.IO
 			// Write out the number of entries in the map
 			@out.WriteInt(instance.Count);
 			// Then write out each key/value pair
-			foreach (KeyValuePair<Writable, Writable> e in instance)
+			foreach (KeyValuePair<IWritable, IWritable> e in instance)
 			{
 				@out.WriteByte(GetId(e.Key.GetType()));
 				e.Key.Write(@out);
@@ -142,7 +143,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(DataInput @in)
+		public override void ReadFields(BinaryReader @in)
 		{
 			base.ReadFields(@in);
 			// First clear the map.  Otherwise we will just accumulate
@@ -153,10 +154,10 @@ namespace Org.Apache.Hadoop.IO
 			// Then read each key/value pair
 			for (int i = 0; i < entries; i++)
 			{
-				Writable key = (Writable)ReflectionUtils.NewInstance(GetClass(@in.ReadByte()), GetConf
+				IWritable key = (IWritable)ReflectionUtils.NewInstance(GetClass(@in.ReadByte()), GetConf
 					());
 				key.ReadFields(@in);
-				Writable value = (Writable)ReflectionUtils.NewInstance(GetClass(@in.ReadByte()), 
+				IWritable value = (IWritable)ReflectionUtils.NewInstance(GetClass(@in.ReadByte()), 
 					GetConf());
 				value.ReadFields(@in);
 				instance[key] = value;

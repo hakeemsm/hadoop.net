@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Collections.Map;
 using Org.Apache.Commons.Compress.Archivers.Tar;

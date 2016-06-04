@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Sharpen;
 

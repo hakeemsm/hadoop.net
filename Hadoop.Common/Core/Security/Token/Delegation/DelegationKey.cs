@@ -7,7 +7,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.Security.Token.Delegation
 {
 	/// <summary>Key used for generating and verifying delegation tokens</summary>
-	public class DelegationKey : Writable
+	public class DelegationKey : IWritable
 	{
 		private int keyId;
 
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			keyId = WritableUtils.ReadVInt(@in);
 			expiryDate = WritableUtils.ReadVLong(@in);

@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Security.Token;
@@ -319,7 +320,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				if (!creds.GetAllTokens().IsEmpty())
 				{
 					IPEndPoint serviceAddr = new IPEndPoint(url.GetHost(), url.Port);
-					Org.Apache.Hadoop.IO.Text service = SecurityUtil.BuildTokenService(serviceAddr);
+					Text service = SecurityUtil.BuildTokenService(serviceAddr);
 					dToken = creds.GetToken(service);
 					if (dToken != null)
 					{

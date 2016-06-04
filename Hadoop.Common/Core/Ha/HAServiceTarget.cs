@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.Conf;
 using Javax.Net;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;

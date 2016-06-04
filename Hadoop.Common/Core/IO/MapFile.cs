@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop;
 using Org.Apache.Hadoop.Conf;
@@ -302,7 +304,7 @@ namespace Org.Apache.Hadoop.IO
 			/// to the previous key added to the map.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Append(WritableComparable key, Writable val)
+			public virtual void Append(WritableComparable key, IWritable val)
 			{
 				lock (this)
 				{
@@ -795,7 +797,7 @@ namespace Org.Apache.Hadoop.IO
 			/// the end of the map
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual bool Next(WritableComparable key, Writable val)
+			public virtual bool Next(WritableComparable key, IWritable val)
 			{
 				lock (this)
 				{
@@ -805,7 +807,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Return the value for the named key, or null if none exists.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual Writable Get(WritableComparable key, Writable val)
+			public virtual IWritable Get(WritableComparable key, IWritable val)
 			{
 				lock (this)
 				{
@@ -831,7 +833,7 @@ namespace Org.Apache.Hadoop.IO
 			/// -     * @return          - the key that was the closest match or null if eof.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual WritableComparable GetClosest(WritableComparable key, Writable val
+			public virtual WritableComparable GetClosest(WritableComparable key, IWritable val
 				)
 			{
 				lock (this)
@@ -850,7 +852,7 @@ namespace Org.Apache.Hadoop.IO
 			/// </param>
 			/// <returns>- the key that was the closest match or null if eof.</returns>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual WritableComparable GetClosest(WritableComparable key, Writable val
+			public virtual WritableComparable GetClosest(WritableComparable key, IWritable val
 				, bool before)
 			{
 				lock (this)
@@ -947,8 +949,8 @@ namespace Org.Apache.Hadoop.IO
 					.FullName + ", got " + dataReader.GetValueClass().FullName);
 			}
 			long cnt = 0L;
-			Writable key = ReflectionUtils.NewInstance(keyClass, conf);
-			Writable value = ReflectionUtils.NewInstance(valueClass, conf);
+			IWritable key = ReflectionUtils.NewInstance(keyClass, conf);
+			IWritable value = ReflectionUtils.NewInstance(valueClass, conf);
 			SequenceFile.Writer indexWriter = null;
 			if (!dryrun)
 			{
@@ -1094,7 +1096,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 				// re-usable array
 				WritableComparable[] keys = new WritableComparable[inReaders.Length];
-				Writable[] values = new Writable[inReaders.Length];
+				IWritable[] values = new IWritable[inReaders.Length];
 				// Read first key/value from all inputs
 				for (int i = 0; i < inReaders.Length; i++)
 				{
@@ -1111,7 +1113,7 @@ namespace Org.Apache.Hadoop.IO
 				{
 					int currentEntry = -1;
 					WritableComparable currentKey = null;
-					Writable currentValue = null;
+					IWritable currentValue = null;
 					for (int i_1 = 0; i_1 < keys.Length; i_1++)
 					{
 						if (keys[i_1] == null)
@@ -1183,7 +1185,7 @@ namespace Org.Apache.Hadoop.IO
 					>(), reader.GetValueClass());
 				WritableComparable key = ReflectionUtils.NewInstance(reader.GetKeyClass().AsSubclass
 					<WritableComparable>(), conf);
-				Writable value = ReflectionUtils.NewInstance(reader.GetValueClass().AsSubclass<Writable
+				IWritable value = ReflectionUtils.NewInstance(reader.GetValueClass().AsSubclass<IWritable
 					>(), conf);
 				while (reader.Next(key, value))
 				{

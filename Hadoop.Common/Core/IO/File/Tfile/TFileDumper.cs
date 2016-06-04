@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;

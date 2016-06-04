@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authorize;

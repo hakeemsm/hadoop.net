@@ -6,7 +6,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.FS
 {
 	/// <summary>An abstract class representing file checksums for files.</summary>
-	public abstract class FileChecksum : Writable
+	public abstract class FileChecksum : IWritable
 	{
 		/// <summary>The checksum algorithm name</summary>
 		public abstract string GetAlgorithmName();
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.FS
 			return GetAlgorithmName().GetHashCode() ^ Arrays.HashCode(GetBytes());
 		}
 
-		public abstract void ReadFields(DataInput arg1);
+		public abstract void ReadFields(BinaryReader arg1);
 
 		public abstract void Write(DataOutput arg1);
 	}

@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Sockets;
 using Com.Google.Common.Annotations;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Javax.Security.Sasl;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
@@ -29,10 +31,10 @@ namespace Org.Apache.Hadoop.Ipc
 	/// <summary>An abstract IPC service.</summary>
 	/// <remarks>
 	/// An abstract IPC service.  IPC calls take a single
-	/// <see cref="Writable"/>
+	/// <see cref="IWritable"/>
 	/// as a
 	/// parameter, and return a
-	/// <see cref="Writable"/>
+	/// <see cref="IWritable"/>
 	/// as their value.  A service runs on
 	/// a port and is defined by a parameter class and a value class.
 	/// </remarks>
@@ -189,9 +191,9 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <summary>Returns the server instance called under or null.</summary>
 		/// <remarks>
 		/// Returns the server instance called under or null.  May be called under
-		/// <see cref="Call(Writable, long)"/>
+		/// <see cref="Call(IWritable, long)"/>
 		/// implementations, and under
-		/// <see cref="Writable"/>
+		/// <see cref="IWritable"/>
 		/// methods of paramters and return values.  Permits applications to access
 		/// the server context.
 		/// </remarks>
@@ -486,7 +488,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			private readonly int retryCount;
 
-			private readonly Writable rpcRequest;
+			private readonly IWritable rpcRequest;
 
 			private readonly Server.Connection connection;
 
@@ -500,19 +502,19 @@ namespace Org.Apache.Hadoop.Ipc
 
 			private readonly Span traceSpan;
 
-			public Call(int id, int retryCount, Writable param, Server.Connection connection)
+			public Call(int id, int retryCount, IWritable param, Server.Connection connection)
 				: this(id, retryCount, param, connection, RPC.RpcKind.RpcBuiltin, RpcConstants.DummyClientId
 					)
 			{
 			}
 
-			public Call(int id, int retryCount, Writable param, Server.Connection connection, 
+			public Call(int id, int retryCount, IWritable param, Server.Connection connection, 
 				RPC.RpcKind kind, byte[] clientId)
 				: this(id, retryCount, param, connection, kind, clientId, null)
 			{
 			}
 
-			public Call(int id, int retryCount, Writable param, Server.Connection connection, 
+			public Call(int id, int retryCount, IWritable param, Server.Connection connection, 
 				RPC.RpcKind kind, byte[] clientId, Span span)
 			{
 				// the client's call id
@@ -2283,7 +2285,7 @@ namespace Org.Apache.Hadoop.Ipc
 					throw new Server.WrappedRpcServerException(RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto
 						.FatalInvalidRpcHeader, err);
 				}
-				Writable rpcRequest;
+				IWritable rpcRequest;
 				try
 				{
 					//Read the rpc request
@@ -2513,7 +2515,7 @@ namespace Org.Apache.Hadoop.Ipc
 						RpcHeaderProtos.RpcResponseHeaderProto.RpcStatusProto returnStatus = RpcHeaderProtos.RpcResponseHeaderProto.RpcStatusProto
 							.Success;
 						RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto detailedErr = null;
-						Writable value = null;
+						IWritable value = null;
 						Server.CurCall.Set(call);
 						if (call.traceSpan != null)
 						{
@@ -2638,7 +2640,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			private sealed class _PrivilegedExceptionAction_2045 : PrivilegedExceptionAction<
-				Writable>
+				IWritable>
 			{
 				public _PrivilegedExceptionAction_2045(Handler _enclosing, Server.Call call)
 				{
@@ -2647,7 +2649,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 
 				/// <exception cref="System.Exception"/>
-				public Writable Run()
+				public IWritable Run()
 				{
 					return this._enclosing._enclosing.Call(call.rpcKind, call.connection.protocolName
 						, call.rpcRequest, call.timestamp);
@@ -2843,7 +2845,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <param name="error">error message, if the call failed</param>
 		/// <exception cref="System.IO.IOException"/>
 		private void SetupResponse(ByteArrayOutputStream responseBuf, Server.Call call, RpcHeaderProtos.RpcResponseHeaderProto.RpcStatusProto
-			 status, RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto erCode, Writable
+			 status, RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto erCode, IWritable
 			 rv, string errorClass, string error)
 		{
 			responseBuf.Reset();
@@ -2936,7 +2938,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <param name="error">error message, if the call failed</param>
 		/// <exception cref="System.IO.IOException"/>
 		private void SetupResponseOldVersionFatal(ByteArrayOutputStream response, Server.Call
-			 call, Writable rv, string errorClass, string error)
+			 call, IWritable rv, string errorClass, string error)
 		{
 			int OldVersionFatalStatus = -1;
 			response.Reset();
@@ -3077,14 +3079,14 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <exception cref="System.Exception"/>
 		[System.ObsoleteAttribute(@"Use  #call(RpcPayloadHeader.RpcKind,String,Writable,long) instead"
 			)]
-		public virtual Writable Call(Writable param, long receiveTime)
+		public virtual IWritable Call(IWritable param, long receiveTime)
 		{
 			return Call(RPC.RpcKind.RpcBuiltin, null, param, receiveTime);
 		}
 
 		/// <summary>Called for each call.</summary>
 		/// <exception cref="System.Exception"/>
-		public abstract Writable Call(RPC.RpcKind rpcKind, string protocol, Writable param
+		public abstract IWritable Call(RPC.RpcKind rpcKind, string protocol, IWritable param
 			, long receiveTime);
 
 		/// <summary>Authorize the incoming client connection.</summary>

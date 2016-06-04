@@ -36,13 +36,13 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				this.state = @in.ReadInt();
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public static TestWritable.SimpleWritable Read(DataInput @in)
+			public static TestWritable.SimpleWritable Read(BinaryReader @in)
 			{
 				TestWritable.SimpleWritable result = new TestWritable.SimpleWritable();
 				result.ReadFields(@in);
@@ -160,7 +160,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 			}
 

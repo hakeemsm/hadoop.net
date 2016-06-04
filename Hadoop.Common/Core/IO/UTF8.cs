@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			length = @in.ReadUnsignedShort();
 			if (bytes == null || bytes.Length < length)
@@ -132,7 +132,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>Skips over one UTF8 in the input.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Skip(DataInput @in)
+		public static void Skip(BinaryReader @in)
 		{
 			int length = @in.ReadUnsignedShort();
 			WritableUtils.SkipFully(@in, length);
@@ -268,9 +268,9 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Read a UTF-8 encoded string.</summary>
-		/// <seealso cref="System.IO.DataInput.ReadUTF()"/>
+		/// <seealso cref="System.IO.BinaryReader.ReadUTF()"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(DataInput @in)
+		public static string ReadString(BinaryReader @in)
 		{
 			int bytes = @in.ReadUnsignedShort();
 			StringBuilder buffer = new StringBuilder(bytes);
@@ -280,7 +280,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <exception cref="System.IO.UTFDataFormatException"/>
 		/// <exception cref="System.IO.IOException"/>
-		private static void ReadChars(DataInput @in, StringBuilder buffer, int nBytes)
+		private static void ReadChars(BinaryReader @in, StringBuilder buffer, int nBytes)
 		{
 			DataOutputBuffer obuf = ObufFactory.Get();
 			obuf.Reset();

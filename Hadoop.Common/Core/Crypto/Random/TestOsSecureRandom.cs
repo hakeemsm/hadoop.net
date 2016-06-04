@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.Conf;
 using NUnit.Framework;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Hadoop.Conf;

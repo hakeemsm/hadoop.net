@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Hadoop;

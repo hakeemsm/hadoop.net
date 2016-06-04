@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Ipc;

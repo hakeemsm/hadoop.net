@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
 using Sharpen;

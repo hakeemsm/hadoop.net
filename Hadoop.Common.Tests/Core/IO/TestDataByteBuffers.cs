@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.IO
 	public class TestDataByteBuffers
 	{
 		/// <exception cref="System.IO.IOException"/>
-		private static void ReadJunk(DataInput @in, Random r, long seed, int iter)
+		private static void ReadJunk(BinaryReader @in, Random r, long seed, int iter)
 		{
 			r.SetSeed(seed);
 			for (int i = 0; i < iter; ++i)

@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Security.Token
 	/// An identifier that identifies a token, may contain public information
 	/// about a token, including its kind (or type).
 	/// </summary>
-	public abstract class TokenIdentifier : Writable
+	public abstract class TokenIdentifier : IWritable
 	{
 		private string trackingId = null;
 
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Security.Token
 			return trackingId;
 		}
 
-		public abstract void ReadFields(DataInput arg1);
+		public abstract void ReadFields(BinaryReader arg1);
 
 		public abstract void Write(DataOutput arg1);
 	}

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Crypto.Key;
 using Org.Apache.Hadoop.Crypto.Key.Kms;

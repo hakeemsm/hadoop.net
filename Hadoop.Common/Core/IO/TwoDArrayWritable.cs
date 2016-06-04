@@ -7,18 +7,18 @@ using Sharpen.Reflect;
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A Writable for 2D arrays containing a matrix of instances of a class.</summary>
-	public class TwoDArrayWritable : Writable
+	public class TwoDArrayWritable : IWritable
 	{
 		private Type valueClass;
 
-		private Writable[][] values;
+		private IWritable[][] values;
 
 		public TwoDArrayWritable(Type valueClass)
 		{
 			this.valueClass = valueClass;
 		}
 
-		public TwoDArrayWritable(Type valueClass, Writable[][] values)
+		public TwoDArrayWritable(Type valueClass, IWritable[][] values)
 			: this(valueClass)
 		{
 			this.values = values;
@@ -40,35 +40,35 @@ namespace Org.Apache.Hadoop.IO
 			return result;
 		}
 
-		public virtual void Set(Writable[][] values)
+		public virtual void Set(IWritable[][] values)
 		{
 			this.values = values;
 		}
 
-		public virtual Writable[][] Get()
+		public virtual IWritable[][] Get()
 		{
 			return values;
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			// construct matrix
-			values = new Writable[@in.ReadInt()][];
+			values = new IWritable[@in.ReadInt()][];
 			for (int i = 0; i < values.Length; i++)
 			{
-				values[i] = new Writable[@in.ReadInt()];
+				values[i] = new IWritable[@in.ReadInt()];
 			}
 			// construct values
 			for (int i_1 = 0; i_1 < values.Length; i_1++)
 			{
 				for (int j = 0; j < values[i_1].Length; j++)
 				{
-					Writable value;
+					IWritable value;
 					// construct value
 					try
 					{
-						value = (Writable)System.Activator.CreateInstance(valueClass);
+						value = (IWritable)System.Activator.CreateInstance(valueClass);
 					}
 					catch (InstantiationException e)
 					{

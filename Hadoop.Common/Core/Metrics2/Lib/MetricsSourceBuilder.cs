@@ -18,6 +18,7 @@
 using System;
 using System.Reflection;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Annotation;

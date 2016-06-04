@@ -195,7 +195,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				tokenid.ReadFields(@in);
 				realUser.ReadFields(@in);

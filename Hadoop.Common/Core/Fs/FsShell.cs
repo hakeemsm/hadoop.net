@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
@@ -31,7 +32,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <summary>Default ctor with no configuration.</summary>
 		/// <remarks>
 		/// Default ctor with no configuration.  Be sure to invoke
-		/// <see cref="Org.Apache.Hadoop.Conf.Configured.SetConf(Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="Org.Apache.Hadoop.Conf.Configured.SetConf(Configuration)
 		/// 	"/>
 		/// with a valid configuration prior
 		/// to running commands.

@@ -5,6 +5,7 @@ using System.Net;
 using System.Reflection;
 using Com.Google.Common.Annotations;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
@@ -280,7 +281,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 		}
 
-		internal interface RpcWrapper : Writable
+		internal interface RpcWrapper : IWritable
 		{
 			int GetLength();
 		}
@@ -328,7 +329,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				requestHeader = ParseHeaderFrom(ReadVarintBytes(@in));
 				theRequestRead = ReadMessageRequest(@in);
@@ -338,13 +339,13 @@ namespace Org.Apache.Hadoop.Ipc
 			internal abstract T ParseHeaderFrom(byte[] bytes);
 
 			/// <exception cref="System.IO.IOException"/>
-			internal virtual byte[] ReadMessageRequest(DataInput @in)
+			internal virtual byte[] ReadMessageRequest(BinaryReader @in)
 			{
 				return ReadVarintBytes(@in);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			private static byte[] ReadVarintBytes(DataInput @in)
+			private static byte[] ReadVarintBytes(BinaryReader @in)
 			{
 				int length = ProtoUtil.ReadRawVarint32(@in);
 				byte[] bytes = new byte[length];
@@ -448,7 +449,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			internal override byte[] ReadMessageRequest(DataInput @in)
+			internal override byte[] ReadMessageRequest(BinaryReader @in)
 			{
 				switch (requestHeader.GetStatus())
 				{
@@ -513,7 +514,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				int length = ProtoUtil.ReadRawVarint32(@in);
 				theResponseRead = new byte[length];
@@ -621,7 +622,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 
 				/// <exception cref="System.Exception"/>
-				public virtual Writable Call(RPC.Server server, string protocol, Writable writableRequest
+				public virtual IWritable Call(RPC.Server server, string protocol, IWritable writableRequest
 					, long receiveTime)
 				{
 					ProtobufRpcEngine.RpcRequestWrapper request = (ProtobufRpcEngine.RpcRequestWrapper

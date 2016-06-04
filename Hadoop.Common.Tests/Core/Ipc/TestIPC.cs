@@ -324,7 +324,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				base.ReadFields(@in);
 				MaybeThrowIOE();
@@ -338,7 +338,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				base.ReadFields(@in);
 				MaybeThrowRTE();

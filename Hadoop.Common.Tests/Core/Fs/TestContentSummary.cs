@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.FS
 			long spaceConsumed = 55555;
 			long spaceQuota = 66666;
 			ContentSummary contentSummary = new ContentSummary.Builder().Build();
-			DataInput @in = Org.Mockito.Mockito.Mock<DataInput>();
+			BinaryReader @in = Org.Mockito.Mockito.Mock<BinaryReader>();
 			Org.Mockito.Mockito.When(@in.ReadLong()).ThenReturn(length).ThenReturn(fileCount)
 				.ThenReturn(directoryCount).ThenReturn(quota).ThenReturn(spaceConsumed).ThenReturn
 				(spaceQuota);

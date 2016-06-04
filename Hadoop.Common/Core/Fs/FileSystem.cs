@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
@@ -362,7 +365,7 @@ namespace Hadoop.Common.Core.Fs
 		/// <remarks>
 		/// Returns the FileSystem for this URI's scheme and authority and the
 		/// passed user. Internally invokes
-		/// <see cref="NewInstance(Sharpen.URI, Org.Apache.Hadoop.Conf.Configuration)"/>
+		/// <see cref="NewInstance(Sharpen.URI, Configuration)"/>
 		/// </remarks>
 		/// <param name="uri">of the filesystem</param>
 		/// <param name="conf">the configuration to use</param>

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
@@ -15,7 +16,7 @@ namespace Org.Apache.Hadoop.Security
 	/// A class that provides the facilities of reading and writing
 	/// secret keys and Tokens.
 	/// </summary>
-	public class Credentials : Writable
+	public class Credentials : IWritable
 	{
 		private static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.Security.Credentials
 			));
@@ -241,7 +242,7 @@ namespace Org.Apache.Hadoop.Security
 		/// <summary>Loads all the keys</summary>
 		/// <param name="in"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			secretKeysMap.Clear();
 			tokenMap.Clear();

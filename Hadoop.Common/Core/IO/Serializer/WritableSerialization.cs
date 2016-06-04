@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
@@ -13,16 +15,16 @@ namespace Org.Apache.Hadoop.IO.Serializer
 	/// A
 	/// <see cref="Serialization{T}"/>
 	/// for
-	/// <see cref="Writable"/>
+	/// <see cref="IWritable"/>
 	/// s that delegates to
-	/// <see cref="Writable.Write(System.IO.DataOutput)"/>
+	/// <see cref="IWritable.Write(System.IO.DataOutput)"/>
 	/// and
-	/// <see cref="Writable.ReadFields(System.IO.DataInput)"/>
+	/// <see cref="IWritable.ReadFields(System.IO.BinaryReader)"/>
 	/// .
 	/// </summary>
-	public class WritableSerialization : Configured, Serialization<Writable>
+	public class WritableSerialization : Configured, Serialization<IWritable>
 	{
-		internal class WritableDeserializer : Configured, Deserializer<Writable>
+		internal class WritableDeserializer : Configured, Deserializer<IWritable>
 		{
 			private Type writableClass;
 
@@ -47,12 +49,12 @@ namespace Org.Apache.Hadoop.IO.Serializer
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual Writable Deserialize(Writable w)
+			public virtual IWritable Deserialize(IWritable w)
 			{
-				Writable writable;
+				IWritable writable;
 				if (w == null)
 				{
-					writable = (Writable)ReflectionUtils.NewInstance(writableClass, GetConf());
+					writable = (IWritable)ReflectionUtils.NewInstance(writableClass, GetConf());
 				}
 				else
 				{
@@ -70,7 +72,7 @@ namespace Org.Apache.Hadoop.IO.Serializer
 		}
 
 		internal class WritableSerializer : Configured, Org.Apache.Hadoop.IO.Serializer.Serializer
-			<Writable>
+			<IWritable>
 		{
 			private DataOutputStream dataOut;
 
@@ -87,7 +89,7 @@ namespace Org.Apache.Hadoop.IO.Serializer
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Serialize(Writable w)
+			public virtual void Serialize(IWritable w)
 			{
 				w.Write(dataOut);
 			}
@@ -102,18 +104,18 @@ namespace Org.Apache.Hadoop.IO.Serializer
 		[InterfaceAudience.Private]
 		public virtual bool Accept(Type c)
 		{
-			return typeof(Writable).IsAssignableFrom(c);
+			return typeof(IWritable).IsAssignableFrom(c);
 		}
 
 		[InterfaceAudience.Private]
-		public virtual Org.Apache.Hadoop.IO.Serializer.Serializer<Writable> GetSerializer
+		public virtual Org.Apache.Hadoop.IO.Serializer.Serializer<IWritable> GetSerializer
 			(Type c)
 		{
 			return new WritableSerialization.WritableSerializer();
 		}
 
 		[InterfaceAudience.Private]
-		public virtual Deserializer<Writable> GetDeserializer(Type c)
+		public virtual Deserializer<IWritable> GetDeserializer(Type c)
 		{
 			return new WritableSerialization.WritableDeserializer(GetConf(), c);
 		}

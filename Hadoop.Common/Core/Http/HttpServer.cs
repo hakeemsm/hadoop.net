@@ -5,6 +5,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Com.Sun.Jersey.Spi.Container.Servlet;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Util;
 using Javax.Servlet;
 using Javax.Servlet.Http;
 using Org.Apache.Commons.Logging;

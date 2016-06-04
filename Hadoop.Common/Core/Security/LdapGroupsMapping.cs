@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Com.Sun.Jndi.Ldap;
+using Hadoop.Common.Core.Conf;
 using Javax.Naming;
 using Javax.Naming.Directory;
 using Org.Apache.Commons.IO;

@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using Com.Google.Common.Base;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Sharpen;

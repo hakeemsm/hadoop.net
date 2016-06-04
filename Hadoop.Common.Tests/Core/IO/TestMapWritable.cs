@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using System.IO;
-using NUnit.Framework;
-using Sharpen;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Tests.Core.IO
 {
 	/// <summary>Tests MapWritable</summary>
 	public class TestMapWritable : TestCase

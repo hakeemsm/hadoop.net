@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Avro;
 using Org.Apache.Avro.File;
 using Org.Apache.Avro.Generic;
@@ -199,7 +201,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 
 			internal WritableComparable<object> key;
 
-			internal Writable val;
+			internal IWritable val;
 
 			internal DataInputBuffer inbuf;
 
@@ -214,7 +216,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 				this.r = new SequenceFile.Reader(lconf, SequenceFile.Reader.File(fpath));
 				this.key = ReflectionUtils.NewInstance(this.r.GetKeyClass().AsSubclass<WritableComparable
 					>(), lconf);
-				this.val = ReflectionUtils.NewInstance(this.r.GetValueClass().AsSubclass<Writable
+				this.val = ReflectionUtils.NewInstance(this.r.GetValueClass().AsSubclass<IWritable
 					>(), lconf);
 				this.inbuf = new DataInputBuffer();
 				this.outbuf = new DataOutputBuffer();

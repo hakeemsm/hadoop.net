@@ -5,7 +5,9 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop;
@@ -34,7 +36,7 @@ namespace Org.Apache.Hadoop.Ipc
 	/// <see cref="string"/>
 	/// ; or</li>
 	/// <li>a
-	/// <see cref="Writable"/>
+	/// <see cref="IWritable"/>
 	/// ; or</li>
 	/// <li>an array of the above types</li> </ul>
 	/// All methods in the protocol should throw only IOException.  No field data of
@@ -81,7 +83,7 @@ namespace Org.Apache.Hadoop.Ipc
 			/// <returns>the call's return</returns>
 			/// <exception cref="System.IO.IOException"/>
 			/// <exception cref="System.Exception"/>
-			Writable Call(RPC.Server server, string protocol, Writable rpcRequest, long receiveTime
+			IWritable Call(RPC.Server server, string protocol, IWritable rpcRequest, long receiveTime
 				);
 		}
 
@@ -1016,7 +1018,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.Exception"/>
-			public override Writable Call(RPC.RpcKind rpcKind, string protocol, Writable rpcRequest
+			public override IWritable Call(RPC.RpcKind rpcKind, string protocol, IWritable rpcRequest
 				, long receiveTime)
 			{
 				return GetRpcInvoker(rpcKind).Call(this, protocol, rpcRequest, receiveTime);

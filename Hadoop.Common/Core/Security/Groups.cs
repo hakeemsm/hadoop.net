@@ -3,6 +3,8 @@ using System.IO;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
 using Com.Google.Common.Cache;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop;
 using Org.Apache.Hadoop.Classification;

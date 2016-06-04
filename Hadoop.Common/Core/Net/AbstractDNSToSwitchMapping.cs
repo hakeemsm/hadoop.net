@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Sharpen;
@@ -19,7 +20,7 @@ namespace Org.Apache.Hadoop.Net
 	/// base class, and should not be changed to do so, as it causes problems
 	/// for subclasses. The constructor of the <code>Configured</code> calls
 	/// the
-	/// <see cref="SetConf(Org.Apache.Hadoop.Conf.Configuration)"/>
+	/// <see cref="SetConf(Configuration)"/>
 	/// method, which will call into the
 	/// subclasses before they have been fully constructed.
 	/// </remarks>
@@ -36,7 +37,7 @@ namespace Org.Apache.Hadoop.Net
 		/// <remarks>
 		/// Create an instance, caching the configuration file.
 		/// This constructor does not call
-		/// <see cref="SetConf(Org.Apache.Hadoop.Conf.Configuration)"/>
+		/// <see cref="SetConf(Configuration)"/>
 		/// ; if
 		/// a subclass extracts information in that method, it must call it explicitly.
 		/// </remarks>

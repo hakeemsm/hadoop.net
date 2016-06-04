@@ -1,4 +1,5 @@
 using System;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
@@ -39,7 +40,7 @@ namespace Hadoop.Common.Core.IO
 			// no public ctor
 			/// <summary>Append a value to the file.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Append(Writable value)
+			public virtual void Append(IWritable value)
 			{
 				lock (this)
 				{
@@ -76,7 +77,7 @@ namespace Hadoop.Common.Core.IO
 
 			/// <summary>Read and return the next value in the file.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual Writable Next(Writable value)
+			public virtual IWritable Next(IWritable value)
 			{
 				lock (this)
 				{
@@ -88,9 +89,9 @@ namespace Hadoop.Common.Core.IO
 			/// Returns the key associated with the most recent call to
 			/// <see cref="Seek(long)"/>
 			/// ,
-			/// <see cref="Next(Writable)"/>
+			/// <see cref="Next(IWritable)"/>
 			/// , or
-			/// <see cref="Get(long, Writable)"/>
+			/// <see cref="Get(long, IWritable)"/>
 			/// .
 			/// </summary>
 			/// <exception cref="System.IO.IOException"/>
@@ -104,7 +105,7 @@ namespace Hadoop.Common.Core.IO
 
 			/// <summary>Return the <code>n</code>th value in the file.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual Writable Get(long n, Writable value)
+			public virtual IWritable Get(long n, IWritable value)
 			{
 				lock (this)
 				{

@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.IO
 			private string foo = "foo";
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				foo = Text.ReadString(@in);
 			}
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.IO
 
 			//The Answer to The Ultimate Question Of Life, the Universe and Everything
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				bar = @in.ReadInt();
 			}
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.IO
 		public class Baz : TestGenericWritable.Bar
 		{
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				base.ReadFields(@in);
 				//needs a configuration parameter

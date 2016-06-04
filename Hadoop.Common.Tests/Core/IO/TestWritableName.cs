@@ -28,13 +28,13 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				this.state = @in.ReadInt();
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public static TestWritableName.SimpleWritable Read(DataInput @in)
+			public static TestWritableName.SimpleWritable Read(BinaryReader @in)
 			{
 				TestWritableName.SimpleWritable result = new TestWritableName.SimpleWritable();
 				result.ReadFields(@in);

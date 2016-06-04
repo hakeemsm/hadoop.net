@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
-using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Serializer;
-using Sharpen;
-using Sharpen.Management;
-using Sharpen.Reflect;
+using Org.Apache.Hadoop.Util;
 
-namespace Org.Apache.Hadoop.Util
+namespace Hadoop.Common.Core.Util
 {
 	/// <summary>General reflection utils</summary>
 	public class ReflectionUtils
@@ -189,7 +187,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <param name="log">the logger that logs the stack trace</param>
 		/// <param name="title">a descriptive title for the call stacks</param>
 		/// <param name="minInterval">the minimum time from the last</param>
-		public static void LogThreadInfo(Log log, string title, long minInterval)
+		public static void LogThreadInfo(Org.Apache.Hadoop.Log log, string title, long minInterval)
 		{
 			bool dumpStack = false;
 			if (log.IsInfoEnabled())
@@ -309,7 +307,7 @@ namespace Org.Apache.Hadoop.Util
 
 		/// <exception cref="System.IO.IOException"/>
 		[Obsolete]
-		public static void CloneWritableInto(Writable dst, Writable src)
+		public static void CloneWritableInto(IWritable dst, IWritable src)
 		{
 			ReflectionUtils.CopyInCopyOutBuffer buffer = cloneBuffers.Get();
 			buffer.outBuffer.Reset();

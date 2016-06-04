@@ -1,5 +1,6 @@
 using System;
 using Com.Codahale.Metrics;
+using Hadoop.Common.Core.Conf;
 using Javax.Servlet;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Crypto.Key;

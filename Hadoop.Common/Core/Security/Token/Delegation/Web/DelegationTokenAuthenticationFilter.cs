@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Conf;
 using Javax.Servlet;
 using Javax.Servlet.Http;
 using Org.Apache.Curator.Framework;

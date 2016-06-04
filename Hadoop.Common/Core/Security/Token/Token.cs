@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Commons.Codec.Binary;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
@@ -15,7 +17,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.Security.Token
 {
 	/// <summary>The client-side form of the token.</summary>
-	public class Token<T> : Writable
+	public class Token<T> : IWritable
 		where T : TokenIdentifier
 	{
 		public static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.Security.Token.Token
@@ -193,7 +195,7 @@ namespace Org.Apache.Hadoop.Security.Token
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			int len = WritableUtils.ReadVInt(@in);
 			if (identifier == null || identifier.Length != len)
@@ -229,7 +231,7 @@ namespace Org.Apache.Hadoop.Security.Token
 		/// <param name="obj">the object to serialize</param>
 		/// <returns>the encoded string</returns>
 		/// <exception cref="System.IO.IOException"/>
-		private static string EncodeWritable(Writable obj)
+		private static string EncodeWritable(IWritable obj)
 		{
 			DataOutputBuffer buf = new DataOutputBuffer();
 			obj.Write(buf);
@@ -243,7 +245,7 @@ namespace Org.Apache.Hadoop.Security.Token
 		/// <param name="obj">the object to read into</param>
 		/// <param name="newValue">the string with the url-safe base64 encoded bytes</param>
 		/// <exception cref="System.IO.IOException"/>
-		private static void DecodeWritable(Writable obj, string newValue)
+		private static void DecodeWritable(IWritable obj, string newValue)
 		{
 			Base64 decoder = new Base64(0, null, true);
 			DataInputBuffer buf = new DataInputBuffer();
@@ -412,12 +414,12 @@ namespace Org.Apache.Hadoop.Security.Token
 		public class TrivialRenewer : TokenRenewer
 		{
 			// define the kind for this renewer
-			protected internal virtual Org.Apache.Hadoop.IO.Text GetKind()
+			protected internal virtual Text GetKind()
 			{
 				return null;
 			}
 
-			public override bool HandleKind(Org.Apache.Hadoop.IO.Text kind)
+			public override bool HandleKind(Text kind)
 			{
 				return kind.Equals(GetKind());
 			}

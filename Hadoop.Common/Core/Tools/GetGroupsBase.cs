@@ -1,6 +1,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Net;

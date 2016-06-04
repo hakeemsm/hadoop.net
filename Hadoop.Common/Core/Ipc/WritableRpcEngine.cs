@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
@@ -61,7 +62,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <summary>A method invocation, including the method name and its parameters.</summary>
-		private class Invocation : Writable, Configurable
+		private class Invocation : IWritable, Configurable
 		{
 			private string methodName;
 
@@ -143,7 +144,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				rpcVersion = @in.ReadLong();
 				declaringClassProtocolName = UTF8.ReadString(@in);
@@ -455,7 +456,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				/// <exception cref="System.IO.IOException"/>
 				/// <exception cref="Org.Apache.Hadoop.Ipc.RPC.VersionMismatch"/>
-				public virtual Writable Call(RPC.Server server, string protocolName, Writable rpcRequest
+				public virtual IWritable Call(RPC.Server server, string protocolName, IWritable rpcRequest
 					, long receivedTime)
 				{
 					WritableRpcEngine.Invocation call = (WritableRpcEngine.Invocation)rpcRequest;

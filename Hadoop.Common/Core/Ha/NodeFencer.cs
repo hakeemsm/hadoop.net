@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;

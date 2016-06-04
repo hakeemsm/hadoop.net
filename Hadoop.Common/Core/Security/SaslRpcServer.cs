@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Javax.Security.Auth.Callback;
 using Javax.Security.Sasl;
 using Org.Apache.Commons.Codec.Binary;
@@ -285,7 +286,7 @@ namespace Org.Apache.Hadoop.Security
 
 			/// <summary>Read from in</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public static SaslRpcServer.AuthMethod Read(DataInput @in)
+			public static SaslRpcServer.AuthMethod Read(BinaryReader @in)
 			{
 				return ValueOf(@in.ReadByte());
 			}

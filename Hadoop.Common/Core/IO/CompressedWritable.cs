@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.IO
 	/// compressed makes copying the instance from one file to another much
 	/// faster.
 	/// </remarks>
-	public abstract class CompressedWritable : Writable
+	public abstract class CompressedWritable : IWritable
 	{
 		private byte[] compressed;
 
@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.IO
 
 		// if non-null, the compressed field data of this instance.
 		/// <exception cref="System.IO.IOException"/>
-		public void ReadFields(DataInput @in)
+		public void ReadFields(BinaryReader @in)
 		{
 			compressed = new byte[@in.ReadInt()];
 			@in.ReadFully(compressed, 0, compressed.Length);
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.IO
 				try
 				{
 					ByteArrayInputStream deflated = new ByteArrayInputStream(compressed);
-					DataInput inflater = new DataInputStream(new InflaterInputStream(deflated));
+					BinaryReader inflater = new DataInputStream(new InflaterInputStream(deflated));
 					ReadFieldsCompressed(inflater);
 					compressed = null;
 				}
@@ -56,11 +56,11 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Subclasses implement this instead of
-		/// <see cref="ReadFields(System.IO.DataInput)"/>
+		/// <see cref="ReadFields(System.IO.BinaryReader)"/>
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		protected internal abstract void ReadFieldsCompressed(DataInput @in);
+		protected internal abstract void ReadFieldsCompressed(BinaryReader @in);
 
 		/// <exception cref="System.IO.IOException"/>
 		public void Write(DataOutput @out)

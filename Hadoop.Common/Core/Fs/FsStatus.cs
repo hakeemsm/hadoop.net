@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.FS
 	/// <see cref="FileSystem"/>
 	/// .
 	/// </summary>
-	public class FsStatus : Writable
+	public class FsStatus : IWritable
 	{
 		private long capacity;
 
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			capacity = @in.ReadLong();
 			used = @in.ReadLong();

@@ -8,7 +8,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.FS
 {
 	/// <summary>Provides server default configuration values to clients.</summary>
-	public class FsServerDefaults : Writable
+	public class FsServerDefaults : IWritable
 	{
 		static FsServerDefaults()
 		{
@@ -23,7 +23,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 			}
 
-			public Writable NewInstance()
+			public IWritable NewInstance()
 			{
 				return new Org.Apache.Hadoop.FS.FsServerDefaults();
 			}
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		[InterfaceAudience.Private]
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			blockSize = @in.ReadLong();
 			bytesPerChecksum = @in.ReadInt();

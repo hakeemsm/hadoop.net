@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				base.ReadFields(@in);
 				// version
@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public static TestVersionedWritable.SimpleVersionedWritable Read(DataInput @in)
+			public static TestVersionedWritable.SimpleVersionedWritable Read(BinaryReader @in)
 			{
 				TestVersionedWritable.SimpleVersionedWritable result = new TestVersionedWritable.SimpleVersionedWritable
 					();
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				base.ReadFields(@in);
 				shortTestString = @in.ReadUTF();

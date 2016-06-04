@@ -5,7 +5,7 @@ namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>
 	/// Thrown by
-	/// <see cref="VersionedWritable#readFields(DataInput)"/>
+	/// <see cref="VersionedWritable#readFields(BinaryReader)"/>
 	/// when the
 	/// version of an object being read does not match the current implementation
 	/// version as returned by

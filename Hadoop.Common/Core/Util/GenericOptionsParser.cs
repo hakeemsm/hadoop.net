@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Cli;
 using Org.Apache.Commons.Logging;
@@ -156,7 +157,7 @@ namespace Org.Apache.Hadoop.Util
 		/// Returns the commons-cli <code>CommandLine</code> object
 		/// to process the parsed arguments.
 		/// Note: If the object is created with
-		/// <see cref="GenericOptionsParser(Org.Apache.Hadoop.Conf.Configuration, string[])"/
+		/// <see cref="GenericOptionsParser(Configuration, string[])"/
 		/// 	>
 		/// , then returned
 		/// object will only contain parsed generic options.

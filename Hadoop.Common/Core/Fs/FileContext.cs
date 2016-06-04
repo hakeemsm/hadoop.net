@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop;
@@ -69,7 +70,7 @@ namespace Org.Apache.Hadoop.FS
 	/// </ul>
 	/// in general, are obtained from the default configuration file
 	/// in your environment,  (@see
-	/// <see cref="Org.Apache.Hadoop.Conf.Configuration"/>
+	/// <see cref="Configuration"/>
 	/// ).
 	/// No other configuration parameters are obtained from the default config as
 	/// far as the file context layer is concerned. All file system instances
@@ -464,7 +465,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <summary>Create a FileContext using the passed config.</summary>
 		/// <remarks>
 		/// Create a FileContext using the passed config. Generally it is better to use
-		/// <see cref="GetFileContext(Sharpen.URI, Org.Apache.Hadoop.Conf.Configuration)"/>
+		/// <see cref="GetFileContext(Sharpen.URI, Configuration)"/>
 		/// instead of this one.
 		/// </remarks>
 		/// <param name="aConf"/>

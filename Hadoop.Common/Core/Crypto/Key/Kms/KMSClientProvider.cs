@@ -6,6 +6,8 @@ using System.Net;
 using System.Text;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Codec.Binary;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;
@@ -925,7 +927,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			(string renewer, Credentials credentials)
 		{
 			Org.Apache.Hadoop.Security.Token.Token<object>[] tokens = null;
-			Org.Apache.Hadoop.IO.Text dtService = GetDelegationTokenService();
+			Text dtService = GetDelegationTokenService();
 			Org.Apache.Hadoop.Security.Token.Token<object> token = credentials.GetToken(dtService
 				);
 			if (token == null)
@@ -997,11 +999,11 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private Org.Apache.Hadoop.IO.Text GetDelegationTokenService()
+		private Text GetDelegationTokenService()
 		{
 			Uri url = new Uri(kmsUrl);
 			IPEndPoint addr = new IPEndPoint(url.GetHost(), url.Port);
-			Org.Apache.Hadoop.IO.Text dtService = SecurityUtil.BuildTokenService(addr);
+			Text dtService = SecurityUtil.BuildTokenService(addr);
 			return dtService;
 		}
 

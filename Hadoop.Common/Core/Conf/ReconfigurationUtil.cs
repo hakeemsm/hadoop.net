@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Hadoop.Common.Core.Conf;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.Conf

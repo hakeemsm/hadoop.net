@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Util;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Commons.Net.Util;

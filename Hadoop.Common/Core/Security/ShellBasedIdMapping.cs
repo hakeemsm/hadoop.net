@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
@@ -33,7 +34,7 @@ namespace Org.Apache.Hadoop.Security
 	/// do step 1.
 	/// Note: for testing purpose, step 1 may initial the maps with full mapping
 	/// when using constructor
-	/// <see cref="ShellBasedIdMapping(Org.Apache.Hadoop.Conf.Configuration, bool)"/>
+	/// <see cref="ShellBasedIdMapping(Configuration, bool)"/>
 	/// .
 	/// </summary>
 	public class ShellBasedIdMapping : IdMappingServiceProvider

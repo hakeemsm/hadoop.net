@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
@@ -12,7 +13,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.Security.Authorize
 {
 	/// <summary>Class representing a configured access control list.</summary>
-	public class AccessControlList : Writable
+	public class AccessControlList : IWritable
 	{
 		static AccessControlList()
 		{
@@ -27,7 +28,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			{
 			}
 
-			public Writable NewInstance()
+			public IWritable NewInstance()
 			{
 				return new Org.Apache.Hadoop.Security.Authorize.AccessControlList();
 			}
@@ -317,14 +318,14 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		public virtual void Write(DataOutput @out)
 		{
 			string aclString = GetAclString();
-			Org.Apache.Hadoop.IO.Text.WriteString(@out, aclString);
+			Text.WriteString(@out, aclString);
 		}
 
 		/// <summary>Deserializes the AccessControlList object</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
-			string aclString = Org.Apache.Hadoop.IO.Text.ReadString(@in);
+			string aclString = Text.ReadString(@in);
 			BuildACL(aclString.Split(" ", 2));
 		}
 

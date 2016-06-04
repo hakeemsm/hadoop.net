@@ -1,10 +1,10 @@
 using System;
 using System.IO;
 using System.Text;
-using Hadoop.Common.Core.IO;
-using Sharpen;
+using System.Threading;
+using Org.Apache.Hadoop.IO;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>This class stores text using standard UTF8 encoding.</summary>
 	/// <remarks>
@@ -19,14 +19,13 @@ namespace Org.Apache.Hadoop.IO
 	/// </remarks>
 	public class Text : BinaryComparable, WritableComparable<BinaryComparable>
 	{
+	    ThreadLocal<UTF8Encoding> _encoder = new ThreadLocal<UTF8Encoding>();
+        
 		private sealed class _ThreadLocal_57 : ThreadLocal<CharsetEncoder>
 		{
-			public _ThreadLocal_57()
+		    protected override Encoding InitialValue()
 			{
-			}
-
-			protected override CharsetEncoder InitialValue()
-			{
+                
 				return Sharpen.Extensions.GetEncoding("UTF-8").NewEncoder().OnMalformedInput(CodingErrorAction
 					.Report).OnUnmappableCharacter(CodingErrorAction.Report);
 			}
@@ -57,6 +56,8 @@ namespace Org.Apache.Hadoop.IO
 
 		public Text()
 		{
+            _encoder.Value = new UTF8Encoding().OnMalformedInput(CodingErrorAction
+                    .Report).OnUnmappableCharacter(CodingErrorAction.Report);
 			bytes = EmptyBytes;
 		}
 
@@ -67,7 +68,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Construct from another text.</summary>
-		public Text(Org.Apache.Hadoop.IO.Text utf8)
+		public Text(Text utf8)
 		{
 			Set(utf8);
 		}
@@ -87,6 +88,7 @@ namespace Org.Apache.Hadoop.IO
 		/// </remarks>
 		public virtual byte[] CopyBytes()
 		{
+              
 			byte[] result = new byte[length];
 			System.Array.Copy(bytes, 0, result, 0, length);
 			return result;
@@ -239,7 +241,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>copy a text.</summary>
-		public virtual void Set(Org.Apache.Hadoop.IO.Text other)
+		public virtual void Set(Text other)
 		{
 			Set(other.GetBytes(), 0, other.GetLength());
 		}
@@ -323,14 +325,14 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>deserialize</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			int newLength = WritableUtils.ReadVInt(@in);
 			ReadWithKnownLength(@in, newLength);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in, int maxLength)
+		public virtual void ReadFields(BinaryReader @in, int maxLength)
 		{
 			int newLength = WritableUtils.ReadVInt(@in);
 			if (newLength < 0)
@@ -351,7 +353,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>Skips over one Text in the input.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Skip(DataInput @in)
+		public static void Skip(BinaryReader @in)
 		{
 			int length = WritableUtils.ReadVInt(@in);
 			WritableUtils.SkipFully(@in, length);
@@ -364,7 +366,7 @@ namespace Org.Apache.Hadoop.IO
 		/// format.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadWithKnownLength(DataInput @in, int len)
+		public virtual void ReadWithKnownLength(BinaryReader @in, int len)
 		{
 			SetCapacity(len, false);
 			@in.ReadFully(bytes, 0, len);
@@ -376,7 +378,7 @@ namespace Org.Apache.Hadoop.IO
 		/// write this object to out
 		/// length uses zero-compressed encoding
 		/// </summary>
-		/// <seealso cref="Writable.Write(System.IO.DataOutput)"/>
+		/// <seealso cref="IWritable.Write(System.IO.DataOutput)"/>
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void Write(DataOutput @out)
 		{
@@ -399,7 +401,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>Returns true iff <code>o</code> is a Text with the same contents.</summary>
 		public override bool Equals(object o)
 		{
-			if (o is Org.Apache.Hadoop.IO.Text)
+			if (o is Text)
 			{
 				return base.Equals(o);
 			}
@@ -415,7 +417,7 @@ namespace Org.Apache.Hadoop.IO
 		public class Comparator : WritableComparator
 		{
 			public Comparator()
-				: base(typeof(Org.Apache.Hadoop.IO.Text))
+				: base(typeof(Text))
 			{
 			}
 
@@ -430,7 +432,7 @@ namespace Org.Apache.Hadoop.IO
 		static Text()
 		{
 			// register this comparator
-			WritableComparator.Define(typeof(Org.Apache.Hadoop.IO.Text), new Text.Comparator(
+			WritableComparator.Define(typeof(Text), new Text.Comparator(
 				));
 		}
 
@@ -548,14 +550,14 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>Read a UTF8 encoded string from in</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(DataInput @in)
+		public static string ReadString(BinaryReader @in)
 		{
 			return ReadString(@in, int.MaxValue);
 		}
 
 		/// <summary>Read a UTF8 encoded string with a maximum size</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(DataInput @in, int maxLength)
+		public static string ReadString(BinaryReader @in, int maxLength)
 		{
 			int length = WritableUtils.ReadVIntInRange(@in, 0, maxLength);
 			byte[] bytes = new byte[length];

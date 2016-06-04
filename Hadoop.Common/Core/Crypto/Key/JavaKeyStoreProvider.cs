@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;

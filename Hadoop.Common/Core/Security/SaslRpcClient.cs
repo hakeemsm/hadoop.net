@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using Com.Google.Common.Annotations;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Javax.Security.Auth.Callback;
 using Javax.Security.Auth.Kerberos;
 using Javax.Security.Sasl;

@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
 using Sharpen;
@@ -22,11 +24,11 @@ namespace Org.Apache.Hadoop.IO
 	/// </p>
 	/// <p>
 	/// Generic Writable implements
-	/// <see cref="Org.Apache.Hadoop.Conf.Configurable"/>
+	/// <see cref="Configurable"/>
 	/// interface, so that it will be
 	/// configured by the framework. The configuration is passed to the wrapped objects
 	/// implementing
-	/// <see cref="Org.Apache.Hadoop.Conf.Configurable"/>
+	/// <see cref="Configurable"/>
 	/// interface <i>before deserialization</i>.
 	/// </p>
 	/// how to use it: <br />
@@ -51,19 +53,19 @@ namespace Org.Apache.Hadoop.IO
 	/// </pre></blockquote>
 	/// </remarks>
 	/// <since>Nov 8, 2006</since>
-	public abstract class GenericWritable : Writable, Configurable
+	public abstract class GenericWritable : IWritable, Configurable
 	{
 		private const byte NotSet = unchecked((byte)(-1));
 
 		private byte type = NotSet;
 
-		private Writable instance;
+		private IWritable instance;
 
 		private Configuration conf = null;
 
 		/// <summary>Set the instance that is wrapped.</summary>
 		/// <param name="obj"/>
-		public virtual void Set(Writable obj)
+		public virtual void Set(IWritable obj)
 		{
 			instance = obj;
 			Type instanceClazz = instance.GetType();
@@ -82,7 +84,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Return the wrapped instance.</summary>
-		public virtual Writable Get()
+		public virtual IWritable Get()
 		{
 			return instance;
 		}
@@ -94,7 +96,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			type = @in.ReadByte();
 			Type clazz = GetTypes()[type & unchecked((int)(0xff))];

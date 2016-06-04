@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
 using Sharpen;
@@ -36,12 +38,12 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Create a new instance of a class with a defined factory.</summary>
-		public static Writable NewInstance(Type c, Configuration conf)
+		public static IWritable NewInstance(Type c, Configuration conf)
 		{
 			WritableFactory factory = Org.Apache.Hadoop.IO.WritableFactories.GetFactory(c);
 			if (factory != null)
 			{
-				Writable result = factory.NewInstance();
+				IWritable result = factory.NewInstance();
 				if (result is Configurable)
 				{
 					((Configurable)result).SetConf(conf);
@@ -55,7 +57,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Create a new instance of a class with a defined factory.</summary>
-		public static Writable NewInstance(Type c)
+		public static IWritable NewInstance(Type c)
 		{
 			return NewInstance(c, null);
 		}

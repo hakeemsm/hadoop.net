@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
 using Sharpen;
@@ -171,7 +173,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <p>The default implementation reads the data into two
 		/// <see cref="WritableComparable{T}"/>
 		/// s (using
-		/// <see cref="Writable.ReadFields(System.IO.DataInput)"/>
+		/// <see cref="IWritable.ReadFields(System.IO.BinaryReader)"/>
 		/// , then calls
 		/// <see cref="Compare(WritableComparable{T}, WritableComparable{T})"/>
 		/// .

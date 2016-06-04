@@ -1,6 +1,6 @@
-using Sharpen;
+using Org.Apache.Hadoop.Conf;
 
-namespace Org.Apache.Hadoop.Conf
+namespace Hadoop.Common.Core.Conf
 {
 	/// <summary>
 	/// Something that may be configured with a

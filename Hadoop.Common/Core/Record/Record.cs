@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Record
 
 		// inherit javadoc
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput din)
+		public virtual void ReadFields(BinaryReader din)
 		{
 			BinaryRecordInput rin = BinaryRecordInput.Get(din);
 			this.Deserialize(rin);

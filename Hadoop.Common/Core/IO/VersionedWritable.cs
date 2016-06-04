@@ -10,12 +10,12 @@ namespace Org.Apache.Hadoop.IO
 	/// <p>This is useful when a class may evolve, so that instances written by the
 	/// old version of the class may still be processed by the new version.  To
 	/// handle this situation,
-	/// <see cref="ReadFields(System.IO.DataInput)"/>
+	/// <see cref="ReadFields(System.IO.BinaryReader)"/>
 	/// implementations should catch
 	/// <see cref="VersionMismatchException"/>
 	/// .
 	/// </remarks>
-	public abstract class VersionedWritable : Writable
+	public abstract class VersionedWritable : IWritable
 	{
 		/// <summary>Return the version number of the current implementation.</summary>
 		public abstract byte GetVersion();
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.IO
 		// store version
 		// javadoc from Writable
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			byte version = @in.ReadByte();
 			// read version

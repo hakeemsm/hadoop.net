@@ -8,7 +8,9 @@ using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
 using Com.Google.Common.Util.Concurrent;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Javax.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
@@ -28,10 +30,10 @@ namespace Org.Apache.Hadoop.Ipc
 	/// <summary>A client for an IPC service.</summary>
 	/// <remarks>
 	/// A client for an IPC service.  IPC calls take a single
-	/// <see cref="Writable"/>
+	/// <see cref="IWritable"/>
 	/// as a
 	/// parameter, and return a
-	/// <see cref="Writable"/>
+	/// <see cref="IWritable"/>
 	/// as their value.  A service runs on
 	/// a port and is defined by a parameter class and a value class.
 	/// </remarks>
@@ -268,7 +270,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 		}
 
-		internal virtual Client.Call CreateCall(RPC.RpcKind rpcKind, Writable rpcRequest)
+		internal virtual Client.Call CreateCall(RPC.RpcKind rpcKind, IWritable rpcRequest)
 		{
 			return new Client.Call(rpcKind, rpcRequest);
 		}
@@ -280,9 +282,9 @@ namespace Org.Apache.Hadoop.Ipc
 
 			internal readonly int retry;
 
-			internal readonly Writable rpcRequest;
+			internal readonly IWritable rpcRequest;
 
-			internal Writable rpcResponse;
+			internal IWritable rpcResponse;
 
 			internal IOException error;
 
@@ -290,7 +292,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			internal bool done;
 
-			private Call(RPC.RpcKind rpcKind, Writable param)
+			private Call(RPC.RpcKind rpcKind, IWritable param)
 			{
 				// call id
 				// retry count
@@ -361,7 +363,7 @@ namespace Org.Apache.Hadoop.Ipc
 			/// Notify the caller the call is done.
 			/// </remarks>
 			/// <param name="rpcResponse">return value of the rpc call.</param>
-			public virtual void SetRpcResponse(Writable rpcResponse)
+			public virtual void SetRpcResponse(IWritable rpcResponse)
 			{
 				lock (this)
 				{
@@ -370,7 +372,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 			}
 
-			public virtual Writable GetRpcResponse()
+			public virtual IWritable GetRpcResponse()
 			{
 				lock (this)
 				{
@@ -1405,7 +1407,7 @@ namespace Org.Apache.Hadoop.Ipc
 					RpcHeaderProtos.RpcResponseHeaderProto.RpcStatusProto status = header.GetStatus();
 					if (status == RpcHeaderProtos.RpcResponseHeaderProto.RpcStatusProto.Success)
 					{
-						Writable value = ReflectionUtils.NewInstance(this._enclosing.valueClass, this._enclosing
+						IWritable value = ReflectionUtils.NewInstance(this._enclosing.valueClass, this._enclosing
 							.conf);
 						value.ReadFields(this.@in);
 						// read value
@@ -1546,7 +1548,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Construct an IPC client whose values are of the given
-		/// <see cref="Writable"/>
+		/// <see cref="IWritable"/>
 		/// class.
 		/// </summary>
 		public Client(Type valueClass, Configuration conf, SocketFactory factory)
@@ -1616,11 +1618,11 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as
-		/// <see cref="Call(RpcKind, Writable, ConnectionId)"/>
+		/// <see cref="Call(RpcKind, IWritable, ConnectionId)"/>
 		/// for RPC_BUILTIN
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(Writable param, IPEndPoint address)
+		public virtual IWritable Call(IWritable param, IPEndPoint address)
 		{
 			return Call(RPC.RpcKind.RpcBuiltin, param, address);
 		}
@@ -1637,7 +1639,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <exception cref="System.IO.IOException"/>
 		[System.ObsoleteAttribute(@"Use Call(RpcKind, Org.Apache.Hadoop.IO.Writable, ConnectionId) instead"
 			)]
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable param, IPEndPoint address
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable param, IPEndPoint address
 			)
 		{
 			return Call(rpcKind, param, address, null);
@@ -1658,7 +1660,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <exception cref="System.IO.IOException"/>
 		[System.ObsoleteAttribute(@"Use Call(RpcKind, Org.Apache.Hadoop.IO.Writable, ConnectionId) instead"
 			)]
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable param, IPEndPoint addr
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable param, IPEndPoint addr
 			, UserGroupInformation ticket)
 		{
 			Client.ConnectionId remoteId = Client.ConnectionId.GetConnectionId(addr, null, ticket
@@ -1683,7 +1685,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <exception cref="System.IO.IOException"/>
 		[System.ObsoleteAttribute(@"Use Call(RpcKind, Org.Apache.Hadoop.IO.Writable, ConnectionId) instead"
 			)]
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable param, IPEndPoint addr
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable param, IPEndPoint addr
 			, Type protocol, UserGroupInformation ticket, int rpcTimeout)
 		{
 			Client.ConnectionId remoteId = Client.ConnectionId.GetConnectionId(addr, protocol
@@ -1693,12 +1695,12 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as
-		/// <see cref="Call(RpcKind, Writable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="Call(RpcKind, IWritable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Configuration)
 		/// 	"/>
 		/// except that rpcKind is writable.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(Writable param, IPEndPoint addr, Type protocol, UserGroupInformation
+		public virtual IWritable Call(IWritable param, IPEndPoint addr, Type protocol, UserGroupInformation
 			 ticket, int rpcTimeout, Configuration conf)
 		{
 			Client.ConnectionId remoteId = Client.ConnectionId.GetConnectionId(addr, protocol
@@ -1708,12 +1710,12 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as
-		/// <see cref="Call(Writable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="Call(IWritable, System.Net.IPEndPoint, System.Type{T}, Org.Apache.Hadoop.Security.UserGroupInformation, int, Configuration)
 		/// 	"/>
 		/// except that specifying serviceClass.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(Writable param, IPEndPoint addr, Type protocol, UserGroupInformation
+		public virtual IWritable Call(IWritable param, IPEndPoint addr, Type protocol, UserGroupInformation
 			 ticket, int rpcTimeout, int serviceClass, Configuration conf)
 		{
 			Client.ConnectionId remoteId = Client.ConnectionId.GetConnectionId(addr, protocol
@@ -1737,7 +1739,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// code threw an exception.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable param, IPEndPoint addr
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable param, IPEndPoint addr
 			, Type protocol, UserGroupInformation ticket, int rpcTimeout, Configuration conf
 			)
 		{
@@ -1748,11 +1750,11 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Same as {link
-		/// <see cref="Call(RpcKind, Writable, ConnectionId)"/>
+		/// <see cref="Call(RpcKind, IWritable, ConnectionId)"/>
 		/// except the rpcKind is RPC_BUILTIN
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(Writable param, Client.ConnectionId remoteId)
+		public virtual IWritable Call(IWritable param, Client.ConnectionId remoteId)
 		{
 			return Call(RPC.RpcKind.RpcBuiltin, param, remoteId);
 		}
@@ -1770,7 +1772,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// threw an exception.
 		/// </returns>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable rpcRequest, Client.ConnectionId
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable rpcRequest, Client.ConnectionId
 			 remoteId)
 		{
 			return Call(rpcKind, rpcRequest, remoteId, RPC.RpcServiceClassDefault);
@@ -1793,7 +1795,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// threw an exception.
 		/// </returns>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable rpcRequest, Client.ConnectionId
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable rpcRequest, Client.ConnectionId
 			 remoteId, AtomicBoolean fallbackToSimpleAuth)
 		{
 			return Call(rpcKind, rpcRequest, remoteId, RPC.RpcServiceClassDefault, fallbackToSimpleAuth
@@ -1814,7 +1816,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// threw an exception.
 		/// </returns>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable rpcRequest, Client.ConnectionId
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable rpcRequest, Client.ConnectionId
 			 remoteId, int serviceClass)
 		{
 			return Call(rpcKind, rpcRequest, remoteId, serviceClass, null);
@@ -1838,7 +1840,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// threw an exception.
 		/// </returns>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual Writable Call(RPC.RpcKind rpcKind, Writable rpcRequest, Client.ConnectionId
+		public virtual IWritable Call(RPC.RpcKind rpcKind, IWritable rpcRequest, Client.ConnectionId
 			 remoteId, int serviceClass, AtomicBoolean fallbackToSimpleAuth)
 		{
 			Client.Call call = CreateCall(rpcKind, rpcRequest);

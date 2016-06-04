@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Hadoop.Common.Core.Conf;
 using Javax.Servlet;
 using Javax.Servlet.Http;
 using Org.Apache.Commons.Logging;

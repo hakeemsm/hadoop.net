@@ -9,7 +9,7 @@ using Sharpen;
 
 namespace Org.Apache.Hadoop.Ipc
 {
-	public class ProtocolSignature : Writable
+	public class ProtocolSignature : IWritable
 	{
 		static ProtocolSignature()
 		{
@@ -24,7 +24,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 			}
 
-			public Writable NewInstance()
+			public IWritable NewInstance()
 			{
 				return new Org.Apache.Hadoop.Ipc.ProtocolSignature();
 			}
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			version = @in.ReadLong();
 			bool hasMethods = @in.ReadBoolean();

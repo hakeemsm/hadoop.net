@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
@@ -774,7 +775,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public MetaIndex(DataInput @in)
+			public MetaIndex(BinaryReader @in)
 			{
 				// for read, construct the map from the file
 				int count = Utils.ReadVInt(@in);
@@ -819,7 +820,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			private readonly BCFile.BlockRegion region;
 
 			/// <exception cref="System.IO.IOException"/>
-			public MetaIndexEntry(DataInput @in)
+			public MetaIndexEntry(BinaryReader @in)
 			{
 				string fullMetaName = Utils.ReadString(@in);
 				if (fullMetaName.StartsWith(defaultPrefix))
@@ -878,7 +879,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			private readonly AList<BCFile.BlockRegion> listRegions;
 
 			/// <exception cref="System.IO.IOException"/>
-			public DataIndex(DataInput @in)
+			public DataIndex(BinaryReader @in)
 			{
 				// for data blocks, each entry specifies a block's offset, compressed size
 				// and raw size
@@ -944,7 +945,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 			// ... total of 16 bytes
 			/// <exception cref="System.IO.IOException"/>
-			public static void ReadAndVerify(DataInput @in)
+			public static void ReadAndVerify(BinaryReader @in)
 			{
 				byte[] abMagic = new byte[Size()];
 				@in.ReadFully(abMagic);
@@ -978,7 +979,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			private readonly long rawSize;
 
 			/// <exception cref="System.IO.IOException"/>
-			public BlockRegion(DataInput @in)
+			public BlockRegion(BinaryReader @in)
 			{
 				offset = Utils.ReadVLong(@in);
 				compressedSize = Utils.ReadVLong(@in);

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
@@ -18,7 +19,7 @@ namespace Org.Apache.Hadoop.IO
 	/// and provides very much the same
 	/// functionality. However, it uses dynamic Bloom filters to provide
 	/// quick membership test for keys, and it offers a fast version of
-	/// <see cref="Reader.Get(WritableComparable{T}, Writable)"/>
+	/// <see cref="Reader.Get(WritableComparable{T}, IWritable)"/>
 	/// operation, especially in
 	/// case of sparsely populated MapFile-s.
 	/// </summary>
@@ -173,7 +174,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Append(WritableComparable key, Writable val)
+			public override void Append(WritableComparable key, IWritable val)
 			{
 				lock (this)
 				{
@@ -292,14 +293,14 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>
 			/// Fast version of the
-			/// <see cref="Reader.Get(WritableComparable{T}, Writable)"/>
+			/// <see cref="Reader.Get(WritableComparable{T}, IWritable)"/>
 			/// method. First
 			/// it checks the Bloom filter for the existence of the key, and only if
 			/// present it performs the real get operation. This yields significant
 			/// performance improvements for get operations on sparsely populated files.
 			/// </summary>
 			/// <exception cref="System.IO.IOException"/>
-			public override Writable Get(WritableComparable key, Writable val)
+			public override IWritable Get(WritableComparable key, IWritable val)
 			{
 				lock (this)
 				{

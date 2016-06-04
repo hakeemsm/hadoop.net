@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Apache.NMS.Util;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 
@@ -24,7 +25,7 @@ namespace Hadoop.Common.Core.IO
     /// in any specific map instance.
     /// </remarks>
     
-    public abstract class AbstractMapWritable : Writable, Configurable
+    public abstract class AbstractMapWritable : IWritable, Configurable
 	{
 		private AtomicReference<Configuration> conf;
 
@@ -106,7 +107,7 @@ namespace Hadoop.Common.Core.IO
 		}
 
 		/// <summary>Used by child copy constructors.</summary>
-		protected internal virtual void Copy(Writable other)
+		protected internal virtual void Copy(IWritable other)
 		{
 			lock (this)
 			{
@@ -114,9 +115,12 @@ namespace Hadoop.Common.Core.IO
 				{
 					try
 					{
-						DataOutputBuffer outputBuffer = new DataOutputBuffer();
-						other.Write(outputBuffer);
-						DataInputBuffer inputBuffer = new DataInputBuffer();
+					    var memoryStream = new MemoryStream();
+					    var binaryWriter = new BinaryWriter(memoryStream);
+					    DataOutputBuffer outputBuffer = new DataOutputBuffer();
+						other.Write(binaryWriter);
+                        
+                        DataInputBuffer inputBuffer = new DataInputBuffer();
 						inputBuffer.Reset(outputBuffer.GetData(), outputBuffer.GetLength());
 						ReadFields(inputBuffer);
 					}
@@ -182,7 +186,7 @@ namespace Hadoop.Common.Core.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			// Get the number of "unknown" classes
 			_newClasses = @in.ReadByte();

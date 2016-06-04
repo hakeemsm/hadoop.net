@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(DataInput @in)
+		public override void ReadFields(BinaryReader @in)
 		{
 			base.ReadFields(@in);
 			bits = new BitSet(this.vectorSize);

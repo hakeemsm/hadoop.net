@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.Record
 		)]
 	public class BinaryRecordInput : RecordInput
 	{
-		private DataInput @in;
+		private BinaryReader @in;
 
 		private class BinaryIndex : Index
 		{
@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.Record
 		{
 		}
 
-		private void SetDataInput(DataInput inp)
+		private void SetDataInput(BinaryReader inp)
 		{
 			this.@in = inp;
 		}
@@ -55,10 +55,10 @@ namespace Org.Apache.Hadoop.Record
 
 		private static ThreadLocal bIn = new _ThreadLocal_60();
 
-		/// <summary>Get a thread-local record input for the supplied DataInput.</summary>
+		/// <summary>Get a thread-local record input for the supplied BinaryReader.</summary>
 		/// <param name="inp">data input stream</param>
-		/// <returns>binary record input corresponding to the supplied DataInput.</returns>
-		public static BinaryRecordInput Get(DataInput inp)
+		/// <returns>binary record input corresponding to the supplied BinaryReader.</returns>
+		public static BinaryRecordInput Get(BinaryReader inp)
 		{
 			BinaryRecordInput bin = (BinaryRecordInput)bIn.Get();
 			bin.SetDataInput(inp);
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Record
 		}
 
 		/// <summary>Creates a new instance of BinaryRecordInput</summary>
-		public BinaryRecordInput(DataInput din)
+		public BinaryRecordInput(BinaryReader din)
 		{
 			this.@in = din;
 		}

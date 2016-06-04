@@ -8,6 +8,8 @@ using System.Threading;
 using Com.Google.Common.Base;
 using Com.Google.Common.Collect;
 using Com.Sun.Jersey.Spi.Container.Servlet;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Util;
 using Javax.Servlet;
 using Javax.Servlet.Http;
 using Org.Apache.Commons.Logging;

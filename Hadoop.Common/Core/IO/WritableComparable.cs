@@ -5,7 +5,7 @@ namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>
 	/// A
-	/// <see cref="Writable"/>
+	/// <see cref="IWritable"/>
 	/// which is also
 	/// <see cref="System.IComparable{T}"/>
 	/// .
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.IO
 	/// out.writeInt(counter);
 	/// out.writeLong(timestamp);
 	/// }
-	/// public void readFields(DataInput in) throws IOException {
+	/// public void readFields(BinaryReader in) throws IOException {
 	/// counter = in.readInt();
 	/// timestamp = in.readLong();
 	/// }
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.IO
 	/// }
 	/// </pre></blockquote></p>
 	/// </summary>
-	public interface WritableComparable<T> : Writable, Comparable<T>
+	public interface WritableComparable<T> : IWritable, Comparable<T>
 	{
 	}
 }

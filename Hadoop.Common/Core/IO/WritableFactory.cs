@@ -8,6 +8,6 @@ namespace Org.Apache.Hadoop.IO
 	public interface WritableFactory
 	{
 		/// <summary>Return a new instance.</summary>
-		Writable NewInstance();
+		IWritable NewInstance();
 	}
 }

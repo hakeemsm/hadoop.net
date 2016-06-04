@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.Conf;
 using Sharpen;
 
 namespace Org.Apache.Hadoop.HA
@@ -23,7 +24,7 @@ namespace Org.Apache.Hadoop.HA
 	/// for more information.
 	/// <p>
 	/// If an implementation also implements
-	/// <see cref="Org.Apache.Hadoop.Conf.Configurable"/>
+	/// <see cref="Configurable"/>
 	/// then its
 	/// <code>setConf</code> method will be called upon instantiation.
 	/// </remarks>

@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Crypto;
 using Org.Apache.Hadoop.IO.Compress;

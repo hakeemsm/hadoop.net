@@ -23,7 +23,7 @@ namespace Org.Apache.Hadoop.IO
 	/// }
 	/// </pre>
 	/// </summary>
-	public class DataOutputBuffer : DataOutputStream
+	public class DataOutputBuffer : MemoryStream
 	{
 		private class Buffer : ByteArrayOutputStream
 		{
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataInput @in, int len)
+			public virtual void Write(BinaryReader @in, int len)
 			{
 				int newcount = count + len;
 				if (newcount > buf.Length)
@@ -118,9 +118,9 @@ namespace Org.Apache.Hadoop.IO
 			return this;
 		}
 
-		/// <summary>Writes bytes from a DataInput directly into the buffer.</summary>
+		/// <summary>Writes bytes from a BinaryReader directly into the buffer.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataInput @in, int length)
+		public virtual void Write(BinaryReader @in, int length)
 		{
 			buffer.Write(@in, length);
 		}

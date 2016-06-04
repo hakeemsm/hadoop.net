@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.IO;
 using Javax.Security.Auth;
 using Javax.Security.Auth.Callback;
 using Javax.Security.Auth.Kerberos;

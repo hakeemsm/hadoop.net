@@ -4,28 +4,17 @@ using System.IO;
 using System.Net;
 using System.Security;
 using System.Text;
-using Com.Google.Common.Annotations;
-using Com.Google.Common.Base;
 using Hadoop.Common.Core.Fs;
 using Hadoop.Common.Core.IO;
-using Javax.Xml.Parsers;
-using Javax.Xml.Transform;
-using Javax.Xml.Transform.Dom;
-using Javax.Xml.Transform.Stream;
-using Org.Apache.Commons.Collections.Map;
-using Org.Apache.Commons.Logging;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security.Alias;
 using Org.Apache.Hadoop.Util;
-using Org.Codehaus.Jackson;
-using Org.W3c.Dom;
-using Org.Xml.Sax;
-using Sharpen;
 
-namespace Org.Apache.Hadoop.Conf
+namespace Hadoop.Common.Core.Conf
 {
 	/// <summary>Provides access to configuration parameters.</summary>
 	/// <remarks>
@@ -93,12 +82,12 @@ namespace Org.Apache.Hadoop.Conf
 	/// <tt>log4j.logger.org.apache.hadoop.conf.Configuration.deprecation</tt> in
 	/// log4j.properties file.
 	/// </remarks>
-	public class Configuration : IEnumerable<KeyValuePair<string, string>>, Writable
+	public class Configuration : IEnumerable<KeyValuePair<string, string>>, IWritable
 	{
-		private static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.Conf.Configuration
+		private static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog(typeof(Configuration
 			));
 
-		private static readonly Log LogDeprecation = LogFactory.GetLog("org.apache.hadoop.conf.Configuration.deprecation"
+		private static readonly Org.Apache.Hadoop.Log LogDeprecation = LogFactory.GetLog("org.apache.hadoop.conf.Configuration.deprecation"
 			);
 
 		private bool quietmode = true;
@@ -431,7 +420,7 @@ namespace Org.Apache.Hadoop.Conf
 		/// <param name="key"/>
 		/// <param name="newKeys"/>
 		/// <param name="customMessage"/>
-		[System.ObsoleteAttribute(@"use AddDeprecation(string, string, string) instead")]
+		[Obsolete(@"use AddDeprecation(string, string, string) instead")]
 		public static void AddDeprecation(string key, string[] newKeys, string customMessage
 			)
 		{
@@ -477,7 +466,7 @@ namespace Org.Apache.Hadoop.Conf
 		/// </remarks>
 		/// <param name="key">Key that is to be deprecated</param>
 		/// <param name="newKeys">list of keys that take up the values of deprecated key</param>
-		[System.ObsoleteAttribute(@"use AddDeprecation(string, string) instead")]
+		[Obsolete(@"use AddDeprecation(string, string) instead")]
 		public static void AddDeprecation(string key, string[] newKeys)
 		{
 			AddDeprecation(key, newKeys, null);
@@ -3375,14 +3364,14 @@ match_loop_break: ;
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			Clear();
 			int size = WritableUtils.ReadVInt(@in);
 			for (int i = 0; i < size; ++i)
 			{
-				string key = Org.Apache.Hadoop.IO.Text.ReadString(@in);
-				string value = Org.Apache.Hadoop.IO.Text.ReadString(@in);
+				string key = Text.ReadString(@in);
+				string value = Text.ReadString(@in);
 				Set(key, value);
 				string[] sources = WritableUtils.ReadCompressedStringArray(@in);
 				if (sources != null)
@@ -3400,8 +3389,8 @@ match_loop_break: ;
 			WritableUtils.WriteVInt(@out, props.Count);
 			foreach (KeyValuePair<object, object> item in props)
 			{
-				Org.Apache.Hadoop.IO.Text.WriteString(@out, (string)item.Key);
-				Org.Apache.Hadoop.IO.Text.WriteString(@out, (string)item.Value);
+				Text.WriteString(@out, (string)item.Key);
+				Text.WriteString(@out, (string)item.Value);
 				WritableUtils.WriteCompressedStringArray(@out, updatingResource[item.Key]);
 			}
 		}

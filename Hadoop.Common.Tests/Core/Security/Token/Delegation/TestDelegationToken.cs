@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				base.ReadFields(@in);
 			}

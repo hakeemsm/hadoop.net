@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 	/// </remarks>
 	/// <seealso cref="Key">The general behavior of a key</seealso>
 	/// <seealso cref="HashFunction">A hash function</seealso>
-	public abstract class Filter : Writable
+	public abstract class Filter : IWritable
 	{
 		private const int Version = -1;
 
@@ -163,7 +163,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			int ver = @in.ReadInt();
 			if (ver > 0)

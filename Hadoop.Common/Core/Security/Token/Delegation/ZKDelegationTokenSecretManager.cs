@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Conf;
 using Javax.Security.Auth.Login;
 using Org.Apache.Curator.Ensemble.Fixed;
 using Org.Apache.Curator.Framework;

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
@@ -11,7 +12,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.FS.Permission
 {
 	/// <summary>A class for file/directory permissions.</summary>
-	public class FsPermission : Writable
+	public class FsPermission : IWritable
 	{
 		private static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.FS.Permission.FsPermission
 			));
@@ -22,7 +23,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			{
 			}
 
-			public Writable NewInstance()
+			public IWritable NewInstance()
 			{
 				return new Org.Apache.Hadoop.FS.Permission.FsPermission();
 			}
@@ -161,7 +162,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			FromShort(@in.ReadShort());
 		}
@@ -170,11 +171,11 @@ namespace Org.Apache.Hadoop.FS.Permission
 		/// Create and initialize a
 		/// <see cref="FsPermission"/>
 		/// from
-		/// <see cref="System.IO.DataInput"/>
+		/// <see cref="System.IO.BinaryReader"/>
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.Permission.FsPermission Read(DataInput @in)
+		public static Org.Apache.Hadoop.FS.Permission.FsPermission Read(BinaryReader @in)
 		{
 			Org.Apache.Hadoop.FS.Permission.FsPermission p = new Org.Apache.Hadoop.FS.Permission.FsPermission
 				();
@@ -425,7 +426,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				throw new NotSupportedException();
 			}

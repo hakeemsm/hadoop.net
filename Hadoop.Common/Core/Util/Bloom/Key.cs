@@ -118,7 +118,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			this.bytes = new byte[@in.ReadInt()];
 			@in.ReadFully(this.bytes);

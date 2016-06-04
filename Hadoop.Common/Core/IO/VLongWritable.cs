@@ -8,7 +8,7 @@ namespace Org.Apache.Hadoop.IO
 	/// A WritableComparable for longs in a variable-length format. Such values take
 	/// between one and five bytes.  Smaller values take fewer bytes.
 	/// </remarks>
-	/// <seealso cref="WritableUtils.ReadVLong(System.IO.DataInput)"/>
+	/// <seealso cref="WritableUtils.ReadVLong(System.IO.BinaryReader)"/>
 	public class VLongWritable : WritableComparable<Org.Apache.Hadoop.IO.VLongWritable
 		>
 	{
@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			value = WritableUtils.ReadVLong(@in);
 		}

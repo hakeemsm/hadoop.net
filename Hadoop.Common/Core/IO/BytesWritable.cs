@@ -166,7 +166,7 @@ namespace Hadoop.Common.Core.IO
 
 		// inherit javadoc
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			SetSize(0);
 			// clear the old data

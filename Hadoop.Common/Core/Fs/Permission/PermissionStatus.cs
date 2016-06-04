@@ -7,7 +7,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.FS.Permission
 {
 	/// <summary>Store permission related information.</summary>
-	public class PermissionStatus : Writable
+	public class PermissionStatus : IWritable
 	{
 		private sealed class _WritableFactory_34 : WritableFactory
 		{
@@ -15,7 +15,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			{
 			}
 
-			public Writable NewInstance()
+			public IWritable NewInstance()
 			{
 				return new Org.Apache.Hadoop.FS.Permission.PermissionStatus();
 			}
@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(DataInput @in)
+			public override void ReadFields(BinaryReader @in)
 			{
 				throw new NotSupportedException();
 			}
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			username = Text.ReadString(@in, Text.DefaultMaxLen);
 			groupname = Text.ReadString(@in, Text.DefaultMaxLen);
@@ -125,11 +125,11 @@ namespace Org.Apache.Hadoop.FS.Permission
 		/// Create and initialize a
 		/// <see cref="PermissionStatus"/>
 		/// from
-		/// <see cref="System.IO.DataInput"/>
+		/// <see cref="System.IO.BinaryReader"/>
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.Permission.PermissionStatus Read(DataInput @in
+		public static Org.Apache.Hadoop.FS.Permission.PermissionStatus Read(BinaryReader @in
 			)
 		{
 			Org.Apache.Hadoop.FS.Permission.PermissionStatus p = new Org.Apache.Hadoop.FS.Permission.PermissionStatus

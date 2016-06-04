@@ -16,6 +16,7 @@
 * limitations under the License.
 */
 using System;
+using Hadoop.Common.Core.Conf;
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;

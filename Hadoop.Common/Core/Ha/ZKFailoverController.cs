@@ -5,6 +5,7 @@ using System.Net;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
 using Com.Google.Common.Util.Concurrent;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop;
 using Org.Apache.Hadoop.Conf;

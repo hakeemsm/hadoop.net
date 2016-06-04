@@ -9,7 +9,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.FS
 {
 	/// <summary>Store the summary of a content (a directory or a file).</summary>
-	public class ContentSummary : Writable
+	public class ContentSummary : IWritable
 	{
 		private long length;
 
@@ -276,7 +276,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		[InterfaceAudience.Private]
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			this.length = @in.ReadLong();
 			this.fileCount = @in.ReadLong();

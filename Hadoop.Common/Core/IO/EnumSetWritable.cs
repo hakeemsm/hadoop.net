@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Sharpen;
@@ -8,7 +9,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A Writable wrapper for EnumSet.</summary>
-	public class EnumSetWritable<E> : AbstractCollection<E>, Writable, Configurable
+	public class EnumSetWritable<E> : AbstractCollection<E>, IWritable, Configurable
 		where E : Enum<E>
 	{
 		private EnumSet<E> value;
@@ -114,7 +115,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			int length = @in.ReadInt();
 			if (length == -1)
@@ -249,7 +250,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 			}
 
-			public Writable NewInstance()
+			public IWritable NewInstance()
 			{
 				return new Org.Apache.Hadoop.IO.EnumSetWritable();
 			}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
@@ -16,7 +17,7 @@ namespace Org.Apache.Hadoop.IO
 	/// A polymorphic Writable that writes an instance with it's class name.
 	/// Handles arrays, strings and primitive types without a Writable wrapper.
 	/// </remarks>
-	public class ObjectWritable : Writable, Configurable
+	public class ObjectWritable : IWritable, Configurable
 	{
 		private Type declaredClass;
 
@@ -64,7 +65,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			ReadObject(@in, this, this.conf);
 		}
@@ -91,7 +92,7 @@ namespace Org.Apache.Hadoop.IO
 			PrimitiveNames["void"] = typeof(void);
 		}
 
-		private class NullInstance : Configured, Writable
+		private class NullInstance : Configured, IWritable
 		{
 			private Type declaredClass;
 
@@ -107,7 +108,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				string className = UTF8.ReadString(@in);
 				declaredClass = PrimitiveNames[className];
@@ -133,7 +134,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Write a
-		/// <see cref="Writable"/>
+		/// <see cref="IWritable"/>
 		/// ,
 		/// <see cref="string"/>
 		/// , primitive type, or an array of
@@ -148,7 +149,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Write a
-		/// <see cref="Writable"/>
+		/// <see cref="IWritable"/>
 		/// ,
 		/// <see cref="string"/>
 		/// , primitive type, or an array of
@@ -169,7 +170,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 				// null
 				instance = new ObjectWritable.NullInstance(declaredClass, conf);
-				declaredClass = typeof(Writable);
+				declaredClass = typeof(IWritable);
 			}
 			// Special case: must come before writing out the declaredClass.
 			// If this is an eligible array of primitives,
@@ -293,11 +294,11 @@ namespace Org.Apache.Hadoop.IO
 							}
 							else
 							{
-								if (typeof(Writable).IsAssignableFrom(declaredClass))
+								if (typeof(IWritable).IsAssignableFrom(declaredClass))
 								{
 									// Writable
 									UTF8.WriteString(@out, instance.GetType().FullName);
-									((Writable)instance).Write(@out);
+									((IWritable)instance).Write(@out);
 								}
 								else
 								{
@@ -320,28 +321,28 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>
 		/// Read a
-		/// <see cref="Writable"/>
+		/// <see cref="IWritable"/>
 		/// ,
 		/// <see cref="string"/>
 		/// , primitive type, or an array of
 		/// the preceding.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static object ReadObject(DataInput @in, Configuration conf)
+		public static object ReadObject(BinaryReader @in, Configuration conf)
 		{
 			return ReadObject(@in, null, conf);
 		}
 
 		/// <summary>
 		/// Read a
-		/// <see cref="Writable"/>
+		/// <see cref="IWritable"/>
 		/// ,
 		/// <see cref="string"/>
 		/// , primitive type, or an array of
 		/// the preceding.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static object ReadObject(DataInput @in, ObjectWritable objectWritable, Configuration
+		public static object ReadObject(BinaryReader @in, ObjectWritable objectWritable, Configuration
 			 conf)
 		{
 			string className = UTF8.ReadString(@in);
@@ -477,7 +478,7 @@ namespace Org.Apache.Hadoop.IO
 									Type instanceClass = null;
 									string str = UTF8.ReadString(@in);
 									instanceClass = LoadClass(conf, str);
-									Writable writable = WritableFactories.NewInstance(instanceClass, conf);
+									IWritable writable = WritableFactories.NewInstance(instanceClass, conf);
 									writable.ReadFields(@in);
 									instance = writable;
 									if (instanceClass == typeof(ObjectWritable.NullInstance))
@@ -509,7 +510,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="dataIn">the input stream to read from</param>
 		/// <returns>the instantiated Message instance</returns>
 		/// <exception cref="System.IO.IOException">if an IO problem occurs</exception>
-		private static Message TryInstantiateProtobuf(Type protoClass, DataInput dataIn)
+		private static Message TryInstantiateProtobuf(Type protoClass, BinaryReader dataIn)
 		{
 			try
 			{
@@ -524,7 +525,7 @@ namespace Org.Apache.Hadoop.IO
 				else
 				{
 					// Have to read it into a buffer first, since protobuf doesn't deal
-					// with the DataInput interface directly.
+					// with the BinaryReader interface directly.
 					// Read the size delimiter that writeDelimitedTo writes
 					int size = ProtoUtil.ReadRawVarint32(dataIn);
 					if (size < 0)

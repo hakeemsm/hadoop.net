@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
 using Sharpen;
@@ -10,7 +12,7 @@ namespace Org.Apache.Hadoop.IO
 	public sealed class WritableUtils
 	{
 		/// <exception cref="System.IO.IOException"/>
-		public static byte[] ReadCompressedByteArray(DataInput @in)
+		public static byte[] ReadCompressedByteArray(BinaryReader @in)
 		{
 			int length = @in.ReadInt();
 			if (length == -1)
@@ -36,7 +38,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static void SkipCompressedByteArray(DataInput @in)
+		public static void SkipCompressedByteArray(BinaryReader @in)
 		{
 			int length = @in.ReadInt();
 			if (length != -1)
@@ -78,7 +80,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/* Ugly utility, maybe someone else can do this better  */
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadCompressedString(DataInput @in)
+		public static string ReadCompressedString(BinaryReader @in)
 		{
 			byte[] bytes = ReadCompressedByteArray(@in);
 			if (bytes == null)
@@ -125,7 +127,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(DataInput @in)
+		public static string ReadString(BinaryReader @in)
 		{
 			int length = @in.ReadInt();
 			if (length == -1)
@@ -180,7 +182,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static string[] ReadStringArray(DataInput @in)
+		public static string[] ReadStringArray(BinaryReader @in)
 		{
 			int len = @in.ReadInt();
 			if (len == -1)
@@ -201,7 +203,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static string[] ReadCompressedStringArray(DataInput @in)
+		public static string[] ReadCompressedStringArray(BinaryReader @in)
 		{
 			int len = @in.ReadInt();
 			if (len == -1)
@@ -247,7 +249,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="orig">The object to copy</param>
 		/// <returns>The copied object</returns>
 		public static T Clone<T>(T orig, Configuration conf)
-			where T : Writable
+			where T : IWritable
 		{
 			try
 			{
@@ -267,7 +269,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="src">the object to copy into, which is destroyed</param>
 		/// <exception cref="System.IO.IOException"/>
 		[System.ObsoleteAttribute(@"use ReflectionUtils.cloneInto instead.")]
-		public static void CloneInto(Writable dst, Writable src)
+		public static void CloneInto(IWritable dst, IWritable src)
 		{
 			ReflectionUtils.CloneWritableInto(dst, src);
 		}
@@ -341,7 +343,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="stream">Binary input stream</param>
 		/// <exception cref="System.IO.IOException"></exception>
 		/// <returns>deserialized long from stream.</returns>
-		public static long ReadVLong(DataInput stream)
+		public static long ReadVLong(BinaryReader stream)
 		{
 			byte firstByte = stream.ReadByte();
 			int len = DecodeVIntSize(firstByte);
@@ -364,7 +366,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="stream">Binary input stream</param>
 		/// <exception cref="System.IO.IOException"></exception>
 		/// <returns>deserialized integer from stream.</returns>
-		public static int ReadVInt(DataInput stream)
+		public static int ReadVInt(BinaryReader stream)
 		{
 			long n = ReadVLong(stream);
 			if ((n > int.MaxValue) || (n < int.MinValue))
@@ -383,7 +385,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="stream">Binary input stream</param>
 		/// <exception cref="System.IO.IOException"/>
 		/// <returns>deserialized integer from stream</returns>
-		public static int ReadVIntInRange(DataInput stream, int lower, int upper)
+		public static int ReadVIntInRange(BinaryReader stream, int lower, int upper)
 		{
 			long n = ReadVLong(stream);
 			if (n < lower)
@@ -454,15 +456,15 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>
-		/// Read an Enum value from DataInput, Enums are read and written
+		/// Read an Enum value from BinaryReader, Enums are read and written
 		/// using String values.
 		/// </summary>
 		/// <?/>
-		/// <param name="in">DataInput to read from</param>
+		/// <param name="in">BinaryReader to read from</param>
 		/// <param name="enumType">Class type of Enum</param>
-		/// <returns>Enum represented by String read from DataInput</returns>
+		/// <returns>Enum represented by String read from BinaryReader</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static T ReadEnum<T>(DataInput @in)
+		public static T ReadEnum<T>(BinaryReader @in)
 			where T : Enum<T>
 		{
 			System.Type enumType = typeof(T);
@@ -483,7 +485,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="in">input stream</param>
 		/// <param name="len">number of bytes to skip</param>
 		/// <exception cref="System.IO.IOException">when skipped less number of bytes</exception>
-		public static void SkipFully(DataInput @in, int len)
+		public static void SkipFully(BinaryReader @in, int len)
 		{
 			int total = 0;
 			int cur = 0;
@@ -499,12 +501,12 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Convert writables to a byte array</summary>
-		public static byte[] ToByteArray(params Writable[] writables)
+		public static byte[] ToByteArray(params IWritable[] writables)
 		{
 			DataOutputBuffer @out = new DataOutputBuffer();
 			try
 			{
-				foreach (Writable w in writables)
+				foreach (IWritable w in writables)
 				{
 					w.Write(@out);
 				}
@@ -525,12 +527,12 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="in">the stream to read from</param>
 		/// <param name="maxLength">the largest acceptable length of the encoded string</param>
 		/// <returns>the bytes as a string</returns>
-		/// <exception cref="System.IO.IOException">if reading from the DataInput fails</exception>
+		/// <exception cref="System.IO.IOException">if reading from the BinaryReader fails</exception>
 		/// <exception cref="System.ArgumentException">
 		/// if the encoded byte size for string
 		/// is negative or larger than maxSize. Only the vint is read.
 		/// </exception>
-		public static string ReadStringSafely(DataInput @in, int maxLength)
+		public static string ReadStringSafely(BinaryReader @in, int maxLength)
 		{
 			int length = ReadVInt(@in);
 			if (length < 0 || length > maxLength)

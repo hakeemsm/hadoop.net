@@ -21,11 +21,11 @@ namespace Org.Apache.Hadoop.IO
 	/// }
 	/// </code>
 	/// </remarks>
-	public class ArrayWritable : Writable
+	public class ArrayWritable : IWritable
 	{
 		private Type valueClass;
 
-		private Writable[] values;
+		private IWritable[] values;
 
 		public ArrayWritable(Type valueClass)
 		{
@@ -36,14 +36,14 @@ namespace Org.Apache.Hadoop.IO
 			this.valueClass = valueClass;
 		}
 
-		public ArrayWritable(Type valueClass, Writable[] values)
+		public ArrayWritable(Type valueClass, IWritable[] values)
 			: this(valueClass)
 		{
 			this.values = values;
 		}
 
 		public ArrayWritable(string[] strings)
-			: this(typeof(UTF8), new Writable[strings.Length])
+			: this(typeof(UTF8), new IWritable[strings.Length])
 		{
 			for (int i = 0; i < strings.Length; i++)
 			{
@@ -76,24 +76,24 @@ namespace Org.Apache.Hadoop.IO
 			return result;
 		}
 
-		public virtual void Set(Writable[] values)
+		public virtual void Set(IWritable[] values)
 		{
 			this.values = values;
 		}
 
-		public virtual Writable[] Get()
+		public virtual IWritable[] Get()
 		{
 			return values;
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
-			values = new Writable[@in.ReadInt()];
+			values = new IWritable[@in.ReadInt()];
 			// construct values
 			for (int i = 0; i < values.Length; i++)
 			{
-				Writable value = WritableFactories.NewInstance(valueClass);
+				IWritable value = WritableFactories.NewInstance(valueClass);
 				value.ReadFields(@in);
 				// read a value
 				values[i] = value;

@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Util;

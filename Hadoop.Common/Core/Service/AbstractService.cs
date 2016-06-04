@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Sharpen;
@@ -102,11 +103,11 @@ namespace Org.Apache.Hadoop.Service
 		/// <remarks>
 		/// Set the configuration for this service.
 		/// This method is called during
-		/// <see cref="Init(Org.Apache.Hadoop.Conf.Configuration)"/>
+		/// <see cref="Init(Configuration)"/>
 		/// and should only be needed if for some reason a service implementation
 		/// needs to override that initial setting -for example replacing
 		/// it with a new subclass of
-		/// <see cref="Org.Apache.Hadoop.Conf.Configuration"/>
+		/// <see cref="Configuration"/>
 		/// </remarks>
 		/// <param name="conf">new configuration.</param>
 		protected internal virtual void SetConfig(Configuration conf)
@@ -117,7 +118,7 @@ namespace Org.Apache.Hadoop.Service
 		/// <summary>
 		/// <inheritDoc/>
 		/// This invokes
-		/// <see cref="ServiceInit(Org.Apache.Hadoop.Conf.Configuration)"/>
+		/// <see cref="ServiceInit(Configuration)"/>
 		/// </summary>
 		/// <param name="conf">the configuration of the service. This must not be null</param>
 		/// <exception cref="ServiceStateException">
@@ -322,7 +323,7 @@ namespace Org.Apache.Hadoop.Service
 		/// a specific service instance.
 		/// Implementations do not need to be synchronized as the logic
 		/// in
-		/// <see cref="Init(Org.Apache.Hadoop.Conf.Configuration)"/>
+		/// <see cref="Init(Configuration)"/>
 		/// prevents re-entrancy.
 		/// The base implementation checks to see if the subclass has created
 		/// a new configuration instance, and if so, updates the base class value

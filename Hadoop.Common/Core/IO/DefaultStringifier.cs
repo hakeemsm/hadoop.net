@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Codec.Binary;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;

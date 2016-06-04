@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.FS
 				fs.Write(@out);
 			}
 			Log.Info("Creating ByteArrayInputStream object");
-			DataInput @in = new DataInputStream(new ByteArrayInputStream(baos.ToByteArray()));
+			BinaryReader @in = new DataInputStream(new ByteArrayInputStream(baos.ToByteArray()));
 			Log.Info("Testing if read objects are equal to written ones");
 			FileStatus dest = new FileStatus();
 			int iterator = 0;

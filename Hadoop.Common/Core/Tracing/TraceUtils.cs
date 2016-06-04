@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Htrace;
 using Sharpen;

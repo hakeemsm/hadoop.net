@@ -9,7 +9,7 @@ using Sharpen;
 namespace Org.Apache.Hadoop.FS
 {
 	/// <summary>Interface that represents the client side information for a file.</summary>
-	public class FileStatus : Writable, IComparable
+	public class FileStatus : IWritable, IComparable
 	{
 		private Path path;
 
@@ -299,7 +299,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			string strPath = Text.ReadString(@in, Text.DefaultMaxLen);
 			this.path = new Path(strPath);

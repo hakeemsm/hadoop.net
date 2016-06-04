@@ -1,5 +1,6 @@
 using System.IO;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Commons.Net.Ftp;

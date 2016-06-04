@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Sharpen;
@@ -35,7 +36,7 @@ namespace Org.Apache.Hadoop.Net
 		/// Create an instance with the default configuration.
 		/// </p>
 		/// Calling
-		/// <see cref="SetConf(Org.Apache.Hadoop.Conf.Configuration)"/>
+		/// <see cref="SetConf(Configuration)"/>
 		/// will trigger a
 		/// re-evaluation of the configuration settings and so be used to
 		/// set up the mapping script.
@@ -128,7 +129,7 @@ namespace Org.Apache.Hadoop.Net
 			/// <summary>Constructor.</summary>
 			/// <remarks>
 			/// Constructor. The mapping is not ready to use until
-			/// <see cref="SetConf(Org.Apache.Hadoop.Conf.Configuration)"/>
+			/// <see cref="SetConf(Configuration)"/>
 			/// has been called
 			/// </remarks>
 			public RawScriptBasedMappingWithDependency()

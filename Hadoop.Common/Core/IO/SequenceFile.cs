@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Java.Rmi.Server;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
@@ -670,7 +672,7 @@ namespace Org.Apache.Hadoop.IO
 		/// The metadata of a file is a list of attribute name/value
 		/// pairs of Text type.
 		/// </remarks>
-		public class Metadata : Writable
+		public class Metadata : IWritable
 		{
 			private SortedDictionary<Text, Text> theMetadata;
 
@@ -721,7 +723,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(DataInput @in)
+			public virtual void ReadFields(BinaryReader @in)
 			{
 				int sz = @in.ReadInt();
 				if (sz < 0)
@@ -798,11 +800,11 @@ namespace Org.Apache.Hadoop.IO
 			{
 				StringBuilder sb = new StringBuilder();
 				sb.Append("size: ").Append(this.theMetadata.Count).Append("\n");
-				IEnumerator<KeyValuePair<Org.Apache.Hadoop.IO.Text, Org.Apache.Hadoop.IO.Text>> iter
+				IEnumerator<KeyValuePair<Text, Text>> iter
 					 = this.theMetadata.GetEnumerator();
 				while (iter.HasNext())
 				{
-					KeyValuePair<Org.Apache.Hadoop.IO.Text, Org.Apache.Hadoop.IO.Text> en = iter.Next
+					KeyValuePair<Text, Text> en = iter.Next
 						();
 					sb.Append("\t").Append(en.Key.ToString()).Append("\t").Append(en.Value.ToString()
 						);
@@ -1304,13 +1306,13 @@ namespace Org.Apache.Hadoop.IO
 			private void WriteFileHeader()
 			{
 				@out.Write(Version);
-				Org.Apache.Hadoop.IO.Text.WriteString(@out, keyClass.FullName);
-				Org.Apache.Hadoop.IO.Text.WriteString(@out, valClass.FullName);
+				Text.WriteString(@out, keyClass.FullName);
+				Text.WriteString(@out, valClass.FullName);
 				@out.WriteBoolean(this.IsCompressed());
 				@out.WriteBoolean(this.IsBlockCompressed());
 				if (this.IsCompressed())
 				{
-					Org.Apache.Hadoop.IO.Text.WriteString(@out, (codec.GetType()).FullName);
+					Text.WriteString(@out, (codec.GetType()).FullName);
 				}
 				this.metadata.Write(@out);
 				@out.Write(sync);
@@ -1491,7 +1493,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Append a key/value pair.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Append(Writable key, Writable val)
+			public virtual void Append(IWritable key, IWritable val)
 			{
 				Append((object)key, (object)val);
 			}
@@ -1575,7 +1577,7 @@ namespace Org.Apache.Hadoop.IO
 			/// <see cref="Reader.Seek(long)"/>
 			/// with a position
 			/// returned by this method,
-			/// <see cref="Reader.Next(Writable)"/>
+			/// <see cref="Reader.Next(IWritable)"/>
 			/// may be called.  However
 			/// the key may be earlier in the file than key last written when this
 			/// method was called (e.g., with block-compression, it may be the first key
@@ -2182,8 +2184,8 @@ namespace Org.Apache.Hadoop.IO
 				else
 				{
 					// val class name
-					keyClassName = Org.Apache.Hadoop.IO.Text.ReadString(@in);
-					valClassName = Org.Apache.Hadoop.IO.Text.ReadString(@in);
+					keyClassName = Text.ReadString(@in);
+					valClassName = Text.ReadString(@in);
 				}
 				if (version > 2)
 				{
@@ -2211,7 +2213,7 @@ namespace Org.Apache.Hadoop.IO
 				{
 					if (version >= CustomCompressVersion)
 					{
-						string codecClassname = Org.Apache.Hadoop.IO.Text.ReadString(@in);
+						string codecClassname = Text.ReadString(@in);
 						try
 						{
 							Type codecClass = conf.GetClassByName(codecClassname).AsSubclass<CompressionCodec
@@ -2563,7 +2565,7 @@ namespace Org.Apache.Hadoop.IO
 			/// <summary>Get the 'value' corresponding to the last read 'key'.</summary>
 			/// <param name="val">: The 'value' to be read.</param>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void GetCurrentValue(Writable val)
+			public virtual void GetCurrentValue(IWritable val)
 			{
 				lock (this)
 				{
@@ -2654,7 +2656,7 @@ namespace Org.Apache.Hadoop.IO
 			/// value.  True if another entry exists, and false at end of file.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual bool Next(Writable key)
+			public virtual bool Next(IWritable key)
 			{
 				lock (this)
 				{
@@ -2719,7 +2721,7 @@ namespace Org.Apache.Hadoop.IO
 			/// end of file
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual bool Next(Writable key, Writable val)
+			public virtual bool Next(IWritable key, IWritable val)
 			{
 				lock (this)
 				{
@@ -3180,7 +3182,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <remarks>
 		/// Sorts key/value pairs in a sequence-format file.
 		/// <p>For best performance, applications should make sure that the
-		/// <see cref="Writable.ReadFields(System.IO.DataInput)"/>
+		/// <see cref="IWritable.ReadFields(System.IO.BinaryReader)"/>
 		/// implementation of their keys is
 		/// very efficient.  In particular, it should avoid allocating memory.
 		/// </remarks>

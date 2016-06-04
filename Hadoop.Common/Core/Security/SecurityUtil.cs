@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.IO;
 using Javax.Security.Auth.Kerberos;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;

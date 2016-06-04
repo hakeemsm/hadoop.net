@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Sharpen;
@@ -88,7 +89,7 @@ namespace Org.Apache.Hadoop.IO
 				Type writableClass = NameToClass[name];
 				if (writableClass != null)
 				{
-					return writableClass.AsSubclass<Writable>();
+					return writableClass.AsSubclass<IWritable>();
 				}
 				try
 				{

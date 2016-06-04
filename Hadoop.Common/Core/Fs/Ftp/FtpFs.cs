@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs.Ftp;
 using Org.Apache.Commons.Net.Ftp;
 using Org.Apache.Hadoop.Conf;
@@ -15,7 +16,7 @@ namespace Org.Apache.Hadoop.FS.Ftp
 	{
 		/// <summary>
 		/// This constructor has the signature needed by
-		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(Sharpen.URI, Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(Sharpen.URI, Configuration)
 		/// 	"/>
 		/// .
 		/// </summary>

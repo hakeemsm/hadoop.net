@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.Conf;
 using Javax.Net;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.HA;

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Com.Google.Common.Annotations;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.IO;
 using Javax.Servlet.Http;
 using Javax.WS.RS.Core;
 using Org.Apache.Hadoop.Conf;

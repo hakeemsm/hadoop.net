@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Shell;
 using Sharpen;
@@ -216,11 +217,11 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 
 		/// <summary>
 		/// Set the
-		/// <see cref="Org.Apache.Hadoop.Conf.Configuration"/>
+		/// <see cref="Configuration"/>
 		/// </summary>
 		/// <param name="configuration">
 		/// 
-		/// <see cref="Org.Apache.Hadoop.Conf.Configuration"/>
+		/// <see cref="Configuration"/>
 		/// </param>
 		public virtual void SetConfiguration(Configuration configuration)
 		{
@@ -229,9 +230,9 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 
 		/// <summary>
 		/// Return the
-		/// <see cref="Org.Apache.Hadoop.Conf.Configuration"/>
+		/// <see cref="Configuration"/>
 		/// return configuration
-		/// <see cref="Org.Apache.Hadoop.Conf.Configuration"/>
+		/// <see cref="Configuration"/>
 		/// </summary>
 		public virtual Configuration GetConfiguration()
 		{

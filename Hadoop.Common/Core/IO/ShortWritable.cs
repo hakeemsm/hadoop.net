@@ -32,7 +32,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>read the short value</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(DataInput @in)
+		public virtual void ReadFields(BinaryReader @in)
 		{
 			value = @in.ReadShort();
 		}

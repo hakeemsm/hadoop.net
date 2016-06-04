@@ -445,7 +445,7 @@
     <Compile Include="Core\IO\VersionMismatchException.cs" />
     <Compile Include="Core\IO\VIntWritable.cs" />
     <Compile Include="Core\IO\VLongWritable.cs" />
-    <Compile Include="Core\IO\Writable.cs" />
+    <Compile Include="Core\IO\IWritable.cs" />
     <Compile Include="Core\IO\WritableComparable.cs" />
     <Compile Include="Core\IO\WritableComparator.cs" />
     <Compile Include="Core\IO\WritableFactories.cs" />

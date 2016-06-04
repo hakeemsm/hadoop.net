@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Hadoop.Common.Core.Conf;
 using Javax.Net;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;

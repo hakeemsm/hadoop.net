@@ -5,7 +5,7 @@ namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>
 	/// A reusable
-	/// <see cref="System.IO.DataInput"/>
+	/// <see cref="System.IO.BinaryReader"/>
 	/// implementation that reads from an in-memory
 	/// buffer.
 	/// <p>This saves memory over creating a new DataInputStream and
@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.IO
 	/// byte[] data = ... get data ...;
 	/// int dataLength = ... get data length ...;
 	/// buffer.reset(data, dataLength);
-	/// ... read buffer using DataInput methods ...
+	/// ... read buffer using BinaryReader methods ...
 	/// }
 	/// </pre>
 	/// </summary>

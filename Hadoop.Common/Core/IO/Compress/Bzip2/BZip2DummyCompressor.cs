@@ -16,6 +16,7 @@
 *
 */
 using System;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Compress;
 using Sharpen;

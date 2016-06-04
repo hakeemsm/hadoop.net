@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Util;
 using Sharpen;
 
@@ -9,15 +10,15 @@ namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>A Writable SortedMap.</summary>
 	public class SortedMapWritable : AbstractMapWritable, SortedDictionary<WritableComparable
-		, Writable>
+		, IWritable>
 	{
-		private SortedDictionary<WritableComparable, Writable> instance;
+		private SortedDictionary<WritableComparable, IWritable> instance;
 
 		/// <summary>default constructor.</summary>
 		public SortedMapWritable()
 			: base()
 		{
-			this.instance = new SortedDictionary<WritableComparable, Writable>();
+			this.instance = new SortedDictionary<WritableComparable, IWritable>();
 		}
 
 		/// <summary>Copy constructor.</summary>
@@ -39,7 +40,7 @@ namespace Org.Apache.Hadoop.IO
 			return instance.FirstKey();
 		}
 
-		public virtual SortedDictionary<WritableComparable, Writable> HeadMap(WritableComparable
+		public virtual SortedDictionary<WritableComparable, IWritable> HeadMap(WritableComparable
 			 toKey)
 		{
 			return instance.HeadMap(toKey);
@@ -50,13 +51,13 @@ namespace Org.Apache.Hadoop.IO
 			return instance.LastKey();
 		}
 
-		public virtual SortedDictionary<WritableComparable, Writable> SubMap(WritableComparable
+		public virtual SortedDictionary<WritableComparable, IWritable> SubMap(WritableComparable
 			 fromKey, WritableComparable toKey)
 		{
 			return instance.SubMap(fromKey, toKey);
 		}
 
-		public virtual SortedDictionary<WritableComparable, Writable> TailMap(WritableComparable
+		public virtual SortedDictionary<WritableComparable, IWritable> TailMap(WritableComparable
 			 fromKey)
 		{
 			return instance.TailMap(fromKey);
@@ -77,12 +78,12 @@ namespace Org.Apache.Hadoop.IO
 			return instance.ContainsValue(value);
 		}
 
-		public virtual ICollection<KeyValuePair<WritableComparable, Writable>> EntrySet()
+		public virtual ICollection<KeyValuePair<WritableComparable, IWritable>> EntrySet()
 		{
 			return instance;
 		}
 
-		public virtual Writable Get(object key)
+		public virtual IWritable Get(object key)
 		{
 			return instance[key];
 		}
@@ -100,7 +101,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		public virtual Writable Put(WritableComparable key, Writable value)
+		public virtual IWritable Put(WritableComparable key, IWritable value)
 		{
 			AddToMap(key.GetType());
 			AddToMap(value.GetType());
@@ -110,13 +111,13 @@ namespace Org.Apache.Hadoop.IO
 		public virtual void PutAll<_T0>(IDictionary<_T0> t)
 			where _T0 : WritableComparable
 		{
-			foreach (KeyValuePair<WritableComparable, Writable> e in t)
+			foreach (KeyValuePair<WritableComparable, IWritable> e in t)
 			{
 				this[e.Key] = e.Value;
 			}
 		}
 
-		public virtual Writable Remove(object key)
+		public virtual IWritable Remove(object key)
 		{
 			return Sharpen.Collections.Remove(instance, key);
 		}
@@ -129,7 +130,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		public virtual ICollection<Writable> Values
+		public virtual ICollection<IWritable> Values
 		{
 			get
 			{
@@ -138,7 +139,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(DataInput @in)
+		public override void ReadFields(BinaryReader @in)
 		{
 			base.ReadFields(@in);
 			// Read the number of entries in the map
@@ -149,7 +150,7 @@ namespace Org.Apache.Hadoop.IO
 				WritableComparable key = (WritableComparable)ReflectionUtils.NewInstance(GetClass
 					(@in.ReadByte()), GetConf());
 				key.ReadFields(@in);
-				Writable value = (Writable)ReflectionUtils.NewInstance(GetClass(@in.ReadByte()), 
+				IWritable value = (IWritable)ReflectionUtils.NewInstance(GetClass(@in.ReadByte()), 
 					GetConf());
 				value.ReadFields(@in);
 				instance[key] = value;
@@ -163,7 +164,7 @@ namespace Org.Apache.Hadoop.IO
 			// Write out the number of entries in the map
 			@out.WriteInt(instance.Count);
 			// Then write out each key/value pair
-			foreach (KeyValuePair<WritableComparable, Writable> e in instance)
+			foreach (KeyValuePair<WritableComparable, IWritable> e in instance)
 			{
 				@out.WriteByte(GetId(e.Key.GetType()));
 				e.Key.Write(@out);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
@@ -2233,7 +2234,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public TFileMeta(DataInput @in)
+			public TFileMeta(BinaryReader @in)
 			{
 				// ctor for reads
 				version = new Utils.Version(@in);
@@ -2340,7 +2341,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 			/// <summary>For reading from file.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public TFileIndex(int entryCount, DataInput @in, CompareUtils.BytesComparator comparator
+			public TFileIndex(int entryCount, BinaryReader @in, CompareUtils.BytesComparator comparator
 				)
 			{
 				// END: class MetaTFileMeta
@@ -2519,7 +2520,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			internal readonly long kvEntries;
 
 			/// <exception cref="System.IO.IOException"/>
-			public TFileIndexEntry(DataInput @in)
+			public TFileIndexEntry(BinaryReader @in)
 			{
 				// count of <key, value> entries in the block.
 				int len = Utils.ReadVInt(@in);

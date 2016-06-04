@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
 using Sharpen;
 
@@ -169,8 +170,8 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="in">input stream</param>
 		/// <returns>the decoded integer</returns>
 		/// <exception cref="System.IO.IOException"/>
-		/// <seealso cref="ReadVLong(System.IO.DataInput)"/>
-		public static int ReadVInt(DataInput @in)
+		/// <seealso cref="ReadVLong(System.IO.BinaryReader)"/>
+		public static int ReadVInt(BinaryReader @in)
 		{
 			long ret = ReadVLong(@in);
 			if ((ret > int.MaxValue) || (ret < int.MinValue))
@@ -197,7 +198,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="in">input stream</param>
 		/// <returns>the decoded long integer.</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static long ReadVLong(DataInput @in)
+		public static long ReadVLong(BinaryReader @in)
 		{
 			int firstByte = @in.ReadByte();
 			if (firstByte >= -32)
@@ -300,7 +301,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="in">The input stream.</param>
 		/// <returns>The string</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(DataInput @in)
+		public static string ReadString(BinaryReader @in)
 		{
 			int length = ReadVInt(@in);
 			if (length == -1)
@@ -330,7 +331,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			/// <summary>Construct the Version object by reading from the input stream.</summary>
 			/// <param name="in">input stream</param>
 			/// <exception cref="System.IO.IOException"/>
-			public Version(DataInput @in)
+			public Version(BinaryReader @in)
 			{
 				major = @in.ReadShort();
 				minor = @in.ReadShort();

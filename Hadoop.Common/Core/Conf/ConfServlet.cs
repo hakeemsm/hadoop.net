@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.Conf;
 using Javax.Servlet.Http;
 using Org.Apache.Hadoop.Http;
 using Sharpen;

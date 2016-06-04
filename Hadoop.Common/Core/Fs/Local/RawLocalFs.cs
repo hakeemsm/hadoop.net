@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Sharpen;
@@ -20,7 +21,7 @@ namespace Org.Apache.Hadoop.FS.Local
 
 		/// <summary>
 		/// This constructor has the signature needed by
-		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(Sharpen.URI, Org.Apache.Hadoop.Conf.Configuration)
+		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(Sharpen.URI, Configuration)
 		/// 	"/>
 		/// .
 		/// </summary>

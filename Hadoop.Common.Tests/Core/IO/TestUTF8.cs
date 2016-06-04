@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.IO
 				// generate a random string
 				string before = GetTestString();
 				// Check that the bytes are stored correctly in Modified-UTF8 format.
-				// Note that the DataInput and DataOutput interfaces convert between
+				// Note that the BinaryReader and DataOutput interfaces convert between
 				// bytes and Strings using the Modified-UTF8 format.
 				NUnit.Framework.Assert.AreEqual(before, ReadModifiedUTF(UTF8.GetBytes(before)));
 			}
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.IO
 				@in.Reset(@out.GetData(), @out.GetLength());
 				string after = UTF8.ReadString(@in);
 				NUnit.Framework.Assert.AreEqual(before, after);
-				// test that it reads correctly with DataInput
+				// test that it reads correctly with BinaryReader
 				@in.Reset(@out.GetData(), @out.GetLength());
 				string after2 = @in.ReadUTF();
 				NUnit.Framework.Assert.AreEqual(before, after2);
