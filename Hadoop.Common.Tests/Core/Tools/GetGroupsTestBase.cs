@@ -32,64 +32,64 @@ namespace Org.Apache.Hadoop.Tools
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoUserGiven()
 		{
 			string actualOutput = RunTool(conf, new string[0], true);
 			UserGroupInformation currentUser = UserGroupInformation.GetCurrentUser();
-			NUnit.Framework.Assert.AreEqual("No user provided should default to current user"
+			Assert.Equal("No user provided should default to current user"
 				, GetExpectedOutput(currentUser), actualOutput);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExistingUser()
 		{
 			string actualOutput = RunTool(conf, new string[] { testUser1.GetUserName() }, true
 				);
-			NUnit.Framework.Assert.AreEqual("Show only the output of the user given", GetExpectedOutput
+			Assert.Equal("Show only the output of the user given", GetExpectedOutput
 				(testUser1), actualOutput);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleExistingUsers()
 		{
 			string actualOutput = RunTool(conf, new string[] { testUser1.GetUserName(), testUser2
 				.GetUserName() }, true);
-			NUnit.Framework.Assert.AreEqual("Show the output for both users given", GetExpectedOutput
+			Assert.Equal("Show the output for both users given", GetExpectedOutput
 				(testUser1) + GetExpectedOutput(testUser2), actualOutput);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNonExistentUser()
 		{
 			string actualOutput = RunTool(conf, new string[] { "does-not-exist" }, true);
-			NUnit.Framework.Assert.AreEqual("Show the output for only the user given, with no groups"
+			Assert.Equal("Show the output for only the user given, with no groups"
 				, GetExpectedOutput(UserGroupInformation.CreateRemoteUser("does-not-exist")), actualOutput
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleNonExistingUsers()
 		{
 			string actualOutput = RunTool(conf, new string[] { "does-not-exist1", "does-not-exist2"
 				 }, true);
-			NUnit.Framework.Assert.AreEqual("Show the output for only the user given, with no groups"
+			Assert.Equal("Show the output for only the user given, with no groups"
 				, GetExpectedOutput(UserGroupInformation.CreateRemoteUser("does-not-exist1")) + 
 				GetExpectedOutput(UserGroupInformation.CreateRemoteUser("does-not-exist2")), actualOutput
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExistingInterleavedWithNonExistentUsers()
 		{
 			string actualOutput = RunTool(conf, new string[] { "does-not-exist1", testUser1.GetUserName
 				(), "does-not-exist2", testUser2.GetUserName() }, true);
-			NUnit.Framework.Assert.AreEqual("Show the output for only the user given, with no groups"
+			Assert.Equal("Show the output for only the user given, with no groups"
 				, GetExpectedOutput(UserGroupInformation.CreateRemoteUser("does-not-exist1")) + 
 				GetExpectedOutput(testUser1) + GetExpectedOutput(UserGroupInformation.CreateRemoteUser
 				("does-not-exist2")) + GetExpectedOutput(testUser2), actualOutput);
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Tools
 			try
 			{
 				int ret = ToolRunner.Run(GetTool(@out), args);
-				NUnit.Framework.Assert.AreEqual(success, ret == 0);
+				Assert.Equal(success, ret == 0);
 				return o.ToString();
 			}
 			finally

@@ -21,23 +21,23 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 {
 	public class TestUniqNames
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCommonCases()
 		{
 			UniqueNames u = new UniqueNames();
-			NUnit.Framework.Assert.AreEqual("foo", u.UniqueName("foo"));
-			NUnit.Framework.Assert.AreEqual("foo-1", u.UniqueName("foo"));
+			Assert.Equal("foo", u.UniqueName("foo"));
+			Assert.Equal("foo-1", u.UniqueName("foo"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCollisions()
 		{
 			UniqueNames u = new UniqueNames();
 			u.UniqueName("foo");
-			NUnit.Framework.Assert.AreEqual("foo-1", u.UniqueName("foo-1"));
-			NUnit.Framework.Assert.AreEqual("foo-2", u.UniqueName("foo"));
-			NUnit.Framework.Assert.AreEqual("foo-1-1", u.UniqueName("foo-1"));
-			NUnit.Framework.Assert.AreEqual("foo-2-1", u.UniqueName("foo-2"));
+			Assert.Equal("foo-1", u.UniqueName("foo-1"));
+			Assert.Equal("foo-2", u.UniqueName("foo"));
+			Assert.Equal("foo-1-1", u.UniqueName("foo-1"));
+			Assert.Equal("foo-2-1", u.UniqueName("foo-2"));
 		}
 	}
 }

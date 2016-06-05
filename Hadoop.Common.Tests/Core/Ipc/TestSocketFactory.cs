@@ -10,7 +10,7 @@ namespace Org.Apache.Hadoop.Ipc
 {
 	public class TestSocketFactory
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketFactoryAsKeyInMap()
 		{
 			IDictionary<SocketFactory, int> dummyCache = new Dictionary<SocketFactory, int>();
@@ -25,9 +25,9 @@ namespace Org.Apache.Hadoop.Ipc
 				);
 			SocketFactory defaultSocketFactory = NetUtils.GetDefaultSocketFactory(conf);
 			dummyCache[defaultSocketFactory] = toBeCached2;
-			NUnit.Framework.Assert.AreEqual("The cache contains two elements", 2, dummyCache.
+			Assert.Equal("The cache contains two elements", 2, dummyCache.
 				Count);
-			NUnit.Framework.Assert.AreEqual("Equals of both socket factory shouldn't be same"
+			Assert.Equal("Equals of both socket factory shouldn't be same"
 				, defaultSocketFactory.Equals(dummySocketFactory), false);
 			NUnit.Framework.Assert.AreSame(toBeCached2, Sharpen.Collections.Remove(dummyCache
 				, defaultSocketFactory));

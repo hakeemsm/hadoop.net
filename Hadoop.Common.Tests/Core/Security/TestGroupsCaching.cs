@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGroupsCaching()
 		{
 			// Disable negative cache.
@@ -148,10 +148,10 @@ namespace Org.Apache.Hadoop.Security
 			TestGroupsCaching.FakeGroupMapping.ClearBlackList();
 			TestGroupsCaching.FakeGroupMapping.AddToBlackList("user1");
 			// regular entry
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups("me").Count == 2);
+			Assert.True(groups.GetGroups("me").Count == 2);
 			// this must be cached. blacklisting should have no effect.
 			TestGroupsCaching.FakeGroupMapping.AddToBlackList("me");
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups("me").Count == 2);
+			Assert.True(groups.GetGroups("me").Count == 2);
 			// ask for a negative entry
 			try
 			{
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			// this shouldn't be cached. remove from the black list and retry.
 			TestGroupsCaching.FakeGroupMapping.ClearBlackList();
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups("user1").Count == 2);
+			Assert.True(groups.GetGroups("user1").Count == 2);
 		}
 
 		public class FakeunPrivilegedGroupMapping : TestGroupsCaching.FakeGroupMapping
@@ -188,7 +188,7 @@ namespace Org.Apache.Hadoop.Security
 		* Group lookup should not happen for static users
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGroupLookupForStaticUsers()
 		{
 			conf.SetClass(CommonConfigurationKeys.HadoopSecurityGroupMapping, typeof(TestGroupsCaching.FakeunPrivilegedGroupMapping
@@ -197,7 +197,7 @@ namespace Org.Apache.Hadoop.Security
 				);
 			Groups groups = new Groups(conf);
 			IList<string> userGroups = groups.GetGroups("me");
-			NUnit.Framework.Assert.IsTrue("non-empty groups for static user", userGroups.IsEmpty
+			Assert.True("non-empty groups for static user", userGroups.IsEmpty
 				());
 			NUnit.Framework.Assert.IsFalse("group lookup done for static user", TestGroupsCaching.FakeunPrivilegedGroupMapping
 				.invoked);
@@ -205,19 +205,19 @@ namespace Org.Apache.Hadoop.Security
 			expected.AddItem("group1");
 			TestGroupsCaching.FakeunPrivilegedGroupMapping.invoked = false;
 			userGroups = groups.GetGroups("user1");
-			NUnit.Framework.Assert.IsTrue("groups not correct", expected.Equals(userGroups));
+			Assert.True("groups not correct", expected.Equals(userGroups));
 			NUnit.Framework.Assert.IsFalse("group lookup done for unprivileged user", TestGroupsCaching.FakeunPrivilegedGroupMapping
 				.invoked);
 			expected.AddItem("group2");
 			TestGroupsCaching.FakeunPrivilegedGroupMapping.invoked = false;
 			userGroups = groups.GetGroups("user2");
-			NUnit.Framework.Assert.IsTrue("groups not correct", expected.Equals(userGroups));
+			Assert.True("groups not correct", expected.Equals(userGroups));
 			NUnit.Framework.Assert.IsFalse("group lookup done for unprivileged user", TestGroupsCaching.FakeunPrivilegedGroupMapping
 				.invoked);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeGroupCaching()
 		{
 			string user = "negcache";
@@ -268,11 +268,11 @@ namespace Org.Apache.Hadoop.Security
 			timer.Advance(4 * 1000);
 			// The groups for the user is expired in the negative cache, a new copy of
 			// groups for the user is fetched.
-			NUnit.Framework.Assert.AreEqual(Arrays.AsList(myGroups), groups.GetGroups(user));
+			Assert.Equal(Arrays.AsList(myGroups), groups.GetGroups(user));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachePreventsImplRequest()
 		{
 			// Disable negative cache.
@@ -281,19 +281,19 @@ namespace Org.Apache.Hadoop.Security
 			groups.CacheGroupsAdd(Arrays.AsList(myGroups));
 			groups.Refresh();
 			TestGroupsCaching.FakeGroupMapping.ClearBlackList();
-			NUnit.Framework.Assert.AreEqual(0, TestGroupsCaching.FakeGroupMapping.GetRequestCount
+			Assert.Equal(0, TestGroupsCaching.FakeGroupMapping.GetRequestCount
 				());
 			// First call hits the wire
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups("me").Count == 2);
-			NUnit.Framework.Assert.AreEqual(1, TestGroupsCaching.FakeGroupMapping.GetRequestCount
+			Assert.True(groups.GetGroups("me").Count == 2);
+			Assert.Equal(1, TestGroupsCaching.FakeGroupMapping.GetRequestCount
 				());
 			// Second count hits cache
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups("me").Count == 2);
-			NUnit.Framework.Assert.AreEqual(1, TestGroupsCaching.FakeGroupMapping.GetRequestCount
+			Assert.True(groups.GetGroups("me").Count == 2);
+			Assert.Equal(1, TestGroupsCaching.FakeGroupMapping.GetRequestCount
 				());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExceptionsFromImplNotCachedInNegativeCache()
 		{
 			conf.SetClass(CommonConfigurationKeys.HadoopSecurityGroupMapping, typeof(TestGroupsCaching.ExceptionalGroupMapping
@@ -303,7 +303,7 @@ namespace Org.Apache.Hadoop.Security
 			Groups groups = new Groups(conf);
 			groups.CacheGroupsAdd(Arrays.AsList(myGroups));
 			groups.Refresh();
-			NUnit.Framework.Assert.AreEqual(0, TestGroupsCaching.ExceptionalGroupMapping.GetRequestCount
+			Assert.Equal(0, TestGroupsCaching.ExceptionalGroupMapping.GetRequestCount
 				());
 			// First call should hit the wire
 			try
@@ -315,7 +315,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 			}
 			// okay
-			NUnit.Framework.Assert.AreEqual(1, TestGroupsCaching.ExceptionalGroupMapping.GetRequestCount
+			Assert.Equal(1, TestGroupsCaching.ExceptionalGroupMapping.GetRequestCount
 				());
 			// Second call should hit the wire (no negative caching)
 			try
@@ -327,12 +327,12 @@ namespace Org.Apache.Hadoop.Security
 			{
 			}
 			// okay
-			NUnit.Framework.Assert.AreEqual(2, TestGroupsCaching.ExceptionalGroupMapping.GetRequestCount
+			Assert.Equal(2, TestGroupsCaching.ExceptionalGroupMapping.GetRequestCount
 				());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOnlyOneRequestWhenNoEntryIsCached()
 		{
 			// Disable negative cache.
@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.Security
 				t_1.Join();
 			}
 			// But only one thread should have made the request
-			NUnit.Framework.Assert.AreEqual(1, TestGroupsCaching.FakeGroupMapping.GetRequestCount
+			Assert.Equal(1, TestGroupsCaching.FakeGroupMapping.GetRequestCount
 				());
 		}
 
@@ -372,7 +372,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				try
 				{
-					NUnit.Framework.Assert.AreEqual(2, groups.GetGroups("me").Count);
+					Assert.Equal(2, groups.GetGroups("me").Count);
 				}
 				catch (IOException)
 				{
@@ -384,7 +384,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOnlyOneRequestWhenExpiredEntryExists()
 		{
 			conf.SetLong(CommonConfigurationKeys.HadoopSecurityGroupsCacheSecs, 1);
@@ -415,7 +415,7 @@ namespace Org.Apache.Hadoop.Security
 				t_1.Join();
 			}
 			// Only one extra request is made
-			NUnit.Framework.Assert.AreEqual(startingRequestCount + 1, TestGroupsCaching.FakeGroupMapping
+			Assert.Equal(startingRequestCount + 1, TestGroupsCaching.FakeGroupMapping
 				.GetRequestCount());
 		}
 
@@ -430,7 +430,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				try
 				{
-					NUnit.Framework.Assert.AreEqual(2, groups.GetGroups("me").Count);
+					Assert.Equal(2, groups.GetGroups("me").Count);
 				}
 				catch (IOException)
 				{
@@ -442,7 +442,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheEntriesExpire()
 		{
 			conf.SetLong(CommonConfigurationKeys.HadoopSecurityGroupsCacheSecs, 1);
@@ -457,12 +457,12 @@ namespace Org.Apache.Hadoop.Security
 			timer.Advance(20 * 1000);
 			// Cache entry has expired so it results in a new fetch
 			groups.GetGroups("me");
-			NUnit.Framework.Assert.AreEqual(startingRequestCount + 1, TestGroupsCaching.FakeGroupMapping
+			Assert.Equal(startingRequestCount + 1, TestGroupsCaching.FakeGroupMapping
 				.GetRequestCount());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeCacheClearedOnRefresh()
 		{
 			conf.SetLong(CommonConfigurationKeys.HadoopSecurityGroupsNegativeCacheSecs, 100);
@@ -492,12 +492,12 @@ namespace Org.Apache.Hadoop.Security
 			{
 			}
 			// pass
-			NUnit.Framework.Assert.AreEqual(startingRequestCount + 1, TestGroupsCaching.FakeGroupMapping
+			Assert.Equal(startingRequestCount + 1, TestGroupsCaching.FakeGroupMapping
 				.GetRequestCount());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeCacheEntriesExpire()
 		{
 			conf.SetLong(CommonConfigurationKeys.HadoopSecurityGroupsNegativeCacheSecs, 2);
@@ -522,7 +522,7 @@ namespace Org.Apache.Hadoop.Security
 				GenericTestUtils.AssertExceptionContains("No groups found for user", e);
 			}
 			// Check if user1 exists in negative cache
-			NUnit.Framework.Assert.IsTrue(groups.GetNegativeCache().Contains("user1"));
+			Assert.True(groups.GetNegativeCache().Contains("user1"));
 			// Advance fake timer
 			timer.Advance(1000);
 			// Put user2 in negative cache
@@ -537,11 +537,11 @@ namespace Org.Apache.Hadoop.Security
 				GenericTestUtils.AssertExceptionContains("No groups found for user", e);
 			}
 			// Check if user2 exists in negative cache
-			NUnit.Framework.Assert.IsTrue(groups.GetNegativeCache().Contains("user2"));
+			Assert.True(groups.GetNegativeCache().Contains("user2"));
 			// Advance timer. Only user2 should be present in negative cache.
 			timer.Advance(1100);
 			NUnit.Framework.Assert.IsFalse(groups.GetNegativeCache().Contains("user1"));
-			NUnit.Framework.Assert.IsTrue(groups.GetNegativeCache().Contains("user2"));
+			Assert.True(groups.GetNegativeCache().Contains("user2"));
 			// Advance timer. Even user2 should not be present in negative cache.
 			timer.Advance(1000);
 			NUnit.Framework.Assert.IsFalse(groups.GetNegativeCache().Contains("user2"));

@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoDataEntry()
 		{
 			if (skip)
@@ -102,15 +102,15 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			CloseOutput();
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
-			NUnit.Framework.Assert.IsTrue(reader.IsSorted());
+			Assert.True(reader.IsSorted());
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
-			NUnit.Framework.Assert.IsTrue(scanner.AtEnd());
+			Assert.True(scanner.AtEnd());
 			scanner.Close();
 			reader.Close();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOneDataEntry()
 		{
 			if (skip)
@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTwoDataEntries()
 		{
 			if (skip)
@@ -140,7 +140,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 		/// <summary>Fill up exactly one block.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOneBlock()
 		{
 			if (skip)
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 		/// <summary>One block plus one record.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOneBlockPlusOneEntry()
 		{
 			if (skip)
@@ -170,7 +170,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTwoBlocks()
 		{
 			if (skip)
@@ -183,7 +183,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestThreeBlocks()
 		{
 			if (skip)
@@ -236,7 +236,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLocate()
 		{
 			if (skip)
@@ -254,13 +254,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				)));
 			TFile.Reader.Location locX = Locate(scanner, Sharpen.Runtime.GetBytesForString("keyX"
 				));
-			NUnit.Framework.Assert.AreEqual(scanner.endLocation, locX);
+			Assert.Equal(scanner.endLocation, locX);
 			scanner.Close();
 			reader.Close();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureWriterNotClosed()
 		{
 			if (skip)
@@ -287,7 +287,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureWriteMetaBlocksWithSameName()
 		{
 			if (skip)
@@ -316,7 +316,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureGetNonExistentMetaBlock()
 		{
 			if (skip)
@@ -350,7 +350,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureWriteRecordAfterMetaBlock()
 		{
 			if (skip)
@@ -382,7 +382,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureReadValueManyTimes()
 		{
 			if (skip)
@@ -396,7 +396,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			byte[] vbuf = new byte[BufSize];
 			int vlen = scanner.Entry().GetValueLength();
 			scanner.Entry().GetValue(vbuf);
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+			Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
 				Value + 0);
 			try
 			{
@@ -412,7 +412,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureBadCompressionCodec()
 		{
 			if (skip)
@@ -434,7 +434,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		// noop, expecting exceptions
 		// e.printStackTrace();
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureOpenEmptyFile()
 		{
 			if (skip)
@@ -458,7 +458,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 		// noop, expecting exceptions
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureOpenRandomFile()
 		{
 			if (skip)
@@ -490,7 +490,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 		// noop, expecting exceptions
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureKeyLongerThan64K()
 		{
 			if (skip)
@@ -512,7 +512,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureOutOfOrderKeys()
 		{
 			if (skip)
@@ -536,7 +536,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureNegativeOffset()
 		{
 			if (skip)
@@ -557,7 +557,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureNegativeOffset_2()
 		{
 			if (skip)
@@ -586,7 +586,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureNegativeLength()
 		{
 			if (skip)
@@ -607,7 +607,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureNegativeLength_2()
 		{
 			if (skip)
@@ -636,7 +636,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureNegativeLength_3()
 		{
 			if (skip)
@@ -678,7 +678,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureCompressionNotWorking()
 		{
 			if (skip)
@@ -689,13 +689,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			if (!Sharpen.Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
 				()))
 			{
-				NUnit.Framework.Assert.IsTrue(@out.GetPos() < rawDataSize);
+				Assert.True(@out.GetPos() < rawDataSize);
 			}
 			CloseOutput();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureFileWriteNotAt0Position()
 		{
 			if (skip)
@@ -781,15 +781,15 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					byte[] kbuf = new byte[BufSize];
 					int klen = scanner.Entry().GetKeyLength();
 					scanner.Entry().GetKey(kbuf);
-					NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+					Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
 						ComposeSortedKey(Key, nx));
 					byte[] vbuf = new byte[BufSize];
 					int vlen = scanner.Entry().GetValueLength();
 					scanner.Entry().GetValue(vbuf);
-					NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+					Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
 						Value + nx);
 				}
-				NUnit.Framework.Assert.IsTrue(scanner.AtEnd());
+				Assert.True(scanner.AtEnd());
 				NUnit.Framework.Assert.IsFalse(scanner.Advance());
 			}
 			finally
@@ -807,7 +807,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
 			scanner.SeekTo(Sharpen.Runtime.GetBytesForString(ComposeSortedKey(Key, recordIndex
 				)));
-			NUnit.Framework.Assert.AreEqual(blockIndexExpected, scanner.currentLocation.GetBlockIndex
+			Assert.Equal(blockIndexExpected, scanner.currentLocation.GetBlockIndex
 				());
 			scanner.Close();
 			reader.Close();
@@ -825,12 +825,12 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] vbuf = new byte[BufSize];
 				int vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					Value + recordIndex);
 				byte[] kbuf = new byte[BufSize];
 				int klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
 					ComposeSortedKey(Key, recordIndex));
 			}
 			finally
@@ -853,7 +853,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] kbuf1 = new byte[BufSize];
 				int klen1 = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf1);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
 					), ComposeSortedKey(Key, recordIndex));
 				if (scanner.Advance() && !scanner.AtEnd())
 				{
@@ -861,7 +861,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					byte[] kbuf2 = new byte[BufSize];
 					int klen2 = scanner.Entry().GetKeyLength();
 					scanner.Entry().GetKey(kbuf2);
-					NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf2, 0, klen2
+					Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf2, 0, klen2
 						), ComposeSortedKey(Key, recordIndex + 1));
 				}
 			}
@@ -882,14 +882,14 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			byte[] vbuf1 = new byte[BufSize];
 			int vlen1 = scanner.Entry().GetValueLength();
 			scanner.Entry().GetValue(vbuf1);
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf1, 0, vlen1
+			Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf1, 0, vlen1
 				), Value + recordIndex);
 			if (scanner.Advance() && !scanner.AtEnd())
 			{
 				byte[] vbuf2 = new byte[BufSize];
 				int vlen2 = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf2);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf2, 0, vlen2
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf2, 0, vlen2
 					), Value + (recordIndex + 1));
 			}
 			scanner.Close();
@@ -907,15 +907,15 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			byte[] kbuf1 = new byte[BufSize];
 			int klen1 = scanner.Entry().GetKeyLength();
 			scanner.Entry().GetKey(kbuf1);
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+			Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
 				), ComposeSortedKey(Key, recordIndex));
 			klen1 = scanner.Entry().GetKeyLength();
 			scanner.Entry().GetKey(kbuf1);
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+			Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
 				), ComposeSortedKey(Key, recordIndex));
 			klen1 = scanner.Entry().GetKeyLength();
 			scanner.Entry().GetKey(kbuf1);
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+			Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
 				), ComposeSortedKey(Key, recordIndex));
 			scanner.Close();
 			reader.Close();

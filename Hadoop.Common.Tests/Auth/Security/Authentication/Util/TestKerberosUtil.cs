@@ -29,35 +29,35 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetServerPrincipal()
 		{
 			string service = "TestKerberosUtil";
 			string localHostname = KerberosUtil.GetLocalHostName();
 			string testHost = "FooBar";
 			// send null hostname
-			NUnit.Framework.Assert.AreEqual("When no hostname is sent", service + "/" + localHostname
+			Assert.Equal("When no hostname is sent", service + "/" + localHostname
 				.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, null));
 			// send empty hostname
-			NUnit.Framework.Assert.AreEqual("When empty hostname is sent", service + "/" + localHostname
+			Assert.Equal("When empty hostname is sent", service + "/" + localHostname
 				.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, string.Empty));
 			// send 0.0.0.0 hostname
-			NUnit.Framework.Assert.AreEqual("When 0.0.0.0 hostname is sent", service + "/" + 
+			Assert.Equal("When 0.0.0.0 hostname is sent", service + "/" + 
 				localHostname.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, "0.0.0.0"));
 			// send uppercase hostname
-			NUnit.Framework.Assert.AreEqual("When uppercase hostname is sent", service + "/" 
+			Assert.Equal("When uppercase hostname is sent", service + "/" 
 				+ testHost.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, testHost));
 			// send lowercase hostname
-			NUnit.Framework.Assert.AreEqual("When lowercase hostname is sent", service + "/" 
+			Assert.Equal("When lowercase hostname is sent", service + "/" 
 				+ testHost.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, testHost.ToLower(Sharpen.Extensions.GetEnglishCulture())));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetPrincipalNamesMissingKeytab()
 		{
 			try
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 		//expects exception
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetPrincipalNamesMissingPattern()
 		{
 			CreateKeyTab(testKeytab, new string[] { "test/testhost@testRealm" });
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 		//expects exception
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetPrincipalNamesFromKeytab()
 		{
 			CreateKeyTab(testKeytab, testPrincipals);
@@ -99,15 +99,15 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			IList<string> principalList = Arrays.AsList(principals);
 			foreach (string principal in testPrincipals)
 			{
-				NUnit.Framework.Assert.IsTrue("missing principal " + principal, principalList.Contains
+				Assert.True("missing principal " + principal, principalList.Contains
 					(principal));
 				expectedSize++;
 			}
-			NUnit.Framework.Assert.AreEqual(expectedSize, principals.Length);
+			Assert.Equal(expectedSize, principals.Length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetPrincipalNamesFromKeytabWithPattern()
 		{
 			CreateKeyTab(testKeytab, testPrincipals);
@@ -122,12 +122,12 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			{
 				if (httpPattern.Matcher(principal).Matches())
 				{
-					NUnit.Framework.Assert.IsTrue("missing principal " + principal, httpPrincipalList
+					Assert.True("missing principal " + principal, httpPrincipalList
 						.Contains(principal));
 					expectedSize++;
 				}
 			}
-			NUnit.Framework.Assert.AreEqual(expectedSize, httpPrincipals.Length);
+			Assert.Equal(expectedSize, httpPrincipals.Length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>

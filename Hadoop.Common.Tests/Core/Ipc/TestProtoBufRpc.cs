@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.Ipc
 				// Ensure clientId is received
 				byte[] clientId = Server.GetClientId();
 				NUnit.Framework.Assert.IsNotNull(Server.GetClientId());
-				NUnit.Framework.Assert.AreEqual(16, clientId.Length);
+				Assert.Equal(16, clientId.Length);
 				return ((TestProtos.EmptyResponseProto)TestProtos.EmptyResponseProto.NewBuilder()
 					.Build());
 			}
@@ -166,7 +166,7 @@ namespace Org.Apache.Hadoop.Ipc
 			TestProtos.EchoRequestProto echoRequest = ((TestProtos.EchoRequestProto)TestProtos.EchoRequestProto
 				.NewBuilder().SetMessage("hello").Build());
 			TestProtos.EchoResponseProto echoResponse = client.Echo(null, echoRequest);
-			NUnit.Framework.Assert.AreEqual(echoResponse.GetMessage(), "hello");
+			Assert.Equal(echoResponse.GetMessage(), "hello");
 			// Test error method - error should be thrown as RemoteException
 			try
 			{
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.Ipc
 				RpcServerException rse = (RpcServerException)re.UnwrapRemoteException(typeof(RpcServerException
 					));
 				NUnit.Framework.Assert.IsNotNull(rse);
-				NUnit.Framework.Assert.IsTrue(re.GetErrorCode().Equals(RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto
+				Assert.True(re.GetErrorCode().Equals(RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto
 					.ErrorRpcServer));
 			}
 		}
@@ -196,7 +196,7 @@ namespace Org.Apache.Hadoop.Ipc
 			TestProtos.EchoRequestProto echoRequest = ((TestProtos.EchoRequestProto)TestProtos.EchoRequestProto
 				.NewBuilder().SetMessage("hello").Build());
 			TestProtos.EchoResponseProto echoResponse = client.Echo2(null, echoRequest);
-			NUnit.Framework.Assert.AreEqual(echoResponse.GetMessage(), "hello");
+			Assert.Equal(echoResponse.GetMessage(), "hello");
 			// Ensure RPC metrics are updated
 			MetricsRecordBuilder rpcMetrics = MetricsAsserts.GetMetrics(server.GetRpcMetrics(
 				).Name());
@@ -219,12 +219,12 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 			catch (ServiceException se)
 			{
-				NUnit.Framework.Assert.IsTrue(se.InnerException is RemoteException);
+				Assert.True(se.InnerException is RemoteException);
 				RemoteException re = (RemoteException)se.InnerException;
-				NUnit.Framework.Assert.IsTrue(re.GetClassName().Equals(typeof(URISyntaxException)
+				Assert.True(re.GetClassName().Equals(typeof(URISyntaxException)
 					.FullName));
-				NUnit.Framework.Assert.IsTrue(re.Message.Contains("testException"));
-				NUnit.Framework.Assert.IsTrue(re.GetErrorCode().Equals(RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto
+				Assert.True(re.Message.Contains("testException"));
+				Assert.True(re.GetErrorCode().Equals(RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto
 					.ErrorApplication));
 			}
 		}
@@ -238,7 +238,7 @@ namespace Org.Apache.Hadoop.Ipc
 				.NewBuilder().SetMessage(shortString).Build());
 			// short message goes through
 			TestProtos.EchoResponseProto echoResponse = client.Echo2(null, echoRequest);
-			NUnit.Framework.Assert.AreEqual(shortString, echoResponse.GetMessage());
+			Assert.Equal(shortString, echoResponse.GetMessage());
 			string longString = StringUtils.Repeat("X", 4096);
 			echoRequest = ((TestProtos.EchoRequestProto)TestProtos.EchoRequestProto.NewBuilder
 				().SetMessage(longString).Build());

@@ -24,19 +24,19 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstructUrlsFromClasspath()
 		{
 			FilePath file = new FilePath(testDir, "file");
-			NUnit.Framework.Assert.IsTrue("Create file", file.CreateNewFile());
+			Assert.True("Create file", file.CreateNewFile());
 			FilePath dir = new FilePath(testDir, "dir");
-			NUnit.Framework.Assert.IsTrue("Make dir", dir.Mkdir());
+			Assert.True("Make dir", dir.Mkdir());
 			FilePath jarsDir = new FilePath(testDir, "jarsdir");
-			NUnit.Framework.Assert.IsTrue("Make jarsDir", jarsDir.Mkdir());
+			Assert.True("Make jarsDir", jarsDir.Mkdir());
 			FilePath nonJarFile = new FilePath(jarsDir, "nonjar");
-			NUnit.Framework.Assert.IsTrue("Create non-jar file", nonJarFile.CreateNewFile());
+			Assert.True("Create non-jar file", nonJarFile.CreateNewFile());
 			FilePath jarFile = new FilePath(jarsDir, "a.jar");
-			NUnit.Framework.Assert.IsTrue("Create jar file", jarFile.CreateNewFile());
+			Assert.True("Create jar file", jarFile.CreateNewFile());
 			FilePath nofile = new FilePath(testDir, "nofile");
 			// don't create nofile
 			StringBuilder cp = new StringBuilder();
@@ -45,20 +45,20 @@ namespace Org.Apache.Hadoop.Util
 				(FilePath.pathSeparator).Append(nofile.GetAbsolutePath()).Append(FilePath.pathSeparator
 				).Append(nofile.GetAbsolutePath() + "/*").Append(FilePath.pathSeparator);
 			Uri[] urls = ApplicationClassLoader.ConstructUrlsFromClasspath(cp.ToString());
-			NUnit.Framework.Assert.AreEqual(3, urls.Length);
-			NUnit.Framework.Assert.AreEqual(file.ToURI().ToURL(), urls[0]);
-			NUnit.Framework.Assert.AreEqual(dir.ToURI().ToURL(), urls[1]);
-			NUnit.Framework.Assert.AreEqual(jarFile.ToURI().ToURL(), urls[2]);
+			Assert.Equal(3, urls.Length);
+			Assert.Equal(file.ToURI().ToURL(), urls[0]);
+			Assert.Equal(dir.ToURI().ToURL(), urls[1]);
+			Assert.Equal(jarFile.ToURI().ToURL(), urls[2]);
 		}
 
 		// nofile should be ignored
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsSystemClass()
 		{
 			TestIsSystemClassInternal(string.Empty);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsSystemNestedClass()
 		{
 			TestIsSystemClassInternal("$Klass");
@@ -68,17 +68,17 @@ namespace Org.Apache.Hadoop.Util
 		{
 			NUnit.Framework.Assert.IsFalse(ApplicationClassLoader.IsSystemClass("org.example.Foo"
 				 + nestedClass, null));
-			NUnit.Framework.Assert.IsTrue(ApplicationClassLoader.IsSystemClass("org.example.Foo"
+			Assert.True(ApplicationClassLoader.IsSystemClass("org.example.Foo"
 				 + nestedClass, Classes("org.example.Foo")));
-			NUnit.Framework.Assert.IsTrue(ApplicationClassLoader.IsSystemClass("/org.example.Foo"
+			Assert.True(ApplicationClassLoader.IsSystemClass("/org.example.Foo"
 				 + nestedClass, Classes("org.example.Foo")));
-			NUnit.Framework.Assert.IsTrue(ApplicationClassLoader.IsSystemClass("org.example.Foo"
+			Assert.True(ApplicationClassLoader.IsSystemClass("org.example.Foo"
 				 + nestedClass, Classes("org.example.")));
-			NUnit.Framework.Assert.IsTrue(ApplicationClassLoader.IsSystemClass("net.example.Foo"
+			Assert.True(ApplicationClassLoader.IsSystemClass("net.example.Foo"
 				 + nestedClass, Classes("org.example.,net.example.")));
 			NUnit.Framework.Assert.IsFalse(ApplicationClassLoader.IsSystemClass("org.example.Foo"
 				 + nestedClass, Classes("-org.example.Foo,org.example.")));
-			NUnit.Framework.Assert.IsTrue(ApplicationClassLoader.IsSystemClass("org.example.Bar"
+			Assert.True(ApplicationClassLoader.IsSystemClass("org.example.Bar"
 				 + nestedClass, Classes("-org.example.Foo.,org.example.")));
 			NUnit.Framework.Assert.IsFalse(ApplicationClassLoader.IsSystemClass("org.example.Foo"
 				 + nestedClass, Classes("org.example.,-org.example.Foo")));
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetResource()
 		{
 			Uri testJar = MakeTestJar().ToURI().ToURL();
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Util
 			InputStream @in = appClassloader.GetResourceAsStream("resource.txt");
 			NUnit.Framework.Assert.IsNotNull("Resource should not be null for app classloader"
 				, @in);
-			NUnit.Framework.Assert.AreEqual("hello", IOUtils.ToString(@in));
+			Assert.Equal("hello", IOUtils.ToString(@in));
 		}
 
 		/// <exception cref="System.IO.IOException"/>

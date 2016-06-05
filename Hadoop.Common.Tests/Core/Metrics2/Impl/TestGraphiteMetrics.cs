@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			return mockGraphite;
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPutMetrics()
 		{
 			GraphiteSink sink = new GraphiteSink();
@@ -51,13 +51,13 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				Sharpen.Runtime.PrintStackTrace(e);
 			}
 			string result = argument.GetValue();
-			NUnit.Framework.Assert.AreEqual(true, result.Equals("null.all.Context.Context=all.Hostname=host.foo1 1.25 10\n"
+			Assert.Equal(true, result.Equals("null.all.Context.Context=all.Hostname=host.foo1 1.25 10\n"
 				 + "null.all.Context.Context=all.Hostname=host.foo2 2.25 10\n") || result.Equals
 				("null.all.Context.Context=all.Hostname=host.foo2 2.25 10\n" + "null.all.Context.Context=all.Hostname=host.foo1 1.25 10\n"
 				));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPutMetrics2()
 		{
 			GraphiteSink sink = new GraphiteSink();
@@ -82,13 +82,13 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				Sharpen.Runtime.PrintStackTrace(e);
 			}
 			string result = argument.GetValue();
-			NUnit.Framework.Assert.AreEqual(true, result.Equals("null.all.Context.Context=all.foo1 1 10\n"
+			Assert.Equal(true, result.Equals("null.all.Context.Context=all.foo1 1 10\n"
 				 + "null.all.Context.Context=all.foo2 2 10\n") || result.Equals("null.all.Context.Context=all.foo2 2 10\n"
 				 + "null.all.Context.Context=all.foo1 1 10\n"));
 		}
 
 		/// <summary>Assert that timestamps are converted correctly, ticket HADOOP-11182</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPutMetrics3()
 		{
 			// setup GraphiteSink
@@ -129,7 +129,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureAndPutMetrics()
 		{
 			GraphiteSink sink = new GraphiteSink();
@@ -156,13 +156,13 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			sink.PutMetrics(record);
 			Org.Mockito.Mockito.Verify(mockGraphite).Write(argument.Capture());
 			string result = argument.GetValue();
-			NUnit.Framework.Assert.AreEqual(true, result.Equals("null.all.Context.Context=all.Hostname=host.foo1 1.25 10\n"
+			Assert.Equal(true, result.Equals("null.all.Context.Context=all.Hostname=host.foo1 1.25 10\n"
 				 + "null.all.Context.Context=all.Hostname=host.foo2 2.25 10\n") || result.Equals
 				("null.all.Context.Context=all.Hostname=host.foo2 2.25 10\n" + "null.all.Context.Context=all.Hostname=host.foo1 1.25 10\n"
 				));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClose()
 		{
 			GraphiteSink sink = new GraphiteSink();

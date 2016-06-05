@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertGauge(string name, int expected, MetricsRecordBuilder rb
 			)
 		{
-			NUnit.Framework.Assert.AreEqual("Bad value for metric " + name, expected, GetIntGauge
+			Assert.Equal("Bad value for metric " + name, expected, GetIntGauge
 				(name, rb));
 		}
 
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertCounter(string name, int expected, MetricsRecordBuilder 
 			rb)
 		{
-			NUnit.Framework.Assert.AreEqual("Bad value for metric " + name, expected, GetIntCounter
+			Assert.Equal("Bad value for metric " + name, expected, GetIntCounter
 				(name, rb));
 		}
 
@@ -177,7 +177,7 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertGauge(string name, long expected, MetricsRecordBuilder rb
 			)
 		{
-			NUnit.Framework.Assert.AreEqual("Bad value for metric " + name, expected, GetLongGauge
+			Assert.Equal("Bad value for metric " + name, expected, GetLongGauge
 				(name, rb));
 		}
 
@@ -197,7 +197,7 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertGauge(string name, double expected, MetricsRecordBuilder
 			 rb)
 		{
-			NUnit.Framework.Assert.AreEqual("Bad value for metric " + name, expected, GetDoubleGauge
+			Assert.Equal("Bad value for metric " + name, expected, GetDoubleGauge
 				(name, rb), Epsilon);
 		}
 
@@ -217,7 +217,7 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertCounter(string name, long expected, MetricsRecordBuilder
 			 rb)
 		{
-			NUnit.Framework.Assert.AreEqual("Bad value for metric " + name, expected, GetLongCounter
+			Assert.Equal("Bad value for metric " + name, expected, GetLongCounter
 				(name, rb));
 		}
 
@@ -237,7 +237,7 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertGauge(string name, float expected, MetricsRecordBuilder 
 			rb)
 		{
-			NUnit.Framework.Assert.AreEqual("Bad value for metric " + name, expected, GetFloatGauge
+			Assert.Equal("Bad value for metric " + name, expected, GetFloatGauge
 				(name, rb), Epsilon);
 		}
 
@@ -253,7 +253,7 @@ namespace Org.Apache.Hadoop.Test
 		/// <summary>Check that this metric was captured exactly once.</summary>
 		private static void CheckCaptured<_T0>(ArgumentCaptor<_T0> captor, string name)
 		{
-			NUnit.Framework.Assert.AreEqual("Expected exactly one metric for name " + name, 1
+			Assert.Equal("Expected exactly one metric for name " + name, 1
 				, captor.GetAllValues().Count);
 		}
 

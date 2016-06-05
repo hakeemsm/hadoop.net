@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			if (type == NotSet || instance == null)
 			{

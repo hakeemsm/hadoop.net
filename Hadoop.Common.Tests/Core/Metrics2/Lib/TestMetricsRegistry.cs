@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 	public class TestMetricsRegistry
 	{
 		/// <summary>Test various factory methods</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNewMetrics()
 		{
 			MetricsRegistry r = new MetricsRegistry("test");
@@ -18,12 +18,12 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			r.NewGauge("g1", "g1 desc", 3);
 			r.NewGauge("g2", "g2 desc", 4L);
 			r.NewStat("s1", "s1 desc", "ops", "time");
-			NUnit.Framework.Assert.AreEqual("num metrics in registry", 5, r.Metrics().Count);
-			NUnit.Framework.Assert.IsTrue("c1 found", r.Get("c1") is MutableCounterInt);
-			NUnit.Framework.Assert.IsTrue("c2 found", r.Get("c2") is MutableCounterLong);
-			NUnit.Framework.Assert.IsTrue("g1 found", r.Get("g1") is MutableGaugeInt);
-			NUnit.Framework.Assert.IsTrue("g2 found", r.Get("g2") is MutableGaugeLong);
-			NUnit.Framework.Assert.IsTrue("s1 found", r.Get("s1") is MutableStat);
+			Assert.Equal("num metrics in registry", 5, r.Metrics().Count);
+			Assert.True("c1 found", r.Get("c1") is MutableCounterInt);
+			Assert.True("c2 found", r.Get("c2") is MutableCounterLong);
+			Assert.True("g1 found", r.Get("g1") is MutableGaugeInt);
+			Assert.True("g2 found", r.Get("g2") is MutableGaugeLong);
+			Assert.True("s1 found", r.Get("s1") is MutableStat);
 			ExpectMetricsException("Metric name c1 already exists", new _Runnable_54(r));
 		}
 
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 		}
 
 		/// <summary>Test adding metrics with whitespace in the name</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMetricsRegistryIllegalMetricNames()
 		{
 			MetricsRegistry r = new MetricsRegistry("test");
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			ExpectMetricsException("Metric name 'withnewline6\n' contains " + "illegal whitespace character"
 				, new _Runnable_92(r));
 			// Final validation
-			NUnit.Framework.Assert.AreEqual("num metrics in registry", 3, r.Metrics().Count);
+			Assert.Equal("num metrics in registry", 3, r.Metrics().Count);
 		}
 
 		private sealed class _Runnable_72 : Runnable
@@ -142,7 +142,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 		}
 
 		/// <summary>Test the add by name method</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddByName()
 		{
 			MetricsRecordBuilder rb = MetricsAsserts.MockMetricsRecordBuilder();
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			}
 			catch (MetricsException e)
 			{
-				NUnit.Framework.Assert.IsTrue("expected exception", e.Message.StartsWith(prefix));
+				Assert.True("expected exception", e.Message.StartsWith(prefix));
 				return;
 			}
 			NUnit.Framework.Assert.Fail("should've thrown '" + prefix + "...'");

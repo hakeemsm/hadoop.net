@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.Util
 			TestIndexedSort.SampleSortable s = new TestIndexedSort.SampleSortable(values);
 			sorter.Sort(s, 0, Sample);
 			int[] check = s.GetSorted();
-			NUnit.Framework.Assert.IsTrue(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
+			Assert.True(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
 				.ToString(check), Arrays.Equals(values, check));
 			// Set random min/max, re-sort.
 			Random r = new Random();
@@ -30,9 +30,9 @@ namespace Org.Apache.Hadoop.Util
 			sorter.Sort(s, 0, Sample);
 			check = s.GetSorted();
 			Arrays.Sort(values);
-			NUnit.Framework.Assert.IsTrue(check[0] == 9);
-			NUnit.Framework.Assert.IsTrue(check[Sample - 1] == 11);
-			NUnit.Framework.Assert.IsTrue(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
+			Assert.True(check[0] == 9);
+			Assert.True(check[Sample - 1] == 11);
+			Assert.True(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
 				.ToString(check), Arrays.Equals(values, check));
 		}
 
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.Util
 			TestIndexedSort.SampleSortable s = new TestIndexedSort.SampleSortable(values);
 			sorter.Sort(s, 0, Sample);
 			int[] check = s.GetSorted();
-			NUnit.Framework.Assert.IsTrue(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
+			Assert.True(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
 				.ToString(check), Arrays.Equals(values, check));
 		}
 
@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.Util
 			TestIndexedSort.SampleSortable s = new TestIndexedSort.SampleSortable(values);
 			sorter.Sort(s, 0, Sample);
 			int[] check = s.GetSorted();
-			NUnit.Framework.Assert.IsTrue(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
+			Assert.True(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
 				.ToString(check), Arrays.Equals(values, check));
 		}
 
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Util
 			int[] values = s.GetValues();
 			sorter.Sort(s, 0, Sample);
 			int[] check = s.GetSorted();
-			NUnit.Framework.Assert.IsTrue(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
+			Assert.True(Arrays.ToString(values) + "\ndoesn't match\n" + Arrays
 				.ToString(check), Arrays.Equals(values, check));
 		}
 
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.Util
 			Arrays.Sort(values);
 			sorter.Sort(s, 0, Sample);
 			int[] check = s.GetSorted();
-			NUnit.Framework.Assert.IsTrue("seed: " + seed + "\ndoesn't match\n", Arrays.Equals
+			Assert.True("seed: " + seed + "\ndoesn't match\n", Arrays.Equals
 				(values, check));
 		}
 
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.Util
 			Arrays.Sort(values);
 			sorter.Sort(s, 0, Sample);
 			string[] check = s.GetSorted();
-			NUnit.Framework.Assert.IsTrue("seed: " + seed + "\ndoesn't match", Arrays.Equals(
+			Assert.True("seed: " + seed + "\ndoesn't match", Arrays.Equals(
 				values, check));
 		}
 
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.Util
 				() + "(" + sorter.GetType().FullName + ")");
 			Arrays.Sort(values);
 			int[] check = s.GetSorted();
-			NUnit.Framework.Assert.IsTrue(Arrays.Equals(values, check));
+			Assert.True(Arrays.Equals(values, check));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -283,14 +283,14 @@ namespace Org.Apache.Hadoop.Util
 
 			public virtual int Compare(int i, int j)
 			{
-				NUnit.Framework.Assert.IsTrue("Expected fewer than " + maxcmp + " comparisons", ++
+				Assert.True("Expected fewer than " + maxcmp + " comparisons", ++
 					comparisions < maxcmp);
 				return s.Compare(i, j);
 			}
 
 			public virtual void Swap(int i, int j)
 			{
-				NUnit.Framework.Assert.IsTrue("Expected fewer than " + maxswp + " swaps", ++swaps
+				Assert.True("Expected fewer than " + maxswp + " swaps", ++swaps
 					 < maxswp);
 				s.Swap(i, j);
 			}

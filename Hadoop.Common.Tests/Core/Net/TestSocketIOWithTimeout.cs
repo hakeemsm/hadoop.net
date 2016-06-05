@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.Net
 					long diff = Time.Now() - start;
 					Log.Info("Got SocketTimeoutException as expected after " + diff + " millis : " + 
 						e.Message);
-					NUnit.Framework.Assert.IsTrue(Math.Abs(expectedTimeout - diff) <= TestNetUtils.TimeFudgeMillis
+					Assert.True(Math.Abs(expectedTimeout - diff) <= TestNetUtils.TimeFudgeMillis
 						);
 					break;
 				}
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketIOWithTimeout()
 		{
 			// first open pipe:
@@ -87,8 +87,8 @@ namespace Org.Apache.Hadoop.Net
 				@out.Write(byteWithHighBit);
 				DoIO(null, @out, Timeout);
 				@in.Read(readBytes);
-				NUnit.Framework.Assert.IsTrue(Arrays.Equals(writeBytes, readBytes));
-				NUnit.Framework.Assert.AreEqual(byteWithHighBit & unchecked((int)(0xff)), @in.Read
+				Assert.True(Arrays.Equals(writeBytes, readBytes));
+				Assert.Equal(byteWithHighBit & unchecked((int)(0xff)), @in.Read
 					());
 				DoIO(@in, null, Timeout);
 				// Change timeout on the read side.
@@ -112,8 +112,8 @@ namespace Org.Apache.Hadoop.Net
 				thread.Interrupt();
 				ctx.Stop();
 				//make sure the channels are still open
-				NUnit.Framework.Assert.IsTrue(source.IsOpen());
-				NUnit.Framework.Assert.IsTrue(sink.IsOpen());
+				Assert.True(source.IsOpen());
+				Assert.True(sink.IsOpen());
 				// Nevertheless, the output stream is closed, because
 				// a partial write may have succeeded (see comment in
 				// SocketOutputStream#write(byte[]), int, int)
@@ -138,7 +138,7 @@ namespace Org.Apache.Hadoop.Net
 				@out.Close();
 				NUnit.Framework.Assert.IsFalse(sink.IsOpen());
 				// close sink and expect -1 from source.read()
-				NUnit.Framework.Assert.AreEqual(-1, @in.Read());
+				Assert.Equal(-1, @in.Read());
 				// make sure close() closes the underlying channel.
 				@in.Close();
 				NUnit.Framework.Assert.IsFalse(source.IsOpen());

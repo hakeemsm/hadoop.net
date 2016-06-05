@@ -32,20 +32,20 @@ namespace Org.Apache.Hadoop.Util
 			thread.Start();
 			bool ret = ShutdownThreadsHelper.ShutdownThread(thread);
 			bool isTerminated = !thread.IsAlive();
-			NUnit.Framework.Assert.AreEqual("Incorrect return value", ret, isTerminated);
-			NUnit.Framework.Assert.IsTrue("Thread is not shutdown", isTerminated);
+			Assert.Equal("Incorrect return value", ret, isTerminated);
+			Assert.True("Thread is not shutdown", isTerminated);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShutdownThreadPool()
 		{
 			ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
 			executor.Execute(sampleRunnable);
 			bool ret = ShutdownThreadsHelper.ShutdownExecutorService(executor);
 			bool isTerminated = executor.IsTerminated();
-			NUnit.Framework.Assert.AreEqual("Incorrect return value", ret, isTerminated);
-			NUnit.Framework.Assert.IsTrue("ExecutorService is not shutdown", isTerminated);
+			Assert.Equal("Incorrect return value", ret, isTerminated);
+			Assert.True("ExecutorService is not shutdown", isTerminated);
 		}
 	}
 }

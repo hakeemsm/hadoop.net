@@ -106,15 +106,15 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// 	"/>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Org.Apache.Hadoop.Ipc.StandbyException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSuccedsOnceThenFailOver()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
 				>(NewFlipFlopProxyProvider(), new TestFailoverProxy.FailOverOnceOnAnyExceptionPolicy
 				());
-			NUnit.Framework.Assert.AreEqual("impl1", unreliable.SucceedsOnceThenFailsReturningString
+			Assert.Equal("impl1", unreliable.SucceedsOnceThenFailsReturningString
 				());
-			NUnit.Framework.Assert.AreEqual("impl2", unreliable.SucceedsOnceThenFailsReturningString
+			Assert.Equal("impl2", unreliable.SucceedsOnceThenFailsReturningString
 				());
 			try
 			{
@@ -131,7 +131,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// 	"/>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Org.Apache.Hadoop.Ipc.StandbyException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSucceedsTenTimesThenFailOver()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -139,10 +139,10 @@ namespace Org.Apache.Hadoop.IO.Retry
 				());
 			for (int i = 0; i < 10; i++)
 			{
-				NUnit.Framework.Assert.AreEqual("impl1", unreliable.SucceedsTenTimesThenFailsReturningString
+				Assert.Equal("impl1", unreliable.SucceedsTenTimesThenFailsReturningString
 					());
 			}
-			NUnit.Framework.Assert.AreEqual("impl2", unreliable.SucceedsTenTimesThenFailsReturningString
+			Assert.Equal("impl2", unreliable.SucceedsTenTimesThenFailsReturningString
 				());
 		}
 
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// 	"/>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Org.Apache.Hadoop.Ipc.StandbyException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNeverFailOver()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -163,7 +163,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 			}
 			catch (UnreliableInterface.UnreliableException e)
 			{
-				NUnit.Framework.Assert.AreEqual("impl1", e.Message);
+				Assert.Equal("impl1", e.Message);
 			}
 		}
 
@@ -171,12 +171,12 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// 	"/>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Org.Apache.Hadoop.Ipc.StandbyException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverOnStandbyException()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
 				>(NewFlipFlopProxyProvider(), RetryPolicies.FailoverOnNetworkException(1));
-			NUnit.Framework.Assert.AreEqual("impl1", unreliable.SucceedsOnceThenFailsReturningString
+			Assert.Equal("impl1", unreliable.SucceedsOnceThenFailsReturningString
 				());
 			try
 			{
@@ -186,15 +186,15 @@ namespace Org.Apache.Hadoop.IO.Retry
 			catch (UnreliableInterface.UnreliableException e)
 			{
 				// Make sure there was no failover on normal exception.
-				NUnit.Framework.Assert.AreEqual("impl1", e.Message);
+				Assert.Equal("impl1", e.Message);
 			}
 			unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface>(NewFlipFlopProxyProvider
 				(UnreliableImplementation.TypeOfExceptionToFailWith.StandbyException, UnreliableImplementation.TypeOfExceptionToFailWith
 				.UnreliableException), RetryPolicies.FailoverOnNetworkException(1));
-			NUnit.Framework.Assert.AreEqual("impl1", unreliable.SucceedsOnceThenFailsReturningString
+			Assert.Equal("impl1", unreliable.SucceedsOnceThenFailsReturningString
 				());
 			// Make sure we fail over since the first implementation threw a StandbyException
-			NUnit.Framework.Assert.AreEqual("impl2", unreliable.SucceedsOnceThenFailsReturningString
+			Assert.Equal("impl2", unreliable.SucceedsOnceThenFailsReturningString
 				());
 		}
 
@@ -202,14 +202,14 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// 	"/>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Org.Apache.Hadoop.Ipc.StandbyException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverOnNetworkExceptionIdempotentOperation()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
 				>(NewFlipFlopProxyProvider(UnreliableImplementation.TypeOfExceptionToFailWith.IoException
 				, UnreliableImplementation.TypeOfExceptionToFailWith.UnreliableException), RetryPolicies
 				.FailoverOnNetworkException(1));
-			NUnit.Framework.Assert.AreEqual("impl1", unreliable.SucceedsOnceThenFailsReturningString
+			Assert.Equal("impl1", unreliable.SucceedsOnceThenFailsReturningString
 				());
 			try
 			{
@@ -220,13 +220,13 @@ namespace Org.Apache.Hadoop.IO.Retry
 			{
 				// Make sure we *don't* fail over since the first implementation threw an
 				// IOException and this method is not idempotent
-				NUnit.Framework.Assert.AreEqual("impl1", e.Message);
+				Assert.Equal("impl1", e.Message);
 			}
-			NUnit.Framework.Assert.AreEqual("impl1", unreliable.SucceedsOnceThenFailsReturningStringIdempotent
+			Assert.Equal("impl1", unreliable.SucceedsOnceThenFailsReturningStringIdempotent
 				());
 			// Make sure we fail over since the first implementation threw an
 			// IOException and this method is idempotent.
-			NUnit.Framework.Assert.AreEqual("impl2", unreliable.SucceedsOnceThenFailsReturningStringIdempotent
+			Assert.Equal("impl2", unreliable.SucceedsOnceThenFailsReturningStringIdempotent
 				());
 		}
 
@@ -235,7 +235,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// the exception is properly propagated
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExceptionPropagatedForNonIdempotentVoid()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -312,7 +312,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// failover.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConcurrentMethodFailures()
 		{
 			TestFailoverProxy.FlipFlopProxyProvider<UnreliableInterface> proxyProvider = new 
@@ -330,9 +330,9 @@ namespace Org.Apache.Hadoop.IO.Retry
 			t2.Start();
 			t1.Join();
 			t2.Join();
-			NUnit.Framework.Assert.AreEqual("impl2", t1.result);
-			NUnit.Framework.Assert.AreEqual("impl2", t2.result);
-			NUnit.Framework.Assert.AreEqual(1, proxyProvider.GetFailoversOccurred());
+			Assert.Equal("impl2", t1.result);
+			Assert.Equal("impl2", t2.result);
+			Assert.Equal(1, proxyProvider.GetFailoversOccurred());
 		}
 
 		/// <summary>
@@ -344,7 +344,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// 	"/>
 		/// <exception cref="Org.Apache.Hadoop.Ipc.StandbyException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverBetweenMultipleStandbys()
 		{
 			long millisToSleep = 10000;
@@ -359,7 +359,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 				, 10, 1000, 10000));
 			new _Thread_328(millisToSleep, impl1).Start();
 			string result = unreliable.FailsIfIdentifierDoesntMatch("renamed-impl1");
-			NUnit.Framework.Assert.AreEqual("renamed-impl1", result);
+			Assert.Equal("renamed-impl1", result);
 		}
 
 		private sealed class _Thread_328 : Sharpen.Thread
@@ -382,7 +382,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		}
 
 		/// <summary>Ensure that normal IO exceptions don't result in a failover.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExpectedIOException()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -396,7 +396,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 			}
 			catch (Exception e)
 			{
-				NUnit.Framework.Assert.IsTrue("Expected IOE but got " + e.GetType(), e is IOException
+				Assert.True("Expected IOE but got " + e.GetType(), e is IOException
 					);
 			}
 		}

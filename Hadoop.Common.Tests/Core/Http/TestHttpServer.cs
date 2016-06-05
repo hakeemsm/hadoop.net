@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.Http
 
 		/// <summary>Test the maximum number of threads cannot be exceeded.</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMaxThreads()
 		{
 			int clientThreads = MaxThreads * 10;
@@ -159,10 +159,10 @@ namespace Org.Apache.Hadoop.Http
 				try
 				{
 					start.Await();
-					NUnit.Framework.Assert.AreEqual("a:b\nc:d\n", HttpServerFunctionalTest.ReadOutput
+					Assert.Equal("a:b\nc:d\n", HttpServerFunctionalTest.ReadOutput
 						(new Uri(HttpServerFunctionalTest.baseUrl, "/echo?a=b&c=d")));
 					int serverThreads = TestHttpServer.server.webServer.GetThreadPool().GetThreads();
-					NUnit.Framework.Assert.IsTrue("More threads are started than expected, Server Threads count: "
+					Assert.True("More threads are started than expected, Server Threads count: "
 						 + serverThreads, serverThreads <= TestHttpServer.MaxThreads);
 					System.Console.Out.WriteLine("Number of threads = " + serverThreads + " which is less or equal than the max = "
 						 + TestHttpServer.MaxThreads);
@@ -178,28 +178,28 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEcho()
 		{
-			NUnit.Framework.Assert.AreEqual("a:b\nc:d\n", ReadOutput(new Uri(baseUrl, "/echo?a=b&c=d"
+			Assert.Equal("a:b\nc:d\n", ReadOutput(new Uri(baseUrl, "/echo?a=b&c=d"
 				)));
-			NUnit.Framework.Assert.AreEqual("a:b\nc&lt;:d\ne:&gt;\n", ReadOutput(new Uri(baseUrl
+			Assert.Equal("a:b\nc&lt;:d\ne:&gt;\n", ReadOutput(new Uri(baseUrl
 				, "/echo?a=b&c<=d&e=>")));
 		}
 
 		/// <summary>Test the echo map servlet that uses getParameterMap.</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEchoMap()
 		{
-			NUnit.Framework.Assert.AreEqual("a:b\nc:d\n", ReadOutput(new Uri(baseUrl, "/echomap?a=b&c=d"
+			Assert.Equal("a:b\nc:d\n", ReadOutput(new Uri(baseUrl, "/echomap?a=b&c=d"
 				)));
-			NUnit.Framework.Assert.AreEqual("a:b,&gt;\nc&lt;:d\n", ReadOutput(new Uri(baseUrl
+			Assert.Equal("a:b,&gt;\nc&lt;:d\n", ReadOutput(new Uri(baseUrl
 				, "/echomap?a=b&c<=d&a=>")));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLongHeader()
 		{
 			Uri url = new Uri(baseUrl, "/longheader");
@@ -208,36 +208,36 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestContentTypes()
 		{
 			// Static CSS files should have text/css
 			Uri cssUrl = new Uri(baseUrl, "/static/test.css");
 			HttpURLConnection conn = (HttpURLConnection)cssUrl.OpenConnection();
 			conn.Connect();
-			NUnit.Framework.Assert.AreEqual(200, conn.GetResponseCode());
-			NUnit.Framework.Assert.AreEqual("text/css", conn.GetContentType());
+			Assert.Equal(200, conn.GetResponseCode());
+			Assert.Equal("text/css", conn.GetContentType());
 			// Servlets should have text/plain with proper encoding by default
 			Uri servletUrl = new Uri(baseUrl, "/echo?a=b");
 			conn = (HttpURLConnection)servletUrl.OpenConnection();
 			conn.Connect();
-			NUnit.Framework.Assert.AreEqual(200, conn.GetResponseCode());
-			NUnit.Framework.Assert.AreEqual("text/plain; charset=utf-8", conn.GetContentType(
+			Assert.Equal(200, conn.GetResponseCode());
+			Assert.Equal("text/plain; charset=utf-8", conn.GetContentType(
 				));
 			// We should ignore parameters for mime types - ie a parameter
 			// ending in .css should not change mime type
 			servletUrl = new Uri(baseUrl, "/echo?a=b.css");
 			conn = (HttpURLConnection)servletUrl.OpenConnection();
 			conn.Connect();
-			NUnit.Framework.Assert.AreEqual(200, conn.GetResponseCode());
-			NUnit.Framework.Assert.AreEqual("text/plain; charset=utf-8", conn.GetContentType(
+			Assert.Equal(200, conn.GetResponseCode());
+			Assert.Equal("text/plain; charset=utf-8", conn.GetContentType(
 				));
 			// Servlets that specify text/html should get that content type
 			servletUrl = new Uri(baseUrl, "/htmlcontent");
 			conn = (HttpURLConnection)servletUrl.OpenConnection();
 			conn.Connect();
-			NUnit.Framework.Assert.AreEqual(200, conn.GetResponseCode());
-			NUnit.Framework.Assert.AreEqual("text/html; charset=utf-8", conn.GetContentType()
+			Assert.Equal(200, conn.GetResponseCode());
+			Assert.Equal("text/html; charset=utf-8", conn.GetContentType()
 				);
 		}
 
@@ -344,7 +344,7 @@ namespace Org.Apache.Hadoop.Http
 		/// enabled.
 		/// </summary>
 		/// <exception cref="System.Exception"></exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDisabledAuthorizationOfDefaultServlets()
 		{
 			Configuration conf = new Configuration();
@@ -368,7 +368,7 @@ namespace Org.Apache.Hadoop.Http
 			{
 				foreach (string user in new string[] { "userA", "userB" })
 				{
-					NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, GetHttpStatusCode(serverURL
+					Assert.Equal(HttpURLConnection.HttpOk, GetHttpStatusCode(serverURL
 						 + servlet, user));
 				}
 			}
@@ -380,7 +380,7 @@ namespace Org.Apache.Hadoop.Http
 		/// /metrics servlets.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthorizationOfDefaultServlets()
 		{
 			Configuration conf = new Configuration();
@@ -410,17 +410,17 @@ namespace Org.Apache.Hadoop.Http
 			{
 				foreach (string user in new string[] { "userA", "userB", "userC", "userD" })
 				{
-					NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, GetHttpStatusCode(serverURL
+					Assert.Equal(HttpURLConnection.HttpOk, GetHttpStatusCode(serverURL
 						 + servlet, user));
 				}
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpForbidden, GetHttpStatusCode
+				Assert.Equal(HttpURLConnection.HttpForbidden, GetHttpStatusCode
 					(serverURL + servlet, "userE"));
 			}
 			myServer.Stop();
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRequestQuoterWithNull()
 		{
 			HttpServletRequest request = Org.Mockito.Mockito.Mock<HttpServletRequest>();
@@ -433,7 +433,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRequestQuoterWithNotNull()
 		{
 			HttpServletRequest request = Org.Mockito.Mockito.Mock<HttpServletRequest>();
@@ -442,7 +442,7 @@ namespace Org.Apache.Hadoop.Http
 			HttpServer2.QuotingInputFilter.RequestQuoter requestQuoter = new HttpServer2.QuotingInputFilter.RequestQuoter
 				(request);
 			string[] parameterValues = requestQuoter.GetParameterValues("dummy");
-			NUnit.Framework.Assert.IsTrue("It should return Parameter Values", Arrays.Equals(
+			Assert.True("It should return Parameter Values", Arrays.Equals(
 				values, parameterValues));
 		}
 
@@ -452,20 +452,20 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJersey()
 		{
 			Log.Info("BEGIN testJersey()");
 			string js = ReadOutput(new Uri(baseUrl, "/jersey/foo?op=bar"));
 			IDictionary<string, object> m = Parse(js);
 			Log.Info("m=" + m);
-			NUnit.Framework.Assert.AreEqual("foo", m[JerseyResource.Path]);
-			NUnit.Framework.Assert.AreEqual("bar", m[JerseyResource.Op]);
+			Assert.Equal("foo", m[JerseyResource.Path]);
+			Assert.Equal("bar", m[JerseyResource.Op]);
 			Log.Info("END testJersey()");
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHasAdministratorAccess()
 		{
 			Configuration conf = new Configuration();
@@ -479,7 +479,7 @@ namespace Org.Apache.Hadoop.Http
 			Org.Mockito.Mockito.When(request.GetRemoteUser()).ThenReturn(null);
 			HttpServletResponse response = Org.Mockito.Mockito.Mock<HttpServletResponse>();
 			//authorization OFF
-			NUnit.Framework.Assert.IsTrue(HttpServer2.HasAdministratorAccess(context, request
+			Assert.True(HttpServer2.HasAdministratorAccess(context, request
 				, response));
 			//authorization ON & user NULL
 			response = Org.Mockito.Mockito.Mock<HttpServletResponse>();
@@ -491,7 +491,7 @@ namespace Org.Apache.Hadoop.Http
 			//authorization ON & user NOT NULL & ACLs NULL
 			response = Org.Mockito.Mockito.Mock<HttpServletResponse>();
 			Org.Mockito.Mockito.When(request.GetRemoteUser()).ThenReturn("foo");
-			NUnit.Framework.Assert.IsTrue(HttpServer2.HasAdministratorAccess(context, request
+			Assert.True(HttpServer2.HasAdministratorAccess(context, request
 				, response));
 			//authorization ON & user NOT NULL & ACLs NOT NULL & user not in ACLs
 			response = Org.Mockito.Mockito.Mock<HttpServletResponse>();
@@ -510,12 +510,12 @@ namespace Org.Apache.Hadoop.Http
 				>())).ThenReturn(true);
 			Org.Mockito.Mockito.When(context.GetAttribute(HttpServer2.AdminsAcl)).ThenReturn(
 				acls);
-			NUnit.Framework.Assert.IsTrue(HttpServer2.HasAdministratorAccess(context, request
+			Assert.True(HttpServer2.HasAdministratorAccess(context, request
 				, response));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRequiresAuthorizationAccess()
 		{
 			Configuration conf = new Configuration();
@@ -525,7 +525,7 @@ namespace Org.Apache.Hadoop.Http
 			HttpServletRequest request = Org.Mockito.Mockito.Mock<HttpServletRequest>();
 			HttpServletResponse response = Org.Mockito.Mockito.Mock<HttpServletResponse>();
 			//requires admin access to instrumentation, FALSE by default
-			NUnit.Framework.Assert.IsTrue(HttpServer2.IsInstrumentationAccessAllowed(context, 
+			Assert.True(HttpServer2.IsInstrumentationAccessAllowed(context, 
 				request, response));
 			//requires admin access to instrumentation, TRUE
 			conf.SetBoolean(CommonConfigurationKeys.HadoopSecurityInstrumentationRequiresAdmin
@@ -541,7 +541,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBindAddress()
 		{
 			CheckBindAddress("localhost", 0, false).Stop();
@@ -559,7 +559,7 @@ namespace Org.Apache.Hadoop.Http
 				NUnit.Framework.Assert.IsNull(myServer2.GetConnectorAddress(0));
 				// not bound
 				myServer2.OpenListeners();
-				NUnit.Framework.Assert.AreEqual(port, myServer2.GetConnectorAddress(0).Port);
+				Assert.Equal(port, myServer2.GetConnectorAddress(0).Port);
 			}
 			finally
 			{
@@ -582,25 +582,25 @@ namespace Org.Apache.Hadoop.Http
 				IList<object> listeners = (IList<object>)Whitebox.GetInternalState(server, "listeners"
 					);
 				Connector listener = (Connector)listeners[0];
-				NUnit.Framework.Assert.AreEqual(port, listener.GetPort());
+				Assert.Equal(port, listener.GetPort());
 				// verify hostname is what was given
 				server.OpenListeners();
-				NUnit.Framework.Assert.AreEqual(host, server.GetConnectorAddress(0).GetHostName()
+				Assert.Equal(host, server.GetConnectorAddress(0).GetHostName()
 					);
 				int boundPort = server.GetConnectorAddress(0).Port;
 				if (port == 0)
 				{
-					NUnit.Framework.Assert.IsTrue(boundPort != 0);
+					Assert.True(boundPort != 0);
 				}
 				else
 				{
 					// ephemeral should now return bound port
 					if (findPort)
 					{
-						NUnit.Framework.Assert.IsTrue(boundPort > port);
+						Assert.True(boundPort > port);
 						// allow a little wiggle room to prevent random test failures if
 						// some consecutive ports are already in use
-						NUnit.Framework.Assert.IsTrue(boundPort - port < 8);
+						Assert.True(boundPort - port < 8);
 					}
 				}
 			}
@@ -613,17 +613,17 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoCacheHeader()
 		{
 			Uri url = new Uri(baseUrl, "/echo?a=b&c=d");
 			HttpURLConnection conn = (HttpURLConnection)url.OpenConnection();
-			NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
-			NUnit.Framework.Assert.AreEqual("no-cache", conn.GetHeaderField("Cache-Control"));
-			NUnit.Framework.Assert.AreEqual("no-cache", conn.GetHeaderField("Pragma"));
+			Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
+			Assert.Equal("no-cache", conn.GetHeaderField("Cache-Control"));
+			Assert.Equal("no-cache", conn.GetHeaderField("Pragma"));
 			NUnit.Framework.Assert.IsNotNull(conn.GetHeaderField("Expires"));
 			NUnit.Framework.Assert.IsNotNull(conn.GetHeaderField("Date"));
-			NUnit.Framework.Assert.AreEqual(conn.GetHeaderField("Expires"), conn.GetHeaderField
+			Assert.Equal(conn.GetHeaderField("Expires"), conn.GetHeaderField
 				("Date"));
 		}
 	}

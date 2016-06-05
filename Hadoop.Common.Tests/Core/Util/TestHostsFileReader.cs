@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.Util
 		*   are equal to the number of hosts written
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostsFileReader()
 		{
 			FileWriter efw = new FileWriter(excludesFile);
@@ -70,11 +70,11 @@ namespace Org.Apache.Hadoop.Util
 			HostsFileReader hfp = new HostsFileReader(includesFile, excludesFile);
 			int includesLen = hfp.GetHosts().Count;
 			int excludesLen = hfp.GetExcludedHosts().Count;
-			NUnit.Framework.Assert.AreEqual(5, includesLen);
-			NUnit.Framework.Assert.AreEqual(5, excludesLen);
-			NUnit.Framework.Assert.IsTrue(hfp.GetHosts().Contains("somehost5"));
+			Assert.Equal(5, includesLen);
+			Assert.Equal(5, excludesLen);
+			Assert.True(hfp.GetHosts().Contains("somehost5"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetHosts().Contains("host3"));
-			NUnit.Framework.Assert.IsTrue(hfp.GetExcludedHosts().Contains("somehost5"));
+			Assert.True(hfp.GetExcludedHosts().Contains("somehost5"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetExcludedHosts().Contains("host4"));
 		}
 
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Util
 		* Test creating a new HostsFileReader with nonexistent files
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateHostFileReaderWithNonexistentFile()
 		{
 			try
@@ -101,7 +101,7 @@ namespace Org.Apache.Hadoop.Util
 		* Test refreshing an existing HostsFileReader with an includes file that no longer exists
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRefreshHostFileReaderWithNonexistentFile()
 		{
 			FileWriter efw = new FileWriter(excludesFile);
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.Util
 			efw.Close();
 			ifw.Close();
 			HostsFileReader hfp = new HostsFileReader(includesFile, excludesFile);
-			NUnit.Framework.Assert.IsTrue(IncludesFile.Delete());
+			Assert.True(IncludesFile.Delete());
 			try
 			{
 				hfp.Refresh();
@@ -125,7 +125,7 @@ namespace Org.Apache.Hadoop.Util
 		* Test for null file
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostFileReaderWithNull()
 		{
 			FileWriter efw = new FileWriter(excludesFile);
@@ -136,8 +136,8 @@ namespace Org.Apache.Hadoop.Util
 			int includesLen = hfp.GetHosts().Count;
 			int excludesLen = hfp.GetExcludedHosts().Count;
 			// TestCase1: Check if lines beginning with # are ignored
-			NUnit.Framework.Assert.AreEqual(0, includesLen);
-			NUnit.Framework.Assert.AreEqual(0, excludesLen);
+			Assert.Equal(0, includesLen);
+			Assert.Equal(0, excludesLen);
 			// TestCase2: Check if given host names are reported by getHosts and
 			// getExcludedHosts
 			NUnit.Framework.Assert.IsFalse(hfp.GetHosts().Contains("somehost5"));
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.Util
 		* Check if only comments can be written to hosts file
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostFileReaderWithCommentsOnly()
 		{
 			FileWriter efw = new FileWriter(excludesFile);
@@ -160,8 +160,8 @@ namespace Org.Apache.Hadoop.Util
 			HostsFileReader hfp = new HostsFileReader(includesFile, excludesFile);
 			int includesLen = hfp.GetHosts().Count;
 			int excludesLen = hfp.GetExcludedHosts().Count;
-			NUnit.Framework.Assert.AreEqual(0, includesLen);
-			NUnit.Framework.Assert.AreEqual(0, excludesLen);
+			Assert.Equal(0, includesLen);
+			Assert.Equal(0, excludesLen);
 			NUnit.Framework.Assert.IsFalse(hfp.GetHosts().Contains("somehost5"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetExcludedHosts().Contains("somehost5"));
 		}
@@ -170,7 +170,7 @@ namespace Org.Apache.Hadoop.Util
 		* Test if spaces are allowed in host names
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostFileReaderWithSpaces()
 		{
 			FileWriter efw = new FileWriter(excludesFile);
@@ -186,12 +186,12 @@ namespace Org.Apache.Hadoop.Util
 			HostsFileReader hfp = new HostsFileReader(includesFile, excludesFile);
 			int includesLen = hfp.GetHosts().Count;
 			int excludesLen = hfp.GetExcludedHosts().Count;
-			NUnit.Framework.Assert.AreEqual(3, includesLen);
-			NUnit.Framework.Assert.AreEqual(3, excludesLen);
-			NUnit.Framework.Assert.IsTrue(hfp.GetHosts().Contains("somehost3"));
+			Assert.Equal(3, includesLen);
+			Assert.Equal(3, excludesLen);
+			Assert.True(hfp.GetHosts().Contains("somehost3"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetHosts().Contains("somehost5"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetHosts().Contains("somehost4"));
-			NUnit.Framework.Assert.IsTrue(hfp.GetExcludedHosts().Contains("somehost3"));
+			Assert.True(hfp.GetExcludedHosts().Contains("somehost3"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetExcludedHosts().Contains("somehost5"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetExcludedHosts().Contains("somehost4"));
 		}
@@ -200,7 +200,7 @@ namespace Org.Apache.Hadoop.Util
 		* Test if spaces , tabs and new lines are allowed
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostFileReaderWithTabs()
 		{
 			FileWriter efw = new FileWriter(excludesFile);
@@ -218,11 +218,11 @@ namespace Org.Apache.Hadoop.Util
 			HostsFileReader hfp = new HostsFileReader(includesFile, excludesFile);
 			int includesLen = hfp.GetHosts().Count;
 			int excludesLen = hfp.GetExcludedHosts().Count;
-			NUnit.Framework.Assert.AreEqual(4, includesLen);
-			NUnit.Framework.Assert.AreEqual(4, excludesLen);
-			NUnit.Framework.Assert.IsTrue(hfp.GetHosts().Contains("somehost2"));
+			Assert.Equal(4, includesLen);
+			Assert.Equal(4, excludesLen);
+			Assert.True(hfp.GetHosts().Contains("somehost2"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetHosts().Contains("somehost5"));
-			NUnit.Framework.Assert.IsTrue(hfp.GetExcludedHosts().Contains("somehost2"));
+			Assert.True(hfp.GetExcludedHosts().Contains("somehost2"));
 			NUnit.Framework.Assert.IsFalse(hfp.GetExcludedHosts().Contains("somehost5"));
 		}
 

@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 				();
 			string args = "-L path";
 			find.ProcessOptions(GetArgs(args));
-			NUnit.Framework.Assert.IsTrue(find.GetOptions().IsFollowLink());
+			Assert.True(find.GetOptions().IsFollowLink());
 			NUnit.Framework.Assert.IsFalse(find.GetOptions().IsFollowArgLink());
 		}
 
@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string args = "-H path";
 			find.ProcessOptions(GetArgs(args));
 			NUnit.Framework.Assert.IsFalse(find.GetOptions().IsFollowLink());
-			NUnit.Framework.Assert.IsTrue(find.GetOptions().IsFollowArgLink());
+			Assert.True(find.GetOptions().IsFollowArgLink());
 		}
 
 		// check follow arg link option is recognized
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 				();
 			string args = "-L -H path";
 			find.ProcessOptions(GetArgs(args));
-			NUnit.Framework.Assert.IsTrue(find.GetOptions().IsFollowLink());
+			Assert.True(find.GetOptions().IsFollowLink());
 			// follow link option takes precedence over follow arg link
 			NUnit.Framework.Assert.IsFalse(find.GetOptions().IsFollowArgLink());
 		}
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			List<string> argsList = GetArgs(args);
 			find.ProcessOptions(argsList);
 			List<string> pathList = GetArgs(paths);
-			NUnit.Framework.Assert.AreEqual(pathList, argsList);
+			Assert.Equal(pathList, argsList);
 		}
 
 		// check print is used as the default expression
@@ -86,7 +86,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "Print(;)";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check unknown options are rejected
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string args = "-print";
 			List<string> argsList = GetArgs(args);
 			find.ProcessOptions(argsList);
-			NUnit.Framework.Assert.AreEqual(Sharpen.Collections.SingletonList(Path.CurDir), argsList
+			Assert.Equal(Sharpen.Collections.SingletonList(Path.CurDir), argsList
 				);
 		}
 
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "And(;Name(namemask;),Print(;))";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check -iname is handled correctly
@@ -164,7 +164,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "And(;Iname-Name(namemask;),Print(;))";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check -print is handled correctly
@@ -178,7 +178,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "Print(;)";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check -print0 is handled correctly
@@ -192,7 +192,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "Print0-Print(;)";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check an implicit and is handled correctly
@@ -206,7 +206,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "And(;And(;Name(one;),Name(two;)),Print(;))";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check -a is handled correctly
@@ -220,7 +220,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "And(;And(;Name(one;),Name(two;)),Print(;))";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check -and is handled correctly
@@ -234,7 +234,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string expected = "And(;And(;Name(one;),Name(two;)),Print(;))";
 			find.ProcessOptions(GetArgs(args));
 			Expression expression = find.GetRootExpression();
-			NUnit.Framework.Assert.AreEqual(expected, expression.ToString());
+			Assert.Equal(expected, expression.ToString());
 		}
 
 		// check expressions are called in the correct order

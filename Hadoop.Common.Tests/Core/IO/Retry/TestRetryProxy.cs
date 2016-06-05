@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 
 		/// <exception cref="Org.Apache.Hadoop.IO.Retry.UnreliableInterface.UnreliableException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTryOnceThenFail()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -41,19 +41,19 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// <see cref="RetryInvocationHandler{T}.IsRpcInvocation(object)"/>
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRpcInvocation()
 		{
 			// For a proxy method should return true
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
 				>(unreliableImpl, RetryPolicies.RetryForever);
-			NUnit.Framework.Assert.IsTrue(RetryInvocationHandler.IsRpcInvocation(unreliable));
+			Assert.True(RetryInvocationHandler.IsRpcInvocation(unreliable));
 			// Embed the proxy in ProtocolTranslator
 			ProtocolTranslator xlator = new _ProtocolTranslator_83(unreliable);
 			// For a proxy wrapped in ProtocolTranslator method should return true
-			NUnit.Framework.Assert.IsTrue(RetryInvocationHandler.IsRpcInvocation(xlator));
+			Assert.True(RetryInvocationHandler.IsRpcInvocation(xlator));
 			// Ensure underlying proxy was looked at
-			NUnit.Framework.Assert.AreEqual(xlator.ToString(), "1");
+			Assert.Equal(xlator.ToString(), "1");
 			// For non-proxy the method must return false
 			NUnit.Framework.Assert.IsFalse(RetryInvocationHandler.IsRpcInvocation(new object(
 				)));
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 
 		/// <exception cref="Org.Apache.Hadoop.IO.Retry.UnreliableInterface.UnreliableException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryForever()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -97,7 +97,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 
 		/// <exception cref="Org.Apache.Hadoop.IO.Retry.UnreliableInterface.UnreliableException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryUpToMaximumCountWithFixedSleep()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -118,7 +118,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		// expected
 		/// <exception cref="Org.Apache.Hadoop.IO.Retry.UnreliableInterface.UnreliableException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryUpToMaximumTimeWithFixedSleep()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -139,7 +139,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		// expected
 		/// <exception cref="Org.Apache.Hadoop.IO.Retry.UnreliableInterface.UnreliableException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryUpToMaximumCountWithProportionalSleep()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -160,7 +160,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		// expected
 		/// <exception cref="Org.Apache.Hadoop.IO.Retry.UnreliableInterface.UnreliableException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExponentialRetry()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -181,7 +181,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		// expected
 		/// <exception cref="Org.Apache.Hadoop.IO.Retry.UnreliableInterface.UnreliableException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryByException()
 		{
 			IDictionary<Type, RetryPolicy> exceptionToPolicyMap = Collections.SingletonMap<Type
@@ -202,7 +202,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		}
 
 		// expected
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryByRemoteException()
 		{
 			IDictionary<Type, RetryPolicy> exceptionToPolicyMap = Sharpen.Collections.SingletonMap
@@ -223,7 +223,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 
 		// expected
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryInterruptible()
 		{
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -238,13 +238,13 @@ namespace Org.Apache.Hadoop.IO.Retry
 			latch.Await();
 			Sharpen.Thread.Sleep(1000);
 			// time to fail and sleep
-			NUnit.Framework.Assert.IsTrue(futureThread.Get().IsAlive());
+			Assert.True(futureThread.Get().IsAlive());
 			futureThread.Get().Interrupt();
 			Exception e = future.Get(1, TimeUnit.Seconds);
 			// should return immediately 
 			NUnit.Framework.Assert.IsNotNull(e);
-			NUnit.Framework.Assert.AreEqual(typeof(Exception), e.GetType());
-			NUnit.Framework.Assert.AreEqual("sleep interrupted", e.Message);
+			Assert.Equal(typeof(Exception), e.GetType());
+			Assert.Equal("sleep interrupted", e.Message);
 		}
 
 		private sealed class _Callable_216 : Callable<Exception>

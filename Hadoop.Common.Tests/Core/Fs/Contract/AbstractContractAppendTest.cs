@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAppendToEmptyFile()
 		{
 			ContractTestUtils.Touch(GetFileSystem(), target);
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAppendNonexistentFile()
 		{
 			try
@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAppendToExistingFile()
 		{
 			byte[] original = ContractTestUtils.Dataset(8192, 'A', 'Z');
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAppendMissingTarget()
 		{
 			try
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameFileBeingAppended()
 		{
 			ContractTestUtils.Touch(GetFileSystem(), target);

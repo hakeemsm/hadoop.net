@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Minikdc
 		private static readonly bool IbmJava = Runtime.GetProperty("java.vendor").Contains
 			("IBM");
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMiniKdcStart()
 		{
 			MiniKdc kdc = GetKdc();
@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.Minikdc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKeytabGen()
 		{
 			MiniKdc kdc = GetKdc();
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.Minikdc
 			//here principals use \ instead of /
 			//because org.apache.directory.server.kerberos.shared.keytab.KeytabDecoder
 			// .getPrincipalName(IoBuffer buffer) use \\ when generates principal
-			NUnit.Framework.Assert.AreEqual(new HashSet<string>(Arrays.AsList("foo\\bar@" + kdc
+			Assert.Equal(new HashSet<string>(Arrays.AsList("foo\\bar@" + kdc
 				.GetRealm(), "bar\\foo@" + kdc.GetRealm())), principals);
 		}
 
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Minikdc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKerberosLogin()
 		{
 			MiniKdc kdc = GetKdc();
@@ -124,10 +124,10 @@ namespace Org.Apache.Hadoop.Minikdc
 					.CreateClientConfig(principal, keytab));
 				loginContext.Login();
 				subject = loginContext.GetSubject();
-				NUnit.Framework.Assert.AreEqual(1, subject.GetPrincipals().Count);
-				NUnit.Framework.Assert.AreEqual(typeof(KerberosPrincipal), subject.GetPrincipals(
+				Assert.Equal(1, subject.GetPrincipals().Count);
+				Assert.Equal(typeof(KerberosPrincipal), subject.GetPrincipals(
 					).GetEnumerator().Next().GetType());
-				NUnit.Framework.Assert.AreEqual(principal + "@" + kdc.GetRealm(), subject.GetPrincipals
+				Assert.Equal(principal + "@" + kdc.GetRealm(), subject.GetPrincipals
 					().GetEnumerator().Next().GetName());
 				loginContext.Logout();
 				//server login
@@ -137,10 +137,10 @@ namespace Org.Apache.Hadoop.Minikdc
 					.CreateServerConfig(principal, keytab));
 				loginContext.Login();
 				subject = loginContext.GetSubject();
-				NUnit.Framework.Assert.AreEqual(1, subject.GetPrincipals().Count);
-				NUnit.Framework.Assert.AreEqual(typeof(KerberosPrincipal), subject.GetPrincipals(
+				Assert.Equal(1, subject.GetPrincipals().Count);
+				Assert.Equal(typeof(KerberosPrincipal), subject.GetPrincipals(
 					).GetEnumerator().Next().GetType());
-				NUnit.Framework.Assert.AreEqual(principal + "@" + kdc.GetRealm(), subject.GetPrincipals
+				Assert.Equal(principal + "@" + kdc.GetRealm(), subject.GetPrincipals
 					().GetEnumerator().Next().GetName());
 				loginContext.Logout();
 			}

@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Crypto
 				Log.Warn("Skipping test since openSSL library not loaded");
 				Assume.AssumeTrue(false);
 			}
-			NUnit.Framework.Assert.AreEqual(null, OpensslCipher.GetLoadingFailureReason());
+			Assert.Equal(null, OpensslCipher.GetLoadingFailureReason());
 			CryptoCodecTest(conf, seed, 0, jceCodecClass, jceCodecClass, iv);
 			CryptoCodecTest(conf, seed, count, jceCodecClass, jceCodecClass, iv);
 			CryptoCodecTest(conf, seed, count, jceCodecClass, opensslCodecClass, iv);
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Crypto
 				Log.Warn("Skipping test since openSSL library not loaded");
 				Assume.AssumeTrue(false);
 			}
-			NUnit.Framework.Assert.AreEqual(null, OpensslCipher.GetLoadingFailureReason());
+			Assert.Equal(null, OpensslCipher.GetLoadingFailureReason());
 			CryptoCodecTest(conf, seed, 0, opensslCodecClass, opensslCodecClass, iv);
 			CryptoCodecTest(conf, seed, count, opensslCodecClass, opensslCodecClass, iv);
 			CryptoCodecTest(conf, seed, count, opensslCodecClass, jceCodecClass, iv);
@@ -155,17 +155,17 @@ namespace Org.Apache.Hadoop.Crypto
 				RandomDatum v2 = new RandomDatum();
 				k2.ReadFields(dataIn);
 				v2.ReadFields(dataIn);
-				NUnit.Framework.Assert.IsTrue("original and encrypted-then-decrypted-output not equal"
+				Assert.True("original and encrypted-then-decrypted-output not equal"
 					, k1.Equals(k2) && v1.Equals(v2));
 				// original and encrypted-then-decrypted-output have the same hashCode
 				IDictionary<RandomDatum, string> m = new Dictionary<RandomDatum, string>();
 				m[k1] = k1.ToString();
 				m[v1] = v1.ToString();
 				string result = m[k2];
-				NUnit.Framework.Assert.AreEqual("k1 and k2 hashcode not equal", result, k1.ToString
+				Assert.Equal("k1 and k2 hashcode not equal", result, k1.ToString
 					());
 				result = m[v2];
-				NUnit.Framework.Assert.AreEqual("v1 and v2 hashcode not equal", result, v1.ToString
+				Assert.Equal("v1 and v2 hashcode not equal", result, v1.ToString
 					());
 			}
 			// Decrypt data byte-at-a-time
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.Crypto
 			do
 			{
 				expected = originalIn.Read();
-				NUnit.Framework.Assert.AreEqual("Decrypted stream read by byte does not match", expected
+				Assert.Equal("Decrypted stream read by byte does not match", expected
 					, @in.Read());
 			}
 			while (expected != -1);
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.Crypto
 			do
 			{
 				expected = originalInput.Read();
-				NUnit.Framework.Assert.AreEqual("Decrypted stream read by byte does not match", expected
+				Assert.Equal("Decrypted stream read by byte does not match", expected
 					, @in.Read());
 			}
 			while (expected != -1);
@@ -224,8 +224,8 @@ namespace Org.Apache.Hadoop.Crypto
 			byte[] rand1 = new byte[len];
 			codec.GenerateSecureRandom(rand);
 			codec.GenerateSecureRandom(rand1);
-			NUnit.Framework.Assert.AreEqual(len, rand.Length);
-			NUnit.Framework.Assert.AreEqual(len, rand1.Length);
+			Assert.Equal(len, rand.Length);
+			Assert.Equal(len, rand1.Length);
 			NUnit.Framework.Assert.IsFalse(Arrays.Equals(rand, rand1));
 		}
 
@@ -276,7 +276,7 @@ namespace Org.Apache.Hadoop.Crypto
 			codec.CalculateIV(initIV, counter, Iv);
 			BigInteger iv = new BigInteger(1, Iv);
 			BigInteger @ref = CalculateRef(initIV, counter);
-			NUnit.Framework.Assert.IsTrue("Calculated IV don't match with the reference", iv.
+			Assert.True("Calculated IV don't match with the reference", iv.
 				Equals(@ref));
 		}
 

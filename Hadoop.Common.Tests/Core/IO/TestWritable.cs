@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.IO
 			internal int state = Random.Next();
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				@out.WriteInt(state);
 			}
@@ -129,7 +129,7 @@ namespace Org.Apache.Hadoop.IO
 			dib.Reset(dob.GetData(), dob.GetLength());
 			Writable after = (Writable)ReflectionUtils.NewInstance(before.GetType(), conf);
 			after.ReadFields(dib);
-			NUnit.Framework.Assert.AreEqual(before, after);
+			Assert.Equal(before, after);
 			return after;
 		}
 
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 			}
 
@@ -187,12 +187,12 @@ namespace Org.Apache.Hadoop.IO
 			frobComparator = WritableComparator.Get(typeof(TestWritable.Frob), conf);
 			System.Diagnostics.Debug.Assert((frobComparator is TestWritable.FrobComparator));
 			NUnit.Framework.Assert.IsNotNull(frobComparator.GetConf());
-			NUnit.Framework.Assert.AreEqual(conf.Get(TestConfigParam), TestConfigValue);
+			Assert.Equal(conf.Get(TestConfigParam), TestConfigValue);
 			// Without conf. should reuse configuration.
 			frobComparator = WritableComparator.Get(typeof(TestWritable.Frob));
 			System.Diagnostics.Debug.Assert((frobComparator is TestWritable.FrobComparator));
 			NUnit.Framework.Assert.IsNotNull(frobComparator.GetConf());
-			NUnit.Framework.Assert.AreEqual(conf.Get(TestConfigParam), TestConfigValue);
+			Assert.Equal(conf.Get(TestConfigParam), TestConfigValue);
 			// New conf. should use new configuration.
 			frobComparator = WritableComparator.Get(typeof(TestWritable.Frob), new Configuration
 				());
@@ -212,18 +212,18 @@ namespace Org.Apache.Hadoop.IO
 			ShortWritable writable2 = new ShortWritable((short)128);
 			ShortWritable writable3 = new ShortWritable((short)256);
 			string ShouldNotMatchWithResultOne = "Result should be 1, should not match the writables";
-			NUnit.Framework.Assert.IsTrue(ShouldNotMatchWithResultOne, writable1.CompareTo(writable2
+			Assert.True(ShouldNotMatchWithResultOne, writable1.CompareTo(writable2
 				) == 1);
-			NUnit.Framework.Assert.IsTrue(ShouldNotMatchWithResultOne, WritableComparator.Get
+			Assert.True(ShouldNotMatchWithResultOne, WritableComparator.Get
 				(typeof(ShortWritable)).Compare(writable1, writable2) == 1);
 			string ShouldNotMatchWithResultMinusOne = "Result should be -1, should not match the writables";
-			NUnit.Framework.Assert.IsTrue(ShouldNotMatchWithResultMinusOne, writable2.CompareTo
+			Assert.True(ShouldNotMatchWithResultMinusOne, writable2.CompareTo
 				(writable1) == -1);
-			NUnit.Framework.Assert.IsTrue(ShouldNotMatchWithResultMinusOne, WritableComparator
+			Assert.True(ShouldNotMatchWithResultMinusOne, WritableComparator
 				.Get(typeof(ShortWritable)).Compare(writable2, writable1) == -1);
 			string ShouldMatch = "Result should be 0, should match the writables";
-			NUnit.Framework.Assert.IsTrue(ShouldMatch, writable1.CompareTo(writable1) == 0);
-			NUnit.Framework.Assert.IsTrue(ShouldMatch, WritableComparator.Get(typeof(ShortWritable
+			Assert.True(ShouldMatch, writable1.CompareTo(writable1) == 0);
+			Assert.True(ShouldMatch, WritableComparator.Get(typeof(ShortWritable
 				)).Compare(writable1, writable3) == 0);
 		}
 
@@ -239,7 +239,7 @@ namespace Org.Apache.Hadoop.IO
 				)wc.NewKey());
 			NUnit.Framework.Assert.IsNotNull(wc.GetConf());
 			NUnit.Framework.Assert.IsNotNull(key.GetConf());
-			NUnit.Framework.Assert.AreEqual(key.GetConf().Get(TestWritableConfigParam), TestWritableConfigValue
+			Assert.Equal(key.GetConf().Get(TestWritableConfigParam), TestWritableConfigValue
 				);
 		}
 	}

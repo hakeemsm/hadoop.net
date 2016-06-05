@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCredentialSuccessfulLifecycle()
 		{
 			outContent.Reset();
@@ -41,31 +41,31 @@ namespace Org.Apache.Hadoop.Security.Alias
 			CredentialShell cs = new CredentialShell();
 			cs.SetConf(new Configuration());
 			rc = cs.Run(args1);
-			NUnit.Framework.Assert.AreEqual(outContent.ToString(), 0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("credential1 has been successfully "
+			Assert.Equal(outContent.ToString(), 0, rc);
+			Assert.True(outContent.ToString().Contains("credential1 has been successfully "
 				 + "created."));
 			outContent.Reset();
 			string[] args2 = new string[] { "list", "-provider", jceksProvider };
 			rc = cs.Run(args2);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("credential1"));
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("credential1"));
 			outContent.Reset();
 			string[] args4 = new string[] { "delete", "credential1", "-f", "-provider", jceksProvider
 				 };
 			rc = cs.Run(args4);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("credential1 has been successfully "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("credential1 has been successfully "
 				 + "deleted."));
 			outContent.Reset();
 			string[] args5 = new string[] { "list", "-provider", jceksProvider };
 			rc = cs.Run(args5);
-			NUnit.Framework.Assert.AreEqual(0, rc);
+			Assert.Equal(0, rc);
 			NUnit.Framework.Assert.IsFalse(outContent.ToString(), outContent.ToString().Contains
 				("credential1"));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidProvider()
 		{
 			string[] args1 = new string[] { "create", "credential1", "-value", "p@ssw0rd", "-provider"
@@ -74,13 +74,13 @@ namespace Org.Apache.Hadoop.Security.Alias
 			CredentialShell cs = new CredentialShell();
 			cs.SetConf(new Configuration());
 			rc = cs.Run(args1);
-			NUnit.Framework.Assert.AreEqual(1, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("There are no valid "
+			Assert.Equal(1, rc);
+			Assert.True(outContent.ToString().Contains("There are no valid "
 				 + "CredentialProviders configured."));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTransientProviderWarning()
 		{
 			string[] args1 = new string[] { "create", "credential1", "-value", "p@ssw0rd", "-provider"
@@ -89,19 +89,19 @@ namespace Org.Apache.Hadoop.Security.Alias
 			CredentialShell cs = new CredentialShell();
 			cs.SetConf(new Configuration());
 			rc = cs.Run(args1);
-			NUnit.Framework.Assert.AreEqual(outContent.ToString(), 0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("WARNING: you are modifying a "
+			Assert.Equal(outContent.ToString(), 0, rc);
+			Assert.True(outContent.ToString().Contains("WARNING: you are modifying a "
 				 + "transient provider."));
 			string[] args2 = new string[] { "delete", "credential1", "-f", "-provider", "user:///"
 				 };
 			rc = cs.Run(args2);
-			NUnit.Framework.Assert.AreEqual(outContent.ToString(), 0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("credential1 has been successfully "
+			Assert.Equal(outContent.ToString(), 0, rc);
+			Assert.True(outContent.ToString().Contains("credential1 has been successfully "
 				 + "deleted."));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTransientProviderOnlyConfig()
 		{
 			string[] args1 = new string[] { "create", "credential1" };
@@ -111,13 +111,13 @@ namespace Org.Apache.Hadoop.Security.Alias
 			config.Set(CredentialProviderFactory.CredentialProviderPath, "user:///");
 			cs.SetConf(config);
 			rc = cs.Run(args1);
-			NUnit.Framework.Assert.AreEqual(1, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("There are no valid "
+			Assert.Equal(1, rc);
+			Assert.True(outContent.ToString().Contains("There are no valid "
 				 + "CredentialProviders configured."));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPromptForCredentialWithEmptyPasswd()
 		{
 			string[] args1 = new string[] { "create", "credential1", "-provider", jceksProvider
@@ -130,13 +130,13 @@ namespace Org.Apache.Hadoop.Security.Alias
 			shell.SetConf(new Configuration());
 			shell.SetPasswordReader(new TestCredShell.MockPasswordReader(this, passwords));
 			rc = shell.Run(args1);
-			NUnit.Framework.Assert.AreEqual(outContent.ToString(), 1, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("Passwords don't match"
+			Assert.Equal(outContent.ToString(), 1, rc);
+			Assert.True(outContent.ToString().Contains("Passwords don't match"
 				));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPromptForCredential()
 		{
 			string[] args1 = new string[] { "create", "credential1", "-provider", jceksProvider
@@ -149,14 +149,14 @@ namespace Org.Apache.Hadoop.Security.Alias
 			shell.SetConf(new Configuration());
 			shell.SetPasswordReader(new TestCredShell.MockPasswordReader(this, passwords));
 			rc = shell.Run(args1);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("credential1 has been successfully "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("credential1 has been successfully "
 				 + "created."));
 			string[] args2 = new string[] { "delete", "credential1", "-f", "-provider", jceksProvider
 				 };
 			rc = shell.Run(args2);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("credential1 has been successfully "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("credential1 has been successfully "
 				 + "deleted."));
 		}
 
@@ -189,39 +189,39 @@ namespace Org.Apache.Hadoop.Security.Alias
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEmptyArgList()
 		{
 			CredentialShell shell = new CredentialShell();
 			shell.SetConf(new Configuration());
-			NUnit.Framework.Assert.AreEqual(1, shell.Init(new string[0]));
+			Assert.Equal(1, shell.Init(new string[0]));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCommandHelpExitsNormally()
 		{
 			foreach (string cmd in Arrays.AsList("create", "list", "delete"))
 			{
 				CredentialShell shell = new CredentialShell();
 				shell.SetConf(new Configuration());
-				NUnit.Framework.Assert.AreEqual("Expected help argument on " + cmd + " to return 0"
+				Assert.Equal("Expected help argument on " + cmd + " to return 0"
 					, 0, shell.Init(new string[] { cmd, "-help" }));
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEmptyArgForCommands()
 		{
 			CredentialShell shell = new CredentialShell();
 			string[] command = new string[] { "list", "-provider" };
-			NUnit.Framework.Assert.AreEqual("Expected empty argument on " + command + " to return 1"
+			Assert.Equal("Expected empty argument on " + command + " to return 1"
 				, 1, shell.Init(command));
 			foreach (string cmd in Arrays.AsList("create", "delete"))
 			{
 				shell.SetConf(new Configuration());
-				NUnit.Framework.Assert.AreEqual("Expected empty argument on " + cmd + " to return 1"
+				Assert.Equal("Expected empty argument on " + cmd + " to return 1"
 					, 1, shell.Init(new string[] { cmd }));
 			}
 		}

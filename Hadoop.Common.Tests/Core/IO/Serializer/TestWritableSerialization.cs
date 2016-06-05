@@ -9,16 +9,16 @@ namespace Org.Apache.Hadoop.IO.Serializer
 		private static readonly Configuration conf = new Configuration();
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWritableSerialization()
 		{
 			Text before = new Text("test writable");
 			Text after = SerializationTestUtil.TestSerialization(conf, before);
-			NUnit.Framework.Assert.AreEqual(before, after);
+			Assert.Equal(before, after);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWritableConfigurable()
 		{
 			//set the configuration parameter
@@ -32,12 +32,12 @@ namespace Org.Apache.Hadoop.IO.Serializer
 			generic.Set(baz);
 			TestGenericWritable.Baz result = SerializationTestUtil.TestSerialization(conf, baz
 				);
-			NUnit.Framework.Assert.AreEqual(baz, result);
+			Assert.Equal(baz, result);
 			NUnit.Framework.Assert.IsNotNull(result.GetConf());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWritableComparatorJavaSerialization()
 		{
 			Serialization ser = new JavaSerialization();
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.IO.Serializer
 			deserializer.Open(dib);
 			TestWritableSerialization.TestWC deser = deserializer.Deserialize(null);
 			deserializer.Close();
-			NUnit.Framework.Assert.AreEqual(orig, deser);
+			Assert.Equal(orig, deser);
 		}
 
 		[System.Serializable]

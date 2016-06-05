@@ -355,7 +355,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			// no-op
 			outKey.Close();
 			outKey.Close();
-			NUnit.Framework.Assert.IsTrue("Multiple close should have no effect.", true);
+			Assert.True("Multiple close should have no effect.", true);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -454,7 +454,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			if (!Sharpen.Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
 				()))
 			{
-				NUnit.Framework.Assert.IsTrue(@out.GetPos() < rawDataSize);
+				Assert.True(@out.GetPos() < rawDataSize);
 			}
 			CloseOutput();
 		}
@@ -470,7 +470,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			if (!Sharpen.Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
 				()))
 			{
-				NUnit.Framework.Assert.IsTrue(@out.GetPos() < rawDataSize);
+				Assert.True(@out.GetPos() < rawDataSize);
 			}
 			CloseOutput();
 		}

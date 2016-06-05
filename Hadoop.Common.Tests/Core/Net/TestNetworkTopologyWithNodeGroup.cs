@@ -28,45 +28,45 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNumOfChildren()
 		{
-			NUnit.Framework.Assert.AreEqual(dataNodes.Length, cluster.GetNumOfLeaves());
+			Assert.Equal(dataNodes.Length, cluster.GetNumOfLeaves());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNumOfRacks()
 		{
-			NUnit.Framework.Assert.AreEqual(3, cluster.GetNumOfRacks());
+			Assert.Equal(3, cluster.GetNumOfRacks());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRacks()
 		{
-			NUnit.Framework.Assert.AreEqual(3, cluster.GetNumOfRacks());
-			NUnit.Framework.Assert.IsTrue(cluster.IsOnSameRack(dataNodes[0], dataNodes[1]));
-			NUnit.Framework.Assert.IsTrue(cluster.IsOnSameRack(dataNodes[1], dataNodes[2]));
+			Assert.Equal(3, cluster.GetNumOfRacks());
+			Assert.True(cluster.IsOnSameRack(dataNodes[0], dataNodes[1]));
+			Assert.True(cluster.IsOnSameRack(dataNodes[1], dataNodes[2]));
 			NUnit.Framework.Assert.IsFalse(cluster.IsOnSameRack(dataNodes[2], dataNodes[3]));
-			NUnit.Framework.Assert.IsTrue(cluster.IsOnSameRack(dataNodes[3], dataNodes[4]));
-			NUnit.Framework.Assert.IsTrue(cluster.IsOnSameRack(dataNodes[4], dataNodes[5]));
+			Assert.True(cluster.IsOnSameRack(dataNodes[3], dataNodes[4]));
+			Assert.True(cluster.IsOnSameRack(dataNodes[4], dataNodes[5]));
 			NUnit.Framework.Assert.IsFalse(cluster.IsOnSameRack(dataNodes[5], dataNodes[6]));
-			NUnit.Framework.Assert.IsTrue(cluster.IsOnSameRack(dataNodes[6], dataNodes[7]));
+			Assert.True(cluster.IsOnSameRack(dataNodes[6], dataNodes[7]));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNodeGroups()
 		{
-			NUnit.Framework.Assert.AreEqual(3, cluster.GetNumOfRacks());
-			NUnit.Framework.Assert.IsTrue(cluster.IsOnSameNodeGroup(dataNodes[0], dataNodes[1
+			Assert.Equal(3, cluster.GetNumOfRacks());
+			Assert.True(cluster.IsOnSameNodeGroup(dataNodes[0], dataNodes[1
 				]));
 			NUnit.Framework.Assert.IsFalse(cluster.IsOnSameNodeGroup(dataNodes[1], dataNodes[
 				2]));
 			NUnit.Framework.Assert.IsFalse(cluster.IsOnSameNodeGroup(dataNodes[2], dataNodes[
 				3]));
-			NUnit.Framework.Assert.IsTrue(cluster.IsOnSameNodeGroup(dataNodes[3], dataNodes[4
+			Assert.True(cluster.IsOnSameNodeGroup(dataNodes[3], dataNodes[4
 				]));
 			NUnit.Framework.Assert.IsFalse(cluster.IsOnSameNodeGroup(dataNodes[4], dataNodes[
 				5]));
@@ -77,23 +77,23 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetDistance()
 		{
-			NUnit.Framework.Assert.AreEqual(0, cluster.GetDistance(dataNodes[0], dataNodes[0]
+			Assert.Equal(0, cluster.GetDistance(dataNodes[0], dataNodes[0]
 				));
-			NUnit.Framework.Assert.AreEqual(2, cluster.GetDistance(dataNodes[0], dataNodes[1]
+			Assert.Equal(2, cluster.GetDistance(dataNodes[0], dataNodes[1]
 				));
-			NUnit.Framework.Assert.AreEqual(4, cluster.GetDistance(dataNodes[0], dataNodes[2]
+			Assert.Equal(4, cluster.GetDistance(dataNodes[0], dataNodes[2]
 				));
-			NUnit.Framework.Assert.AreEqual(6, cluster.GetDistance(dataNodes[0], dataNodes[3]
+			Assert.Equal(6, cluster.GetDistance(dataNodes[0], dataNodes[3]
 				));
-			NUnit.Framework.Assert.AreEqual(8, cluster.GetDistance(dataNodes[0], dataNodes[6]
+			Assert.Equal(8, cluster.GetDistance(dataNodes[0], dataNodes[6]
 				));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSortByDistance()
 		{
 			NodeBase[] testNodes = new NodeBase[4];
@@ -103,34 +103,34 @@ namespace Org.Apache.Hadoop.Net
 			testNodes[2] = dataNodes[3];
 			testNodes[3] = dataNodes[0];
 			cluster.SortByDistance(dataNodes[0], testNodes, testNodes.Length);
-			NUnit.Framework.Assert.IsTrue(testNodes[0] == dataNodes[0]);
-			NUnit.Framework.Assert.IsTrue(testNodes[1] == dataNodes[1]);
-			NUnit.Framework.Assert.IsTrue(testNodes[2] == dataNodes[2]);
-			NUnit.Framework.Assert.IsTrue(testNodes[3] == dataNodes[3]);
+			Assert.True(testNodes[0] == dataNodes[0]);
+			Assert.True(testNodes[1] == dataNodes[1]);
+			Assert.True(testNodes[2] == dataNodes[2]);
+			Assert.True(testNodes[3] == dataNodes[3]);
 			// array contains local node & local node group
 			testNodes[0] = dataNodes[3];
 			testNodes[1] = dataNodes[4];
 			testNodes[2] = dataNodes[1];
 			testNodes[3] = dataNodes[0];
 			cluster.SortByDistance(dataNodes[0], testNodes, testNodes.Length);
-			NUnit.Framework.Assert.IsTrue(testNodes[0] == dataNodes[0]);
-			NUnit.Framework.Assert.IsTrue(testNodes[1] == dataNodes[1]);
+			Assert.True(testNodes[0] == dataNodes[0]);
+			Assert.True(testNodes[1] == dataNodes[1]);
 			// array contains local node & rack node
 			testNodes[0] = dataNodes[5];
 			testNodes[1] = dataNodes[3];
 			testNodes[2] = dataNodes[2];
 			testNodes[3] = dataNodes[0];
 			cluster.SortByDistance(dataNodes[0], testNodes, testNodes.Length);
-			NUnit.Framework.Assert.IsTrue(testNodes[0] == dataNodes[0]);
-			NUnit.Framework.Assert.IsTrue(testNodes[1] == dataNodes[2]);
+			Assert.True(testNodes[0] == dataNodes[0]);
+			Assert.True(testNodes[1] == dataNodes[2]);
 			// array contains local-nodegroup node (not a data node also) & rack node
 			testNodes[0] = dataNodes[6];
 			testNodes[1] = dataNodes[7];
 			testNodes[2] = dataNodes[2];
 			testNodes[3] = dataNodes[0];
 			cluster.SortByDistance(computeNode, testNodes, testNodes.Length);
-			NUnit.Framework.Assert.IsTrue(testNodes[0] == dataNodes[0]);
-			NUnit.Framework.Assert.IsTrue(testNodes[1] == dataNodes[2]);
+			Assert.True(testNodes[0] == dataNodes[0]);
+			Assert.True(testNodes[1] == dataNodes[2]);
 		}
 
 		/// <summary>This picks a large number of nodes at random in order to ensure coverage
@@ -161,7 +161,7 @@ namespace Org.Apache.Hadoop.Net
 		/// so cannot be added to cluster. We should test proper exception is thrown in
 		/// adding node but shouldn't affect the cluster.
 		/// </remarks>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestChooseRandomExcludedNode()
 		{
 			string scope = "~" + NodeBase.GetPath(dataNodes[0]);
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.Net
 			foreach (Node key in dataNodes)
 			{
 				// all nodes except the first should be more than zero
-				NUnit.Framework.Assert.IsTrue(frequency[key] > 0 || key == dataNodes[0]);
+				Assert.True(frequency[key] > 0 || key == dataNodes[0]);
 			}
 		}
 
@@ -177,7 +177,7 @@ namespace Org.Apache.Hadoop.Net
 		/// This test checks that adding a node with invalid topology will be failed
 		/// with an exception to show topology is invalid.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddNodeWithInvalidTopology()
 		{
 			// The last node is a node with invalid topology
@@ -194,7 +194,7 @@ namespace Org.Apache.Hadoop.Net
 					NUnit.Framework.Assert.Fail("Expecting IllegalArgumentException, but caught:" + e
 						);
 				}
-				NUnit.Framework.Assert.IsTrue(e.Message.Contains("illegal network location"));
+				Assert.True(e.Message.Contains("illegal network location"));
 			}
 		}
 	}

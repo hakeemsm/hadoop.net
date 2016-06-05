@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			WritableUtils.WriteVInt(@out, keyId);
 			WritableUtils.WriteVLong(@out, expiryDate);

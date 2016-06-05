@@ -45,6 +45,6 @@ namespace Org.Apache.Hadoop.FS
 
 		public abstract void ReadFields(BinaryReader arg1);
 
-		public abstract void Write(DataOutput arg1);
+		public abstract void Write(BinaryWriter arg1);
 	}
 }

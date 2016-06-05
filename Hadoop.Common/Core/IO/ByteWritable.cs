@@ -1,11 +1,10 @@
 using System.IO;
-using Hadoop.Common.Core.IO;
-using Sharpen;
+using Org.Apache.Hadoop.IO;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A WritableComparable for a single byte.</summary>
-	public class ByteWritable : IWritableComparable<Org.Apache.Hadoop.IO.ByteWritable>
+	public class ByteWritable : IWritableComparable<ByteWritable>
 	{
 		private byte value;
 
@@ -31,25 +30,25 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
-			value = @in.ReadByte();
+			value = reader.ReadByte();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter writer)
 		{
-			@out.WriteByte(value);
+			writer.Write(value);
 		}
 
 		/// <summary>Returns true iff <code>o</code> is a ByteWritable with the same value.</summary>
 		public override bool Equals(object o)
 		{
-			if (!(o is Org.Apache.Hadoop.IO.ByteWritable))
+			if (!(o is ByteWritable))
 			{
 				return false;
 			}
-			Org.Apache.Hadoop.IO.ByteWritable other = (Org.Apache.Hadoop.IO.ByteWritable)o;
+			ByteWritable other = (ByteWritable)o;
 			return this.value == other.value;
 		}
 
@@ -59,7 +58,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Compares two ByteWritables.</summary>
-		public virtual int CompareTo(Org.Apache.Hadoop.IO.ByteWritable o)
+		public virtual int CompareTo(ByteWritable o)
 		{
 			int thisValue = this.value;
 			int thatValue = o.value;
@@ -68,7 +67,7 @@ namespace Org.Apache.Hadoop.IO
 
 		public override string ToString()
 		{
-			return byte.ToString(value);
+			return value.ToString();
 		}
 
 		/// <summary>A Comparator optimized for ByteWritable.</summary>

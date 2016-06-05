@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Ipc
 			mux = new WeightedRoundRobinMultiplexer(2, "namespace", conf);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLegalInstantiation()
 		{
 			Configuration conf = new Configuration();
@@ -40,54 +40,54 @@ namespace Org.Apache.Hadoop.Ipc
 			mux = new WeightedRoundRobinMultiplexer(3, "namespace.", conf);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultPattern()
 		{
 			// Mux of size 1: 0 0 0 0 0, etc
 			mux = new WeightedRoundRobinMultiplexer(1, string.Empty, new Configuration());
 			for (int i = 0; i < 10; i++)
 			{
-				NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
+				Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
 			}
 			// Mux of size 2: 0 0 1 0 0 1 0 0 1, etc
 			mux = new WeightedRoundRobinMultiplexer(2, string.Empty, new Configuration());
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
 			// Size 3: 4x0 2x1 1x2, etc
 			mux = new WeightedRoundRobinMultiplexer(3, string.Empty, new Configuration());
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 2);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 2);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
 			// Size 4: 8x0 4x1 2x2 1x3
 			mux = new WeightedRoundRobinMultiplexer(4, string.Empty, new Configuration());
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 2);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 2);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 3);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 2);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 2);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 3);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCustomPattern()
 		{
 			// 1x0 1x1
@@ -95,22 +95,22 @@ namespace Org.Apache.Hadoop.Ipc
 			conf.SetStrings("test.custom." + WeightedRoundRobinMultiplexer.IpcCallqueueWrrmuxWeightsKey
 				, "1", "1");
 			mux = new WeightedRoundRobinMultiplexer(2, "test.custom", conf);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-			NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+			Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
 			// 1x0 3x1 2x2
 			conf.SetStrings("test.custom." + WeightedRoundRobinMultiplexer.IpcCallqueueWrrmuxWeightsKey
 				, "1", "3", "2");
 			mux = new WeightedRoundRobinMultiplexer(3, "test.custom", conf);
 			for (int i = 0; i < 5; i++)
 			{
-				NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 0);
-				NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-				NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-				NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 1);
-				NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 2);
-				NUnit.Framework.Assert.AreEqual(mux.GetAndAdvanceCurrentIndex(), 2);
+				Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 0);
+				Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+				Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+				Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 1);
+				Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 2);
+				Assert.Equal(mux.GetAndAdvanceCurrentIndex(), 2);
 			}
 		}
 		// Ensure pattern repeats

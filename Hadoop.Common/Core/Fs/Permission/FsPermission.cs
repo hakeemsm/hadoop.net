@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteShort(ToShort());
 		}

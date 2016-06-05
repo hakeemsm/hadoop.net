@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.FS
 		// /////////////////////////////////////////
 		/// <exception cref="System.IO.IOException"/>
 		[InterfaceAudience.Private]
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteLong(blockSize);
 			@out.WriteInt(bytesPerChecksum);

@@ -173,7 +173,7 @@ namespace Hadoop.Common.Core.IO
 		}
         
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			// First write out the size of the class table and any classes that are
 			// "unknown" classes

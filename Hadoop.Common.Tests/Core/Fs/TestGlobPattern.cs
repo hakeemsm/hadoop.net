@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.FS
 			foreach (string s in input)
 			{
 				bool result = pattern.Matches(s);
-				NUnit.Framework.Assert.IsTrue(glob + " should" + (yes ? string.Empty : " not") + 
+				Assert.True(glob + " should" + (yes ? string.Empty : " not") + 
 					" match " + s, yes ? result : !result);
 			}
 		}
@@ -29,11 +29,11 @@ namespace Org.Apache.Hadoop.FS
 					Sharpen.Runtime.PrintStackTrace(e);
 					continue;
 				}
-				NUnit.Framework.Assert.IsTrue("glob " + glob + " should throw", false);
+				Assert.True("glob " + glob + " should throw", false);
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestValidPatterns()
 		{
 			AssertMatch(true, "*", "^$", "foo", "bar");
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.FS
 			AssertMatch(true, "}", "}");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidPatterns()
 		{
 			ShouldThrow("[", "[[]]", "[][]", "{", "\\");

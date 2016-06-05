@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			//When timing out exception is thrown.
 			shellFile.Delete();
-			NUnit.Framework.Assert.IsTrue("Script didnt not timeout", shexc.IsTimedOut());
+			Assert.True("Script didnt not timeout", shexc.IsTimedOut());
 		}
 
 		private static int CountTimerThreads()
@@ -151,7 +151,7 @@ namespace Org.Apache.Hadoop.Util
 			Sharpen.Thread.Sleep(1000);
 			int timersAfter = CountTimerThreads();
 			System.Console.Error.WriteLine("after: " + timersAfter);
-			NUnit.Framework.Assert.AreEqual(timersBefore, timersAfter);
+			Assert.Equal(timersBefore, timersAfter);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -159,15 +159,15 @@ namespace Org.Apache.Hadoop.Util
 		{
 			TestShell.Command command = new TestShell.Command(interval);
 			command.Run();
-			NUnit.Framework.Assert.AreEqual(1, command.GetRunCount());
+			Assert.Equal(1, command.GetRunCount());
 			command.Run();
 			if (interval > 0)
 			{
-				NUnit.Framework.Assert.AreEqual(1, command.GetRunCount());
+				Assert.Equal(1, command.GetRunCount());
 			}
 			else
 			{
-				NUnit.Framework.Assert.AreEqual(2, command.GetRunCount());
+				Assert.Equal(2, command.GetRunCount());
 			}
 		}
 	}

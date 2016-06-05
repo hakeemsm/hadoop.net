@@ -71,7 +71,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			WriteObject(@out, instance, declaredClass, conf);
 		}
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				UTF8.WriteString(@out, declaredClass.FullName);
 			}
@@ -141,7 +141,7 @@ namespace Org.Apache.Hadoop.IO
 		/// the preceding.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteObject(DataOutput @out, object instance, Type declaredClass
+		public static void WriteObject(BinaryWriter @out, object instance, Type declaredClass
 			, Configuration conf)
 		{
 			WriteObject(@out, instance, declaredClass, conf, false);
@@ -163,7 +163,7 @@ namespace Org.Apache.Hadoop.IO
 		/// we can consider removing this parameter and always using the compact format.
 		/// </param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteObject(DataOutput @out, object instance, Type declaredClass
+		public static void WriteObject(BinaryWriter @out, object instance, Type declaredClass
 			, Configuration conf, bool allowCompactArrays)
 		{
 			if (instance == null)

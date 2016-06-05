@@ -32,11 +32,11 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation ugi1 = UserGroupInformation.LoginUserFromKeytabAndReturnUGI(
 				args[0], args[1]);
 			System.Console.Out.WriteLine("UGI 1 = " + ugi1);
-			NUnit.Framework.Assert.IsTrue(ugi1.GetUserName().Equals(args[0]));
+			Assert.True(ugi1.GetUserName().Equals(args[0]));
 			UserGroupInformation ugi2 = UserGroupInformation.LoginUserFromKeytabAndReturnUGI(
 				args[2], args[3]);
 			System.Console.Out.WriteLine("UGI 2 = " + ugi2);
-			NUnit.Framework.Assert.IsTrue(ugi2.GetUserName().Equals(args[2]));
+			Assert.True(ugi2.GetUserName().Equals(args[2]));
 		}
 	}
 }

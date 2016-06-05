@@ -101,9 +101,9 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					this.compressAlgo = compressionAlgo;
 					this.fsOut = fsOut;
 					this.posStart = fsOut.GetPos();
-					fsOutputBuffer.SetCapacity(TFile.GetFSOutputBufferSize(conf));
+					fsOutputBuffer.Capacity = TFile.GetFSOutputBufferSize(conf);
 					this.fsBufferedOutput = new SimpleBufferedOutputStream(this.fsOut, fsOutputBuffer
-						.GetBytes());
+						.Bytes);
 					this.compressor = compressAlgo.GetCompressor();
 					try
 					{
@@ -798,7 +798,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				Utils.WriteVInt(@out, index.Count);
 				foreach (BCFile.MetaIndexEntry indexEntry in index.Values)
@@ -861,7 +861,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(DataOutput @out)
+			public void Write(BinaryWriter @out)
 			{
 				Utils.WriteString(@out, defaultPrefix + metaName);
 				Utils.WriteString(@out, compressionAlgorithm.GetName());
@@ -919,7 +919,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				Utils.WriteString(@out, defaultCompressionAlgorithm.GetName());
 				Utils.WriteVInt(@out, listRegions.Count);
@@ -958,7 +958,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public static void Write(DataOutput @out)
+			public static void Write(BinaryWriter @out)
 			{
 				@out.Write(AbMagicBcfile);
 			}
@@ -994,7 +994,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(DataOutput @out)
+			public void Write(BinaryWriter @out)
 			{
 				Utils.WriteVLong(@out, offset);
 				Utils.WriteVLong(@out, compressedSize);

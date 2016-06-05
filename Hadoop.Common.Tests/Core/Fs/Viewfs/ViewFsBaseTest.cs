@@ -103,12 +103,12 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			fcTarget.Delete(fileContextTestHelper.GetTestRootPath(fcTarget), true);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetMountPoints()
 		{
 			ViewFs viewfs = (ViewFs)fcView.GetDefaultFileSystem();
 			ViewFs.MountPoint[] mountPoints = viewfs.GetMountPoints();
-			NUnit.Framework.Assert.AreEqual(8, mountPoints.Length);
+			Assert.Equal(8, mountPoints.Length);
 		}
 
 		internal virtual int GetExpectedDelegationTokenCount()
@@ -126,25 +126,25 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// It should be overridden for when mount points into hdfs.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetDelegationTokens()
 		{
 			IList<Org.Apache.Hadoop.Security.Token.Token<object>> delTokens = fcView.GetDelegationTokens
 				(new Path("/"), "sanjay");
-			NUnit.Framework.Assert.AreEqual(GetExpectedDelegationTokenCount(), delTokens.Count
+			Assert.Equal(GetExpectedDelegationTokenCount(), delTokens.Count
 				);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBasicPaths()
 		{
-			NUnit.Framework.Assert.AreEqual(FsConstants.ViewfsUri, fcView.GetDefaultFileSystem
+			Assert.Equal(FsConstants.ViewfsUri, fcView.GetDefaultFileSystem
 				().GetUri());
-			NUnit.Framework.Assert.AreEqual(fcView.MakeQualified(new Path("/user/" + Runtime.
+			Assert.Equal(fcView.MakeQualified(new Path("/user/" + Runtime.
 				GetProperty("user.name"))), fcView.GetWorkingDirectory());
-			NUnit.Framework.Assert.AreEqual(fcView.MakeQualified(new Path("/user/" + Runtime.
+			Assert.Equal(fcView.MakeQualified(new Path("/user/" + Runtime.
 				GetProperty("user.name"))), fcView.GetHomeDirectory());
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar").MakeQualified(FsConstants.ViewfsUri
+			Assert.Equal(new Path("/foo/bar").MakeQualified(FsConstants.ViewfsUri
 				, null), fcView.MakeQualified(new Path("/foo/bar")));
 		}
 
@@ -162,17 +162,17 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// target file system (ie fclocal) that the mount link points-to.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOperationsThroughMountLinks()
 		{
 			// Create file 
 			fileContextTestHelper.CreateFileNonRecursive(fcView, "/user/foo");
-			NUnit.Framework.Assert.IsTrue("Create file should be file", FileContextTestHelper.IsFile
+			Assert.True("Create file should be file", FileContextTestHelper.IsFile
 				(fcView, new Path("/user/foo")));
-			NUnit.Framework.Assert.IsTrue("Target of created file should be type file", FileContextTestHelper.IsFile
+			Assert.True("Target of created file should be type file", FileContextTestHelper.IsFile
 				(fcTarget, new Path(targetTestRoot, "user/foo")));
 			// Delete the created file
-			NUnit.Framework.Assert.IsTrue("Delete should succeed", fcView.Delete(new Path("/user/foo"
+			Assert.True("Delete should succeed", fcView.Delete(new Path("/user/foo"
 				), false));
 			NUnit.Framework.Assert.IsFalse("File should not exist after delete", FileContextTestHelper.Exists
 				(fcView, new Path("/user/foo")));
@@ -181,12 +181,12 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			// Create file with a 2 component dirs
 			fileContextTestHelper.CreateFileNonRecursive(fcView, "/internalDir/linkToDir2/foo"
 				);
-			NUnit.Framework.Assert.IsTrue("Created file should be type file", FileContextTestHelper.IsFile
+			Assert.True("Created file should be type file", FileContextTestHelper.IsFile
 				(fcView, new Path("/internalDir/linkToDir2/foo")));
-			NUnit.Framework.Assert.IsTrue("Target of created file should be type file", FileContextTestHelper.IsFile
+			Assert.True("Target of created file should be type file", FileContextTestHelper.IsFile
 				(fcTarget, new Path(targetTestRoot, "dir2/foo")));
 			// Delete the created file
-			NUnit.Framework.Assert.IsTrue("Delete should suceed", fcView.Delete(new Path("/internalDir/linkToDir2/foo"
+			Assert.True("Delete should suceed", fcView.Delete(new Path("/internalDir/linkToDir2/foo"
 				), false));
 			NUnit.Framework.Assert.IsFalse("File should not exist after deletion", FileContextTestHelper.Exists
 				(fcView, new Path("/internalDir/linkToDir2/foo")));
@@ -195,20 +195,20 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			// Create file with a 3 component dirs
 			fileContextTestHelper.CreateFileNonRecursive(fcView, "/internalDir/internalDir2/linkToDir3/foo"
 				);
-			NUnit.Framework.Assert.IsTrue("Created file should be of type file", FileContextTestHelper.IsFile
+			Assert.True("Created file should be of type file", FileContextTestHelper.IsFile
 				(fcView, new Path("/internalDir/internalDir2/linkToDir3/foo")));
-			NUnit.Framework.Assert.IsTrue("Target of created file should also be type file", 
+			Assert.True("Target of created file should also be type file", 
 				FileContextTestHelper.IsFile(fcTarget, new Path(targetTestRoot, "dir3/foo")));
 			// Recursive Create file with missing dirs
 			fileContextTestHelper.CreateFile(fcView, "/internalDir/linkToDir2/missingDir/miss2/foo"
 				);
-			NUnit.Framework.Assert.IsTrue("Created file should be of type file", FileContextTestHelper.IsFile
+			Assert.True("Created file should be of type file", FileContextTestHelper.IsFile
 				(fcView, new Path("/internalDir/linkToDir2/missingDir/miss2/foo")));
-			NUnit.Framework.Assert.IsTrue("Target of created file should also be type file", 
+			Assert.True("Target of created file should also be type file", 
 				FileContextTestHelper.IsFile(fcTarget, new Path(targetTestRoot, "dir2/missingDir/miss2/foo"
 				)));
 			// Delete the created file
-			NUnit.Framework.Assert.IsTrue("Delete should succeed", fcView.Delete(new Path("/internalDir/internalDir2/linkToDir3/foo"
+			Assert.True("Delete should succeed", fcView.Delete(new Path("/internalDir/internalDir2/linkToDir3/foo"
 				), false));
 			NUnit.Framework.Assert.IsFalse("Deleted File should not exist", FileContextTestHelper.Exists
 				(fcView, new Path("/internalDir/internalDir2/linkToDir3/foo")));
@@ -217,24 +217,24 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			// mkdir
 			fcView.Mkdir(fileContextTestHelper.GetTestRootPath(fcView, "/user/dirX"), FileContext
 				.DefaultPerm, false);
-			NUnit.Framework.Assert.IsTrue("New dir should be type dir", FileContextTestHelper.IsDir
+			Assert.True("New dir should be type dir", FileContextTestHelper.IsDir
 				(fcView, new Path("/user/dirX")));
-			NUnit.Framework.Assert.IsTrue("Target of new dir should be of type dir", FileContextTestHelper.IsDir
+			Assert.True("Target of new dir should be of type dir", FileContextTestHelper.IsDir
 				(fcTarget, new Path(targetTestRoot, "user/dirX")));
 			fcView.Mkdir(fileContextTestHelper.GetTestRootPath(fcView, "/user/dirX/dirY"), FileContext
 				.DefaultPerm, false);
-			NUnit.Framework.Assert.IsTrue("New dir should be type dir", FileContextTestHelper.IsDir
+			Assert.True("New dir should be type dir", FileContextTestHelper.IsDir
 				(fcView, new Path("/user/dirX/dirY")));
-			NUnit.Framework.Assert.IsTrue("Target of new dir should be of type dir", FileContextTestHelper.IsDir
+			Assert.True("Target of new dir should be of type dir", FileContextTestHelper.IsDir
 				(fcTarget, new Path(targetTestRoot, "user/dirX/dirY")));
 			// Delete the created dir
-			NUnit.Framework.Assert.IsTrue("Delete should succeed", fcView.Delete(new Path("/user/dirX/dirY"
+			Assert.True("Delete should succeed", fcView.Delete(new Path("/user/dirX/dirY"
 				), false));
 			NUnit.Framework.Assert.IsFalse("Deleted File should not exist", FileContextTestHelper.Exists
 				(fcView, new Path("/user/dirX/dirY")));
 			NUnit.Framework.Assert.IsFalse("Deleted Target should not exist", FileContextTestHelper.Exists
 				(fcTarget, new Path(targetTestRoot, "user/dirX/dirY")));
-			NUnit.Framework.Assert.IsTrue("Delete should succeed", fcView.Delete(new Path("/user/dirX"
+			Assert.True("Delete should succeed", fcView.Delete(new Path("/user/dirX"
 				), false));
 			NUnit.Framework.Assert.IsFalse("Deleted File should not exist", FileContextTestHelper.Exists
 				(fcView, new Path("/user/dirX")));
@@ -247,9 +247,9 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				(fcView, new Path("/user/foo")));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fcTarget, new Path(targetTestRoot
 				, "user/foo")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fcView, fileContextTestHelper
+			Assert.True(FileContextTestHelper.IsFile(fcView, fileContextTestHelper
 				.GetTestRootPath(fcView, "/user/fooBar")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fcTarget, new Path(targetTestRoot
+			Assert.True(FileContextTestHelper.IsFile(fcTarget, new Path(targetTestRoot
 				, "user/fooBar")));
 			fcView.Mkdir(new Path("/user/dirFoo"), FileContext.DefaultPerm, false);
 			fcView.Rename(new Path("/user/dirFoo"), new Path("/user/dirFooBar"));
@@ -257,13 +257,13 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				(fcView, new Path("/user/dirFoo")));
 			NUnit.Framework.Assert.IsFalse("Renamed src should not exist in target", FileContextTestHelper.Exists
 				(fcTarget, new Path(targetTestRoot, "user/dirFoo")));
-			NUnit.Framework.Assert.IsTrue("Renamed dest should  exist as dir", FileContextTestHelper.IsDir
+			Assert.True("Renamed dest should  exist as dir", FileContextTestHelper.IsDir
 				(fcView, fileContextTestHelper.GetTestRootPath(fcView, "/user/dirFooBar")));
-			NUnit.Framework.Assert.IsTrue("Renamed dest should  exist as dir in target", FileContextTestHelper.IsDir
+			Assert.True("Renamed dest should  exist as dir in target", FileContextTestHelper.IsDir
 				(fcTarget, new Path(targetTestRoot, "user/dirFooBar")));
 			// Make a directory under a directory that's mounted from the root of another FS
 			fcView.Mkdir(new Path("/targetRoot/dirFoo"), FileContext.DefaultPerm, false);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fcView, new Path("/targetRoot/dirFoo"
+			Assert.True(FileContextTestHelper.Exists(fcView, new Path("/targetRoot/dirFoo"
 				)));
 			bool dirFooPresent = false;
 			RemoteIterator<FileStatus> dirContents = fcView.ListStatus(new Path("/targetRoot/"
@@ -276,7 +276,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					dirFooPresent = true;
 				}
 			}
-			NUnit.Framework.Assert.IsTrue(dirFooPresent);
+			Assert.True(dirFooPresent);
 		}
 
 		// rename across mount points that point to same target also fail 
@@ -309,7 +309,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		//  local fs use 1 block
 		// override for HDFS
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetBlockLocations()
 		{
 			Path targetFilePath = new Path(targetTestRoot, "data/largeFile");
@@ -319,7 +319,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				.isFile);
 			BlockLocation[] viewBL = fcView.GetFileBlockLocations(viewFilePath, 0, 10240 + 100
 				);
-			NUnit.Framework.Assert.AreEqual(SupportsBlocks ? 10 : 1, viewBL.Length);
+			Assert.Equal(SupportsBlocks ? 10 : 1, viewBL.Length);
 			BlockLocation[] targetBL = fcTarget.GetFileBlockLocations(targetFilePath, 0, 10240
 				 + 100);
 			CompareBLs(viewBL, targetBL);
@@ -332,13 +332,13 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		internal virtual void CompareBLs(BlockLocation[] viewBL, BlockLocation[] targetBL
 			)
 		{
-			NUnit.Framework.Assert.AreEqual(targetBL.Length, viewBL.Length);
+			Assert.Equal(targetBL.Length, viewBL.Length);
 			int i = 0;
 			foreach (BlockLocation vbl in viewBL)
 			{
-				NUnit.Framework.Assert.AreEqual(vbl.ToString(), targetBL[i].ToString());
-				NUnit.Framework.Assert.AreEqual(targetBL[i].GetOffset(), vbl.GetOffset());
-				NUnit.Framework.Assert.AreEqual(targetBL[i].GetLength(), vbl.GetLength());
+				Assert.Equal(vbl.ToString(), targetBL[i].ToString());
+				Assert.Equal(targetBL[i].GetOffset(), vbl.GetOffset());
+				Assert.Equal(targetBL[i].GetLength(), vbl.GetLength());
 				i++;
 			}
 		}
@@ -350,49 +350,49 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// These operations should succeed.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListOnInternalDirsOfMountTable()
 		{
 			// test list on internal dirs of mount table 
 			// list on Slash
 			FileStatus[] dirPaths = fcView.Util().ListStatus(new Path("/"));
 			FileStatus fs;
-			NUnit.Framework.Assert.AreEqual(7, dirPaths.Length);
+			Assert.Equal(7, dirPaths.Length);
 			fs = fileContextTestHelper.ContainsPath(fcView, "/user", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue("A mount should appear as symlink", fs.IsSymlink());
+			Assert.True("A mount should appear as symlink", fs.IsSymlink());
 			fs = fileContextTestHelper.ContainsPath(fcView, "/data", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue("A mount should appear as symlink", fs.IsSymlink());
+			Assert.True("A mount should appear as symlink", fs.IsSymlink());
 			fs = fileContextTestHelper.ContainsPath(fcView, "/internalDir", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue("InternalDirs should appear as dir", fs.IsDirectory
+			Assert.True("InternalDirs should appear as dir", fs.IsDirectory
 				());
 			fs = fileContextTestHelper.ContainsPath(fcView, "/danglingLink", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue("A mount should appear as symlink", fs.IsSymlink());
+			Assert.True("A mount should appear as symlink", fs.IsSymlink());
 			fs = fileContextTestHelper.ContainsPath(fcView, "/linkToAFile", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue("A mount should appear as symlink", fs.IsSymlink());
+			Assert.True("A mount should appear as symlink", fs.IsSymlink());
 			// list on internal dir
 			dirPaths = fcView.Util().ListStatus(new Path("/internalDir"));
-			NUnit.Framework.Assert.AreEqual(2, dirPaths.Length);
+			Assert.Equal(2, dirPaths.Length);
 			fs = fileContextTestHelper.ContainsPath(fcView, "/internalDir/internalDir2", dirPaths
 				);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue("InternalDirs should appear as dir", fs.IsDirectory
+			Assert.True("InternalDirs should appear as dir", fs.IsDirectory
 				());
 			fs = fileContextTestHelper.ContainsPath(fcView, "/internalDir/linkToDir2", dirPaths
 				);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue("A mount should appear as symlink", fs.IsSymlink());
+			Assert.True("A mount should appear as symlink", fs.IsSymlink());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileStatusOnMountLink()
 		{
-			NUnit.Framework.Assert.IsTrue("Slash should appear as dir", fcView.GetFileStatus(
+			Assert.True("Slash should appear as dir", fcView.GetFileStatus(
 				new Path("/")).IsDirectory());
 			FileContextTestHelper.CheckFileStatus(fcView, "/", FileContextTestHelper.FileType
 				.isDir);
@@ -422,7 +422,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// <exception cref="Org.Apache.Hadoop.Security.AccessControlException"/>
 		/// <exception cref="Org.Apache.Hadoop.FS.UnresolvedLinkException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetFileChecksum()
 		{
 			AbstractFileSystem mockAFS = Org.Mockito.Mockito.Mock<AbstractFileSystem>();
@@ -452,7 +452,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestgetFileLinkStatus()
 		{
 			FileContextTestHelper.CheckFileLinkStatus(fcView, "/user", FileContextTestHelper.FileType
@@ -478,19 +478,19 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSymlinkTarget()
 		{
 			// get link target`
-			NUnit.Framework.Assert.AreEqual(fcView.GetLinkTarget(new Path("/user")), (new Path
+			Assert.Equal(fcView.GetLinkTarget(new Path("/user")), (new Path
 				(targetTestRoot, "user")));
-			NUnit.Framework.Assert.AreEqual(fcView.GetLinkTarget(new Path("/data")), (new Path
+			Assert.Equal(fcView.GetLinkTarget(new Path("/data")), (new Path
 				(targetTestRoot, "data")));
-			NUnit.Framework.Assert.AreEqual(fcView.GetLinkTarget(new Path("/internalDir/linkToDir2"
+			Assert.Equal(fcView.GetLinkTarget(new Path("/internalDir/linkToDir2"
 				)), (new Path(targetTestRoot, "dir2")));
-			NUnit.Framework.Assert.AreEqual(fcView.GetLinkTarget(new Path("/internalDir/internalDir2/linkToDir3"
+			Assert.Equal(fcView.GetLinkTarget(new Path("/internalDir/internalDir2/linkToDir3"
 				)), (new Path(targetTestRoot, "dir3")));
-			NUnit.Framework.Assert.AreEqual(fcView.GetLinkTarget(new Path("/linkToAFile")), (
+			Assert.Equal(fcView.GetLinkTarget(new Path("/linkToAFile")), (
 				new Path(targetTestRoot, "aFile")));
 		}
 
@@ -506,42 +506,42 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		* fcView.getDefaultFileSystem().resolvePath() fcView.resolvePath()
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolvePathInternalPaths()
 		{
-			NUnit.Framework.Assert.AreEqual(new Path("/"), fcView.ResolvePath(new Path("/")));
-			NUnit.Framework.Assert.AreEqual(new Path("/internalDir"), fcView.ResolvePath(new 
+			Assert.Equal(new Path("/"), fcView.ResolvePath(new Path("/")));
+			Assert.Equal(new Path("/internalDir"), fcView.ResolvePath(new 
 				Path("/internalDir")));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolvePathMountPoints()
 		{
-			NUnit.Framework.Assert.AreEqual(new Path(targetTestRoot, "user"), fcView.ResolvePath
+			Assert.Equal(new Path(targetTestRoot, "user"), fcView.ResolvePath
 				(new Path("/user")));
-			NUnit.Framework.Assert.AreEqual(new Path(targetTestRoot, "data"), fcView.ResolvePath
+			Assert.Equal(new Path(targetTestRoot, "data"), fcView.ResolvePath
 				(new Path("/data")));
-			NUnit.Framework.Assert.AreEqual(new Path(targetTestRoot, "dir2"), fcView.ResolvePath
+			Assert.Equal(new Path(targetTestRoot, "dir2"), fcView.ResolvePath
 				(new Path("/internalDir/linkToDir2")));
-			NUnit.Framework.Assert.AreEqual(new Path(targetTestRoot, "dir3"), fcView.ResolvePath
+			Assert.Equal(new Path(targetTestRoot, "dir3"), fcView.ResolvePath
 				(new Path("/internalDir/internalDir2/linkToDir3")));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolvePathThroughMountPoints()
 		{
 			fileContextTestHelper.CreateFile(fcView, "/user/foo");
-			NUnit.Framework.Assert.AreEqual(new Path(targetTestRoot, "user/foo"), fcView.ResolvePath
+			Assert.Equal(new Path(targetTestRoot, "user/foo"), fcView.ResolvePath
 				(new Path("/user/foo")));
 			fcView.Mkdir(fileContextTestHelper.GetTestRootPath(fcView, "/user/dirX"), FileContext
 				.DefaultPerm, false);
-			NUnit.Framework.Assert.AreEqual(new Path(targetTestRoot, "user/dirX"), fcView.ResolvePath
+			Assert.Equal(new Path(targetTestRoot, "user/dirX"), fcView.ResolvePath
 				(new Path("/user/dirX")));
 			fcView.Mkdir(fileContextTestHelper.GetTestRootPath(fcView, "/user/dirX/dirY"), FileContext
 				.DefaultPerm, false);
-			NUnit.Framework.Assert.AreEqual(new Path(targetTestRoot, "user/dirX/dirY"), fcView
+			Assert.Equal(new Path(targetTestRoot, "user/dirX/dirY"), fcView
 				.ResolvePath(new Path("/user/dirX/dirY")));
 		}
 
@@ -663,7 +663,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestInternalDeleteExisting2()
 		{
-			NUnit.Framework.Assert.IsTrue("Delete of link to dir should succeed", fcView.GetFileStatus
+			Assert.True("Delete of link to dir should succeed", fcView.GetFileStatus
 				(new Path("/internalDir/linkToDir2")).IsDirectory());
 			fcView.Delete(new Path("/internalDir/linkToDir2"), false);
 		}
@@ -678,7 +678,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestInternalRename2()
 		{
-			NUnit.Framework.Assert.IsTrue("linkTODir2 should be a dir", fcView.GetFileStatus(
+			Assert.True("linkTODir2 should be a dir", fcView.GetFileStatus(
 				new Path("/internalDir/linkToDir2")).IsDirectory());
 			fcView.Rename(new Path("/internalDir/linkToDir2"), new Path("/internalDir/dir1"));
 		}
@@ -742,15 +742,15 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInternalGetAclStatus()
 		{
 			UserGroupInformation currentUser = UserGroupInformation.GetCurrentUser();
 			AclStatus aclStatus = fcView.GetAclStatus(new Path("/internalDir"));
-			NUnit.Framework.Assert.AreEqual(aclStatus.GetOwner(), currentUser.GetUserName());
-			NUnit.Framework.Assert.AreEqual(aclStatus.GetGroup(), currentUser.GetGroupNames()
+			Assert.Equal(aclStatus.GetOwner(), currentUser.GetUserName());
+			Assert.Equal(aclStatus.GetGroup(), currentUser.GetGroupNames()
 				[0]);
-			NUnit.Framework.Assert.AreEqual(aclStatus.GetEntries(), AclUtil.GetMinimalAcl(Constants
+			Assert.Equal(aclStatus.GetEntries(), AclUtil.GetMinimalAcl(Constants
 				.Permission555));
 			NUnit.Framework.Assert.IsFalse(aclStatus.IsStickyBit());
 		}

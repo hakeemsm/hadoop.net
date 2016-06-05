@@ -352,7 +352,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFilterFileSystem()
 		{
 			foreach (MethodInfo m in Sharpen.Runtime.GetDeclaredMethods(typeof(FileSystem)))
@@ -393,7 +393,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFilterEmbedInit()
 		{
 			FileSystem mockFs = CreateMockFs(false);
@@ -402,7 +402,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFilterEmbedNoInit()
 		{
 			FileSystem mockFs = CreateMockFs(true);
@@ -411,7 +411,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLocalEmbedInit()
 		{
 			FileSystem mockFs = CreateMockFs(false);
@@ -420,7 +420,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLocalEmbedNoInit()
 		{
 			FileSystem mockFs = CreateMockFs(true);
@@ -437,7 +437,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetLocalFsSetsConfs()
 		{
 			LocalFileSystem lfs = FileSystem.GetLocal(conf);
@@ -445,7 +445,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetFilterLocalFsSetsConfs()
 		{
 			FilterFileSystem flfs = (FilterFileSystem)FileSystem.Get(URI.Create("flfs:/"), conf
@@ -454,7 +454,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitLocalFsSetsConfs()
 		{
 			LocalFileSystem lfs = new LocalFileSystem();
@@ -464,31 +464,31 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitFilterFsSetsEmbedConf()
 		{
 			LocalFileSystem lfs = new LocalFileSystem();
 			CheckFsConf(lfs, null, 2);
 			FilterFileSystem ffs = new FilterFileSystem(lfs);
-			NUnit.Framework.Assert.AreEqual(lfs, ffs.GetRawFileSystem());
+			Assert.Equal(lfs, ffs.GetRawFileSystem());
 			CheckFsConf(ffs, null, 3);
 			ffs.Initialize(URI.Create("filter:/"), conf);
 			CheckFsConf(ffs, conf, 3);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitFilterLocalFsSetsEmbedConf()
 		{
 			FilterFileSystem flfs = new TestFilterFileSystem.FilterLocalFileSystem();
-			NUnit.Framework.Assert.AreEqual(typeof(LocalFileSystem), flfs.GetRawFileSystem().
+			Assert.Equal(typeof(LocalFileSystem), flfs.GetRawFileSystem().
 				GetType());
 			CheckFsConf(flfs, null, 3);
 			flfs.Initialize(URI.Create("flfs:/"), conf);
 			CheckFsConf(flfs, conf, 3);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyChecksumPassthru()
 		{
 			FileSystem mockFs = Org.Mockito.Mockito.Mock<FileSystem>();
@@ -500,7 +500,7 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.Verify(mockFs).SetVerifyChecksum(Matchers.Eq(true));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWriteChecksumPassthru()
 		{
 			FileSystem mockFs = Org.Mockito.Mockito.Mock<FileSystem>();
@@ -539,14 +539,14 @@ namespace Org.Apache.Hadoop.FS
 				depth++;
 				NUnit.Framework.Assert.IsFalse("depth " + depth + ">" + expectDepth, depth > expectDepth
 					);
-				NUnit.Framework.Assert.AreEqual(conf, fs.GetConf());
+				Assert.Equal(conf, fs.GetConf());
 				if (!(fs is FilterFileSystem))
 				{
 					break;
 				}
 				fs = ((FilterFileSystem)fs).GetRawFileSystem();
 			}
-			NUnit.Framework.Assert.AreEqual(expectDepth, depth);
+			Assert.Equal(expectDepth, depth);
 		}
 
 		private class FilterLocalFileSystem : FilterFileSystem

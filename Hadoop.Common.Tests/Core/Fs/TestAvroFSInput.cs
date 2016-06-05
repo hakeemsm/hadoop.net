@@ -44,20 +44,20 @@ namespace Org.Apache.Hadoop.FS
 			// Create the stream
 			FileContext fc = FileContext.GetFileContext(conf);
 			AvroFSInput avroFSIn = new AvroFSInput(fc, filePath);
-			NUnit.Framework.Assert.AreEqual(10, avroFSIn.Length());
+			Assert.Equal(10, avroFSIn.Length());
 			// Check initial position
 			byte[] buf = new byte[1];
-			NUnit.Framework.Assert.AreEqual(0, avroFSIn.Tell());
+			Assert.Equal(0, avroFSIn.Tell());
 			// Check a read from that position.
 			avroFSIn.Read(buf, 0, 1);
-			NUnit.Framework.Assert.AreEqual(1, avroFSIn.Tell());
-			NUnit.Framework.Assert.AreEqual('0', (char)buf[0]);
+			Assert.Equal(1, avroFSIn.Tell());
+			Assert.Equal('0', (char)buf[0]);
 			// Check a seek + read
 			avroFSIn.Seek(4);
-			NUnit.Framework.Assert.AreEqual(4, avroFSIn.Tell());
+			Assert.Equal(4, avroFSIn.Tell());
 			avroFSIn.Read(buf, 0, 1);
-			NUnit.Framework.Assert.AreEqual('4', (char)buf[0]);
-			NUnit.Framework.Assert.AreEqual(5, avroFSIn.Tell());
+			Assert.Equal('4', (char)buf[0]);
+			Assert.Equal(5, avroFSIn.Tell());
 			avroFSIn.Close();
 		}
 	}

@@ -246,7 +246,7 @@ namespace Org.Apache.Hadoop.FS
 			void Access(Path path, FsAction mode);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHarUri()
 		{
 			Configuration conf = new Configuration();
@@ -274,14 +274,14 @@ namespace Org.Apache.Hadoop.FS
 
 		// Expected
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileChecksum()
 		{
 			Path p = new Path("har://file-localhost/foo.har/file1");
 			HarFileSystem harfs = new HarFileSystem();
 			try
 			{
-				NUnit.Framework.Assert.AreEqual(null, harfs.GetFileChecksum(p));
+				Assert.Equal(null, harfs.GetFileChecksum(p));
 			}
 			finally
 			{
@@ -293,7 +293,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Test how block location offsets and lengths are fixed.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFixBlockLocations()
 		{
 			{
@@ -301,75 +301,75 @@ namespace Org.Apache.Hadoop.FS
 				// case 1: range starts before current har block and ends after
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 0, 20, 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 10);
+				Assert.Equal(b[0].GetOffset(), 5);
+				Assert.Equal(b[0].GetLength(), 10);
 			}
 			{
 				// case 2: range starts in current har block and ends after
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 0, 20, 15);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 0);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 5);
+				Assert.Equal(b[0].GetOffset(), 0);
+				Assert.Equal(b[0].GetLength(), 5);
 			}
 			{
 				// case 3: range starts before current har block and ends in
 				// current har block
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 0, 10, 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 5);
+				Assert.Equal(b[0].GetOffset(), 5);
+				Assert.Equal(b[0].GetLength(), 5);
 			}
 			{
 				// case 4: range starts and ends in current har block
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 0, 6, 12);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 0);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 6);
+				Assert.Equal(b[0].GetOffset(), 0);
+				Assert.Equal(b[0].GetLength(), 6);
 			}
 			{
 				// now try a range where start == 3
 				// case 5: range starts before current har block and ends after
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 3, 20, 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 10);
+				Assert.Equal(b[0].GetOffset(), 5);
+				Assert.Equal(b[0].GetLength(), 10);
 			}
 			{
 				// case 6: range starts in current har block and ends after
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 3, 20, 15);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 3);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 2);
+				Assert.Equal(b[0].GetOffset(), 3);
+				Assert.Equal(b[0].GetLength(), 2);
 			}
 			{
 				// case 7: range starts before current har block and ends in
 				// current har block
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 3, 7, 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 5);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 5);
+				Assert.Equal(b[0].GetOffset(), 5);
+				Assert.Equal(b[0].GetLength(), 5);
 			}
 			{
 				// case 8: range starts and ends in current har block
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 10, 10) };
 				HarFileSystem.FixBlockLocations(b, 3, 3, 12);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 3);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 3);
+				Assert.Equal(b[0].GetOffset(), 3);
+				Assert.Equal(b[0].GetLength(), 3);
 			}
 			{
 				// test case from JIRA MAPREDUCE-1752
 				BlockLocation[] b = new BlockLocation[] { new BlockLocation(null, null, 512, 512)
 					, new BlockLocation(null, null, 1024, 512) };
 				HarFileSystem.FixBlockLocations(b, 0, 512, 896);
-				NUnit.Framework.Assert.AreEqual(b[0].GetOffset(), 0);
-				NUnit.Framework.Assert.AreEqual(b[0].GetLength(), 128);
-				NUnit.Framework.Assert.AreEqual(b[1].GetOffset(), 128);
-				NUnit.Framework.Assert.AreEqual(b[1].GetLength(), 384);
+				Assert.Equal(b[0].GetOffset(), 0);
+				Assert.Equal(b[0].GetLength(), 128);
+				Assert.Equal(b[1].GetOffset(), 128);
+				Assert.Equal(b[1].GetLength(), 384);
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInheritedMethodsImplemented()
 		{
 			int errors = 0;
@@ -410,7 +410,7 @@ namespace Org.Apache.Hadoop.FS
 					}
 				}
 			}
-			NUnit.Framework.Assert.IsTrue((errors + " methods were not overridden correctly - see log"
+			Assert.True((errors + " methods were not overridden correctly - see log"
 				), errors <= 0);
 		}
 	}

@@ -6,7 +6,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 	public class TestRolloverSignerSecretProvider
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetAndRollSecrets()
 		{
 			long rolloverFrequency = 15 * 1000;
@@ -23,21 +23,21 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				byte[] currentSecret = secretProvider.GetCurrentSecret();
 				byte[][] allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret1, currentSecret);
-				NUnit.Framework.Assert.AreEqual(2, allSecrets.Length);
+				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret1, allSecrets[0]);
 				NUnit.Framework.Assert.IsNull(allSecrets[1]);
 				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret2, currentSecret);
-				NUnit.Framework.Assert.AreEqual(2, allSecrets.Length);
+				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret2, allSecrets[0]);
 				Assert.AssertArrayEquals(secret1, allSecrets[1]);
 				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret3, currentSecret);
-				NUnit.Framework.Assert.AreEqual(2, allSecrets.Length);
+				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret3, allSecrets[0]);
 				Assert.AssertArrayEquals(secret2, allSecrets[1]);
 				Sharpen.Thread.Sleep(rolloverFrequency + 2000);

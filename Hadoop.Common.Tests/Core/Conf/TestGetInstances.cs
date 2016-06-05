@@ -38,14 +38,14 @@ namespace Org.Apache.Hadoop.Conf
 			Configuration conf = new Configuration();
 			IList<TestGetInstances.SampleInterface> classes = conf.GetInstances<TestGetInstances.SampleInterface
 				>("no.such.property");
-			NUnit.Framework.Assert.IsTrue(classes.IsEmpty());
+			Assert.True(classes.IsEmpty());
 			conf.Set("empty.property", string.Empty);
 			classes = conf.GetInstances<TestGetInstances.SampleInterface>("empty.property");
-			NUnit.Framework.Assert.IsTrue(classes.IsEmpty());
+			Assert.True(classes.IsEmpty());
 			conf.SetStrings("some.classes", typeof(TestGetInstances.SampleClass).FullName, typeof(
 				TestGetInstances.AnotherClass).FullName);
 			classes = conf.GetInstances<TestGetInstances.SampleInterface>("some.classes");
-			NUnit.Framework.Assert.AreEqual(2, classes.Count);
+			Assert.Equal(2, classes.Count);
 			try
 			{
 				conf.SetStrings("some.classes", typeof(TestGetInstances.SampleClass).FullName, typeof(

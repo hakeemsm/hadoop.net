@@ -90,11 +90,11 @@ namespace Org.Apache.Hadoop.Conf
 				.ToString()));
 			Configuration conf = new Configuration(false);
 			conf.AddResource(in1);
-			NUnit.Framework.Assert.AreEqual("A", conf.Get("prop"));
+			Assert.Equal("A", conf.Get("prop"));
 			InputStream in2 = new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString(writer
 				.ToString()));
 			conf.AddResource(in2);
-			NUnit.Framework.Assert.AreEqual("A", conf.Get("prop"));
+			Assert.Equal("A", conf.Get("prop"));
 		}
 
 		/// <summary>Tests use of multi-byte characters in property names and values.</summary>
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.Conf
 				EndConfig();
 				Configuration conf = new Configuration(false);
 				conf.AddResource(new Path(ConfigMultiByte));
-				NUnit.Framework.Assert.AreEqual(value, conf.Get(name));
+				Assert.Equal(value, conf.Get(name));
 				FileOutputStream fos = new FileOutputStream(ConfigMultiByteSaved);
 				try
 				{
@@ -131,7 +131,7 @@ namespace Org.Apache.Hadoop.Conf
 				}
 				conf = new Configuration(false);
 				conf.AddResource(new Path(ConfigMultiByteSaved));
-				NUnit.Framework.Assert.AreEqual(value, conf.Get(name));
+				Assert.Equal(value, conf.Get(name));
 			}
 			finally
 			{
@@ -166,7 +166,7 @@ namespace Org.Apache.Hadoop.Conf
 				{
 					// expansion is system-dependent (uses System properties)
 					// can't do exact match so just check that all variables got expanded
-					NUnit.Framework.Assert.IsTrue(gotVal != null && -1 == gotVal.IndexOf("${"));
+					Assert.True(gotVal != null && -1 == gotVal.IndexOf("${"));
 				}
 				else
 				{
@@ -174,15 +174,15 @@ namespace Org.Apache.Hadoop.Conf
 				}
 			}
 			// check that expansion also occurs for getInt()
-			NUnit.Framework.Assert.IsTrue(conf.GetInt("intvar", -1) == 42);
-			NUnit.Framework.Assert.IsTrue(conf.GetInt("my.int", -1) == 42);
+			Assert.True(conf.GetInt("intvar", -1) == 42);
+			Assert.True(conf.GetInt("my.int", -1) == 42);
 			IDictionary<string, string> results = conf.GetValByRegex("^my.*file$");
-			NUnit.Framework.Assert.IsTrue(results.Keys.Contains("my.relfile"));
-			NUnit.Framework.Assert.IsTrue(results.Keys.Contains("my.fullfile"));
-			NUnit.Framework.Assert.IsTrue(results.Keys.Contains("my.file"));
-			NUnit.Framework.Assert.AreEqual(-1, results["my.relfile"].IndexOf("${"));
-			NUnit.Framework.Assert.AreEqual(-1, results["my.fullfile"].IndexOf("${"));
-			NUnit.Framework.Assert.AreEqual(-1, results["my.file"].IndexOf("${"));
+			Assert.True(results.Keys.Contains("my.relfile"));
+			Assert.True(results.Keys.Contains("my.fullfile"));
+			Assert.True(results.Keys.Contains("my.file"));
+			Assert.Equal(-1, results["my.relfile"].IndexOf("${"));
+			Assert.Equal(-1, results["my.fullfile"].IndexOf("${"));
+			Assert.Equal(-1, results["my.file"].IndexOf("${"));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -209,7 +209,7 @@ namespace Org.Apache.Hadoop.Conf
 		public static void AssertEq(object a, object b)
 		{
 			System.Console.Out.WriteLine("assertEq: " + a + ", " + b);
-			NUnit.Framework.Assert.AreEqual(a, b);
+			Assert.Equal(a, b);
 		}
 
 		internal class Prop
@@ -297,11 +297,11 @@ namespace Org.Apache.Hadoop.Conf
 			conf.Set("a", "d");
 			Configuration clone = new Configuration(conf);
 			clone.AddResource(new Path(Config2));
-			NUnit.Framework.Assert.AreEqual(clone.Get("a"), "d");
-			NUnit.Framework.Assert.AreEqual(clone.Get("b"), "d");
-			NUnit.Framework.Assert.AreEqual(clone.Get("c"), "d");
-			NUnit.Framework.Assert.AreEqual(clone.Get("d"), "e");
-			NUnit.Framework.Assert.AreEqual(clone.Get("e"), "f");
+			Assert.Equal(clone.Get("a"), "d");
+			Assert.Equal(clone.Get("b"), "d");
+			Assert.Equal(clone.Get("c"), "d");
+			Assert.Equal(clone.Get("d"), "e");
+			Assert.Equal(clone.Get("e"), "f");
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -314,7 +314,7 @@ namespace Org.Apache.Hadoop.Conf
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
 			//two spaces one after "this", one before "contains"
-			NUnit.Framework.Assert.AreEqual("this  contains a comment", conf.Get("my.comment"
+			Assert.Equal("this  contains a comment", conf.Get("my.comment"
 				));
 		}
 
@@ -341,7 +341,7 @@ namespace Org.Apache.Hadoop.Conf
 			conf.AddResource(new Path(Config));
 			foreach (string n in name)
 			{
-				NUnit.Framework.Assert.AreEqual(n + ".value", conf.Get(n));
+				Assert.Equal(n + ".value", conf.Get(n));
 			}
 		}
 
@@ -358,7 +358,7 @@ namespace Org.Apache.Hadoop.Conf
 			for (int i_1 = 0; i_1 < 1000; i_1++)
 			{
 				string localPath = conf.GetLocalPath("dirs", "dir" + i_1).ToString();
-				NUnit.Framework.Assert.IsTrue("Path doesn't end in specified dir: " + localPath, 
+				Assert.True("Path doesn't end in specified dir: " + localPath, 
 					localPath.EndsWith("dir" + i_1));
 				NUnit.Framework.Assert.IsFalse("Path has internal whitespace: " + localPath, localPath
 					.Contains(" "));
@@ -378,7 +378,7 @@ namespace Org.Apache.Hadoop.Conf
 			for (int i_1 = 0; i_1 < 1000; i_1++)
 			{
 				string localPath = conf.GetFile("dirs", "dir" + i_1).ToString();
-				NUnit.Framework.Assert.IsTrue("Path doesn't end in specified dir: " + localPath, 
+				Assert.True("Path doesn't end in specified dir: " + localPath, 
 					localPath.EndsWith("dir" + i_1));
 				NUnit.Framework.Assert.IsFalse("Path has internal whitespace: " + localPath, localPath
 					.Contains(" "));
@@ -395,7 +395,7 @@ namespace Org.Apache.Hadoop.Conf
 			conf.AddResource(fileResource);
 			string expectedOutput = "Configuration: core-default.xml, core-site.xml, " + fileResource
 				.ToString();
-			NUnit.Framework.Assert.AreEqual(expectedOutput, conf.ToString());
+			Assert.Equal(expectedOutput, conf.ToString());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -405,9 +405,9 @@ namespace Org.Apache.Hadoop.Conf
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			conf.WriteXml(baos);
 			string result = baos.ToString();
-			NUnit.Framework.Assert.IsTrue("Result has proper header", result.StartsWith(Xmlheader
+			Assert.True("Result has proper header", result.StartsWith(Xmlheader
 				));
-			NUnit.Framework.Assert.IsTrue("Result has proper footer", result.EndsWith("</configuration>"
+			Assert.True("Result has proper footer", result.EndsWith("</configuration>"
 				));
 		}
 
@@ -430,10 +430,10 @@ namespace Org.Apache.Hadoop.Conf
 			// verify that the includes file contains all properties
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(conf.Get("a"), "b");
-			NUnit.Framework.Assert.AreEqual(conf.Get("c"), "d");
-			NUnit.Framework.Assert.AreEqual(conf.Get("e"), "f");
-			NUnit.Framework.Assert.AreEqual(conf.Get("g"), "h");
+			Assert.Equal(conf.Get("a"), "b");
+			Assert.Equal(conf.Get("c"), "d");
+			Assert.Equal(conf.Get("e"), "f");
+			Assert.Equal(conf.Get("g"), "h");
 			TearDown();
 		}
 
@@ -457,8 +457,8 @@ namespace Org.Apache.Hadoop.Conf
 			// verify that the includes file contains all properties
 			Path fileResource = new Path(relConfig);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(conf.Get("a"), "b");
-			NUnit.Framework.Assert.AreEqual(conf.Get("c"), "d");
+			Assert.Equal(conf.Get("a"), "b");
+			Assert.Equal(conf.Get("c"), "d");
 			// Cleanup
 			new FilePath(relConfig).Delete();
 			new FilePath(relConfig2).Delete();
@@ -475,28 +475,28 @@ namespace Org.Apache.Hadoop.Conf
 			conf.Set("third", "34-");
 			Configuration.IntegerRanges range = conf.GetRange("first", null);
 			System.Console.Out.WriteLine("first = " + range);
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(0));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(1));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(100));
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(101));
+			Assert.Equal(true, range.IsIncluded(0));
+			Assert.Equal(true, range.IsIncluded(1));
+			Assert.Equal(true, range.IsIncluded(100));
+			Assert.Equal(false, range.IsIncluded(101));
 			range = conf.GetRange("second", null);
 			System.Console.Out.WriteLine("second = " + range);
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(3));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(4));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(6));
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(7));
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(8));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(9));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(10));
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(11));
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(26));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(27));
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(28));
+			Assert.Equal(false, range.IsIncluded(3));
+			Assert.Equal(true, range.IsIncluded(4));
+			Assert.Equal(true, range.IsIncluded(6));
+			Assert.Equal(false, range.IsIncluded(7));
+			Assert.Equal(false, range.IsIncluded(8));
+			Assert.Equal(true, range.IsIncluded(9));
+			Assert.Equal(true, range.IsIncluded(10));
+			Assert.Equal(false, range.IsIncluded(11));
+			Assert.Equal(false, range.IsIncluded(26));
+			Assert.Equal(true, range.IsIncluded(27));
+			Assert.Equal(false, range.IsIncluded(28));
 			range = conf.GetRange("third", null);
 			System.Console.Out.WriteLine("third = " + range);
-			NUnit.Framework.Assert.AreEqual(false, range.IsIncluded(33));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(34));
-			NUnit.Framework.Assert.AreEqual(true, range.IsIncluded(100000000));
+			Assert.Equal(false, range.IsIncluded(33));
+			Assert.Equal(true, range.IsIncluded(34));
+			Assert.Equal(true, range.IsIncluded(100000000));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -513,7 +513,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				found.AddItem(i);
 			}
-			NUnit.Framework.Assert.AreEqual(expected, found);
+			Assert.Equal(expected, found);
 			ranges = config.GetRange("Test", "5-10,13-14");
 			expected = new HashSet<int>(Arrays.AsList(5, 6, 7, 8, 9, 10, 13, 14));
 			found = new HashSet<int>();
@@ -521,7 +521,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				found.AddItem(i_1);
 			}
-			NUnit.Framework.Assert.AreEqual(expected, found);
+			Assert.Equal(expected, found);
 			ranges = config.GetRange("Test", "8-12, 5- 7");
 			expected = new HashSet<int>(Arrays.AsList(5, 6, 7, 8, 9, 10, 11, 12));
 			found = new HashSet<int>();
@@ -529,7 +529,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				found.AddItem(i_2);
 			}
-			NUnit.Framework.Assert.AreEqual(expected, found);
+			Assert.Equal(expected, found);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -545,12 +545,12 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(16, conf.GetInt("test.hex1", 0));
-			NUnit.Framework.Assert.AreEqual(16, conf.GetLong("test.hex1", 0));
-			NUnit.Framework.Assert.AreEqual(15, conf.GetInt("test.hex2", 0));
-			NUnit.Framework.Assert.AreEqual(15, conf.GetLong("test.hex2", 0));
-			NUnit.Framework.Assert.AreEqual(-16, conf.GetInt("test.hex3", 0));
-			NUnit.Framework.Assert.AreEqual(-16, conf.GetLong("test.hex3", 0));
+			Assert.Equal(16, conf.GetInt("test.hex1", 0));
+			Assert.Equal(16, conf.GetLong("test.hex1", 0));
+			Assert.Equal(15, conf.GetInt("test.hex2", 0));
+			Assert.Equal(15, conf.GetLong("test.hex2", 0));
+			Assert.Equal(-16, conf.GetInt("test.hex3", 0));
+			Assert.Equal(-16, conf.GetLong("test.hex3", 0));
 			try
 			{
 				conf.GetLong("test.hex4", 0);
@@ -584,18 +584,18 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(20, conf.GetInt("test.int1", 0));
-			NUnit.Framework.Assert.AreEqual(20, conf.GetLong("test.int1", 0));
-			NUnit.Framework.Assert.AreEqual(20, conf.GetLongBytes("test.int1", 0));
-			NUnit.Framework.Assert.AreEqual(20, conf.GetInt("test.int2", 0));
-			NUnit.Framework.Assert.AreEqual(20, conf.GetLong("test.int2", 0));
-			NUnit.Framework.Assert.AreEqual(20, conf.GetLongBytes("test.int2", 0));
-			NUnit.Framework.Assert.AreEqual(-20, conf.GetInt("test.int3", 0));
-			NUnit.Framework.Assert.AreEqual(-20, conf.GetLong("test.int3", 0));
-			NUnit.Framework.Assert.AreEqual(-20, conf.GetLongBytes("test.int3", 0));
-			NUnit.Framework.Assert.AreEqual(-20, conf.GetInt("test.int4", 0));
-			NUnit.Framework.Assert.AreEqual(-20, conf.GetLong("test.int4", 0));
-			NUnit.Framework.Assert.AreEqual(-20, conf.GetLongBytes("test.int4", 0));
+			Assert.Equal(20, conf.GetInt("test.int1", 0));
+			Assert.Equal(20, conf.GetLong("test.int1", 0));
+			Assert.Equal(20, conf.GetLongBytes("test.int1", 0));
+			Assert.Equal(20, conf.GetInt("test.int2", 0));
+			Assert.Equal(20, conf.GetLong("test.int2", 0));
+			Assert.Equal(20, conf.GetLongBytes("test.int2", 0));
+			Assert.Equal(-20, conf.GetInt("test.int3", 0));
+			Assert.Equal(-20, conf.GetLong("test.int3", 0));
+			Assert.Equal(-20, conf.GetLongBytes("test.int3", 0));
+			Assert.Equal(-20, conf.GetInt("test.int4", 0));
+			Assert.Equal(-20, conf.GetLong("test.int4", 0));
+			Assert.Equal(-20, conf.GetLongBytes("test.int4", 0));
 			try
 			{
 				conf.GetInt("test.int5", 0);
@@ -618,9 +618,9 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(1048576, conf.GetLongBytes("test.humanReadableValue1"
+			Assert.Equal(1048576, conf.GetLongBytes("test.humanReadableValue1"
 				, 0));
-			NUnit.Framework.Assert.AreEqual(1048576, conf.GetLongBytes("test.humanReadableValue2"
+			Assert.Equal(1048576, conf.GetLongBytes("test.humanReadableValue2"
 				, 0));
 			try
 			{
@@ -649,14 +649,14 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(true, conf.GetBoolean("test.bool1", false));
-			NUnit.Framework.Assert.AreEqual(false, conf.GetBoolean("test.bool2", true));
-			NUnit.Framework.Assert.AreEqual(true, conf.GetBoolean("test.bool3", false));
-			NUnit.Framework.Assert.AreEqual(false, conf.GetBoolean("test.bool4", true));
-			NUnit.Framework.Assert.AreEqual(true, conf.GetBoolean("test.bool5", true));
-			NUnit.Framework.Assert.AreEqual(true, conf.GetBoolean("test.bool6", false));
-			NUnit.Framework.Assert.AreEqual(false, conf.GetBoolean("test.bool7", true));
-			NUnit.Framework.Assert.AreEqual(false, conf.GetBoolean("test.bool8", false));
+			Assert.Equal(true, conf.GetBoolean("test.bool1", false));
+			Assert.Equal(false, conf.GetBoolean("test.bool2", true));
+			Assert.Equal(true, conf.GetBoolean("test.bool3", false));
+			Assert.Equal(false, conf.GetBoolean("test.bool4", true));
+			Assert.Equal(true, conf.GetBoolean("test.bool5", true));
+			Assert.Equal(true, conf.GetBoolean("test.bool6", false));
+			Assert.Equal(false, conf.GetBoolean("test.bool7", true));
+			Assert.Equal(false, conf.GetBoolean("test.bool8", false));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -672,10 +672,10 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(3.1415f, conf.GetFloat("test.float1", 0.0f));
-			NUnit.Framework.Assert.AreEqual(3.1415f, conf.GetFloat("test.float2", 0.0f));
-			NUnit.Framework.Assert.AreEqual(-3.1415f, conf.GetFloat("test.float3", 0.0f));
-			NUnit.Framework.Assert.AreEqual(-3.1415f, conf.GetFloat("test.float4", 0.0f));
+			Assert.Equal(3.1415f, conf.GetFloat("test.float1", 0.0f));
+			Assert.Equal(3.1415f, conf.GetFloat("test.float2", 0.0f));
+			Assert.Equal(-3.1415f, conf.GetFloat("test.float3", 0.0f));
+			Assert.Equal(-3.1415f, conf.GetFloat("test.float4", 0.0f));
 			try
 			{
 				conf.GetFloat("test.float5", 0.0f);
@@ -700,10 +700,10 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual(3.1415, conf.GetDouble("test.double1", 0.0));
-			NUnit.Framework.Assert.AreEqual(3.1415, conf.GetDouble("test.double2", 0.0));
-			NUnit.Framework.Assert.AreEqual(-3.1415, conf.GetDouble("test.double3", 0.0));
-			NUnit.Framework.Assert.AreEqual(-3.1415, conf.GetDouble("test.double4", 0.0));
+			Assert.Equal(3.1415, conf.GetDouble("test.double1", 0.0));
+			Assert.Equal(3.1415, conf.GetDouble("test.double2", 0.0));
+			Assert.Equal(-3.1415, conf.GetDouble("test.double3", 0.0));
+			Assert.Equal(-3.1415, conf.GetDouble("test.double4", 0.0));
 			try
 			{
 				conf.GetDouble("test.double5", 0.0);
@@ -725,9 +725,9 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual("java.lang.Integer", conf.GetClass("test.class1", 
+			Assert.Equal("java.lang.Integer", conf.GetClass("test.class1", 
 				null).GetCanonicalName());
-			NUnit.Framework.Assert.AreEqual("java.lang.Integer", conf.GetClass("test.class2", 
+			Assert.Equal("java.lang.Integer", conf.GetClass("test.class2", 
 				null).GetCanonicalName());
 		}
 
@@ -755,14 +755,14 @@ namespace Org.Apache.Hadoop.Conf
 			Configuration c = new Configuration();
 			c.Set("x", " a, b\n,\nc ");
 			ICollection<string> strs = c.GetTrimmedStringCollection("x");
-			NUnit.Framework.Assert.AreEqual(3, strs.Count);
+			Assert.Equal(3, strs.Count);
 			Assert.AssertArrayEquals(new string[] { "a", "b", "c" }, Sharpen.Collections.ToArray
 				(strs, new string[0]));
 			// Check that the result is mutable
 			strs.AddItem("z");
 			// Make sure same is true for missing config
 			strs = c.GetStringCollection("does-not-exist");
-			NUnit.Framework.Assert.AreEqual(0, strs.Count);
+			Assert.Equal(0, strs.Count);
 			strs.AddItem("z");
 		}
 
@@ -772,14 +772,14 @@ namespace Org.Apache.Hadoop.Conf
 			Configuration c = new Configuration();
 			c.Set("x", "a, b, c");
 			ICollection<string> strs = c.GetStringCollection("x");
-			NUnit.Framework.Assert.AreEqual(3, strs.Count);
+			Assert.Equal(3, strs.Count);
 			Assert.AssertArrayEquals(new string[] { "a", " b", " c" }, Sharpen.Collections.ToArray
 				(strs, new string[0]));
 			// Check that the result is mutable
 			strs.AddItem("z");
 			// Make sure same is true for missing config
 			strs = c.GetStringCollection("does-not-exist");
-			NUnit.Framework.Assert.AreEqual(0, strs.Count);
+			Assert.Equal(0, strs.Count);
 			strs.AddItem("z");
 		}
 
@@ -825,7 +825,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				fail = true;
 			}
-			NUnit.Framework.Assert.IsTrue(fail);
+			Assert.True(fail);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -850,44 +850,44 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				fail = true;
 			}
-			NUnit.Framework.Assert.IsTrue(fail);
+			Assert.True(fail);
 		}
 
 		public virtual void TestTimeDuration()
 		{
 			Configuration conf = new Configuration(false);
 			conf.SetTimeDuration("test.time.a", 7L, TimeUnit.Seconds);
-			NUnit.Framework.Assert.AreEqual("7s", conf.Get("test.time.a"));
-			NUnit.Framework.Assert.AreEqual(0L, conf.GetTimeDuration("test.time.a", 30, TimeUnit
+			Assert.Equal("7s", conf.Get("test.time.a"));
+			Assert.Equal(0L, conf.GetTimeDuration("test.time.a", 30, TimeUnit
 				.Minutes));
-			NUnit.Framework.Assert.AreEqual(7L, conf.GetTimeDuration("test.time.a", 30, TimeUnit
+			Assert.Equal(7L, conf.GetTimeDuration("test.time.a", 30, TimeUnit
 				.Seconds));
-			NUnit.Framework.Assert.AreEqual(7000L, conf.GetTimeDuration("test.time.a", 30, TimeUnit
+			Assert.Equal(7000L, conf.GetTimeDuration("test.time.a", 30, TimeUnit
 				.Milliseconds));
-			NUnit.Framework.Assert.AreEqual(7000000L, conf.GetTimeDuration("test.time.a", 30, 
+			Assert.Equal(7000000L, conf.GetTimeDuration("test.time.a", 30, 
 				TimeUnit.Microseconds));
-			NUnit.Framework.Assert.AreEqual(7000000000L, conf.GetTimeDuration("test.time.a", 
+			Assert.Equal(7000000000L, conf.GetTimeDuration("test.time.a", 
 				30, TimeUnit.Nanoseconds));
 			conf.SetTimeDuration("test.time.b", 1, TimeUnit.Days);
-			NUnit.Framework.Assert.AreEqual("1d", conf.Get("test.time.b"));
-			NUnit.Framework.Assert.AreEqual(1, conf.GetTimeDuration("test.time.b", 1, TimeUnit
+			Assert.Equal("1d", conf.Get("test.time.b"));
+			Assert.Equal(1, conf.GetTimeDuration("test.time.b", 1, TimeUnit
 				.Days));
-			NUnit.Framework.Assert.AreEqual(24, conf.GetTimeDuration("test.time.b", 1, TimeUnit
+			Assert.Equal(24, conf.GetTimeDuration("test.time.b", 1, TimeUnit
 				.Hours));
-			NUnit.Framework.Assert.AreEqual(TimeUnit.Minutes.Convert(1, TimeUnit.Days), conf.
+			Assert.Equal(TimeUnit.Minutes.Convert(1, TimeUnit.Days), conf.
 				GetTimeDuration("test.time.b", 1, TimeUnit.Minutes));
 			// check default
-			NUnit.Framework.Assert.AreEqual(30L, conf.GetTimeDuration("test.time.X", 30, TimeUnit
+			Assert.Equal(30L, conf.GetTimeDuration("test.time.X", 30, TimeUnit
 				.Seconds));
 			conf.Set("test.time.X", "30");
-			NUnit.Framework.Assert.AreEqual(30L, conf.GetTimeDuration("test.time.X", 40, TimeUnit
+			Assert.Equal(30L, conf.GetTimeDuration("test.time.X", 40, TimeUnit
 				.Seconds));
 			foreach (Configuration.ParsedTimeDuration ptd in Configuration.ParsedTimeDuration
 				.Values())
 			{
 				conf.SetTimeDuration("test.time.unit", 1, ptd.Unit());
-				NUnit.Framework.Assert.AreEqual(1 + ptd.Suffix(), conf.Get("test.time.unit"));
-				NUnit.Framework.Assert.AreEqual(1, conf.GetTimeDuration("test.time.unit", 2, ptd.
+				Assert.Equal(1 + ptd.Suffix(), conf.Get("test.time.unit"));
+				Assert.Equal(1, conf.GetTimeDuration("test.time.unit", 2, ptd.
 					Unit()));
 			}
 		}
@@ -905,18 +905,18 @@ namespace Org.Apache.Hadoop.Conf
 			conf.AddResource(fileResource);
 			Sharpen.Pattern defaultPattern = Sharpen.Pattern.Compile("x+");
 			// Return default if missing
-			NUnit.Framework.Assert.AreEqual(defaultPattern.Pattern(), conf.GetPattern("xxxxx"
+			Assert.Equal(defaultPattern.Pattern(), conf.GetPattern("xxxxx"
 				, defaultPattern).Pattern());
 			// Return null if empty and default is null
 			NUnit.Framework.Assert.IsNull(conf.GetPattern("test.pattern1", null));
 			// Return default for empty
-			NUnit.Framework.Assert.AreEqual(defaultPattern.Pattern(), conf.GetPattern("test.pattern1"
+			Assert.Equal(defaultPattern.Pattern(), conf.GetPattern("test.pattern1"
 				, defaultPattern).Pattern());
 			// Return default for malformed
-			NUnit.Framework.Assert.AreEqual(defaultPattern.Pattern(), conf.GetPattern("test.pattern2"
+			Assert.Equal(defaultPattern.Pattern(), conf.GetPattern("test.pattern2"
 				, defaultPattern).Pattern());
 			// Works for correct patterns
-			NUnit.Framework.Assert.AreEqual("a+b", conf.GetPattern("test.pattern3", defaultPattern
+			Assert.Equal("a+b", conf.GetPattern("test.pattern3", defaultPattern
 				).Pattern());
 		}
 
@@ -931,13 +931,13 @@ namespace Org.Apache.Hadoop.Conf
 			conf.AddResource(fileResource);
 			conf.Set("fs.defaultFS", "value");
 			string[] sources = conf.GetPropertySources("test.foo");
-			NUnit.Framework.Assert.AreEqual(1, sources.Length);
-			NUnit.Framework.Assert.AreEqual("Resource string returned for a file-loaded property"
+			Assert.Equal(1, sources.Length);
+			Assert.Equal("Resource string returned for a file-loaded property"
 				 + " must be a proper absolute path", fileResource, new Path(sources[0]));
 			Assert.AssertArrayEquals("Resource string returned for a set() property must be "
 				 + "\"programatically\"", new string[] { "programatically" }, conf.GetPropertySources
 				("fs.defaultFS"));
-			NUnit.Framework.Assert.AreEqual("Resource string returned for an unset property must be null"
+			Assert.Equal("Resource string returned for an unset property must be null"
 				, null, conf.GetPropertySources("fs.defaultFoo"));
 		}
 
@@ -951,11 +951,11 @@ namespace Org.Apache.Hadoop.Conf
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
 			string[] sources = conf.GetPropertySources("test.foo");
-			NUnit.Framework.Assert.AreEqual(4, sources.Length);
-			NUnit.Framework.Assert.AreEqual("a", sources[0]);
-			NUnit.Framework.Assert.AreEqual("b", sources[1]);
-			NUnit.Framework.Assert.AreEqual("c", sources[2]);
-			NUnit.Framework.Assert.AreEqual("Resource string returned for a file-loaded property"
+			Assert.Equal(4, sources.Length);
+			Assert.Equal("a", sources[0]);
+			Assert.Equal("b", sources[1]);
+			Assert.Equal("c", sources[2]);
+			Assert.Equal("Resource string returned for a file-loaded property"
 				 + " must be a proper absolute path", fileResource, new Path(sources[3]));
 		}
 
@@ -967,17 +967,17 @@ namespace Org.Apache.Hadoop.Conf
 			int defaultPort = 2;
 			IPEndPoint addr = null;
 			addr = conf.GetSocketAddr("myAddress", defaultAddr, defaultPort);
-			NUnit.Framework.Assert.AreEqual(defaultAddr, NetUtils.GetHostPortString(addr));
+			Assert.Equal(defaultAddr, NetUtils.GetHostPortString(addr));
 			conf.Set("myAddress", "host2");
 			addr = conf.GetSocketAddr("myAddress", defaultAddr, defaultPort);
-			NUnit.Framework.Assert.AreEqual("host2:" + defaultPort, NetUtils.GetHostPortString
+			Assert.Equal("host2:" + defaultPort, NetUtils.GetHostPortString
 				(addr));
 			conf.Set("myAddress", "host2:3");
 			addr = conf.GetSocketAddr("myAddress", defaultAddr, defaultPort);
-			NUnit.Framework.Assert.AreEqual("host2:3", NetUtils.GetHostPortString(addr));
+			Assert.Equal("host2:3", NetUtils.GetHostPortString(addr));
 			conf.Set("myAddress", " \n \t    host4:5     \t \n   ");
 			addr = conf.GetSocketAddr("myAddress", defaultAddr, defaultPort);
-			NUnit.Framework.Assert.AreEqual("host4:5", NetUtils.GetHostPortString(addr));
+			Assert.Equal("host4:5", NetUtils.GetHostPortString(addr));
 			bool threwException = false;
 			conf.Set("myAddress", "bad:-port");
 			try
@@ -987,12 +987,12 @@ namespace Org.Apache.Hadoop.Conf
 			catch (ArgumentException iae)
 			{
 				threwException = true;
-				NUnit.Framework.Assert.AreEqual("Does not contain a valid host:port authority: " 
+				Assert.Equal("Does not contain a valid host:port authority: " 
 					+ "bad:-port (configuration property 'myAddress')", iae.Message);
 			}
 			finally
 			{
-				NUnit.Framework.Assert.IsTrue(threwException);
+				Assert.True(threwException);
 			}
 		}
 
@@ -1004,7 +1004,7 @@ namespace Org.Apache.Hadoop.Conf
 			string defaultAddr = "host:1";
 			IPEndPoint addr = NetUtils.CreateSocketAddr(defaultAddr);
 			conf.SetSocketAddr("myAddress", addr);
-			NUnit.Framework.Assert.AreEqual(defaultAddr, NetUtils.GetHostPortString(addr));
+			Assert.Equal(defaultAddr, NetUtils.GetHostPortString(addr));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1012,10 +1012,10 @@ namespace Org.Apache.Hadoop.Conf
 		{
 			IPEndPoint addr = NetUtils.CreateSocketAddrForHost("host", 1);
 			IPEndPoint connectAddr = conf.UpdateConnectAddr("myAddress", addr);
-			NUnit.Framework.Assert.AreEqual(connectAddr.GetHostName(), addr.GetHostName());
+			Assert.Equal(connectAddr.GetHostName(), addr.GetHostName());
 			addr = new IPEndPoint(1);
 			connectAddr = conf.UpdateConnectAddr("myAddress", addr);
-			NUnit.Framework.Assert.AreEqual(connectAddr.GetHostName(), Sharpen.Runtime.GetLocalHost
+			Assert.Equal(connectAddr.GetHostName(), Sharpen.Runtime.GetLocalHost
 				().GetHostName());
 		}
 
@@ -1039,10 +1039,10 @@ namespace Org.Apache.Hadoop.Conf
 			// add a few values via set.
 			conf.Set("test.key3", "value4");
 			conf.Set("test.key4", "value5");
-			NUnit.Framework.Assert.AreEqual("final-value1", conf.Get("test.key1"));
-			NUnit.Framework.Assert.AreEqual("value2", conf.Get("test.key2"));
-			NUnit.Framework.Assert.AreEqual("value4", conf.Get("test.key3"));
-			NUnit.Framework.Assert.AreEqual("value5", conf.Get("test.key4"));
+			Assert.Equal("final-value1", conf.Get("test.key1"));
+			Assert.Equal("value2", conf.Get("test.key2"));
+			Assert.Equal("value4", conf.Get("test.key3"));
+			Assert.Equal("value5", conf.Get("test.key4"));
 			// change values in the test file...
 			@out = new BufferedWriter(new FileWriter(Config));
 			StartConfig();
@@ -1050,11 +1050,11 @@ namespace Org.Apache.Hadoop.Conf
 			AppendProperty("test.key3", "final-value3", true);
 			EndConfig();
 			conf.ReloadConfiguration();
-			NUnit.Framework.Assert.AreEqual("value1", conf.Get("test.key1"));
+			Assert.Equal("value1", conf.Get("test.key1"));
 			// overlayed property overrides.
-			NUnit.Framework.Assert.AreEqual("value4", conf.Get("test.key3"));
-			NUnit.Framework.Assert.AreEqual(null, conf.Get("test.key2"));
-			NUnit.Framework.Assert.AreEqual("value5", conf.Get("test.key4"));
+			Assert.Equal("value4", conf.Get("test.key3"));
+			Assert.Equal(null, conf.Get("test.key2"));
+			Assert.Equal("value5", conf.Get("test.key4"));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1063,7 +1063,7 @@ namespace Org.Apache.Hadoop.Conf
 			Configuration conf = new Configuration(false);
 			conf.Set("a", "A");
 			conf.Set("b", "B");
-			NUnit.Framework.Assert.AreEqual(2, conf.Size());
+			Assert.Equal(2, conf.Size());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1073,7 +1073,7 @@ namespace Org.Apache.Hadoop.Conf
 			conf.Set("a", "A");
 			conf.Set("b", "B");
 			conf.Clear();
-			NUnit.Framework.Assert.AreEqual(0, conf.Size());
+			Assert.Equal(0, conf.Size());
 			NUnit.Framework.Assert.IsFalse(conf.GetEnumerator().HasNext());
 		}
 
@@ -1087,7 +1087,7 @@ namespace Org.Apache.Hadoop.Conf
 			conf.SetQuietMode(false);
 			conf.SetClassLoader(new TestConfiguration.Fake_ClassLoader());
 			Configuration other = new Configuration(conf);
-			NUnit.Framework.Assert.IsTrue(other.GetClassLoader() is TestConfiguration.Fake_ClassLoader
+			Assert.True(other.GetClassLoader() is TestConfiguration.Fake_ClassLoader
 				);
 		}
 
@@ -1162,9 +1162,9 @@ namespace Org.Apache.Hadoop.Conf
 		{
 			Configuration conf = new Configuration(false);
 			conf.Set(" name", "value");
-			NUnit.Framework.Assert.AreEqual("value", conf.Get("name"));
-			NUnit.Framework.Assert.AreEqual("value", conf.Get(" name"));
-			NUnit.Framework.Assert.AreEqual("value", conf.GetRaw("  name  "));
+			Assert.Equal("value", conf.Get("name"));
+			Assert.Equal("value", conf.Get(" name"));
+			Assert.Equal("value", conf.GetRaw("  name  "));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1194,7 +1194,7 @@ namespace Org.Apache.Hadoop.Conf
 			jconf = mapper.ReadValue<TestConfiguration.JsonConfiguration>(jsonStr);
 			int length = jconf.GetProperties().Length;
 			// check for consistency in the number of properties parsed in Json format.
-			NUnit.Framework.Assert.AreEqual(length, defaultLength + 3);
+			Assert.Equal(length, defaultLength + 3);
 			//change few keys in another resource file
 			@out = new BufferedWriter(new FileWriter(Config2));
 			StartConfig();
@@ -1218,20 +1218,20 @@ namespace Org.Apache.Hadoop.Conf
 				confDump[prop.GetKey()] = prop;
 			}
 			// check if the value and resource of test.key1 is changed
-			NUnit.Framework.Assert.AreEqual("newValue1", confDump["test.key1"].GetValue());
-			NUnit.Framework.Assert.AreEqual(false, confDump["test.key1"].GetIsFinal());
-			NUnit.Framework.Assert.AreEqual(fileResource1.ToString(), confDump["test.key1"].GetResource
+			Assert.Equal("newValue1", confDump["test.key1"].GetValue());
+			Assert.Equal(false, confDump["test.key1"].GetIsFinal());
+			Assert.Equal(fileResource1.ToString(), confDump["test.key1"].GetResource
 				());
 			// check if final parameter test.key2 is not changed, since it is first 
 			// loaded as final parameter
-			NUnit.Framework.Assert.AreEqual("value2", confDump["test.key2"].GetValue());
-			NUnit.Framework.Assert.AreEqual(true, confDump["test.key2"].GetIsFinal());
-			NUnit.Framework.Assert.AreEqual(fileResource.ToString(), confDump["test.key2"].GetResource
+			Assert.Equal("value2", confDump["test.key2"].GetValue());
+			Assert.Equal(true, confDump["test.key2"].GetIsFinal());
+			Assert.Equal(fileResource.ToString(), confDump["test.key2"].GetResource
 				());
 			// check for other keys which are not modified later
-			NUnit.Framework.Assert.AreEqual("value3", confDump["test.key3"].GetValue());
-			NUnit.Framework.Assert.AreEqual(false, confDump["test.key3"].GetIsFinal());
-			NUnit.Framework.Assert.AreEqual(fileResource.ToString(), confDump["test.key3"].GetResource
+			Assert.Equal("value3", confDump["test.key3"].GetValue());
+			Assert.Equal(false, confDump["test.key3"].GetIsFinal());
+			Assert.Equal(fileResource.ToString(), confDump["test.key3"].GetResource
 				());
 			// check for resource to be "Unknown" for keys which are loaded using 'set' 
 			// and expansion of properties
@@ -1248,8 +1248,8 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				confDump[prop_1.GetKey()] = prop_1;
 			}
-			NUnit.Framework.Assert.AreEqual("value5", confDump["test.key6"].GetValue());
-			NUnit.Framework.Assert.AreEqual("programatically", confDump["test.key4"].GetResource
+			Assert.Equal("value5", confDump["test.key6"].GetValue());
+			Assert.Equal("programatically", confDump["test.key4"].GetResource
 				());
 			outWriter.Close();
 		}
@@ -1266,7 +1266,7 @@ namespace Org.Apache.Hadoop.Conf
 			TestConfiguration.JsonConfiguration jconf = mapper.ReadValue<TestConfiguration.JsonConfiguration
 				>(jsonStr);
 			//ensure that no properties are loaded.
-			NUnit.Framework.Assert.AreEqual(0, jconf.GetProperties().Length);
+			Assert.Equal(0, jconf.GetProperties().Length);
 			// add 2 keys
 			@out = new BufferedWriter(new FileWriter(Config));
 			StartConfig();
@@ -1288,17 +1288,17 @@ namespace Org.Apache.Hadoop.Conf
 				confDump[prop.GetKey()] = prop;
 			}
 			//ensure only 2 keys are loaded
-			NUnit.Framework.Assert.AreEqual(2, jconf.GetProperties().Length);
+			Assert.Equal(2, jconf.GetProperties().Length);
 			//ensure the values are consistent
-			NUnit.Framework.Assert.AreEqual(confDump["test.key1"].GetValue(), "value1");
-			NUnit.Framework.Assert.AreEqual(confDump["test.key2"].GetValue(), "value2");
+			Assert.Equal(confDump["test.key1"].GetValue(), "value1");
+			Assert.Equal(confDump["test.key2"].GetValue(), "value2");
 			//check the final tag
-			NUnit.Framework.Assert.AreEqual(false, confDump["test.key1"].GetIsFinal());
-			NUnit.Framework.Assert.AreEqual(true, confDump["test.key2"].GetIsFinal());
+			Assert.Equal(false, confDump["test.key1"].GetIsFinal());
+			Assert.Equal(true, confDump["test.key2"].GetIsFinal());
 			//check the resource for each property
 			foreach (TestConfiguration.JsonProperty prop_1 in jconf.GetProperties())
 			{
-				NUnit.Framework.Assert.AreEqual(fileResource.ToString(), prop_1.GetResource());
+				Assert.Equal(fileResource.ToString(), prop_1.GetResource());
 			}
 		}
 
@@ -1314,11 +1314,11 @@ namespace Org.Apache.Hadoop.Conf
 			conf.Set(key3, "value3");
 			conf.Set(key4, "value3");
 			IDictionary<string, string> res = conf.GetValByRegex("^t\\..*\\.key\\d");
-			NUnit.Framework.Assert.IsTrue("Conf didn't get key " + key1, res.Contains(key1));
-			NUnit.Framework.Assert.IsTrue("Conf didn't get key " + key2, res.Contains(key2));
-			NUnit.Framework.Assert.IsTrue("Picked out wrong key " + key3, !res.Contains(key3)
+			Assert.True("Conf didn't get key " + key1, res.Contains(key1));
+			Assert.True("Conf didn't get key " + key2, res.Contains(key2));
+			Assert.True("Picked out wrong key " + key3, !res.Contains(key3)
 				);
-			NUnit.Framework.Assert.IsTrue("Picked out wrong key " + key4, !res.Contains(key4)
+			Assert.True("Picked out wrong key " + key4, !res.Contains(key4)
 				);
 		}
 
@@ -1333,8 +1333,8 @@ namespace Org.Apache.Hadoop.Conf
 			}
 			catch (Exception e)
 			{
-				NUnit.Framework.Assert.IsTrue(e is ArgumentException);
-				NUnit.Framework.Assert.AreEqual(e.Message, "The value of property testClassName must not be null"
+				Assert.True(e is ArgumentException);
+				Assert.Equal(e.Message, "The value of property testClassName must not be null"
 					);
 			}
 		}
@@ -1350,8 +1350,8 @@ namespace Org.Apache.Hadoop.Conf
 			}
 			catch (Exception e)
 			{
-				NUnit.Framework.Assert.IsTrue(e is ArgumentException);
-				NUnit.Framework.Assert.AreEqual(e.Message, "Property name must not be null");
+				Assert.True(e is ArgumentException);
+				Assert.Equal(e.Message, "Property name must not be null");
 			}
 		}
 
@@ -1395,7 +1395,7 @@ namespace Org.Apache.Hadoop.Conf
 			}
 			catch (InvalidOperationException e)
 			{
-				NUnit.Framework.Assert.IsTrue("Unexpected exception text: " + e, e.Message.Contains
+				Assert.True("Unexpected exception text: " + e, e.Message.Contains
 					("substitution depth"));
 			}
 		}
@@ -1410,7 +1410,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				configuration.Set(key, keyExpression);
 				string value = configuration.Get(key);
-				NUnit.Framework.Assert.IsTrue("Unexpected value " + value, value.Equals(keyExpression
+				Assert.True("Unexpected value " + value, value.Equals(keyExpression
 					));
 			}
 		}
@@ -1436,11 +1436,11 @@ namespace Org.Apache.Hadoop.Conf
 			NUnit.Framework.Assert.IsFalse("my.var already exists", finalParameters.Contains(
 				"my.var"));
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual("my.var is undefined", "x", conf.Get("my.var"));
+			Assert.Equal("my.var is undefined", "x", conf.Get("my.var"));
 			NUnit.Framework.Assert.IsFalse("finalparams not copied", finalParameters.Contains
 				("my.var"));
 			finalParameters = conf.GetFinalParameters();
-			NUnit.Framework.Assert.IsTrue("my.var is not final", finalParameters.Contains("my.var"
+			Assert.True("my.var is not final", finalParameters.Contains("my.var"
 				));
 		}
 

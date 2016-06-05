@@ -38,82 +38,82 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSingleFencer()
 		{
 			NodeFencer fencer = SetupFencer(typeof(TestNodeFencer.AlwaysSucceedFencer).FullName
 				 + "(foo)");
-			NUnit.Framework.Assert.IsTrue(fencer.Fence(MockTarget));
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.True(fencer.Fence(MockTarget));
+			Assert.Equal(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
 			NUnit.Framework.Assert.AreSame(MockTarget, TestNodeFencer.AlwaysSucceedFencer.fencedSvc
 				);
-			NUnit.Framework.Assert.AreEqual("foo", TestNodeFencer.AlwaysSucceedFencer.callArgs
+			Assert.Equal("foo", TestNodeFencer.AlwaysSucceedFencer.callArgs
 				[0]);
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleFencers()
 		{
 			NodeFencer fencer = SetupFencer(typeof(TestNodeFencer.AlwaysSucceedFencer).FullName
 				 + "(foo)\n" + typeof(TestNodeFencer.AlwaysSucceedFencer).FullName + "(bar)\n");
-			NUnit.Framework.Assert.IsTrue(fencer.Fence(MockTarget));
+			Assert.True(fencer.Fence(MockTarget));
 			// Only one call, since the first fencer succeeds
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
-			NUnit.Framework.Assert.AreEqual("foo", TestNodeFencer.AlwaysSucceedFencer.callArgs
+			Assert.Equal("foo", TestNodeFencer.AlwaysSucceedFencer.callArgs
 				[0]);
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWhitespaceAndCommentsInConfig()
 		{
 			NodeFencer fencer = SetupFencer("\n" + " # the next one will always fail\n" + " "
 				 + typeof(TestNodeFencer.AlwaysFailFencer).FullName + "(foo) # <- fails\n" + typeof(
 				TestNodeFencer.AlwaysSucceedFencer).FullName + "(bar) \n");
-			NUnit.Framework.Assert.IsTrue(fencer.Fence(MockTarget));
+			Assert.True(fencer.Fence(MockTarget));
 			// One call to each, since top fencer fails
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
+			Assert.Equal(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
 			NUnit.Framework.Assert.AreSame(MockTarget, TestNodeFencer.AlwaysFailFencer.fencedSvc
 				);
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
 			NUnit.Framework.Assert.AreSame(MockTarget, TestNodeFencer.AlwaysSucceedFencer.fencedSvc
 				);
-			NUnit.Framework.Assert.AreEqual("foo", TestNodeFencer.AlwaysFailFencer.callArgs[0
+			Assert.Equal("foo", TestNodeFencer.AlwaysFailFencer.callArgs[0
 				]);
-			NUnit.Framework.Assert.AreEqual("bar", TestNodeFencer.AlwaysSucceedFencer.callArgs
+			Assert.Equal("bar", TestNodeFencer.AlwaysSucceedFencer.callArgs
 				[0]);
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestArglessFencer()
 		{
 			NodeFencer fencer = SetupFencer(typeof(TestNodeFencer.AlwaysSucceedFencer).FullName
 				);
-			NUnit.Framework.Assert.IsTrue(fencer.Fence(MockTarget));
+			Assert.True(fencer.Fence(MockTarget));
 			// One call to each, since top fencer fails
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
 			NUnit.Framework.Assert.AreSame(MockTarget, TestNodeFencer.AlwaysSucceedFencer.fencedSvc
 				);
-			NUnit.Framework.Assert.AreEqual(null, TestNodeFencer.AlwaysSucceedFencer.callArgs
+			Assert.Equal(null, TestNodeFencer.AlwaysSucceedFencer.callArgs
 				[0]);
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortNameShell()
 		{
 			NodeFencer fencer = SetupFencer(GetFencerTrueCommand());
-			NUnit.Framework.Assert.IsTrue(fencer.Fence(MockTarget));
+			Assert.True(fencer.Fence(MockTarget));
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortNameSsh()
 		{
 			NodeFencer fencer = SetupFencer("sshfence");
@@ -121,7 +121,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortNameSshWithUser()
 		{
 			NodeFencer fencer = SetupFencer("sshfence(user)");
@@ -129,7 +129,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortNameSshWithPort()
 		{
 			NodeFencer fencer = SetupFencer("sshfence(:123)");
@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortNameSshWithUserPort()
 		{
 			NodeFencer fencer = SetupFencer("sshfence(user:123)");

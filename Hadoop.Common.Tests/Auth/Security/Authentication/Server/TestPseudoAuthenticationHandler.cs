@@ -8,7 +8,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 	public class TestPseudoAuthenticationHandler
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInit()
 		{
 			PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
@@ -17,7 +17,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				Properties props = new Properties();
 				props.SetProperty(PseudoAuthenticationHandler.AnonymousAllowed, "false");
 				handler.Init(props);
-				NUnit.Framework.Assert.AreEqual(false, handler.GetAcceptAnonymous());
+				Assert.Equal(false, handler.GetAcceptAnonymous());
 			}
 			finally
 			{
@@ -26,16 +26,16 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestType()
 		{
 			PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
-			NUnit.Framework.Assert.AreEqual(PseudoAuthenticationHandler.Type, handler.GetType
+			Assert.Equal(PseudoAuthenticationHandler.Type, handler.GetType
 				());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAnonymousOn()
 		{
 			PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				HttpServletRequest request = Org.Mockito.Mockito.Mock<HttpServletRequest>();
 				HttpServletResponse response = Org.Mockito.Mockito.Mock<HttpServletResponse>();
 				AuthenticationToken token = handler.Authenticate(request, response);
-				NUnit.Framework.Assert.AreEqual(AuthenticationToken.Anonymous, token);
+				Assert.Equal(AuthenticationToken.Anonymous, token);
 			}
 			finally
 			{
@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAnonymousOff()
 		{
 			PseudoAuthenticationHandler handler = new PseudoAuthenticationHandler();
@@ -92,9 +92,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					.UserName + "=" + "user");
 				AuthenticationToken token = handler.Authenticate(request, response);
 				NUnit.Framework.Assert.IsNotNull(token);
-				NUnit.Framework.Assert.AreEqual("user", token.GetUserName());
-				NUnit.Framework.Assert.AreEqual("user", token.GetName());
-				NUnit.Framework.Assert.AreEqual(PseudoAuthenticationHandler.Type, token.GetType()
+				Assert.Equal("user", token.GetUserName());
+				Assert.Equal("user", token.GetName());
+				Assert.Equal(PseudoAuthenticationHandler.Type, token.GetType()
 					);
 			}
 			finally
@@ -104,14 +104,14 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserNameAnonymousOff()
 		{
 			_testUserName(false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserNameAnonymousOn()
 		{
 			_testUserName(true);

@@ -710,7 +710,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				@out.WriteInt(this.theMetadata.Count);
 				IEnumerator<KeyValuePair<Text, Text>> iter = this.theMetadata.GetEnumerator();

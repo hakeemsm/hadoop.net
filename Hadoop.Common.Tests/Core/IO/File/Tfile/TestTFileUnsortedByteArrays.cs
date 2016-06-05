@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
 			NUnit.Framework.Assert.IsFalse(reader.IsSorted());
-			NUnit.Framework.Assert.AreEqual((int)reader.GetEntryCount(), 4);
+			Assert.Equal((int)reader.GetEntryCount(), 4);
 			try
 			{
 				TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Sharpen.Runtime.GetBytesForString
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
 			NUnit.Framework.Assert.IsFalse(reader.IsSorted());
-			NUnit.Framework.Assert.AreEqual((int)reader.GetEntryCount(), 4);
+			Assert.Equal((int)reader.GetEntryCount(), 4);
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
 			try
 			{
@@ -110,24 +110,24 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] kbuf = new byte[BufSize];
 				int klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyZ");
 				byte[] vbuf = new byte[BufSize];
 				int vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueZ");
 				scanner.Advance();
 				// now try get value first
 				vbuf = new byte[BufSize];
 				vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueM");
 				kbuf = new byte[BufSize];
 				klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyM");
 			}
 			finally
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
 			NUnit.Framework.Assert.IsFalse(reader.IsSorted());
-			NUnit.Framework.Assert.AreEqual((int)reader.GetEntryCount(), 4);
+			Assert.Equal((int)reader.GetEntryCount(), 4);
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
 			try
 			{
@@ -152,24 +152,24 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] kbuf = new byte[BufSize];
 				int klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyZ");
 				byte[] vbuf = new byte[BufSize];
 				int vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueZ");
 				scanner.Advance();
 				// now try get value first
 				vbuf = new byte[BufSize];
 				vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueM");
 				kbuf = new byte[BufSize];
 				klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyM");
 			}
 			finally

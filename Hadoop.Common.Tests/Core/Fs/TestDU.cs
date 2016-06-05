@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.FS
 		protected override void SetUp()
 		{
 			FileUtil.FullyDelete(DuDir);
-			NUnit.Framework.Assert.IsTrue(DuDir.Mkdirs());
+			Assert.True(DuDir.Mkdirs());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -65,19 +65,19 @@ namespace Org.Apache.Hadoop.FS
 			du.Start();
 			long duSize = du.GetUsed();
 			du.Shutdown();
-			NUnit.Framework.Assert.IsTrue("Invalid on-disk size", duSize >= writtenSize && writtenSize
+			Assert.True("Invalid on-disk size", duSize >= writtenSize && writtenSize
 				 <= (duSize + slack));
 			//test with 0 interval, will not launch thread 
 			du = new DU(file, 0);
 			du.Start();
 			duSize = du.GetUsed();
 			du.Shutdown();
-			NUnit.Framework.Assert.IsTrue("Invalid on-disk size", duSize >= writtenSize && writtenSize
+			Assert.True("Invalid on-disk size", duSize >= writtenSize && writtenSize
 				 <= (duSize + slack));
 			//test without launching thread 
 			du = new DU(file, 10000);
 			duSize = du.GetUsed();
-			NUnit.Framework.Assert.IsTrue("Invalid on-disk size", duSize >= writtenSize && writtenSize
+			Assert.True("Invalid on-disk size", duSize >= writtenSize && writtenSize
 				 <= (duSize + slack));
 		}
 
@@ -85,13 +85,13 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestDUGetUsedWillNotReturnNegative()
 		{
 			FilePath file = new FilePath(DuDir, "data");
-			NUnit.Framework.Assert.IsTrue(file.CreateNewFile());
+			Assert.True(file.CreateNewFile());
 			Configuration conf = new Configuration();
 			conf.SetLong(CommonConfigurationKeys.FsDuIntervalKey, 10000L);
 			DU du = new DU(file, conf);
 			du.DecDfsUsed(long.MaxValue);
 			long duSize = du.GetUsed();
-			NUnit.Framework.Assert.IsTrue(duSize.ToString(), duSize >= 0L);
+			Assert.True(duSize.ToString(), duSize >= 0L);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -101,7 +101,7 @@ namespace Org.Apache.Hadoop.FS
 			CreateFile(file, 8192);
 			DU du = new DU(file, 3000, 1024);
 			du.Start();
-			NUnit.Framework.Assert.IsTrue("Initial usage setting not honored", du.GetUsed() ==
+			Assert.True("Initial usage setting not honored", du.GetUsed() ==
 				 1024);
 			// wait until the first du runs.
 			try
@@ -111,7 +111,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (Exception)
 			{
 			}
-			NUnit.Framework.Assert.IsTrue("Usage didn't get updated", du.GetUsed() == 8192);
+			Assert.True("Usage didn't get updated", du.GetUsed() == 8192);
 		}
 	}
 }

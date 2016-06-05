@@ -10,7 +10,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 	public class TestPatternFilter
 	{
 		/// <summary>Filters should default to accept</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void EmptyConfigShouldAccept()
 		{
 			SubsetConfiguration empty = new ConfigBuilder().Subset(string.Empty);
@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		}
 
 		/// <summary>Filters should handle white-listing correctly</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void IncludeOnlyShouldOnlyIncludeMatched()
 		{
 			SubsetConfiguration wl = new ConfigBuilder().Add("p.include", "foo").Add("p.include.tags"
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		}
 
 		/// <summary>Filters should handle black-listing correctly</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ExcludeOnlyShouldOnlyExcludeMatched()
 		{
 			SubsetConfiguration bl = new ConfigBuilder().Add("p.exclude", "foo").Add("p.exclude.tags"
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		/// Filters should accepts unmatched item when both include and
 		/// exclude patterns are present.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ShouldAcceptUnmatchedWhenBothAreConfigured()
 		{
 			SubsetConfiguration c = new ConfigBuilder().Add("p.include", "foo").Add("p.include.tags"
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		}
 
 		/// <summary>Include patterns should take precedence over exclude patterns</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void IncludeShouldOverrideExclude()
 		{
 			SubsetConfiguration c = new ConfigBuilder().Add("p.include", "foo").Add("p.include.tags"
@@ -98,8 +98,8 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 
 		internal static void ShouldAccept(SubsetConfiguration conf, string s)
 		{
-			NUnit.Framework.Assert.IsTrue("accepts " + s, NewGlobFilter(conf).Accepts(s));
-			NUnit.Framework.Assert.IsTrue("accepts " + s, NewRegexFilter(conf).Accepts(s));
+			Assert.True("accepts " + s, NewGlobFilter(conf).Accepts(s));
+			Assert.True("accepts " + s, NewRegexFilter(conf).Accepts(s));
 		}
 
 		// Version for one tag:
@@ -136,9 +136,9 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 			MetricsFilter globFilter = NewGlobFilter(conf);
 			MetricsFilter regexFilter = NewRegexFilter(conf);
 			// Test acceptance of the tag list:  
-			NUnit.Framework.Assert.AreEqual("accepts " + tags, expectAcceptList, globFilter.Accepts
+			Assert.Equal("accepts " + tags, expectAcceptList, globFilter.Accepts
 				(tags));
-			NUnit.Framework.Assert.AreEqual("accepts " + tags, expectAcceptList, regexFilter.
+			Assert.Equal("accepts " + tags, expectAcceptList, regexFilter.
 				Accepts(tags));
 			// Test results on each of the individual tags:
 			int acceptedCount = 0;
@@ -147,10 +147,10 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 				MetricsTag tag = tags[i];
 				bool actGlob = globFilter.Accepts(tag);
 				bool actRegex = regexFilter.Accepts(tag);
-				NUnit.Framework.Assert.AreEqual("accepts " + tag, expectedAcceptedSpec[i], actGlob
+				Assert.Equal("accepts " + tag, expectedAcceptedSpec[i], actGlob
 					);
 				// Both the filters should give the same result:
-				NUnit.Framework.Assert.AreEqual(actGlob, actRegex);
+				Assert.Equal(actGlob, actRegex);
 				if (actGlob)
 				{
 					acceptedCount++;
@@ -159,13 +159,13 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 			if (expectAcceptList)
 			{
 				// At least one individual tag should be accepted:
-				NUnit.Framework.Assert.IsTrue("No tag of the following accepted: " + tags, acceptedCount
+				Assert.True("No tag of the following accepted: " + tags, acceptedCount
 					 > 0);
 			}
 			else
 			{
 				// At least one individual tag should be rejected: 
-				NUnit.Framework.Assert.IsTrue("No tag of the following rejected: " + tags, acceptedCount
+				Assert.True("No tag of the following rejected: " + tags, acceptedCount
 					 < tags.Count);
 			}
 		}
@@ -176,16 +176,16 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		/// <param name="record">MetricsRecord to check</param>
 		internal static void ShouldAccept(SubsetConfiguration conf, MetricsRecord record)
 		{
-			NUnit.Framework.Assert.IsTrue("accepts " + record, NewGlobFilter(conf).Accepts(record
+			Assert.True("accepts " + record, NewGlobFilter(conf).Accepts(record
 				));
-			NUnit.Framework.Assert.IsTrue("accepts " + record, NewRegexFilter(conf).Accepts(record
+			Assert.True("accepts " + record, NewRegexFilter(conf).Accepts(record
 				));
 		}
 
 		internal static void ShouldReject(SubsetConfiguration conf, string s)
 		{
-			NUnit.Framework.Assert.IsTrue("rejects " + s, !NewGlobFilter(conf).Accepts(s));
-			NUnit.Framework.Assert.IsTrue("rejects " + s, !NewRegexFilter(conf).Accepts(s));
+			Assert.True("rejects " + s, !NewGlobFilter(conf).Accepts(s));
+			Assert.True("rejects " + s, !NewRegexFilter(conf).Accepts(s));
 		}
 
 		/// <summary>Asserts that filters with the given configuration reject the given record.
@@ -194,9 +194,9 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		/// <param name="record">MetricsRecord to check</param>
 		internal static void ShouldReject(SubsetConfiguration conf, MetricsRecord record)
 		{
-			NUnit.Framework.Assert.IsTrue("rejects " + record, !NewGlobFilter(conf).Accepts(record
+			Assert.True("rejects " + record, !NewGlobFilter(conf).Accepts(record
 				));
-			NUnit.Framework.Assert.IsTrue("rejects " + record, !NewRegexFilter(conf).Accepts(
+			Assert.True("rejects " + record, !NewRegexFilter(conf).Accepts(
 				record));
 		}
 

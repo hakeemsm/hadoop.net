@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSingleFrame()
 		{
 			RpcUtil.RpcFrameDecoder decoder = new RpcUtil.RpcFrameDecoder();
@@ -76,7 +76,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			ChannelBuffer channelBuffer = (ChannelBuffer)decoder.Decode(Org.Mockito.Mockito.Mock
 				<ChannelHandlerContext>(), Org.Mockito.Mockito.Mock<Org.Jboss.Netty.Channel.Channel
 				>(), buf);
-			NUnit.Framework.Assert.IsTrue(channelBuffer == null);
+			Assert.True(channelBuffer == null);
 			// Test all bytes are not received yet
 			byte[] fragment = new byte[4 + 9];
 			fragment[0] = unchecked((byte)(1 << 7));
@@ -85,18 +85,18 @@ namespace Org.Apache.Hadoop.Oncrpc
 			fragment[2] = 0;
 			fragment[3] = unchecked((byte)10);
 			// fragment size = 10 bytes
-			NUnit.Framework.Assert.IsTrue(XDR.IsLastFragment(fragment));
-			NUnit.Framework.Assert.IsTrue(XDR.FragmentSize(fragment) == 10);
+			Assert.True(XDR.IsLastFragment(fragment));
+			Assert.True(XDR.FragmentSize(fragment) == 10);
 			buffer = ByteBuffer.Allocate(4 + 9);
 			buffer.Put(fragment);
 			buffer.Flip();
 			buf = new ByteBufferBackedChannelBuffer(buffer);
 			channelBuffer = (ChannelBuffer)decoder.Decode(Org.Mockito.Mockito.Mock<ChannelHandlerContext
 				>(), Org.Mockito.Mockito.Mock<Org.Jboss.Netty.Channel.Channel>(), buf);
-			NUnit.Framework.Assert.IsTrue(channelBuffer == null);
+			Assert.True(channelBuffer == null);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleFrames()
 		{
 			RpcUtil.RpcFrameDecoder decoder = new RpcUtil.RpcFrameDecoder();
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			fragment1[3] = unchecked((byte)10);
 			// fragment size = 10 bytes
 			NUnit.Framework.Assert.IsFalse(XDR.IsLastFragment(fragment1));
-			NUnit.Framework.Assert.IsTrue(XDR.FragmentSize(fragment1) == 10);
+			Assert.True(XDR.FragmentSize(fragment1) == 10);
 			// decoder should wait for the final fragment
 			ByteBuffer buffer = ByteBuffer.Allocate(4 + 10);
 			buffer.Put(fragment1);
@@ -118,7 +118,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			ChannelBuffer channelBuffer = (ChannelBuffer)decoder.Decode(Org.Mockito.Mockito.Mock
 				<ChannelHandlerContext>(), Org.Mockito.Mockito.Mock<Org.Jboss.Netty.Channel.Channel
 				>(), buf);
-			NUnit.Framework.Assert.IsTrue(channelBuffer == null);
+			Assert.True(channelBuffer == null);
 			byte[] fragment2 = new byte[4 + 10];
 			fragment2[0] = unchecked((byte)(1 << 7));
 			// final fragment
@@ -126,20 +126,20 @@ namespace Org.Apache.Hadoop.Oncrpc
 			fragment2[2] = 0;
 			fragment2[3] = unchecked((byte)10);
 			// fragment size = 10 bytes
-			NUnit.Framework.Assert.IsTrue(XDR.IsLastFragment(fragment2));
-			NUnit.Framework.Assert.IsTrue(XDR.FragmentSize(fragment2) == 10);
+			Assert.True(XDR.IsLastFragment(fragment2));
+			Assert.True(XDR.FragmentSize(fragment2) == 10);
 			buffer = ByteBuffer.Allocate(4 + 10);
 			buffer.Put(fragment2);
 			buffer.Flip();
 			buf = new ByteBufferBackedChannelBuffer(buffer);
 			channelBuffer = (ChannelBuffer)decoder.Decode(Org.Mockito.Mockito.Mock<ChannelHandlerContext
 				>(), Org.Mockito.Mockito.Mock<Org.Jboss.Netty.Channel.Channel>(), buf);
-			NUnit.Framework.Assert.IsTrue(channelBuffer != null);
+			Assert.True(channelBuffer != null);
 			// Complete frame should have to total size 10+10=20
-			NUnit.Framework.Assert.AreEqual(20, channelBuffer.ReadableBytes());
+			Assert.Equal(20, channelBuffer.ReadableBytes());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFrames()
 		{
 			int serverPort = StartRpcServer(true);
@@ -152,10 +152,10 @@ namespace Org.Apache.Hadoop.Oncrpc
 			// Send the request to the server
 			TestRequest(xdrOut, serverPort);
 			// Verify the server got the request with right size
-			NUnit.Framework.Assert.AreEqual(requestSize, resultSize);
+			Assert.Equal(requestSize, resultSize);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUnprivilegedPort()
 		{
 			// Don't allow connections from unprivileged ports. Given that this test is
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			// Send the request to the server
 			TestRequest(xdrOut, serverPort);
 			// Verify the server rejected the request.
-			NUnit.Framework.Assert.AreEqual(0, resultSize);
+			Assert.Equal(0, resultSize);
 			// Ensure that the NULL procedure does in fact succeed.
 			xdrOut = new XDR();
 			CreatePortmapXDRheader(xdrOut, 0);
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			// Send the request to the server
 			TestRequest(xdrOut, serverPort);
 			// Verify the server did not reject the request.
-			NUnit.Framework.Assert.AreEqual(requestSize, resultSize);
+			Assert.Equal(requestSize, resultSize);
 		}
 
 		private static int StartRpcServer(bool allowInsecurePorts)

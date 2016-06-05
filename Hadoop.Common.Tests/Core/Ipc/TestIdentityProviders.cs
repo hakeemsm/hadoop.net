@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Ipc
 			private readonly TestIdentityProviders _enclosing;
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPluggableIdentityProvider()
 		{
 			Configuration conf = new Configuration();
@@ -39,14 +39,14 @@ namespace Org.Apache.Hadoop.Ipc
 				);
 			IList<IdentityProvider> providers = conf.GetInstances<IdentityProvider>(CommonConfigurationKeys
 				.IpcCallqueueIdentityProviderKey);
-			NUnit.Framework.Assert.IsTrue(providers.Count == 1);
+			Assert.True(providers.Count == 1);
 			IdentityProvider ip = providers[0];
 			NUnit.Framework.Assert.IsNotNull(ip);
-			NUnit.Framework.Assert.AreEqual(ip.GetType(), typeof(UserIdentityProvider));
+			Assert.Equal(ip.GetType(), typeof(UserIdentityProvider));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserIdentityProvider()
 		{
 			UserIdentityProvider uip = new UserIdentityProvider();
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.Ipc
 			// Get our username
 			UserGroupInformation ugi = UserGroupInformation.GetCurrentUser();
 			string username = ugi.GetUserName();
-			NUnit.Framework.Assert.AreEqual(username, identity);
+			Assert.Equal(username, identity);
 		}
 	}
 }

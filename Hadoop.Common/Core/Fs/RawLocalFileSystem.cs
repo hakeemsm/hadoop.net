@@ -822,7 +822,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				if (!IsPermissionLoaded())
 				{

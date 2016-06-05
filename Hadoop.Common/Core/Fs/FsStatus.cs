@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.FS
 		// Writable
 		//////////////////////////////////////////////////
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteLong(capacity);
 			@out.WriteLong(used);

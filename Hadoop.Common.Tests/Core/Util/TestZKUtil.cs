@@ -20,21 +20,21 @@ namespace Org.Apache.Hadoop.Util
 		private static readonly string BogusFile = new FilePath("/xxxx-this-does-not-exist"
 			).GetPath();
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEmptyACL()
 		{
 			IList<ACL> result = ZKUtil.ParseACLs(string.Empty);
-			NUnit.Framework.Assert.IsTrue(result.IsEmpty());
+			Assert.True(result.IsEmpty());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullACL()
 		{
 			IList<ACL> result = ZKUtil.ParseACLs(null);
-			NUnit.Framework.Assert.IsTrue(result.IsEmpty());
+			Assert.True(result.IsEmpty());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidACLs()
 		{
 			BadAcl("a:b", "ACL 'a:b' not of expected form scheme:id:perm");
@@ -53,76 +53,76 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (ZKUtil.BadAclFormatException e)
 			{
-				NUnit.Framework.Assert.AreEqual(expectedErr, e.Message);
+				Assert.Equal(expectedErr, e.Message);
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRemoveSpecificPerms()
 		{
 			int perms = ZooDefs.Perms.All;
 			int remove = ZooDefs.Perms.Create;
 			int newPerms = ZKUtil.RemoveSpecificPerms(perms, remove);
-			NUnit.Framework.Assert.AreEqual("Removal failed", 0, newPerms & ZooDefs.Perms.Create
+			Assert.Equal("Removal failed", 0, newPerms & ZooDefs.Perms.Create
 				);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGoodACLs()
 		{
 			IList<ACL> result = ZKUtil.ParseACLs("sasl:hdfs/host1@MY.DOMAIN:cdrwa, sasl:hdfs/host2@MY.DOMAIN:ca"
 				);
 			ACL acl0 = result[0];
-			NUnit.Framework.Assert.AreEqual(ZooDefs.Perms.Create | ZooDefs.Perms.Delete | ZooDefs.Perms
+			Assert.Equal(ZooDefs.Perms.Create | ZooDefs.Perms.Delete | ZooDefs.Perms
 				.Read | ZooDefs.Perms.Write | ZooDefs.Perms.Admin, acl0.GetPerms());
-			NUnit.Framework.Assert.AreEqual("sasl", acl0.GetId().GetScheme());
-			NUnit.Framework.Assert.AreEqual("hdfs/host1@MY.DOMAIN", acl0.GetId().GetId());
+			Assert.Equal("sasl", acl0.GetId().GetScheme());
+			Assert.Equal("hdfs/host1@MY.DOMAIN", acl0.GetId().GetId());
 			ACL acl1 = result[1];
-			NUnit.Framework.Assert.AreEqual(ZooDefs.Perms.Create | ZooDefs.Perms.Admin, acl1.
+			Assert.Equal(ZooDefs.Perms.Create | ZooDefs.Perms.Admin, acl1.
 				GetPerms());
-			NUnit.Framework.Assert.AreEqual("sasl", acl1.GetId().GetScheme());
-			NUnit.Framework.Assert.AreEqual("hdfs/host2@MY.DOMAIN", acl1.GetId().GetId());
+			Assert.Equal("sasl", acl1.GetId().GetScheme());
+			Assert.Equal("hdfs/host2@MY.DOMAIN", acl1.GetId().GetId());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEmptyAuth()
 		{
 			IList<ZKUtil.ZKAuthInfo> result = ZKUtil.ParseAuth(string.Empty);
-			NUnit.Framework.Assert.IsTrue(result.IsEmpty());
+			Assert.True(result.IsEmpty());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullAuth()
 		{
 			IList<ZKUtil.ZKAuthInfo> result = ZKUtil.ParseAuth(null);
-			NUnit.Framework.Assert.IsTrue(result.IsEmpty());
+			Assert.True(result.IsEmpty());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGoodAuths()
 		{
 			IList<ZKUtil.ZKAuthInfo> result = ZKUtil.ParseAuth("scheme:data,\n   scheme2:user:pass"
 				);
-			NUnit.Framework.Assert.AreEqual(2, result.Count);
+			Assert.Equal(2, result.Count);
 			ZKUtil.ZKAuthInfo auth0 = result[0];
-			NUnit.Framework.Assert.AreEqual("scheme", auth0.GetScheme());
-			NUnit.Framework.Assert.AreEqual("data", Sharpen.Runtime.GetStringForBytes(auth0.GetAuth
+			Assert.Equal("scheme", auth0.GetScheme());
+			Assert.Equal("data", Sharpen.Runtime.GetStringForBytes(auth0.GetAuth
 				()));
 			ZKUtil.ZKAuthInfo auth1 = result[1];
-			NUnit.Framework.Assert.AreEqual("scheme2", auth1.GetScheme());
-			NUnit.Framework.Assert.AreEqual("user:pass", Sharpen.Runtime.GetStringForBytes(auth1
+			Assert.Equal("scheme2", auth1.GetScheme());
+			Assert.Equal("user:pass", Sharpen.Runtime.GetStringForBytes(auth1
 				.GetAuth()));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConfIndirection()
 		{
 			NUnit.Framework.Assert.IsNull(ZKUtil.ResolveConfIndirection(null));
-			NUnit.Framework.Assert.AreEqual("x", ZKUtil.ResolveConfIndirection("x"));
+			Assert.Equal("x", ZKUtil.ResolveConfIndirection("x"));
 			TestFile.GetParentFile().Mkdirs();
 			Files.Write("hello world", TestFile, Charsets.Utf8);
-			NUnit.Framework.Assert.AreEqual("hello world", ZKUtil.ResolveConfIndirection("@" 
+			Assert.Equal("hello world", ZKUtil.ResolveConfIndirection("@" 
 				+ TestFile.GetAbsolutePath()));
 			try
 			{
@@ -131,7 +131,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (FileNotFoundException fnfe)
 			{
-				NUnit.Framework.Assert.IsTrue(fnfe.Message.StartsWith(BogusFile));
+				Assert.True(fnfe.Message.StartsWith(BogusFile));
 			}
 		}
 	}

@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Util
 
 		/// <summary>Test default unjarring behavior - unpack everything</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUnJar()
 		{
 			FilePath unjarDir = new FilePath(TestRootDir, "unjar-all");
@@ -59,9 +59,9 @@ namespace Org.Apache.Hadoop.Util
 				(unjarDir, "foobar.txt").Exists());
 			// Unjar everything
 			RunJar.UnJar(new FilePath(TestRootDir, TestJarName), unjarDir);
-			NUnit.Framework.Assert.IsTrue("foobar unpacked", new FilePath(unjarDir, "foobar.txt"
+			Assert.True("foobar unpacked", new FilePath(unjarDir, "foobar.txt"
 				).Exists());
-			NUnit.Framework.Assert.IsTrue("foobaz unpacked", new FilePath(unjarDir, "foobaz.txt"
+			Assert.True("foobaz unpacked", new FilePath(unjarDir, "foobaz.txt"
 				).Exists());
 		}
 
@@ -77,7 +77,7 @@ namespace Org.Apache.Hadoop.Util
 				(".*baz.*"));
 			NUnit.Framework.Assert.IsFalse("foobar not unpacked", new FilePath(unjarDir, "foobar.txt"
 				).Exists());
-			NUnit.Framework.Assert.IsTrue("foobaz unpacked", new FilePath(unjarDir, "foobaz.txt"
+			Assert.True("foobaz unpacked", new FilePath(unjarDir, "foobaz.txt"
 				).Exists());
 		}
 
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Util
 		/// loaded by the system classloader.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClientClassLoader()
 		{
 			RunJar runJar = Org.Mockito.Mockito.Spy(new RunJar());

@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			// check that schema matches expected
 			Schema s = ((ReflectData)ReflectData.Get()).GetSchema(type);
-			NUnit.Framework.Assert.AreEqual(Schema.Parse(schema), s);
+			Assert.Equal(Schema.Parse(schema), s);
 			// check that value is serialized correctly
 			ReflectDatumWriter<object> writer = new ReflectDatumWriter<object>(s);
 			ByteArrayOutputStream @out = new ByteArrayOutputStream();
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.IO
 			ReflectDatumReader<object> reader = new ReflectDatumReader<object>(s);
 			object after = reader.Read(null, DecoderFactory.Get().BinaryDecoder(@out.ToByteArray
 				(), null));
-			NUnit.Framework.Assert.AreEqual(value, after);
+			Assert.Equal(value, after);
 		}
 	}
 }

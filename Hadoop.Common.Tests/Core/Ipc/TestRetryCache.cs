@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// then complete based on the entry in the retry cache.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLongOperationsSuccessful()
 		{
 			// Test long successful operations
@@ -128,7 +128,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// up performing the operation again.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLongOperationsFailure()
 		{
 			// Test long failed operations
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// retries then complete based on the entry in the retry cache.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortOperationsSuccess()
 		{
 			// Test long failed operations
@@ -160,7 +160,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// performing the operation again.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortOperationsFailure()
 		{
 			// Test long failed operations
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryAfterSuccess()
 		{
 			// Previous operation successfully completed
@@ -181,7 +181,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetryAfterFailure()
 		{
 			// Previous operation failed
@@ -207,16 +207,16 @@ namespace Org.Apache.Hadoop.Ipc
 				Future<int> submit = executorService.Submit(worker);
 				list.AddItem(submit);
 			}
-			NUnit.Framework.Assert.AreEqual(numberOfThreads, list.Count);
+			Assert.Equal(numberOfThreads, list.Count);
 			foreach (Future<int> future in list)
 			{
 				if (success)
 				{
-					NUnit.Framework.Assert.AreEqual(input, future.Get());
+					Assert.Equal(input, future.Get());
 				}
 				else
 				{
-					NUnit.Framework.Assert.AreEqual(failureOutput, future.Get());
+					Assert.Equal(failureOutput, future.Get());
 				}
 			}
 			if (success)
@@ -224,8 +224,8 @@ namespace Org.Apache.Hadoop.Ipc
 				// If the operation was successful, all the subsequent operations
 				// by other threads should be retries. Operation count should be 1.
 				int retries = numberOfThreads + (attemptedBefore ? 0 : -1);
-				NUnit.Framework.Assert.AreEqual(1, testServer.operationCount.Get());
-				NUnit.Framework.Assert.AreEqual(retries, testServer.retryCount.Get());
+				Assert.Equal(1, testServer.operationCount.Get());
+				Assert.Equal(retries, testServer.retryCount.Get());
 			}
 			else
 			{
@@ -233,8 +233,8 @@ namespace Org.Apache.Hadoop.Ipc
 				// should execute once more, hence the retry count should be 0 and
 				// operation count should be the number of tries
 				int opCount = numberOfThreads + (attemptedBefore ? 1 : 0);
-				NUnit.Framework.Assert.AreEqual(opCount, testServer.operationCount.Get());
-				NUnit.Framework.Assert.AreEqual(0, testServer.retryCount.Get());
+				Assert.Equal(opCount, testServer.operationCount.Get());
+				Assert.Equal(0, testServer.retryCount.Get());
 			}
 		}
 
@@ -254,7 +254,7 @@ namespace Org.Apache.Hadoop.Ipc
 			public int Call()
 			{
 				Server.GetCurCall().Set(call);
-				NUnit.Framework.Assert.AreEqual(Server.GetCurCall().Get(), call);
+				Assert.Equal(Server.GetCurCall().Get(), call);
 				int randomPause = pause == 0 ? pause : TestRetryCache.r.Next(pause);
 				return TestRetryCache.testServer.Echo(input, failureOutput, randomPause, success);
 			}

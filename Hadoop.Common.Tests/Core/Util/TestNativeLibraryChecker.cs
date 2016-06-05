@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNativeLibraryChecker()
 		{
 			ExitUtil.DisableSystemExit();
@@ -42,7 +42,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNativeLibraryCheckerOutput()
 		{
 			ExpectOutput(new string[] { "-a" });
@@ -68,12 +68,12 @@ namespace Org.Apache.Hadoop.Util
 			{
 				if (Shell.Windows)
 				{
-					NUnit.Framework.Assert.AreEqual(outContent.ToString().IndexOf("winutils: true") !=
+					Assert.Equal(outContent.ToString().IndexOf("winutils: true") !=
 						 -1, true);
 				}
 				if (NativeCodeLoader.IsNativeCodeLoaded())
 				{
-					NUnit.Framework.Assert.AreEqual(outContent.ToString().IndexOf("hadoop:  true") !=
+					Assert.Equal(outContent.ToString().IndexOf("hadoop:  true") !=
 						 -1, true);
 				}
 				Runtime.SetOut(originalPs);

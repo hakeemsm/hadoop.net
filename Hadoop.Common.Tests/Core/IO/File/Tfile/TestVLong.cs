@@ -48,13 +48,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				Utils.WriteVLong(@out, i);
 			}
 			@out.Close();
-			NUnit.Framework.Assert.AreEqual("Incorrect encoded size", (1 << byte.Size) + 96, 
+			Assert.Equal("Incorrect encoded size", (1 << byte.Size) + 96, 
 				fs.GetFileStatus(path).GetLen());
 			FSDataInputStream @in = fs.Open(path);
 			for (int i_1 = byte.MinValue; i_1 <= byte.MaxValue; ++i_1)
 			{
 				long n = Utils.ReadVLong(@in);
-				NUnit.Framework.Assert.AreEqual(n, i_1);
+				Assert.Equal(n, i_1);
 			}
 			@in.Close();
 			fs.Delete(path, false);
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			for (int i_1 = short.MinValue; i_1 <= short.MaxValue; ++i_1)
 			{
 				long n = Utils.ReadVLong(@in);
-				NUnit.Framework.Assert.AreEqual(n, ((long)i_1) << shift);
+				Assert.Equal(n, ((long)i_1) << shift);
 			}
 			@in.Close();
 			long ret = fs.GetFileStatus(path).GetLen();
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		public virtual void TestVLongShort()
 		{
 			long size = WriteAndVerify(0);
-			NUnit.Framework.Assert.AreEqual("Incorrect encoded size", (1 << short.Size) * 2 +
+			Assert.Equal("Incorrect encoded size", (1 << short.Size) * 2 +
 				 ((1 << byte.Size) - 40) * (1 << byte.Size) - 128 - 32, size);
 		}
 
@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		public virtual void TestVLong3Bytes()
 		{
 			long size = WriteAndVerify(byte.Size);
-			NUnit.Framework.Assert.AreEqual("Incorrect encoded size", (1 << short.Size) * 3 +
+			Assert.Equal("Incorrect encoded size", (1 << short.Size) * 3 +
 				 ((1 << byte.Size) - 32) * (1 << byte.Size) - 40 - 1, size);
 		}
 
@@ -101,7 +101,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		public virtual void TestVLong4Bytes()
 		{
 			long size = WriteAndVerify(byte.Size * 2);
-			NUnit.Framework.Assert.AreEqual("Incorrect encoded size", (1 << short.Size) * 4 +
+			Assert.Equal("Incorrect encoded size", (1 << short.Size) * 4 +
 				 ((1 << byte.Size) - 16) * (1 << byte.Size) - 32 - 2, size);
 		}
 
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		public virtual void TestVLong5Bytes()
 		{
 			long size = WriteAndVerify(byte.Size * 3);
-			NUnit.Framework.Assert.AreEqual("Incorrect encoded size", (1 << short.Size) * 6 -
+			Assert.Equal("Incorrect encoded size", (1 << short.Size) * 6 -
 				 256 - 16 - 3, size);
 		}
 
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		private void VerifySixOrMoreBytes(int bytes)
 		{
 			long size = WriteAndVerify(byte.Size * (bytes - 2));
-			NUnit.Framework.Assert.AreEqual("Incorrect encoded size", (1 << short.Size) * (bytes
+			Assert.Equal("Incorrect encoded size", (1 << short.Size) * (bytes
 				 + 1) - 256 - bytes + 1, size);
 		}
 
@@ -162,7 +162,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			FSDataInputStream @in = fs.Open(path);
 			for (int i_2 = 0; i_2 < data.Length; ++i_2)
 			{
-				NUnit.Framework.Assert.AreEqual(Utils.ReadVLong(@in), data[i_2]);
+				Assert.Equal(Utils.ReadVLong(@in), data[i_2]);
 			}
 			@in.Close();
 			fs.Delete(path, false);

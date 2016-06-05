@@ -48,9 +48,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			Org.Mockito.Mockito.When(request.GetHeader("User-Agent")).ThenReturn("Some Browser"
 				);
 			AuthenticationToken token = handler.Authenticate(request, response);
-			NUnit.Framework.Assert.AreEqual("A", token.GetUserName());
-			NUnit.Framework.Assert.AreEqual("B", token.GetName());
-			NUnit.Framework.Assert.AreEqual(GetExpectedType(), token.GetType());
+			Assert.Equal("A", token.GetUserName());
+			Assert.Equal("B", token.GetName());
+			Assert.Equal(GetExpectedType(), token.GetType());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -79,9 +79,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			Org.Mockito.Mockito.When(request.GetHeader("User-Agent")).ThenReturn("blah");
 			// Should use alt authentication
 			AuthenticationToken token = handler.Authenticate(request, response);
-			NUnit.Framework.Assert.AreEqual("A", token.GetUserName());
-			NUnit.Framework.Assert.AreEqual("B", token.GetName());
-			NUnit.Framework.Assert.AreEqual(GetExpectedType(), token.GetType());
+			Assert.Equal("A", token.GetUserName());
+			Assert.Equal("B", token.GetName());
+			Assert.Equal(GetExpectedType(), token.GetType());
 		}
 
 		/// <exception cref="System.Exception"/>

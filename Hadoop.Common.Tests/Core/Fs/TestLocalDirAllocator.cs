@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		private static void RmBufferDirs()
 		{
-			NUnit.Framework.Assert.IsTrue(!localFs.Exists(BufferPathRoot) || localFs.Delete(BufferPathRoot
+			Assert.True(!localFs.Exists(BufferPathRoot) || localFs.Delete(BufferPathRoot
 				, true));
 		}
 
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.FS
 		private static void ValidateTempDirCreation(string dir)
 		{
 			FilePath result = CreateTempFile(SmallFileSize);
-			NUnit.Framework.Assert.IsTrue("Checking for " + dir + " in " + result + " - FAILED!"
+			Assert.True("Checking for " + dir + " in " + result + " - FAILED!"
 				, result.GetPath().StartsWith(new Path(dir, Filename).ToUri().GetPath()));
 		}
 
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				conf.Set(Context, dir0 + "," + dir1);
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir1)));
+				Assert.True(localFs.Mkdirs(new Path(dir1)));
 				BufferRoot.SetReadOnly();
 				ValidateTempDirCreation(dir1);
 				ValidateTempDirCreation(dir1);
@@ -177,7 +177,7 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				conf.Set(Context, dir1 + "," + dir2);
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir2)));
+				Assert.True(localFs.Mkdirs(new Path(dir2)));
 				BufferRoot.SetReadOnly();
 				ValidateTempDirCreation(dir2);
 				ValidateTempDirCreation(dir2);
@@ -238,8 +238,8 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				conf.Set(Context, dir3 + "," + dir4);
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir3)));
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir4)));
+				Assert.True(localFs.Mkdirs(new Path(dir3)));
+				Assert.True(localFs.Mkdirs(new Path(dir4)));
 				// Create the first small file
 				CreateTempFile(SmallFileSize);
 				// Determine the round-robin sequence
@@ -279,8 +279,8 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				conf.Set(Context, dir5 + "," + dir6);
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir5)));
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir6)));
+				Assert.True(localFs.Mkdirs(new Path(dir5)));
+				Assert.True(localFs.Mkdirs(new Path(dir6)));
 				int inDir5 = 0;
 				int inDir6 = 0;
 				for (int i = 0; i < Trials; ++i)
@@ -299,7 +299,7 @@ namespace Org.Apache.Hadoop.FS
 					}
 					result.Delete();
 				}
-				NUnit.Framework.Assert.IsTrue(inDir5 + inDir6 == Trials);
+				Assert.True(inDir5 + inDir6 == Trials);
 			}
 			finally
 			{
@@ -323,10 +323,10 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				conf.Set(Context, dir0 + "," + dir1);
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir1)));
+				Assert.True(localFs.Mkdirs(new Path(dir1)));
 				BufferRoot.SetReadOnly();
 				Path p1 = dirAllocator.GetLocalPathForWrite("p1/x", SmallFileSize, conf);
-				NUnit.Framework.Assert.IsTrue(localFs.GetFileStatus(p1.GetParent()).IsDirectory()
+				Assert.True(localFs.GetFileStatus(p1.GetParent()).IsDirectory()
 					);
 				Path p2 = dirAllocator.GetLocalPathForWrite("p2/x", SmallFileSize, conf, false);
 				try
@@ -335,7 +335,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				catch (Exception e)
 				{
-					NUnit.Framework.Assert.AreEqual(e.GetType(), typeof(FileNotFoundException));
+					Assert.Equal(e.GetType(), typeof(FileNotFoundException));
 				}
 			}
 			finally
@@ -361,8 +361,8 @@ namespace Org.Apache.Hadoop.FS
 			{
 				conf.Set(Context, dir);
 				FilePath result = dirAllocator.CreateTmpFileForWrite(Filename, -1, conf);
-				NUnit.Framework.Assert.IsTrue(result.Delete());
-				NUnit.Framework.Assert.IsTrue(result.GetParentFile().Delete());
+				Assert.True(result.Delete());
+				Assert.True(result.GetParentFile().Delete());
 				NUnit.Framework.Assert.IsFalse(new FilePath(dir).Exists());
 			}
 			finally
@@ -381,11 +381,11 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				conf.Set(Context, dir);
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir)));
+				Assert.True(localFs.Mkdirs(new Path(dir)));
 				FilePath f1 = dirAllocator.CreateTmpFileForWrite(Filename, SmallFileSize, conf);
 				Path p1 = dirAllocator.GetLocalPathToRead(f1.GetName(), conf);
-				NUnit.Framework.Assert.AreEqual(f1.GetName(), p1.GetName());
-				NUnit.Framework.Assert.AreEqual("file", p1.GetFileSystem(conf).GetUri().GetScheme
+				Assert.Equal(f1.GetName(), p1.GetName());
+				Assert.Equal("file", p1.GetFileSystem(conf).GetUri().GetScheme
 					());
 			}
 			finally
@@ -411,8 +411,8 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				conf.Set(Context, dir0 + "," + dir1);
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir0)));
-				NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(new Path(dir1)));
+				Assert.True(localFs.Mkdirs(new Path(dir0)));
+				Assert.True(localFs.Mkdirs(new Path(dir1)));
 				localFs.Create(new Path(dir0 + Path.Separator + Filename));
 				localFs.Create(new Path(dir1 + Path.Separator + Filename));
 				// check both the paths are returned as paths to read:  
@@ -422,11 +422,11 @@ namespace Org.Apache.Hadoop.FS
 				foreach (Path p in pathIterable)
 				{
 					count++;
-					NUnit.Framework.Assert.AreEqual(Filename, p.GetName());
-					NUnit.Framework.Assert.AreEqual("file", p.GetFileSystem(conf).GetUri().GetScheme(
+					Assert.Equal(Filename, p.GetName());
+					Assert.Equal("file", p.GetFileSystem(conf).GetUri().GetScheme(
 						));
 				}
-				NUnit.Framework.Assert.AreEqual(2, count);
+				Assert.Equal(2, count);
 				// test #next() while no element to iterate any more: 
 				try
 				{
@@ -471,7 +471,7 @@ namespace Org.Apache.Hadoop.FS
 				conf.Set(contextCfgItemName, dir);
 				LocalDirAllocator localDirAllocator = new LocalDirAllocator(contextCfgItemName);
 				localDirAllocator.GetLocalPathForWrite("p1/x", SmallFileSize, conf);
-				NUnit.Framework.Assert.IsTrue(LocalDirAllocator.IsContextValid(contextCfgItemName
+				Assert.True(LocalDirAllocator.IsContextValid(contextCfgItemName
 					));
 				LocalDirAllocator.RemoveContext(contextCfgItemName);
 				NUnit.Framework.Assert.IsFalse(LocalDirAllocator.IsContextValid(contextCfgItemName

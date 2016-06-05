@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// <summary>Regression test for HADOOP-8408.</summary>
 		/// <exception cref="Sharpen.URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetCanonicalServiceNameWithNonDefaultMountTable()
 		{
 			Configuration conf = new Configuration();
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 
 		/// <exception cref="Sharpen.URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetCanonicalServiceNameWithDefaultMountTable()
 		{
 			Configuration conf = new Configuration();
@@ -85,46 +85,46 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetChildFileSystems()
 		{
 			NUnit.Framework.Assert.IsNull(fs1.GetChildFileSystems());
 			NUnit.Framework.Assert.IsNull(fs2.GetChildFileSystems());
 			IList<FileSystem> children = Arrays.AsList(viewFs.GetChildFileSystems());
-			NUnit.Framework.Assert.AreEqual(2, children.Count);
-			NUnit.Framework.Assert.IsTrue(children.Contains(fs1));
-			NUnit.Framework.Assert.IsTrue(children.Contains(fs2));
+			Assert.Equal(2, children.Count);
+			Assert.True(children.Contains(fs1));
+			Assert.True(children.Contains(fs2));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddDelegationTokens()
 		{
 			Credentials creds = new Credentials();
 			Org.Apache.Hadoop.Security.Token.Token<object>[] fs1Tokens = AddTokensWithCreds(fs1
 				, creds);
-			NUnit.Framework.Assert.AreEqual(1, fs1Tokens.Length);
-			NUnit.Framework.Assert.AreEqual(1, creds.NumberOfTokens());
+			Assert.Equal(1, fs1Tokens.Length);
+			Assert.Equal(1, creds.NumberOfTokens());
 			Org.Apache.Hadoop.Security.Token.Token<object>[] fs2Tokens = AddTokensWithCreds(fs2
 				, creds);
-			NUnit.Framework.Assert.AreEqual(1, fs2Tokens.Length);
-			NUnit.Framework.Assert.AreEqual(2, creds.NumberOfTokens());
+			Assert.Equal(1, fs2Tokens.Length);
+			Assert.Equal(2, creds.NumberOfTokens());
 			Credentials savedCreds = creds;
 			creds = new Credentials();
 			// should get the same set of tokens as explicitly fetched above
 			Org.Apache.Hadoop.Security.Token.Token<object>[] viewFsTokens = viewFs.AddDelegationTokens
 				("me", creds);
-			NUnit.Framework.Assert.AreEqual(2, viewFsTokens.Length);
-			NUnit.Framework.Assert.IsTrue(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
+			Assert.Equal(2, viewFsTokens.Length);
+			Assert.True(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
 				()));
-			NUnit.Framework.Assert.AreEqual(savedCreds.NumberOfTokens(), creds.NumberOfTokens
+			Assert.Equal(savedCreds.NumberOfTokens(), creds.NumberOfTokens
 				());
 			// should get none, already have all tokens
 			viewFsTokens = viewFs.AddDelegationTokens("me", creds);
-			NUnit.Framework.Assert.AreEqual(0, viewFsTokens.Length);
-			NUnit.Framework.Assert.IsTrue(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
+			Assert.Equal(0, viewFsTokens.Length);
+			Assert.True(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
 				()));
-			NUnit.Framework.Assert.AreEqual(savedCreds.NumberOfTokens(), creds.NumberOfTokens
+			Assert.Equal(savedCreds.NumberOfTokens(), creds.NumberOfTokens
 				());
 		}
 
@@ -137,22 +137,22 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			Org.Apache.Hadoop.Security.Token.Token<object>[] tokens = fs.AddDelegationTokens(
 				"me", creds);
 			// test that we got the token we wanted, and that creds were modified
-			NUnit.Framework.Assert.AreEqual(1, tokens.Length);
-			NUnit.Framework.Assert.AreEqual(fs.GetCanonicalServiceName(), tokens[0].GetService
+			Assert.Equal(1, tokens.Length);
+			Assert.Equal(fs.GetCanonicalServiceName(), tokens[0].GetService
 				().ToString());
-			NUnit.Framework.Assert.IsTrue(creds.GetAllTokens().Contains(tokens[0]));
-			NUnit.Framework.Assert.IsTrue(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
+			Assert.True(creds.GetAllTokens().Contains(tokens[0]));
+			Assert.True(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
 				()));
-			NUnit.Framework.Assert.AreEqual(savedCreds.NumberOfTokens() + 1, creds.NumberOfTokens
+			Assert.Equal(savedCreds.NumberOfTokens() + 1, creds.NumberOfTokens
 				());
 			// shouldn't get any new tokens since already in creds
 			savedCreds = new Credentials(creds);
 			Org.Apache.Hadoop.Security.Token.Token<object>[] tokenRefetch = fs.AddDelegationTokens
 				("me", creds);
-			NUnit.Framework.Assert.AreEqual(0, tokenRefetch.Length);
-			NUnit.Framework.Assert.IsTrue(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
+			Assert.Equal(0, tokenRefetch.Length);
+			Assert.True(creds.GetAllTokens().ContainsAll(savedCreds.GetAllTokens
 				()));
-			NUnit.Framework.Assert.AreEqual(savedCreds.NumberOfTokens(), creds.NumberOfTokens
+			Assert.Equal(savedCreds.NumberOfTokens(), creds.NumberOfTokens
 				());
 			return tokens;
 		}

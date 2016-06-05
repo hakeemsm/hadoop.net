@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.Util
 		// actual data or checksums, to make sure the code handles
 		// buffer.position(), limit, etc correctly.
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBulkOps()
 		{
 			foreach (DataChecksum.Type type in ChecksumTypes)
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Util
 				}
 				catch (ChecksumException ce)
 				{
-					NUnit.Framework.Assert.AreEqual(0, ce.GetPos());
+					Assert.Equal(0, ce.GetPos());
 				}
 				// Make sure bad checksums fail - error at end of array
 				UncorruptBufferOffset(checksumBuf, SumsOffsetInBuffer);
@@ -107,8 +107,8 @@ namespace Org.Apache.Hadoop.Util
 				catch (ChecksumException ce)
 				{
 					int expectedPos = checksum.GetBytesPerChecksum() * (numSums - 1);
-					NUnit.Framework.Assert.AreEqual(expectedPos, ce.GetPos());
-					NUnit.Framework.Assert.IsTrue(ce.Message.Contains("fake file"));
+					Assert.Equal(expectedPos, ce.GetPos());
+					Assert.True(ce.Message.Contains("fake file"));
 				}
 			}
 		}
@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.Util
 		/// buffers.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void CommonUsagePerfTest()
 		{
 			int NumRuns = 5;
@@ -153,10 +153,10 @@ namespace Org.Apache.Hadoop.Util
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEquality()
 		{
-			NUnit.Framework.Assert.AreEqual(DataChecksum.NewDataChecksum(DataChecksum.Type.Crc32
+			Assert.Equal(DataChecksum.NewDataChecksum(DataChecksum.Type.Crc32
 				, 512), DataChecksum.NewDataChecksum(DataChecksum.Type.Crc32, 512));
 			NUnit.Framework.Assert.IsFalse(DataChecksum.NewDataChecksum(DataChecksum.Type.Crc32
 				, 512).Equals(DataChecksum.NewDataChecksum(DataChecksum.Type.Crc32, 1024)));
@@ -164,10 +164,10 @@ namespace Org.Apache.Hadoop.Util
 				, 512).Equals(DataChecksum.NewDataChecksum(DataChecksum.Type.Crc32c, 512)));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToString()
 		{
-			NUnit.Framework.Assert.AreEqual("DataChecksum(type=CRC32, chunkSize=512)", DataChecksum
+			Assert.Equal("DataChecksum(type=CRC32, chunkSize=512)", DataChecksum
 				.NewDataChecksum(DataChecksum.Type.Crc32, 512).ToString());
 		}
 

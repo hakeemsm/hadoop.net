@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Sharpen.Thread t = new Sharpen.Thread(taker);
 			t.Start();
 			t.Join(100);
-			NUnit.Framework.Assert.AreEqual(taker.callsTaken, numberOfTakes);
+			Assert.Equal(taker.callsTaken, numberOfTakes);
 			t.Interrupt();
 		}
 
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Sharpen.Thread t = new Sharpen.Thread(putter);
 			t.Start();
 			t.Join(100);
-			NUnit.Framework.Assert.AreEqual(putter.callsAdded, numberOfPuts);
+			Assert.Equal(putter.callsAdded, numberOfPuts);
 			t.Interrupt();
 		}
 
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Ipc
 			>(typeof(LinkedBlockingQueue));
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCallQueueCapacity()
 		{
 			manager = new CallQueueManager<TestCallQueueManager.FakeCall>(queueClass, 10, string.Empty
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		// Will stop at 10 due to capacity
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEmptyConsume()
 		{
 			manager = new CallQueueManager<TestCallQueueManager.FakeCall>(queueClass, 10, string.Empty
@@ -219,7 +219,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 			// Wait for consumers to wake up, then consume
 			Sharpen.Thread.Sleep(2000);
-			NUnit.Framework.Assert.AreEqual(0, manager.Size());
+			Assert.Equal(0, manager.Size());
 			// Ensure no calls were dropped
 			long totalCallsCreated = 0;
 			foreach (TestCallQueueManager.Putter p_2 in producers)
@@ -241,7 +241,7 @@ namespace Org.Apache.Hadoop.Ipc
 				threads[t_2].Join();
 				totalCallsConsumed += t_2.callsTaken;
 			}
-			NUnit.Framework.Assert.AreEqual(totalCallsConsumed, totalCallsCreated);
+			Assert.Equal(totalCallsConsumed, totalCallsCreated);
 		}
 	}
 }

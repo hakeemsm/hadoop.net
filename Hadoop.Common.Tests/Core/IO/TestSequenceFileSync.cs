@@ -22,13 +22,13 @@ namespace Org.Apache.Hadoop.IO
 			val.Clear();
 			reader.Sync(off);
 			reader.Next(key, val);
-			NUnit.Framework.Assert.AreEqual(key.Get(), expectedRecord);
+			Assert.Equal(key.Get(), expectedRecord);
 			string test = string.Format(RecFmt, expectedRecord, expectedRecord);
-			NUnit.Framework.Assert.AreEqual("Invalid value " + val, 0, val.Find(test, 0));
+			Assert.Equal("Invalid value " + val, 0, val.Find(test, 0));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLowSyncpoint()
 		{
 			Configuration conf = new Configuration();

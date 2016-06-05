@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			Assume.AssumeTrue(SnappyCodec.IsNativeCodeLoaded());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyCompressorSetInputNullPointerException()
 		{
 			try
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyDecompressorSetInputNullPointerException()
 		{
 			try
@@ -58,7 +58,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyCompressorSetInputAIOBException()
 		{
 			try
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyDecompressorSetInputAIOUBException()
 		{
 			try
@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyCompressorCompressNullPointerException()
 		{
 			try
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyDecompressorCompressNullPointerException()
 		{
 			try
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyCompressorCompressAIOBException()
 		{
 			try
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyDecompressorCompressAIOBException()
 		{
 			try
@@ -192,7 +192,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyCompressDecompress()
 		{
 			int ByteSize = 1024 * 54;
@@ -201,25 +201,25 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			try
 			{
 				compressor.SetInput(bytes, 0, bytes.Length);
-				NUnit.Framework.Assert.IsTrue("SnappyCompressDecompress getBytesRead error !!!", 
+				Assert.True("SnappyCompressDecompress getBytesRead error !!!", 
 					compressor.GetBytesRead() > 0);
-				NUnit.Framework.Assert.IsTrue("SnappyCompressDecompress getBytesWritten before compress error !!!"
+				Assert.True("SnappyCompressDecompress getBytesWritten before compress error !!!"
 					, compressor.GetBytesWritten() == 0);
 				byte[] compressed = new byte[ByteSize];
 				int cSize = compressor.Compress(compressed, 0, compressed.Length);
-				NUnit.Framework.Assert.IsTrue("SnappyCompressDecompress getBytesWritten after compress error !!!"
+				Assert.True("SnappyCompressDecompress getBytesWritten after compress error !!!"
 					, compressor.GetBytesWritten() > 0);
 				SnappyDecompressor decompressor = new SnappyDecompressor(ByteSize);
 				// set as input for decompressor only compressed data indicated with cSize
 				decompressor.SetInput(compressed, 0, cSize);
 				byte[] decompressed = new byte[ByteSize];
 				decompressor.Decompress(decompressed, 0, decompressed.Length);
-				NUnit.Framework.Assert.IsTrue("testSnappyCompressDecompress finished error !!!", 
+				Assert.True("testSnappyCompressDecompress finished error !!!", 
 					decompressor.Finished());
 				Assert.AssertArrayEquals(bytes, decompressed);
 				compressor.Reset();
 				decompressor.Reset();
-				NUnit.Framework.Assert.IsTrue("decompressor getRemaining error !!!", decompressor
+				Assert.True("decompressor getRemaining error !!!", decompressor
 					.GetRemaining() == 0);
 			}
 			catch (Exception)
@@ -228,7 +228,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorDecompressorEmptyStreamLogic()
 		{
 			ByteArrayInputStream bytesIn = null;
@@ -245,7 +245,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 				blockCompressorStream.Close();
 				// check compressed output
 				buf = bytesOut.ToByteArray();
-				NUnit.Framework.Assert.AreEqual("empty stream compressed output size != 4", 4, buf
+				Assert.Equal("empty stream compressed output size != 4", 4, buf
 					.Length);
 				// use compressed output as input for decompression
 				bytesIn = new ByteArrayInputStream(buf);
@@ -253,7 +253,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 				blockDecompressorStream = new BlockDecompressorStream(bytesIn, new SnappyDecompressor
 					(), 1024);
 				// no byte is available because stream was closed
-				NUnit.Framework.Assert.AreEqual("return value is not -1", -1, blockDecompressorStream
+				Assert.Equal("return value is not -1", -1, blockDecompressorStream
 					.Read());
 			}
 			catch (Exception e)
@@ -278,7 +278,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyBlockCompression()
 		{
 			int ByteSize = 1024 * 50;
@@ -312,7 +312,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 					}
 					while (len > 0);
 				}
-				NUnit.Framework.Assert.IsTrue("testSnappyBlockCompression error !!!", @out.ToByteArray
+				Assert.True("testSnappyBlockCompression error !!!", @out.ToByteArray
 					().Length > 0);
 			}
 			catch (Exception)
@@ -347,7 +347,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 					outBuf.Flip();
 					while (outBuf.Remaining() > 0)
 					{
-						NUnit.Framework.Assert.AreEqual(expected.Get(), outBuf.Get());
+						Assert.Equal(expected.Get(), outBuf.Get());
 					}
 					outBuf.Clear();
 				}
@@ -355,13 +355,13 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			outBuf.Flip();
 			while (outBuf.Remaining() > 0)
 			{
-				NUnit.Framework.Assert.AreEqual(expected.Get(), outBuf.Get());
+				Assert.Equal(expected.Get(), outBuf.Get());
 			}
 			outBuf.Clear();
-			NUnit.Framework.Assert.AreEqual(0, expected.Remaining());
+			Assert.Equal(0, expected.Remaining());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyDirectBlockCompression()
 		{
 			int[] size = new int[] { 4 * 1024, 64 * 1024, 128 * 1024, 1024 * 1024 };
@@ -379,7 +379,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Snappy
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyCompressorDecopressorLogicWithCompressionStreams()
 		{
 			int ByteSize = 1024 * 100;

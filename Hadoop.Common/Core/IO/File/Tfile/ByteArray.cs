@@ -24,7 +24,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// </summary>
 		/// <param name="other"/>
 		public ByteArray(BytesWritable other)
-			: this(other.GetBytes(), 0, other.GetLength())
+			: this(other.Bytes, 0, other.Length)
 		{
 		}
 

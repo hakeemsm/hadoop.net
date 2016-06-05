@@ -152,7 +152,7 @@ namespace Org.Apache.Hadoop.Util
 		{
 			byte[] header = new byte[GetChecksumHeaderSize()];
 			header[0] = unchecked((byte)(type.id & unchecked((int)(0xff))));
-			// Writing in buffer just like DataOutput.WriteInt()
+			// Writing in buffer just like BinaryWriter.WriteInt()
 			header[1 + 0] = unchecked((byte)(((int)(((uint)bytesPerChecksum) >> 24)) & unchecked(
 				(int)(0xff))));
 			header[1 + 1] = unchecked((byte)(((int)(((uint)bytesPerChecksum) >> 16)) & unchecked(

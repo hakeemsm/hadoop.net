@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Test
 		private const string FailMsg = "Inner thread fails an assert";
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoErrors()
 		{
 			AtomicInteger threadsRun = new AtomicInteger();
@@ -20,16 +20,16 @@ namespace Org.Apache.Hadoop.Test
 			{
 				ctx.AddThread(new _TestingThread_42(threadsRun, ctx));
 			}
-			NUnit.Framework.Assert.AreEqual(0, threadsRun.Get());
+			Assert.Equal(0, threadsRun.Get());
 			ctx.StartThreads();
 			long st = Time.Now();
 			ctx.WaitFor(30000);
 			long et = Time.Now();
 			// All threads should have run
-			NUnit.Framework.Assert.AreEqual(3, threadsRun.Get());
+			Assert.Equal(3, threadsRun.Get());
 			// Test shouldn't have waited the full 30 seconds, since
 			// the threads exited faster than that.
-			NUnit.Framework.Assert.IsTrue("Test took " + (et - st) + "ms", et - st < 5000);
+			Assert.True("Test took " + (et - st) + "ms", et - st < 5000);
 		}
 
 		private sealed class _TestingThread_42 : MultithreadedTestUtil.TestingThread
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Test
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestThreadFails()
 		{
 			MultithreadedTestUtil.TestContext ctx = new MultithreadedTestUtil.TestContext();
@@ -66,12 +66,12 @@ namespace Org.Apache.Hadoop.Test
 			catch (RuntimeException rte)
 			{
 				// expected
-				NUnit.Framework.Assert.AreEqual(FailMsg, rte.InnerException.Message);
+				Assert.Equal(FailMsg, rte.InnerException.Message);
 			}
 			long et = Time.Now();
 			// Test shouldn't have waited the full 30 seconds, since
 			// the thread throws faster than that
-			NUnit.Framework.Assert.IsTrue("Test took " + (et - st) + "ms", et - st < 5000);
+			Assert.True("Test took " + (et - st) + "ms", et - st < 5000);
 		}
 
 		private sealed class _TestingThread_66 : MultithreadedTestUtil.TestingThread
@@ -89,7 +89,7 @@ namespace Org.Apache.Hadoop.Test
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestThreadThrowsCheckedException()
 		{
 			MultithreadedTestUtil.TestContext ctx = new MultithreadedTestUtil.TestContext();
@@ -104,12 +104,12 @@ namespace Org.Apache.Hadoop.Test
 			catch (RuntimeException rte)
 			{
 				// expected
-				NUnit.Framework.Assert.AreEqual("my ioe", rte.InnerException.Message);
+				Assert.Equal("my ioe", rte.InnerException.Message);
 			}
 			long et = Time.Now();
 			// Test shouldn't have waited the full 30 seconds, since
 			// the thread throws faster than that
-			NUnit.Framework.Assert.IsTrue("Test took " + (et - st) + "ms", et - st < 5000);
+			Assert.True("Test took " + (et - st) + "ms", et - st < 5000);
 		}
 
 		private sealed class _TestingThread_91 : MultithreadedTestUtil.TestingThread
@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.Test
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRepeatingThread()
 		{
 			AtomicInteger counter = new AtomicInteger();
@@ -140,10 +140,10 @@ namespace Org.Apache.Hadoop.Test
 			long et = Time.Now();
 			long elapsed = et - st;
 			// Test should have waited just about 3 seconds
-			NUnit.Framework.Assert.IsTrue("Test took " + (et - st) + "ms", Math.Abs(elapsed -
+			Assert.True("Test took " + (et - st) + "ms", Math.Abs(elapsed -
 				 3000) < 500);
 			// Counter should have been incremented lots of times in 3 full seconds
-			NUnit.Framework.Assert.IsTrue("Counter value = " + counter.Get(), counter.Get() >
+			Assert.True("Counter value = " + counter.Get(), counter.Get() >
 				 1000);
 		}
 

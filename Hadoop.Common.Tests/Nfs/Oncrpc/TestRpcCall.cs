@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 	/// </summary>
 	public class TestRpcCall
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstructor()
 		{
 			Credentials credential = new CredentialsNone();
@@ -20,14 +20,14 @@ namespace Org.Apache.Hadoop.Oncrpc
 			int procedure = 4;
 			RpcCall call = new RpcCall(0, RpcMessage.Type.RpcCall, rpcVersion, program, version
 				, procedure, credential, verifier);
-			NUnit.Framework.Assert.AreEqual(0, call.GetXid());
-			NUnit.Framework.Assert.AreEqual(RpcMessage.Type.RpcCall, call.GetMessageType());
-			NUnit.Framework.Assert.AreEqual(rpcVersion, call.GetRpcVersion());
-			NUnit.Framework.Assert.AreEqual(program, call.GetProgram());
-			NUnit.Framework.Assert.AreEqual(version, call.GetVersion());
-			NUnit.Framework.Assert.AreEqual(procedure, call.GetProcedure());
-			NUnit.Framework.Assert.AreEqual(credential, call.GetCredential());
-			NUnit.Framework.Assert.AreEqual(verifier, call.GetVerifier());
+			Assert.Equal(0, call.GetXid());
+			Assert.Equal(RpcMessage.Type.RpcCall, call.GetMessageType());
+			Assert.Equal(rpcVersion, call.GetRpcVersion());
+			Assert.Equal(program, call.GetProgram());
+			Assert.Equal(version, call.GetVersion());
+			Assert.Equal(procedure, call.GetProcedure());
+			Assert.Equal(credential, call.GetCredential());
+			Assert.Equal(verifier, call.GetVerifier());
 		}
 
 		public virtual void TestInvalidRpcVersion()

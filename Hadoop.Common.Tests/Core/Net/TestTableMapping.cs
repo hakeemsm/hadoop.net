@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.Net
 		private string hostName2 = "5.6.7.8";
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolve()
 		{
 			FilePath mapFile = FilePath.CreateTempFile(GetType().Name + ".testResolve", ".txt"
@@ -31,13 +31,13 @@ namespace Org.Apache.Hadoop.Net
 			names.AddItem(hostName1);
 			names.AddItem(hostName2);
 			IList<string> result = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(names.Count, result.Count);
-			NUnit.Framework.Assert.AreEqual("/rack1", result[0]);
-			NUnit.Framework.Assert.AreEqual("/rack2", result[1]);
+			Assert.Equal(names.Count, result.Count);
+			Assert.Equal("/rack1", result[0]);
+			Assert.Equal("/rack2", result[1]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTableCaching()
 		{
 			FilePath mapFile = FilePath.CreateTempFile(GetType().Name + ".testTableCaching", 
@@ -54,17 +54,17 @@ namespace Org.Apache.Hadoop.Net
 			names.AddItem(hostName1);
 			names.AddItem(hostName2);
 			IList<string> result1 = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(names.Count, result1.Count);
-			NUnit.Framework.Assert.AreEqual("/rack1", result1[0]);
-			NUnit.Framework.Assert.AreEqual("/rack2", result1[1]);
+			Assert.Equal(names.Count, result1.Count);
+			Assert.Equal("/rack1", result1[0]);
+			Assert.Equal("/rack2", result1[1]);
 			// unset the file, see if it gets read again
 			conf.Set(CommonConfigurationKeysPublic.NetTopologyTableMappingFileKey, "some bad value for a file"
 				);
 			IList<string> result2 = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(result1, result2);
+			Assert.Equal(result1, result2);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoFile()
 		{
 			TableMapping mapping = new TableMapping();
@@ -74,12 +74,12 @@ namespace Org.Apache.Hadoop.Net
 			names.AddItem(hostName1);
 			names.AddItem(hostName2);
 			IList<string> result = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(names.Count, result.Count);
-			NUnit.Framework.Assert.AreEqual(NetworkTopology.DefaultRack, result[0]);
-			NUnit.Framework.Assert.AreEqual(NetworkTopology.DefaultRack, result[1]);
+			Assert.Equal(names.Count, result.Count);
+			Assert.Equal(NetworkTopology.DefaultRack, result[0]);
+			Assert.Equal(NetworkTopology.DefaultRack, result[1]);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileDoesNotExist()
 		{
 			TableMapping mapping = new TableMapping();
@@ -91,13 +91,13 @@ namespace Org.Apache.Hadoop.Net
 			names.AddItem(hostName1);
 			names.AddItem(hostName2);
 			IList<string> result = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(names.Count, result.Count);
-			NUnit.Framework.Assert.AreEqual(result[0], NetworkTopology.DefaultRack);
-			NUnit.Framework.Assert.AreEqual(result[1], NetworkTopology.DefaultRack);
+			Assert.Equal(names.Count, result.Count);
+			Assert.Equal(result[0], NetworkTopology.DefaultRack);
+			Assert.Equal(result[1], NetworkTopology.DefaultRack);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClearingCachedMappings()
 		{
 			FilePath mapFile = FilePath.CreateTempFile(GetType().Name + ".testClearingCachedMappings"
@@ -114,18 +114,18 @@ namespace Org.Apache.Hadoop.Net
 			names.AddItem(hostName1);
 			names.AddItem(hostName2);
 			IList<string> result = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(names.Count, result.Count);
-			NUnit.Framework.Assert.AreEqual("/rack1", result[0]);
-			NUnit.Framework.Assert.AreEqual("/rack2", result[1]);
+			Assert.Equal(names.Count, result.Count);
+			Assert.Equal("/rack1", result[0]);
+			Assert.Equal("/rack2", result[1]);
 			Files.Write(string.Empty, mapFile, Charsets.Utf8);
 			mapping.ReloadCachedMappings();
 			names = new AList<string>();
 			names.AddItem(hostName1);
 			names.AddItem(hostName2);
 			result = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(names.Count, result.Count);
-			NUnit.Framework.Assert.AreEqual(NetworkTopology.DefaultRack, result[0]);
-			NUnit.Framework.Assert.AreEqual(NetworkTopology.DefaultRack, result[1]);
+			Assert.Equal(names.Count, result.Count);
+			Assert.Equal(NetworkTopology.DefaultRack, result[0]);
+			Assert.Equal(NetworkTopology.DefaultRack, result[1]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -144,9 +144,9 @@ namespace Org.Apache.Hadoop.Net
 			names.AddItem(hostName1);
 			names.AddItem(hostName2);
 			IList<string> result = mapping.Resolve(names);
-			NUnit.Framework.Assert.AreEqual(names.Count, result.Count);
-			NUnit.Framework.Assert.AreEqual(result[0], NetworkTopology.DefaultRack);
-			NUnit.Framework.Assert.AreEqual(result[1], NetworkTopology.DefaultRack);
+			Assert.Equal(names.Count, result.Count);
+			Assert.Equal(result[0], NetworkTopology.DefaultRack);
+			Assert.Equal(result[1], NetworkTopology.DefaultRack);
 		}
 	}
 }

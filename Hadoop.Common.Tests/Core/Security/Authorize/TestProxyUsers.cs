@@ -75,7 +75,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		/// - org.apache.hadoop.security.ShellBasedUnixGroupsNetgroupMapping
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNetgroups()
 		{
 			if (!NativeCodeLoader.IsNativeCodeLoaded())
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUsers()
 		{
 			Configuration conf = new Configuration();
@@ -141,7 +141,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUsersWithUserConf()
 		{
 			Configuration conf = new Configuration();
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			AssertNotAuthorized(proxyUserUgi, "1.2.3.5");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWildcardGroup()
 		{
 			Configuration conf = new Configuration();
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			AssertNotAuthorized(proxyUserUgi, "1.2.3.5");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWildcardUser()
 		{
 			Configuration conf = new Configuration();
@@ -227,7 +227,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			AssertNotAuthorized(proxyUserUgi, "1.2.3.5");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWildcardIP()
 		{
 			Configuration conf = new Configuration();
@@ -253,7 +253,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			AssertNotAuthorized(proxyUserUgi, "1.2.3.5");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIPRange()
 		{
 			Configuration conf = new Configuration();
@@ -274,7 +274,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithDuplicateProxyGroups()
 		{
 			Configuration conf = new Configuration();
@@ -286,11 +286,11 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			ICollection<string> groupsToBeProxied = ProxyUsers.GetDefaultImpersonationProvider
 				().GetProxyGroups()[DefaultImpersonationProvider.GetTestProvider().GetProxySuperuserGroupConfKey
 				(RealUserName)];
-			NUnit.Framework.Assert.AreEqual(1, groupsToBeProxied.Count);
+			Assert.Equal(1, groupsToBeProxied.Count);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithDuplicateProxyHosts()
 		{
 			Configuration conf = new Configuration();
@@ -302,11 +302,11 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			ICollection<string> hosts = ProxyUsers.GetDefaultImpersonationProvider().GetProxyHosts
 				()[DefaultImpersonationProvider.GetTestProvider().GetProxySuperuserIpConfKey(RealUserName
 				)];
-			NUnit.Framework.Assert.AreEqual(1, hosts.Count);
+			Assert.Equal(1, hosts.Count);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUsersWithProviderOverride()
 		{
 			Configuration conf = new Configuration();
@@ -334,7 +334,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithProxyGroupsAndUsersWithSpaces()
 		{
 			Configuration conf = new Configuration();
@@ -349,7 +349,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			ICollection<string> groupsToBeProxied = ProxyUsers.GetDefaultImpersonationProvider
 				().GetProxyGroups()[DefaultImpersonationProvider.GetTestProvider().GetProxySuperuserGroupConfKey
 				(RealUserName)];
-			NUnit.Framework.Assert.AreEqual(GroupNames.Length, groupsToBeProxied.Count);
+			Assert.Equal(GroupNames.Length, groupsToBeProxied.Count);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -366,7 +366,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUsersWithCustomPrefix()
 		{
 			Configuration conf = new Configuration(false);
@@ -394,7 +394,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoHostsForUsers()
 		{
 			Configuration conf = new Configuration(false);

@@ -62,23 +62,23 @@ namespace Org.Apache.Hadoop.FS
 				br = new BufferedReader(new StringReader(this.directory));
 				TestStat.stat.ParseExecResult(br);
 				status = TestStat.stat.GetFileStatusForTesting();
-				NUnit.Framework.Assert.IsTrue(status.IsDirectory());
+				Assert.True(status.IsDirectory());
 				br = new BufferedReader(new StringReader(this.file));
 				TestStat.stat.ParseExecResult(br);
 				status = TestStat.stat.GetFileStatusForTesting();
-				NUnit.Framework.Assert.IsTrue(status.IsFile());
+				Assert.True(status.IsFile());
 				foreach (string symlink in this.symlinks)
 				{
 					br = new BufferedReader(new StringReader(symlink));
 					TestStat.stat.ParseExecResult(br);
 					status = TestStat.stat.GetFileStatusForTesting();
-					NUnit.Framework.Assert.IsTrue(status.IsSymlink());
+					Assert.True(status.IsSymlink());
 				}
 				br = new BufferedReader(new StringReader(this.stickydir));
 				TestStat.stat.ParseExecResult(br);
 				status = TestStat.stat.GetFileStatusForTesting();
-				NUnit.Framework.Assert.IsTrue(status.IsDirectory());
-				NUnit.Framework.Assert.IsTrue(status.GetPermission().GetStickyBit());
+				Assert.True(status.IsDirectory());
+				Assert.True(status.GetPermission().GetStickyBit());
 			}
 
 			private readonly TestStat _enclosing;
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.Exception"/>
 		public virtual void TestStatEnvironment()
 		{
-			NUnit.Framework.Assert.AreEqual("C", stat.GetEnvironment("LANG"));
+			Assert.Equal("C", stat.GetEnvironment("LANG"));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -142,7 +142,7 @@ namespace Org.Apache.Hadoop.FS
 			fs.CreateSymlink(sub1, sub2, false);
 			FileStatus stat1 = new Stat(sub1, 4096l, false, fs).GetFileStatus();
 			FileStatus stat2 = new Stat(sub2, 0, false, fs).GetFileStatus();
-			NUnit.Framework.Assert.IsTrue(stat1.IsDirectory());
+			Assert.True(stat1.IsDirectory());
 			NUnit.Framework.Assert.IsFalse(stat2.IsDirectory());
 			fs.Delete(testDir, true);
 		}

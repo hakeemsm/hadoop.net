@@ -33,7 +33,7 @@ namespace Hadoop.Common.Tests.Core.Fs.Shell
 				 + Runtime.GetProperty("line.separator");
 			string output = ReadUsingTextCommand(AvroFilename, GenerateWeatherAvroBinaryData(
 				));
-			NUnit.Framework.Assert.AreEqual(expectedOutput, output);
+			Assert.Equal(expectedOutput, output);
 		}
 
 		/// <summary>Tests that a zero-length file is displayed correctly.</summary>
@@ -42,7 +42,7 @@ namespace Hadoop.Common.Tests.Core.Fs.Shell
 		{
 			byte[] emptyContents = {  };
 			string output = ReadUsingTextCommand(TextFilename, emptyContents);
-			NUnit.Framework.Assert.IsTrue(string.Empty.Equals(output));
+			Assert.True(string.Empty.Equals(output));
 		}
 
 		/// <summary>Tests that a one-byte file is displayed correctly.</summary>
@@ -51,7 +51,7 @@ namespace Hadoop.Common.Tests.Core.Fs.Shell
 		{
 			byte[] oneByteContents = { (byte)('x') };
 			string output = ReadUsingTextCommand(TextFilename, oneByteContents);
-			NUnit.Framework.Assert.IsTrue(Sharpen.Runtime.GetStringForBytes(oneByteContents).
+			Assert.True(Sharpen.Runtime.GetStringForBytes(oneByteContents).
 				Equals(output));
 		}
 
@@ -61,7 +61,7 @@ namespace Hadoop.Common.Tests.Core.Fs.Shell
 		{
 			byte[] twoByteContents = { (byte)('x'), (byte)('y') };
 			string output = ReadUsingTextCommand(TextFilename, twoByteContents);
-			NUnit.Framework.Assert.IsTrue(Sharpen.Runtime.GetStringForBytes(twoByteContents).
+			Assert.True(Sharpen.Runtime.GetStringForBytes(twoByteContents).
 				Equals(output));
 		}
 

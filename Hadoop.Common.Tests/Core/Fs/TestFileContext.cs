@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.FS
 		private static readonly Log Log = LogFactory.GetLog(typeof(TestFileContext));
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultURIWithoutScheme()
 		{
 			Configuration conf = new Configuration();

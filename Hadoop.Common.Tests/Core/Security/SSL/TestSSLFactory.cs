@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			{
 				sslFactory.Init();
 				NUnit.Framework.Assert.IsNotNull(sslFactory.CreateSSLServerSocketFactory());
-				NUnit.Framework.Assert.AreEqual(clientCert, sslFactory.IsClientCertRequired());
+				Assert.Equal(clientCert, sslFactory.IsClientCertRequired());
 				if (socket)
 				{
 					sslFactory.CreateSSLSocketFactory();
@@ -113,38 +113,38 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ValidHostnameVerifier()
 		{
 			Configuration conf = CreateConfiguration(false, true);
 			conf.Unset(SSLFactory.SslHostnameVerifierKey);
 			SSLFactory sslFactory = new SSLFactory(SSLFactory.Mode.Client, conf);
 			sslFactory.Init();
-			NUnit.Framework.Assert.AreEqual("DEFAULT", sslFactory.GetHostnameVerifier().ToString
+			Assert.Equal("DEFAULT", sslFactory.GetHostnameVerifier().ToString
 				());
 			sslFactory.Destroy();
 			conf.Set(SSLFactory.SslHostnameVerifierKey, "ALLOW_ALL");
 			sslFactory = new SSLFactory(SSLFactory.Mode.Client, conf);
 			sslFactory.Init();
-			NUnit.Framework.Assert.AreEqual("ALLOW_ALL", sslFactory.GetHostnameVerifier().ToString
+			Assert.Equal("ALLOW_ALL", sslFactory.GetHostnameVerifier().ToString
 				());
 			sslFactory.Destroy();
 			conf.Set(SSLFactory.SslHostnameVerifierKey, "DEFAULT_AND_LOCALHOST");
 			sslFactory = new SSLFactory(SSLFactory.Mode.Client, conf);
 			sslFactory.Init();
-			NUnit.Framework.Assert.AreEqual("DEFAULT_AND_LOCALHOST", sslFactory.GetHostnameVerifier
+			Assert.Equal("DEFAULT_AND_LOCALHOST", sslFactory.GetHostnameVerifier
 				().ToString());
 			sslFactory.Destroy();
 			conf.Set(SSLFactory.SslHostnameVerifierKey, "STRICT");
 			sslFactory = new SSLFactory(SSLFactory.Mode.Client, conf);
 			sslFactory.Init();
-			NUnit.Framework.Assert.AreEqual("STRICT", sslFactory.GetHostnameVerifier().ToString
+			Assert.Equal("STRICT", sslFactory.GetHostnameVerifier().ToString
 				());
 			sslFactory.Destroy();
 			conf.Set(SSLFactory.SslHostnameVerifierKey, "STRICT_IE6");
 			sslFactory = new SSLFactory(SSLFactory.Mode.Client, conf);
 			sslFactory.Init();
-			NUnit.Framework.Assert.AreEqual("STRICT_IE6", sslFactory.GetHostnameVerifier().ToString
+			Assert.Equal("STRICT_IE6", sslFactory.GetHostnameVerifier().ToString
 				());
 			sslFactory.Destroy();
 		}
@@ -166,7 +166,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConnectionConfigurator()
 		{
 			Configuration conf = CreateConfiguration(false, true);
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				NUnit.Framework.Assert.AreNotSame("STRICT_IE6", sslConn.GetHostnameVerifier().ToString
 					());
 				sslFactory.Configure(sslConn);
-				NUnit.Framework.Assert.AreEqual("STRICT_IE6", sslConn.GetHostnameVerifier().ToString
+				Assert.Equal("STRICT_IE6", sslConn.GetHostnameVerifier().ToString
 					());
 			}
 			finally
@@ -190,7 +190,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServerDifferentPasswordAndKeyPassword()
 		{
 			CheckSSLFactoryInitWithPasswords(SSLFactory.Mode.Server, "password", "keyPassword"
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServerKeyPasswordDefaultsToPassword()
 		{
 			CheckSSLFactoryInitWithPasswords(SSLFactory.Mode.Server, "password", "password", 
@@ -206,7 +206,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClientDifferentPasswordAndKeyPassword()
 		{
 			CheckSSLFactoryInitWithPasswords(SSLFactory.Mode.Client, "password", "keyPassword"
@@ -214,7 +214,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClientKeyPasswordDefaultsToPassword()
 		{
 			CheckSSLFactoryInitWithPasswords(SSLFactory.Mode.Client, "password", "password", 
@@ -222,7 +222,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServerCredProviderPasswords()
 		{
 			KeyStoreTestUtil.ProvisionPasswordsToCredentialProvider();
@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoClientCertsInitialization()
 		{
 			Configuration conf = CreateConfiguration(false, true);
@@ -374,7 +374,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoTrustStore()
 		{
 			Configuration conf = CreateConfiguration(false, false);

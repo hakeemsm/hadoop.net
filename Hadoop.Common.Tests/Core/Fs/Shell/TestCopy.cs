@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyStreamTarget()
 		{
 			FSDataOutputStream @out = Org.Mockito.Mockito.Mock<FSDataOutputStream>();
@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyStreamTargetExists()
 		{
 			FSDataOutputStream @out = Org.Mockito.Mockito.Mock<FSDataOutputStream>();
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInterruptedCreate()
 		{
 			WhenFsCreate().ThenThrow(new ThreadInterruptedException());
@@ -110,7 +110,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInterruptedCopyBytes()
 		{
 			FSDataOutputStream @out = Org.Mockito.Mockito.Mock<FSDataOutputStream>();
@@ -130,7 +130,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInterruptedRename()
 		{
 			FSDataOutputStream @out = Org.Mockito.Mockito.Mock<FSDataOutputStream>();

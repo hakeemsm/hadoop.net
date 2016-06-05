@@ -23,7 +23,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLogin()
 		{
 			string userPrincipal = Runtime.GetProperty("user.principal");
@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation.SetConfiguration(conf);
 			UserGroupInformation ugi = UserGroupInformation.LoginUserFromKeytabAndReturnUGI(userPrincipal
 				, userKeyTab);
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Kerberos
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Kerberos
 				, ugi.GetAuthenticationMethod());
 			try
 			{

@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Conf
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWriteJson()
 		{
 			StringWriter sw = new StringWriter();
@@ -49,11 +49,11 @@ namespace Org.Apache.Hadoop.Conf
 					foundSetting = true;
 				}
 			}
-			NUnit.Framework.Assert.IsTrue(foundSetting);
+			Assert.True(foundSetting);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWriteXml()
 		{
 			StringWriter sw = new StringWriter();
@@ -74,14 +74,14 @@ namespace Org.Apache.Hadoop.Conf
 					foundSetting = true;
 					Element propertyElem = (Element)nameNode.GetParentNode();
 					string val = propertyElem.GetElementsByTagName("value").Item(0).GetTextContent();
-					NUnit.Framework.Assert.AreEqual(TestVal, val);
+					Assert.Equal(TestVal, val);
 				}
 			}
-			NUnit.Framework.Assert.IsTrue(foundSetting);
+			Assert.True(foundSetting);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBadFormat()
 		{
 			StringWriter sw = new StringWriter();
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 			}
 			// expected
-			NUnit.Framework.Assert.AreEqual(string.Empty, sw.ToString());
+			Assert.Equal(string.Empty, sw.ToString());
 		}
 	}
 }

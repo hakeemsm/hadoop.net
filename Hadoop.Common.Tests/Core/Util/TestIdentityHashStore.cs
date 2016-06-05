@@ -40,15 +40,15 @@ namespace Org.Apache.Hadoop.Util
 			IdentityHashStore<TestIdentityHashStore.Key, int> store = new IdentityHashStore<TestIdentityHashStore.Key
 				, int>(0);
 			store.VisitAll(new _Visitor_61());
-			NUnit.Framework.Assert.IsTrue(store.IsEmpty());
+			Assert.True(store.IsEmpty());
 			TestIdentityHashStore.Key key1 = new TestIdentityHashStore.Key("key1");
 			int value1 = 100;
 			store.Put(key1, value1);
-			NUnit.Framework.Assert.IsTrue(!store.IsEmpty());
-			NUnit.Framework.Assert.AreEqual(value1, store.Get(key1));
+			Assert.True(!store.IsEmpty());
+			Assert.Equal(value1, store.Get(key1));
 			store.VisitAll(new _Visitor_73(key1));
-			NUnit.Framework.Assert.AreEqual(value1, store.Remove(key1));
-			NUnit.Framework.Assert.IsTrue(store.IsEmpty());
+			Assert.Equal(value1, store.Remove(key1));
+			Assert.True(store.IsEmpty());
 		}
 
 		private sealed class _Visitor_61 : IdentityHashStore.Visitor<TestIdentityHashStore.Key
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.Util
 
 			public void Accept(TestIdentityHashStore.Key k, int v)
 			{
-				NUnit.Framework.Assert.AreEqual(key1, k);
+				Assert.Equal(key1, k);
 			}
 
 			private readonly TestIdentityHashStore.Key key1;
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.Util
 			IdentityHashStore<TestIdentityHashStore.Key, int> store = new IdentityHashStore<TestIdentityHashStore.Key
 				, int>(4);
 			store.VisitAll(new _Visitor_87());
-			NUnit.Framework.Assert.IsTrue(store.IsEmpty());
+			Assert.True(store.IsEmpty());
 			TestIdentityHashStore.Key key1 = new TestIdentityHashStore.Key("key1");
 			int value1 = 100;
 			int value2 = 200;
@@ -94,20 +94,20 @@ namespace Org.Apache.Hadoop.Util
 			TestIdentityHashStore.Key equalToKey1 = new TestIdentityHashStore.Key("key1");
 			// IdentityHashStore compares by object equality, not equals()
 			NUnit.Framework.Assert.IsNull(store.Get(equalToKey1));
-			NUnit.Framework.Assert.IsTrue(!store.IsEmpty());
-			NUnit.Framework.Assert.AreEqual(value1, store.Get(key1));
+			Assert.True(!store.IsEmpty());
+			Assert.Equal(value1, store.Get(key1));
 			store.Put(key1, value2);
 			store.Put(key1, value3);
 			IList<int> allValues = new List<int>();
 			store.VisitAll(new _Visitor_109(allValues));
-			NUnit.Framework.Assert.AreEqual(3, allValues.Count);
+			Assert.Equal(3, allValues.Count);
 			for (int i = 0; i < 3; i++)
 			{
 				int value = store.Remove(key1);
-				NUnit.Framework.Assert.IsTrue(allValues.Remove(value));
+				Assert.True(allValues.Remove(value));
 			}
 			NUnit.Framework.Assert.IsNull(store.Remove(key1));
-			NUnit.Framework.Assert.IsTrue(store.IsEmpty());
+			Assert.True(store.IsEmpty());
 		}
 
 		private sealed class _Visitor_87 : IdentityHashStore.Visitor<TestIdentityHashStore.Key
@@ -158,13 +158,13 @@ namespace Org.Apache.Hadoop.Util
 			store.VisitAll(new _Visitor_137(keys));
 			for (int i_2 = 0; i_2 < NumKeys; i_2++)
 			{
-				NUnit.Framework.Assert.AreEqual(Sharpen.Extensions.ValueOf(i_2), store.Remove(keys
+				Assert.Equal(Sharpen.Extensions.ValueOf(i_2), store.Remove(keys
 					[i_2]));
 			}
 			store.VisitAll(new _Visitor_147());
-			NUnit.Framework.Assert.IsTrue("expected the store to be " + "empty, but found " +
+			Assert.True("expected the store to be " + "empty, but found " +
 				 store.NumElements() + " elements.", store.IsEmpty());
-			NUnit.Framework.Assert.AreEqual(1024, store.Capacity());
+			Assert.Equal(1024, store.Capacity());
 		}
 
 		private sealed class _Visitor_137 : IdentityHashStore.Visitor<TestIdentityHashStore.Key
@@ -177,7 +177,7 @@ namespace Org.Apache.Hadoop.Util
 
 			public void Accept(TestIdentityHashStore.Key k, int v)
 			{
-				NUnit.Framework.Assert.IsTrue(keys.Contains(k));
+				Assert.True(keys.Contains(k));
 			}
 
 			private readonly IList<TestIdentityHashStore.Key> keys;

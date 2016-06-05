@@ -29,7 +29,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDTManager()
 		{
 			Configuration conf = new Configuration(false);
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				, "foo");
 			NUnit.Framework.Assert.IsNotNull(token);
 			tm.VerifyToken(token);
-			NUnit.Framework.Assert.IsTrue(tm.RenewToken(token, "foo") > Runtime.CurrentTimeMillis
+			Assert.True(tm.RenewToken(token, "foo") > Runtime.CurrentTimeMillis
 				());
 			tm.CancelToken(token, "foo");
 			try

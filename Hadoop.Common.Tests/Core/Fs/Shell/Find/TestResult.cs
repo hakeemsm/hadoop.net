@@ -8,8 +8,8 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		public virtual void TestPass()
 		{
 			Result result = Result.Pass;
-			NUnit.Framework.Assert.IsTrue(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsPass());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the FAIL value
@@ -17,14 +17,14 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result result = Result.Fail;
 			NUnit.Framework.Assert.IsFalse(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the STOP value
 		public virtual void TestStop()
 		{
 			Result result = Result.Stop;
-			NUnit.Framework.Assert.IsTrue(result.IsPass());
+			Assert.True(result.IsPass());
 			NUnit.Framework.Assert.IsFalse(result.IsDescend());
 		}
 
@@ -32,8 +32,8 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		public virtual void CombinePassPass()
 		{
 			Result result = Result.Pass.Combine(Result.Pass);
-			NUnit.Framework.Assert.IsTrue(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsPass());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the combine method with a PASS and a FAIL
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result result = Result.Pass.Combine(Result.Fail);
 			NUnit.Framework.Assert.IsFalse(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the combine method with a FAIL and a PASS
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result result = Result.Fail.Combine(Result.Pass);
 			NUnit.Framework.Assert.IsFalse(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the combine method with two FAILs
@@ -57,14 +57,14 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result result = Result.Fail.Combine(Result.Fail);
 			NUnit.Framework.Assert.IsFalse(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the combine method with a PASS and STOP
 		public virtual void CombinePassStop()
 		{
 			Result result = Result.Pass.Combine(Result.Stop);
-			NUnit.Framework.Assert.IsTrue(result.IsPass());
+			Assert.True(result.IsPass());
 			NUnit.Framework.Assert.IsFalse(result.IsDescend());
 		}
 
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		public virtual void CombineStopPass()
 		{
 			Result result = Result.Stop.Combine(Result.Pass);
-			NUnit.Framework.Assert.IsTrue(result.IsPass());
+			Assert.True(result.IsPass());
 			NUnit.Framework.Assert.IsFalse(result.IsDescend());
 		}
 
@@ -97,15 +97,15 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result result = Result.Pass.Negate();
 			NUnit.Framework.Assert.IsFalse(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the negation of FAIL
 		public virtual void NegateFail()
 		{
 			Result result = Result.Fail.Negate();
-			NUnit.Framework.Assert.IsTrue(result.IsPass());
-			NUnit.Framework.Assert.IsTrue(result.IsDescend());
+			Assert.True(result.IsPass());
+			Assert.True(result.IsDescend());
 		}
 
 		// test the negation of STOP
@@ -121,7 +121,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result one = Result.Pass;
 			Result two = Result.Pass.Combine(Result.Pass);
-			NUnit.Framework.Assert.AreEqual(one, two);
+			Assert.Equal(one, two);
 		}
 
 		// test equals with two FAILs
@@ -129,7 +129,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result one = Result.Fail;
 			Result two = Result.Fail.Combine(Result.Fail);
-			NUnit.Framework.Assert.AreEqual(one, two);
+			Assert.Equal(one, two);
 		}
 
 		// test equals with two STOPS
@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Result one = Result.Stop;
 			Result two = Result.Stop.Combine(Result.Stop);
-			NUnit.Framework.Assert.AreEqual(one, two);
+			Assert.Equal(one, two);
 		}
 
 		// test all combinations of not equals

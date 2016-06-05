@@ -125,13 +125,13 @@ namespace Org.Apache.Hadoop.Security
 			if (expectSuccess)
 			{
 				NUnit.Framework.Assert.IsNotNull(ugi);
-				NUnit.Framework.Assert.AreEqual(method, ugi.GetAuthenticationMethod());
+				Assert.Equal(method, ugi.GetAuthenticationMethod());
 			}
 			else
 			{
 				NUnit.Framework.Assert.IsNotNull(ex);
-				NUnit.Framework.Assert.AreEqual(typeof(NotSupportedException), ex.GetType());
-				NUnit.Framework.Assert.AreEqual(method + " login authentication is not supported"
+				Assert.Equal(typeof(NotSupportedException), ex.GetType());
+				Assert.Equal(method + " login authentication is not supported"
 					, ex.Message);
 			}
 		}
@@ -140,28 +140,28 @@ namespace Org.Apache.Hadoop.Security
 		{
 			UserGroupInformation ugi = UserGroupInformation.CreateRemoteUser("user1");
 			ugi.SetAuthenticationMethod(UserGroupInformation.AuthenticationMethod.Simple);
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Simple, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Simple, 
 				ugi.GetAuthenticationMethod());
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Simple, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Simple, 
 				ugi.GetRealAuthenticationMethod());
 			ugi = UserGroupInformation.CreateProxyUser("user2", ugi);
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Proxy, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Proxy, 
 				ugi.GetAuthenticationMethod());
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Simple, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Simple, 
 				ugi.GetRealAuthenticationMethod());
 		}
 
 		public virtual void TestCreateRemoteUser()
 		{
 			UserGroupInformation ugi = UserGroupInformation.CreateRemoteUser("user1");
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Simple, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Simple, 
 				ugi.GetAuthenticationMethod());
-			NUnit.Framework.Assert.IsTrue(ugi.ToString().Contains("(auth:SIMPLE)"));
+			Assert.True(ugi.ToString().Contains("(auth:SIMPLE)"));
 			ugi = UserGroupInformation.CreateRemoteUser("user1", SaslRpcServer.AuthMethod.Kerberos
 				);
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Kerberos
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Kerberos
 				, ugi.GetAuthenticationMethod());
-			NUnit.Framework.Assert.IsTrue(ugi.ToString().Contains("(auth:KERBEROS)"));
+			Assert.True(ugi.ToString().Contains("(auth:KERBEROS)"));
 		}
 
 		/// <summary>Test login method</summary>
@@ -173,9 +173,9 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation.SetConfiguration(conf);
 			// login from unix
 			UserGroupInformation ugi = UserGroupInformation.GetCurrentUser();
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.GetCurrentUser(), UserGroupInformation
+			Assert.Equal(UserGroupInformation.GetCurrentUser(), UserGroupInformation
 				.GetLoginUser());
-			NUnit.Framework.Assert.IsTrue(ugi.GetGroupNames().Length >= 1);
+			Assert.True(ugi.GetGroupNames().Length >= 1);
 			VerifyGroupMetrics(1);
 			// ensure that doAs works correctly
 			UserGroupInformation userGroupInfo = UserGroupInformation.CreateUserForTesting(UserName
@@ -183,7 +183,7 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation curUGI = userGroupInfo.DoAs(new _PrivilegedExceptionAction_185
 				());
 			// make sure in the scope of the doAs, the right user is current
-			NUnit.Framework.Assert.AreEqual(curUGI, userGroupInfo);
+			Assert.Equal(curUGI, userGroupInfo);
 			// make sure it is not the same as the login user
 			NUnit.Framework.Assert.IsFalse(curUGI.Equals(UserGroupInformation.GetLoginUser())
 				);
@@ -248,12 +248,12 @@ namespace Org.Apache.Hadoop.Security
 				// user names are case insensitive on Windows. Make consistent
 				loginUserName = StringUtils.ToLowerCase(loginUserName);
 			}
-			NUnit.Framework.Assert.AreEqual(userName, loginUserName);
+			Assert.Equal(userName, loginUserName);
 			string[] gi = login.GetGroupNames();
-			NUnit.Framework.Assert.AreEqual(groups.Count, gi.Length);
+			Assert.Equal(groups.Count, gi.Length);
 			for (int i = 0; i < gi.Length; i++)
 			{
-				NUnit.Framework.Assert.IsTrue(groups.Contains(gi[i]));
+				Assert.True(groups.Contains(gi[i]));
 			}
 			UserGroupInformation fakeUser = UserGroupInformation.CreateRemoteUser("foo.bar");
 			fakeUser.DoAs(new _PrivilegedExceptionAction_248(login, fakeUser));
@@ -274,8 +274,8 @@ namespace Org.Apache.Hadoop.Security
 			{
 				UserGroupInformation current = UserGroupInformation.GetCurrentUser();
 				NUnit.Framework.Assert.IsFalse(current.Equals(login));
-				NUnit.Framework.Assert.AreEqual(current, fakeUser);
-				NUnit.Framework.Assert.AreEqual(0, current.GetGroupNames().Length);
+				Assert.Equal(current, fakeUser);
+				Assert.Equal(0, current.GetGroupNames().Length);
 				return null;
 			}
 
@@ -360,8 +360,8 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation ugi = UserGroupInformation.CreateUserForTesting(principal, GroupNames
 				);
 			// make sure the short and full user names are correct
-			NUnit.Framework.Assert.AreEqual(principal, ugi.GetUserName());
-			NUnit.Framework.Assert.AreEqual(shortName, ugi.GetShortUserName());
+			Assert.Equal(principal, ugi.GetUserName());
+			Assert.Equal(shortName, ugi.GetShortUserName());
 		}
 
 		private void TestConstructorFailures(string userName)
@@ -375,7 +375,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				string expect = (userName == null || userName.IsEmpty()) ? "Null user" : "Illegal principal name "
 					 + userName;
-				NUnit.Framework.Assert.IsTrue("Did not find " + expect + " in " + e, e.ToString()
+				Assert.True("Did not find " + expect + " in " + e, e.ToString()
 					.Contains(expect));
 			}
 		}
@@ -388,22 +388,22 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation.Reset();
 			NUnit.Framework.Assert.IsFalse(KerberosName.HasRulesBeenSet());
 			KerberosName.SetRules(rules[0]);
-			NUnit.Framework.Assert.IsTrue(KerberosName.HasRulesBeenSet());
-			NUnit.Framework.Assert.AreEqual(rules[0], KerberosName.GetRules());
+			Assert.True(KerberosName.HasRulesBeenSet());
+			Assert.Equal(rules[0], KerberosName.GetRules());
 			// implicit init should honor rules already being set
 			UserGroupInformation.CreateUserForTesting("someone", new string[0]);
-			NUnit.Framework.Assert.AreEqual(rules[0], KerberosName.GetRules());
+			Assert.Equal(rules[0], KerberosName.GetRules());
 			// set conf, should override
 			conf.Set(CommonConfigurationKeysPublic.HadoopSecurityAuthToLocal, rules[1]);
 			UserGroupInformation.SetConfiguration(conf);
-			NUnit.Framework.Assert.AreEqual(rules[1], KerberosName.GetRules());
+			Assert.Equal(rules[1], KerberosName.GetRules());
 			// set conf, should again override
 			conf.Set(CommonConfigurationKeysPublic.HadoopSecurityAuthToLocal, rules[2]);
 			UserGroupInformation.SetConfiguration(conf);
-			NUnit.Framework.Assert.AreEqual(rules[2], KerberosName.GetRules());
+			Assert.Equal(rules[2], KerberosName.GetRules());
 			// implicit init should honor rules already being set
 			UserGroupInformation.CreateUserForTesting("someone", new string[0]);
-			NUnit.Framework.Assert.AreEqual(rules[2], KerberosName.GetRules());
+			Assert.Equal(rules[2], KerberosName.GetRules());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -414,14 +414,14 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation.Reset();
 			NUnit.Framework.Assert.IsFalse(KerberosName.HasRulesBeenSet());
 			UserGroupInformation.CreateUserForTesting("someone", new string[0]);
-			NUnit.Framework.Assert.IsTrue(KerberosName.HasRulesBeenSet());
+			Assert.True(KerberosName.HasRulesBeenSet());
 			// set a rule, trigger implicit init, rule should not change 
 			UserGroupInformation.Reset();
 			KerberosName.SetRules(rules);
-			NUnit.Framework.Assert.IsTrue(KerberosName.HasRulesBeenSet());
-			NUnit.Framework.Assert.AreEqual(rules, KerberosName.GetRules());
+			Assert.True(KerberosName.HasRulesBeenSet());
+			Assert.Equal(rules, KerberosName.GetRules());
 			UserGroupInformation.CreateUserForTesting("someone", new string[0]);
-			NUnit.Framework.Assert.AreEqual(rules, KerberosName.GetRules());
+			Assert.Equal(rules, KerberosName.GetRules());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -429,7 +429,7 @@ namespace Org.Apache.Hadoop.Security
 		{
 			UserGroupInformation uugi = UserGroupInformation.CreateUserForTesting(UserName, GroupNames
 				);
-			NUnit.Framework.Assert.AreEqual(uugi, uugi);
+			Assert.Equal(uugi, uugi);
 			// The subjects should be different, so this should fail
 			UserGroupInformation ugi2 = UserGroupInformation.CreateUserForTesting(UserName, GroupNames
 				);
@@ -437,8 +437,8 @@ namespace Org.Apache.Hadoop.Security
 			NUnit.Framework.Assert.IsFalse(uugi.GetHashCode() == ugi2.GetHashCode());
 			// two ugi that have the same subject need to be equal
 			UserGroupInformation ugi3 = new UserGroupInformation(uugi.GetSubject());
-			NUnit.Framework.Assert.AreEqual(uugi, ugi3);
-			NUnit.Framework.Assert.AreEqual(uugi.GetHashCode(), ugi3.GetHashCode());
+			Assert.Equal(uugi, ugi3);
+			Assert.Equal(uugi.GetHashCode(), ugi3.GetHashCode());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -450,7 +450,7 @@ namespace Org.Apache.Hadoop.Security
 				);
 			UserGroupInformation proxyUgi2 = new UserGroupInformation(proxyUgi1.GetSubject());
 			UserGroupInformation remoteUgi = UserGroupInformation.CreateRemoteUser(UserName);
-			NUnit.Framework.Assert.AreEqual(proxyUgi1, proxyUgi2);
+			Assert.Equal(proxyUgi1, proxyUgi2);
 			NUnit.Framework.Assert.IsFalse(remoteUgi.Equals(proxyUgi1));
 		}
 
@@ -459,7 +459,7 @@ namespace Org.Apache.Hadoop.Security
 		{
 			UserGroupInformation uugi = UserGroupInformation.CreateUserForTesting(UserName, GroupNames
 				);
-			NUnit.Framework.Assert.AreEqual(UserName, uugi.GetUserName());
+			Assert.Equal(UserName, uugi.GetUserName());
 			Assert.AssertArrayEquals(new string[] { Group1Name, Group2Name, Group3Name }, uugi
 				.GetGroupNames());
 		}
@@ -571,16 +571,16 @@ namespace Org.Apache.Hadoop.Security
 				();
 			foreach (Org.Apache.Hadoop.Security.Token.Token<object> t in tokens)
 			{
-				NUnit.Framework.Assert.IsTrue(ugiTokens.Contains(t));
+				Assert.True(ugiTokens.Contains(t));
 			}
-			NUnit.Framework.Assert.AreEqual(tokens.Length, ugiTokens.Count);
+			Assert.Equal(tokens.Length, ugiTokens.Count);
 			// check the ugi's credentials
 			Credentials ugiCreds = ugi.GetCredentials();
 			foreach (Org.Apache.Hadoop.Security.Token.Token<object> t_1 in tokens)
 			{
 				NUnit.Framework.Assert.AreSame(t_1, ugiCreds.GetToken(t_1.GetService()));
 			}
-			NUnit.Framework.Assert.AreEqual(tokens.Length, ugiCreds.NumberOfTokens());
+			Assert.Equal(tokens.Length, ugiCreds.NumberOfTokens());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -625,12 +625,12 @@ namespace Org.Apache.Hadoop.Security
 			ugi.AddCredentials(creds);
 			ICollection<Org.Apache.Hadoop.Security.Token.Token<TokenIdentifier>> z = ugi.GetTokens
 				();
-			NUnit.Framework.Assert.IsTrue(z.Contains(t1));
-			NUnit.Framework.Assert.IsTrue(z.Contains(t2));
-			NUnit.Framework.Assert.AreEqual(2, z.Count);
+			Assert.True(z.Contains(t1));
+			Assert.True(z.Contains(t2));
+			Assert.Equal(2, z.Count);
 			Credentials ugiCreds = ugi.GetCredentials();
 			NUnit.Framework.Assert.AreSame(secretKey, ugiCreds.GetSecretKey(secretName));
-			NUnit.Framework.Assert.AreEqual(1, ugiCreds.NumberOfSecretKeys());
+			Assert.Equal(1, ugiCreds.NumberOfSecretKeys());
 			try
 			{
 				z.Remove(t1);
@@ -644,8 +644,8 @@ namespace Org.Apache.Hadoop.Security
 			// ensure that the tokens are passed through doAs
 			ICollection<Org.Apache.Hadoop.Security.Token.Token<TokenIdentifier>> otherSet = ugi
 				.DoAs(new _PrivilegedExceptionAction_612());
-			NUnit.Framework.Assert.IsTrue(otherSet.Contains(t1));
-			NUnit.Framework.Assert.IsTrue(otherSet.Contains(t2));
+			Assert.True(otherSet.Contains(t1));
+			Assert.True(otherSet.Contains(t2));
 		}
 
 		private sealed class _PrivilegedExceptionAction_612 : PrivilegedExceptionAction<ICollection
@@ -672,15 +672,15 @@ namespace Org.Apache.Hadoop.Security
 			ugi.AddTokenIdentifier(t1);
 			ugi.AddTokenIdentifier(t2);
 			ICollection<TokenIdentifier> z = ugi.GetTokenIdentifiers();
-			NUnit.Framework.Assert.IsTrue(z.Contains(t1));
-			NUnit.Framework.Assert.IsTrue(z.Contains(t2));
-			NUnit.Framework.Assert.AreEqual(2, z.Count);
+			Assert.True(z.Contains(t1));
+			Assert.True(z.Contains(t2));
+			Assert.Equal(2, z.Count);
 			// ensure that the token identifiers are passed through doAs
 			ICollection<TokenIdentifier> otherSet = ugi.DoAs(new _PrivilegedExceptionAction_639
 				());
-			NUnit.Framework.Assert.IsTrue(otherSet.Contains(t1));
-			NUnit.Framework.Assert.IsTrue(otherSet.Contains(t2));
-			NUnit.Framework.Assert.AreEqual(2, otherSet.Count);
+			Assert.True(otherSet.Contains(t1));
+			Assert.True(otherSet.Contains(t2));
+			Assert.Equal(2, otherSet.Count);
 		}
 
 		private sealed class _PrivilegedExceptionAction_639 : PrivilegedExceptionAction<ICollection
@@ -708,7 +708,7 @@ namespace Org.Apache.Hadoop.Security
 				if (am.GetAuthMethod() != null)
 				{
 					ugi.SetAuthenticationMethod(am.GetAuthMethod());
-					NUnit.Framework.Assert.AreEqual(am, ugi.GetAuthenticationMethod());
+					Assert.Equal(am, ugi.GetAuthenticationMethod());
 				}
 			}
 		}
@@ -720,7 +720,7 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation.AuthenticationMethod am = UserGroupInformation.AuthenticationMethod
 				.Kerberos;
 			ugi.SetAuthenticationMethod(am);
-			NUnit.Framework.Assert.AreEqual(am, ugi.GetAuthenticationMethod());
+			Assert.Equal(am, ugi.GetAuthenticationMethod());
 			ugi.DoAs(new _PrivilegedExceptionAction_668(am));
 		}
 
@@ -736,7 +736,7 @@ namespace Org.Apache.Hadoop.Security
 			/// <exception cref="System.IO.IOException"/>
 			public object Run()
 			{
-				NUnit.Framework.Assert.AreEqual(am, UserGroupInformation.GetCurrentUser().GetAuthenticationMethod
+				Assert.Equal(am, UserGroupInformation.GetCurrentUser().GetAuthenticationMethod
 					());
 				return null;
 			}
@@ -753,22 +753,22 @@ namespace Org.Apache.Hadoop.Security
 			UserGroupInformation.AuthenticationMethod am = UserGroupInformation.AuthenticationMethod
 				.Kerberos;
 			ugi.SetAuthenticationMethod(am);
-			NUnit.Framework.Assert.AreEqual(am, ugi.GetAuthenticationMethod());
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Proxy, 
+			Assert.Equal(am, ugi.GetAuthenticationMethod());
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Proxy, 
 				proxyUgi.GetAuthenticationMethod());
-			NUnit.Framework.Assert.AreEqual(am, UserGroupInformation.GetRealAuthenticationMethod
+			Assert.Equal(am, UserGroupInformation.GetRealAuthenticationMethod
 				(proxyUgi));
 			proxyUgi.DoAs(new _PrivilegedExceptionAction_690(am));
 			UserGroupInformation proxyUgi2 = new UserGroupInformation(proxyUgi.GetSubject());
 			proxyUgi2.SetAuthenticationMethod(UserGroupInformation.AuthenticationMethod.Proxy
 				);
-			NUnit.Framework.Assert.AreEqual(proxyUgi, proxyUgi2);
+			Assert.Equal(proxyUgi, proxyUgi2);
 			// Equality should work if authMethod is null
 			UserGroupInformation realugi = UserGroupInformation.GetCurrentUser();
 			UserGroupInformation proxyUgi3 = UserGroupInformation.CreateProxyUser("proxyAnother"
 				, realugi);
 			UserGroupInformation proxyUgi4 = new UserGroupInformation(proxyUgi3.GetSubject());
-			NUnit.Framework.Assert.AreEqual(proxyUgi3, proxyUgi4);
+			Assert.Equal(proxyUgi3, proxyUgi4);
 		}
 
 		private sealed class _PrivilegedExceptionAction_690 : PrivilegedExceptionAction<object
@@ -783,9 +783,9 @@ namespace Org.Apache.Hadoop.Security
 			/// <exception cref="System.IO.IOException"/>
 			public object Run()
 			{
-				NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Proxy, 
+				Assert.Equal(UserGroupInformation.AuthenticationMethod.Proxy, 
 					UserGroupInformation.GetCurrentUser().GetAuthenticationMethod());
-				NUnit.Framework.Assert.AreEqual(am, UserGroupInformation.GetCurrentUser().GetRealUser
+				Assert.Equal(am, UserGroupInformation.GetCurrentUser().GetRealUser
 					().GetAuthenticationMethod());
 				return null;
 			}
@@ -803,7 +803,7 @@ namespace Org.Apache.Hadoop.Security
 			LoginContext login2 = anotherUgi.GetSubject().GetPrincipals<User>().GetEnumerator
 				().Next().GetLogin();
 			//login1 and login2 must be same instances
-			NUnit.Framework.Assert.IsTrue(login1 == login2);
+			Assert.True(login1 == login2);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -816,7 +816,7 @@ namespace Org.Apache.Hadoop.Security
 			login.Login();
 			User user2 = loginUgi.GetSubject().GetPrincipals<User>().GetEnumerator().Next();
 			// user1 and user2 must be same instances.
-			NUnit.Framework.Assert.IsTrue(user1 == user2);
+			Assert.True(user1 == user2);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -844,7 +844,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				MetricsAsserts.AssertCounterGt("GetGroupsNumOps", groups - 1, rb);
 				double avg = MetricsAsserts.GetDoubleGauge("GetGroupsAvgTime", rb);
-				NUnit.Framework.Assert.IsTrue(avg >= 0.0);
+				Assert.True(avg >= 0.0);
 				// Sleep for an interval+slop to let the percentiles rollover
 				Sharpen.Thread.Sleep((PercentilesInterval + 1) * 1000);
 				// Check that the percentiles were updated
@@ -889,7 +889,7 @@ namespace Org.Apache.Hadoop.Security
 			subject.GetPrincipals().AddItem(p);
 			UserGroupInformation ugi = UserGroupInformation.GetUGIFromSubject(subject);
 			NUnit.Framework.Assert.IsNotNull(ugi);
-			NUnit.Framework.Assert.AreEqual("guest@DEFAULT.REALM", ugi.GetUserName());
+			Assert.Equal("guest@DEFAULT.REALM", ugi.GetUserName());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -897,7 +897,7 @@ namespace Org.Apache.Hadoop.Security
 		{
 			UserGroupInformation ugi = UserGroupInformation.CreateRemoteUser("test-user");
 			UserGroupInformation.SetLoginUser(ugi);
-			NUnit.Framework.Assert.AreEqual(ugi, UserGroupInformation.GetLoginUser());
+			Assert.Equal(ugi, UserGroupInformation.GetLoginUser());
 		}
 
 		/// <summary>
@@ -913,7 +913,7 @@ namespace Org.Apache.Hadoop.Security
 		/// <see cref="UserGroupInformation.GetCredentials()"/>
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPrivateTokenExclusion()
 		{
 			UserGroupInformation ugi = UserGroupInformation.GetCurrentUser();
@@ -931,7 +931,7 @@ namespace Org.Apache.Hadoop.Security
 			// Ensure only non-private tokens are returned
 			ICollection<Org.Apache.Hadoop.Security.Token.Token<TokenIdentifier>> tokens = ugi
 				.GetCredentials().GetAllTokens();
-			NUnit.Framework.Assert.AreEqual(1, tokens.Count);
+			Assert.Equal(1, tokens.Count);
 		}
 
 		/// <summary>
@@ -949,7 +949,7 @@ namespace Org.Apache.Hadoop.Security
 		/// this test would fail every time; now it does not.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTokenRaceCondition()
 		{
 			UserGroupInformation userGroupInfo = UserGroupInformation.CreateUserForTesting(UserName

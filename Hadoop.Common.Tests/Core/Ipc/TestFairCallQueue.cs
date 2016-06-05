@@ -42,10 +42,10 @@ namespace Org.Apache.Hadoop.Ipc
 		public virtual void TestPollReturnsTopCallWhenNotEmpty()
 		{
 			Schedulable call = MockCall("c");
-			NUnit.Framework.Assert.IsTrue(fcq.Offer(call));
-			NUnit.Framework.Assert.AreEqual(call, fcq.Poll());
+			Assert.True(fcq.Offer(call));
+			Assert.Equal(call, fcq.Poll());
 			// Poll took it out so the fcq is empty
-			NUnit.Framework.Assert.AreEqual(0, fcq.Count);
+			Assert.Equal(0, fcq.Count);
 		}
 
 		public virtual void TestOfferSucceeds()
@@ -54,9 +54,9 @@ namespace Org.Apache.Hadoop.Ipc
 			for (int i = 0; i < 5; i++)
 			{
 				// We can fit 10 calls
-				NUnit.Framework.Assert.IsTrue(fcq.Offer(MockCall("c")));
+				Assert.True(fcq.Offer(MockCall("c")));
 			}
-			NUnit.Framework.Assert.AreEqual(5, fcq.Count);
+			Assert.Equal(5, fcq.Count);
 		}
 
 		public virtual void TestOfferFailsWhenFull()
@@ -64,11 +64,11 @@ namespace Org.Apache.Hadoop.Ipc
 			fcq.SetScheduler(alwaysZeroScheduler);
 			for (int i = 0; i < 5; i++)
 			{
-				NUnit.Framework.Assert.IsTrue(fcq.Offer(MockCall("c")));
+				Assert.True(fcq.Offer(MockCall("c")));
 			}
 			NUnit.Framework.Assert.IsFalse(fcq.Offer(MockCall("c")));
 			// It's full
-			NUnit.Framework.Assert.AreEqual(5, fcq.Count);
+			Assert.Equal(5, fcq.Count);
 		}
 
 		public virtual void TestOfferSucceedsWhenScheduledLowPriority()
@@ -80,10 +80,10 @@ namespace Org.Apache.Hadoop.Ipc
 			fcq.SetScheduler(sched);
 			for (int i = 0; i < 5; i++)
 			{
-				NUnit.Framework.Assert.IsTrue(fcq.Offer(MockCall("c")));
+				Assert.True(fcq.Offer(MockCall("c")));
 			}
-			NUnit.Framework.Assert.IsTrue(fcq.Offer(MockCall("c")));
-			NUnit.Framework.Assert.AreEqual(6, fcq.Count);
+			Assert.True(fcq.Offer(MockCall("c")));
+			Assert.Equal(6, fcq.Count);
 		}
 
 		public virtual void TestPeekNullWhenEmpty()
@@ -94,11 +94,11 @@ namespace Org.Apache.Hadoop.Ipc
 		public virtual void TestPeekNonDestructive()
 		{
 			Schedulable call = MockCall("c");
-			NUnit.Framework.Assert.IsTrue(fcq.Offer(call));
-			NUnit.Framework.Assert.AreEqual(call, fcq.Peek());
-			NUnit.Framework.Assert.AreEqual(call, fcq.Peek());
+			Assert.True(fcq.Offer(call));
+			Assert.Equal(call, fcq.Peek());
+			Assert.Equal(call, fcq.Peek());
 			// Non-destructive
-			NUnit.Framework.Assert.AreEqual(1, fcq.Count);
+			Assert.Equal(1, fcq.Count);
 		}
 
 		public virtual void TestPeekPointsAtHead()
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Schedulable next = MockCall("b");
 			fcq.Offer(call);
 			fcq.Offer(next);
-			NUnit.Framework.Assert.AreEqual(call, fcq.Peek());
+			Assert.Equal(call, fcq.Peek());
 		}
 
 		// Peek points at the head
@@ -123,9 +123,9 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			fcq.SetScheduler(alwaysZeroScheduler);
 			Schedulable call = MockCall("c");
-			NUnit.Framework.Assert.IsTrue(fcq.Offer(call));
-			NUnit.Framework.Assert.AreEqual(call, fcq.Poll(10, TimeUnit.Milliseconds));
-			NUnit.Framework.Assert.AreEqual(0, fcq.Count);
+			Assert.True(fcq.Offer(call));
+			Assert.Equal(call, fcq.Poll(10, TimeUnit.Milliseconds));
+			Assert.Equal(0, fcq.Count);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -134,13 +134,13 @@ namespace Org.Apache.Hadoop.Ipc
 			fcq.SetScheduler(alwaysZeroScheduler);
 			for (int i = 0; i < 5; i++)
 			{
-				NUnit.Framework.Assert.IsTrue(fcq.Offer(MockCall("c"), 10, TimeUnit.Milliseconds)
+				Assert.True(fcq.Offer(MockCall("c"), 10, TimeUnit.Milliseconds)
 					);
 			}
 			NUnit.Framework.Assert.IsFalse(fcq.Offer(MockCall("e"), 10, TimeUnit.Milliseconds
 				));
 			// It's full
-			NUnit.Framework.Assert.AreEqual(5, fcq.Count);
+			Assert.Equal(5, fcq.Count);
 		}
 
 		public virtual void TestDrainTo()
@@ -156,8 +156,8 @@ namespace Org.Apache.Hadoop.Ipc
 				fcq.Offer(MockCall("c"));
 			}
 			fcq.DrainTo(fcq2);
-			NUnit.Framework.Assert.AreEqual(0, fcq.Count);
-			NUnit.Framework.Assert.AreEqual(3, fcq2.Count);
+			Assert.Equal(0, fcq.Count);
+			Assert.Equal(3, fcq2.Count);
 		}
 
 		public virtual void TestDrainToWithLimit()
@@ -173,13 +173,13 @@ namespace Org.Apache.Hadoop.Ipc
 				fcq.Offer(MockCall("c"));
 			}
 			fcq.DrainTo(fcq2, 2);
-			NUnit.Framework.Assert.AreEqual(1, fcq.Count);
-			NUnit.Framework.Assert.AreEqual(2, fcq2.Count);
+			Assert.Equal(1, fcq.Count);
+			Assert.Equal(2, fcq2.Count);
 		}
 
 		public virtual void TestInitialRemainingCapacity()
 		{
-			NUnit.Framework.Assert.AreEqual(10, fcq.RemainingCapacity());
+			Assert.Equal(10, fcq.RemainingCapacity());
 		}
 
 		public virtual void TestFirstQueueFullRemainingCapacity()
@@ -189,7 +189,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 			}
 			// Queue 0 will fill up first, then queue 1
-			NUnit.Framework.Assert.AreEqual(5, fcq.RemainingCapacity());
+			Assert.Equal(5, fcq.RemainingCapacity());
 		}
 
 		public virtual void TestAllQueuesFullRemainingCapacity()
@@ -201,8 +201,8 @@ namespace Org.Apache.Hadoop.Ipc
 			while (fcq.Offer(MockCall("c")))
 			{
 			}
-			NUnit.Framework.Assert.AreEqual(0, fcq.RemainingCapacity());
-			NUnit.Framework.Assert.AreEqual(10, fcq.Count);
+			Assert.Equal(0, fcq.RemainingCapacity());
+			Assert.Equal(10, fcq.Count);
 		}
 
 		public virtual void TestQueuesPartialFilledRemainingCapacity()
@@ -215,8 +215,8 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				fcq.Offer(MockCall("c"));
 			}
-			NUnit.Framework.Assert.AreEqual(5, fcq.RemainingCapacity());
-			NUnit.Framework.Assert.AreEqual(5, fcq.Count);
+			Assert.Equal(5, fcq.RemainingCapacity());
+			Assert.Equal(5, fcq.Count);
 		}
 
 		/// <summary>Putter produces FakeCalls</summary>
@@ -348,7 +348,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Sharpen.Thread t = new Sharpen.Thread(taker);
 			t.Start();
 			latch.Await();
-			NUnit.Framework.Assert.AreEqual(numberOfTakes, taker.callsTaken);
+			Assert.Equal(numberOfTakes, taker.callsTaken);
 			t.Interrupt();
 		}
 
@@ -363,7 +363,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Sharpen.Thread t = new Sharpen.Thread(putter);
 			t.Start();
 			latch.Await();
-			NUnit.Framework.Assert.AreEqual(numberOfPuts, putter.callsAdded);
+			Assert.Equal(numberOfPuts, putter.callsAdded);
 			t.Interrupt();
 		}
 
@@ -374,7 +374,7 @@ namespace Org.Apache.Hadoop.Ipc
 			fcq.SetScheduler(alwaysZeroScheduler);
 			// We can fit more than 5, even though the scheduler suggests the top queue
 			AssertCanPut(fcq, 8, 8);
-			NUnit.Framework.Assert.AreEqual(8, fcq.Count);
+			Assert.Equal(8, fcq.Count);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -383,7 +383,7 @@ namespace Org.Apache.Hadoop.Ipc
 			fcq.SetScheduler(alwaysZeroScheduler);
 			AssertCanPut(fcq, 10, 10);
 			// Fill up
-			NUnit.Framework.Assert.AreEqual(10, fcq.Count);
+			Assert.Equal(10, fcq.Count);
 			// Put more which causes overflow
 			AssertCanPut(fcq, 0, 1);
 		}
@@ -402,8 +402,8 @@ namespace Org.Apache.Hadoop.Ipc
 			fcq.SetScheduler(alwaysZeroScheduler);
 			Schedulable call = MockCall("c");
 			fcq.Offer(call);
-			NUnit.Framework.Assert.AreEqual(call, fcq.Take());
-			NUnit.Framework.Assert.AreEqual(0, fcq.Count);
+			Assert.Equal(call, fcq.Take());
+			Assert.Equal(0, fcq.Count);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -421,8 +421,8 @@ namespace Org.Apache.Hadoop.Ipc
 			Schedulable call = MockCall("c");
 			fcq.Put(call);
 			// Take from q1 even though mux said q0, since q0 empty
-			NUnit.Framework.Assert.AreEqual(call, fcq.Take());
-			NUnit.Framework.Assert.AreEqual(0, fcq.Count);
+			Assert.Equal(call, fcq.Take());
+			Assert.Equal(0, fcq.Count);
 		}
 
 		public TestFairCallQueue()

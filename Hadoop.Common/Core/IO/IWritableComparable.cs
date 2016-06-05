@@ -23,7 +23,7 @@ namespace Hadoop.Common.Core.IO
 	/// // Some data
 	/// private int counter;
 	/// private long timestamp;
-	/// public void write(DataOutput out) throws IOException {
+	/// public void write(BinaryWriter out) throws IOException {
 	/// out.writeInt(counter);
 	/// out.writeLong(timestamp);
 	/// }

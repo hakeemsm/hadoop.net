@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.IO
 				.KeyClass(typeof(long)), SequenceFile.Writer.ValueClass(typeof(string)), SequenceFile.Writer
 				.AppendIfExists(true), metadataOption);
 			// Verify the Meta data is not changed
-			NUnit.Framework.Assert.AreEqual(value1, writer.metadata.Get(key1));
+			Assert.Equal(value1, writer.metadata.Get(key1));
 			writer.Append(3L, "three");
 			writer.Append(4L, "four");
 			writer.Close();
@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.IO
 			// Verify the Meta data readable after append
 			SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.File
 				(file));
-			NUnit.Framework.Assert.AreEqual(value1, reader.GetMetadata().Get(key1));
+			Assert.Equal(value1, reader.GetMetadata().Get(key1));
 			reader.Close();
 			// Verify failure if the compression details are different
 			try
@@ -235,10 +235,10 @@ namespace Org.Apache.Hadoop.IO
 		{
 			SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.File
 				(file));
-			NUnit.Framework.Assert.AreEqual(1L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("one", reader.GetCurrentValue((object)null));
-			NUnit.Framework.Assert.AreEqual(2L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("two", reader.GetCurrentValue((object)null));
+			Assert.Equal(1L, reader.Next((object)null));
+			Assert.Equal("one", reader.GetCurrentValue((object)null));
+			Assert.Equal(2L, reader.Next((object)null));
+			Assert.Equal("two", reader.GetCurrentValue((object)null));
 			NUnit.Framework.Assert.IsNull(reader.Next((object)null));
 			reader.Close();
 		}
@@ -248,14 +248,14 @@ namespace Org.Apache.Hadoop.IO
 		{
 			SequenceFile.Reader reader = new SequenceFile.Reader(conf, SequenceFile.Reader.File
 				(file));
-			NUnit.Framework.Assert.AreEqual(1L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("one", reader.GetCurrentValue((object)null));
-			NUnit.Framework.Assert.AreEqual(2L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("two", reader.GetCurrentValue((object)null));
-			NUnit.Framework.Assert.AreEqual(3L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("three", reader.GetCurrentValue((object)null));
-			NUnit.Framework.Assert.AreEqual(4L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("four", reader.GetCurrentValue((object)null));
+			Assert.Equal(1L, reader.Next((object)null));
+			Assert.Equal("one", reader.GetCurrentValue((object)null));
+			Assert.Equal(2L, reader.Next((object)null));
+			Assert.Equal("two", reader.GetCurrentValue((object)null));
+			Assert.Equal(3L, reader.Next((object)null));
+			Assert.Equal("three", reader.GetCurrentValue((object)null));
+			Assert.Equal(4L, reader.Next((object)null));
+			Assert.Equal("four", reader.GetCurrentValue((object)null));
 			NUnit.Framework.Assert.IsNull(reader.Next((object)null));
 			reader.Close();
 		}

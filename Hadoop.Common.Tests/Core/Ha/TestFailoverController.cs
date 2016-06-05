@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.HA
 			.Standby).SetNotReadyToBecomeActive("injected not ready");
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverAndFailback()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -32,24 +32,24 @@ namespace Org.Apache.Hadoop.HA
 				).FullName);
 			TestNodeFencer.AlwaysSucceedFencer.fenceCalled = 0;
 			DoFailover(svc1, svc2, false, false);
-			NUnit.Framework.Assert.AreEqual(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc2.state
 				);
 			TestNodeFencer.AlwaysSucceedFencer.fenceCalled = 0;
 			DoFailover(svc2, svc1, false, false);
-			NUnit.Framework.Assert.AreEqual(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverFromStandbyToStandby()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Standby
@@ -59,14 +59,14 @@ namespace Org.Apache.Hadoop.HA
 			svc1.fencer = svc2.fencer = TestNodeFencer.SetupFencer(typeof(TestNodeFencer.AlwaysSucceedFencer
 				).FullName);
 			DoFailover(svc1, svc2, false, false);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverFromActiveToActive()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -84,14 +84,14 @@ namespace Org.Apache.Hadoop.HA
 			{
 			}
 			// Expected
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverWithoutPermission()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -111,13 +111,13 @@ namespace Org.Apache.Hadoop.HA
 			}
 			catch (FailoverFailedException ffe)
 			{
-				NUnit.Framework.Assert.IsTrue(ffe.InnerException.Message.Contains("Access denied"
+				Assert.True(ffe.InnerException.Message.Contains("Access denied"
 					));
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverToUnreadyService()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -140,20 +140,20 @@ namespace Org.Apache.Hadoop.HA
 					throw;
 				}
 			}
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 			// Forcing it means we ignore readyToBecomeActive
 			DoFailover(svc1, svc2, false, true);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverToUnhealthyServiceFailsAndFailsback()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -173,14 +173,14 @@ namespace Org.Apache.Hadoop.HA
 			{
 			}
 			// Expected
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverFromFaultyServiceSucceeds()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -201,18 +201,18 @@ namespace Org.Apache.Hadoop.HA
 				NUnit.Framework.Assert.Fail("Faulty active prevented failover");
 			}
 			// svc1 still thinks it's active, that's OK, it was fenced
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
 			NUnit.Framework.Assert.AreSame(svc1, TestNodeFencer.AlwaysSucceedFencer.fencedSvc
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverFromFaultyServiceFencingFailure()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -233,16 +233,16 @@ namespace Org.Apache.Hadoop.HA
 			{
 			}
 			// Expected
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
+			Assert.Equal(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
 			NUnit.Framework.Assert.AreSame(svc1, TestNodeFencer.AlwaysFailFencer.fencedSvc);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFencingFailureDuringFailover()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -264,16 +264,16 @@ namespace Org.Apache.Hadoop.HA
 			// Expected
 			// If fencing was requested and it failed we don't try to make
 			// svc2 active anyway, and we don't failback to svc1.
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
+			Assert.Equal(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
 			NUnit.Framework.Assert.AreSame(svc1, TestNodeFencer.AlwaysFailFencer.fencedSvc);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverFromNonExistantServiceWithFencer()
 		{
 			DummyHAService svc1 = Org.Mockito.Mockito.Spy(new DummyHAService(null, svc1Addr));
@@ -303,12 +303,12 @@ namespace Org.Apache.Hadoop.HA
 				), Org.Mockito.Mockito.Eq(CommonConfigurationKeys.HaFcGracefulFenceTimeoutDefault
 				));
 			// Don't check svc1 because we can't reach it, but that's OK, it's been fenced.
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverToNonExistantServiceFails()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -327,12 +327,12 @@ namespace Org.Apache.Hadoop.HA
 			{
 			}
 			// Expected
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailoverToFaultyServiceFailsbackOK()
 		{
 			DummyHAService svc1 = Org.Mockito.Mockito.Spy(new DummyHAService(HAServiceProtocol.HAServiceState
@@ -355,14 +355,14 @@ namespace Org.Apache.Hadoop.HA
 			// svc1 went standby then back to active
 			Org.Mockito.Mockito.Verify(svc1.proxy).TransitionToStandby(AnyReqInfo());
 			Org.Mockito.Mockito.Verify(svc1.proxy).TransitionToActive(AnyReqInfo());
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWeDontFailbackIfActiveWasFenced()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -385,14 +385,14 @@ namespace Org.Apache.Hadoop.HA
 			// Expected
 			// We failed to failover and did not failback because we fenced
 			// svc1 (we forced it), therefore svc1 and svc2 should be standby.
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWeFenceOnFailbackIfTransitionToActiveFails()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -417,9 +417,9 @@ namespace Org.Apache.Hadoop.HA
 			// We failed to failover. We did not fence svc1 because it cooperated
 			// and we didn't force it, so we failed back to svc1 and fenced svc2.
 			// Note svc2 still thinks it's active, that's OK, we fenced it.
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(1, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
 			NUnit.Framework.Assert.AreSame(svc2, TestNodeFencer.AlwaysSucceedFencer.fencedSvc
 				);
@@ -431,7 +431,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailureToFenceOnFailbackFailsTheFailback()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -456,14 +456,14 @@ namespace Org.Apache.Hadoop.HA
 			// We did not fence svc1 because it cooperated and we didn't force it, 
 			// we failed to failover so we fenced svc2, we failed to fence svc2
 			// so we did not failback to svc1, ie it's still standby.
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
+			Assert.Equal(1, TestNodeFencer.AlwaysFailFencer.fenceCalled);
 			NUnit.Framework.Assert.AreSame(svc2, TestNodeFencer.AlwaysFailFencer.fencedSvc);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailbackToFaultyServiceFails()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -485,14 +485,14 @@ namespace Org.Apache.Hadoop.HA
 			{
 			}
 			// Expected
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc1.state
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSelfFailoverFails()
 		{
 			DummyHAService svc1 = new DummyHAService(HAServiceProtocol.HAServiceState.Active, 
@@ -511,9 +511,9 @@ namespace Org.Apache.Hadoop.HA
 			{
 			}
 			// Expected
-			NUnit.Framework.Assert.AreEqual(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, svc1.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Active, svc1.state
 				);
 			try
 			{
@@ -524,9 +524,9 @@ namespace Org.Apache.Hadoop.HA
 			{
 			}
 			// Expected
-			NUnit.Framework.Assert.AreEqual(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
+			Assert.Equal(0, TestNodeFencer.AlwaysSucceedFencer.fenceCalled
 				);
-			NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, svc2.state
+			Assert.Equal(HAServiceProtocol.HAServiceState.Standby, svc2.state
 				);
 		}
 

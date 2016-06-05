@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Metrics2.Source
 {
 	public class TestJvmMetrics
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPresence()
 		{
 			JvmPauseMonitor pauseMonitor = new JvmPauseMonitor(new Configuration());

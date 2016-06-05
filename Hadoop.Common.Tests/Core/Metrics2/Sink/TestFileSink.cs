@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.Metrics2.Sink
 				, Sharpen.Pattern.Multiline);
 			// line #1:
 			// line #2:
-			NUnit.Framework.Assert.IsTrue(expectedContentPattern.Matcher(outFileContent).Matches
+			Assert.True(expectedContentPattern.Matcher(outFileContent).Matches
 				());
 		}
 
@@ -130,7 +130,7 @@ namespace Org.Apache.Hadoop.Metrics2.Sink
 			if (outFile != null)
 			{
 				outFile.Delete();
-				NUnit.Framework.Assert.IsTrue(!outFile.Exists());
+				Assert.True(!outFile.Exists());
 			}
 		}
 	}

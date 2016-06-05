@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.FS
 			expectedArgs = new AList<string>();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoArgs()
 		{
 			CheckArgLimits(null, 0, 0);
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 1, 2);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOneArg()
 		{
 			args = ListOf("a");
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 2, 3);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTwoArgs()
 		{
 			args = ListOf("a", "b");
@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 3, 3);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOneOpt()
 		{
 			args = ListOf("-a");
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 1, 1, "a", "b");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTwoOpts()
 		{
 			args = ListOf("-a", "-b");
@@ -77,7 +77,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 1, 1, "a", "b");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOptArg()
 		{
 			args = ListOf("-a", "b");
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 2, 2, "a", "b");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestArgOpt()
 		{
 			args = ListOf("b", "-a");
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 3, 4, "a", "b");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOptStopOptArg()
 		{
 			args = ListOf("-a", "--", "-b", "c");
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 3, 4, "a", "b");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOptDashArg()
 		{
 			args = ListOf("-b", "-", "-c");
@@ -127,27 +127,27 @@ namespace Org.Apache.Hadoop.FS
 			CheckArgLimits(typeof(CommandFormat.NotEnoughArgumentsException), 3, 4, "b", "c");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOldArgsWithIndex()
 		{
 			string[] arrayArgs = new string[] { "ignore", "-a", "b", "-c" };
 			{
 				CommandFormat cf = new CommandFormat(0, 9, "a", "c");
 				IList<string> parsedArgs = cf.Parse(arrayArgs, 0);
-				NUnit.Framework.Assert.AreEqual(SetOf(), cf.GetOpts());
-				NUnit.Framework.Assert.AreEqual(ListOf("ignore", "-a", "b", "-c"), parsedArgs);
+				Assert.Equal(SetOf(), cf.GetOpts());
+				Assert.Equal(ListOf("ignore", "-a", "b", "-c"), parsedArgs);
 			}
 			{
 				CommandFormat cf = new CommandFormat(0, 9, "a", "c");
 				IList<string> parsedArgs = cf.Parse(arrayArgs, 1);
-				NUnit.Framework.Assert.AreEqual(SetOf("a"), cf.GetOpts());
-				NUnit.Framework.Assert.AreEqual(ListOf("b", "-c"), parsedArgs);
+				Assert.Equal(SetOf("a"), cf.GetOpts());
+				Assert.Equal(ListOf("b", "-c"), parsedArgs);
 			}
 			{
 				CommandFormat cf = new CommandFormat(0, 9, "a", "c");
 				IList<string> parsedArgs = cf.Parse(arrayArgs, 2);
-				NUnit.Framework.Assert.AreEqual(SetOf(), cf.GetOpts());
-				NUnit.Framework.Assert.AreEqual(ListOf("b", "-c"), parsedArgs);
+				Assert.Equal(SetOf(), cf.GetOpts());
+				Assert.Equal(ListOf("b", "-c"), parsedArgs);
 			}
 		}
 
@@ -166,11 +166,11 @@ namespace Org.Apache.Hadoop.FS
 				System.Console.Out.WriteLine(e.Message);
 				cfError = e.GetType();
 			}
-			NUnit.Framework.Assert.AreEqual(expectedErr, cfError);
+			Assert.Equal(expectedErr, cfError);
 			if (expectedErr == null)
 			{
-				NUnit.Framework.Assert.AreEqual(expectedArgs, parsedArgs);
-				NUnit.Framework.Assert.AreEqual(expectedOpts, cf.GetOpts());
+				Assert.Equal(expectedArgs, parsedArgs);
+				Assert.Equal(expectedOpts, cf.GetOpts());
 			}
 			return cf;
 		}

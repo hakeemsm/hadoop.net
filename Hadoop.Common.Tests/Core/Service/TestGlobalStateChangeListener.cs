@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.Service
 		public virtual void AssertListenerState(BreakableStateChangeListener breakable, Service.STATE
 			 state)
 		{
-			NUnit.Framework.Assert.AreEqual("Wrong state in " + breakable, state, breakable.GetLastState
+			Assert.Equal("Wrong state in " + breakable, state, breakable.GetLastState
 				());
 		}
 
@@ -80,25 +80,25 @@ namespace Org.Apache.Hadoop.Service
 		public virtual void AssertListenerEventCount(BreakableStateChangeListener breakable
 			, int count)
 		{
-			NUnit.Framework.Assert.AreEqual("Wrong event count in " + breakable, count, breakable
+			Assert.Equal("Wrong event count in " + breakable, count, breakable
 				.GetEventCount());
 		}
 
 		/// <summary>Test that register/unregister works</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRegisterListener()
 		{
 			Register();
-			NUnit.Framework.Assert.IsTrue("listener not registered", Unregister());
+			Assert.True("listener not registered", Unregister());
 		}
 
 		/// <summary>Test that double registration results in one registration only.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRegisterListenerTwice()
 		{
 			Register();
 			Register();
-			NUnit.Framework.Assert.IsTrue("listener not registered", Unregister());
+			Assert.True("listener not registered", Unregister());
 			//there should be no listener to unregister the second time
 			NUnit.Framework.Assert.IsFalse("listener double registered", Unregister());
 		}
@@ -109,13 +109,13 @@ namespace Org.Apache.Hadoop.Service
 		/// is picking up
 		/// the state changes and that its last event field is as expected.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEventHistory()
 		{
 			Register();
 			BreakableService service = new BreakableService();
 			AssertListenerState(listener, Service.STATE.Notinited);
-			NUnit.Framework.Assert.AreEqual(0, listener.GetEventCount());
+			Assert.Equal(0, listener.GetEventCount());
 			service.Init(new Configuration());
 			AssertListenerState(listener, Service.STATE.Inited);
 			NUnit.Framework.Assert.AreSame(service, listener.GetLastService());
@@ -133,7 +133,7 @@ namespace Org.Apache.Hadoop.Service
 		/// service has already reached it's desired state, purely because the
 		/// notifications take place afterwards.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListenerFailure()
 		{
 			listener.SetFailingState(Service.STATE.Inited);
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Service
 		/// Create a chain of listeners and set one in the middle to fail; verify that
 		/// those in front got called, and those after did not.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListenerChain()
 		{
 			//create and register the listeners

@@ -64,18 +64,18 @@ namespace Org.Apache.Hadoop.Util
 			string output = Shell.ExecCommand(Shell.Winutils, "ls", testFile.GetCanonicalPath
 				());
 			string[] outputArgs = output.Split("[ \r\n]");
-			NUnit.Framework.Assert.IsTrue(outputArgs[0].Equals("-rwx------"));
-			NUnit.Framework.Assert.IsTrue(outputArgs[outputArgs.Length - 1].Equals(testFile.GetCanonicalPath
+			Assert.True(outputArgs[0].Equals("-rwx------"));
+			Assert.True(outputArgs[outputArgs.Length - 1].Equals(testFile.GetCanonicalPath
 				()));
 			// Verify most tokens when using a formatted output (other tokens
 			// will be verified with chmod/chown)
 			output = Shell.ExecCommand(Shell.Winutils, "ls", "-F", testFile.GetCanonicalPath(
 				));
 			outputArgs = output.Split("[|\r\n]");
-			NUnit.Framework.Assert.AreEqual(9, outputArgs.Length);
-			NUnit.Framework.Assert.IsTrue(outputArgs[0].Equals("-rwx------"));
-			NUnit.Framework.Assert.AreEqual(contentSize, long.Parse(outputArgs[4]));
-			NUnit.Framework.Assert.IsTrue(outputArgs[8].Equals(testFile.GetCanonicalPath()));
+			Assert.Equal(9, outputArgs.Length);
+			Assert.True(outputArgs[0].Equals("-rwx------"));
+			Assert.Equal(contentSize, long.Parse(outputArgs[4]));
+			Assert.True(outputArgs[8].Equals(testFile.GetCanonicalPath()));
 			testFile.Delete();
 			NUnit.Framework.Assert.IsFalse(testFile.Exists());
 		}
@@ -88,12 +88,12 @@ namespace Org.Apache.Hadoop.Util
 			// groups when invoked with no args
 			string outputNoArgs = Shell.ExecCommand(Shell.Winutils, "groups").Trim();
 			string output = Shell.ExecCommand(Shell.Winutils, "groups", currentUser).Trim();
-			NUnit.Framework.Assert.AreEqual(output, outputNoArgs);
+			Assert.Equal(output, outputNoArgs);
 			// Verify that groups command with the -F flag returns the same information
 			string outputFormat = Shell.ExecCommand(Shell.Winutils, "groups", "-F", currentUser
 				).Trim();
 			outputFormat = outputFormat.Replace("|", " ");
-			NUnit.Framework.Assert.AreEqual(output, outputFormat);
+			Assert.Equal(output, outputFormat);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -124,14 +124,14 @@ namespace Org.Apache.Hadoop.Util
 		private void AssertPermissions(FilePath file, string expected)
 		{
 			string output = Ls(file).Split("[ \r\n]")[0];
-			NUnit.Framework.Assert.AreEqual(expected, output);
+			Assert.Equal(expected, output);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
 		private void TestChmodInternal(string mode, string expectedPerm)
 		{
 			FilePath a = new FilePath(TestDir, "file1");
-			NUnit.Framework.Assert.IsTrue(a.CreateNewFile());
+			Assert.True(a.CreateNewFile());
 			// Reset permissions on the file to default
 			Chmod("700", a);
 			// Apply the mode mask
@@ -147,12 +147,12 @@ namespace Org.Apache.Hadoop.Util
 		{
 			// Create a new directory
 			FilePath dir = new FilePath(TestDir, "dir1");
-			NUnit.Framework.Assert.IsTrue(dir.Mkdir());
+			Assert.True(dir.Mkdir());
 			// Set permission use chmod
 			Chmod("755", dir);
 			// Create a child file in the directory
 			FilePath child = new FilePath(dir, "file1");
-			NUnit.Framework.Assert.IsTrue(child.CreateNewFile());
+			Assert.True(child.CreateNewFile());
 			// Verify the child file has correct permissions
 			AssertPermissions(child, expectedPerm);
 			child.Delete();
@@ -166,22 +166,22 @@ namespace Org.Apache.Hadoop.Util
 		{
 			// Setup test folder hierarchy
 			FilePath a = new FilePath(TestDir, "a");
-			NUnit.Framework.Assert.IsTrue(a.Mkdir());
+			Assert.True(a.Mkdir());
 			Chmod("700", a);
 			FilePath aa = new FilePath(a, "a");
-			NUnit.Framework.Assert.IsTrue(aa.CreateNewFile());
+			Assert.True(aa.CreateNewFile());
 			Chmod("600", aa);
 			FilePath ab = new FilePath(a, "b");
-			NUnit.Framework.Assert.IsTrue(ab.Mkdir());
+			Assert.True(ab.Mkdir());
 			Chmod("700", ab);
 			FilePath aba = new FilePath(ab, "a");
-			NUnit.Framework.Assert.IsTrue(aba.Mkdir());
+			Assert.True(aba.Mkdir());
 			Chmod("700", aba);
 			FilePath abb = new FilePath(ab, "b");
-			NUnit.Framework.Assert.IsTrue(abb.CreateNewFile());
+			Assert.True(abb.CreateNewFile());
 			Chmod("600", abb);
 			FilePath abx = new FilePath(ab, "x");
-			NUnit.Framework.Assert.IsTrue(abx.CreateNewFile());
+			Assert.True(abx.CreateNewFile());
 			Chmod("u+x", abx);
 			// Run chmod recursive
 			ChmodR(mode, a);
@@ -192,7 +192,7 @@ namespace Org.Apache.Hadoop.Util
 			AssertPermissions(aba, "d" + expectedPermx);
 			AssertPermissions(abb, "-" + expectedPerm);
 			AssertPermissions(abx, "-" + expectedPermx);
-			NUnit.Framework.Assert.IsTrue(FileUtil.FullyDelete(a));
+			Assert.True(FileUtil.FullyDelete(a));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -230,7 +230,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			// restore permissions
 			Chmod("700", a);
-			NUnit.Framework.Assert.IsTrue(a.Delete());
+			Assert.True(a.Delete());
 			// - Copy WINUTILS to a new executable file, a.exe.
 			// - Change mode to 677 so owner does not have execute permission.
 			// - Verify the owner truly does not have the permissions to execute the file.
@@ -248,7 +248,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				Log.Info("Expected: Failed to execute a file with permissions 677");
 			}
-			NUnit.Framework.Assert.IsTrue(aExe.Delete());
+			Assert.True(aExe.Delete());
 		}
 
 		/// <summary>Validate behavior of chmod commands on directories on Windows.</summary>
@@ -259,17 +259,17 @@ namespace Org.Apache.Hadoop.Util
 			FilePath a = new FilePath(TestDir, "a");
 			FilePath b = new FilePath(a, "b");
 			a.Mkdirs();
-			NUnit.Framework.Assert.IsTrue(b.CreateNewFile());
+			Assert.True(b.CreateNewFile());
 			// Remove read permissions on directory a
 			Chmod("300", a);
 			string[] files = a.List();
-			NUnit.Framework.Assert.IsTrue("Listing a directory without read permission should fail"
+			Assert.True("Listing a directory without read permission should fail"
 				, null == files);
 			// restore permissions
 			Chmod("700", a);
 			// validate that the directory can be listed now
 			files = a.List();
-			NUnit.Framework.Assert.AreEqual("b", files[0]);
+			Assert.Equal("b", files[0]);
 			// Remove write permissions on the directory and validate the
 			// behavior for adding, deleting and renaming files
 			Chmod("500", a);
@@ -290,7 +290,7 @@ namespace Org.Apache.Hadoop.Util
 			// Deleting a file will succeed even if write permissions are not present
 			// on the parent dir. Check the following link for additional details:
 			// http://support.microsoft.com/kb/238018
-			NUnit.Framework.Assert.IsTrue("Special behavior: deleting a file will succeed on Windows "
+			Assert.True("Special behavior: deleting a file will succeed on Windows "
 				 + "even if a user does not have write permissions on the parent dir", b.Delete(
 				));
 			NUnit.Framework.Assert.IsFalse("Renaming a file should fail on the dir where a user does "
@@ -298,9 +298,9 @@ namespace Org.Apache.Hadoop.Util
 			// restore permissions
 			Chmod("700", a);
 			// Make sure adding new files and rename succeeds now
-			NUnit.Framework.Assert.IsTrue(c.CreateNewFile());
+			Assert.True(c.CreateNewFile());
 			FilePath d = new FilePath(a, "d");
-			NUnit.Framework.Assert.IsTrue(c.RenameTo(d));
+			Assert.True(c.RenameTo(d));
 			// at this point in the test, d is the only remaining file in directory a
 			// Removing execute permissions does not have the same behavior on
 			// Windows as on Linux. Adding, renaming, deleting and listing files
@@ -311,14 +311,14 @@ namespace Org.Apache.Hadoop.Util
 			Chmod("600", a);
 			// validate directory listing
 			files = a.List();
-			NUnit.Framework.Assert.AreEqual("d", files[0]);
+			Assert.Equal("d", files[0]);
 			// validate delete
-			NUnit.Framework.Assert.IsTrue(d.Delete());
+			Assert.True(d.Delete());
 			// validate add
 			FilePath e = new FilePath(a, "e");
-			NUnit.Framework.Assert.IsTrue(e.CreateNewFile());
+			Assert.True(e.CreateNewFile());
 			// validate rename
-			NUnit.Framework.Assert.IsTrue(e.RenameTo(new FilePath(a, "f")));
+			Assert.True(e.RenameTo(new FilePath(a, "f")));
 			// restore permissions
 			Chmod("700", a);
 		}
@@ -353,9 +353,9 @@ namespace Org.Apache.Hadoop.Util
 			)
 		{
 			string[] args = LsF(file).Trim().Split("[\\|]");
-			NUnit.Framework.Assert.AreEqual(StringUtils.ToLowerCase(expectedUser), StringUtils
+			Assert.Equal(StringUtils.ToLowerCase(expectedUser), StringUtils
 				.ToLowerCase(args[2]));
-			NUnit.Framework.Assert.AreEqual(StringUtils.ToLowerCase(expectedGroup), StringUtils
+			Assert.Equal(StringUtils.ToLowerCase(expectedGroup), StringUtils
 				.ToLowerCase(args[3]));
 		}
 
@@ -363,7 +363,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestChown()
 		{
 			FilePath a = new FilePath(TestDir, "a");
-			NUnit.Framework.Assert.IsTrue(a.CreateNewFile());
+			Assert.True(a.CreateNewFile());
 			string username = Runtime.GetProperty("user.name");
 			// username including the domain aka DOMAIN\\user
 			string qualifiedUsername = Shell.ExecCommand("whoami").Trim();
@@ -377,7 +377,7 @@ namespace Org.Apache.Hadoop.Util
 			Chown(":" + admins, a);
 			Chown(username + ":", a);
 			AssertOwners(a, qualifiedUsername, qualifiedAdmins);
-			NUnit.Framework.Assert.IsTrue(a.Delete());
+			Assert.True(a.Delete());
 			NUnit.Framework.Assert.IsFalse(a.Exists());
 		}
 
@@ -385,7 +385,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestSymlinkRejectsForwardSlashesInLink()
 		{
 			FilePath newFile = new FilePath(TestDir, "file");
-			NUnit.Framework.Assert.IsTrue(newFile.CreateNewFile());
+			Assert.True(newFile.CreateNewFile());
 			string target = newFile.GetPath();
 			string link = new FilePath(TestDir, "link").GetPath().ReplaceAll("\\\\", "/");
 			try
@@ -404,7 +404,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestSymlinkRejectsForwardSlashesInTarget()
 		{
 			FilePath newFile = new FilePath(TestDir, "file");
-			NUnit.Framework.Assert.IsTrue(newFile.CreateNewFile());
+			Assert.True(newFile.CreateNewFile());
 			string target = newFile.GetPath().ReplaceAll("\\\\", "/");
 			string link = new FilePath(TestDir, "link").GetPath();
 			try
@@ -425,9 +425,9 @@ namespace Org.Apache.Hadoop.Util
 			// Create TEST_DIR\dir1\file1.txt
 			//
 			FilePath dir1 = new FilePath(TestDir, "dir1");
-			NUnit.Framework.Assert.IsTrue(dir1.Mkdirs());
+			Assert.True(dir1.Mkdirs());
 			FilePath file1 = new FilePath(dir1, "file1.txt");
-			NUnit.Framework.Assert.IsTrue(file1.CreateNewFile());
+			Assert.True(file1.CreateNewFile());
 			FilePath dirLink = new FilePath(TestDir, "dlink");
 			FilePath fileLink = new FilePath(TestDir, "flink");
 			// Next create a directory symlink to dir1 and a file
@@ -520,7 +520,7 @@ namespace Org.Apache.Hadoop.Util
 			NUnit.Framework.Assert.IsFalse(proof.Exists());
 			Shell.ExecCommand(Shell.Winutils, "task", "create", "testTaskCreate" + testNumber
 				, batch.GetAbsolutePath());
-			NUnit.Framework.Assert.IsTrue(proof.Exists());
+			Assert.True(proof.Exists());
 			string outNumber = FileUtils.ReadFileToString(proof);
 			Assert.AssertThat(outNumber, JUnitMatchers.ContainsString(testNumber));
 		}
@@ -533,17 +533,17 @@ namespace Org.Apache.Hadoop.Util
 			// Run a task without any options
 			string @out = Shell.ExecCommand(Shell.Winutils, "task", "create", "job" + jobId, 
 				"cmd /c echo job" + jobId);
-			NUnit.Framework.Assert.IsTrue(@out.Trim().Equals("job" + jobId));
+			Assert.True(@out.Trim().Equals("job" + jobId));
 			// Run a task without any limits
 			jobId = string.Format("%f", Math.Random());
 			@out = Shell.ExecCommand(Shell.Winutils, "task", "create", "-c", "-1", "-m", "-1"
 				, "job" + jobId, "cmd /c echo job" + jobId);
-			NUnit.Framework.Assert.IsTrue(@out.Trim().Equals("job" + jobId));
+			Assert.True(@out.Trim().Equals("job" + jobId));
 			// Run a task with limits (128MB should be enough for a cmd)
 			jobId = string.Format("%f", Math.Random());
 			@out = Shell.ExecCommand(Shell.Winutils, "task", "create", "-c", "10000", "-m", "128"
 				, "job" + jobId, "cmd /c echo job" + jobId);
-			NUnit.Framework.Assert.IsTrue(@out.Trim().Equals("job" + jobId));
+			Assert.True(@out.Trim().Equals("job" + jobId));
 			// Run a task without enough memory
 			try
 			{

@@ -23,12 +23,12 @@ namespace Org.Apache.Hadoop.Security
 			Runtime.SetProperty("java.security.krb5.realm", "NONE");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void IsOriginalTGTReturnsCorrectValues()
 		{
-			NUnit.Framework.Assert.IsTrue(SecurityUtil.IsTGSPrincipal(new KerberosPrincipal("krbtgt/foo@foo"
+			Assert.True(SecurityUtil.IsTGSPrincipal(new KerberosPrincipal("krbtgt/foo@foo"
 				)));
-			NUnit.Framework.Assert.IsTrue(SecurityUtil.IsTGSPrincipal(new KerberosPrincipal("krbtgt/foo.bar.bat@foo.bar.bat"
+			Assert.True(SecurityUtil.IsTGSPrincipal(new KerberosPrincipal("krbtgt/foo.bar.bat@foo.bar.bat"
 				)));
 			NUnit.Framework.Assert.IsFalse(SecurityUtil.IsTGSPrincipal(null));
 			NUnit.Framework.Assert.IsFalse(SecurityUtil.IsTGSPrincipal(new KerberosPrincipal(
@@ -42,10 +42,10 @@ namespace Org.Apache.Hadoop.Security
 		/// <exception cref="System.IO.IOException"/>
 		private void Verify(string original, string hostname, string expected)
 		{
-			NUnit.Framework.Assert.AreEqual(expected, SecurityUtil.GetServerPrincipal(original
+			Assert.Equal(expected, SecurityUtil.GetServerPrincipal(original
 				, hostname));
 			IPAddress addr = MockAddr(hostname);
-			NUnit.Framework.Assert.AreEqual(expected, SecurityUtil.GetServerPrincipal(original
+			Assert.Equal(expected, SecurityUtil.GetServerPrincipal(original
 				, addr));
 		}
 
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetServerPrincipal()
 		{
 			string service = "hdfs/";
@@ -72,13 +72,13 @@ namespace Org.Apache.Hadoop.Security
 			Verify(userPrincipal, hostname, userPrincipal);
 			// testing reverse DNS lookup doesn't happen
 			IPAddress notUsed = Org.Mockito.Mockito.Mock<IPAddress>();
-			NUnit.Framework.Assert.AreEqual(shouldNotReplace, SecurityUtil.GetServerPrincipal
+			Assert.Equal(shouldNotReplace, SecurityUtil.GetServerPrincipal
 				(shouldNotReplace, notUsed));
 			Org.Mockito.Mockito.Verify(notUsed, Org.Mockito.Mockito.Never()).ToString();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPrincipalsWithLowerCaseHosts()
 		{
 			string service = "xyz/";
@@ -90,18 +90,18 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLocalHostNameForNullOrWild()
 		{
 			string local = StringUtils.ToLowerCase(SecurityUtil.GetLocalHostName());
-			NUnit.Framework.Assert.AreEqual("hdfs/" + local + "@REALM", SecurityUtil.GetServerPrincipal
+			Assert.Equal("hdfs/" + local + "@REALM", SecurityUtil.GetServerPrincipal
 				("hdfs/_HOST@REALM", (string)null));
-			NUnit.Framework.Assert.AreEqual("hdfs/" + local + "@REALM", SecurityUtil.GetServerPrincipal
+			Assert.Equal("hdfs/" + local + "@REALM", SecurityUtil.GetServerPrincipal
 				("hdfs/_HOST@REALM", "0.0.0.0"));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartsWithIncorrectSettings()
 		{
 			Configuration conf = new Configuration();
@@ -120,47 +120,47 @@ namespace Org.Apache.Hadoop.Security
 				// expected
 				gotException = true;
 			}
-			NUnit.Framework.Assert.IsTrue("Exception for empty keytabfile name was expected", 
+			Assert.True("Exception for empty keytabfile name was expected", 
 				gotException);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetHostFromPrincipal()
 		{
-			NUnit.Framework.Assert.AreEqual("host", SecurityUtil.GetHostFromPrincipal("service/host@realm"
+			Assert.Equal("host", SecurityUtil.GetHostFromPrincipal("service/host@realm"
 				));
-			NUnit.Framework.Assert.AreEqual(null, SecurityUtil.GetHostFromPrincipal("service@realm"
+			Assert.Equal(null, SecurityUtil.GetHostFromPrincipal("service@realm"
 				));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBuildDTServiceName()
 		{
 			SecurityUtil.SetTokenServiceUseIp(true);
-			NUnit.Framework.Assert.AreEqual("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
+			Assert.Equal("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
 				URI.Create("test://LocalHost"), 123));
-			NUnit.Framework.Assert.AreEqual("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
+			Assert.Equal("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
 				URI.Create("test://LocalHost:123"), 456));
-			NUnit.Framework.Assert.AreEqual("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
+			Assert.Equal("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
 				URI.Create("test://127.0.0.1"), 123));
-			NUnit.Framework.Assert.AreEqual("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
+			Assert.Equal("127.0.0.1:123", SecurityUtil.BuildDTServiceName(
 				URI.Create("test://127.0.0.1:123"), 456));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBuildTokenServiceSockAddr()
 		{
 			SecurityUtil.SetTokenServiceUseIp(true);
-			NUnit.Framework.Assert.AreEqual("127.0.0.1:123", SecurityUtil.BuildTokenService(new 
+			Assert.Equal("127.0.0.1:123", SecurityUtil.BuildTokenService(new 
 				IPEndPoint("LocalHost", 123)).ToString());
-			NUnit.Framework.Assert.AreEqual("127.0.0.1:123", SecurityUtil.BuildTokenService(new 
+			Assert.Equal("127.0.0.1:123", SecurityUtil.BuildTokenService(new 
 				IPEndPoint("127.0.0.1", 123)).ToString());
 			// what goes in, comes out
-			NUnit.Framework.Assert.AreEqual("127.0.0.1:123", SecurityUtil.BuildTokenService(NetUtils
+			Assert.Equal("127.0.0.1:123", SecurityUtil.BuildTokenService(NetUtils
 				.CreateSocketAddr("127.0.0.1", 123)).ToString());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGoodHostsAndPorts()
 		{
 			IPEndPoint compare = NetUtils.CreateSocketAddrForHost("localhost", 123);
@@ -171,14 +171,14 @@ namespace Org.Apache.Hadoop.Security
 
 		internal virtual void RunGoodCases(IPEndPoint addr, string host, int port)
 		{
-			NUnit.Framework.Assert.AreEqual(addr, NetUtils.CreateSocketAddr(host, port));
-			NUnit.Framework.Assert.AreEqual(addr, NetUtils.CreateSocketAddr("hdfs://" + host, 
+			Assert.Equal(addr, NetUtils.CreateSocketAddr(host, port));
+			Assert.Equal(addr, NetUtils.CreateSocketAddr("hdfs://" + host, 
 				port));
-			NUnit.Framework.Assert.AreEqual(addr, NetUtils.CreateSocketAddr("hdfs://" + host 
+			Assert.Equal(addr, NetUtils.CreateSocketAddr("hdfs://" + host 
 				+ "/path", port));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBadHostsAndPorts()
 		{
 			RunBadCases(string.Empty, true);
@@ -216,7 +216,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			finally
 			{
-				NUnit.Framework.Assert.IsTrue("should be bad: '" + arg + "'", bad);
+				Assert.True("should be bad: '" + arg + "'", bad);
 			}
 			foreach (int port in ports)
 			{
@@ -235,7 +235,7 @@ namespace Org.Apache.Hadoop.Security
 				}
 				finally
 				{
-					NUnit.Framework.Assert.IsTrue("should be bad: '" + arg + "' (default port:" + port
+					Assert.True("should be bad: '" + arg + "' (default port:" + port
 						 + ")", bad);
 				}
 			}
@@ -248,16 +248,16 @@ namespace Org.Apache.Hadoop.Security
 		// 5) the port is correct
 		private void VerifyValues(IPEndPoint addr, string host, string ip, int port)
 		{
-			NUnit.Framework.Assert.IsTrue(!addr.IsUnresolved());
+			Assert.True(!addr.IsUnresolved());
 			// don't know what the standard resolver will return for hostname.
 			// should be host for host; host or ip for ip is ambiguous
 			if (!SecurityUtil.useIpForTokenService)
 			{
-				NUnit.Framework.Assert.AreEqual(host, addr.GetHostName());
-				NUnit.Framework.Assert.AreEqual(host, addr.Address.GetHostName());
+				Assert.Equal(host, addr.GetHostName());
+				Assert.Equal(host, addr.Address.GetHostName());
 			}
-			NUnit.Framework.Assert.AreEqual(ip, addr.Address.GetHostAddress());
-			NUnit.Framework.Assert.AreEqual(port, addr.Port);
+			Assert.Equal(ip, addr.Address.GetHostAddress());
+			Assert.Equal(port, addr.Port);
 		}
 
 		// check:
@@ -273,9 +273,9 @@ namespace Org.Apache.Hadoop.Security
 			Org.Apache.Hadoop.Security.Token.Token<object> token = new Org.Apache.Hadoop.Security.Token.Token
 				<TokenIdentifier>();
 			Text service = new Text(serviceHost + ":" + port);
-			NUnit.Framework.Assert.AreEqual(service, SecurityUtil.BuildTokenService(addr));
+			Assert.Equal(service, SecurityUtil.BuildTokenService(addr));
 			SecurityUtil.SetTokenService(token, addr);
-			NUnit.Framework.Assert.AreEqual(service, token.GetService());
+			Assert.Equal(service, token.GetService());
 			IPEndPoint serviceAddr = SecurityUtil.GetTokenServiceAddr(token);
 			NUnit.Framework.Assert.IsNotNull(serviceAddr);
 			VerifyValues(serviceAddr, serviceHost, ip, port);
@@ -322,7 +322,7 @@ namespace Org.Apache.Hadoop.Security
 			VerifyAddress(addr, host, ip, port);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketAddrWithName()
 		{
 			string staticHost = "my";
@@ -330,7 +330,7 @@ namespace Org.Apache.Hadoop.Security
 			VerifyServiceAddr("LocalHost", "127.0.0.1");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketAddrWithIP()
 		{
 			string staticHost = "127.0.0.1";
@@ -338,7 +338,7 @@ namespace Org.Apache.Hadoop.Security
 			VerifyServiceAddr(staticHost, "127.0.0.1");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketAddrWithNameToStaticName()
 		{
 			string staticHost = "host1";
@@ -346,7 +346,7 @@ namespace Org.Apache.Hadoop.Security
 			VerifyServiceAddr(staticHost, "127.0.0.1");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketAddrWithNameToStaticIP()
 		{
 			string staticHost = "host3";
@@ -355,7 +355,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		// this is a bizarre case, but it's if a test tries to remap an ip address
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketAddrWithIPToStaticIP()
 		{
 			string staticHost = "1.2.3.4";
@@ -363,21 +363,21 @@ namespace Org.Apache.Hadoop.Security
 			VerifyServiceAddr(staticHost, "255.255.255.255");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetAuthenticationMethod()
 		{
 			Configuration conf = new Configuration();
 			// default is simple
 			conf.Unset(CommonConfigurationKeysPublic.HadoopSecurityAuthentication);
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Simple, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Simple, 
 				SecurityUtil.GetAuthenticationMethod(conf));
 			// simple
 			conf.Set(CommonConfigurationKeysPublic.HadoopSecurityAuthentication, "simple");
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Simple, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Simple, 
 				SecurityUtil.GetAuthenticationMethod(conf));
 			// kerberos
 			conf.Set(CommonConfigurationKeysPublic.HadoopSecurityAuthentication, "kerberos");
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Kerberos
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Kerberos
 				, SecurityUtil.GetAuthenticationMethod(conf));
 			// bad value
 			conf.Set(CommonConfigurationKeysPublic.HadoopSecurityAuthentication, "kaboom");
@@ -390,28 +390,28 @@ namespace Org.Apache.Hadoop.Security
 			{
 				error = e.ToString();
 			}
-			NUnit.Framework.Assert.AreEqual("java.lang.IllegalArgumentException: " + "Invalid attribute value for "
+			Assert.Equal("java.lang.IllegalArgumentException: " + "Invalid attribute value for "
 				 + CommonConfigurationKeysPublic.HadoopSecurityAuthentication + " of kaboom", error
 				);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetAuthenticationMethod()
 		{
 			Configuration conf = new Configuration();
 			// default
 			SecurityUtil.SetAuthenticationMethod(null, conf);
-			NUnit.Framework.Assert.AreEqual("simple", conf.Get(CommonConfigurationKeysPublic.
+			Assert.Equal("simple", conf.Get(CommonConfigurationKeysPublic.
 				HadoopSecurityAuthentication));
 			// simple
 			SecurityUtil.SetAuthenticationMethod(UserGroupInformation.AuthenticationMethod.Simple
 				, conf);
-			NUnit.Framework.Assert.AreEqual("simple", conf.Get(CommonConfigurationKeysPublic.
+			Assert.Equal("simple", conf.Get(CommonConfigurationKeysPublic.
 				HadoopSecurityAuthentication));
 			// kerberos
 			SecurityUtil.SetAuthenticationMethod(UserGroupInformation.AuthenticationMethod.Kerberos
 				, conf);
-			NUnit.Framework.Assert.AreEqual("kerberos", conf.Get(CommonConfigurationKeysPublic
+			Assert.Equal("kerberos", conf.Get(CommonConfigurationKeysPublic
 				.HadoopSecurityAuthentication));
 		}
 	}

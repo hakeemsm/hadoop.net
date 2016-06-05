@@ -10,7 +10,7 @@ namespace Org.Apache.Hadoop.Security.Http
 	{
 		/// <exception cref="Javax.Servlet.ServletException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSameOrigin()
 		{
 			// Setup the configuration settings of the server
@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.Security.Http
 
 		/// <exception cref="Javax.Servlet.ServletException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAllowAllOrigins()
 		{
 			// Setup the configuration settings of the server
@@ -44,31 +44,31 @@ namespace Org.Apache.Hadoop.Security.Http
 			// Object under test
 			CrossOriginFilter filter = new CrossOriginFilter();
 			filter.Init(filterConfig);
-			NUnit.Framework.Assert.IsTrue(filter.AreOriginsAllowed("example.com"));
+			Assert.True(filter.AreOriginsAllowed("example.com"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEncodeHeaders()
 		{
 			string validOrigin = "http://localhost:12345";
 			string encodedValidOrigin = CrossOriginFilter.EncodeHeader(validOrigin);
-			NUnit.Framework.Assert.AreEqual("Valid origin encoding should match exactly", validOrigin
+			Assert.Equal("Valid origin encoding should match exactly", validOrigin
 				, encodedValidOrigin);
 			string httpResponseSplitOrigin = validOrigin + " \nSecondHeader: value";
 			string encodedResponseSplitOrigin = CrossOriginFilter.EncodeHeader(httpResponseSplitOrigin
 				);
-			NUnit.Framework.Assert.AreEqual("Http response split origin should be protected against"
+			Assert.Equal("Http response split origin should be protected against"
 				, validOrigin, encodedResponseSplitOrigin);
 			// Test Origin List
 			string validOriginList = "http://foo.example.com:12345 http://bar.example.com:12345";
 			string encodedValidOriginList = CrossOriginFilter.EncodeHeader(validOriginList);
-			NUnit.Framework.Assert.AreEqual("Valid origin list encoding should match exactly"
+			Assert.Equal("Valid origin list encoding should match exactly"
 				, validOriginList, encodedValidOriginList);
 		}
 
 		/// <exception cref="Javax.Servlet.ServletException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPatternMatchingOrigins()
 		{
 			// Setup the configuration settings of the server
@@ -81,13 +81,13 @@ namespace Org.Apache.Hadoop.Security.Http
 			// match multiple sub-domains
 			NUnit.Framework.Assert.IsFalse(filter.AreOriginsAllowed("example.com"));
 			NUnit.Framework.Assert.IsFalse(filter.AreOriginsAllowed("foo:example.com"));
-			NUnit.Framework.Assert.IsTrue(filter.AreOriginsAllowed("foo.example.com"));
-			NUnit.Framework.Assert.IsTrue(filter.AreOriginsAllowed("foo.bar.example.com"));
+			Assert.True(filter.AreOriginsAllowed("foo.example.com"));
+			Assert.True(filter.AreOriginsAllowed("foo.bar.example.com"));
 			// First origin is allowed
-			NUnit.Framework.Assert.IsTrue(filter.AreOriginsAllowed("foo.example.com foo.nomatch.com"
+			Assert.True(filter.AreOriginsAllowed("foo.example.com foo.nomatch.com"
 				));
 			// Second origin is allowed
-			NUnit.Framework.Assert.IsTrue(filter.AreOriginsAllowed("foo.nomatch.com foo.example.com"
+			Assert.True(filter.AreOriginsAllowed("foo.nomatch.com foo.example.com"
 				));
 			// No origin in list is allowed
 			NUnit.Framework.Assert.IsFalse(filter.AreOriginsAllowed("foo.nomatch1.com foo.nomatch2.com"
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.Security.Http
 
 		/// <exception cref="Javax.Servlet.ServletException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDisallowedOrigin()
 		{
 			// Setup the configuration settings of the server
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.Security.Http
 
 		/// <exception cref="Javax.Servlet.ServletException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDisallowedMethod()
 		{
 			// Setup the configuration settings of the server
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.Security.Http
 
 		/// <exception cref="Javax.Servlet.ServletException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDisallowedHeader()
 		{
 			// Setup the configuration settings of the server
@@ -174,7 +174,7 @@ namespace Org.Apache.Hadoop.Security.Http
 
 		/// <exception cref="Javax.Servlet.ServletException"/>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCrossOriginFilter()
 		{
 			// Setup the configuration settings of the server
@@ -208,7 +208,7 @@ namespace Org.Apache.Hadoop.Security.Http
 		}
 
 		/// <exception cref="Javax.Servlet.ServletException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCrossOriginFilterAfterRestart()
 		{
 			// Setup the configuration settings of the server
@@ -221,11 +221,11 @@ namespace Org.Apache.Hadoop.Security.Http
 			CrossOriginFilter filter = new CrossOriginFilter();
 			filter.Init(filterConfig);
 			//verify filter values
-			NUnit.Framework.Assert.IsTrue("Allowed headers do not match", string.CompareOrdinal
+			Assert.True("Allowed headers do not match", string.CompareOrdinal
 				(filter.GetAllowedHeadersHeader(), "X-Requested-With,Accept") == 0);
-			NUnit.Framework.Assert.IsTrue("Allowed methods do not match", string.CompareOrdinal
+			Assert.True("Allowed methods do not match", string.CompareOrdinal
 				(filter.GetAllowedMethodsHeader(), "GET,POST") == 0);
-			NUnit.Framework.Assert.IsTrue(filter.AreOriginsAllowed("example.com"));
+			Assert.True(filter.AreOriginsAllowed("example.com"));
 			//destroy filter values and clear conf
 			filter.Destroy();
 			conf.Clear();
@@ -237,11 +237,11 @@ namespace Org.Apache.Hadoop.Security.Http
 			//initialize filter
 			filter.Init(filterConfig);
 			//verify filter values
-			NUnit.Framework.Assert.IsTrue("Allowed headers do not match", string.CompareOrdinal
+			Assert.True("Allowed headers do not match", string.CompareOrdinal
 				(filter.GetAllowedHeadersHeader(), "Content-Type,Origin") == 0);
-			NUnit.Framework.Assert.IsTrue("Allowed methods do not match", string.CompareOrdinal
+			Assert.True("Allowed methods do not match", string.CompareOrdinal
 				(filter.GetAllowedMethodsHeader(), "GET,HEAD") == 0);
-			NUnit.Framework.Assert.IsTrue(filter.AreOriginsAllowed("newexample.com"));
+			Assert.True(filter.AreOriginsAllowed("newexample.com"));
 			//destroy filter values
 			filter.Destroy();
 		}

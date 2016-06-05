@@ -32,7 +32,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMoveTargetExistsWithoutExplicitRename()
 		{
 			Path srcPath = new Path("mockfs:/file");
@@ -75,7 +75,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			cmd.SetOverwrite(true);
 			cmd.Run(cmdargs);
 			// make sure command failed with the proper exception
-			NUnit.Framework.Assert.IsTrue("Rename should have failed with path exists exception"
+			Assert.True("Rename should have failed with path exists exception"
 				, cmd.error is PathExistsException);
 		}
 

@@ -14,19 +14,19 @@ namespace Org.Apache.Hadoop.Http
 		/// <param name="server">server</param>
 		private void AssertAlive(HttpServer2 server)
 		{
-			NUnit.Framework.Assert.IsTrue("Server is not alive", server.IsAlive());
+			Assert.True("Server is not alive", server.IsAlive());
 			AssertToStringContains(server, HttpServer2.StateDescriptionAlive);
 		}
 
 		private void AssertNotLive(HttpServer2 server)
 		{
-			NUnit.Framework.Assert.IsTrue("Server should not be live", !server.IsAlive());
+			Assert.True("Server should not be live", !server.IsAlive());
 			AssertToStringContains(server, HttpServer2.StateDescriptionNotLive);
 		}
 
 		/// <summary>Test that the server is alive once started</summary>
 		/// <exception cref="System.Exception">on failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreatedServerIsNotAlive()
 		{
 			HttpServer2 server = CreateTestServer();
@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopUnstartedServer()
 		{
 			HttpServer2 server = CreateTestServer();
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.Http
 
 		/// <summary>Test that the server is alive once started</summary>
 		/// <exception cref="System.Exception">on failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartedServerIsAlive()
 		{
 			HttpServer2 server = null;
@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.Http
 
 		/// <summary>Test that the server with request logging enabled</summary>
 		/// <exception cref="System.Exception">on failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartedServerWithRequestLog()
 		{
 			HttpRequestLogAppender requestLogAppender = new HttpRequestLogAppender();
@@ -85,13 +85,13 @@ namespace Org.Apache.Hadoop.Http
 		private void AssertToStringContains(HttpServer2 server, string text)
 		{
 			string description = server.ToString();
-			NUnit.Framework.Assert.IsTrue("Did not find \"" + text + "\" in \"" + description
+			Assert.True("Did not find \"" + text + "\" in \"" + description
 				 + "\"", description.Contains(text));
 		}
 
 		/// <summary>Test that the server is not alive once stopped</summary>
 		/// <exception cref="System.Exception">on failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStoppedServerIsNotAlive()
 		{
 			HttpServer2 server = CreateAndStartTestServer();
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Http
 
 		/// <summary>Test that the server is not alive once stopped</summary>
 		/// <exception cref="System.Exception">on failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStoppingTwiceServerIsAllowed()
 		{
 			HttpServer2 server = CreateAndStartTestServer();
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.Http
 
 		/// <summary>Test that the server is alive once started</summary>
 		/// <exception cref="System.Exception">on failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWepAppContextAfterServerStop()
 		{
 			HttpServer2 server = null;
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.Http
 			server.Start();
 			server.SetAttribute(key, value);
 			AssertAlive(server);
-			NUnit.Framework.Assert.AreEqual(value, server.GetAttribute(key));
+			Assert.Equal(value, server.GetAttribute(key));
 			Stop(server);
 			NUnit.Framework.Assert.IsNull("Server context should have cleared", server.GetAttribute
 				(key));

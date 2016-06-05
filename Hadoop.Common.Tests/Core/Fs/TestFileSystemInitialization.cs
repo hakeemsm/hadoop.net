@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.FS
 		/// Check if FileSystem can be properly initialized if URLStreamHandlerFactory
 		/// is registered.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitializationWithRegisteredStreamFactory()
 		{
 			Configuration conf = new Configuration();

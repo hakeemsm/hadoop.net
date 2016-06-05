@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 	public abstract class AbstractContractCreateTest : AbstractFSContractTestBase
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNewFile()
 		{
 			Describe("Foundational 'create a file' test");
@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateFileOverExistingFileNoOverwrite()
 		{
 			Describe("Verify overwriting an existing file fails");
@@ -77,7 +77,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// is why different file lengths and datasets are used
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOverwriteExistingFile()
 		{
 			Describe("Overwrite an existing file and verify the new data is there");
@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOverwriteEmptyDirectory()
 		{
 			Describe("verify trying to create a file over an empty dir fails");
@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOverwriteNonEmptyDirectory()
 		{
 			Describe("verify trying to create a file over a non-empty dir fails");
@@ -185,7 +185,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreatedFileIsImmediatelyVisible()
 		{
 			Describe("verify that a newly created file exists as soon as open returns");

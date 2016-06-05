@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				base.Write(@out);
 			}
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSerialization()
 		{
 			TestDelegationToken.TestDelegationTokenIdentifier origToken = new TestDelegationToken.TestDelegationTokenIdentifier
@@ -162,15 +162,15 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			inBuf.Reset(outBuf.GetData(), 0, outBuf.GetLength());
 			newToken.ReadFields(inBuf);
 			// now test the fields
-			NUnit.Framework.Assert.AreEqual("alice", newToken.GetUser().GetUserName());
-			NUnit.Framework.Assert.AreEqual(new Text("bob"), newToken.GetRenewer());
-			NUnit.Framework.Assert.AreEqual("colin", newToken.GetUser().GetRealUser().GetUserName
+			Assert.Equal("alice", newToken.GetUser().GetUserName());
+			Assert.Equal(new Text("bob"), newToken.GetRenewer());
+			Assert.Equal("colin", newToken.GetUser().GetRealUser().GetUserName
 				());
-			NUnit.Framework.Assert.AreEqual(123, newToken.GetIssueDate());
-			NUnit.Framework.Assert.AreEqual(321, newToken.GetMasterKeyId());
-			NUnit.Framework.Assert.AreEqual(314, newToken.GetMaxDate());
-			NUnit.Framework.Assert.AreEqual(12345, newToken.GetSequenceNumber());
-			NUnit.Framework.Assert.AreEqual(origToken, newToken);
+			Assert.Equal(123, newToken.GetIssueDate());
+			Assert.Equal(321, newToken.GetMasterKeyId());
+			Assert.Equal(314, newToken.GetMaxDate());
+			Assert.Equal(12345, newToken.GetSequenceNumber());
+			Assert.Equal(origToken, newToken);
 		}
 
 		private Org.Apache.Hadoop.Security.Token.Token<TestDelegationToken.TestDelegationTokenIdentifier
@@ -193,12 +193,12 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			catch (Exception th)
 			{
 				Log.Info("Caught an exception: ", th);
-				NUnit.Framework.Assert.AreEqual("action threw wrong exception", except, th.GetType
+				Assert.Equal("action threw wrong exception", except, th.GetType
 					());
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetUserNullOwner()
 		{
 			TestDelegationToken.TestDelegationTokenIdentifier ident = new TestDelegationToken.TestDelegationTokenIdentifier
@@ -207,19 +207,19 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			NUnit.Framework.Assert.IsNull(ugi);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetUserWithOwner()
 		{
 			TestDelegationToken.TestDelegationTokenIdentifier ident = new TestDelegationToken.TestDelegationTokenIdentifier
 				(new Text("owner"), null, null);
 			UserGroupInformation ugi = ident.GetUser();
 			NUnit.Framework.Assert.IsNull(ugi.GetRealUser());
-			NUnit.Framework.Assert.AreEqual("owner", ugi.GetUserName());
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Token, 
+			Assert.Equal("owner", ugi.GetUserName());
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Token, 
 				ugi.GetAuthenticationMethod());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetUserWithOwnerEqualsReal()
 		{
 			Text owner = new Text("owner");
@@ -227,12 +227,12 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				(owner, null, owner);
 			UserGroupInformation ugi = ident.GetUser();
 			NUnit.Framework.Assert.IsNull(ugi.GetRealUser());
-			NUnit.Framework.Assert.AreEqual("owner", ugi.GetUserName());
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Token, 
+			Assert.Equal("owner", ugi.GetUserName());
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Token, 
 				ugi.GetAuthenticationMethod());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetUserWithOwnerAndReal()
 		{
 			Text owner = new Text("owner");
@@ -242,16 +242,16 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			UserGroupInformation ugi = ident.GetUser();
 			NUnit.Framework.Assert.IsNotNull(ugi.GetRealUser());
 			NUnit.Framework.Assert.IsNull(ugi.GetRealUser().GetRealUser());
-			NUnit.Framework.Assert.AreEqual("owner", ugi.GetUserName());
-			NUnit.Framework.Assert.AreEqual("realUser", ugi.GetRealUser().GetUserName());
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Proxy, 
+			Assert.Equal("owner", ugi.GetUserName());
+			Assert.Equal("realUser", ugi.GetRealUser().GetUserName());
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Proxy, 
 				ugi.GetAuthenticationMethod());
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.AuthenticationMethod.Token, 
+			Assert.Equal(UserGroupInformation.AuthenticationMethod.Token, 
 				ugi.GetRealUser().GetAuthenticationMethod());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenSecretManager()
 		{
 			TestDelegationToken.TestDelegationTokenSecretManager dtSecretManager = new TestDelegationToken.TestDelegationTokenSecretManager
@@ -261,18 +261,18 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				dtSecretManager.StartThreads();
 				Org.Apache.Hadoop.Security.Token.Token<TestDelegationToken.TestDelegationTokenIdentifier
 					> token = GenerateDelegationToken(dtSecretManager, "SomeUser", "JobTracker");
-				NUnit.Framework.Assert.IsTrue(dtSecretManager.isStoreNewTokenCalled);
+				Assert.True(dtSecretManager.isStoreNewTokenCalled);
 				// Fake renewer should not be able to renew
 				ShouldThrow(new _PrivilegedExceptionAction_272(dtSecretManager, token), typeof(AccessControlException
 					));
 				long time = dtSecretManager.RenewToken(token, "JobTracker");
-				NUnit.Framework.Assert.IsTrue(dtSecretManager.isUpdateStoredTokenCalled);
-				NUnit.Framework.Assert.IsTrue("renew time is in future", time > Time.Now());
+				Assert.True(dtSecretManager.isUpdateStoredTokenCalled);
+				Assert.True("renew time is in future", time > Time.Now());
 				TestDelegationToken.TestDelegationTokenIdentifier identifier = new TestDelegationToken.TestDelegationTokenIdentifier
 					();
 				byte[] tokenId = token.GetIdentifier();
 				identifier.ReadFields(new DataInputStream(new ByteArrayInputStream(tokenId)));
-				NUnit.Framework.Assert.IsTrue(null != dtSecretManager.RetrievePassword(identifier
+				Assert.True(null != dtSecretManager.RetrievePassword(identifier
 					));
 				Log.Info("Sleep to expire the token");
 				Sharpen.Thread.Sleep(2000);
@@ -348,7 +348,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCancelDelegationToken()
 		{
 			TestDelegationToken.TestDelegationTokenSecretManager dtSecretManager = new TestDelegationToken.TestDelegationTokenSecretManager
@@ -362,7 +362,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				ShouldThrow(new _PrivilegedExceptionAction_324(dtSecretManager, token), typeof(AccessControlException
 					));
 				dtSecretManager.CancelToken(token, "JobTracker");
-				NUnit.Framework.Assert.IsTrue(dtSecretManager.isRemoveStoredTokenCalled);
+				Assert.True(dtSecretManager.isRemoveStoredTokenCalled);
 				ShouldThrow(new _PrivilegedExceptionAction_333(dtSecretManager, token), typeof(SecretManager.InvalidToken
 					));
 			}
@@ -435,10 +435,10 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				//store the length of the keys list
 				int prevNumKeys = dtSecretManager.GetAllKeys().Length;
 				dtSecretManager.RollMasterKey();
-				NUnit.Framework.Assert.IsTrue(dtSecretManager.isStoreNewMasterKeyCalled);
+				Assert.True(dtSecretManager.isStoreNewMasterKeyCalled);
 				//after rolling, the length of the keys list must increase
 				int currNumKeys = dtSecretManager.GetAllKeys().Length;
-				NUnit.Framework.Assert.AreEqual((currNumKeys - prevNumKeys) >= 1, true);
+				Assert.Equal((currNumKeys - prevNumKeys) >= 1, true);
 				//after rolling, the token that was generated earlier must
 				//still be valid (retrievePassword will fail if the token
 				//is not valid)
@@ -448,7 +448,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				identifier.ReadFields(new DataInputStream(bi));
 				byte[] newPasswd = dtSecretManager.RetrievePassword(identifier);
 				//compare the passwords
-				NUnit.Framework.Assert.AreEqual(oldPasswd, newPasswd);
+				Assert.Equal(oldPasswd, newPasswd);
 				// wait for keys to expire
 				while (!dtSecretManager.isRemoveStoredMasterKeyCalled)
 				{
@@ -462,7 +462,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenSelector()
 		{
 			TestDelegationToken.TestDelegationTokenSecretManager dtSecretManager = new TestDelegationToken.TestDelegationTokenSecretManager
@@ -487,7 +487,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				//try to select a token with a given service name (created earlier)
 				Org.Apache.Hadoop.Security.Token.Token<TestDelegationToken.TestDelegationTokenIdentifier
 					> t = ds.SelectToken(new Text("MY-SERVICE1"), tokens);
-				NUnit.Framework.Assert.AreEqual(t, token1);
+				Assert.Equal(t, token1);
 			}
 			finally
 			{
@@ -496,7 +496,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestParallelDelegationTokenCreation()
 		{
 			TestDelegationToken.TestDelegationTokenSecretManager dtSecretManager = new TestDelegationToken.TestDelegationTokenSecretManager
@@ -518,7 +518,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				}
 				IDictionary<TestDelegationToken.TestDelegationTokenIdentifier, AbstractDelegationTokenSecretManager.DelegationTokenInformation
 					> tokenCache = dtSecretManager.GetAllTokens();
-				NUnit.Framework.Assert.AreEqual(numTokensPerThread * numThreads, tokenCache.Count
+				Assert.Equal(numTokensPerThread * numThreads, tokenCache.Count
 					);
 				IEnumerator<TestDelegationToken.TestDelegationTokenIdentifier> iter = tokenCache.
 					Keys.GetEnumerator();
@@ -527,12 +527,12 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 					TestDelegationToken.TestDelegationTokenIdentifier id = iter.Next();
 					AbstractDelegationTokenSecretManager.DelegationTokenInformation info = tokenCache
 						[id];
-					NUnit.Framework.Assert.IsTrue(info != null);
+					Assert.True(info != null);
 					DelegationKey key = dtSecretManager.GetKey(id);
-					NUnit.Framework.Assert.IsTrue(key != null);
+					Assert.True(key != null);
 					byte[] storedPassword = dtSecretManager.RetrievePassword(id);
 					byte[] password = dtSecretManager.CreatePassword(id, key);
-					NUnit.Framework.Assert.IsTrue(Arrays.Equals(password, storedPassword));
+					Assert.True(Arrays.Equals(password, storedPassword));
 					//verify by secret manager api
 					dtSecretManager.VerifyToken(id, password);
 				}
@@ -569,7 +569,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenNullRenewer()
 		{
 			TestDelegationToken.TestDelegationTokenSecretManager dtSecretManager = new TestDelegationToken.TestDelegationTokenSecretManager
@@ -580,7 +580,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			Org.Apache.Hadoop.Security.Token.Token<TestDelegationToken.TestDelegationTokenIdentifier
 				> token = new Org.Apache.Hadoop.Security.Token.Token<TestDelegationToken.TestDelegationTokenIdentifier
 				>(dtId, dtSecretManager);
-			NUnit.Framework.Assert.IsTrue(token != null);
+			Assert.True(token != null);
 			try
 			{
 				dtSecretManager.RenewToken(token, string.Empty);
@@ -607,7 +607,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				TestDelegationToken.TestDelegationTokenIdentifier dtid2 = new TestDelegationToken.TestDelegationTokenIdentifier
 					();
 				dtid2.ReadFields(@in);
-				NUnit.Framework.Assert.IsTrue(dtid.Equals(dtid2));
+				Assert.True(dtid.Equals(dtid2));
 				return true;
 			}
 			catch (IOException)
@@ -617,19 +617,19 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSimpleDtidSerialization()
 		{
-			NUnit.Framework.Assert.IsTrue(TestDelegationTokenIdentiferSerializationRoundTrip(
+			Assert.True(TestDelegationTokenIdentiferSerializationRoundTrip(
 				new Text("owner"), new Text("renewer"), new Text("realUser")));
-			NUnit.Framework.Assert.IsTrue(TestDelegationTokenIdentiferSerializationRoundTrip(
+			Assert.True(TestDelegationTokenIdentiferSerializationRoundTrip(
 				new Text(string.Empty), new Text(string.Empty), new Text(string.Empty)));
-			NUnit.Framework.Assert.IsTrue(TestDelegationTokenIdentiferSerializationRoundTrip(
+			Assert.True(TestDelegationTokenIdentiferSerializationRoundTrip(
 				new Text(string.Empty), new Text("b"), new Text(string.Empty)));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOverlongDtidSerialization()
 		{
 			byte[] bigBuf = new byte[Text.DefaultMaxLen + 1];
@@ -645,7 +645,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				(new Text("owner"), new Text("renewer"), new Text(bigBuf)));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationKeyEqualAndHash()
 		{
 			DelegationKey key1 = new DelegationKey(1111, 2222, Sharpen.Runtime.GetBytesForString
@@ -654,7 +654,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				("keyBytes"));
 			DelegationKey key3 = new DelegationKey(3333, 2222, Sharpen.Runtime.GetBytesForString
 				("keyBytes"));
-			NUnit.Framework.Assert.AreEqual(key1, key2);
+			Assert.Equal(key1, key2);
 			NUnit.Framework.Assert.IsFalse(key2.Equals(key3));
 		}
 	}

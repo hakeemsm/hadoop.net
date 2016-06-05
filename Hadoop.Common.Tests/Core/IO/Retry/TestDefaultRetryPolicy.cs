@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithRetriable()
 		{
 			Configuration conf = new Configuration();
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithWrappedRetriable()
 		{
 			Configuration conf = new Configuration();
@@ -58,7 +58,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithRetriableAndRetryDisabled()
 		{
 			Configuration conf = new Configuration();

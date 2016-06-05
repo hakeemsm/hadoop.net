@@ -19,23 +19,23 @@ namespace Org.Apache.Hadoop.Util
 		/// Check for exclusion
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSubnetsAndIPs()
 		{
 			string[] ips = new string[] { "10.119.103.112", "10.221.102.0/23" };
 			CreateFileWithEntries("ips.txt", ips);
 			IPList ipList = new FileBasedIPList("ips.txt");
-			NUnit.Framework.Assert.IsTrue("10.119.103.112 is not in the list", ipList.IsIn("10.119.103.112"
+			Assert.True("10.119.103.112 is not in the list", ipList.IsIn("10.119.103.112"
 				));
 			NUnit.Framework.Assert.IsFalse("10.119.103.113 is in the list", ipList.IsIn("10.119.103.113"
 				));
-			NUnit.Framework.Assert.IsTrue("10.221.102.0 is not in the list", ipList.IsIn("10.221.102.0"
+			Assert.True("10.221.102.0 is not in the list", ipList.IsIn("10.221.102.0"
 				));
-			NUnit.Framework.Assert.IsTrue("10.221.102.1 is not in the list", ipList.IsIn("10.221.102.1"
+			Assert.True("10.221.102.1 is not in the list", ipList.IsIn("10.221.102.1"
 				));
-			NUnit.Framework.Assert.IsTrue("10.221.103.1 is not in the list", ipList.IsIn("10.221.103.1"
+			Assert.True("10.221.103.1 is not in the list", ipList.IsIn("10.221.103.1"
 				));
-			NUnit.Framework.Assert.IsTrue("10.221.103.255 is not in the list", ipList.IsIn("10.221.103.255"
+			Assert.True("10.221.103.255 is not in the list", ipList.IsIn("10.221.103.255"
 				));
 			NUnit.Framework.Assert.IsFalse("10.221.104.0 is in the list", ipList.IsIn("10.221.104.0"
 				));
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.Util
 		/// Check for exclusion
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullIP()
 		{
 			string[] ips = new string[] { "10.119.103.112", "10.221.102.0/23" };
@@ -64,26 +64,26 @@ namespace Org.Apache.Hadoop.Util
 		/// Check for exclusion
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithMultipleSubnetAndIPs()
 		{
 			string[] ips = new string[] { "10.119.103.112", "10.221.102.0/23", "10.222.0.0/16"
 				, "10.113.221.221" };
 			CreateFileWithEntries("ips.txt", ips);
 			IPList ipList = new FileBasedIPList("ips.txt");
-			NUnit.Framework.Assert.IsTrue("10.119.103.112 is not in the list", ipList.IsIn("10.119.103.112"
+			Assert.True("10.119.103.112 is not in the list", ipList.IsIn("10.119.103.112"
 				));
 			NUnit.Framework.Assert.IsFalse("10.119.103.113 is in the list", ipList.IsIn("10.119.103.113"
 				));
-			NUnit.Framework.Assert.IsTrue("10.221.103.121 is not in the list", ipList.IsIn("10.221.103.121"
+			Assert.True("10.221.103.121 is not in the list", ipList.IsIn("10.221.103.121"
 				));
 			NUnit.Framework.Assert.IsFalse("10.221.104.0 is in the list", ipList.IsIn("10.221.104.0"
 				));
-			NUnit.Framework.Assert.IsTrue("10.222.103.121 is not in the list", ipList.IsIn("10.222.103.121"
+			Assert.True("10.222.103.121 is not in the list", ipList.IsIn("10.222.103.121"
 				));
 			NUnit.Framework.Assert.IsFalse("10.223.104.0 is in the list", ipList.IsIn("10.223.104.0"
 				));
-			NUnit.Framework.Assert.IsTrue("10.113.221.221 is not in the list", ipList.IsIn("10.113.221.221"
+			Assert.True("10.113.221.221 is not in the list", ipList.IsIn("10.113.221.221"
 				));
 			NUnit.Framework.Assert.IsFalse("10.113.221.222 is in the list", ipList.IsIn("10.113.221.222"
 				));

@@ -115,20 +115,20 @@ namespace Org.Apache.Hadoop.FS
 		private void ValidateSetup()
 		{
 			//check existence of source directory and files
-			NUnit.Framework.Assert.IsTrue(src.Exists());
-			NUnit.Framework.Assert.AreEqual(3, src.List().Length);
-			NUnit.Framework.Assert.IsTrue(x1.Exists());
-			NUnit.Framework.Assert.IsTrue(x2.Exists());
-			NUnit.Framework.Assert.IsTrue(x3.Exists());
+			Assert.True(src.Exists());
+			Assert.Equal(3, src.List().Length);
+			Assert.True(x1.Exists());
+			Assert.True(x2.Exists());
+			Assert.True(x3.Exists());
 			//check contents of source files
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x1).Equals(str1));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x2).Equals(str2));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x3).Equals(str3));
+			Assert.True(FetchFileContents(x1).Equals(str1));
+			Assert.True(FetchFileContents(x2).Equals(str2));
+			Assert.True(FetchFileContents(x3).Equals(str3));
 			//check target directories exist and are empty
-			NUnit.Framework.Assert.IsTrue(tgt_one.Exists());
-			NUnit.Framework.Assert.IsTrue(tgt_mult.Exists());
-			NUnit.Framework.Assert.AreEqual(0, tgt_one.List().Length);
-			NUnit.Framework.Assert.AreEqual(0, tgt_mult.List().Length);
+			Assert.True(tgt_one.Exists());
+			Assert.True(tgt_mult.Exists());
+			Assert.Equal(0, tgt_one.List().Length);
+			Assert.Equal(0, tgt_mult.List().Length);
 		}
 
 		/// <summary>validate that single-file link operations produced the expected results</summary>
@@ -136,18 +136,18 @@ namespace Org.Apache.Hadoop.FS
 		private void ValidateTgtOne()
 		{
 			//check that target directory tgt_one ended up with expected four files
-			NUnit.Framework.Assert.IsTrue(tgt_one.Exists());
-			NUnit.Framework.Assert.AreEqual(4, tgt_one.List().Length);
-			NUnit.Framework.Assert.IsTrue(x1_one.Exists());
-			NUnit.Framework.Assert.IsTrue(x11_one.Exists());
-			NUnit.Framework.Assert.IsTrue(y_one.Exists());
-			NUnit.Framework.Assert.IsTrue(x3_one.Exists());
+			Assert.True(tgt_one.Exists());
+			Assert.Equal(4, tgt_one.List().Length);
+			Assert.True(x1_one.Exists());
+			Assert.True(x11_one.Exists());
+			Assert.True(y_one.Exists());
+			Assert.True(x3_one.Exists());
 			//confirm the contents of those four files reflects the known contents
 			//of the files they were hardlinked from.
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x1_one).Equals(str1));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x11_one).Equals(str1));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(y_one).Equals(str2));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x3_one).Equals(str3));
+			Assert.True(FetchFileContents(x1_one).Equals(str1));
+			Assert.True(FetchFileContents(x11_one).Equals(str1));
+			Assert.True(FetchFileContents(y_one).Equals(str2));
+			Assert.True(FetchFileContents(x3_one).Equals(str3));
 		}
 
 		/// <summary>validate that multi-file link operations produced the expected results</summary>
@@ -155,16 +155,16 @@ namespace Org.Apache.Hadoop.FS
 		private void ValidateTgtMult()
 		{
 			//check that target directory tgt_mult ended up with expected three files
-			NUnit.Framework.Assert.IsTrue(tgt_mult.Exists());
-			NUnit.Framework.Assert.AreEqual(3, tgt_mult.List().Length);
-			NUnit.Framework.Assert.IsTrue(x1_mult.Exists());
-			NUnit.Framework.Assert.IsTrue(x2_mult.Exists());
-			NUnit.Framework.Assert.IsTrue(x3_mult.Exists());
+			Assert.True(tgt_mult.Exists());
+			Assert.Equal(3, tgt_mult.List().Length);
+			Assert.True(x1_mult.Exists());
+			Assert.True(x2_mult.Exists());
+			Assert.True(x3_mult.Exists());
 			//confirm the contents of those three files reflects the known contents
 			//of the files they were hardlinked from.
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x1_mult).Equals(str1));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x2_mult).Equals(str2));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x3_mult).Equals(str3));
+			Assert.True(FetchFileContents(x1_mult).Equals(str1));
+			Assert.True(FetchFileContents(x2_mult).Equals(str2));
+			Assert.True(FetchFileContents(x3_mult).Equals(str3));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -211,14 +211,14 @@ namespace Org.Apache.Hadoop.FS
 		/// Tests with multiply-linked files are in later test cases.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetLinkCount()
 		{
 			//at beginning of world, check that source files have link count "1"
 			//since they haven't been hardlinked yet
-			NUnit.Framework.Assert.AreEqual(1, HardLink.GetLinkCount(x1));
-			NUnit.Framework.Assert.AreEqual(1, HardLink.GetLinkCount(x2));
-			NUnit.Framework.Assert.AreEqual(1, HardLink.GetLinkCount(x3));
+			Assert.Equal(1, HardLink.GetLinkCount(x1));
+			Assert.Equal(1, HardLink.GetLinkCount(x2));
+			Assert.Equal(1, HardLink.GetLinkCount(x3));
 		}
 
 		/// <summary>Test the single-file method HardLink.createHardLink().</summary>
@@ -227,38 +227,38 @@ namespace Org.Apache.Hadoop.FS
 		/// Also tests getLinkCount() with values greater than one.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateHardLink()
 		{
 			//hardlink a single file and confirm expected result
 			HardLink.CreateHardLink(x1, x1_one);
-			NUnit.Framework.Assert.IsTrue(x1_one.Exists());
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x1));
+			Assert.True(x1_one.Exists());
+			Assert.Equal(2, HardLink.GetLinkCount(x1));
 			//x1 and x1_one are linked now 
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x1_one));
+			Assert.Equal(2, HardLink.GetLinkCount(x1_one));
 			//so they both have count "2"
 			//confirm that x2, which we didn't change, still shows count "1"
-			NUnit.Framework.Assert.AreEqual(1, HardLink.GetLinkCount(x2));
+			Assert.Equal(1, HardLink.GetLinkCount(x2));
 			//now do a few more
 			HardLink.CreateHardLink(x2, y_one);
 			HardLink.CreateHardLink(x3, x3_one);
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x2));
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x3));
+			Assert.Equal(2, HardLink.GetLinkCount(x2));
+			Assert.Equal(2, HardLink.GetLinkCount(x3));
 			//create another link to a file that already has count 2
 			HardLink.CreateHardLink(x1, x11_one);
-			NUnit.Framework.Assert.AreEqual(3, HardLink.GetLinkCount(x1));
+			Assert.Equal(3, HardLink.GetLinkCount(x1));
 			//x1, x1_one, and x11_one
-			NUnit.Framework.Assert.AreEqual(3, HardLink.GetLinkCount(x1_one));
+			Assert.Equal(3, HardLink.GetLinkCount(x1_one));
 			//are all linked, so they
-			NUnit.Framework.Assert.AreEqual(3, HardLink.GetLinkCount(x11_one));
+			Assert.Equal(3, HardLink.GetLinkCount(x11_one));
 			//should all have count "3"
 			//validate by contents
 			ValidateTgtOne();
 			//validate that change of content is reflected in the other linked files
 			AppendToFile(x1_one, str3);
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x1_one).Equals(str1 + str3));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x11_one).Equals(str1 + str3));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x1).Equals(str1 + str3));
+			Assert.True(FetchFileContents(x1_one).Equals(str1 + str3));
+			Assert.True(FetchFileContents(x11_one).Equals(str1 + str3));
+			Assert.True(FetchFileContents(x1).Equals(str1 + str3));
 		}
 
 		/*
@@ -266,7 +266,7 @@ namespace Org.Apache.Hadoop.FS
 		* multiple files within a directory into one target directory
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateHardLinkMult()
 		{
 			//hardlink a whole list of three files at once
@@ -274,18 +274,18 @@ namespace Org.Apache.Hadoop.FS
 			HardLink.CreateHardLinkMult(src, fileNames, tgt_mult);
 			//validate by link count - each file has been linked once,
 			//so each count is "2"
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x1));
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x2));
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x3));
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x1_mult));
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x2_mult));
-			NUnit.Framework.Assert.AreEqual(2, HardLink.GetLinkCount(x3_mult));
+			Assert.Equal(2, HardLink.GetLinkCount(x1));
+			Assert.Equal(2, HardLink.GetLinkCount(x2));
+			Assert.Equal(2, HardLink.GetLinkCount(x3));
+			Assert.Equal(2, HardLink.GetLinkCount(x1_mult));
+			Assert.Equal(2, HardLink.GetLinkCount(x2_mult));
+			Assert.Equal(2, HardLink.GetLinkCount(x3_mult));
 			//validate by contents
 			ValidateTgtMult();
 			//validate that change of content is reflected in the other linked files
 			AppendToFile(x1_mult, str3);
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x1_mult).Equals(str1 + str3));
-			NUnit.Framework.Assert.IsTrue(FetchFileContents(x1).Equals(str1 + str3));
+			Assert.True(FetchFileContents(x1_mult).Equals(str1 + str3));
+			Assert.True(FetchFileContents(x1).Equals(str1 + str3));
 		}
 
 		/// <summary>Test createHardLinkMult() with empty list of files.</summary>
@@ -296,7 +296,7 @@ namespace Org.Apache.Hadoop.FS
 		/// be zero in this case.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateHardLinkMultEmptyList()
 		{
 			string[] emptyList = new string[] {  };
@@ -316,19 +316,19 @@ namespace Org.Apache.Hadoop.FS
 		* Depends on the HardLinkCGWin class and member fields being accessible
 		* from this test method.
 		*/
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWindowsSyntax()
 		{
 			//basic checks on array lengths
-			NUnit.Framework.Assert.AreEqual(4, _T703671896.getLinkCountCommand.Length);
+			Assert.Equal(4, _T703671896.getLinkCountCommand.Length);
 			//make sure "%f" was not munged
-			NUnit.Framework.Assert.AreEqual(2, ("%f").Length);
+			Assert.Equal(2, ("%f").Length);
 			//make sure "\\%f" was munged correctly
-			NUnit.Framework.Assert.AreEqual(3, ("\\%f").Length);
-			NUnit.Framework.Assert.IsTrue(_T703671896.getLinkCountCommand[1].Equals("hardlink"
+			Assert.Equal(3, ("\\%f").Length);
+			Assert.True(_T703671896.getLinkCountCommand[1].Equals("hardlink"
 				));
 			//make sure "-c%h" was not munged
-			NUnit.Framework.Assert.AreEqual(4, ("-c%h").Length);
+			Assert.Equal(4, ("-c%h").Length);
 		}
 
 		internal class _T703671896 : HardLink.HardLinkCGWin

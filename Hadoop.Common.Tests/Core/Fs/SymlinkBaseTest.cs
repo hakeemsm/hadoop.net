@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.FS
 			Path linkToDir = new Path(TestBaseDir1() + "/link");
 			wrapper.CreateSymlink(dir, linkToDir, false);
 			wrapper.SetWorkingDirectory(linkToDir);
-			NUnit.Framework.Assert.AreEqual(linkToDir.GetName(), wrapper.GetWorkingDirectory(
+			Assert.Equal(linkToDir.GetName(), wrapper.GetWorkingDirectory(
 				).GetName());
 		}
 
@@ -190,7 +190,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				// Expected. The symlink already exists.
 				// LocalFs just throws an IOException
-				NUnit.Framework.Assert.AreEqual("file", GetScheme());
+				Assert.Equal("file", GetScheme());
 			}
 		}
 
@@ -264,19 +264,19 @@ namespace Org.Apache.Hadoop.FS
 			wrapper.CreateSymlink(file, linkToFile, false);
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(linkToFile).IsDirectory(
 				));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsSymlink(linkToFile));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(linkToFile));
+			Assert.True(wrapper.IsSymlink(linkToFile));
+			Assert.True(wrapper.IsFile(linkToFile));
 			NUnit.Framework.Assert.IsFalse(wrapper.IsDir(linkToFile));
-			NUnit.Framework.Assert.AreEqual(file, wrapper.GetLinkTarget(linkToFile));
+			Assert.Equal(file, wrapper.GetLinkTarget(linkToFile));
 			// The local file system does not fully resolve the link
 			// when obtaining the file status
 			if (!"file".Equals(GetScheme()))
 			{
-				NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(file), wrapper.GetFileStatus
+				Assert.Equal(wrapper.GetFileStatus(file), wrapper.GetFileStatus
 					(linkToFile));
-				NUnit.Framework.Assert.AreEqual(wrapper.MakeQualified(file), wrapper.GetFileStatus
+				Assert.Equal(wrapper.MakeQualified(file), wrapper.GetFileStatus
 					(linkToFile).GetPath());
-				NUnit.Framework.Assert.AreEqual(wrapper.MakeQualified(linkToFile), wrapper.GetFileLinkStatus
+				Assert.Equal(wrapper.MakeQualified(linkToFile), wrapper.GetFileLinkStatus
 					(linkToFile).GetPath());
 			}
 		}
@@ -289,11 +289,11 @@ namespace Org.Apache.Hadoop.FS
 			Path linkToFile = new Path(TestBaseDir1(), "linkToFile");
 			CreateAndWriteFile(file);
 			wrapper.CreateSymlink(new Path("file"), linkToFile, false);
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(file), wrapper.GetFileStatus
+			Assert.Equal(wrapper.GetFileStatus(file), wrapper.GetFileStatus
 				(linkToFile));
-			NUnit.Framework.Assert.AreEqual(wrapper.MakeQualified(file), wrapper.GetFileStatus
+			Assert.Equal(wrapper.MakeQualified(file), wrapper.GetFileStatus
 				(linkToFile).GetPath());
-			NUnit.Framework.Assert.AreEqual(wrapper.MakeQualified(linkToFile), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.MakeQualified(linkToFile), wrapper.GetFileLinkStatus
 				(linkToFile).GetPath());
 		}
 
@@ -304,13 +304,13 @@ namespace Org.Apache.Hadoop.FS
 			Path linkToDir = new Path(TestBaseDir1() + "/linkToDir");
 			wrapper.CreateSymlink(dir, linkToDir, false);
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileStatus(linkToDir).IsSymlink());
-			NUnit.Framework.Assert.IsTrue(wrapper.IsDir(linkToDir));
+			Assert.True(wrapper.IsDir(linkToDir));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(linkToDir).IsDirectory()
 				);
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(linkToDir).IsSymlink());
+			Assert.True(wrapper.GetFileLinkStatus(linkToDir).IsSymlink());
 			NUnit.Framework.Assert.IsFalse(wrapper.IsFile(linkToDir));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsDir(linkToDir));
-			NUnit.Framework.Assert.AreEqual(dir, wrapper.GetLinkTarget(linkToDir));
+			Assert.True(wrapper.IsDir(linkToDir));
+			Assert.Equal(dir, wrapper.GetLinkTarget(linkToDir));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -320,7 +320,7 @@ namespace Org.Apache.Hadoop.FS
 			Path link = new Path(TestBaseDir1() + "/link");
 			wrapper.CreateSymlink(file, link, false);
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(link).IsDirectory());
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(link).IsSymlink());
+			Assert.True(wrapper.GetFileLinkStatus(link).IsSymlink());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -392,7 +392,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				// LocalFs throws sub class of IOException, since File.exists
 				// returns false for a link to link.
-				NUnit.Framework.Assert.AreEqual("Possible cyclic loop while following symbolic link "
+				Assert.Equal("Possible cyclic loop while following symbolic link "
 					 + link1.ToString(), x.Message);
 			}
 		}
@@ -407,21 +407,21 @@ namespace Org.Apache.Hadoop.FS
 			Assume.AssumeTrue(!EmulatingSymlinksOnWindows());
 			Path dir = new Path(TestBaseDir1());
 			// isFile/Directory
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(linkAbs));
+			Assert.True(wrapper.IsFile(linkAbs));
 			NUnit.Framework.Assert.IsFalse(wrapper.IsDir(linkAbs));
 			// Check getFileStatus
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileStatus(linkAbs).IsSymlink());
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileStatus(linkAbs).IsDirectory());
-			NUnit.Framework.Assert.AreEqual(fileSize, wrapper.GetFileStatus(linkAbs).GetLen()
+			Assert.Equal(fileSize, wrapper.GetFileStatus(linkAbs).GetLen()
 				);
 			// Check getFileLinkStatus
-			NUnit.Framework.Assert.IsTrue(wrapper.IsSymlink(linkAbs));
+			Assert.True(wrapper.IsSymlink(linkAbs));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(linkAbs).IsDirectory());
 			// Check getSymlink always returns a qualified target, except
 			// when partially qualified paths are used (see tests below).
-			NUnit.Framework.Assert.AreEqual(targetQual.ToString(), wrapper.GetFileLinkStatus(
+			Assert.Equal(targetQual.ToString(), wrapper.GetFileLinkStatus(
 				linkAbs).GetSymlink().ToString());
-			NUnit.Framework.Assert.AreEqual(targetQual, wrapper.GetFileLinkStatus(linkAbs).GetSymlink
+			Assert.Equal(targetQual, wrapper.GetFileLinkStatus(linkAbs).GetSymlink
 				());
 			// Check that the target is qualified using the file system of the
 			// path used to access the link (if the link target was not specified
@@ -430,11 +430,11 @@ namespace Org.Apache.Hadoop.FS
 			{
 				FileContext localFc = FileContext.GetLocalFSFileContext();
 				Path linkQual = new Path(TestURI().ToString(), linkAbs);
-				NUnit.Framework.Assert.AreEqual(targetQual, localFc.GetFileLinkStatus(linkQual).GetSymlink
+				Assert.Equal(targetQual, localFc.GetFileLinkStatus(linkQual).GetSymlink
 					());
 			}
 			// Check getLinkTarget
-			NUnit.Framework.Assert.AreEqual(expectedTarget, wrapper.GetLinkTarget(linkAbs));
+			Assert.Equal(expectedTarget, wrapper.GetLinkTarget(linkAbs));
 			// Now read using all path types..
 			wrapper.SetWorkingDirectory(dir);
 			ReadFile(new Path("linkToFile"));
@@ -496,7 +496,7 @@ namespace Org.Apache.Hadoop.FS
 			Path fileViaDir2 = new Path(schemeAuth, TestBaseDir2() + "/file");
 			wrapper.Rename(dir1, dir2, Options.Rename.Overwrite);
 			FileStatus[] stats = wrapper.ListStatus(dir2);
-			NUnit.Framework.Assert.AreEqual(fileViaDir2, wrapper.GetFileLinkStatus(linkViaDir2
+			Assert.Equal(fileViaDir2, wrapper.GetFileLinkStatus(linkViaDir2
 				).GetSymlink());
 			ReadFile(linkViaDir2);
 		}
@@ -517,7 +517,7 @@ namespace Org.Apache.Hadoop.FS
 			Path dir2 = new Path(TestBaseDir2());
 			Path linkViaDir2 = new Path(TestBaseDir2(), "linkToFile");
 			wrapper.Rename(dir1, dir2, Options.Rename.Overwrite);
-			NUnit.Framework.Assert.AreEqual(fileQual, wrapper.GetFileLinkStatus(linkViaDir2).
+			Assert.Equal(fileQual, wrapper.GetFileLinkStatus(linkViaDir2).
 				GetSymlink());
 			try
 			{
@@ -546,7 +546,7 @@ namespace Org.Apache.Hadoop.FS
 			Path dir2 = new Path(TestBaseDir2());
 			Path linkViaDir2 = new Path(TestBaseDir2(), "linkToFile");
 			wrapper.Rename(dir1, dir2, Options.Rename.Overwrite);
-			NUnit.Framework.Assert.AreEqual(fileQual, wrapper.GetFileLinkStatus(linkViaDir2).
+			Assert.Equal(fileQual, wrapper.GetFileLinkStatus(linkViaDir2).
 				GetSymlink());
 			try
 			{
@@ -572,16 +572,16 @@ namespace Org.Apache.Hadoop.FS
 			FSTestWrapper localWrapper = wrapper.GetLocalFSWrapper();
 			wrapper.CreateSymlink(fileWoHost, link, false);
 			// Partially qualified path is stored
-			NUnit.Framework.Assert.AreEqual(fileWoHost, wrapper.GetLinkTarget(linkQual));
+			Assert.Equal(fileWoHost, wrapper.GetLinkTarget(linkQual));
 			// NB: We do not add an authority
-			NUnit.Framework.Assert.AreEqual(fileWoHost.ToString(), wrapper.GetFileLinkStatus(
+			Assert.Equal(fileWoHost.ToString(), wrapper.GetFileLinkStatus(
 				link).GetSymlink().ToString());
-			NUnit.Framework.Assert.AreEqual(fileWoHost.ToString(), wrapper.GetFileLinkStatus(
+			Assert.Equal(fileWoHost.ToString(), wrapper.GetFileLinkStatus(
 				linkQual).GetSymlink().ToString());
 			// Ditto even from another file system
 			if (wrapper is FileContextTestWrapper)
 			{
-				NUnit.Framework.Assert.AreEqual(fileWoHost.ToString(), localWrapper.GetFileLinkStatus
+				Assert.Equal(fileWoHost.ToString(), localWrapper.GetFileLinkStatus
 					(linkQual).GetSymlink().ToString());
 			}
 			// Same as if we accessed a partially qualified path directly
@@ -592,12 +592,12 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (RuntimeException)
 			{
-				NUnit.Framework.Assert.IsTrue(wrapper is FileContextTestWrapper);
+				Assert.True(wrapper is FileContextTestWrapper);
 			}
 			catch (FileNotFoundException e)
 			{
 				// Expected
-				NUnit.Framework.Assert.IsTrue(wrapper is FileSystemTestWrapper);
+				Assert.True(wrapper is FileSystemTestWrapper);
 				GenericTestUtils.AssertExceptionContains("File does not exist: /test1/file", e);
 			}
 		}
@@ -613,8 +613,8 @@ namespace Org.Apache.Hadoop.FS
 				return;
 			}
 			wrapper.CreateSymlink(fileWoScheme, link, false);
-			NUnit.Framework.Assert.AreEqual(fileWoScheme, wrapper.GetLinkTarget(link));
-			NUnit.Framework.Assert.AreEqual(fileWoScheme.ToString(), wrapper.GetFileLinkStatus
+			Assert.Equal(fileWoScheme, wrapper.GetLinkTarget(link));
+			Assert.Equal(fileWoScheme.ToString(), wrapper.GetFileLinkStatus
 				(link).GetSymlink().ToString());
 			try
 			{
@@ -632,7 +632,7 @@ namespace Org.Apache.Hadoop.FS
 				{
 					if (wrapper is FileSystemTestWrapper)
 					{
-						NUnit.Framework.Assert.AreEqual("No FileSystem for scheme: null", e.Message);
+						Assert.Equal("No FileSystem for scheme: null", e.Message);
 					}
 				}
 			}
@@ -647,9 +647,9 @@ namespace Org.Apache.Hadoop.FS
 			Path file = new Path(TestBaseDir1(), "file");
 			Path fileQual = new Path(schemeAuth, file.ToString());
 			CreateAndWriteFile(file);
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
 				(file));
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(dir), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(dir), wrapper.GetFileLinkStatus
 				(dir));
 			try
 			{
@@ -659,7 +659,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException x)
 			{
-				NUnit.Framework.Assert.AreEqual("Path " + fileQual + " is not a symbolic link", x
+				Assert.Equal("Path " + fileQual + " is not a symbolic link", x
 					.Message);
 			}
 			try
@@ -670,7 +670,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException x)
 			{
-				NUnit.Framework.Assert.AreEqual("Path " + dirQual + " is not a symbolic link", x.
+				Assert.Equal("Path " + dirQual + " is not a symbolic link", x.
 					Message);
 			}
 		}
@@ -684,9 +684,9 @@ namespace Org.Apache.Hadoop.FS
 			CreateAndWriteFile(file);
 			wrapper.CreateSymlink(dir1, linkToDir, false);
 			NUnit.Framework.Assert.IsFalse(wrapper.IsFile(linkToDir));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsDir(linkToDir));
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileStatus(linkToDir).IsDirectory());
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(linkToDir).IsSymlink());
+			Assert.True(wrapper.IsDir(linkToDir));
+			Assert.True(wrapper.GetFileStatus(linkToDir).IsDirectory());
+			Assert.True(wrapper.GetFileLinkStatus(linkToDir).IsSymlink());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -697,7 +697,7 @@ namespace Org.Apache.Hadoop.FS
 			Path fileViaLink = new Path(linkToDir, "file");
 			wrapper.CreateSymlink(dir, linkToDir, false);
 			CreateAndWriteFile(fileViaLink);
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(fileViaLink));
+			Assert.True(wrapper.IsFile(fileViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.IsDir(fileViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(fileViaLink).IsSymlink()
 				);
@@ -716,7 +716,7 @@ namespace Org.Apache.Hadoop.FS
 			Path subDirViaLink = new Path(linkToDir, "subDir");
 			wrapper.CreateSymlink(dir1, linkToDir, false);
 			wrapper.Mkdir(subDirViaLink, FileContext.DefaultPerm, true);
-			NUnit.Framework.Assert.IsTrue(wrapper.IsDir(subDirViaLink));
+			Assert.True(wrapper.IsDir(subDirViaLink));
 			wrapper.Delete(subDirViaLink, false);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(subDirViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(subDir));
@@ -738,12 +738,12 @@ namespace Org.Apache.Hadoop.FS
 			CreateAndWriteFile(file);
 			wrapper.CreateSymlink(dir1, linkToDir, false);
 			wrapper.CreateSymlink(fileViaLink, linkToFile, false);
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(linkToFile));
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(linkToFile).IsSymlink());
+			Assert.True(wrapper.IsFile(linkToFile));
+			Assert.True(wrapper.GetFileLinkStatus(linkToFile).IsSymlink());
 			ReadFile(linkToFile);
-			NUnit.Framework.Assert.AreEqual(fileSize, wrapper.GetFileStatus(linkToFile).GetLen
+			Assert.Equal(fileSize, wrapper.GetFileStatus(linkToFile).GetLen
 				());
-			NUnit.Framework.Assert.AreEqual(fileViaLink, wrapper.GetLinkTarget(linkToFile));
+			Assert.Equal(fileViaLink, wrapper.GetLinkTarget(linkToFile));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -756,7 +756,7 @@ namespace Org.Apache.Hadoop.FS
 			// The size of the result is file system dependent, Hdfs is 2 (file
 			// and link) and LocalFs is 3 (file, link, file crc).
 			FileStatus[] stats = wrapper.ListStatus(link);
-			NUnit.Framework.Assert.IsTrue(stats.Length == 2 || stats.Length == 3);
+			Assert.True(stats.Length == 2 || stats.Length == 3);
 			RemoteIterator<FileStatus> statsItor = wrapper.ListStatusIterator(link);
 			int dirLen = 0;
 			while (statsItor.HasNext())
@@ -764,7 +764,7 @@ namespace Org.Apache.Hadoop.FS
 				statsItor.Next();
 				dirLen++;
 			}
-			NUnit.Framework.Assert.IsTrue(dirLen == 2 || dirLen == 3);
+			Assert.True(dirLen == 2 || dirLen == 3);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -797,7 +797,7 @@ namespace Org.Apache.Hadoop.FS
 			CreateAndWriteFile(file);
 			wrapper.CreateSymlink(dir1, linkToDir, false);
 			wrapper.CreateSymlink(linkToDir, linkToLink, false);
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(fileViaLink));
+			Assert.True(wrapper.IsFile(fileViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.IsDir(fileViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(fileViaLink).IsSymlink()
 				);
@@ -882,11 +882,11 @@ namespace Org.Apache.Hadoop.FS
 			Path linkToDir = new Path(TestBaseDir2(), "linkToDir");
 			Path fileViaLink = new Path(linkToDir, "test/file");
 			// Symlink to .. is not a problem since the .. is squashed early
-			NUnit.Framework.Assert.AreEqual(new Path(TestBaseDir1()), dotDot);
+			Assert.Equal(new Path(TestBaseDir1()), dotDot);
 			CreateAndWriteFile(file);
 			wrapper.CreateSymlink(dotDot, linkToDir, false);
 			ReadFile(fileViaLink);
-			NUnit.Framework.Assert.AreEqual(fileSize, wrapper.GetFileStatus(fileViaLink).GetLen
+			Assert.Equal(fileSize, wrapper.GetFileStatus(fileViaLink).GetLen
 				());
 		}
 
@@ -901,7 +901,7 @@ namespace Org.Apache.Hadoop.FS
 			wrapper.SetWorkingDirectory(dir);
 			wrapper.CreateSymlink(new Path("../file"), link, false);
 			ReadFile(link);
-			NUnit.Framework.Assert.AreEqual(new Path("../file"), wrapper.GetLinkTarget(link));
+			Assert.Equal(new Path("../file"), wrapper.GetLinkTarget(link));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -917,7 +917,7 @@ namespace Org.Apache.Hadoop.FS
 			wrapper.Rename(fileViaLink, fileNewViaLink);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(fileViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(file));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(fileNewViaLink));
+			Assert.True(wrapper.Exists(fileNewViaLink));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -938,9 +938,9 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected. Both must be directories.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is IOException);
+				Assert.True(UnwrapException(e) is IOException);
 			}
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(file));
+			Assert.True(wrapper.Exists(file));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -953,11 +953,11 @@ namespace Org.Apache.Hadoop.FS
 			Path dirNewViaLink = new Path(linkToDir, "dirNew");
 			wrapper.Mkdir(dir, FileContext.DefaultPerm, false);
 			wrapper.CreateSymlink(baseDir, linkToDir, false);
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(dirViaLink));
+			Assert.True(wrapper.Exists(dirViaLink));
 			wrapper.Rename(dirViaLink, dirNewViaLink);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(dirViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(dir));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(dirNewViaLink));
+			Assert.True(wrapper.Exists(dirNewViaLink));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -975,8 +975,8 @@ namespace Org.Apache.Hadoop.FS
 			wrapper.Rename(linkViaLink, linkNewViaLink);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(linkViaLink));
 			// Check that we didn't rename the link target
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(file));
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(linkNewViaLink).IsSymlink
+			Assert.True(wrapper.Exists(file));
+			Assert.True(wrapper.GetFileLinkStatus(linkNewViaLink).IsSymlink
 				() || EmulatingSymlinksOnWindows());
 			ReadFile(linkNewViaLink);
 		}
@@ -997,10 +997,10 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected. Both must be directories.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is IOException);
+				Assert.True(UnwrapException(e) is IOException);
 			}
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(dir1));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(linkToDir));
+			Assert.True(wrapper.Exists(dir1));
+			Assert.True(wrapper.Exists(linkToDir));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1019,10 +1019,10 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected. Both must be directories.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is IOException);
+				Assert.True(UnwrapException(e) is IOException);
 			}
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(dir1));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(linkToFile));
+			Assert.True(wrapper.Exists(dir1));
+			Assert.True(wrapper.Exists(linkToFile));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1039,10 +1039,10 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected. Both must be directories.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is IOException);
+				Assert.True(UnwrapException(e) is IOException);
 			}
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(dir));
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(link) != null);
+			Assert.True(wrapper.Exists(dir));
+			Assert.True(wrapper.GetFileLinkStatus(link) != null);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1062,12 +1062,12 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			wrapper.Rename(file, link, Options.Rename.Overwrite);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(file));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(link));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(link));
+			Assert.True(wrapper.Exists(link));
+			Assert.True(wrapper.IsFile(link));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(link).IsSymlink());
 		}
 
@@ -1088,12 +1088,12 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			wrapper.Rename(file1, link, Options.Rename.Overwrite);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(file1));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(link));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(link));
+			Assert.True(wrapper.Exists(link));
+			Assert.True(wrapper.IsFile(link));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(link).IsSymlink());
 		}
 
@@ -1120,8 +1120,8 @@ namespace Org.Apache.Hadoop.FS
 			// Expected
 			wrapper.Rename(file1, link, Options.Rename.Overwrite);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(file1));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(link));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(link));
+			Assert.True(wrapper.Exists(link));
+			Assert.True(wrapper.IsFile(link));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(link).IsSymlink());
 		}
 
@@ -1134,7 +1134,7 @@ namespace Org.Apache.Hadoop.FS
 			CreateAndWriteFile(file);
 			wrapper.CreateSymlink(file, link1, false);
 			wrapper.Rename(link1, link2);
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(link2).IsSymlink() || EmulatingSymlinksOnWindows
+			Assert.True(wrapper.GetFileLinkStatus(link2).IsSymlink() || EmulatingSymlinksOnWindows
 				());
 			ReadFile(link2);
 			ReadFile(file);
@@ -1158,14 +1158,14 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			wrapper.Rename(link, file1, Options.Rename.Overwrite);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(link));
 			if (!EmulatingSymlinksOnWindows())
 			{
-				NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(file1).IsSymlink());
-				NUnit.Framework.Assert.AreEqual(file2, wrapper.GetLinkTarget(file1));
+				Assert.True(wrapper.GetFileLinkStatus(file1).IsSymlink());
+				Assert.Equal(file2, wrapper.GetLinkTarget(file1));
 			}
 		}
 
@@ -1185,7 +1185,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected. Both must be directories.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is IOException);
+				Assert.True(UnwrapException(e) is IOException);
 			}
 			try
 			{
@@ -1195,7 +1195,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected. Both must be directories.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is IOException);
+				Assert.True(UnwrapException(e) is IOException);
 			}
 			// Also fails when dir2 has a sub-directory
 			wrapper.Mkdir(subDir, FsPermission.GetDefault(), false);
@@ -1207,7 +1207,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected. Both must be directories.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is IOException);
+				Assert.True(UnwrapException(e) is IOException);
 			}
 		}
 
@@ -1225,7 +1225,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			// Fails with overwrite as well
 			try
@@ -1235,7 +1235,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 		}
 
@@ -1249,7 +1249,7 @@ namespace Org.Apache.Hadoop.FS
 			CreateAndWriteFile(file);
 			wrapper.CreateSymlink(file, link1, false);
 			wrapper.Rename(link1, link2);
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileLinkStatus(link2).IsSymlink());
+			Assert.True(wrapper.GetFileLinkStatus(link2).IsSymlink());
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileStatus(link2).IsDirectory());
 			ReadFile(link2);
 			ReadFile(file);
@@ -1286,13 +1286,13 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			// Check the rename didn't happen
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(file));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(link));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsSymlink(link));
-			NUnit.Framework.Assert.AreEqual(file, wrapper.GetLinkTarget(link));
+			Assert.True(wrapper.IsFile(file));
+			Assert.True(wrapper.Exists(link));
+			Assert.True(wrapper.IsSymlink(link));
+			Assert.Equal(file, wrapper.GetLinkTarget(link));
 			try
 			{
 				wrapper.Rename(link, file, Options.Rename.Overwrite);
@@ -1300,13 +1300,13 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			// Check the rename didn't happen
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(file));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(link));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsSymlink(link));
-			NUnit.Framework.Assert.AreEqual(file, wrapper.GetLinkTarget(link));
+			Assert.True(wrapper.IsFile(file));
+			Assert.True(wrapper.Exists(link));
+			Assert.True(wrapper.IsSymlink(link));
+			Assert.Equal(file, wrapper.GetLinkTarget(link));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1331,13 +1331,13 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			// Check the rename didn't happen
-			NUnit.Framework.Assert.IsTrue(wrapper.IsDir(dir));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(link));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsSymlink(link));
-			NUnit.Framework.Assert.AreEqual(dir, wrapper.GetLinkTarget(link));
+			Assert.True(wrapper.IsDir(dir));
+			Assert.True(wrapper.Exists(link));
+			Assert.True(wrapper.IsSymlink(link));
+			Assert.Equal(dir, wrapper.GetLinkTarget(link));
 			try
 			{
 				wrapper.Rename(link, dir, Options.Rename.Overwrite);
@@ -1345,13 +1345,13 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			// Check the rename didn't happen
-			NUnit.Framework.Assert.IsTrue(wrapper.IsDir(dir));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(link));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsSymlink(link));
-			NUnit.Framework.Assert.AreEqual(dir, wrapper.GetLinkTarget(link));
+			Assert.True(wrapper.IsDir(dir));
+			Assert.True(wrapper.Exists(link));
+			Assert.True(wrapper.IsSymlink(link));
+			Assert.Equal(dir, wrapper.GetLinkTarget(link));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1391,7 +1391,7 @@ namespace Org.Apache.Hadoop.FS
 			CreateAndWriteFile(file1);
 			wrapper.Rename(file1, file3);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(file1));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(file3));
+			Assert.True(wrapper.Exists(file3));
 			wrapper.Rename(file3, file1);
 			// But fails if link is dangling...
 			wrapper.Delete(link, false);
@@ -1403,7 +1403,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileNotFoundException);
+				Assert.True(UnwrapException(e) is FileNotFoundException);
 			}
 			// And if link points to a file...
 			CreateAndWriteFile(file2);
@@ -1414,7 +1414,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Expected
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is ParentNotDirectoryException);
+				Assert.True(UnwrapException(e) is ParentNotDirectoryException);
 			}
 		}
 
@@ -1429,25 +1429,25 @@ namespace Org.Apache.Hadoop.FS
 			Path fileNewViaLink = new Path(linkToDir, "fileNew");
 			wrapper.CreateSymlink(baseDir, linkToDir, false);
 			CreateAndWriteFile(fileViaLink);
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(fileViaLink));
-			NUnit.Framework.Assert.IsTrue(wrapper.IsFile(fileViaLink));
+			Assert.True(wrapper.Exists(fileViaLink));
+			Assert.True(wrapper.IsFile(fileViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.IsDir(fileViaLink));
 			NUnit.Framework.Assert.IsFalse(wrapper.GetFileLinkStatus(fileViaLink).IsSymlink()
 				);
 			NUnit.Framework.Assert.IsFalse(wrapper.IsDir(fileViaLink));
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
 				(file));
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
 				(fileViaLink));
 			ReadFile(fileViaLink);
 			AppendToFile(fileViaLink);
 			wrapper.Rename(fileViaLink, fileNewViaLink);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(fileViaLink));
-			NUnit.Framework.Assert.IsTrue(wrapper.Exists(fileNewViaLink));
+			Assert.True(wrapper.Exists(fileNewViaLink));
 			ReadFile(fileNewViaLink);
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileBlockLocations(fileNew, 0, 1).Length
+			Assert.Equal(wrapper.GetFileBlockLocations(fileNew, 0, 1).Length
 				, wrapper.GetFileBlockLocations(fileNewViaLink, 0, 1).Length);
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileChecksum(fileNew), wrapper.GetFileChecksum
+			Assert.Equal(wrapper.GetFileChecksum(fileNew), wrapper.GetFileChecksum
 				(fileNewViaLink));
 			wrapper.Delete(fileNewViaLink, true);
 			NUnit.Framework.Assert.IsFalse(wrapper.Exists(fileNewViaLink));
@@ -1462,9 +1462,9 @@ namespace Org.Apache.Hadoop.FS
 			Path fileViaLink = new Path(linkToDir, "file");
 			wrapper.CreateSymlink(wrapper.MakeQualified(baseDir), linkToDir, false);
 			CreateAndWriteFile(fileViaLink);
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
 				(file));
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
 				(fileViaLink));
 			ReadFile(fileViaLink);
 		}
@@ -1482,16 +1482,16 @@ namespace Org.Apache.Hadoop.FS
 			CreateAndWriteFile(fileViaLink);
 			// Note that getFileStatus returns fully qualified paths even
 			// when called on an absolute path.
-			NUnit.Framework.Assert.AreEqual(wrapper.MakeQualified(file), wrapper.GetFileStatus
+			Assert.Equal(wrapper.MakeQualified(file), wrapper.GetFileStatus
 				(file).GetPath());
 			// In each case getFileLinkStatus returns the same FileStatus
 			// as getFileStatus since we're not calling it on a link and
 			// FileStatus objects are compared by Path.
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(file), wrapper.GetFileLinkStatus
 				(file));
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
 				(fileViaLink));
-			NUnit.Framework.Assert.AreEqual(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
+			Assert.Equal(wrapper.GetFileStatus(fileViaLink), wrapper.GetFileLinkStatus
 				(file));
 		}
 
@@ -1504,9 +1504,9 @@ namespace Org.Apache.Hadoop.FS
 			Path dirViaLink = new Path(linkToDir, "dir");
 			wrapper.CreateSymlink(baseDir, linkToDir, false);
 			wrapper.Mkdir(dirViaLink, FileContext.DefaultPerm, true);
-			NUnit.Framework.Assert.IsTrue(wrapper.GetFileStatus(dirViaLink).IsDirectory());
+			Assert.True(wrapper.GetFileStatus(dirViaLink).IsDirectory());
 			FileStatus[] stats = wrapper.ListStatus(dirViaLink);
-			NUnit.Framework.Assert.AreEqual(0, stats.Length);
+			Assert.Equal(0, stats.Length);
 			RemoteIterator<FileStatus> statsItor = wrapper.ListStatusIterator(dirViaLink);
 			NUnit.Framework.Assert.IsFalse(statsItor.HasNext());
 			wrapper.Delete(dirViaLink, false);
@@ -1526,10 +1526,10 @@ namespace Org.Apache.Hadoop.FS
 			// NB: local file systems don't implement setTimes
 			if (!"file".Equals(GetScheme()))
 			{
-				NUnit.Framework.Assert.AreEqual(at, wrapper.GetFileLinkStatus(link).GetAccessTime
+				Assert.Equal(at, wrapper.GetFileLinkStatus(link).GetAccessTime
 					());
-				NUnit.Framework.Assert.AreEqual(3, wrapper.GetFileStatus(file).GetAccessTime());
-				NUnit.Framework.Assert.AreEqual(2, wrapper.GetFileStatus(file).GetModificationTime
+				Assert.Equal(3, wrapper.GetFileStatus(file).GetAccessTime());
+				Assert.Equal(2, wrapper.GetFileStatus(file).GetModificationTime
 					());
 			}
 		}

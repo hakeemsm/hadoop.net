@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Setup("name");
 			PathData item = new PathData("/directory/path/name", mockFs.GetConf());
-			NUnit.Framework.Assert.AreEqual(Result.Pass, name.Apply(item, -1));
+			Assert.Equal(Result.Pass, name.Apply(item, -1));
 		}
 
 		// test a non-matching name
@@ -42,7 +42,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Setup("name");
 			PathData item = new PathData("/directory/path/notname", mockFs.GetConf());
-			NUnit.Framework.Assert.AreEqual(Result.Fail, name.Apply(item, -1));
+			Assert.Equal(Result.Fail, name.Apply(item, -1));
 		}
 
 		// test a matching name (different case)
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Setup("name");
 			PathData item = new PathData("/directory/path/NaMe", mockFs.GetConf());
-			NUnit.Framework.Assert.AreEqual(Result.Pass, name.Apply(item, -1));
+			Assert.Equal(Result.Pass, name.Apply(item, -1));
 		}
 
 		// test a matching glob pattern (same case)
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Setup("n*e");
 			PathData item = new PathData("/directory/path/name", mockFs.GetConf());
-			NUnit.Framework.Assert.AreEqual(Result.Pass, name.Apply(item, -1));
+			Assert.Equal(Result.Pass, name.Apply(item, -1));
 		}
 
 		// test a matching glob pattern (different case)
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Setup("n*e");
 			PathData item = new PathData("/directory/path/NaMe", mockFs.GetConf());
-			NUnit.Framework.Assert.AreEqual(Result.Pass, name.Apply(item, -1));
+			Assert.Equal(Result.Pass, name.Apply(item, -1));
 		}
 
 		// test a non-matching glob pattern
@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			Setup("n*e");
 			PathData item = new PathData("/directory/path/notmatch", mockFs.GetConf());
-			NUnit.Framework.Assert.AreEqual(Result.Fail, name.Apply(item, -1));
+			Assert.Equal(Result.Fail, name.Apply(item, -1));
 		}
 	}
 }

@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.IO
 				Org.Apache.Hadoop.IO.Text claimedText = stringifier.FromString(str);
 				Log.Info("Object: " + text);
 				Log.Info("String representation of the object: " + str);
-				NUnit.Framework.Assert.AreEqual(text, claimedText);
+				Assert.Equal(text, claimedText);
 			}
 		}
 
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.IO
 			string str = stringifier.ToString(testInt);
 			int claimedInt = stringifier.FromString(str);
 			Log.Info("String representation of the object: " + str);
-			NUnit.Framework.Assert.AreEqual(testInt, claimedInt);
+			Assert.Equal(testInt, claimedInt);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.IO
 			DefaultStringifier.Store(conf, text, keyName);
 			Org.Apache.Hadoop.IO.Text claimedText = DefaultStringifier.Load<Org.Apache.Hadoop.IO.Text
 				>(conf, keyName);
-			NUnit.Framework.Assert.AreEqual("DefaultStringifier#load() or #store() might be flawed"
+			Assert.Equal("DefaultStringifier#load() or #store() might be flawed"
 				, text, claimedText);
 		}
 
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.IO
 			int[] claimedArray = DefaultStringifier.LoadArray<int, int>(conf, keyName);
 			for (int i = 0; i < array.Length; i++)
 			{
-				NUnit.Framework.Assert.AreEqual("two arrays are not equal", array[i], claimedArray
+				Assert.Equal("two arrays are not equal", array[i], claimedArray
 					[i]);
 			}
 		}

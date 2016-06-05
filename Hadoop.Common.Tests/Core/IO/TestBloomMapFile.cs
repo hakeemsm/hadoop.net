@@ -80,9 +80,9 @@ namespace Org.Apache.Hadoop.IO
 				reader.Close();
 				fs.Delete(qualifiedDirName, true);
 				System.Console.Out.WriteLine("False negatives: " + falseNeg);
-				NUnit.Framework.Assert.AreEqual(0, falseNeg);
+				Assert.Equal(0, falseNeg);
 				System.Console.Out.WriteLine("False positives: " + falsePos);
-				NUnit.Framework.Assert.IsTrue(falsePos < 2);
+				Assert.True(falsePos < 2);
 			}
 			finally
 			{
@@ -111,7 +111,7 @@ namespace Org.Apache.Hadoop.IO
 				Sharpen.Collections.Reverse(keys);
 				foreach (Text key_1 in keys)
 				{
-					NUnit.Framework.Assert.IsTrue("False negative for existing key " + key_1, reader.
+					Assert.True("False negative for existing key " + key_1, reader.
 						ProbablyHasKey(key_1));
 				}
 				reader.Close();

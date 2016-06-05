@@ -31,11 +31,11 @@ namespace Org.Apache.Hadoop.FS.Contract.Rawlocal
 			RawlocalFSContract contract = new RawlocalFSContract(new Configuration());
 			testDirectory = contract.GetTestDirectory();
 			testDirectory.Mkdirs();
-			NUnit.Framework.Assert.IsTrue(testDirectory.IsDirectory());
+			Assert.True(testDirectory.IsDirectory());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteEmptyPath()
 		{
 			FilePath nonexistent = new FilePath(testDirectory, "testDeleteEmptyPath");

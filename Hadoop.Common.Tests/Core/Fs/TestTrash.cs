@@ -17,9 +17,9 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		protected internal static Path Mkdir(FileSystem fs, Path p)
 		{
-			NUnit.Framework.Assert.IsTrue(fs.Mkdirs(p));
-			NUnit.Framework.Assert.IsTrue(fs.Exists(p));
-			NUnit.Framework.Assert.IsTrue(fs.GetFileStatus(p).IsDirectory());
+			Assert.True(fs.Mkdirs(p));
+			Assert.True(fs.Exists(p));
+			Assert.True(fs.GetFileStatus(p).IsDirectory());
 			return p;
 		}
 
@@ -29,7 +29,7 @@ namespace Org.Apache.Hadoop.FS
 			 path)
 		{
 			Path p = Path.MergePaths(trashRoot, path);
-			NUnit.Framework.Assert.IsTrue("Could not find file in trash: " + p, trashFs.Exists
+			Assert.True("Could not find file in trash: " + p, trashFs.Exists
 				(p));
 		}
 
@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.FS
 			)
 		{
 			Path p = new Path(trashRoot + "/" + new Path(pathname).GetName());
-			NUnit.Framework.Assert.IsTrue(!fs.Exists(p));
+			Assert.True(!fs.Exists(p));
 		}
 
 		/// <summary>Test trash for the shell's delete command for the file system fs</summary>
@@ -101,7 +101,7 @@ namespace Org.Apache.Hadoop.FS
 			NUnit.Framework.Assert.IsFalse(new Trash(conf).IsEnabled());
 			conf.SetLong(FsTrashIntervalKey, 10);
 			// 10 minute
-			NUnit.Framework.Assert.IsTrue(new Trash(conf).IsEnabled());
+			Assert.True(new Trash(conf).IsEnabled());
 			FsShell shell = new FsShell();
 			shell.SetConf(conf);
 			if (trashRoot == null)
@@ -133,7 +133,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 			}
 			{
 				// Verify that we succeed in removing the file we created.
@@ -151,7 +151,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 				CheckTrash(trashRootFs, trashRoot, fs.MakeQualified(myFile));
 			}
 			// Verify that we can recreate the file
@@ -171,7 +171,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 			}
 			// Verify that we can recreate the file
 			FileSystemTestHelper.WriteFile(fs, myFile, 10);
@@ -191,7 +191,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 			}
 			// recreate directory
 			Mkdir(fs, myPath);
@@ -210,7 +210,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 			}
 			{
 				// Check that we can delete a file from the trash
@@ -226,7 +226,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(retVal == 0);
+				Assert.True(retVal == 0);
 				CheckNotInTrash(trashRootFs, trashRoot, toErase.ToString());
 				CheckNotInTrash(trashRootFs, trashRoot, toErase.ToString() + ".1");
 			}
@@ -244,7 +244,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 			}
 			// verify that after expunging the Trash, it really goes away
 			CheckNotInTrash(trashRootFs, trashRoot, new Path(@base, "test/mkdirs/myFile").ToString
@@ -267,7 +267,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 				CheckTrash(trashRootFs, trashRoot, myFile);
 				args = new string[2];
 				args[0] = "-rmr";
@@ -282,7 +282,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 				CheckTrash(trashRootFs, trashRoot, myPath);
 			}
 			{
@@ -300,8 +300,8 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.AreEqual("exit code", 1, val);
-				NUnit.Framework.Assert.IsTrue(trashRootFs.Exists(trashRoot));
+				Assert.Equal("exit code", 1, val);
+				Assert.True(trashRootFs.Exists(trashRoot));
 			}
 			// Verify skip trash option really works
 			// recreate directory and file
@@ -317,7 +317,7 @@ namespace Org.Apache.Hadoop.FS
 				try
 				{
 					// Clear out trash
-					NUnit.Framework.Assert.AreEqual("-expunge failed", 0, shell.Run(new string[] { "-expunge"
+					Assert.Equal("-expunge failed", 0, shell.Run(new string[] { "-expunge"
 						 }));
 					val = shell.Run(args);
 				}
@@ -330,7 +330,7 @@ namespace Org.Apache.Hadoop.FS
 					 + trashRootFs.GetUri(), trashRootFs.Exists(trashRoot));
 				// No new Current should be created
 				NUnit.Framework.Assert.IsFalse(fs.Exists(myFile));
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 			}
 			// recreate directory and file
 			Mkdir(fs, myPath);
@@ -345,7 +345,7 @@ namespace Org.Apache.Hadoop.FS
 				try
 				{
 					// Clear out trash
-					NUnit.Framework.Assert.AreEqual(0, shell.Run(new string[] { "-expunge" }));
+					Assert.Equal(0, shell.Run(new string[] { "-expunge" }));
 					val = shell.Run(args);
 				}
 				catch (Exception e)
@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.FS
 				// No new Current should be created
 				NUnit.Framework.Assert.IsFalse(fs.Exists(myPath));
 				NUnit.Framework.Assert.IsFalse(fs.Exists(myFile));
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 			}
 			{
 				// deleting same file multiple times
@@ -365,7 +365,7 @@ namespace Org.Apache.Hadoop.FS
 				Mkdir(fs, myPath);
 				try
 				{
-					NUnit.Framework.Assert.AreEqual(0, shell.Run(new string[] { "-expunge" }));
+					Assert.Equal(0, shell.Run(new string[] { "-expunge" }));
 				}
 				catch (Exception e)
 				{
@@ -390,7 +390,7 @@ namespace Org.Apache.Hadoop.FS
 						System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 							());
 					}
-					NUnit.Framework.Assert.IsTrue(val == 0);
+					Assert.True(val == 0);
 				}
 				// current trash directory
 				Path trashDir = Path.MergePaths(new Path(trashRoot.ToUri().GetPath()), new Path(myFile
@@ -401,7 +401,7 @@ namespace Org.Apache.Hadoop.FS
 				int count = CountSameDeletedFiles(fs, trashDir, myFile);
 				System.Console.Out.WriteLine("counted " + count + " files " + myFile.GetName() + 
 					"* in " + trashDir);
-				NUnit.Framework.Assert.IsTrue(count == num_runs);
+				Assert.True(count == num_runs);
 			}
 			{
 				//Verify skipTrash option is suggested when rm fails due to its absence
@@ -427,7 +427,7 @@ namespace Org.Apache.Hadoop.FS
 				string output = byteStream.ToString();
 				Runtime.SetOut(stdout);
 				Runtime.SetErr(stderr);
-				NUnit.Framework.Assert.IsTrue("skipTrash wasn't suggested as remedy to failed rm command"
+				Assert.True("skipTrash wasn't suggested as remedy to failed rm command"
 					 + " or we deleted / even though we could not get server defaults", output.IndexOf
 					("Consider using -skipTrash option") != -1 || output.IndexOf("Failed to determine server trash configuration"
 					) != -1);
@@ -455,10 +455,10 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from fs expunge " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.AreEqual(0, rc);
+				Assert.Equal(0, rc);
 				NUnit.Framework.Assert.IsFalse("old checkpoint format not recognized", trashRootFs
 					.Exists(dirToDelete));
-				NUnit.Framework.Assert.IsTrue("old checkpoint format directory should not be removed"
+				Assert.True("old checkpoint format directory should not be removed"
 					, trashRootFs.Exists(dirToKeep));
 			}
 		}
@@ -521,7 +521,7 @@ namespace Org.Apache.Hadoop.FS
 			conf.SetClass("fs.trash.classname", typeof(TestTrash.TestTrashPolicy), typeof(TrashPolicy
 				));
 			Trash trash = new Trash(conf);
-			NUnit.Framework.Assert.IsTrue(trash.GetTrashPolicy().GetType().Equals(typeof(TestTrash.TestTrashPolicy
+			Assert.True(trash.GetTrashPolicy().GetType().Equals(typeof(TestTrash.TestTrashPolicy
 				)));
 		}
 
@@ -569,7 +569,7 @@ namespace Org.Apache.Hadoop.FS
 					System.Console.Error.WriteLine("Exception raised from Trash.run " + e.GetLocalizedMessage
 						());
 				}
-				NUnit.Framework.Assert.IsTrue(val == 0);
+				Assert.True(val == 0);
 				Path trashDir = shell.GetCurrentTrashDir();
 				FileStatus[] files = fs.ListStatus(trashDir.GetParent());
 				// Scan files in .Trash and add them to set of checkpoints
@@ -583,7 +583,7 @@ namespace Org.Apache.Hadoop.FS
 				{
 					// The actual contents should be smaller since the last checkpoint
 					// should've been deleted and Current might not have been recreated yet
-					NUnit.Framework.Assert.IsTrue(checkpoints.Count > files.Length);
+					Assert.True(checkpoints.Count > files.Length);
 					break;
 				}
 				Sharpen.Thread.Sleep(5000);
@@ -667,7 +667,7 @@ namespace Org.Apache.Hadoop.FS
 						());
 					throw new IOException(e.Message);
 				}
-				NUnit.Framework.Assert.IsTrue(retVal == 0);
+				Assert.True(retVal == 0);
 				long iterTime = Time.Now() - start;
 				// take median of the first 10 runs
 				if (i < 10)
@@ -691,7 +691,7 @@ namespace Org.Apache.Hadoop.FS
 							start + "; iterTime = " + iterTime + " vs. firstTime=" + first);
 					}
 					long factoredTime = first * factor;
-					NUnit.Framework.Assert.IsTrue(iterTime < factoredTime);
+					Assert.True(iterTime < factoredTime);
 				}
 			}
 		}

@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleKMSInstancesWithZKSigner()
 		{
 			FilePath testDir = TestKMS.GetTestDir();
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			public object Run()
 			{
 				HttpURLConnection conn = aUrl.OpenConnection(url1, token);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				return null;
 			}
 
@@ -121,7 +121,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			public object Run()
 			{
 				HttpURLConnection conn = aUrl.OpenConnection(url2, token);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				return null;
 			}
 
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				DelegationTokenAuthenticatedURL.Token emptyToken = new DelegationTokenAuthenticatedURL.Token
 					();
 				HttpURLConnection conn = aUrl.OpenConnection(url2, emptyToken);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpForbidden, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpForbidden, conn.GetResponseCode
 					());
 				return null;
 			}

@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.Net
 		/// This is a regression test for HADOOP-6722.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAvoidLoopbackTcpSockets()
 		{
 			Configuration conf = new Configuration();
@@ -66,25 +66,25 @@ namespace Org.Apache.Hadoop.Net
 			catch (ConnectException ce)
 			{
 				System.Console.Error.WriteLine("Got exception: " + ce);
-				NUnit.Framework.Assert.IsTrue(ce.Message.Contains("resulted in a loopback"));
+				Assert.True(ce.Message.Contains("resulted in a loopback"));
 			}
 			catch (SocketException se)
 			{
 				// Some TCP stacks will actually throw their own Invalid argument exception
 				// here. This is also OK.
-				NUnit.Framework.Assert.IsTrue(se.Message.Contains("Invalid argument"));
+				Assert.True(se.Message.Contains("Invalid argument"));
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketReadTimeoutWithChannel()
 		{
 			DoSocketReadTimeoutTest(true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSocketReadTimeoutWithoutChannel()
 		{
 			DoSocketReadTimeoutTest(false);
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.Net
 		{
 			long durationNano = Runtime.NanoTime() - startNanos;
 			long millis = TimeUnit.Milliseconds.Convert(durationNano, TimeUnit.Nanoseconds);
-			NUnit.Framework.Assert.IsTrue("Expected " + expectedMillis + "ms, but took " + millis
+			Assert.True("Expected " + expectedMillis + "ms, but took " + millis
 				, Math.Abs(millis - expectedMillis) < TimeFudgeMillis);
 		}
 
@@ -165,7 +165,7 @@ namespace Org.Apache.Hadoop.Net
 		/// 	</exception>
 		/// <exception cref="System.Net.Sockets.SocketException"></exception>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetLocalInetAddress()
 		{
 			NUnit.Framework.Assert.IsNotNull(NetUtils.GetLocalInetAddress("127.0.0.1"));
@@ -181,7 +181,7 @@ namespace Org.Apache.Hadoop.Net
 			NetUtils.VerifyHostnames(names);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyHostnamesNoException()
 		{
 			string[] names = new string[] { "valid.host.com", "1.com" };
@@ -201,11 +201,11 @@ namespace Org.Apache.Hadoop.Net
 		/// <see cref="NetUtils.IsLocalAddress(System.Net.IPAddress)"/>
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsLocalAddress()
 		{
 			// Test - local host is local address
-			NUnit.Framework.Assert.IsTrue(NetUtils.IsLocalAddress(Sharpen.Runtime.GetLocalHost
+			Assert.True(NetUtils.IsLocalAddress(Sharpen.Runtime.GetLocalHost
 				()));
 			// Test - all addresses bound network interface is local address
 			Enumeration<NetworkInterface> interfaces = NetworkInterface.GetNetworkInterfaces(
@@ -225,7 +225,7 @@ namespace Org.Apache.Hadoop.Net
 					while (addrs.MoveNext())
 					{
 						IPAddress addr = addrs.Current;
-						NUnit.Framework.Assert.IsTrue(NetUtils.IsLocalAddress(addr));
+						Assert.True(NetUtils.IsLocalAddress(addr));
 					}
 				}
 			}
@@ -234,7 +234,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrapConnectException()
 		{
 			IOException e = new ConnectException("failed");
@@ -247,7 +247,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrapBindException()
 		{
 			IOException e = new BindException("failed");
@@ -259,7 +259,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrapUnknownHostException()
 		{
 			IOException e = new UnknownHostException("failed");
@@ -272,7 +272,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrapEOFException()
 		{
 			IOException e = new EOFException("eof");
@@ -285,29 +285,29 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetConnectAddress()
 		{
 			NetUtils.AddStaticResolution("host", "127.0.0.1");
 			IPEndPoint addr = NetUtils.CreateSocketAddrForHost("host", 1);
 			IPEndPoint connectAddr = NetUtils.GetConnectAddress(addr);
-			NUnit.Framework.Assert.AreEqual(addr.GetHostName(), connectAddr.GetHostName());
+			Assert.Equal(addr.GetHostName(), connectAddr.GetHostName());
 			addr = new IPEndPoint(1);
 			connectAddr = NetUtils.GetConnectAddress(addr);
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetLocalHost().GetHostName(), connectAddr
+			Assert.Equal(Sharpen.Runtime.GetLocalHost().GetHostName(), connectAddr
 				.GetHostName());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateSocketAddress()
 		{
 			IPEndPoint addr = NetUtils.CreateSocketAddr("127.0.0.1:12345", 1000, "myconfig");
-			NUnit.Framework.Assert.AreEqual("127.0.0.1", addr.Address.GetHostAddress());
-			NUnit.Framework.Assert.AreEqual(12345, addr.Port);
+			Assert.Equal("127.0.0.1", addr.Address.GetHostAddress());
+			Assert.Equal(12345, addr.Port);
 			addr = NetUtils.CreateSocketAddr("127.0.0.1", 1000, "myconfig");
-			NUnit.Framework.Assert.AreEqual("127.0.0.1", addr.Address.GetHostAddress());
-			NUnit.Framework.Assert.AreEqual(1000, addr.Port);
+			Assert.Equal("127.0.0.1", addr.Address.GetHostAddress());
+			Assert.Equal(1000, addr.Port);
 			try
 			{
 				addr = NetUtils.CreateSocketAddr("127.0.0.1:blahblah", 1000, "myconfig");
@@ -413,25 +413,25 @@ namespace Org.Apache.Hadoop.Net
 			AssertBetterArrayEquals(searches, resolver.GetHostSearches());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByExactNameUnqualified()
 		{
 			VerifyGetByExactNameSearch("unknown", "unknown.");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByExactNameUnqualifiedWithDomain()
 		{
 			VerifyGetByExactNameSearch("unknown.domain", "unknown.domain.");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByExactNameQualified()
 		{
 			VerifyGetByExactNameSearch("unknown.", "unknown.");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByExactNameQualifiedWithDomain()
 		{
 			VerifyGetByExactNameSearch("unknown.domain.", "unknown.domain.");
@@ -444,28 +444,28 @@ namespace Org.Apache.Hadoop.Net
 			AssertBetterArrayEquals(searches, resolver.GetHostSearches());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameWithSearchUnqualified()
 		{
 			string host = "unknown";
 			VerifyGetByNameWithSearch(host, host + ".a.b.", host + ".b.", host + ".c.");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameWithSearchUnqualifiedWithDomain()
 		{
 			string host = "unknown.domain";
 			VerifyGetByNameWithSearch(host, host + ".a.b.", host + ".b.", host + ".c.");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameWithSearchQualified()
 		{
 			string host = "unknown.";
 			VerifyGetByNameWithSearch(host, host);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameWithSearchQualifiedWithDomain()
 		{
 			string host = "unknown.domain.";
@@ -488,27 +488,27 @@ namespace Org.Apache.Hadoop.Net
 			AssertBetterArrayEquals(searches, resolver.GetHostSearches());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameQualified()
 		{
 			string host = "unknown.";
 			VerifyGetByName(host, host);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameQualifiedWithDomain()
 		{
 			VerifyGetByName("unknown.domain.", "unknown.domain.");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameUnqualified()
 		{
 			string host = "unknown";
 			VerifyGetByName(host, host + ".a.b.", host + ".b.", host + ".c.", host + ".");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverGetByNameUnqualifiedWithDomain()
 		{
 			string host = "unknown.domain";
@@ -535,11 +535,11 @@ namespace Org.Apache.Hadoop.Net
 		private void VerifyInetAddress(IPAddress addr, string host, string ip)
 		{
 			NUnit.Framework.Assert.IsNotNull(addr);
-			NUnit.Framework.Assert.AreEqual(host, addr.GetHostName());
-			NUnit.Framework.Assert.AreEqual(ip, addr.GetHostAddress());
+			Assert.Equal(host, addr.GetHostName());
+			Assert.Equal(ip, addr.GetHostAddress());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverUnqualified()
 		{
 			string host = "host";
@@ -547,7 +547,7 @@ namespace Org.Apache.Hadoop.Net
 			VerifyInetAddress(addr, "host.a.b", "1.1.1.1");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverUnqualifiedWithDomain()
 		{
 			string host = "host.a";
@@ -555,7 +555,7 @@ namespace Org.Apache.Hadoop.Net
 			VerifyInetAddress(addr, "host.a.b", "1.1.1.1");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverUnqualifedFull()
 		{
 			string host = "host.a.b";
@@ -563,7 +563,7 @@ namespace Org.Apache.Hadoop.Net
 			VerifyInetAddress(addr, host, "1.1.1.1");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverQualifed()
 		{
 			string host = "host.a.b.";
@@ -572,7 +572,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		// localhost
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverLoopback()
 		{
 			string host = "Localhost";
@@ -581,7 +581,7 @@ namespace Org.Apache.Hadoop.Net
 			VerifyInetAddress(addr, "Localhost", "127.0.0.1");
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolverIP()
 		{
 			string host = "1.1.1.1";
@@ -591,72 +591,72 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		//
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCanonicalUriWithPort()
 		{
 			URI uri;
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host:123"), 456);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123", uri.ToString());
+			Assert.Equal("scheme://host.a.b:123", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host:123/"), 456);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123/", uri.ToString());
+			Assert.Equal("scheme://host.a.b:123/", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host:123/path"), 456);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123/path", uri.ToString());
+			Assert.Equal("scheme://host.a.b:123/path", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host:123/path?q#frag"), 456);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123/path?q#frag", uri.ToString
+			Assert.Equal("scheme://host.a.b:123/path?q#frag", uri.ToString
 				());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCanonicalUriWithDefaultPort()
 		{
 			URI uri;
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host"), 123);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123", uri.ToString());
+			Assert.Equal("scheme://host.a.b:123", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host/"), 123);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123/", uri.ToString());
+			Assert.Equal("scheme://host.a.b:123/", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host/path"), 123);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123/path", uri.ToString());
+			Assert.Equal("scheme://host.a.b:123/path", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host/path?q#frag"), 123);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b:123/path?q#frag", uri.ToString
+			Assert.Equal("scheme://host.a.b:123/path?q#frag", uri.ToString
 				());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCanonicalUriWithPath()
 		{
 			URI uri;
 			uri = NetUtils.GetCanonicalUri(URI.Create("path"), 2);
-			NUnit.Framework.Assert.AreEqual("path", uri.ToString());
+			Assert.Equal("path", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("/path"), 2);
-			NUnit.Framework.Assert.AreEqual("/path", uri.ToString());
+			Assert.Equal("/path", uri.ToString());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCanonicalUriWithNoAuthority()
 		{
 			URI uri;
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme:/"), 2);
-			NUnit.Framework.Assert.AreEqual("scheme:/", uri.ToString());
+			Assert.Equal("scheme:/", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme:/path"), 2);
-			NUnit.Framework.Assert.AreEqual("scheme:/path", uri.ToString());
+			Assert.Equal("scheme:/path", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme:///"), 2);
-			NUnit.Framework.Assert.AreEqual("scheme:///", uri.ToString());
+			Assert.Equal("scheme:///", uri.ToString());
 			uri = NetUtils.GetCanonicalUri(URI.Create("scheme:///path"), 2);
-			NUnit.Framework.Assert.AreEqual("scheme:///path", uri.ToString());
+			Assert.Equal("scheme:///path", uri.ToString());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCanonicalUriWithNoHost()
 		{
 			URI uri = NetUtils.GetCanonicalUri(URI.Create("scheme://:123/path"), 2);
-			NUnit.Framework.Assert.AreEqual("scheme://:123/path", uri.ToString());
+			Assert.Equal("scheme://:123/path", uri.ToString());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCanonicalUriWithNoPortNoDefaultPort()
 		{
 			URI uri = NetUtils.GetCanonicalUri(URI.Create("scheme://host/path"), -1);
-			NUnit.Framework.Assert.AreEqual("scheme://host.a.b/path", uri.ToString());
+			Assert.Equal("scheme://host.a.b/path", uri.ToString());
 		}
 
 		/// <summary>
@@ -664,25 +664,25 @@ namespace Org.Apache.Hadoop.Net
 		/// <see cref="NetUtils.NormalizeHostNames(System.Collections.Generic.ICollection{E})
 		/// 	"/>
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNormalizeHostName()
 		{
 			IList<string> hosts = Arrays.AsList(new string[] { "127.0.0.1", "localhost", "1.kanyezone.appspot.com"
 				, "UnknownHost123" });
 			IList<string> normalizedHosts = NetUtils.NormalizeHostNames(hosts);
 			// when ipaddress is normalized, same address is expected in return
-			NUnit.Framework.Assert.AreEqual(normalizedHosts[0], hosts[0]);
+			Assert.Equal(normalizedHosts[0], hosts[0]);
 			// for normalizing a resolvable hostname, resolved ipaddress is expected in return
 			NUnit.Framework.Assert.IsFalse(normalizedHosts[1].Equals(hosts[1]));
-			NUnit.Framework.Assert.AreEqual(normalizedHosts[1], hosts[0]);
+			Assert.Equal(normalizedHosts[1], hosts[0]);
 			// this address HADOOP-8372: when normalizing a valid resolvable hostname start with numeric, 
 			// its ipaddress is expected to return
 			NUnit.Framework.Assert.IsFalse(normalizedHosts[2].Equals(hosts[2]));
 			// return the same hostname after normalizing a irresolvable hostname.
-			NUnit.Framework.Assert.AreEqual(normalizedHosts[3], hosts[3]);
+			Assert.Equal(normalizedHosts[3], hosts[3]);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetHostNameOfIP()
 		{
 			NUnit.Framework.Assert.IsNull(NetUtils.GetHostNameOfIP(null));
@@ -698,7 +698,7 @@ namespace Org.Apache.Hadoop.Net
 			NUnit.Framework.Assert.IsNotNull(NetUtils.GetHostNameOfIP("127.0.0.1:1"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTrimCreateSocketAddress()
 		{
 			Configuration conf = new Configuration();
@@ -706,7 +706,7 @@ namespace Org.Apache.Hadoop.Net
 			string defaultAddr = "host:1  ";
 			IPEndPoint addr = NetUtils.CreateSocketAddr(defaultAddr);
 			conf.SetSocketAddr("myAddress", addr);
-			NUnit.Framework.Assert.AreEqual(defaultAddr.Trim(), NetUtils.GetHostPortString(addr
+			Assert.Equal(defaultAddr.Trim(), NetUtils.GetHostPortString(addr
 				));
 		}
 
@@ -714,7 +714,7 @@ namespace Org.Apache.Hadoop.Net
 		{
 			string expectStr = StringUtils.Join(expect, ", ");
 			string gotStr = StringUtils.Join(got, ", ");
-			NUnit.Framework.Assert.AreEqual(expectStr, gotStr);
+			Assert.Equal(expectStr, gotStr);
 		}
 	}
 }

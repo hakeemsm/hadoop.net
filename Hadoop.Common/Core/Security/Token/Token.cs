@@ -214,7 +214,7 @@ namespace Org.Apache.Hadoop.Security.Token
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			WritableUtils.WriteVInt(@out, identifier.Length);
 			@out.Write(identifier);

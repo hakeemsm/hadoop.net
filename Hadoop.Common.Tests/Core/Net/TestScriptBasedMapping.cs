@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Net
 		{
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoArgsMeansNoResult()
 		{
 			Configuration conf = new Configuration();
@@ -28,19 +28,19 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoFilenameMeansSingleSwitch()
 		{
 			Configuration conf = new Configuration();
 			ScriptBasedMapping mapping = CreateMapping(conf);
-			NUnit.Framework.Assert.IsTrue("Expected to be single switch", mapping.IsSingleSwitch
+			Assert.True("Expected to be single switch", mapping.IsSingleSwitch
 				());
-			NUnit.Framework.Assert.IsTrue("Expected to be single switch", AbstractDNSToSwitchMapping
+			Assert.True("Expected to be single switch", AbstractDNSToSwitchMapping
 				.IsMappingSingleSwitch(mapping));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFilenameMeansMultiSwitch()
 		{
 			Configuration conf = new Configuration();
@@ -49,16 +49,16 @@ namespace Org.Apache.Hadoop.Net
 			NUnit.Framework.Assert.IsFalse("Expected to be multi switch", mapping.IsSingleSwitch
 				());
 			mapping.SetConf(new Configuration());
-			NUnit.Framework.Assert.IsTrue("Expected to be single switch", mapping.IsSingleSwitch
+			Assert.True("Expected to be single switch", mapping.IsSingleSwitch
 				());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullConfig()
 		{
 			ScriptBasedMapping mapping = CreateMapping(null);
-			NUnit.Framework.Assert.IsTrue("Expected to be single switch", mapping.IsSingleSwitch
+			Assert.True("Expected to be single switch", mapping.IsSingleSwitch
 				());
 		}
 

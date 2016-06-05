@@ -23,7 +23,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStaticMapParsing()
 		{
 			FilePath tempStaticMapFile = FilePath.CreateTempFile("nfs-", ".map");
@@ -36,22 +36,22 @@ namespace Org.Apache.Hadoop.Security
 			CreateStaticMapFile(tempStaticMapFile, staticMapFileContents);
 			ShellBasedIdMapping.StaticMapping parsedMap = ShellBasedIdMapping.ParseStaticMap(
 				tempStaticMapFile);
-			NUnit.Framework.Assert.AreEqual(10, (int)parsedMap.uidMapping[100]);
-			NUnit.Framework.Assert.AreEqual(11, (int)parsedMap.uidMapping[201]);
-			NUnit.Framework.Assert.AreEqual(12, (int)parsedMap.uidMapping[301]);
-			NUnit.Framework.Assert.AreEqual(13, (int)parsedMap.uidMapping[302]);
-			NUnit.Framework.Assert.AreEqual(10, (int)parsedMap.gidMapping[200]);
-			NUnit.Framework.Assert.AreEqual(11, (int)parsedMap.gidMapping[201]);
-			NUnit.Framework.Assert.AreEqual(12, (int)parsedMap.gidMapping[202]);
-			NUnit.Framework.Assert.AreEqual(10000, (int)parsedMap.uidMapping[10001]);
+			Assert.Equal(10, (int)parsedMap.uidMapping[100]);
+			Assert.Equal(11, (int)parsedMap.uidMapping[201]);
+			Assert.Equal(12, (int)parsedMap.uidMapping[301]);
+			Assert.Equal(13, (int)parsedMap.uidMapping[302]);
+			Assert.Equal(10, (int)parsedMap.gidMapping[200]);
+			Assert.Equal(11, (int)parsedMap.gidMapping[201]);
+			Assert.Equal(12, (int)parsedMap.gidMapping[202]);
+			Assert.Equal(10000, (int)parsedMap.uidMapping[10001]);
 			// Ensure pass-through of unmapped IDs works.
-			NUnit.Framework.Assert.AreEqual(1000, (int)parsedMap.uidMapping[1000]);
-			NUnit.Framework.Assert.AreEqual(-2, (int)parsedMap.uidMapping[123]);
-			NUnit.Framework.Assert.AreEqual(-1, (int)parsedMap.gidMapping[321]);
+			Assert.Equal(1000, (int)parsedMap.uidMapping[1000]);
+			Assert.Equal(-2, (int)parsedMap.uidMapping[123]);
+			Assert.Equal(-1, (int)parsedMap.gidMapping[321]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStaticMapping()
 		{
 			Assume.AssumeTrue(!Shell.Windows);
@@ -72,21 +72,21 @@ namespace Org.Apache.Hadoop.Security
 				);
 			ShellBasedIdMapping.UpdateMapInternal(gMap, "group", GetAllGroupsCmd, ":", gidStaticMap
 				);
-			NUnit.Framework.Assert.AreEqual("hdfs", uMap[10]);
-			NUnit.Framework.Assert.AreEqual(10, (int)uMap.Inverse()["hdfs"]);
-			NUnit.Framework.Assert.AreEqual("atm", uMap[1000]);
-			NUnit.Framework.Assert.AreEqual(1000, (int)uMap.Inverse()["atm"]);
-			NUnit.Framework.Assert.AreEqual("hdfs", gMap[11501]);
-			NUnit.Framework.Assert.AreEqual(11501, (int)gMap.Inverse()["hdfs"]);
-			NUnit.Framework.Assert.AreEqual("mapred", gMap[200]);
-			NUnit.Framework.Assert.AreEqual(200, (int)gMap.Inverse()["mapred"]);
-			NUnit.Framework.Assert.AreEqual("mapred2", gMap[498]);
-			NUnit.Framework.Assert.AreEqual(498, (int)gMap.Inverse()["mapred2"]);
+			Assert.Equal("hdfs", uMap[10]);
+			Assert.Equal(10, (int)uMap.Inverse()["hdfs"]);
+			Assert.Equal("atm", uMap[1000]);
+			Assert.Equal(1000, (int)uMap.Inverse()["atm"]);
+			Assert.Equal("hdfs", gMap[11501]);
+			Assert.Equal(11501, (int)gMap.Inverse()["hdfs"]);
+			Assert.Equal("mapred", gMap[200]);
+			Assert.Equal(200, (int)gMap.Inverse()["mapred"]);
+			Assert.Equal("mapred2", gMap[498]);
+			Assert.Equal(498, (int)gMap.Inverse()["mapred2"]);
 		}
 
 		// Test staticMap refreshing
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStaticMapUpdate()
 		{
 			Assume.AssumeTrue(!Shell.Windows);
@@ -110,7 +110,7 @@ namespace Org.Apache.Hadoop.Security
 				// The static map is empty, so the id found for "name" would be
 				// the same as "id"
 				int nid = incrIdMapping.GetUid(name);
-				NUnit.Framework.Assert.AreEqual(id, nid);
+				Assert.Equal(id, nid);
 				// Clear map and update staticMap file
 				incrIdMapping.ClearNameMaps();
 				int rid = id + 10000;
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.Security
 				// Now the id found for "name" should be the id specified by
 				// the staticMap
 				nid = incrIdMapping.GetUid(name);
-				NUnit.Framework.Assert.AreEqual(rid, nid);
+				Assert.Equal(rid, nid);
 			}
 			// Force empty map, to see effect of incremental map update of calling
 			// getGid()
@@ -132,7 +132,7 @@ namespace Org.Apache.Hadoop.Security
 				// The static map is empty, so the id found for "name" would be
 				// the same as "id"
 				int nid = incrIdMapping.GetGid(name);
-				NUnit.Framework.Assert.AreEqual(id, nid);
+				Assert.Equal(id, nid);
 				// Clear map and update staticMap file
 				incrIdMapping.ClearNameMaps();
 				int rid = id + 10000;
@@ -149,12 +149,12 @@ namespace Org.Apache.Hadoop.Security
 				// Now the id found for "name" should be the id specified by
 				// the staticMap
 				nid = incrIdMapping.GetGid(name);
-				NUnit.Framework.Assert.AreEqual(rid, nid);
+				Assert.Equal(rid, nid);
 			}
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDuplicates()
 		{
 			Assume.AssumeTrue(!Shell.Windows);
@@ -170,22 +170,22 @@ namespace Org.Apache.Hadoop.Security
 			BiMap<int, string> gMap = HashBiMap.Create();
 			ShellBasedIdMapping.UpdateMapInternal(uMap, "user", GetAllUsersCmd, ":", EmptyPassThroughMap
 				);
-			NUnit.Framework.Assert.AreEqual(5, uMap.Count);
-			NUnit.Framework.Assert.AreEqual("root", uMap[0]);
-			NUnit.Framework.Assert.AreEqual("hdfs", uMap[11501]);
-			NUnit.Framework.Assert.AreEqual("hdfs2", uMap[11502]);
-			NUnit.Framework.Assert.AreEqual("bin", uMap[2]);
-			NUnit.Framework.Assert.AreEqual("daemon", uMap[1]);
+			Assert.Equal(5, uMap.Count);
+			Assert.Equal("root", uMap[0]);
+			Assert.Equal("hdfs", uMap[11501]);
+			Assert.Equal("hdfs2", uMap[11502]);
+			Assert.Equal("bin", uMap[2]);
+			Assert.Equal("daemon", uMap[1]);
 			ShellBasedIdMapping.UpdateMapInternal(gMap, "group", GetAllGroupsCmd, ":", EmptyPassThroughMap
 				);
-			NUnit.Framework.Assert.IsTrue(gMap.Count == 3);
-			NUnit.Framework.Assert.AreEqual("hdfs", gMap[11501]);
-			NUnit.Framework.Assert.AreEqual("mapred", gMap[497]);
-			NUnit.Framework.Assert.AreEqual("mapred3", gMap[498]);
+			Assert.True(gMap.Count == 3);
+			Assert.Equal("hdfs", gMap[11501]);
+			Assert.Equal("mapred", gMap[497]);
+			Assert.Equal("mapred3", gMap[498]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIdOutOfIntegerRange()
 		{
 			Assume.AssumeTrue(!Shell.Windows);
@@ -204,47 +204,47 @@ namespace Org.Apache.Hadoop.Security
 			BiMap<int, string> gMap = HashBiMap.Create();
 			ShellBasedIdMapping.UpdateMapInternal(uMap, "user", GetAllUsersCmd, ":", EmptyPassThroughMap
 				);
-			NUnit.Framework.Assert.IsTrue(uMap.Count == 7);
-			NUnit.Framework.Assert.AreEqual("nfsnobody", uMap[-2]);
-			NUnit.Framework.Assert.AreEqual("nfsnobody1", uMap[-1]);
-			NUnit.Framework.Assert.AreEqual("maxint", uMap[2147483647]);
-			NUnit.Framework.Assert.AreEqual("minint", uMap[-2147483648]);
-			NUnit.Framework.Assert.AreEqual("archivebackup", uMap[1031]);
-			NUnit.Framework.Assert.AreEqual("hdfs", uMap[11501]);
-			NUnit.Framework.Assert.AreEqual("daemon", uMap[2]);
+			Assert.True(uMap.Count == 7);
+			Assert.Equal("nfsnobody", uMap[-2]);
+			Assert.Equal("nfsnobody1", uMap[-1]);
+			Assert.Equal("maxint", uMap[2147483647]);
+			Assert.Equal("minint", uMap[-2147483648]);
+			Assert.Equal("archivebackup", uMap[1031]);
+			Assert.Equal("hdfs", uMap[11501]);
+			Assert.Equal("daemon", uMap[2]);
 			ShellBasedIdMapping.UpdateMapInternal(gMap, "group", GetAllGroupsCmd, ":", EmptyPassThroughMap
 				);
-			NUnit.Framework.Assert.IsTrue(gMap.Count == 7);
-			NUnit.Framework.Assert.AreEqual("hdfs", gMap[11501]);
-			NUnit.Framework.Assert.AreEqual("rpcuser", gMap[29]);
-			NUnit.Framework.Assert.AreEqual("nfsnobody", gMap[-2]);
-			NUnit.Framework.Assert.AreEqual("nfsnobody1", gMap[-1]);
-			NUnit.Framework.Assert.AreEqual("maxint", gMap[2147483647]);
-			NUnit.Framework.Assert.AreEqual("minint", gMap[-2147483648]);
-			NUnit.Framework.Assert.AreEqual("mapred3", gMap[498]);
+			Assert.True(gMap.Count == 7);
+			Assert.Equal("hdfs", gMap[11501]);
+			Assert.Equal("rpcuser", gMap[29]);
+			Assert.Equal("nfsnobody", gMap[-2]);
+			Assert.Equal("nfsnobody1", gMap[-1]);
+			Assert.Equal("maxint", gMap[2147483647]);
+			Assert.Equal("minint", gMap[-2147483648]);
+			Assert.Equal("mapred3", gMap[498]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserUpdateSetting()
 		{
 			ShellBasedIdMapping iug = new ShellBasedIdMapping(new Configuration());
-			NUnit.Framework.Assert.AreEqual(iug.GetTimeout(), IdMappingConstant.UsergroupidUpdateMillisDefault
+			Assert.Equal(iug.GetTimeout(), IdMappingConstant.UsergroupidUpdateMillisDefault
 				);
 			Configuration conf = new Configuration();
 			conf.SetLong(IdMappingConstant.UsergroupidUpdateMillisKey, 0);
 			iug = new ShellBasedIdMapping(conf);
-			NUnit.Framework.Assert.AreEqual(iug.GetTimeout(), IdMappingConstant.UsergroupidUpdateMillisMin
+			Assert.Equal(iug.GetTimeout(), IdMappingConstant.UsergroupidUpdateMillisMin
 				);
 			conf.SetLong(IdMappingConstant.UsergroupidUpdateMillisKey, IdMappingConstant.UsergroupidUpdateMillisDefault
 				 * 2);
 			iug = new ShellBasedIdMapping(conf);
-			NUnit.Framework.Assert.AreEqual(iug.GetTimeout(), IdMappingConstant.UsergroupidUpdateMillisDefault
+			Assert.Equal(iug.GetTimeout(), IdMappingConstant.UsergroupidUpdateMillisDefault
 				 * 2);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUpdateMapIncr()
 		{
 			Configuration conf = new Configuration();
@@ -264,9 +264,9 @@ namespace Org.Apache.Hadoop.Security
 				int id = me.Key;
 				string name = me.Value;
 				string tname = incrIdMapping.GetUserName(id, null);
-				NUnit.Framework.Assert.AreEqual(name, tname);
+				Assert.Equal(name, tname);
 			}
-			NUnit.Framework.Assert.AreEqual(uidNameMap.Count, incrIdMapping.GetUidNameMap().Count
+			Assert.Equal(uidNameMap.Count, incrIdMapping.GetUidNameMap().Count
 				);
 			// Force empty map, to see effect of incremental map update of calling
 			// getUid()
@@ -276,9 +276,9 @@ namespace Org.Apache.Hadoop.Security
 				int id = me_1.Key;
 				string name = me_1.Value;
 				int tid = incrIdMapping.GetUid(name);
-				NUnit.Framework.Assert.AreEqual(id, tid);
+				Assert.Equal(id, tid);
 			}
-			NUnit.Framework.Assert.AreEqual(uidNameMap.Count, incrIdMapping.GetUidNameMap().Count
+			Assert.Equal(uidNameMap.Count, incrIdMapping.GetUidNameMap().Count
 				);
 			// Force empty map, to see effect of incremental map update of calling
 			// getGroupName()
@@ -289,9 +289,9 @@ namespace Org.Apache.Hadoop.Security
 				int id = me_2.Key;
 				string name = me_2.Value;
 				string tname = incrIdMapping.GetGroupName(id, null);
-				NUnit.Framework.Assert.AreEqual(name, tname);
+				Assert.Equal(name, tname);
 			}
-			NUnit.Framework.Assert.AreEqual(gidNameMap.Count, incrIdMapping.GetGidNameMap().Count
+			Assert.Equal(gidNameMap.Count, incrIdMapping.GetGidNameMap().Count
 				);
 			// Force empty map, to see effect of incremental map update of calling
 			// getGid()
@@ -302,9 +302,9 @@ namespace Org.Apache.Hadoop.Security
 				int id = me_3.Key;
 				string name = me_3.Value;
 				int tid = incrIdMapping.GetGid(name);
-				NUnit.Framework.Assert.AreEqual(id, tid);
+				Assert.Equal(id, tid);
 			}
-			NUnit.Framework.Assert.AreEqual(gidNameMap.Count, incrIdMapping.GetGidNameMap().Count
+			Assert.Equal(gidNameMap.Count, incrIdMapping.GetGidNameMap().Count
 				);
 		}
 	}

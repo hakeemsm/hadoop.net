@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.Util
 		private readonly PureJavaCrc32 ours = new PureJavaCrc32();
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCorrectness()
 		{
 			CheckSame();
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Util
 
 		private void CheckSame()
 		{
-			NUnit.Framework.Assert.AreEqual(theirs.GetValue(), ours.GetValue());
+			Assert.Equal(theirs.GetValue(), ours.GetValue());
 		}
 
 		/// <summary>

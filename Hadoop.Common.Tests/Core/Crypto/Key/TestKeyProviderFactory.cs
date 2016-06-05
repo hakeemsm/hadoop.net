@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFactory()
 		{
 			Configuration conf = new Configuration();
@@ -37,16 +37,16 @@ namespace Org.Apache.Hadoop.Crypto.Key
 				();
 			conf.Set(KeyProviderFactory.KeyProviderPath, userUri + "," + jksUri);
 			IList<KeyProvider> providers = KeyProviderFactory.GetProviders(conf);
-			NUnit.Framework.Assert.AreEqual(2, providers.Count);
-			NUnit.Framework.Assert.AreEqual(typeof(UserProvider), providers[0].GetType());
-			NUnit.Framework.Assert.AreEqual(typeof(JavaKeyStoreProvider), providers[1].GetType
+			Assert.Equal(2, providers.Count);
+			Assert.Equal(typeof(UserProvider), providers[0].GetType());
+			Assert.Equal(typeof(JavaKeyStoreProvider), providers[1].GetType
 				());
-			NUnit.Framework.Assert.AreEqual(userUri, providers[0].ToString());
-			NUnit.Framework.Assert.AreEqual(jksUri, providers[1].ToString());
+			Assert.Equal(userUri, providers[0].ToString());
+			Assert.Equal(jksUri, providers[1].ToString());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFactoryErrors()
 		{
 			Configuration conf = new Configuration();
@@ -54,17 +54,17 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			try
 			{
 				IList<KeyProvider> providers = KeyProviderFactory.GetProviders(conf);
-				NUnit.Framework.Assert.IsTrue("should throw!", false);
+				Assert.True("should throw!", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("No KeyProviderFactory for unknown:/// in " + KeyProviderFactory
+				Assert.Equal("No KeyProviderFactory for unknown:/// in " + KeyProviderFactory
 					.KeyProviderPath, e.Message);
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUriErrors()
 		{
 			Configuration conf = new Configuration();
@@ -72,11 +72,11 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			try
 			{
 				IList<KeyProvider> providers = KeyProviderFactory.GetProviders(conf);
-				NUnit.Framework.Assert.IsTrue("should throw!", false);
+				Assert.True("should throw!", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Bad configuration of " + KeyProviderFactory.KeyProviderPath
+				Assert.Equal("Bad configuration of " + KeyProviderFactory.KeyProviderPath
 					 + " at unkn@own:/x/y", e.Message);
 			}
 		}
@@ -95,8 +95,8 @@ namespace Org.Apache.Hadoop.Crypto.Key
 				key3[i] = unchecked((byte)(i * 3));
 			}
 			// ensure that we get nulls when the key isn't there
-			NUnit.Framework.Assert.AreEqual(null, provider.GetKeyVersion("no-such-key"));
-			NUnit.Framework.Assert.AreEqual(null, provider.GetMetadata("key"));
+			Assert.Equal(null, provider.GetKeyVersion("no-such-key"));
+			Assert.Equal(null, provider.GetMetadata("key"));
 			// create a new key
 			try
 			{
@@ -109,76 +109,76 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 			// check the metadata for key3
 			KeyProvider.Metadata meta = provider.GetMetadata("key3");
-			NUnit.Framework.Assert.AreEqual(KeyProvider.DefaultCipher, meta.GetCipher());
-			NUnit.Framework.Assert.AreEqual(KeyProvider.DefaultBitlength, meta.GetBitLength()
+			Assert.Equal(KeyProvider.DefaultCipher, meta.GetCipher());
+			Assert.Equal(KeyProvider.DefaultBitlength, meta.GetBitLength()
 				);
-			NUnit.Framework.Assert.AreEqual(1, meta.GetVersions());
+			Assert.Equal(1, meta.GetVersions());
 			// make sure we get back the right key
 			Assert.AssertArrayEquals(key3, provider.GetCurrentKey("key3").GetMaterial());
-			NUnit.Framework.Assert.AreEqual("key3@0", provider.GetCurrentKey("key3").GetVersionName
+			Assert.Equal("key3@0", provider.GetCurrentKey("key3").GetVersionName
 				());
 			// try recreating key3
 			try
 			{
 				provider.CreateKey("key3", key3, KeyProvider.Options(conf));
-				NUnit.Framework.Assert.IsTrue("should throw", false);
+				Assert.True("should throw", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Key key3 already exists in " + ourUrl, e.Message
+				Assert.Equal("Key key3 already exists in " + ourUrl, e.Message
 					);
 			}
 			provider.DeleteKey("key3");
 			try
 			{
 				provider.DeleteKey("key3");
-				NUnit.Framework.Assert.IsTrue("should throw", false);
+				Assert.True("should throw", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Key key3 does not exist in " + ourUrl, e.Message
+				Assert.Equal("Key key3 does not exist in " + ourUrl, e.Message
 					);
 			}
 			provider.CreateKey("key3", key3, KeyProvider.Options(conf));
 			try
 			{
 				provider.CreateKey("key4", key3, KeyProvider.Options(conf).SetBitLength(8));
-				NUnit.Framework.Assert.IsTrue("should throw", false);
+				Assert.True("should throw", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Wrong key length. Required 8, but got 128", e.Message
+				Assert.Equal("Wrong key length. Required 8, but got 128", e.Message
 					);
 			}
 			provider.CreateKey("key4", new byte[] { 1 }, KeyProvider.Options(conf).SetBitLength
 				(8));
 			provider.RollNewVersion("key4", new byte[] { 2 });
 			meta = provider.GetMetadata("key4");
-			NUnit.Framework.Assert.AreEqual(2, meta.GetVersions());
+			Assert.Equal(2, meta.GetVersions());
 			Assert.AssertArrayEquals(new byte[] { 2 }, provider.GetCurrentKey("key4").GetMaterial
 				());
 			Assert.AssertArrayEquals(new byte[] { 1 }, provider.GetKeyVersion("key4@0").GetMaterial
 				());
-			NUnit.Framework.Assert.AreEqual("key4@1", provider.GetCurrentKey("key4").GetVersionName
+			Assert.Equal("key4@1", provider.GetCurrentKey("key4").GetVersionName
 				());
 			try
 			{
 				provider.RollNewVersion("key4", key1);
-				NUnit.Framework.Assert.IsTrue("should throw", false);
+				Assert.True("should throw", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Wrong key length. Required 8, but got 128", e.Message
+				Assert.Equal("Wrong key length. Required 8, but got 128", e.Message
 					);
 			}
 			try
 			{
 				provider.RollNewVersion("no-such-key", key1);
-				NUnit.Framework.Assert.IsTrue("should throw", false);
+				Assert.True("should throw", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Key no-such-key not found", e.Message);
+				Assert.Equal("Key no-such-key not found", e.Message);
 			}
 			provider.Flush();
 			// get a new instance of the provider to ensure it was saved correctly
@@ -186,24 +186,24 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			Assert.AssertArrayEquals(new byte[] { 2 }, provider.GetCurrentKey("key4").GetMaterial
 				());
 			Assert.AssertArrayEquals(key3, provider.GetCurrentKey("key3").GetMaterial());
-			NUnit.Framework.Assert.AreEqual("key3@0", provider.GetCurrentKey("key3").GetVersionName
+			Assert.Equal("key3@0", provider.GetCurrentKey("key3").GetVersionName
 				());
 			IList<string> keys = provider.GetKeys();
-			NUnit.Framework.Assert.IsTrue("Keys should have been returned.", keys.Count == 2);
-			NUnit.Framework.Assert.IsTrue("Returned Keys should have included key3.", keys.Contains
+			Assert.True("Keys should have been returned.", keys.Count == 2);
+			Assert.True("Returned Keys should have included key3.", keys.Contains
 				("key3"));
-			NUnit.Framework.Assert.IsTrue("Returned Keys should have included key4.", keys.Contains
+			Assert.True("Returned Keys should have included key4.", keys.Contains
 				("key4"));
 			IList<KeyProvider.KeyVersion> kvl = provider.GetKeyVersions("key3");
-			NUnit.Framework.Assert.IsTrue("KeyVersions should have been returned for key3.", 
+			Assert.True("KeyVersions should have been returned for key3.", 
 				kvl.Count == 1);
-			NUnit.Framework.Assert.IsTrue("KeyVersions should have included key3@0.", kvl[0].
+			Assert.True("KeyVersions should have included key3@0.", kvl[0].
 				GetVersionName().Equals("key3@0"));
 			Assert.AssertArrayEquals(key3, kvl[0].GetMaterial());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserProvider()
 		{
 			Configuration conf = new Configuration();
@@ -219,7 +219,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJksProvider()
 		{
 			Configuration conf = new Configuration();
@@ -276,19 +276,19 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			Path path = ProviderUtils.UnnestUri(new URI(ourUrl));
 			FileSystem fs = path.GetFileSystem(conf);
 			FileStatus s = fs.GetFileStatus(path);
-			NUnit.Framework.Assert.IsTrue(s.GetPermission().ToString().Equals("rwx------"));
-			NUnit.Framework.Assert.IsTrue(file + " should exist", file.IsFile());
+			Assert.True(s.GetPermission().ToString().Equals("rwx------"));
+			Assert.True(file + " should exist", file.IsFile());
 			// Corrupt file and Check if JKS can reload from _OLD file
 			FilePath oldFile = new FilePath(file.GetPath() + "_OLD");
 			file.RenameTo(oldFile);
 			file.Delete();
 			file.CreateNewFile();
-			NUnit.Framework.Assert.IsTrue(oldFile.Exists());
+			Assert.True(oldFile.Exists());
 			provider = KeyProviderFactory.GetProviders(conf)[0];
-			NUnit.Framework.Assert.IsTrue(file.Exists());
-			NUnit.Framework.Assert.IsTrue(oldFile + "should be deleted", !oldFile.Exists());
+			Assert.True(file.Exists());
+			Assert.True(oldFile + "should be deleted", !oldFile.Exists());
 			VerifyAfterReload(file, provider);
-			NUnit.Framework.Assert.IsTrue(!oldFile.Exists());
+			Assert.True(!oldFile.Exists());
 			// _NEW and current file should not exist together
 			FilePath newFile = new FilePath(file.GetPath() + "_NEW");
 			newFile.CreateNewFile();
@@ -367,9 +367,9 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		private void VerifyAfterReload(FilePath file, KeyProvider provider)
 		{
 			IList<string> existingKeys = provider.GetKeys();
-			NUnit.Framework.Assert.IsTrue(existingKeys.Contains("key4"));
-			NUnit.Framework.Assert.IsTrue(existingKeys.Contains("key3"));
-			NUnit.Framework.Assert.IsTrue(file.Exists());
+			Assert.True(existingKeys.Contains("key4"));
+			Assert.True(existingKeys.Contains("key3"));
+			Assert.True(file.Exists());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -399,12 +399,12 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			Assert.AssertArrayEquals(key, provider.GetCurrentKey("key5").GetMaterial());
 			FileSystem fs = path.GetFileSystem(conf);
 			FileStatus s = fs.GetFileStatus(path);
-			NUnit.Framework.Assert.IsTrue("Permissions should have been retained from the preexisting keystore."
+			Assert.True("Permissions should have been retained from the preexisting keystore."
 				, s.GetPermission().ToString().Equals("rwxrwxrwx"));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJksProviderPasswordViaConfig()
 		{
 			Configuration conf = new Configuration();
@@ -461,7 +461,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 
 		//NOP
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetProviderViaURI()
 		{
 			Configuration conf = new Configuration(false);
@@ -469,14 +469,14 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			URI uri = new URI(JavaKeyStoreProvider.SchemeName + "://file" + jksPath.ToUri());
 			KeyProvider kp = KeyProviderFactory.Get(uri, conf);
 			NUnit.Framework.Assert.IsNotNull(kp);
-			NUnit.Framework.Assert.AreEqual(typeof(JavaKeyStoreProvider), kp.GetType());
+			Assert.Equal(typeof(JavaKeyStoreProvider), kp.GetType());
 			uri = new URI("foo://bar");
 			kp = KeyProviderFactory.Get(uri, conf);
 			NUnit.Framework.Assert.IsNull(kp);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJksProviderWithKeytoolKeys()
 		{
 			Configuration conf = new Configuration();

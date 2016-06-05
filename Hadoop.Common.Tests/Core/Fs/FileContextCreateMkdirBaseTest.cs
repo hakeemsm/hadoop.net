@@ -72,15 +72,15 @@ namespace Org.Apache.Hadoop.FS
 		//      Test Mkdir
 		////////////////////////
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirNonRecursiveWithExistingDir()
 		{
 			Path f = GetTestRootPath(fc, "aDir");
 			fc.Mkdir(f, FileContext.DefaultPerm, false);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc, f));
+			Assert.True(FileContextTestHelper.IsDir(fc, f));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirNonRecursiveWithNonExistingDir()
 		{
 			try
@@ -96,36 +96,36 @@ namespace Org.Apache.Hadoop.FS
 
 		// failed As expected
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirRecursiveWithExistingDir()
 		{
 			Path f = GetTestRootPath(fc, "aDir");
 			fc.Mkdir(f, FileContext.DefaultPerm, true);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc, f));
+			Assert.True(FileContextTestHelper.IsDir(fc, f));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirRecursiveWithNonExistingDir()
 		{
 			Path f = GetTestRootPath(fc, "NonExistant2/aDir");
 			fc.Mkdir(f, FileContext.DefaultPerm, true);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc, f));
+			Assert.True(FileContextTestHelper.IsDir(fc, f));
 		}
 
 		///////////////////////
 		//      Test Create
 		////////////////////////
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNonRecursiveWithExistingDir()
 		{
 			Path f = GetTestRootPath(fc, "foo");
 			FileContextTestHelper.CreateFile(fc, f);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fc, f));
+			Assert.True(FileContextTestHelper.IsFile(fc, f));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNonRecursiveWithNonExistingDir()
 		{
 			try
@@ -142,21 +142,21 @@ namespace Org.Apache.Hadoop.FS
 
 		// As expected
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateRecursiveWithExistingDir()
 		{
 			Path f = GetTestRootPath(fc, "foo");
 			FileContextTestHelper.CreateFile(fc, f);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fc, f));
+			Assert.True(FileContextTestHelper.IsFile(fc, f));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateRecursiveWithNonExistingDir()
 		{
 			Path f = GetTestRootPath(fc, "NonExisting/foo");
 			FileContextTestHelper.CreateFile(fc, f);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fc, f));
+			Assert.True(FileContextTestHelper.IsFile(fc, f));
 		}
 
 		private Path GetTestRootPath(FileContext fc)

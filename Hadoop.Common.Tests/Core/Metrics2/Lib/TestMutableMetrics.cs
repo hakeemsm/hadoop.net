@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 		private readonly double Epsilon = 1e-42;
 
 		/// <summary>Test the snapshot method</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnapshot()
 		{
 			MetricsRecordBuilder mb = MetricsAsserts.MockMetricsRecordBuilder();
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			void Bar();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMutableRates()
 		{
 			MetricsRecordBuilder rb = MetricsAsserts.MockMetricsRecordBuilder();

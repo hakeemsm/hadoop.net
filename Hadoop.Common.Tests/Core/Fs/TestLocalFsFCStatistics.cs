@@ -32,13 +32,13 @@ namespace Org.Apache.Hadoop.FS
 		protected internal override void VerifyReadBytes(FileSystem.Statistics stats)
 		{
 			// one blockSize for read, one for pread
-			NUnit.Framework.Assert.AreEqual(2 * blockSize, stats.GetBytesRead());
+			Assert.Equal(2 * blockSize, stats.GetBytesRead());
 		}
 
 		protected internal override void VerifyWrittenBytes(FileSystem.Statistics stats)
 		{
 			//Extra 12 bytes are written apart from the block.
-			NUnit.Framework.Assert.AreEqual(blockSize + 12, stats.GetBytesWritten());
+			Assert.Equal(blockSize + 12, stats.GetBytesWritten());
 		}
 
 		protected internal override URI GetFsUri()

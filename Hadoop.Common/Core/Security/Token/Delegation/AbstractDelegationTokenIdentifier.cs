@@ -214,7 +214,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 
 		/// <exception cref="System.IO.IOException"/>
 		[VisibleForTesting]
-		internal virtual void WriteImpl(DataOutput @out)
+		internal virtual void WriteImpl(BinaryWriter @out)
 		{
 			@out.WriteByte(Version);
 			owner.Write(@out);
@@ -227,17 +227,17 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(DataOutput @out)
+		public override void Write(BinaryWriter @out)
 		{
-			if (owner.GetLength() > Text.DefaultMaxLen)
+			if (owner.Length> Text.DefaultMaxLen)
 			{
 				throw new IOException("owner is too long to be serialized!");
 			}
-			if (renewer.GetLength() > Text.DefaultMaxLen)
+			if (renewer.Length> Text.DefaultMaxLen)
 			{
 				throw new IOException("renewer is too long to be serialized!");
 			}
-			if (realUser.GetLength() > Text.DefaultMaxLen)
+			if (realUser.Length> Text.DefaultMaxLen)
 			{
 				throw new IOException("realuser is too long to be serialized!");
 			}

@@ -321,7 +321,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				OutputStream os = DataOutputOutputStream.ConstructOutputStream(@out);
 				((Message)requestHeader).WriteDelimitedTo(os);
@@ -507,7 +507,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				OutputStream os = DataOutputOutputStream.ConstructOutputStream(@out);
 				theResponse.WriteDelimitedTo(os);

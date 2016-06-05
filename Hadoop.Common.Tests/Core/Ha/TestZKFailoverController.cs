@@ -65,15 +65,15 @@ namespace Org.Apache.Hadoop.HA
 			DummyHAService svc = cluster.GetService(1);
 			// Run without formatting the base dir,
 			// should barf
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeNoParentZnode, RunFC(
+			Assert.Equal(ZKFailoverController.ErrCodeNoParentZnode, RunFC(
 				svc));
 			// Format the base dir, should succeed
-			NUnit.Framework.Assert.AreEqual(0, RunFC(svc, "-formatZK"));
+			Assert.Equal(0, RunFC(svc, "-formatZK"));
 			// Should fail to format if already formatted
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeFormatDenied, RunFC(svc
+			Assert.Equal(ZKFailoverController.ErrCodeFormatDenied, RunFC(svc
 				, "-formatZK", "-nonInteractive"));
 			// Unless '-force' is on
-			NUnit.Framework.Assert.AreEqual(0, RunFC(svc, "-formatZK", "-force"));
+			Assert.Equal(0, RunFC(svc, "-formatZK", "-force"));
 		}
 
 		/// <summary>
@@ -85,11 +85,11 @@ namespace Org.Apache.Hadoop.HA
 		{
 			StopServer();
 			DummyHAService svc = cluster.GetService(1);
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeNoZk, RunFC(svc));
+			Assert.Equal(ZKFailoverController.ErrCodeNoZk, RunFC(svc));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFormatOneClusterLeavesOtherClustersAlone()
 		{
 			DummyHAService svc = cluster.GetService(1);
@@ -97,20 +97,20 @@ namespace Org.Apache.Hadoop.HA
 				(1));
 			// Run without formatting the base dir,
 			// should barf
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeNoParentZnode, RunFC(
+			Assert.Equal(ZKFailoverController.ErrCodeNoParentZnode, RunFC(
 				svc));
 			// Format the base dir, should succeed
-			NUnit.Framework.Assert.AreEqual(0, RunFC(svc, "-formatZK"));
+			Assert.Equal(0, RunFC(svc, "-formatZK"));
 			// Run the other cluster without formatting, should barf because
 			// it uses a different parent znode
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeNoParentZnode, zkfcInOtherCluster
+			Assert.Equal(ZKFailoverController.ErrCodeNoParentZnode, zkfcInOtherCluster
 				.Run(new string[] {  }));
 			// Should succeed in formatting the second cluster
-			NUnit.Framework.Assert.AreEqual(0, zkfcInOtherCluster.Run(new string[] { "-formatZK"
+			Assert.Equal(0, zkfcInOtherCluster.Run(new string[] { "-formatZK"
 				 }));
 			// But should not have deleted the original base node from the first
 			// cluster
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeFormatDenied, RunFC(svc
+			Assert.Equal(ZKFailoverController.ErrCodeFormatDenied, RunFC(svc
 				, "-formatZK", "-nonInteractive"));
 		}
 
@@ -137,9 +137,9 @@ namespace Org.Apache.Hadoop.HA
 			DummyHAService svc = cluster.GetService(1);
 			svc = Org.Mockito.Mockito.Spy(svc);
 			Org.Mockito.Mockito.DoReturn(false).When(svc).IsAutoFailoverEnabled();
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeAutoFailoverNotEnabled
+			Assert.Equal(ZKFailoverController.ErrCodeAutoFailoverNotEnabled
 				, RunFC(svc, "-formatZK"));
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeAutoFailoverNotEnabled
+			Assert.Equal(ZKFailoverController.ErrCodeAutoFailoverNotEnabled
 				, RunFC(svc));
 		}
 
@@ -152,7 +152,7 @@ namespace Org.Apache.Hadoop.HA
 		{
 			// Format the base dir, should succeed
 			DummyHAService svc = cluster.GetService(1);
-			NUnit.Framework.Assert.AreEqual(0, RunFC(svc, "-formatZK"));
+			Assert.Equal(0, RunFC(svc, "-formatZK"));
 			ZooKeeper otherClient = CreateClient();
 			try
 			{
@@ -178,9 +178,9 @@ namespace Org.Apache.Hadoop.HA
 			Org.Mockito.Mockito.DoThrow(new BadFencingConfigurationException("no fencing")).When
 				(svc).CheckFencingConfigured();
 			// Format the base dir, should succeed
-			NUnit.Framework.Assert.AreEqual(0, RunFC(svc, "-formatZK"));
+			Assert.Equal(0, RunFC(svc, "-formatZK"));
 			// Try to run the actual FC, should fail without a fencer
-			NUnit.Framework.Assert.AreEqual(ZKFailoverController.ErrCodeNoFencer, RunFC(svc));
+			Assert.Equal(ZKFailoverController.ErrCodeNoFencer, RunFC(svc));
 		}
 
 		/// <summary>
@@ -373,9 +373,9 @@ namespace Org.Apache.Hadoop.HA
 				cluster.WaitForElectorState(0, ActiveStandbyElector.State.Neutral);
 				cluster.WaitForElectorState(1, ActiveStandbyElector.State.Neutral);
 				Log.Info("====== Checking that the services didn't change HA state");
-				NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Active, cluster.
+				Assert.Equal(HAServiceProtocol.HAServiceState.Active, cluster.
 					GetService(0).state);
-				NUnit.Framework.Assert.AreEqual(HAServiceProtocol.HAServiceState.Standby, cluster
+				Assert.Equal(HAServiceProtocol.HAServiceState.Standby, cluster
 					.GetService(1).state);
 				Log.Info("====== Restarting server");
 				StartServer();
@@ -388,9 +388,9 @@ namespace Org.Apache.Hadoop.HA
 				cluster.WaitForHAState(0, HAServiceProtocol.HAServiceState.Active);
 				cluster.WaitForHAState(1, HAServiceProtocol.HAServiceState.Standby);
 				// Check they re-used the same sessions and didn't spuriously reconnect
-				NUnit.Framework.Assert.AreEqual(session0, cluster.GetElector(0).GetZKSessionIdForTests
+				Assert.Equal(session0, cluster.GetElector(0).GetZKSessionIdForTests
 					());
-				NUnit.Framework.Assert.AreEqual(session1, cluster.GetElector(1).GetZKSessionIdForTests
+				Assert.Equal(session1, cluster.GetElector(1).GetZKSessionIdForTests
 					());
 			}
 			finally
@@ -408,7 +408,7 @@ namespace Org.Apache.Hadoop.HA
 				cluster.Start();
 				MiniZKFCCluster.DummyZKFC zkfc = cluster.GetZkfc(0);
 				// It should be in active to start.
-				NUnit.Framework.Assert.AreEqual(ActiveStandbyElector.State.Active, zkfc.GetElectorForTests
+				Assert.Equal(ActiveStandbyElector.State.Active, zkfc.GetElectorForTests
 					().GetStateForTests());
 				// Ask it to cede active for 3 seconds. It should respond promptly
 				// (i.e. the RPC itself should not take 3 seconds!)
@@ -416,17 +416,17 @@ namespace Org.Apache.Hadoop.HA
 				long st = Time.Now();
 				proxy.CedeActive(3000);
 				long et = Time.Now();
-				NUnit.Framework.Assert.IsTrue("RPC to cedeActive took " + (et - st) + " ms", et -
+				Assert.True("RPC to cedeActive took " + (et - st) + " ms", et -
 					 st < 1000);
 				// Should be in "INIT" state since it's not in the election
 				// at this point.
-				NUnit.Framework.Assert.AreEqual(ActiveStandbyElector.State.Init, zkfc.GetElectorForTests
+				Assert.Equal(ActiveStandbyElector.State.Init, zkfc.GetElectorForTests
 					().GetStateForTests());
 				// After the prescribed 3 seconds, should go into STANDBY state,
 				// since the other node in the cluster would have taken ACTIVE.
 				cluster.WaitForElectorState(0, ActiveStandbyElector.State.Standby);
 				long et2 = Time.Now();
-				NUnit.Framework.Assert.IsTrue("Should take ~3 seconds to rejoin. Only took " + (et2
+				Assert.True("Should take ~3 seconds to rejoin. Only took " + (et2
 					 - et) + "ms before rejoining.", et2 - et > 2800);
 			}
 			finally
@@ -448,10 +448,10 @@ namespace Org.Apache.Hadoop.HA
 				cluster.WaitForActiveLockHolder(0);
 				Sharpen.Thread.Sleep(10000);
 				// allow to quiesce
-				NUnit.Framework.Assert.AreEqual(0, cluster.GetService(0).fenceCount);
-				NUnit.Framework.Assert.AreEqual(0, cluster.GetService(1).fenceCount);
-				NUnit.Framework.Assert.AreEqual(2, cluster.GetService(0).activeTransitionCount);
-				NUnit.Framework.Assert.AreEqual(1, cluster.GetService(1).activeTransitionCount);
+				Assert.Equal(0, cluster.GetService(0).fenceCount);
+				Assert.Equal(0, cluster.GetService(1).fenceCount);
+				Assert.Equal(2, cluster.GetService(0).activeTransitionCount);
+				Assert.Equal(1, cluster.GetService(1).activeTransitionCount);
 			}
 			finally
 			{
@@ -510,8 +510,8 @@ namespace Org.Apache.Hadoop.HA
 					GenericTestUtils.AssertExceptionContains("injected failure", sfe);
 				}
 				// No fencing
-				NUnit.Framework.Assert.AreEqual(0, cluster.GetService(0).fenceCount);
-				NUnit.Framework.Assert.AreEqual(0, cluster.GetService(1).fenceCount);
+				Assert.Equal(0, cluster.GetService(0).fenceCount);
+				Assert.Equal(0, cluster.GetService(1).fenceCount);
 				// Service 0 should go back to being active after the failed failover
 				cluster.WaitForActiveLockHolder(0);
 			}
@@ -534,7 +534,7 @@ namespace Org.Apache.Hadoop.HA
 				cluster.SetFailToBecomeStandby(0, true);
 				cluster.GetService(1).GetZKFCProxy(conf, 5000).GracefulFailover();
 				// Check that the old node was fenced
-				NUnit.Framework.Assert.AreEqual(1, cluster.GetService(0).fenceCount);
+				Assert.Equal(1, cluster.GetService(0).fenceCount);
 			}
 			finally
 			{

@@ -172,10 +172,10 @@ namespace Org.Apache.Hadoop.IO
 
 		//end Internal subclass declaration
 		/*
-		* @see org.apache.hadoop.io.Writable#write(java.io.DataOutput)
+		* @see org.apache.hadoop.io.Writable#write(java.io.BinaryWriter)
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			// write componentType 
 			UTF8.WriteString(@out, componentType.FullName);
@@ -347,7 +347,7 @@ namespace Org.Apache.Hadoop.IO
 		//For efficient implementation, there's no way around
 		//the following massive code duplication.
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteBooleanArray(DataOutput @out)
+		private void WriteBooleanArray(BinaryWriter @out)
 		{
 			bool[] v = (bool[])value;
 			for (int i = 0; i < length; i++)
@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteCharArray(DataOutput @out)
+		private void WriteCharArray(BinaryWriter @out)
 		{
 			char[] v = (char[])value;
 			for (int i = 0; i < length; i++)
@@ -367,13 +367,13 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteByteArray(DataOutput @out)
+		private void WriteByteArray(BinaryWriter @out)
 		{
 			@out.Write((byte[])value, 0, length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteShortArray(DataOutput @out)
+		private void WriteShortArray(BinaryWriter @out)
 		{
 			short[] v = (short[])value;
 			for (int i = 0; i < length; i++)
@@ -383,7 +383,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteIntArray(DataOutput @out)
+		private void WriteIntArray(BinaryWriter @out)
 		{
 			int[] v = (int[])value;
 			for (int i = 0; i < length; i++)
@@ -393,7 +393,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteLongArray(DataOutput @out)
+		private void WriteLongArray(BinaryWriter @out)
 		{
 			long[] v = (long[])value;
 			for (int i = 0; i < length; i++)
@@ -403,7 +403,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteFloatArray(DataOutput @out)
+		private void WriteFloatArray(BinaryWriter @out)
 		{
 			float[] v = (float[])value;
 			for (int i = 0; i < length; i++)
@@ -413,7 +413,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteDoubleArray(DataOutput @out)
+		private void WriteDoubleArray(BinaryWriter @out)
 		{
 			double[] v = (double[])value;
 			for (int i = 0; i < length; i++)

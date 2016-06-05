@@ -3383,7 +3383,7 @@ match_loop_break: ;
 
 		//@Override
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			Properties props = GetProps();
 			WritableUtils.WriteVInt(@out, props.Count);

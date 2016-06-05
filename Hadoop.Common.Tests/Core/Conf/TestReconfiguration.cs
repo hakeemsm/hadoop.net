@@ -50,12 +50,12 @@ namespace Org.Apache.Hadoop.Conf
 
 		// not set in conf1
 		/// <summary>Test ReconfigurationUtil.getChangedProperties.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetChangedProperties()
 		{
 			ICollection<ReconfigurationUtil.PropertyChange> changes = ReconfigurationUtil.GetChangedProperties
 				(conf2, conf1);
-			NUnit.Framework.Assert.IsTrue("expected 3 changed properties but got " + changes.
+			Assert.True("expected 3 changed properties but got " + changes.
 				Count, changes.Count == 3);
 			bool changeFound = false;
 			bool unsetFound = false;
@@ -84,7 +84,7 @@ namespace Org.Apache.Hadoop.Conf
 					}
 				}
 			}
-			NUnit.Framework.Assert.IsTrue("not all changes have been applied", changeFound &&
+			Assert.True("not all changes have been applied", changeFound &&
 				 unsetFound && setFound);
 		}
 
@@ -131,28 +131,28 @@ namespace Org.Apache.Hadoop.Conf
 		}
 
 		/// <summary>Test reconfiguring a Reconfigurable.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReconfigure()
 		{
 			TestReconfiguration.ReconfigurableDummy dummy = new TestReconfiguration.ReconfigurableDummy
 				(conf1);
-			NUnit.Framework.Assert.IsTrue(Prop1 + " set to wrong value ", dummy.GetConf().Get
+			Assert.True(Prop1 + " set to wrong value ", dummy.GetConf().Get
 				(Prop1).Equals(Val1));
-			NUnit.Framework.Assert.IsTrue(Prop2 + " set to wrong value ", dummy.GetConf().Get
+			Assert.True(Prop2 + " set to wrong value ", dummy.GetConf().Get
 				(Prop2).Equals(Val1));
-			NUnit.Framework.Assert.IsTrue(Prop3 + " set to wrong value ", dummy.GetConf().Get
+			Assert.True(Prop3 + " set to wrong value ", dummy.GetConf().Get
 				(Prop3).Equals(Val1));
-			NUnit.Framework.Assert.IsTrue(Prop4 + " set to wrong value ", dummy.GetConf().Get
+			Assert.True(Prop4 + " set to wrong value ", dummy.GetConf().Get
 				(Prop4) == null);
-			NUnit.Framework.Assert.IsTrue(Prop5 + " set to wrong value ", dummy.GetConf().Get
+			Assert.True(Prop5 + " set to wrong value ", dummy.GetConf().Get
 				(Prop5) == null);
-			NUnit.Framework.Assert.IsTrue(Prop1 + " should be reconfigurable ", dummy.IsPropertyReconfigurable
+			Assert.True(Prop1 + " should be reconfigurable ", dummy.IsPropertyReconfigurable
 				(Prop1));
-			NUnit.Framework.Assert.IsTrue(Prop2 + " should be reconfigurable ", dummy.IsPropertyReconfigurable
+			Assert.True(Prop2 + " should be reconfigurable ", dummy.IsPropertyReconfigurable
 				(Prop2));
 			NUnit.Framework.Assert.IsFalse(Prop3 + " should not be reconfigurable ", dummy.IsPropertyReconfigurable
 				(Prop3));
-			NUnit.Framework.Assert.IsTrue(Prop4 + " should be reconfigurable ", dummy.IsPropertyReconfigurable
+			Assert.True(Prop4 + " should be reconfigurable ", dummy.IsPropertyReconfigurable
 				(Prop4));
 			NUnit.Framework.Assert.IsFalse(Prop5 + " should not be reconfigurable ", dummy.IsPropertyReconfigurable
 				(Prop5));
@@ -162,7 +162,7 @@ namespace Org.Apache.Hadoop.Conf
 				try
 				{
 					dummy.ReconfigureProperty(Prop1, Val1);
-					NUnit.Framework.Assert.IsTrue(Prop1 + " set to wrong value ", dummy.GetConf().Get
+					Assert.True(Prop1 + " set to wrong value ", dummy.GetConf().Get
 						(Prop1).Equals(Val1));
 				}
 				catch (ReconfigurationException)
@@ -177,7 +177,7 @@ namespace Org.Apache.Hadoop.Conf
 				try
 				{
 					dummy.ReconfigureProperty(Prop1, null);
-					NUnit.Framework.Assert.IsTrue(Prop1 + "set to wrong value ", dummy.GetConf().Get(
+					Assert.True(Prop1 + "set to wrong value ", dummy.GetConf().Get(
 						Prop1) == null);
 				}
 				catch (ReconfigurationException)
@@ -192,7 +192,7 @@ namespace Org.Apache.Hadoop.Conf
 				try
 				{
 					dummy.ReconfigureProperty(Prop1, Val2);
-					NUnit.Framework.Assert.IsTrue(Prop1 + "set to wrong value ", dummy.GetConf().Get(
+					Assert.True(Prop1 + "set to wrong value ", dummy.GetConf().Get(
 						Prop1).Equals(Val2));
 				}
 				catch (ReconfigurationException)
@@ -207,7 +207,7 @@ namespace Org.Apache.Hadoop.Conf
 				try
 				{
 					dummy.ReconfigureProperty(Prop4, null);
-					NUnit.Framework.Assert.IsTrue(Prop4 + "set to wrong value ", dummy.GetConf().Get(
+					Assert.True(Prop4 + "set to wrong value ", dummy.GetConf().Get(
 						Prop4) == null);
 				}
 				catch (ReconfigurationException)
@@ -222,7 +222,7 @@ namespace Org.Apache.Hadoop.Conf
 				try
 				{
 					dummy.ReconfigureProperty(Prop4, Val1);
-					NUnit.Framework.Assert.IsTrue(Prop4 + "set to wrong value ", dummy.GetConf().Get(
+					Assert.True(Prop4 + "set to wrong value ", dummy.GetConf().Get(
 						Prop4).Equals(Val1));
 				}
 				catch (ReconfigurationException)
@@ -242,7 +242,7 @@ namespace Org.Apache.Hadoop.Conf
 				{
 					exceptionCaught = true;
 				}
-				NUnit.Framework.Assert.IsTrue("did not receive expected exception", exceptionCaught
+				Assert.True("did not receive expected exception", exceptionCaught
 					);
 			}
 			{
@@ -256,7 +256,7 @@ namespace Org.Apache.Hadoop.Conf
 				{
 					exceptionCaught = true;
 				}
-				NUnit.Framework.Assert.IsTrue("did not receive expected exception", exceptionCaught
+				Assert.True("did not receive expected exception", exceptionCaught
 					);
 			}
 			{
@@ -270,7 +270,7 @@ namespace Org.Apache.Hadoop.Conf
 				{
 					exceptionCaught = true;
 				}
-				NUnit.Framework.Assert.IsTrue("did not receive expected exception", exceptionCaught
+				Assert.True("did not receive expected exception", exceptionCaught
 					);
 			}
 			{
@@ -284,19 +284,19 @@ namespace Org.Apache.Hadoop.Conf
 				{
 					exceptionCaught = true;
 				}
-				NUnit.Framework.Assert.IsTrue("did not receive expected exception", exceptionCaught
+				Assert.True("did not receive expected exception", exceptionCaught
 					);
 			}
 		}
 
 		/// <summary>Test whether configuration changes are visible in another thread.</summary>
 		/// <exception cref="Org.Apache.Hadoop.Conf.ReconfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestThread()
 		{
 			TestReconfiguration.ReconfigurableDummy dummy = new TestReconfiguration.ReconfigurableDummy
 				(conf1);
-			NUnit.Framework.Assert.IsTrue(dummy.GetConf().Get(Prop1).Equals(Val1));
+			Assert.True(dummy.GetConf().Get(Prop1).Equals(Val1));
 			Sharpen.Thread dummyThread = new Sharpen.Thread(dummy);
 			dummyThread.Start();
 			try
@@ -331,7 +331,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 			}
 			// do nothing
-			NUnit.Framework.Assert.IsTrue(Prop1 + " is set to wrong value", dummy.GetConf().Get
+			Assert.True(Prop1 + " is set to wrong value", dummy.GetConf().Get
 				(Prop1).Equals(Val2));
 		}
 
@@ -388,7 +388,7 @@ namespace Org.Apache.Hadoop.Conf
 		/// <exception cref="Org.Apache.Hadoop.Conf.ReconfigurationException"/>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAsyncReconfigure()
 		{
 			TestReconfiguration.AsyncReconfigurableDummy dummy = Org.Mockito.Mockito.Spy(new 
@@ -415,7 +415,7 @@ namespace Org.Apache.Hadoop.Conf
 			dummy.StartReconfigurationTask();
 			WaitAsyncReconfigureTaskFinish(dummy);
 			ReconfigurationTaskStatus status = dummy.GetReconfigurationTaskStatus();
-			NUnit.Framework.Assert.AreEqual(3, status.GetStatus().Count);
+			Assert.Equal(3, status.GetStatus().Count);
 			foreach (KeyValuePair<ReconfigurationUtil.PropertyChange, Optional<string>> result
 				 in status.GetStatus())
 			{
@@ -461,7 +461,7 @@ namespace Org.Apache.Hadoop.Conf
 			NUnit.Framework.Assert.IsFalse(status.HasTask());
 			dummy.StartReconfigurationTask();
 			status = dummy.GetReconfigurationTaskStatus();
-			NUnit.Framework.Assert.IsTrue(status.HasTask());
+			Assert.True(status.HasTask());
 			NUnit.Framework.Assert.IsFalse(status.Stopped());
 			// An active reconfiguration task is running.
 			try
@@ -475,18 +475,18 @@ namespace Org.Apache.Hadoop.Conf
 					, e);
 			}
 			status = dummy.GetReconfigurationTaskStatus();
-			NUnit.Framework.Assert.IsTrue(status.HasTask());
+			Assert.True(status.HasTask());
 			NUnit.Framework.Assert.IsFalse(status.Stopped());
 			dummy.latch.CountDown();
 			WaitAsyncReconfigureTaskFinish(dummy);
 			status = dummy.GetReconfigurationTaskStatus();
-			NUnit.Framework.Assert.IsTrue(status.HasTask());
-			NUnit.Framework.Assert.IsTrue(status.Stopped());
+			Assert.True(status.HasTask());
+			Assert.True(status.Stopped());
 			// The first task has finished.
 			dummy.StartReconfigurationTask();
 			WaitAsyncReconfigureTaskFinish(dummy);
 			ReconfigurationTaskStatus status2 = dummy.GetReconfigurationTaskStatus();
-			NUnit.Framework.Assert.IsTrue(status2.GetStartTime() >= status.GetEndTime());
+			Assert.True(status2.GetStartTime() >= status.GetEndTime());
 			dummy.ShutdownReconfigurationTask();
 			try
 			{

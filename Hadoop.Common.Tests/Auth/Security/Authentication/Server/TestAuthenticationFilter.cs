@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		private const long TokenValiditySec = 1000;
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetConfiguration()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			Org.Mockito.Mockito.When(config.GetInitParameterNames()).ThenReturn(new Vector<string
 				>(Arrays.AsList("a")).GetEnumerator());
 			Properties props = filter.GetConfiguration(string.Empty, config);
-			NUnit.Framework.Assert.AreEqual("A", props.GetProperty("a"));
+			Assert.Equal("A", props.GetProperty("a"));
 			config = Org.Mockito.Mockito.Mock<FilterConfig>();
 			Org.Mockito.Mockito.When(config.GetInitParameter(AuthenticationFilter.ConfigPrefix
 				)).ThenReturn("foo");
@@ -38,11 +38,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			Org.Mockito.Mockito.When(config.GetInitParameterNames()).ThenReturn(new Vector<string
 				>(Arrays.AsList("foo.a")).GetEnumerator());
 			props = filter.GetConfiguration("foo.", config);
-			NUnit.Framework.Assert.AreEqual("A", props.GetProperty("a"));
+			Assert.Equal("A", props.GetProperty("a"));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitEmpty()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			catch (ServletException ex)
 			{
 				// Expected
-				NUnit.Framework.Assert.AreEqual("Authentication type must be specified: simple|kerberos|<class>"
+				Assert.Equal("Authentication type must be specified: simple|kerberos|<class>"
 					, ex.Message);
 			}
 			catch (Exception)
@@ -149,7 +149,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFallbackToRandomSecretProvider()
 		{
 			// minimal configuration & simple auth handler (Pseudo)
@@ -169,13 +169,13 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					)).ThenReturn(null);
 				Org.Mockito.Mockito.When(config.GetServletContext()).ThenReturn(context);
 				filter.Init(config);
-				NUnit.Framework.Assert.AreEqual(typeof(PseudoAuthenticationHandler), filter.GetAuthenticationHandler
+				Assert.Equal(typeof(PseudoAuthenticationHandler), filter.GetAuthenticationHandler
 					().GetType());
-				NUnit.Framework.Assert.IsTrue(filter.IsRandomSecret());
+				Assert.True(filter.IsRandomSecret());
 				NUnit.Framework.Assert.IsFalse(filter.IsCustomSignerSecretProvider());
 				NUnit.Framework.Assert.IsNull(filter.GetCookieDomain());
 				NUnit.Framework.Assert.IsNull(filter.GetCookiePath());
-				NUnit.Framework.Assert.AreEqual(TokenValiditySec, filter.GetValidity());
+				Assert.Equal(TokenValiditySec, filter.GetValidity());
 			}
 			finally
 			{
@@ -184,7 +184,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInit()
 		{
 			// custom secret as inline
@@ -202,7 +202,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				Org.Mockito.Mockito.When(config.GetServletContext()).ThenReturn(context);
 				filter.Init(config);
 				NUnit.Framework.Assert.IsFalse(filter.IsRandomSecret());
-				NUnit.Framework.Assert.IsTrue(filter.IsCustomSignerSecretProvider());
+				Assert.True(filter.IsCustomSignerSecretProvider());
 			}
 			finally
 			{
@@ -256,8 +256,8 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					, AuthenticationFilter.CookiePath)).GetEnumerator());
 				GetMockedServletContextWithStringSigner(config);
 				filter.Init(config);
-				NUnit.Framework.Assert.AreEqual(".foo.com", filter.GetCookieDomain());
-				NUnit.Framework.Assert.AreEqual("/bar", filter.GetCookiePath());
+				Assert.Equal(".foo.com", filter.GetCookieDomain());
+				Assert.Equal("/bar", filter.GetCookiePath());
 			}
 			finally
 			{
@@ -278,13 +278,13 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					());
 				GetMockedServletContextWithStringSigner(config);
 				filter.Init(config);
-				NUnit.Framework.Assert.IsTrue(TestAuthenticationFilter.DummyAuthenticationHandler
+				Assert.True(TestAuthenticationFilter.DummyAuthenticationHandler
 					.init);
 			}
 			finally
 			{
 				filter.Destroy();
-				NUnit.Framework.Assert.IsTrue(TestAuthenticationFilter.DummyAuthenticationHandler
+				Assert.True(TestAuthenticationFilter.DummyAuthenticationHandler
 					.destroy);
 			}
 			// kerberos auth handler
@@ -306,7 +306,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			finally
 			{
 				// Expected
-				NUnit.Framework.Assert.AreEqual(typeof(KerberosAuthenticationHandler), filter.GetAuthenticationHandler
+				Assert.Equal(typeof(KerberosAuthenticationHandler), filter.GetAuthenticationHandler
 					().GetType());
 				filter.Destroy();
 			}
@@ -335,7 +335,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitCaseSensitivity()
 		{
 			// minimal configuration & simple auth handler (Pseudo)
@@ -352,7 +352,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					)).GetEnumerator());
 				GetMockedServletContextWithStringSigner(config);
 				filter.Init(config);
-				NUnit.Framework.Assert.AreEqual(typeof(PseudoAuthenticationHandler), filter.GetAuthenticationHandler
+				Assert.Equal(typeof(PseudoAuthenticationHandler), filter.GetAuthenticationHandler
 					().GetType());
 			}
 			finally
@@ -362,7 +362,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetRequestURL()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -382,7 +382,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				Org.Mockito.Mockito.When(request.GetRequestURL()).ThenReturn(new StringBuilder("http://foo:8080/bar"
 					));
 				Org.Mockito.Mockito.When(request.GetQueryString()).ThenReturn("a=A&b=B");
-				NUnit.Framework.Assert.AreEqual("http://foo:8080/bar?a=A&b=B", filter.GetRequestURL
+				Assert.Equal("http://foo:8080/bar?a=A&b=B", filter.GetRequestURL
 					(request));
 			}
 			finally
@@ -392,7 +392,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetToken()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -421,7 +421,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				Org.Mockito.Mockito.When(request.GetCookies()).ThenReturn(new Cookie[] { cookie }
 					);
 				AuthenticationToken newToken = filter.GetToken(request);
-				NUnit.Framework.Assert.AreEqual(token.ToString(), newToken.ToString());
+				Assert.Equal(token.ToString(), newToken.ToString());
 			}
 			finally
 			{
@@ -430,7 +430,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetTokenExpired()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -469,12 +469,12 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				}
 				catch (AuthenticationException ex)
 				{
-					NUnit.Framework.Assert.AreEqual("AuthenticationToken expired", ex.Message);
+					Assert.Equal("AuthenticationToken expired", ex.Message);
 					failed = true;
 				}
 				finally
 				{
-					NUnit.Framework.Assert.IsTrue("token not expired", failed);
+					Assert.True("token not expired", failed);
 				}
 			}
 			finally
@@ -484,7 +484,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetTokenInvalidType()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -522,12 +522,12 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				}
 				catch (AuthenticationException ex)
 				{
-					NUnit.Framework.Assert.AreEqual("Invalid AuthenticationToken type", ex.Message);
+					Assert.Equal("Invalid AuthenticationToken type", ex.Message);
 					failed = true;
 				}
 				finally
 				{
-					NUnit.Framework.Assert.IsTrue("token not invalid type", failed);
+					Assert.True("token not invalid type", failed);
 				}
 			}
 			finally
@@ -553,7 +553,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterNotAuthenticated()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -664,7 +664,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				{
 					string v = cookieMap[AuthenticatedURL.AuthCookie];
 					NUnit.Framework.Assert.IsNotNull("cookie missing", v);
-					NUnit.Framework.Assert.IsTrue(v.Contains("u=") && v.Contains("p=") && v.Contains(
+					Assert.True(v.Contains("u=") && v.Contains("p=") && v.Contains(
 						"t=") && v.Contains("e=") && v.Contains("s="));
 					Org.Mockito.Mockito.Verify(chain).DoFilter(Org.Mockito.Mockito.Any<ServletRequest
 						>(), Org.Mockito.Mockito.Any<ServletResponse>());
@@ -680,8 +680,8 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					Assert.AssertThat(token.GetExpires(), CoreMatchers.Not(0L));
 					if (withDomainPath)
 					{
-						NUnit.Framework.Assert.AreEqual(".foo.com", cookieMap["Domain"]);
-						NUnit.Framework.Assert.AreEqual("/bar", cookieMap["Path"]);
+						Assert.Equal(".foo.com", cookieMap["Domain"]);
+						Assert.Equal("/bar", cookieMap["Path"]);
 					}
 					else
 					{
@@ -736,35 +736,35 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthentication()
 		{
 			_testDoFilterAuthentication(false, false, false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthenticationImmediateExpiration()
 		{
 			_testDoFilterAuthentication(false, false, true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthenticationWithInvalidToken()
 		{
 			_testDoFilterAuthentication(false, true, false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthenticationWithDomainPath()
 		{
 			_testDoFilterAuthentication(true, false, false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthenticated()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -818,14 +818,14 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			{
 				object[] args = invocation.GetArguments();
 				HttpServletRequest request = (HttpServletRequest)args[0];
-				NUnit.Framework.Assert.AreEqual("u", request.GetRemoteUser());
-				NUnit.Framework.Assert.AreEqual("p", request.GetUserPrincipal().GetName());
+				Assert.Equal("u", request.GetRemoteUser());
+				Assert.Equal("p", request.GetUserPrincipal().GetName());
 				return null;
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthenticationFailure()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();
@@ -861,7 +861,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					.Eq("WWW-Authenticate"), Org.Mockito.Mockito.AnyString());
 				string value = cookieMap[AuthenticatedURL.AuthCookie];
 				NUnit.Framework.Assert.IsNotNull("cookie missing", value);
-				NUnit.Framework.Assert.AreEqual(string.Empty, value);
+				Assert.Equal(string.Empty, value);
 			}
 			finally
 			{
@@ -902,7 +902,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthenticatedExpired()
 		{
 			string secret = "secret";
@@ -962,9 +962,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				.ScUnauthorized), Org.Mockito.Mockito.AnyString());
 			Org.Mockito.Mockito.Verify(chain, Org.Mockito.Mockito.Never()).DoFilter(Org.Mockito.Mockito
 				.Any<ServletRequest>(), Org.Mockito.Mockito.Any<ServletResponse>());
-			NUnit.Framework.Assert.IsTrue("cookie is missing", cookieMap.Contains(AuthenticatedURL
+			Assert.True("cookie is missing", cookieMap.Contains(AuthenticatedURL
 				.AuthCookie));
-			NUnit.Framework.Assert.AreEqual(string.Empty, cookieMap[AuthenticatedURL.AuthCookie
+			Assert.Equal(string.Empty, cookieMap[AuthenticatedURL.AuthCookie
 				]);
 		}
 
@@ -987,7 +987,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDoFilterAuthenticatedInvalidType()
 		{
 			string secret = "secret";
@@ -1034,7 +1034,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestManagementOperation()
 		{
 			AuthenticationFilter filter = new AuthenticationFilter();

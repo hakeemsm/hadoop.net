@@ -36,17 +36,17 @@ namespace Org.Apache.Hadoop.FS
 
 		private void CheckDeleteOnExitData(int size, FileContext fc, params Path[] paths)
 		{
-			NUnit.Framework.Assert.AreEqual(size, FileContext.DeleteOnExit.Count);
+			Assert.Equal(size, FileContext.DeleteOnExit.Count);
 			ICollection<Path> set = FileContext.DeleteOnExit[fc];
-			NUnit.Framework.Assert.AreEqual(paths.Length, (set == null ? 0 : set.Count));
+			Assert.Equal(paths.Length, (set == null ? 0 : set.Count));
 			foreach (Path path in paths)
 			{
-				NUnit.Framework.Assert.IsTrue(set.Contains(path));
+				Assert.True(set.Contains(path));
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteOnExit()
 		{
 			// Create deleteOnExit entries
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.FS
 			fc.DeleteOnExit(file1);
 			CheckDeleteOnExitData(1, fc, file1);
 			// Ensure shutdown hook is added
-			NUnit.Framework.Assert.IsTrue(ShutdownHookManager.Get().HasShutdownHook(FileContext
+			Assert.True(ShutdownHookManager.Get().HasShutdownHook(FileContext
 				.Finalizer));
 			Path file2 = helper.GetTestRootPath(fc, "dir1/file2");
 			FileContextTestHelper.CreateFile(fc, file2, numBlocks, blockSize);

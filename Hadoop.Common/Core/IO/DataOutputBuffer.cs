@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.IO
 {
 	/// <summary>
 	/// A reusable
-	/// <see cref="System.IO.DataOutput"/>
+	/// <see cref="System.IO.BinaryWriter"/>
 	/// implementation that writes to an in-memory
 	/// buffer.
 	/// <p>This saves memory over creating a new DataOutputStream and
@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.IO
 	/// DataOutputBuffer buffer = new DataOutputBuffer();
 	/// while (... loop condition ...) {
 	/// buffer.reset();
-	/// ... write buffer using DataOutput methods ...
+	/// ... write buffer using BinaryWriter methods ...
 	/// byte[] data = buffer.getData();
 	/// int dataLength = buffer.getLength();
 	/// ... write data to its ultimate destination ...

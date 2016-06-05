@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 	{
 		private static readonly Log Log = LogFactory.GetLog(typeof(TestMetricsCache));
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUpdate()
 		{
 			MetricsCache cache = new MetricsCache();
@@ -37,13 +37,13 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 			Org.Mockito.Mockito.Verify(mr).Name();
 			Org.Mockito.Mockito.Verify(mr).Tags();
 			Org.Mockito.Mockito.Verify(mr).Metrics();
-			NUnit.Framework.Assert.AreEqual("same record size", cr.Metrics().Count, ((ICollection
+			Assert.Equal("same record size", cr.Metrics().Count, ((ICollection
 				<AbstractMetric>)mr.Metrics()).Count);
-			NUnit.Framework.Assert.AreEqual("same metric value", 0, cr.GetMetric("m"));
+			Assert.Equal("same metric value", 0, cr.GetMetric("m"));
 			MetricsRecord mr2 = MakeRecord("r", Arrays.AsList(MakeTag("t", "tv")), Arrays.AsList
 				(MakeMetric("m", 2), MakeMetric("m2", 42)));
 			cr = cache.Update(mr2);
-			NUnit.Framework.Assert.AreEqual("contains 3 metric", 3, cr.Metrics().Count);
+			Assert.Equal("contains 3 metric", 3, cr.Metrics().Count);
 			CheckMetricValue("updated metric value", cr, "m", 2);
 			CheckMetricValue("old metric value", cr, "m1", 1);
 			CheckMetricValue("new metric value", cr, "m2", 42);
@@ -52,18 +52,18 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 			// different tag value
 			cr = cache.Update(mr3);
 			// should get a new record
-			NUnit.Framework.Assert.AreEqual("contains 1 metric", 1, cr.Metrics().Count);
+			Assert.Equal("contains 1 metric", 1, cr.Metrics().Count);
 			CheckMetricValue("updated metric value", cr, "m3", 3);
 			// tags cache should be empty so far
-			NUnit.Framework.Assert.AreEqual("no tags", 0, cr.Tags().Count);
+			Assert.Equal("no tags", 0, cr.Tags().Count);
 			// until now
 			cr = cache.Update(mr3, true);
-			NUnit.Framework.Assert.AreEqual("Got 1 tag", 1, cr.Tags().Count);
-			NUnit.Framework.Assert.AreEqual("Tag value", "tv3", cr.GetTag("t"));
+			Assert.Equal("Got 1 tag", 1, cr.Tags().Count);
+			Assert.Equal("Tag value", "tv3", cr.GetTag("t"));
 			CheckMetricValue("Metric value", cr, "m3", 3);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGet()
 		{
 			MetricsCache cache = new MetricsCache();
@@ -75,22 +75,22 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 			MetricsCache.Record cr = cache.Get("r", mr.Tags());
 			Log.Debug("tags=" + mr.Tags() + " cr=" + cr);
 			NUnit.Framework.Assert.IsNotNull("Got record", cr);
-			NUnit.Framework.Assert.AreEqual("contains 1 metric", 1, cr.Metrics().Count);
+			Assert.Equal("contains 1 metric", 1, cr.Metrics().Count);
 			CheckMetricValue("new metric value", cr, "m", 1);
 		}
 
 		/// <summary>Make sure metrics tag has a sane hashCode impl</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullTag()
 		{
 			MetricsCache cache = new MetricsCache();
 			MetricsRecord mr = MakeRecord("r", Arrays.AsList(MakeTag("t", null)), Arrays.AsList
 				(MakeMetric("m", 0), MakeMetric("m1", 1)));
 			MetricsCache.Record cr = cache.Update(mr);
-			NUnit.Framework.Assert.IsTrue("t value should be null", null == cr.GetTag("t"));
+			Assert.True("t value should be null", null == cr.GetTag("t"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOverflow()
 		{
 			MetricsCache cache = new MetricsCache();
@@ -112,9 +112,9 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 		private void CheckMetricValue(string description, MetricsCache.Record cr, string 
 			key, Number val)
 		{
-			NUnit.Framework.Assert.AreEqual(description, val, cr.GetMetric(key));
+			Assert.Equal(description, val, cr.GetMetric(key));
 			NUnit.Framework.Assert.IsNotNull("metric not null", cr.GetMetricInstance(key));
-			NUnit.Framework.Assert.AreEqual(description, val, cr.GetMetricInstance(key).Value
+			Assert.Equal(description, val, cr.GetMetricInstance(key).Value
 				());
 		}
 

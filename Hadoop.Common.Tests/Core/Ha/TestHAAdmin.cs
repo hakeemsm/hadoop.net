@@ -55,34 +55,34 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAdminUsage()
 		{
-			NUnit.Framework.Assert.AreEqual(-1, RunTool());
+			Assert.Equal(-1, RunTool());
 			AssertOutputContains("Usage:");
 			AssertOutputContains("-transitionToActive");
-			NUnit.Framework.Assert.AreEqual(-1, RunTool("badCommand"));
+			Assert.Equal(-1, RunTool("badCommand"));
 			AssertOutputContains("Bad command 'badCommand'");
-			NUnit.Framework.Assert.AreEqual(-1, RunTool("-badCommand"));
+			Assert.Equal(-1, RunTool("-badCommand"));
 			AssertOutputContains("badCommand: Unknown");
 			// valid command but not enough arguments
-			NUnit.Framework.Assert.AreEqual(-1, RunTool("-transitionToActive"));
+			Assert.Equal(-1, RunTool("-transitionToActive"));
 			AssertOutputContains("transitionToActive: incorrect number of arguments");
-			NUnit.Framework.Assert.AreEqual(-1, RunTool("-transitionToActive", "x", "y"));
+			Assert.Equal(-1, RunTool("-transitionToActive", "x", "y"));
 			AssertOutputContains("transitionToActive: incorrect number of arguments");
-			NUnit.Framework.Assert.AreEqual(-1, RunTool("-failover"));
+			Assert.Equal(-1, RunTool("-failover"));
 			AssertOutputContains("failover: incorrect arguments");
 			AssertOutputContains("failover: incorrect arguments");
-			NUnit.Framework.Assert.AreEqual(-1, RunTool("-failover", "foo:1234"));
+			Assert.Equal(-1, RunTool("-failover", "foo:1234"));
 			AssertOutputContains("failover: incorrect arguments");
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHelp()
 		{
-			NUnit.Framework.Assert.AreEqual(0, RunTool("-help"));
-			NUnit.Framework.Assert.AreEqual(0, RunTool("-help", "transitionToActive"));
+			Assert.Equal(0, RunTool("-help"));
+			Assert.Equal(0, RunTool("-help", "transitionToActive"));
 			AssertOutputContains("Transitions the service into Active");
 		}
 

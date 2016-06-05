@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.IO
 			internal int state = Random.Next();
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				@out.WriteInt(state);
 			}
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			Configuration conf = new Configuration();
 			Type test = WritableName.GetClass("long", conf);
-			NUnit.Framework.Assert.IsTrue(test != null);
+			Assert.True(test != null);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.IO
 			Configuration conf = new Configuration();
 			WritableName.SetName(typeof(TestWritableName.SimpleWritable), testName);
 			Type test = WritableName.GetClass(testName, conf);
-			NUnit.Framework.Assert.IsTrue(test.Equals(typeof(TestWritableName.SimpleWritable)
+			Assert.True(test.Equals(typeof(TestWritableName.SimpleWritable)
 				));
 		}
 
@@ -81,11 +81,11 @@ namespace Org.Apache.Hadoop.IO
 			WritableName.SetName(typeof(TestWritableName.SimpleWritable), testName);
 			WritableName.AddName(typeof(TestWritableName.SimpleWritable), altName);
 			Type test = WritableName.GetClass(altName, conf);
-			NUnit.Framework.Assert.IsTrue(test.Equals(typeof(TestWritableName.SimpleWritable)
+			Assert.True(test.Equals(typeof(TestWritableName.SimpleWritable)
 				));
 			// check original name still works
 			test = WritableName.GetClass(testName, conf);
-			NUnit.Framework.Assert.IsTrue(test.Equals(typeof(TestWritableName.SimpleWritable)
+			Assert.True(test.Equals(typeof(TestWritableName.SimpleWritable)
 				));
 		}
 
@@ -96,11 +96,11 @@ namespace Org.Apache.Hadoop.IO
 			try
 			{
 				WritableName.GetClass("unknown_junk", conf);
-				NUnit.Framework.Assert.IsTrue(false);
+				Assert.True(false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(e.Message.Matches(".*unknown_junk.*"));
+				Assert.True(e.Message.Matches(".*unknown_junk.*"));
 			}
 		}
 	}

@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.Record
 
 		// inherit javadoc
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			BinaryRecordOutput bout = BinaryRecordOutput.Get(@out);
 			this.Serialize(bout);

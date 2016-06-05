@@ -97,7 +97,7 @@ namespace Org.Apache.Hadoop.Conf
 		/// of occurrence of deprecated keys.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"></exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeprecation()
 		{
 			AddDeprecationToConfiguration();
@@ -113,13 +113,13 @@ namespace Org.Apache.Hadoop.Conf
 			conf.AddResource(fileResource);
 			// check if loading of old key with multiple new-key mappings actually loads
 			// the corresponding new keys. 
-			NUnit.Framework.Assert.AreEqual("p", conf.Get("P"));
-			NUnit.Framework.Assert.AreEqual("p", conf.Get("Q"));
-			NUnit.Framework.Assert.AreEqual("p", conf.Get("R"));
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("A"));
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("B"));
-			NUnit.Framework.Assert.AreEqual("d", conf.Get("C"));
-			NUnit.Framework.Assert.AreEqual("d", conf.Get("D"));
+			Assert.Equal("p", conf.Get("P"));
+			Assert.Equal("p", conf.Get("Q"));
+			Assert.Equal("p", conf.Get("R"));
+			Assert.Equal("a", conf.Get("A"));
+			Assert.Equal("a", conf.Get("B"));
+			Assert.Equal("d", conf.Get("C"));
+			Assert.Equal("d", conf.Get("D"));
 			@out = new BufferedWriter(new FileWriter(Config2));
 			StartConfig();
 			// load the old/new keys corresponding to the keys loaded before.
@@ -128,28 +128,28 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource1 = new Path(Config2);
 			conf.AddResource(fileResource1);
-			NUnit.Framework.Assert.AreEqual("b", conf.Get("A"));
-			NUnit.Framework.Assert.AreEqual("b", conf.Get("B"));
-			NUnit.Framework.Assert.AreEqual("c", conf.Get("C"));
-			NUnit.Framework.Assert.AreEqual("c", conf.Get("D"));
+			Assert.Equal("b", conf.Get("A"));
+			Assert.Equal("b", conf.Get("B"));
+			Assert.Equal("c", conf.Get("C"));
+			Assert.Equal("c", conf.Get("D"));
 			// set new key
 			conf.Set("N", "n");
 			// get old key
-			NUnit.Framework.Assert.AreEqual("n", conf.Get("M"));
+			Assert.Equal("n", conf.Get("M"));
 			// check consistency in get of old and new keys
-			NUnit.Framework.Assert.AreEqual(conf.Get("M"), conf.Get("N"));
+			Assert.Equal(conf.Get("M"), conf.Get("N"));
 			// set old key and then get new key(s).
 			conf.Set("M", "m");
-			NUnit.Framework.Assert.AreEqual("m", conf.Get("N"));
+			Assert.Equal("m", conf.Get("N"));
 			conf.Set("X", "x");
-			NUnit.Framework.Assert.AreEqual("x", conf.Get("X"));
-			NUnit.Framework.Assert.AreEqual("x", conf.Get("Y"));
-			NUnit.Framework.Assert.AreEqual("x", conf.Get("Z"));
+			Assert.Equal("x", conf.Get("X"));
+			Assert.Equal("x", conf.Get("Y"));
+			Assert.Equal("x", conf.Get("Z"));
 			// set new keys to different values
 			conf.Set("Y", "y");
 			conf.Set("Z", "z");
 			// get old key
-			NUnit.Framework.Assert.AreEqual("z", conf.Get("X"));
+			Assert.Equal("z", conf.Get("X"));
 		}
 
 		/// <summary>
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Conf
 		/// being marked as final and that are related to deprecation.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeprecationForFinalParameters()
 		{
 			AddDeprecationToConfiguration();
@@ -177,14 +177,14 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("A"));
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("B"));
-			NUnit.Framework.Assert.AreEqual("d", conf.Get("C"));
-			NUnit.Framework.Assert.AreEqual("d", conf.Get("D"));
-			NUnit.Framework.Assert.AreEqual("e", conf.Get("E"));
-			NUnit.Framework.Assert.AreEqual("e", conf.Get("F"));
-			NUnit.Framework.Assert.AreEqual("h", conf.Get("G"));
-			NUnit.Framework.Assert.AreEqual("h", conf.Get("H"));
+			Assert.Equal("a", conf.Get("A"));
+			Assert.Equal("a", conf.Get("B"));
+			Assert.Equal("d", conf.Get("C"));
+			Assert.Equal("d", conf.Get("D"));
+			Assert.Equal("e", conf.Get("E"));
+			Assert.Equal("e", conf.Get("F"));
+			Assert.Equal("h", conf.Get("G"));
+			Assert.Equal("h", conf.Get("H"));
 			NUnit.Framework.Assert.IsNull(conf.Get("I"));
 			NUnit.Framework.Assert.IsNull(conf.Get("J"));
 			@out = new BufferedWriter(new FileWriter(Config2));
@@ -198,14 +198,14 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource1 = new Path(Config2);
 			conf.AddResource(fileResource1);
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("A"));
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("B"));
-			NUnit.Framework.Assert.AreEqual("c", conf.Get("C"));
-			NUnit.Framework.Assert.AreEqual("c", conf.Get("D"));
-			NUnit.Framework.Assert.AreEqual("f", conf.Get("E"));
-			NUnit.Framework.Assert.AreEqual("f", conf.Get("F"));
-			NUnit.Framework.Assert.AreEqual("h", conf.Get("G"));
-			NUnit.Framework.Assert.AreEqual("h", conf.Get("H"));
+			Assert.Equal("a", conf.Get("A"));
+			Assert.Equal("a", conf.Get("B"));
+			Assert.Equal("c", conf.Get("C"));
+			Assert.Equal("c", conf.Get("D"));
+			Assert.Equal("f", conf.Get("E"));
+			Assert.Equal("f", conf.Get("F"));
+			Assert.Equal("h", conf.Get("G"));
+			Assert.Equal("h", conf.Get("H"));
 			NUnit.Framework.Assert.IsNull(conf.Get("I"));
 			NUnit.Framework.Assert.IsNull(conf.Get("J"));
 			@out = new BufferedWriter(new FileWriter(Config3));
@@ -225,49 +225,49 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("A"));
-			NUnit.Framework.Assert.AreEqual("a", conf.Get("B"));
-			NUnit.Framework.Assert.AreEqual("c", conf.Get("C"));
-			NUnit.Framework.Assert.AreEqual("c", conf.Get("D"));
-			NUnit.Framework.Assert.AreEqual("f", conf.Get("E"));
-			NUnit.Framework.Assert.AreEqual("f", conf.Get("F"));
-			NUnit.Framework.Assert.AreEqual("h", conf.Get("G"));
-			NUnit.Framework.Assert.AreEqual("h", conf.Get("H"));
+			Assert.Equal("a", conf.Get("A"));
+			Assert.Equal("a", conf.Get("B"));
+			Assert.Equal("c", conf.Get("C"));
+			Assert.Equal("c", conf.Get("D"));
+			Assert.Equal("f", conf.Get("E"));
+			Assert.Equal("f", conf.Get("F"));
+			Assert.Equal("h", conf.Get("G"));
+			Assert.Equal("h", conf.Get("H"));
 			NUnit.Framework.Assert.IsNull(conf.Get("I"));
 			NUnit.Framework.Assert.IsNull(conf.Get("J"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetBeforeAndGetAfterDeprecation()
 		{
 			Configuration conf = new Configuration();
 			conf.Set("oldkey", "hello");
 			Configuration.AddDeprecation("oldkey", new string[] { "newkey" });
-			NUnit.Framework.Assert.AreEqual("hello", conf.Get("newkey"));
+			Assert.Equal("hello", conf.Get("newkey"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetBeforeAndGetAfterDeprecationAndDefaults()
 		{
 			Configuration conf = new Configuration();
 			conf.Set("tests.fake-default.old-key", "hello");
 			Configuration.AddDeprecation("tests.fake-default.old-key", new string[] { "tests.fake-default.new-key"
 				 });
-			NUnit.Framework.Assert.AreEqual("hello", conf.Get("tests.fake-default.new-key"));
+			Assert.Equal("hello", conf.Get("tests.fake-default.new-key"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIteratorWithDeprecatedKeys()
 		{
 			Configuration conf = new Configuration();
 			Configuration.AddDeprecation("dK", new string[] { "nK" });
 			conf.Set("k", "v");
 			conf.Set("dK", "V");
-			NUnit.Framework.Assert.AreEqual("V", conf.Get("dK"));
-			NUnit.Framework.Assert.AreEqual("V", conf.Get("nK"));
+			Assert.Equal("V", conf.Get("dK"));
+			Assert.Equal("V", conf.Get("nK"));
 			conf.Set("nK", "VV");
-			NUnit.Framework.Assert.AreEqual("VV", conf.Get("dK"));
-			NUnit.Framework.Assert.AreEqual("VV", conf.Get("nK"));
+			Assert.Equal("VV", conf.Get("dK"));
+			Assert.Equal("VV", conf.Get("nK"));
 			bool kFound = false;
 			bool dKFound = false;
 			bool nKFound = false;
@@ -275,39 +275,39 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				if (entry.Key.Equals("k"))
 				{
-					NUnit.Framework.Assert.AreEqual("v", entry.Value);
+					Assert.Equal("v", entry.Value);
 					kFound = true;
 				}
 				if (entry.Key.Equals("dK"))
 				{
-					NUnit.Framework.Assert.AreEqual("VV", entry.Value);
+					Assert.Equal("VV", entry.Value);
 					dKFound = true;
 				}
 				if (entry.Key.Equals("nK"))
 				{
-					NUnit.Framework.Assert.AreEqual("VV", entry.Value);
+					Assert.Equal("VV", entry.Value);
 					nKFound = true;
 				}
 			}
-			NUnit.Framework.Assert.IsTrue("regular Key not found", kFound);
-			NUnit.Framework.Assert.IsTrue("deprecated Key not found", dKFound);
-			NUnit.Framework.Assert.IsTrue("new Key not found", nKFound);
+			Assert.True("regular Key not found", kFound);
+			Assert.True("deprecated Key not found", dKFound);
+			Assert.True("new Key not found", nKFound);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUnsetWithDeprecatedKeys()
 		{
 			Configuration conf = new Configuration();
 			Configuration.AddDeprecation("dK", new string[] { "nK" });
 			conf.Set("nK", "VV");
-			NUnit.Framework.Assert.AreEqual("VV", conf.Get("dK"));
-			NUnit.Framework.Assert.AreEqual("VV", conf.Get("nK"));
+			Assert.Equal("VV", conf.Get("dK"));
+			Assert.Equal("VV", conf.Get("nK"));
 			conf.Unset("dK");
 			NUnit.Framework.Assert.IsNull(conf.Get("dK"));
 			NUnit.Framework.Assert.IsNull(conf.Get("nK"));
 			conf.Set("nK", "VV");
-			NUnit.Framework.Assert.AreEqual("VV", conf.Get("dK"));
-			NUnit.Framework.Assert.AreEqual("VV", conf.Get("nK"));
+			Assert.Equal("VV", conf.Get("dK"));
+			Assert.Equal("VV", conf.Get("nK"));
 			conf.Unset("nK");
 			NUnit.Framework.Assert.IsNull(conf.Get("dK"));
 			NUnit.Framework.Assert.IsNull(conf.Get("nK"));
@@ -407,7 +407,7 @@ namespace Org.Apache.Hadoop.Conf
 						 ".new";
 					string value = "value." + threadIndex + "." + i;
 					conf.Set(testNewKey, value);
-					NUnit.Framework.Assert.AreEqual(value, conf.Get(testNewKey));
+					Assert.Equal(value, conf.Get(testNewKey));
 				}
 				return null;
 			}
@@ -420,7 +420,7 @@ namespace Org.Apache.Hadoop.Conf
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoFalseDeprecationWarning()
 		{
 			Configuration conf = new Configuration();
@@ -428,25 +428,25 @@ namespace Org.Apache.Hadoop.Conf
 			conf.Set("BB", "bb");
 			conf.Get("BB");
 			conf.WriteXml(new ByteArrayOutputStream());
-			NUnit.Framework.Assert.AreEqual(false, Configuration.HasWarnedDeprecation("AA"));
+			Assert.Equal(false, Configuration.HasWarnedDeprecation("AA"));
 			conf.Set("AA", "aa");
-			NUnit.Framework.Assert.AreEqual(true, Configuration.HasWarnedDeprecation("AA"));
+			Assert.Equal(true, Configuration.HasWarnedDeprecation("AA"));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeprecationSetUnset()
 		{
 			AddDeprecationToConfiguration();
 			Configuration conf = new Configuration();
 			//"X" is deprecated by "Y" and "Z"
 			conf.Set("Y", "y");
-			NUnit.Framework.Assert.AreEqual("y", conf.Get("Z"));
+			Assert.Equal("y", conf.Get("Z"));
 			conf.Set("X", "x");
-			NUnit.Framework.Assert.AreEqual("x", conf.Get("Z"));
+			Assert.Equal("x", conf.Get("Z"));
 			conf.Unset("Y");
-			NUnit.Framework.Assert.AreEqual(null, conf.Get("Z"));
-			NUnit.Framework.Assert.AreEqual(null, conf.Get("X"));
+			Assert.Equal(null, conf.Get("Z"));
+			Assert.Equal(null, conf.Get("X"));
 		}
 	}
 }

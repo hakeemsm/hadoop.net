@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Http
 			protected override void DoGet(HttpServletRequest request, HttpServletResponse response
 				)
 			{
-				NUnit.Framework.Assert.AreEqual(63 * 1024, request.GetHeader("longheader").Length
+				Assert.Equal(63 * 1024, request.GetHeader("longheader").Length
 					);
 				response.SetStatus(HttpServletResponse.ScOk);
 			}
@@ -255,7 +255,7 @@ namespace Org.Apache.Hadoop.Http
 				sb.Append("a");
 			}
 			conn.SetRequestProperty("longheader", sb.ToString());
-			NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+			Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 		}
 	}
 }

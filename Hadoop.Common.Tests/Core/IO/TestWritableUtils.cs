@@ -23,10 +23,10 @@ namespace Org.Apache.Hadoop.IO
 				Log.Debug("Buffer = " + printer);
 			}
 			inbuf.Reset(buf.GetData(), 0, buf.GetLength());
-			NUnit.Framework.Assert.AreEqual(val, WritableUtils.ReadVInt(inbuf));
-			NUnit.Framework.Assert.AreEqual(vintlen, buf.GetLength());
-			NUnit.Framework.Assert.AreEqual(vintlen, WritableUtils.GetVIntSize(val));
-			NUnit.Framework.Assert.AreEqual(vintlen, WritableUtils.DecodeVIntSize(buf.GetData
+			Assert.Equal(val, WritableUtils.ReadVInt(inbuf));
+			Assert.Equal(vintlen, buf.GetLength());
+			Assert.Equal(vintlen, WritableUtils.GetVIntSize(val));
+			Assert.Equal(vintlen, WritableUtils.DecodeVIntSize(buf.GetData
 				()[0]));
 		}
 
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.IO
 				{
 					Fail("expected readVIntInRange to throw an exception");
 				}
-				NUnit.Framework.Assert.AreEqual(val, val2);
+				Assert.Equal(val, val2);
 			}
 			catch (IOException e)
 			{

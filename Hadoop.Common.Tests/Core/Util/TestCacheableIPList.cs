@@ -40,9 +40,9 @@ namespace Org.Apache.Hadoop.Util
 				, "10.113.221.221", "10.113.221.222" };
 			TestFileBasedIPList.CreateFileWithEntries("ips.txt", ips2);
 			Sharpen.Thread.Sleep(101);
-			NUnit.Framework.Assert.IsTrue("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
+			Assert.True("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
 				));
-			NUnit.Framework.Assert.IsTrue("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
+			Assert.True("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
 				));
 			TestFileBasedIPList.RemoveFile("ips.txt");
 		}
@@ -73,9 +73,9 @@ namespace Org.Apache.Hadoop.Util
 				, "10.113.221.221", "10.113.221.222" };
 			TestFileBasedIPList.CreateFileWithEntries("ips.txt", ips);
 			CacheableIPList cipl = new CacheableIPList(new FileBasedIPList("ips.txt"), 100);
-			NUnit.Framework.Assert.IsTrue("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
+			Assert.True("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
 				));
-			NUnit.Framework.Assert.IsTrue("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
+			Assert.True("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
 				));
 			TestFileBasedIPList.RemoveFile("ips.txt");
 			string[] ips2 = new string[] { "10.119.103.112", "10.221.102.0/23", "10.113.221.221"
@@ -116,9 +116,9 @@ namespace Org.Apache.Hadoop.Util
 				, "10.113.221.221", "10.113.221.222" };
 			TestFileBasedIPList.CreateFileWithEntries("ips.txt", ips2);
 			cipl.Refresh();
-			NUnit.Framework.Assert.IsTrue("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
+			Assert.True("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
 				));
-			NUnit.Framework.Assert.IsTrue("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
+			Assert.True("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
 				));
 			TestFileBasedIPList.RemoveFile("ips.txt");
 		}
@@ -149,9 +149,9 @@ namespace Org.Apache.Hadoop.Util
 				, "10.113.221.221", "10.113.221.222" };
 			TestFileBasedIPList.CreateFileWithEntries("ips.txt", ips);
 			CacheableIPList cipl = new CacheableIPList(new FileBasedIPList("ips.txt"), 100);
-			NUnit.Framework.Assert.IsTrue("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
+			Assert.True("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
 				));
-			NUnit.Framework.Assert.IsTrue("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
+			Assert.True("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
 				));
 			TestFileBasedIPList.RemoveFile("ips.txt");
 			string[] ips2 = new string[] { "10.119.103.112", "10.221.102.0/23", "10.113.221.221"

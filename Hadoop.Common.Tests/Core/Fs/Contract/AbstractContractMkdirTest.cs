@@ -25,7 +25,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 	public abstract class AbstractContractMkdirTest : AbstractFSContractTestBase
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkDirRmDir()
 		{
 			FileSystem fs = GetFileSystem();
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkDirRmRfDir()
 		{
 			Describe("create a directory then recursive delete it");
@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoMkdirOverFile()
 		{
 			Describe("try to mkdir over a file");
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirOverParentFile()
 		{
 			Describe("try to mkdir where a parent is a file");
@@ -125,16 +125,16 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirSlashHandling()
 		{
 			Describe("verify mkdir slash handling");
 			FileSystem fs = GetFileSystem();
 			// No trailing slash
-			NUnit.Framework.Assert.IsTrue(fs.Mkdirs(Path("testmkdir/a")));
+			Assert.True(fs.Mkdirs(Path("testmkdir/a")));
 			AssertPathExists("mkdir without trailing slash failed", Path("testmkdir/a"));
 			// With trailing slash
-			NUnit.Framework.Assert.IsTrue(fs.Mkdirs(Path("testmkdir/b/")));
+			Assert.True(fs.Mkdirs(Path("testmkdir/b/")));
 			AssertPathExists("mkdir with trailing slash failed", Path("testmkdir/b/"));
 			// Mismatched slashes
 			AssertPathExists("check path existence without trailing slash failed", Path("testmkdir/b"

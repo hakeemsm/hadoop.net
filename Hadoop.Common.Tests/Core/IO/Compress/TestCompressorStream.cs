@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		/// throws an IOEXception, outputStream
 		/// object was not getting closed.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClose()
 		{
 			Org.Apache.Hadoop.IO.Compress.TestCompressorStream testCompressorStream = new Org.Apache.Hadoop.IO.Compress.TestCompressorStream
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			{
 				System.Console.Out.WriteLine("Expected IOException");
 			}
-			NUnit.Framework.Assert.IsTrue("closed shoud be true", ((CompressorStream)testCompressorStream
+			Assert.True("closed shoud be true", ((CompressorStream)testCompressorStream
 				).closed);
 			//cleanup after test case
 			file.Delete();

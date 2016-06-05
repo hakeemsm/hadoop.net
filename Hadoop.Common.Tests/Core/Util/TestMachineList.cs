@@ -25,40 +25,40 @@ namespace Org.Apache.Hadoop.Util
 
 		private static string HostnameIpCidrList = "host1,10.222.0.0/16,10.119.103.110,10.119.103.112,10.119.103.114,10.241.23.0/24,host4,";
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWildCard()
 		{
 			//create MachineList with a list of of IPs
 			MachineList ml = new MachineList("*");
 			//test for inclusion with any IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.119.103.112"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("1.2.3.4"));
+			Assert.True(ml.Includes("10.119.103.112"));
+			Assert.True(ml.Includes("1.2.3.4"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIPList()
 		{
 			//create MachineList with a list of of IPs
 			MachineList ml = new MachineList(IpList);
 			//test for inclusion with an known IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.119.103.112"));
+			Assert.True(ml.Includes("10.119.103.112"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIPListSpaces()
 		{
 			//create MachineList with a ip string which has duplicate ip and spaces
 			MachineList ml = new MachineList(IpListSpaces);
 			//test for inclusion with an known IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.119.103.112"));
+			Assert.True(ml.Includes("10.119.103.112"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStaticIPHostNameList()
 		{
 			//create MachineList with a list of of Hostnames
@@ -73,13 +73,13 @@ namespace Org.Apache.Hadoop.Util
 			MachineList ml = new MachineList(StringUtils.GetTrimmedStringCollection(HostList)
 				, addressFactory);
 			//test for inclusion with an known IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("1.2.3.4"));
+			Assert.True(ml.Includes("1.2.3.4"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("1.2.3.5"));
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostNames()
 		{
 			//create MachineList with a list of of Hostnames
@@ -102,13 +102,13 @@ namespace Org.Apache.Hadoop.Util
 			MachineList ml = new MachineList(StringUtils.GetTrimmedStringCollection(HostList)
 				, addressFactory);
 			//test for inclusion with an known IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("1.2.3.4"));
+			Assert.True(ml.Includes("1.2.3.4"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("1.2.3.5"));
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostNamesReverserIpMatch()
 		{
 			//create MachineList with a list of of Hostnames
@@ -131,69 +131,69 @@ namespace Org.Apache.Hadoop.Util
 			MachineList ml = new MachineList(StringUtils.GetTrimmedStringCollection(HostList)
 				, addressFactory);
 			//test for inclusion with an known IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("1.2.3.4"));
+			Assert.True(ml.Includes("1.2.3.4"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("1.2.3.5"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCIDRs()
 		{
 			//create MachineList with a list of of ip ranges specified in CIDR format
 			MachineList ml = new MachineList(CidrList);
 			//test for inclusion/exclusion 
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.221.255.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.1"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.254"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.255"));
+			Assert.True(ml.Includes("10.222.0.0"));
+			Assert.True(ml.Includes("10.222.0.1"));
+			Assert.True(ml.Includes("10.222.0.255"));
+			Assert.True(ml.Includes("10.222.255.0"));
+			Assert.True(ml.Includes("10.222.255.254"));
+			Assert.True(ml.Includes("10.222.255.255"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.223.0.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.1"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.254"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.255"));
+			Assert.True(ml.Includes("10.241.23.0"));
+			Assert.True(ml.Includes("10.241.23.1"));
+			Assert.True(ml.Includes("10.241.23.254"));
+			Assert.True(ml.Includes("10.241.23.255"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCIDRWith16bitmask()
 		{
 			//create MachineList with a list of of ip ranges specified in CIDR format
 			MachineList ml = new MachineList(CidrList1);
 			//test for inclusion/exclusion 
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.221.255.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.1"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.254"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.255"));
+			Assert.True(ml.Includes("10.222.0.0"));
+			Assert.True(ml.Includes("10.222.0.1"));
+			Assert.True(ml.Includes("10.222.0.255"));
+			Assert.True(ml.Includes("10.222.255.0"));
+			Assert.True(ml.Includes("10.222.255.254"));
+			Assert.True(ml.Includes("10.222.255.255"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.223.0.0"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCIDRWith8BitMask()
 		{
 			//create MachineList with a list of of ip ranges specified in CIDR format
 			MachineList ml = new MachineList(CidrList2);
 			//test for inclusion/exclusion  
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.241.22.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.1"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.254"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.255"));
+			Assert.True(ml.Includes("10.241.23.0"));
+			Assert.True(ml.Includes("10.241.23.1"));
+			Assert.True(ml.Includes("10.241.23.254"));
+			Assert.True(ml.Includes("10.241.23.255"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.241.24.0"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 		}
 
 		//test invalid cidr
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidCIDR()
 		{
 			//create MachineList with an Invalid CIDR
@@ -213,58 +213,58 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		//
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIPandCIDRs()
 		{
 			//create MachineList with a list of of ip ranges and ip addresses
 			MachineList ml = new MachineList(IpCidrList);
 			//test for inclusion with an known IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.119.103.112"));
+			Assert.True(ml.Includes("10.119.103.112"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 			//CIDR Ranges
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.221.255.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.255"));
+			Assert.True(ml.Includes("10.222.0.0"));
+			Assert.True(ml.Includes("10.222.255.255"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.223.0.0"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.241.22.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.255"));
+			Assert.True(ml.Includes("10.241.23.0"));
+			Assert.True(ml.Includes("10.241.23.255"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.241.24.0"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHostNameIPandCIDRs()
 		{
 			//create MachineList with a mix of ip addresses , hostnames and ip ranges
 			MachineList ml = new MachineList(HostnameIpCidrList);
 			//test for inclusion with an known IP
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.119.103.112"));
+			Assert.True(ml.Includes("10.119.103.112"));
 			//test for exclusion with an unknown IP
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 			//CIDR Ranges
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.221.255.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.0.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.222.255.255"));
+			Assert.True(ml.Includes("10.222.0.0"));
+			Assert.True(ml.Includes("10.222.255.255"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.223.0.0"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.241.22.255"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.0"));
-			NUnit.Framework.Assert.IsTrue(ml.Includes("10.241.23.255"));
+			Assert.True(ml.Includes("10.241.23.0"));
+			Assert.True(ml.Includes("10.241.23.255"));
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.241.24.0"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetCollection()
 		{
 			//create MachineList with a mix of ip addresses , hostnames and ip ranges
 			MachineList ml = new MachineList(HostnameIpCidrList);
 			ICollection<string> col = ml.GetCollection();
 			//test getCollectionton to return the full collection
-			NUnit.Framework.Assert.AreEqual(7, ml.GetCollection().Count);
+			Assert.Equal(7, ml.GetCollection().Count);
 			foreach (string item in StringUtils.GetTrimmedStringCollection(HostnameIpCidrList
 				))
 			{
-				NUnit.Framework.Assert.IsTrue(col.Contains(item));
+				Assert.True(col.Contains(item));
 			}
 		}
 	}

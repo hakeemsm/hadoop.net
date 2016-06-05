@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Cli
 			return "testConf.xml";
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public override void TestAll()
 		{
 			base.TestAll();

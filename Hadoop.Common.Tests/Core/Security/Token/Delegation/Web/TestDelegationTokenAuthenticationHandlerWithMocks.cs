@@ -84,7 +84,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestManagementOperations()
 		{
 			TestNonManagementOperation();
@@ -101,10 +101,10 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			HttpServletRequest request = Org.Mockito.Mockito.Mock<HttpServletRequest>();
 			Org.Mockito.Mockito.When(request.GetParameter(DelegationTokenAuthenticator.OpParam
 				)).ThenReturn(null);
-			NUnit.Framework.Assert.IsTrue(handler.ManagementOperation(null, request, null));
+			Assert.True(handler.ManagementOperation(null, request, null));
 			Org.Mockito.Mockito.When(request.GetParameter(DelegationTokenAuthenticator.OpParam
 				)).ThenReturn("CREATE");
-			NUnit.Framework.Assert.IsTrue(handler.ManagementOperation(null, request, null));
+			Assert.True(handler.ManagementOperation(null, request, null));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -171,8 +171,8 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			pwriter.Close();
 			string responseOutput = writer.ToString();
 			string tokenLabel = DelegationTokenAuthenticator.DelegationTokenJson;
-			NUnit.Framework.Assert.IsTrue(responseOutput.Contains(tokenLabel));
-			NUnit.Framework.Assert.IsTrue(responseOutput.Contains(DelegationTokenAuthenticator
+			Assert.True(responseOutput.Contains(tokenLabel));
+			Assert.True(responseOutput.Contains(DelegationTokenAuthenticator
 				.DelegationTokenUrlStringJson));
 			ObjectMapper jsonMapper = new ObjectMapper();
 			IDictionary json = jsonMapper.ReadValue<IDictionary>(responseOutput);
@@ -184,7 +184,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				<DelegationTokenIdentifier>();
 			dt.DecodeFromUrlString(tokenStr);
 			handler.GetTokenManager().VerifyToken(dt);
-			NUnit.Framework.Assert.AreEqual(expectedTokenKind, dt.GetKind());
+			Assert.Equal(expectedTokenKind, dt.GetKind());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -263,12 +263,12 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				));
 			Org.Mockito.Mockito.Verify(response).SetStatus(HttpServletResponse.ScOk);
 			pwriter.Close();
-			NUnit.Framework.Assert.IsTrue(writer.ToString().Contains("long"));
+			Assert.True(writer.ToString().Contains("long"));
 			handler.GetTokenManager().VerifyToken(dToken);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthenticate()
 		{
 			TestValidDelegationTokenQueryString();
@@ -288,11 +288,11 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			Org.Mockito.Mockito.When(request.GetQueryString()).ThenReturn(DelegationTokenAuthenticator
 				.DelegationParam + "=" + dToken.EncodeToUrlString());
 			AuthenticationToken token = handler.Authenticate(request, response);
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.GetCurrentUser().GetShortUserName
+			Assert.Equal(UserGroupInformation.GetCurrentUser().GetShortUserName
 				(), token.GetUserName());
-			NUnit.Framework.Assert.AreEqual(0, token.GetExpires());
-			NUnit.Framework.Assert.AreEqual(handler.GetType(), token.GetType());
-			NUnit.Framework.Assert.IsTrue(token.IsExpired());
+			Assert.Equal(0, token.GetExpires());
+			Assert.Equal(handler.GetType(), token.GetType());
+			Assert.True(token.IsExpired());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -306,11 +306,11 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			Org.Mockito.Mockito.When(request.GetHeader(Org.Mockito.Mockito.Eq(DelegationTokenAuthenticator
 				.DelegationTokenHeader))).ThenReturn(dToken.EncodeToUrlString());
 			AuthenticationToken token = handler.Authenticate(request, response);
-			NUnit.Framework.Assert.AreEqual(UserGroupInformation.GetCurrentUser().GetShortUserName
+			Assert.Equal(UserGroupInformation.GetCurrentUser().GetShortUserName
 				(), token.GetUserName());
-			NUnit.Framework.Assert.AreEqual(0, token.GetExpires());
-			NUnit.Framework.Assert.AreEqual(handler.GetType(), token.GetType());
-			NUnit.Framework.Assert.IsTrue(token.IsExpired());
+			Assert.Equal(0, token.GetExpires());
+			Assert.Equal(handler.GetType(), token.GetType());
+			Assert.True(token.IsExpired());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -325,7 +325,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				);
 			NUnit.Framework.Assert.IsNull(handler.Authenticate(request, response));
 			Org.Mockito.Mockito.Verify(response).SetStatus(HttpServletResponse.ScForbidden);
-			NUnit.Framework.Assert.IsTrue(writer.ToString().Contains("AuthenticationException"
+			Assert.True(writer.ToString().Contains("AuthenticationException"
 				));
 		}
 
@@ -340,7 +340,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			Org.Mockito.Mockito.When(response.GetWriter()).ThenReturn(new PrintWriter(writer)
 				);
 			NUnit.Framework.Assert.IsNull(handler.Authenticate(request, response));
-			NUnit.Framework.Assert.IsTrue(writer.ToString().Contains("AuthenticationException"
+			Assert.True(writer.ToString().Contains("AuthenticationException"
 				));
 		}
 	}

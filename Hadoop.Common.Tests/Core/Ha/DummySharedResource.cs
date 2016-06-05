@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.HA
 		{
 			lock (this)
 			{
-				NUnit.Framework.Assert.AreEqual(0, violations);
+				Assert.Equal(0, violations);
 			}
 		}
 	}

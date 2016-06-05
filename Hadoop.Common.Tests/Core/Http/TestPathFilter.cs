@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPathSpecFilters()
 		{
 			Configuration conf = new Configuration();
@@ -134,9 +134,9 @@ namespace Org.Apache.Hadoop.Http
 			//verify records
 			for (int i_2 = 0; i_2 < filteredUrls.Length; i_2++)
 			{
-				NUnit.Framework.Assert.IsTrue(Records.Remove(filteredUrls[i_2]));
+				Assert.True(Records.Remove(filteredUrls[i_2]));
 			}
-			NUnit.Framework.Assert.IsTrue(Records.IsEmpty());
+			Assert.True(Records.IsEmpty());
 		}
 	}
 }

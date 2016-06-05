@@ -15,7 +15,7 @@ namespace Org.Apache.Hadoop.IO.Serializer.Avro
 			AvroRecord before = new AvroRecord();
 			before.intField = 5;
 			AvroRecord after = SerializationTestUtil.TestSerialization(conf, before);
-			NUnit.Framework.Assert.AreEqual(before, after);
+			Assert.Equal(before, after);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.IO.Serializer.Avro
 			conf.Set(AvroReflectSerialization.AvroReflectPackages, before.GetType().Assembly.
 				GetName());
 			Record after = SerializationTestUtil.TestSerialization(conf, before);
-			NUnit.Framework.Assert.AreEqual(before, after);
+			Assert.Equal(before, after);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.IO.Serializer.Avro
 				GetName());
 			TestAvroSerialization.InnerRecord after = SerializationTestUtil.TestSerialization
 				(conf, before);
-			NUnit.Framework.Assert.AreEqual(before, after);
+			Assert.Equal(before, after);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -58,7 +58,7 @@ namespace Org.Apache.Hadoop.IO.Serializer.Avro
 			before.x = 10;
 			TestAvroSerialization.RefSerializable after = SerializationTestUtil.TestSerialization
 				(conf, before);
-			NUnit.Framework.Assert.AreEqual(before, after);
+			Assert.Equal(before, after);
 		}
 
 		public class InnerRecord

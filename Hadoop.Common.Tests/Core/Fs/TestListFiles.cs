@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Test when input path is a file</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFile()
 		{
 			fs.Mkdirs(TestDir);
@@ -89,23 +89,23 @@ namespace Org.Apache.Hadoop.FS
 			RemoteIterator<LocatedFileStatus> itor = fs.ListFiles(File1, true);
 			LocatedFileStatus stat = itor.Next();
 			NUnit.Framework.Assert.IsFalse(itor.HasNext());
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.AreEqual(FileLen, stat.GetLen());
-			NUnit.Framework.Assert.AreEqual(fs.MakeQualified(File1), stat.GetPath());
-			NUnit.Framework.Assert.AreEqual(1, stat.GetBlockLocations().Length);
+			Assert.True(stat.IsFile());
+			Assert.Equal(FileLen, stat.GetLen());
+			Assert.Equal(fs.MakeQualified(File1), stat.GetPath());
+			Assert.Equal(1, stat.GetBlockLocations().Length);
 			itor = fs.ListFiles(File1, false);
 			stat = itor.Next();
 			NUnit.Framework.Assert.IsFalse(itor.HasNext());
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.AreEqual(FileLen, stat.GetLen());
-			NUnit.Framework.Assert.AreEqual(fs.MakeQualified(File1), stat.GetPath());
-			NUnit.Framework.Assert.AreEqual(1, stat.GetBlockLocations().Length);
+			Assert.True(stat.IsFile());
+			Assert.Equal(FileLen, stat.GetLen());
+			Assert.Equal(fs.MakeQualified(File1), stat.GetPath());
+			Assert.Equal(1, stat.GetBlockLocations().Length);
 			fs.Delete(File1, true);
 		}
 
 		/// <summary>Test when input path is a directory</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDirectory()
 		{
 			fs.Mkdirs(Dir1);
@@ -119,17 +119,17 @@ namespace Org.Apache.Hadoop.FS
 			itor = fs.ListFiles(Dir1, true);
 			LocatedFileStatus stat = itor.Next();
 			NUnit.Framework.Assert.IsFalse(itor.HasNext());
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.AreEqual(FileLen, stat.GetLen());
-			NUnit.Framework.Assert.AreEqual(fs.MakeQualified(File2), stat.GetPath());
-			NUnit.Framework.Assert.AreEqual(1, stat.GetBlockLocations().Length);
+			Assert.True(stat.IsFile());
+			Assert.Equal(FileLen, stat.GetLen());
+			Assert.Equal(fs.MakeQualified(File2), stat.GetPath());
+			Assert.Equal(1, stat.GetBlockLocations().Length);
 			itor = fs.ListFiles(Dir1, false);
 			stat = itor.Next();
 			NUnit.Framework.Assert.IsFalse(itor.HasNext());
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.AreEqual(FileLen, stat.GetLen());
-			NUnit.Framework.Assert.AreEqual(fs.MakeQualified(File2), stat.GetPath());
-			NUnit.Framework.Assert.AreEqual(1, stat.GetBlockLocations().Length);
+			Assert.True(stat.IsFile());
+			Assert.Equal(FileLen, stat.GetLen());
+			Assert.Equal(fs.MakeQualified(File2), stat.GetPath());
+			Assert.Equal(1, stat.GetBlockLocations().Length);
 			// test more complicated directory
 			WriteFile(fs, File1, FileLen);
 			WriteFile(fs, File3, FileLen);
@@ -139,23 +139,23 @@ namespace Org.Apache.Hadoop.FS
 			filesToFind.AddItem(fs.MakeQualified(File3));
 			itor = fs.ListFiles(TestDir, true);
 			stat = itor.Next();
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.IsTrue("Path " + stat.GetPath() + " unexpected", filesToFind
+			Assert.True(stat.IsFile());
+			Assert.True("Path " + stat.GetPath() + " unexpected", filesToFind
 				.Remove(stat.GetPath()));
 			stat = itor.Next();
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.IsTrue("Path " + stat.GetPath() + " unexpected", filesToFind
+			Assert.True(stat.IsFile());
+			Assert.True("Path " + stat.GetPath() + " unexpected", filesToFind
 				.Remove(stat.GetPath()));
 			stat = itor.Next();
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.IsTrue("Path " + stat.GetPath() + " unexpected", filesToFind
+			Assert.True(stat.IsFile());
+			Assert.True("Path " + stat.GetPath() + " unexpected", filesToFind
 				.Remove(stat.GetPath()));
 			NUnit.Framework.Assert.IsFalse(itor.HasNext());
-			NUnit.Framework.Assert.IsTrue(filesToFind.IsEmpty());
+			Assert.True(filesToFind.IsEmpty());
 			itor = fs.ListFiles(TestDir, false);
 			stat = itor.Next();
-			NUnit.Framework.Assert.IsTrue(stat.IsFile());
-			NUnit.Framework.Assert.AreEqual(fs.MakeQualified(File1), stat.GetPath());
+			Assert.True(stat.IsFile());
+			Assert.Equal(fs.MakeQualified(File1), stat.GetPath());
 			NUnit.Framework.Assert.IsFalse(itor.HasNext());
 			fs.Delete(TestDir, true);
 		}

@@ -29,9 +29,9 @@ namespace Org.Apache.Hadoop.Util
 			NUnit.Framework.Assert.IsNotNull("Containing jar not found for Logger", containingJar
 				);
 			FilePath jarFile = new FilePath(containingJar);
-			NUnit.Framework.Assert.IsTrue("Containing jar does not exist on file system", jarFile
+			Assert.True("Containing jar does not exist on file system", jarFile
 				.Exists());
-			NUnit.Framework.Assert.IsTrue("Incorrect jar file" + containingJar, jarFile.GetName
+			Assert.True("Incorrect jar file" + containingJar, jarFile.GetName
 				().Matches("log4j.+[.]jar"));
 		}
 	}

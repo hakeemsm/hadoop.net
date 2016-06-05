@@ -94,18 +94,18 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] val = ReadValue(scanner);
 				string keyStr = string.Format(localFormatter, i);
 				string valStr = value + keyStr;
-				NUnit.Framework.Assert.IsTrue("btyes for keys do not match " + keyStr + " " + Sharpen.Runtime.GetStringForBytes
+				Assert.True("btyes for keys do not match " + keyStr + " " + Sharpen.Runtime.GetStringForBytes
 					(key), Arrays.Equals(Sharpen.Runtime.GetBytesForString(keyStr), key));
-				NUnit.Framework.Assert.IsTrue("bytes for vals do not match " + valStr + " " + Sharpen.Runtime.GetStringForBytes
+				Assert.True("bytes for vals do not match " + valStr + " " + Sharpen.Runtime.GetStringForBytes
 					(val), Arrays.Equals(Sharpen.Runtime.GetBytesForString(valStr), val));
-				NUnit.Framework.Assert.IsTrue(scanner.Advance());
+				Assert.True(scanner.Advance());
 				key = ReadKey(scanner);
 				val = ReadValue(scanner);
-				NUnit.Framework.Assert.IsTrue("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(keyStr), key));
-				NUnit.Framework.Assert.IsTrue("bytes for vals do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("bytes for vals do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(valStr), val));
-				NUnit.Framework.Assert.IsTrue(scanner.Advance());
+				Assert.True(scanner.Advance());
 			}
 			return (start + n);
 		}
@@ -134,11 +134,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				byte[] key = ReadKey(scanner);
 				string keyStr = string.Format(localFormatter, i);
-				NUnit.Framework.Assert.IsTrue("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(keyStr), key));
 				scanner.Advance();
 				key = ReadKey(scanner);
-				NUnit.Framework.Assert.IsTrue("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(keyStr), key));
 				scanner.Advance();
 			}
@@ -169,11 +169,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				readKey = ReadKey(scanner);
 				readValue = ReadValue(scanner);
-				NUnit.Framework.Assert.IsTrue("failed to match keys", Arrays.Equals(readKey, key)
+				Assert.True("failed to match keys", Arrays.Equals(readKey, key)
 					);
-				NUnit.Framework.Assert.IsTrue("failed to match values", Arrays.Equals(readValue, 
+				Assert.True("failed to match values", Arrays.Equals(readValue, 
 					value));
-				NUnit.Framework.Assert.IsTrue("failed to advance cursor", scanner.Advance());
+				Assert.True("failed to advance cursor", scanner.Advance());
 			}
 		}
 
@@ -207,11 +207,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				string key = string.Format(localFormatter, i);
 				byte[] read = ReadKey(scanner);
-				NUnit.Framework.Assert.IsTrue("keys not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("keys not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(key), read));
 				string value = "value" + key;
 				read = ReadValue(scanner);
-				NUnit.Framework.Assert.IsTrue("values not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("values not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(value), read));
 				scanner.Advance();
 			}
@@ -243,12 +243,12 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				string key = string.Format(localFormatter, i);
 				byte[] read = ReadKey(scanner);
-				NUnit.Framework.Assert.IsTrue("keys not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("keys not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(key), read));
 				try
 				{
 					read = ReadValue(scanner);
-					NUnit.Framework.Assert.IsTrue(false);
+					Assert.True(false);
 				}
 				catch (IOException)
 				{
@@ -256,7 +256,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				// should have thrown exception
 				string value = "value" + key;
 				read = ReadLongValue(scanner, Sharpen.Runtime.GetBytesForString(value).Length);
-				NUnit.Framework.Assert.IsTrue("values nto equal", Arrays.Equals(read, Sharpen.Runtime.GetBytesForString
+				Assert.True("values nto equal", Arrays.Equals(read, Sharpen.Runtime.GetBytesForString
 					(value)));
 				scanner.Advance();
 			}
@@ -315,30 +315,30 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
 			ReadAllRecords(scanner);
 			scanner.SeekTo(GetSomeKey(50));
-			NUnit.Framework.Assert.IsTrue("location lookup failed", scanner.SeekTo(GetSomeKey
+			Assert.True("location lookup failed", scanner.SeekTo(GetSomeKey
 				(50)));
 			// read the key and see if it matches
 			byte[] readKey = ReadKey(scanner);
-			NUnit.Framework.Assert.IsTrue("seeked key does not match", Arrays.Equals(GetSomeKey
+			Assert.True("seeked key does not match", Arrays.Equals(GetSomeKey
 				(50), readKey));
 			scanner.SeekTo(new byte[0]);
 			byte[] val1 = ReadValue(scanner);
 			scanner.SeekTo(new byte[0]);
 			byte[] val2 = ReadValue(scanner);
-			NUnit.Framework.Assert.IsTrue(Arrays.Equals(val1, val2));
+			Assert.True(Arrays.Equals(val1, val2));
 			// check for lowerBound
 			scanner.LowerBound(GetSomeKey(50));
-			NUnit.Framework.Assert.IsTrue("locaton lookup failed", scanner.currentLocation.CompareTo
+			Assert.True("locaton lookup failed", scanner.currentLocation.CompareTo
 				(reader.End()) < 0);
 			readKey = ReadKey(scanner);
-			NUnit.Framework.Assert.IsTrue("seeked key does not match", Arrays.Equals(readKey, 
+			Assert.True("seeked key does not match", Arrays.Equals(readKey, 
 				GetSomeKey(50)));
 			// check for upper bound
 			scanner.UpperBound(GetSomeKey(50));
-			NUnit.Framework.Assert.IsTrue("location lookup failed", scanner.currentLocation.CompareTo
+			Assert.True("location lookup failed", scanner.currentLocation.CompareTo
 				(reader.End()) < 0);
 			readKey = ReadKey(scanner);
-			NUnit.Framework.Assert.IsTrue("seeked key does not match", Arrays.Equals(readKey, 
+			Assert.True("seeked key does not match", Arrays.Equals(readKey, 
 				GetSomeKey(51)));
 			scanner.Close();
 			// test for a range of scanner
@@ -407,7 +407,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			try
 			{
 				dout = writer.PrepareMetaBlock("TfileMeta1", compression);
-				NUnit.Framework.Assert.IsTrue(false);
+				Assert.True(false);
 			}
 			catch (MetaBlockAlreadyExists)
 			{
@@ -426,7 +426,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				DataInputStream din = reader.GetMetaBlock("TfileMeta" + i);
 				byte[] b = new byte[len];
 				din.ReadFully(b);
-				NUnit.Framework.Assert.IsTrue("faield to match metadata", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("faield to match metadata", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 					(("something to test" + i)), b));
 				din.Close();
 			}
@@ -440,7 +440,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			try
 			{
 				din = reader.GetMetaBlock("NO ONE");
-				NUnit.Framework.Assert.IsTrue(false);
+				Assert.True(false);
 			}
 			catch (MetaBlockDoesNotExist)
 			{
@@ -448,7 +448,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			// should catch
 			din = reader.GetMetaBlock("TFileMeta100");
 			int read = din.Read();
-			NUnit.Framework.Assert.IsTrue("check for status", (read == -1));
+			Assert.True("check for status", (read == -1));
 			din.Close();
 		}
 

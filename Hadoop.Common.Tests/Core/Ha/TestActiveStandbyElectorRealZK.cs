@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.HA
 			Log.Info("starting test with parentDir:" + ParentDir);
 			NUnit.Framework.Assert.IsFalse(electors[0].ParentZNodeExists());
 			electors[0].EnsureParentZNode();
-			NUnit.Framework.Assert.IsTrue(electors[0].ParentZNodeExists());
+			Assert.True(electors[0].ParentZNodeExists());
 			// First elector joins election, becomes active.
 			electors[0].JoinElection(appDatas[0]);
 			ActiveStandbyElectorTestUtil.WaitForActiveLockData(null, zkServer, ParentDir, appDatas

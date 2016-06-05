@@ -27,11 +27,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			KerberosName nm = new KerberosName(from);
 			string simple = nm.GetShortName();
 			System.Console.Out.WriteLine("to " + simple);
-			NUnit.Framework.Assert.AreEqual("short name incorrect", to, simple);
+			Assert.Equal("short name incorrect", to, simple);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRules()
 		{
 			CheckTranslation("omalley@" + KerberosTestUtils.GetRealm(), "omalley");
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 		// PASS
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAntiPatterns()
 		{
 			CheckBadName("owen/owen/owen@FOO.COM");
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToLowerCase()
 		{
 			string rules = "RULE:[1:$1]/L\n" + "RULE:[2:$1]/L\n" + "RULE:[2:$1;$2](^.*;admin$)s/;admin$///L\n"

@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Service
 			TestCompositeService.CompositeServiceImpl.ResetCounter();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCallSequence()
 		{
 			TestCompositeService.ServiceManager serviceManager = new TestCompositeService.ServiceManager
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.Service
 			}
 			TestCompositeService.CompositeServiceImpl[] services = Sharpen.Collections.ToArray
 				(serviceManager.GetServices(), new TestCompositeService.CompositeServiceImpl[0]);
-			NUnit.Framework.Assert.AreEqual("Number of registered services ", NumOfServices, 
+			Assert.Equal("Number of registered services ", NumOfServices, 
 				services.Length);
 			Configuration conf = new Configuration();
 			// Initialise the composite service
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Service
 			// Verify the init() call sequence numbers for every service
 			for (int i_1 = 0; i_1 < NumOfServices; i_1++)
 			{
-				NUnit.Framework.Assert.AreEqual("For " + services[i_1] + " service, init() call sequence number should have been "
+				Assert.Equal("For " + services[i_1] + " service, init() call sequence number should have been "
 					, i_1, services[i_1].GetCallSequenceNumber());
 			}
 			// Reset the call sequence numbers
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Service
 			// Verify the start() call sequence numbers for every service
 			for (int i_2 = 0; i_2 < NumOfServices; i_2++)
 			{
-				NUnit.Framework.Assert.AreEqual("For " + services[i_2] + " service, start() call sequence number should have been "
+				Assert.Equal("For " + services[i_2] + " service, start() call sequence number should have been "
 					, i_2, services[i_2].GetCallSequenceNumber());
 			}
 			ResetServices(services);
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Service
 			// Verify the stop() call sequence numbers for every service
 			for (int i_3 = 0; i_3 < NumOfServices; i_3++)
 			{
-				NUnit.Framework.Assert.AreEqual("For " + services[i_3] + " service, stop() call sequence number should have been "
+				Assert.Equal("For " + services[i_3] + " service, stop() call sequence number should have been "
 					, ((NumOfServices - 1) - i_3), services[i_3].GetCallSequenceNumber());
 			}
 			// Try to stop again. This should be a no-op.
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.Service
 			// Verify that stop() call sequence numbers for every service don't change.
 			for (int i_4 = 0; i_4 < NumOfServices; i_4++)
 			{
-				NUnit.Framework.Assert.AreEqual("For " + services[i_4] + " service, stop() call sequence number should have been "
+				Assert.Equal("For " + services[i_4] + " service, stop() call sequence number should have been "
 					, ((NumOfServices - 1) - i_4), services[i_4].GetCallSequenceNumber());
 			}
 		}
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Service
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceStartup()
 		{
 			TestCompositeService.ServiceManager serviceManager = new TestCompositeService.ServiceManager
@@ -129,19 +129,19 @@ namespace Org.Apache.Hadoop.Service
 					if (i_1 >= FailedServiceSeqNumber && StopOnlyStartedServices)
 					{
 						// Failed service state should be INITED
-						NUnit.Framework.Assert.AreEqual("Service state should have been ", Service.STATE.
+						Assert.Equal("Service state should have been ", Service.STATE.
 							Inited, services[NumOfServices - 1].GetServiceState());
 					}
 					else
 					{
-						NUnit.Framework.Assert.AreEqual("Service state should have been ", Service.STATE.
+						Assert.Equal("Service state should have been ", Service.STATE.
 							Stopped, services[i_1].GetServiceState());
 					}
 				}
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceStop()
 		{
 			TestCompositeService.ServiceManager serviceManager = new TestCompositeService.ServiceManager
@@ -201,12 +201,12 @@ namespace Org.Apache.Hadoop.Service
 		private void AssertInState(Service.STATE expected, Org.Apache.Hadoop.Service.Service
 			 service)
 		{
-			NUnit.Framework.Assert.AreEqual("Service state should have been " + expected + " in "
+			Assert.Equal("Service state should have been " + expected + " in "
 				 + service, expected, service.GetServiceState());
 		}
 
 		/// <summary>Shut down from not-inited: expect nothing to have happened</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceStopFromNotInited()
 		{
 			TestCompositeService.ServiceManager serviceManager = new TestCompositeService.ServiceManager
@@ -225,7 +225,7 @@ namespace Org.Apache.Hadoop.Service
 		}
 
 		/// <summary>Shut down from inited</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceStopFromInited()
 		{
 			TestCompositeService.ServiceManager serviceManager = new TestCompositeService.ServiceManager
@@ -254,7 +254,7 @@ namespace Org.Apache.Hadoop.Service
 
 		/// <summary>Use a null configuration & expect a failure</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitNullConf()
 		{
 			TestCompositeService.ServiceManager serviceManager = new TestCompositeService.ServiceManager
@@ -277,7 +277,7 @@ namespace Org.Apache.Hadoop.Service
 		/// Walk the service through their lifecycle without any children;
 		/// verify that it all works.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceLifecycleNoChildren()
 		{
 			TestCompositeService.ServiceManager serviceManager = new TestCompositeService.ServiceManager
@@ -288,7 +288,7 @@ namespace Org.Apache.Hadoop.Service
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddServiceInInit()
 		{
 			BreakableService child = new BreakableService();
@@ -303,7 +303,7 @@ namespace Org.Apache.Hadoop.Service
 		{
 			CompositeService testService = new _CompositeService_317("TestService");
 			testService.Init(new Configuration());
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 1, testService.GetServices
+			Assert.Equal("Incorrect number of services", 1, testService.GetServices
 				().Count);
 		}
 
@@ -322,7 +322,7 @@ namespace Org.Apache.Hadoop.Service
 				NUnit.Framework.Assert.IsFalse("Added an integer as a service", this.AddIfService
 					(notAService));
 				this.service = new _AbstractService_325("Service");
-				NUnit.Framework.Assert.IsTrue("Unable to add a service", this.AddIfService(this.service
+				Assert.True("Unable to add a service", this.AddIfService(this.service
 					));
 			}
 
@@ -346,7 +346,7 @@ namespace Org.Apache.Hadoop.Service
 			parent.Init(new Configuration());
 			parent.Start();
 			parent.Stop();
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 2, parent.GetServices
+			Assert.Equal("Incorrect number of services", 2, parent.GetServices
 				().Count);
 		}
 
@@ -368,16 +368,16 @@ namespace Org.Apache.Hadoop.Service
 			}
 			//expected
 			parent.Stop();
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 2, parent.GetServices
+			Assert.Equal("Incorrect number of services", 2, parent.GetServices
 				().Count);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRemoveService()
 		{
 			CompositeService testService = new _CompositeService_371("TestService");
 			testService.Init(new Configuration());
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 2, testService.GetServices
+			Assert.Equal("Incorrect number of services", 2, testService.GetServices
 				().Count);
 		}
 
@@ -480,7 +480,7 @@ namespace Org.Apache.Hadoop.Service
 			parent.Init(new Configuration());
 			parent.Start();
 			parent.Stop();
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 2, parent.GetServices
+			Assert.Equal("Incorrect number of services", 2, parent.GetServices
 				().Count);
 		}
 
@@ -495,7 +495,7 @@ namespace Org.Apache.Hadoop.Service
 			AssertInState(Service.STATE.Notinited, sibling);
 			parent.Start();
 			parent.Stop();
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 2, parent.GetServices
+			Assert.Equal("Incorrect number of services", 2, parent.GetServices
 				().Count);
 		}
 
@@ -513,7 +513,7 @@ namespace Org.Apache.Hadoop.Service
 			parent.Start();
 			AssertInState(Service.STATE.Started, sibling);
 			parent.Stop();
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 2, parent.GetServices
+			Assert.Equal("Incorrect number of services", 2, parent.GetServices
 				().Count);
 			AssertInState(Service.STATE.Stopped, sibling);
 		}
@@ -530,7 +530,7 @@ namespace Org.Apache.Hadoop.Service
 			parent.Init(new Configuration());
 			parent.Start();
 			parent.Stop();
-			NUnit.Framework.Assert.AreEqual("Incorrect number of services", 2, parent.GetServices
+			Assert.Equal("Incorrect number of services", 2, parent.GetServices
 				().Count);
 		}
 

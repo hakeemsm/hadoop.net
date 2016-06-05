@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		//end add()
 		// Writable interface
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteInt(Version);
 			@out.WriteInt(this.nbHash);

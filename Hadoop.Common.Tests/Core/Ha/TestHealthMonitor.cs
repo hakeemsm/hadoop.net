@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.HA
 				}
 				Sharpen.Thread.Sleep(50);
 			}
-			NUnit.Framework.Assert.AreEqual(state, hm.GetHealthState());
+			Assert.Equal(state, hm.GetHealthState());
 		}
 	}
 }

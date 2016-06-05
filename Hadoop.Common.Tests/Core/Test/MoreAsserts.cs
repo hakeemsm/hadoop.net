@@ -18,11 +18,11 @@ namespace Org.Apache.Hadoop.Test
 			int i = 0;
 			for (; i < expected.Length && it.HasNext(); ++i)
 			{
-				NUnit.Framework.Assert.AreEqual("Element " + i + " for " + s, expected[i], it.Next
+				Assert.Equal("Element " + i + " for " + s, expected[i], it.Next
 					());
 			}
-			NUnit.Framework.Assert.IsTrue("Expected more elements", i == expected.Length);
-			NUnit.Framework.Assert.IsTrue("Expected less elements", !it.HasNext());
+			Assert.True("Expected more elements", i == expected.Length);
+			Assert.True("Expected less elements", !it.HasNext());
 		}
 
 		/// <summary>Assert equality for two iterables</summary>
@@ -38,11 +38,11 @@ namespace Org.Apache.Hadoop.Test
 			int i = 0;
 			while (ite.HasNext() && ita.HasNext())
 			{
-				NUnit.Framework.Assert.AreEqual("Element " + i + " for " + s, ite.Next(), ita.Next
+				Assert.Equal("Element " + i + " for " + s, ite.Next(), ita.Next
 					());
 			}
-			NUnit.Framework.Assert.IsTrue("Expected more elements", !ite.HasNext());
-			NUnit.Framework.Assert.IsTrue("Expected less elements", !ita.HasNext());
+			Assert.True("Expected more elements", !ite.HasNext());
+			Assert.True("Expected less elements", !ita.HasNext());
 		}
 	}
 }

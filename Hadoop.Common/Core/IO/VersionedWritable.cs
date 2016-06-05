@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.IO
 
 		// javadoc from Writable
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteByte(GetVersion());
 		}

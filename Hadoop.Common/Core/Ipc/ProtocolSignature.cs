@@ -76,7 +76,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteLong(version);
 			if (methods == null)

@@ -8,41 +8,41 @@ namespace Org.Apache.Hadoop.Http
 	public class TestHtmlQuoting
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNeedsQuoting()
 		{
-			NUnit.Framework.Assert.IsTrue(HtmlQuoting.NeedsQuoting("abcde>"));
-			NUnit.Framework.Assert.IsTrue(HtmlQuoting.NeedsQuoting("<abcde"));
-			NUnit.Framework.Assert.IsTrue(HtmlQuoting.NeedsQuoting("abc'de"));
-			NUnit.Framework.Assert.IsTrue(HtmlQuoting.NeedsQuoting("abcde\""));
-			NUnit.Framework.Assert.IsTrue(HtmlQuoting.NeedsQuoting("&"));
+			Assert.True(HtmlQuoting.NeedsQuoting("abcde>"));
+			Assert.True(HtmlQuoting.NeedsQuoting("<abcde"));
+			Assert.True(HtmlQuoting.NeedsQuoting("abc'de"));
+			Assert.True(HtmlQuoting.NeedsQuoting("abcde\""));
+			Assert.True(HtmlQuoting.NeedsQuoting("&"));
 			NUnit.Framework.Assert.IsFalse(HtmlQuoting.NeedsQuoting(string.Empty));
 			NUnit.Framework.Assert.IsFalse(HtmlQuoting.NeedsQuoting("ab\ncdef"));
 			NUnit.Framework.Assert.IsFalse(HtmlQuoting.NeedsQuoting(null));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestQuoting()
 		{
-			NUnit.Framework.Assert.AreEqual("ab&lt;cd", HtmlQuoting.QuoteHtmlChars("ab<cd"));
-			NUnit.Framework.Assert.AreEqual("ab&gt;", HtmlQuoting.QuoteHtmlChars("ab>"));
-			NUnit.Framework.Assert.AreEqual("&amp;&amp;&amp;", HtmlQuoting.QuoteHtmlChars("&&&"
+			Assert.Equal("ab&lt;cd", HtmlQuoting.QuoteHtmlChars("ab<cd"));
+			Assert.Equal("ab&gt;", HtmlQuoting.QuoteHtmlChars("ab>"));
+			Assert.Equal("&amp;&amp;&amp;", HtmlQuoting.QuoteHtmlChars("&&&"
 				));
-			NUnit.Framework.Assert.AreEqual(" &apos;\n", HtmlQuoting.QuoteHtmlChars(" '\n"));
-			NUnit.Framework.Assert.AreEqual("&quot;", HtmlQuoting.QuoteHtmlChars("\""));
-			NUnit.Framework.Assert.AreEqual(null, HtmlQuoting.QuoteHtmlChars(null));
+			Assert.Equal(" &apos;\n", HtmlQuoting.QuoteHtmlChars(" '\n"));
+			Assert.Equal("&quot;", HtmlQuoting.QuoteHtmlChars("\""));
+			Assert.Equal(null, HtmlQuoting.QuoteHtmlChars(null));
 		}
 
 		/// <exception cref="System.Exception"/>
 		private void RunRoundTrip(string str)
 		{
-			NUnit.Framework.Assert.AreEqual(str, HtmlQuoting.UnquoteHtmlChars(HtmlQuoting.QuoteHtmlChars
+			Assert.Equal(str, HtmlQuoting.UnquoteHtmlChars(HtmlQuoting.QuoteHtmlChars
 				(str)));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRoundtrip()
 		{
 			RunRoundTrip(string.Empty);
@@ -59,17 +59,17 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRequestQuoting()
 		{
 			HttpServletRequest mockReq = Org.Mockito.Mockito.Mock<HttpServletRequest>();
 			HttpServer2.QuotingInputFilter.RequestQuoter quoter = new HttpServer2.QuotingInputFilter.RequestQuoter
 				(mockReq);
 			Org.Mockito.Mockito.DoReturn("a<b").When(mockReq).GetParameter("x");
-			NUnit.Framework.Assert.AreEqual("Test simple param quoting", "a&lt;b", quoter.GetParameter
+			Assert.Equal("Test simple param quoting", "a&lt;b", quoter.GetParameter
 				("x"));
 			Org.Mockito.Mockito.DoReturn(null).When(mockReq).GetParameter("x");
-			NUnit.Framework.Assert.AreEqual("Test that missing parameters dont cause NPE", null
+			Assert.Equal("Test that missing parameters dont cause NPE", null
 				, quoter.GetParameter("x"));
 			Org.Mockito.Mockito.DoReturn(new string[] { "a<b", "b" }).When(mockReq).GetParameterValues
 				("x");

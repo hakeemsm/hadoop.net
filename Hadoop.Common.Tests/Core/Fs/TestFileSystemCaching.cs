@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.FS
 	public class TestFileSystemCaching
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheEnabled()
 		{
 			Configuration conf = new Configuration();
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultFsUris()
 		{
 			Configuration conf = new Configuration();
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.FS
 			FileSystem fs = null;
 			// sanity check default fs
 			FileSystem defaultFs = FileSystem.Get(conf);
-			NUnit.Framework.Assert.AreEqual(defaultUri, defaultFs.GetUri());
+			Assert.Equal(defaultUri, defaultFs.GetUri());
 			// has scheme, no auth
 			fs = FileSystem.Get(URI.Create("defaultfs:/"), conf);
 			NUnit.Framework.Assert.AreSame(defaultFs, fs);
@@ -71,7 +71,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (Exception e)
 			{
-				NUnit.Framework.Assert.AreEqual("No FileSystem for scheme: null", e.Message);
+				Assert.Equal("No FileSystem for scheme: null", e.Message);
 			}
 			// no scheme, different auth
 			try
@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (Exception e)
 			{
-				NUnit.Framework.Assert.AreEqual("No FileSystem for scheme: null", e.Message);
+				Assert.Equal("No FileSystem for scheme: null", e.Message);
 			}
 		}
 
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheEnabledWithInitializeForeverFS()
 		{
 			Configuration conf = new Configuration();
@@ -153,7 +153,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheDisabled()
 		{
 			Configuration conf = new Configuration();
@@ -166,7 +166,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheForUgi<T>()
 			where T : TokenIdentifier
 		{
@@ -283,7 +283,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserFS()
 		{
 			Configuration conf = new Configuration();
@@ -295,7 +295,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsUniqueness()
 		{
 			Configuration conf = new Configuration();
@@ -304,17 +304,17 @@ namespace Org.Apache.Hadoop.FS
 			// multiple invocations of FileSystem.get return the same object.
 			FileSystem fs1 = FileSystem.Get(conf);
 			FileSystem fs2 = FileSystem.Get(conf);
-			NUnit.Framework.Assert.IsTrue(fs1 == fs2);
+			Assert.True(fs1 == fs2);
 			// multiple invocations of FileSystem.newInstance return different objects
 			fs1 = FileSystem.NewInstance(new URI("cachedfile://a"), conf, "bar");
 			fs2 = FileSystem.NewInstance(new URI("cachedfile://a"), conf, "bar");
-			NUnit.Framework.Assert.IsTrue(fs1 != fs2 && !fs1.Equals(fs2));
+			Assert.True(fs1 != fs2 && !fs1.Equals(fs2));
 			fs1.Close();
 			fs2.Close();
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCloseAllForUGI()
 		{
 			Configuration conf = new Configuration();
@@ -383,7 +383,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelete()
 		{
 			FileSystem mockFs = Org.Mockito.Mockito.Mock<FileSystem>();
@@ -397,7 +397,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteOnExit()
 		{
 			FileSystem mockFs = Org.Mockito.Mockito.Mock<FileSystem>();
@@ -406,7 +406,7 @@ namespace Org.Apache.Hadoop.FS
 			// delete on close if path does exist
 			Org.Mockito.Mockito.When(mockFs.GetFileStatus(Eq(path))).ThenReturn(new FileStatus
 				());
-			NUnit.Framework.Assert.IsTrue(fs.DeleteOnExit(path));
+			Assert.True(fs.DeleteOnExit(path));
 			Org.Mockito.Mockito.Verify(mockFs).GetFileStatus(Eq(path));
 			Org.Mockito.Mockito.Reset(mockFs);
 			Org.Mockito.Mockito.When(mockFs.GetFileStatus(Eq(path))).ThenReturn(new FileStatus
@@ -417,7 +417,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteOnExitFNF()
 		{
 			FileSystem mockFs = Org.Mockito.Mockito.Mock<FileSystem>();
@@ -435,7 +435,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteOnExitRemoved()
 		{
 			FileSystem mockFs = Org.Mockito.Mockito.Mock<FileSystem>();
@@ -444,7 +444,7 @@ namespace Org.Apache.Hadoop.FS
 			// don't delete on close if path existed, but later removed
 			Org.Mockito.Mockito.When(mockFs.GetFileStatus(Eq(path))).ThenReturn(new FileStatus
 				());
-			NUnit.Framework.Assert.IsTrue(fs.DeleteOnExit(path));
+			Assert.True(fs.DeleteOnExit(path));
 			Org.Mockito.Mockito.Verify(mockFs).GetFileStatus(Eq(path));
 			Org.Mockito.Mockito.Reset(mockFs);
 			fs.Close();
@@ -454,7 +454,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCancelDeleteOnExit()
 		{
 			FileSystem mockFs = Org.Mockito.Mockito.Mock<FileSystem>();
@@ -463,9 +463,9 @@ namespace Org.Apache.Hadoop.FS
 			// don't delete on close if path existed, but later cancelled
 			Org.Mockito.Mockito.When(mockFs.GetFileStatus(Eq(path))).ThenReturn(new FileStatus
 				());
-			NUnit.Framework.Assert.IsTrue(fs.DeleteOnExit(path));
+			Assert.True(fs.DeleteOnExit(path));
 			Org.Mockito.Mockito.Verify(mockFs).GetFileStatus(Eq(path));
-			NUnit.Framework.Assert.IsTrue(fs.CancelDeleteOnExit(path));
+			Assert.True(fs.CancelDeleteOnExit(path));
 			NUnit.Framework.Assert.IsFalse(fs.CancelDeleteOnExit(path));
 			// false because not registered
 			Org.Mockito.Mockito.Reset(mockFs);

@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		{
 			MetricsTag processIdTag = GetFirstTagByName(record, tagName);
 			NUnit.Framework.Assert.IsNotNull(processIdTag);
-			NUnit.Framework.Assert.AreEqual(expectedValue, processIdTag.Value());
+			Assert.Equal(expectedValue, processIdTag.Value());
 		}
 
 		public static void AssertMetric(MetricsRecord record, string metricName, Number expectedValue
@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		{
 			AbstractMetric resourceLimitMetric = GetFirstMetricByName(record, metricName);
 			NUnit.Framework.Assert.IsNotNull(resourceLimitMetric);
-			NUnit.Framework.Assert.AreEqual(expectedValue, resourceLimitMetric.Value());
+			Assert.Equal(expectedValue, resourceLimitMetric.Value());
 		}
 
 		private static MetricsTag GetFirstTagByName(MetricsRecord record, string name)

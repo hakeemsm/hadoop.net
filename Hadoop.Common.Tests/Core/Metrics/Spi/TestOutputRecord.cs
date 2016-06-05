@@ -12,9 +12,9 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 			AbstractMetricsContext.MetricMap metrics = new AbstractMetricsContext.MetricMap();
 			metrics["metrickey"] = 123.4;
 			OutputRecord r = new OutputRecord(tags, metrics);
-			NUnit.Framework.Assert.AreEqual(tags, r.GetTagsCopy());
+			Assert.Equal(tags, r.GetTagsCopy());
 			NUnit.Framework.Assert.AreNotSame(tags, r.GetTagsCopy());
-			NUnit.Framework.Assert.AreEqual(metrics, r.GetMetricsCopy());
+			Assert.Equal(metrics, r.GetMetricsCopy());
 			NUnit.Framework.Assert.AreNotSame(metrics, r.GetMetricsCopy());
 		}
 	}

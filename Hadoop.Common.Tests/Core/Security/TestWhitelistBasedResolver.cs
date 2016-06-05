@@ -30,23 +30,23 @@ namespace Org.Apache.Hadoop.Security
 				);
 			WhitelistBasedResolver wqr = new WhitelistBasedResolver();
 			wqr.SetConf(conf);
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				(Sharpen.Extensions.GetAddressByName("10.119.103.112")));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.119.103.113"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.119.103.113"
 				));
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				("10.221.103.121"));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.221.104.0"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.221.104.0"
 				));
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				("10.222.103.121"));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.223.104.0"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.223.104.0"
 				));
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				("10.113.221.221"));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.113.221.222"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.113.221.222"
 				));
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				("127.0.0.1"));
 			TestFileBasedIPList.RemoveFile("fixedwhitelist.txt");
 			TestFileBasedIPList.RemoveFile("variablewhitelist.txt");
@@ -75,23 +75,23 @@ namespace Org.Apache.Hadoop.Security
 				);
 			WhitelistBasedResolver wqr = new WhitelistBasedResolver();
 			wqr.SetConf(conf);
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				(Sharpen.Extensions.GetAddressByName("10.119.103.112")));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.119.103.113"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.119.103.113"
 				));
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				("10.221.103.121"));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.221.104.0"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.221.104.0"
 				));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.222.103.121"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.222.103.121"
 				));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.223.104.0"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.223.104.0"
 				));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.113.221.221"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.113.221.221"
 				));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties("10.113.221.222"
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.113.221.222"
 				));
-			NUnit.Framework.Assert.AreEqual(wqr.GetDefaultProperties(), wqr.GetServerProperties
+			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
 				("127.0.0.1"));
 			TestFileBasedIPList.RemoveFile("fixedwhitelist.txt");
 			TestFileBasedIPList.RemoveFile("variablewhitelist.txt");
@@ -119,9 +119,9 @@ namespace Org.Apache.Hadoop.Security
 				);
 			WhitelistBasedResolver wqr = new WhitelistBasedResolver();
 			wqr.SetConf(conf);
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties((IPAddress
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties((IPAddress
 				)null));
-			NUnit.Framework.Assert.AreEqual(SaslPrivacyProps, wqr.GetServerProperties((string
+			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties((string
 				)null));
 			TestFileBasedIPList.RemoveFile("fixedwhitelist.txt");
 			TestFileBasedIPList.RemoveFile("variablewhitelist.txt");

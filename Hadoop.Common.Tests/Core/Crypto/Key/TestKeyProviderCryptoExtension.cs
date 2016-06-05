@@ -35,26 +35,26 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGenerateEncryptedKey()
 		{
 			// Generate a new EEK and check it
 			KeyProviderCryptoExtension.EncryptedKeyVersion ek1 = kpExt.GenerateEncryptedKey(encryptionKey
 				.GetName());
-			NUnit.Framework.Assert.AreEqual("Version name of EEK should be EEK", KeyProviderCryptoExtension
+			Assert.Equal("Version name of EEK should be EEK", KeyProviderCryptoExtension
 				.Eek, ek1.GetEncryptedKeyVersion().GetVersionName());
-			NUnit.Framework.Assert.AreEqual("Name of EEK should be encryption key name", EncryptionKeyName
+			Assert.Equal("Name of EEK should be encryption key name", EncryptionKeyName
 				, ek1.GetEncryptionKeyName());
 			NUnit.Framework.Assert.IsNotNull("Expected encrypted key material", ek1.GetEncryptedKeyVersion
 				().GetMaterial());
-			NUnit.Framework.Assert.AreEqual("Length of encryption key material and EEK material should "
+			Assert.Equal("Length of encryption key material and EEK material should "
 				 + "be the same", encryptionKey.GetMaterial().Length, ek1.GetEncryptedKeyVersion
 				().GetMaterial().Length);
 			// Decrypt EEK into an EK and check it
 			KeyProvider.KeyVersion k1 = kpExt.DecryptEncryptedKey(ek1);
-			NUnit.Framework.Assert.AreEqual(KeyProviderCryptoExtension.Ek, k1.GetVersionName(
+			Assert.Equal(KeyProviderCryptoExtension.Ek, k1.GetVersionName(
 				));
-			NUnit.Framework.Assert.AreEqual(encryptionKey.GetMaterial().Length, k1.GetMaterial
+			Assert.Equal(encryptionKey.GetMaterial().Length, k1.GetMaterial
 				().Length);
 			if (Arrays.Equals(k1.GetMaterial(), encryptionKey.GetMaterial()))
 			{
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEncryptDecrypt()
 		{
 			// Get an EEK

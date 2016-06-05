@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.Ipc
 				);
 			worker.Start();
 			Sharpen.Thread.Sleep(1000);
-			NUnit.Framework.Assert.IsTrue("worker hasn't started", worker.waitStarted);
+			Assert.True("worker hasn't started", worker.waitStarted);
 			worker.Interrupt();
 			worker.Join();
 			Exception caught = worker.GetCaught();

@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Ipc
 	{
 		internal const string cacheName = "NameNodeRetryCache";
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNames()
 		{
 			RetryCache cache = Org.Mockito.Mockito.Mock<RetryCache>();

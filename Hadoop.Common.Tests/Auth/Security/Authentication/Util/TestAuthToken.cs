@@ -8,7 +8,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 	public class TestAuthToken
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstructor()
 		{
 			try
@@ -93,24 +93,24 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetters()
 		{
 			long expires = Runtime.CurrentTimeMillis() + 50;
 			AuthToken token = new AuthToken("u", "p", "t");
 			token.SetExpires(expires);
-			NUnit.Framework.Assert.AreEqual("u", token.GetUserName());
-			NUnit.Framework.Assert.AreEqual("p", token.GetName());
-			NUnit.Framework.Assert.AreEqual("t", token.GetType());
-			NUnit.Framework.Assert.AreEqual(expires, token.GetExpires());
+			Assert.Equal("u", token.GetUserName());
+			Assert.Equal("p", token.GetName());
+			Assert.Equal("t", token.GetType());
+			Assert.Equal(expires, token.GetExpires());
 			NUnit.Framework.Assert.IsFalse(token.IsExpired());
 			Sharpen.Thread.Sleep(70);
 			// +20 msec fuzz for timer granularity.
-			NUnit.Framework.Assert.IsTrue(token.IsExpired());
+			Assert.True(token.IsExpired());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToStringAndParse()
 		{
 			long expires = Runtime.CurrentTimeMillis() + 50;
@@ -118,17 +118,17 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			token.SetExpires(expires);
 			string str = token.ToString();
 			token = AuthToken.Parse(str);
-			NUnit.Framework.Assert.AreEqual("p", token.GetName());
-			NUnit.Framework.Assert.AreEqual("t", token.GetType());
-			NUnit.Framework.Assert.AreEqual(expires, token.GetExpires());
+			Assert.Equal("p", token.GetName());
+			Assert.Equal("t", token.GetType());
+			Assert.Equal(expires, token.GetExpires());
 			NUnit.Framework.Assert.IsFalse(token.IsExpired());
 			Sharpen.Thread.Sleep(70);
 			// +20 msec fuzz for timer granularity.
-			NUnit.Framework.Assert.IsTrue(token.IsExpired());
+			Assert.True(token.IsExpired());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestParseValidAndInvalid()
 		{
 			long expires = Runtime.CurrentTimeMillis() + 50;

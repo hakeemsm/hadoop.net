@@ -73,12 +73,12 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSeekZeroByteFile()
 		{
 			Describe("seek and read a 0 byte file");
 			instream = GetFileSystem().Open(zeroByteFile);
-			NUnit.Framework.Assert.AreEqual(0, instream.GetPos());
+			Assert.Equal(0, instream.GetPos());
 			//expect initial read to fai;
 			int result = instream.Read();
 			AssertMinusOne("initial byte read", result);
@@ -93,12 +93,12 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBlockReadZeroByteFile()
 		{
 			Describe("do a block read on a 0 byte file");
 			instream = GetFileSystem().Open(zeroByteFile);
-			NUnit.Framework.Assert.AreEqual(0, instream.GetPos());
+			Assert.Equal(0, instream.GetPos());
 			//expect that seek to 0 works
 			byte[] buffer = new byte[1];
 			int result = instream.Read(buffer, 0, 1);
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// still fail on the subsequent reads.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSeekReadClosedFile()
 		{
 			bool supportsSeekOnClosedFiles = IsSupported(SupportsSeekOnClosedFile);
@@ -175,11 +175,11 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeSeek()
 		{
 			instream = GetFileSystem().Open(smallSeekFile);
-			NUnit.Framework.Assert.AreEqual(0, instream.GetPos());
+			Assert.Equal(0, instream.GetPos());
 			try
 			{
 				instream.Seek(-1);
@@ -199,48 +199,48 @@ namespace Org.Apache.Hadoop.FS.Contract
 				//bad seek -expected, but not as preferred as an EOFException
 				HandleRelaxedException("a negative seek", "EOFException", e);
 			}
-			NUnit.Framework.Assert.AreEqual(0, instream.GetPos());
+			Assert.Equal(0, instream.GetPos());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSeekFile()
 		{
 			Describe("basic seek operations");
 			instream = GetFileSystem().Open(smallSeekFile);
-			NUnit.Framework.Assert.AreEqual(0, instream.GetPos());
+			Assert.Equal(0, instream.GetPos());
 			//expect that seek to 0 works
 			instream.Seek(0);
 			int result = instream.Read();
-			NUnit.Framework.Assert.AreEqual(0, result);
-			NUnit.Framework.Assert.AreEqual(1, instream.Read());
-			NUnit.Framework.Assert.AreEqual(2, instream.GetPos());
-			NUnit.Framework.Assert.AreEqual(2, instream.Read());
-			NUnit.Framework.Assert.AreEqual(3, instream.GetPos());
+			Assert.Equal(0, result);
+			Assert.Equal(1, instream.Read());
+			Assert.Equal(2, instream.GetPos());
+			Assert.Equal(2, instream.Read());
+			Assert.Equal(3, instream.GetPos());
 			instream.Seek(128);
-			NUnit.Framework.Assert.AreEqual(128, instream.GetPos());
-			NUnit.Framework.Assert.AreEqual(128, instream.Read());
+			Assert.Equal(128, instream.GetPos());
+			Assert.Equal(128, instream.Read());
 			instream.Seek(63);
-			NUnit.Framework.Assert.AreEqual(63, instream.Read());
+			Assert.Equal(63, instream.Read());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSeekAndReadPastEndOfFile()
 		{
 			Describe("verify that reading past the last bytes in the file returns -1");
 			instream = GetFileSystem().Open(smallSeekFile);
-			NUnit.Framework.Assert.AreEqual(0, instream.GetPos());
+			Assert.Equal(0, instream.GetPos());
 			//expect that seek to 0 works
 			//go just before the end
 			instream.Seek(TestFileLen - 2);
-			NUnit.Framework.Assert.IsTrue("Premature EOF", instream.Read() != -1);
-			NUnit.Framework.Assert.IsTrue("Premature EOF", instream.Read() != -1);
+			Assert.True("Premature EOF", instream.Read() != -1);
+			Assert.True("Premature EOF", instream.Read() != -1);
 			AssertMinusOne("read past end of file", instream.Read());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSeekPastEndOfFileThenReseekAndRead()
 		{
 			Describe("do a seek past the EOF, then verify the stream recovers");
@@ -277,12 +277,12 @@ namespace Org.Apache.Hadoop.FS.Contract
 			}
 			//now go back and try to read from a valid point in the file
 			instream.Seek(1);
-			NUnit.Framework.Assert.IsTrue("Premature EOF", instream.Read() != -1);
+			Assert.True("Premature EOF", instream.Read() != -1);
 		}
 
 		/// <summary>Seek round a file bigger than IO buffers</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSeekBigFile()
 		{
 			Describe("Seek round a large file and verify the bytes are what is expected");
@@ -290,29 +290,29 @@ namespace Org.Apache.Hadoop.FS.Contract
 			byte[] block = ContractTestUtils.Dataset(65536, 0, 255);
 			ContractTestUtils.CreateFile(GetFileSystem(), testSeekFile, false, block);
 			instream = GetFileSystem().Open(testSeekFile);
-			NUnit.Framework.Assert.AreEqual(0, instream.GetPos());
+			Assert.Equal(0, instream.GetPos());
 			//expect that seek to 0 works
 			instream.Seek(0);
 			int result = instream.Read();
-			NUnit.Framework.Assert.AreEqual(0, result);
-			NUnit.Framework.Assert.AreEqual(1, instream.Read());
-			NUnit.Framework.Assert.AreEqual(2, instream.Read());
+			Assert.Equal(0, result);
+			Assert.Equal(1, instream.Read());
+			Assert.Equal(2, instream.Read());
 			//do seek 32KB ahead
 			instream.Seek(32768);
-			NUnit.Framework.Assert.AreEqual("@32768", block[32768], unchecked((byte)instream.
+			Assert.Equal("@32768", block[32768], unchecked((byte)instream.
 				Read()));
 			instream.Seek(40000);
-			NUnit.Framework.Assert.AreEqual("@40000", block[40000], unchecked((byte)instream.
+			Assert.Equal("@40000", block[40000], unchecked((byte)instream.
 				Read()));
 			instream.Seek(8191);
-			NUnit.Framework.Assert.AreEqual("@8191", block[8191], unchecked((byte)instream.Read
+			Assert.Equal("@8191", block[8191], unchecked((byte)instream.Read
 				()));
 			instream.Seek(0);
-			NUnit.Framework.Assert.AreEqual("@0", 0, unchecked((byte)instream.Read()));
+			Assert.Equal("@0", 0, unchecked((byte)instream.Read()));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPositionedBulkReadDoesntChangePosition()
 		{
 			Describe("verify that a positioned read does not change the getPos() value");
@@ -321,19 +321,19 @@ namespace Org.Apache.Hadoop.FS.Contract
 			ContractTestUtils.CreateFile(GetFileSystem(), testSeekFile, false, block);
 			instream = GetFileSystem().Open(testSeekFile);
 			instream.Seek(39999);
-			NUnit.Framework.Assert.IsTrue(-1 != instream.Read());
-			NUnit.Framework.Assert.AreEqual(40000, instream.GetPos());
+			Assert.True(-1 != instream.Read());
+			Assert.Equal(40000, instream.GetPos());
 			byte[] readBuffer = new byte[256];
 			instream.Read(128, readBuffer, 0, readBuffer.Length);
 			//have gone back
-			NUnit.Framework.Assert.AreEqual(40000, instream.GetPos());
+			Assert.Equal(40000, instream.GetPos());
 			//content is the same too
-			NUnit.Framework.Assert.AreEqual("@40000", block[40000], unchecked((byte)instream.
+			Assert.Equal("@40000", block[40000], unchecked((byte)instream.
 				Read()));
 			//now verify the picked up data
 			for (int i = 0; i < 256; i++)
 			{
-				NUnit.Framework.Assert.AreEqual("@" + i, block[i + 128], readBuffer[i]);
+				Assert.Equal("@" + i, block[i + 128], readBuffer[i]);
 			}
 		}
 
@@ -343,7 +343,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// wrong results after certain sequences of seeks and reads.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRandomSeeks()
 		{
 			int limit = GetContract().GetLimit(TestRandomSeekCount, DefaultRandomSeekCount);

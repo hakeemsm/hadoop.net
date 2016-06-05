@@ -13,18 +13,18 @@ namespace Org.Apache.Hadoop.FS
 		private static string renewer = "renewer!";
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithNoToken()
 		{
 			FileSystemTestHelper.MockFileSystem fs = CreateFileSystemForServiceName(null);
 			Credentials credentials = new Credentials();
 			fs.AddDelegationTokens(renewer, credentials);
 			VerifyTokenFetch(fs, false);
-			NUnit.Framework.Assert.AreEqual(0, credentials.NumberOfTokens());
+			Assert.Equal(0, credentials.NumberOfTokens());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithToken()
 		{
 			Text service = new Text("singleTokenFs");
@@ -32,12 +32,12 @@ namespace Org.Apache.Hadoop.FS
 			Credentials credentials = new Credentials();
 			fs.AddDelegationTokens(renewer, credentials);
 			VerifyTokenFetch(fs, true);
-			NUnit.Framework.Assert.AreEqual(1, credentials.NumberOfTokens());
+			Assert.Equal(1, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithTokenExists()
 		{
 			Credentials credentials = new Credentials();
@@ -48,12 +48,12 @@ namespace Org.Apache.Hadoop.FS
 			credentials.AddToken(service, token);
 			fs.AddDelegationTokens(renewer, credentials);
 			VerifyTokenFetch(fs, false);
-			NUnit.Framework.Assert.AreEqual(1, credentials.NumberOfTokens());
+			Assert.Equal(1, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.AreSame(token, credentials.GetToken(service));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithChildTokens()
 		{
 			Credentials credentials = new Credentials();
@@ -72,13 +72,13 @@ namespace Org.Apache.Hadoop.FS
 			VerifyTokenFetch(fs1, true);
 			VerifyTokenFetch(fs2, true);
 			VerifyTokenFetch(fs3, false);
-			NUnit.Framework.Assert.AreEqual(2, credentials.NumberOfTokens());
+			Assert.Equal(2, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service1));
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service2));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithDuplicateChildren()
 		{
 			Credentials credentials = new Credentials();
@@ -89,12 +89,12 @@ namespace Org.Apache.Hadoop.FS
 			multiFs.AddDelegationTokens(renewer, credentials);
 			VerifyTokenFetch(multiFs, false);
 			VerifyTokenFetch(fs, true);
-			NUnit.Framework.Assert.AreEqual(1, credentials.NumberOfTokens());
+			Assert.Equal(1, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithDuplicateChildrenTokenExists()
 		{
 			Credentials credentials = new Credentials();
@@ -108,12 +108,12 @@ namespace Org.Apache.Hadoop.FS
 			multiFs.AddDelegationTokens(renewer, credentials);
 			VerifyTokenFetch(multiFs, false);
 			VerifyTokenFetch(fs, false);
-			NUnit.Framework.Assert.AreEqual(1, credentials.NumberOfTokens());
+			Assert.Equal(1, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.AreSame(token, credentials.GetToken(service));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithChildTokensOneExists()
 		{
 			Credentials credentials = new Credentials();
@@ -135,13 +135,13 @@ namespace Org.Apache.Hadoop.FS
 			VerifyTokenFetch(fs2, false);
 			// we had added its token to credentials
 			VerifyTokenFetch(fs3, false);
-			NUnit.Framework.Assert.AreEqual(2, credentials.NumberOfTokens());
+			Assert.Equal(2, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service1));
 			NUnit.Framework.Assert.AreSame(token, credentials.GetToken(service2));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithMyOwnAndChildTokens()
 		{
 			Credentials credentials = new Credentials();
@@ -163,14 +163,14 @@ namespace Org.Apache.Hadoop.FS
 			VerifyTokenFetch(fs1, true);
 			VerifyTokenFetch(fs2, false);
 			// we had added its token to credentials 
-			NUnit.Framework.Assert.AreEqual(3, credentials.NumberOfTokens());
+			Assert.Equal(3, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(myService));
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service1));
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service2));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithMyOwnExistsAndChildTokens()
 		{
 			Credentials credentials = new Credentials();
@@ -191,14 +191,14 @@ namespace Org.Apache.Hadoop.FS
 			// we had added its token to credentials
 			VerifyTokenFetch(fs1, true);
 			VerifyTokenFetch(fs2, true);
-			NUnit.Framework.Assert.AreEqual(3, credentials.NumberOfTokens());
+			Assert.Equal(3, credentials.NumberOfTokens());
 			NUnit.Framework.Assert.AreSame(token, credentials.GetToken(myService));
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service1));
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service2));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFsWithNestedDuplicatesChildren()
 		{
 			Credentials credentials = new Credentials();
@@ -237,7 +237,7 @@ namespace Org.Apache.Hadoop.FS
 			VerifyTokenFetch(fs3, false);
 			// has no tokens
 			VerifyTokenFetch(fs4, true);
-			NUnit.Framework.Assert.AreEqual(4, credentials.NumberOfTokens());
+			Assert.Equal(4, credentials.NumberOfTokens());
 			//fs1+fs2+fs4+multifs (fs3=0)
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service1));
 			NUnit.Framework.Assert.IsNotNull(credentials.GetToken(service2));

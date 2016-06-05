@@ -99,7 +99,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <summary>verify that joinElection tries to create ephemeral lock znode</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJoinElection()
 		{
 			elector.JoinElection(data);
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.HA
 		/// started
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNodeResultBecomeActive()
 		{
 			MockNoPriorActive();
@@ -145,12 +145,12 @@ namespace Org.Apache.Hadoop.HA
 		/// the elector rejoins the election after sleeping for a short period.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailToBecomeActive()
 		{
 			MockNoPriorActive();
 			elector.JoinElection(data);
-			NUnit.Framework.Assert.AreEqual(0, elector.sleptFor);
+			Assert.Equal(0, elector.sleptFor);
 			Org.Mockito.Mockito.DoThrow(new ServiceFailedException("failed to become active")
 				).When(mockApp).BecomeActive();
 			elector.ProcessResult(KeeperException.Code.Ok.IntValue(), ZkLockName, mockZK, ZkLockName
@@ -160,8 +160,8 @@ namespace Org.Apache.Hadoop.HA
 			// should re-join
 			Org.Mockito.Mockito.Verify(mockZK, Org.Mockito.Mockito.Times(2)).Create(ZkLockName
 				, data, ZooDefs.Ids.OpenAclUnsafe, CreateMode.Ephemeral, elector, mockZK);
-			NUnit.Framework.Assert.AreEqual(2, count);
-			NUnit.Framework.Assert.IsTrue(elector.sleptFor > 0);
+			Assert.Equal(2, count);
+			Assert.True(elector.sleptFor > 0);
 		}
 
 		/// <summary>
@@ -170,12 +170,12 @@ namespace Org.Apache.Hadoop.HA
 		/// the election after sleeping for a short period.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailToBecomeActiveAfterZKDisconnect()
 		{
 			MockNoPriorActive();
 			elector.JoinElection(data);
-			NUnit.Framework.Assert.AreEqual(0, elector.sleptFor);
+			Assert.Equal(0, elector.sleptFor);
 			elector.ProcessResult(KeeperException.Code.Connectionloss.IntValue(), ZkLockName, 
 				mockZK, ZkLockName);
 			Org.Mockito.Mockito.Verify(mockZK, Org.Mockito.Mockito.Times(2)).Create(ZkLockName
@@ -195,8 +195,8 @@ namespace Org.Apache.Hadoop.HA
 			// should re-join
 			Org.Mockito.Mockito.Verify(mockZK, Org.Mockito.Mockito.Times(3)).Create(ZkLockName
 				, data, ZooDefs.Ids.OpenAclUnsafe, CreateMode.Ephemeral, elector, mockZK);
-			NUnit.Framework.Assert.AreEqual(2, count);
-			NUnit.Framework.Assert.IsTrue(elector.sleptFor > 0);
+			Assert.Equal(2, count);
+			Assert.True(elector.sleptFor > 0);
 		}
 
 		/// <summary>
@@ -204,7 +204,7 @@ namespace Org.Apache.Hadoop.HA
 		/// elector asks the application to fence it before becoming active.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFencesOldActive()
 		{
 			byte[] fakeOldActiveData = new byte[0];
@@ -223,7 +223,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestQuitElectionRemovesBreadcrumbNode()
 		{
 			MockNoPriorActive();
@@ -245,7 +245,7 @@ namespace Org.Apache.Hadoop.HA
 		/// verify that znode create for existing node and no retry becomes standby and
 		/// monitoring is started
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNodeResultBecomeStandby()
 		{
 			elector.JoinElection(data);
@@ -256,7 +256,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <summary>verify that znode create error result in fatal error</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNodeResultError()
 		{
 			elector.JoinElection(data);
@@ -276,7 +276,7 @@ namespace Org.Apache.Hadoop.HA
 		/// becomes active if they match. monitoring is started.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNodeResultRetryBecomeActive()
 		{
 			MockNoPriorActive();
@@ -295,7 +295,7 @@ namespace Org.Apache.Hadoop.HA
 				 + ". " + "Not retrying further znode create connection errors.");
 			elector.JoinElection(data);
 			// recreate connection via getNewZooKeeper
-			NUnit.Framework.Assert.AreEqual(2, count);
+			Assert.Equal(2, count);
 			elector.ProcessResult(KeeperException.Code.Connectionloss.IntValue(), ZkLockName, 
 				mockZK, ZkLockName);
 			elector.ProcessResult(KeeperException.Code.Nodeexists.IntValue(), ZkLockName, mockZK
@@ -320,7 +320,7 @@ namespace Org.Apache.Hadoop.HA
 		/// verify that retry of network errors verifies active by session id and
 		/// becomes standby if they dont match. monitoring is started.
 		/// </remarks>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNodeResultRetryBecomeStandby()
 		{
 			elector.JoinElection(data);
@@ -343,7 +343,7 @@ namespace Org.Apache.Hadoop.HA
 		/// before exists() watch is set then the return of the exists() method results
 		/// in attempt to re-create the znode and become active
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateNodeResultRetryNoNode()
 		{
 			elector.JoinElection(data);
@@ -363,7 +363,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <summary>verify that more than 3 network error retries result fatalError</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStatNodeRetry()
 		{
 			elector.JoinElection(data);
@@ -381,7 +381,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <summary>verify error in exists() callback results in fatal error</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStatNodeError()
 		{
 			elector.JoinElection(data);
@@ -395,7 +395,7 @@ namespace Org.Apache.Hadoop.HA
 
 		/// <summary>verify behavior of watcher.process callback with non-node event</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProcessCallbackEventNone()
 		{
 			MockNoPriorActive();
@@ -421,7 +421,7 @@ namespace Org.Apache.Hadoop.HA
 				.SyncConnected);
 			elector.ProcessWatchEvent(mockZK, mockEvent);
 			VerifyExistCall(1);
-			NUnit.Framework.Assert.IsTrue(elector.IsMonitorLockNodePending());
+			Assert.True(elector.IsMonitorLockNodePending());
 			elector.ProcessResult(KeeperException.Code.Sessionexpired.IntValue(), ZkLockName, 
 				mockZK, new Stat());
 			NUnit.Framework.Assert.IsFalse(elector.IsMonitorLockNodePending());
@@ -436,7 +436,7 @@ namespace Org.Apache.Hadoop.HA
 				();
 			// called getNewZooKeeper to create new session. first call was in
 			// constructor
-			NUnit.Framework.Assert.AreEqual(2, count);
+			Assert.Equal(2, count);
 			// once in initial joinElection and one now
 			Org.Mockito.Mockito.Verify(mockZK, Org.Mockito.Mockito.Times(2)).Create(ZkLockName
 				, data, ZooDefs.Ids.OpenAclUnsafe, CreateMode.Ephemeral, elector, mockZK);
@@ -458,7 +458,7 @@ namespace Org.Apache.Hadoop.HA
 
 		/// <summary>verify behavior of watcher.process with node event</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProcessCallbackEventNode()
 		{
 			MockNoPriorActive();
@@ -468,7 +468,7 @@ namespace Org.Apache.Hadoop.HA
 				, ZkLockName);
 			Org.Mockito.Mockito.Verify(mockApp, Org.Mockito.Mockito.Times(1)).BecomeStandby();
 			VerifyExistCall(1);
-			NUnit.Framework.Assert.IsTrue(elector.IsMonitorLockNodePending());
+			Assert.True(elector.IsMonitorLockNodePending());
 			Stat stat = new Stat();
 			stat.SetEphemeralOwner(0L);
 			Org.Mockito.Mockito.When(mockZK.GetSessionId()).ThenReturn(1L);
@@ -482,7 +482,7 @@ namespace Org.Apache.Hadoop.HA
 				NodeDataChanged);
 			elector.ProcessWatchEvent(mockZK, mockEvent);
 			VerifyExistCall(2);
-			NUnit.Framework.Assert.IsTrue(elector.IsMonitorLockNodePending());
+			Assert.True(elector.IsMonitorLockNodePending());
 			elector.ProcessResult(KeeperException.Code.Ok.IntValue(), ZkLockName, mockZK, stat
 				);
 			NUnit.Framework.Assert.IsFalse(elector.IsMonitorLockNodePending());
@@ -491,7 +491,7 @@ namespace Org.Apache.Hadoop.HA
 				NodeChildrenChanged);
 			elector.ProcessWatchEvent(mockZK, mockEvent);
 			VerifyExistCall(3);
-			NUnit.Framework.Assert.IsTrue(elector.IsMonitorLockNodePending());
+			Assert.True(elector.IsMonitorLockNodePending());
 			elector.ProcessResult(KeeperException.Code.Ok.IntValue(), ZkLockName, mockZK, stat
 				);
 			NUnit.Framework.Assert.IsFalse(elector.IsMonitorLockNodePending());
@@ -510,7 +510,7 @@ namespace Org.Apache.Hadoop.HA
 				);
 			Org.Mockito.Mockito.Verify(mockApp, Org.Mockito.Mockito.Times(1)).BecomeActive();
 			VerifyExistCall(4);
-			NUnit.Framework.Assert.IsTrue(elector.IsMonitorLockNodePending());
+			Assert.True(elector.IsMonitorLockNodePending());
 			stat.SetEphemeralOwner(1L);
 			elector.ProcessResult(KeeperException.Code.Ok.IntValue(), ZkLockName, mockZK, stat
 				);
@@ -530,7 +530,7 @@ namespace Org.Apache.Hadoop.HA
 				);
 			Org.Mockito.Mockito.Verify(mockApp, Org.Mockito.Mockito.Times(2)).BecomeActive();
 			VerifyExistCall(5);
-			NUnit.Framework.Assert.IsTrue(elector.IsMonitorLockNodePending());
+			Assert.True(elector.IsMonitorLockNodePending());
 			elector.ProcessResult(KeeperException.Code.Ok.IntValue(), ZkLockName, mockZK, stat
 				);
 			NUnit.Framework.Assert.IsFalse(elector.IsMonitorLockNodePending());
@@ -540,7 +540,7 @@ namespace Org.Apache.Hadoop.HA
 			Org.Mockito.Mockito.Verify(mockApp, Org.Mockito.Mockito.Times(1)).NotifyFatalError
 				("Unexpected watch error from Zookeeper");
 			// fatal error means no new connection other than one from constructor
-			NUnit.Framework.Assert.AreEqual(1, count);
+			Assert.Equal(1, count);
 			// no new watches after fatal error
 			VerifyExistCall(5);
 		}
@@ -553,7 +553,7 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <summary>verify becomeStandby is not called if already in standby</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSuccessiveStandbyCalls()
 		{
 			elector.JoinElection(data);
@@ -562,7 +562,7 @@ namespace Org.Apache.Hadoop.HA
 				, ZkLockName);
 			Org.Mockito.Mockito.Verify(mockApp, Org.Mockito.Mockito.Times(1)).BecomeStandby();
 			VerifyExistCall(1);
-			NUnit.Framework.Assert.IsTrue(elector.IsMonitorLockNodePending());
+			Assert.True(elector.IsMonitorLockNodePending());
 			Stat stat = new Stat();
 			stat.SetEphemeralOwner(0L);
 			Org.Mockito.Mockito.When(mockZK.GetSessionId()).ThenReturn(1L);
@@ -598,7 +598,7 @@ namespace Org.Apache.Hadoop.HA
 		/// next call to joinElection creates new connection and performs election
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestQuitElection()
 		{
 			elector.JoinElection(data);
@@ -610,7 +610,7 @@ namespace Org.Apache.Hadoop.HA
 			byte[] data = new byte[8];
 			elector.JoinElection(data);
 			// getNewZooKeeper called 2 times. once in constructor and once now
-			NUnit.Framework.Assert.AreEqual(2, count);
+			Assert.Equal(2, count);
 			elector.ProcessResult(KeeperException.Code.Nodeexists.IntValue(), ZkLockName, mockZK
 				, ZkLockName);
 			Org.Mockito.Mockito.Verify(mockApp, Org.Mockito.Mockito.Times(1)).BecomeStandby();
@@ -627,14 +627,14 @@ namespace Org.Apache.Hadoop.HA
 		/// <exception cref="ActiveNotFoundException"/>
 		/// <exception cref="Org.Apache.Hadoop.HA.ActiveStandbyElector.ActiveNotFoundException
 		/// 	"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetActiveData()
 		{
 			// get valid active data
 			byte[] data = new byte[8];
 			Org.Mockito.Mockito.When(mockZK.GetData(Org.Mockito.Mockito.Eq(ZkLockName), Org.Mockito.Mockito
 				.Eq(false), Org.Mockito.Mockito.AnyObject<Stat>())).ThenReturn(data);
-			NUnit.Framework.Assert.AreEqual(data, elector.GetActiveData());
+			Assert.Equal(data, elector.GetActiveData());
 			Org.Mockito.Mockito.Verify(mockZK, Org.Mockito.Mockito.Times(1)).GetData(Org.Mockito.Mockito
 				.Eq(ZkLockName), Org.Mockito.Mockito.Eq(false), Org.Mockito.Mockito.AnyObject<Stat
 				>());
@@ -672,7 +672,7 @@ namespace Org.Apache.Hadoop.HA
 
 		/// <summary>Test that ensureBaseNode() recursively creates the specified dir</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEnsureBaseNode()
 		{
 			elector.EnsureParentZNode();
@@ -699,7 +699,7 @@ namespace Org.Apache.Hadoop.HA
 		/// more than 3 times to create any part of the path.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEnsureBaseNodeFails()
 		{
 			Org.Mockito.Mockito.DoThrow(new KeeperException.ConnectionLossException()).When(mockZK
@@ -726,7 +726,7 @@ namespace Org.Apache.Hadoop.HA
 
 		/// <summary>verify the zookeeper connection establishment</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithoutZKServer()
 		{
 			try
@@ -745,7 +745,7 @@ namespace Org.Apache.Hadoop.HA
 
 		/// <summary>joinElection(..) should happen only after SERVICE_HEALTHY.</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBecomeActiveBeforeServiceHealthy()
 		{
 			MockNoPriorActive();

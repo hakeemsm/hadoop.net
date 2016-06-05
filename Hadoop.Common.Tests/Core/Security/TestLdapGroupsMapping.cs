@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Security
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Javax.Naming.NamingException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetGroups()
 		{
 			// The search functionality of the mock context is reused, so we will
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.Security
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Javax.Naming.NamingException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetGroupsWithConnectionClosed()
 		{
 			// The case mocks connection is closed/gc-ed, so the first search call throws CommunicationException,
@@ -89,7 +89,7 @@ namespace Org.Apache.Hadoop.Security
 		// 1 is the first failure call 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Javax.Naming.NamingException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetGroupsWithLdapDown()
 		{
 			// This mocks the case where Ldap server is down, and always throws CommunicationException 
@@ -113,14 +113,14 @@ namespace Org.Apache.Hadoop.Security
 			// Username is arbitrary, since the spy is mocked to respond the same,
 			// regardless of input
 			IList<string> groups = mappingSpy.GetGroups("some_user");
-			NUnit.Framework.Assert.AreEqual(expectedGroups, groups);
+			Assert.Equal(expectedGroups, groups);
 			// We should have searched for a user, and then two groups
 			Org.Mockito.Mockito.Verify(mockContext, Org.Mockito.Mockito.Times(searchTimes)).Search
 				(AnyString(), AnyString(), Any<object[]>(), Any<SearchControls>());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExtractPassword()
 		{
 			FilePath testDir = new FilePath(Runtime.GetProperty("test.build.data", "target/test-dir"
@@ -131,12 +131,12 @@ namespace Org.Apache.Hadoop.Security
 			writer.Write("hadoop");
 			writer.Close();
 			LdapGroupsMapping mapping = new LdapGroupsMapping();
-			NUnit.Framework.Assert.AreEqual("hadoop", mapping.ExtractPassword(secretFile.GetPath
+			Assert.Equal("hadoop", mapping.ExtractPassword(secretFile.GetPath
 				()));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConfGetPassword()
 		{
 			FilePath testDir = new FilePath(Runtime.GetProperty("test.build.data", "target/test-dir"
@@ -151,9 +151,9 @@ namespace Org.Apache.Hadoop.Security
 			char[] bindpass = new char[] { 'b', 'i', 'n', 'd', 'p', 'a', 's', 's' };
 			char[] storepass = new char[] { 's', 't', 'o', 'r', 'e', 'p', 'a', 's', 's' };
 			// ensure that we get nulls when the key isn't there
-			NUnit.Framework.Assert.AreEqual(null, provider.GetCredentialEntry(LdapGroupsMapping
+			Assert.Equal(null, provider.GetCredentialEntry(LdapGroupsMapping
 				.BindPasswordKey));
-			NUnit.Framework.Assert.AreEqual(null, provider.GetCredentialEntry(LdapGroupsMapping
+			Assert.Equal(null, provider.GetCredentialEntry(LdapGroupsMapping
 				.LdapKeystorePasswordKey));
 			// create new aliases
 			try
@@ -174,14 +174,14 @@ namespace Org.Apache.Hadoop.Security
 			Assert.AssertArrayEquals(storepass, provider.GetCredentialEntry(LdapGroupsMapping
 				.LdapKeystorePasswordKey).GetCredential());
 			LdapGroupsMapping mapping = new LdapGroupsMapping();
-			NUnit.Framework.Assert.AreEqual("bindpass", mapping.GetPassword(conf, LdapGroupsMapping
+			Assert.Equal("bindpass", mapping.GetPassword(conf, LdapGroupsMapping
 				.BindPasswordKey, string.Empty));
-			NUnit.Framework.Assert.AreEqual("storepass", mapping.GetPassword(conf, LdapGroupsMapping
+			Assert.Equal("storepass", mapping.GetPassword(conf, LdapGroupsMapping
 				.LdapKeystorePasswordKey, string.Empty));
 			// let's make sure that a password that doesn't exist returns an
 			// empty string as currently expected and used to trigger a call to
 			// extract password
-			NUnit.Framework.Assert.AreEqual(string.Empty, mapping.GetPassword(conf, "invalid-alias"
+			Assert.Equal(string.Empty, mapping.GetPassword(conf, "invalid-alias"
 				, string.Empty));
 		}
 	}

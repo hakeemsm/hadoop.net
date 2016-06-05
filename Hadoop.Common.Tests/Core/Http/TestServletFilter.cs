@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServletFilter()
 		{
 			Configuration conf = new Configuration();
@@ -125,11 +125,11 @@ namespace Org.Apache.Hadoop.Http
 					//make sure everything except fsck get filtered
 					if (sequence[i_1] == 0)
 					{
-						NUnit.Framework.Assert.AreEqual(null, uri);
+						Assert.Equal(null, uri);
 					}
 					else
 					{
-						NUnit.Framework.Assert.AreEqual(urls[sequence[i_1]], uri);
+						Assert.Equal(urls[sequence[i_1]], uri);
 						uri = null;
 					}
 				}
@@ -164,7 +164,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServletFilterWhenInitThrowsException()
 		{
 			Configuration conf = new Configuration();
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.Http
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(e.Message.Contains("Problem in starting http server. Server handlers failed"
+				Assert.True(e.Message.Contains("Problem in starting http server. Server handlers failed"
 					));
 			}
 		}
@@ -193,7 +193,7 @@ namespace Org.Apache.Hadoop.Http
 		/// the filter. Regression test for HADOOP-8786.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestContextSpecificServletFilterWhenInitThrowsException()
 		{
 			Configuration conf = new Configuration();

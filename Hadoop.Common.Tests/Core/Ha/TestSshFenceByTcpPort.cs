@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.HA
 			conf.Set(SshFenceByTcpPort.ConfIdentitiesKey, TestKeyfile);
 			SshFenceByTcpPort fence = new SshFenceByTcpPort();
 			fence.SetConf(conf);
-			NUnit.Framework.Assert.IsTrue(fence.TryFence(TestTarget, null));
+			Assert.True(fence.TryFence(TestTarget, null));
 		}
 
 		/// <summary>Test connecting to a host which definitely won't respond.</summary>
@@ -61,28 +61,28 @@ namespace Org.Apache.Hadoop.HA
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestArgsParsing()
 		{
 			SshFenceByTcpPort.Args args = new SshFenceByTcpPort.Args(null);
-			NUnit.Framework.Assert.AreEqual(Runtime.GetProperty("user.name"), args.user);
-			NUnit.Framework.Assert.AreEqual(22, args.sshPort);
+			Assert.Equal(Runtime.GetProperty("user.name"), args.user);
+			Assert.Equal(22, args.sshPort);
 			args = new SshFenceByTcpPort.Args(string.Empty);
-			NUnit.Framework.Assert.AreEqual(Runtime.GetProperty("user.name"), args.user);
-			NUnit.Framework.Assert.AreEqual(22, args.sshPort);
+			Assert.Equal(Runtime.GetProperty("user.name"), args.user);
+			Assert.Equal(22, args.sshPort);
 			args = new SshFenceByTcpPort.Args("12345");
-			NUnit.Framework.Assert.AreEqual("12345", args.user);
-			NUnit.Framework.Assert.AreEqual(22, args.sshPort);
+			Assert.Equal("12345", args.user);
+			Assert.Equal(22, args.sshPort);
 			args = new SshFenceByTcpPort.Args(":12345");
-			NUnit.Framework.Assert.AreEqual(Runtime.GetProperty("user.name"), args.user);
-			NUnit.Framework.Assert.AreEqual(12345, args.sshPort);
+			Assert.Equal(Runtime.GetProperty("user.name"), args.user);
+			Assert.Equal(12345, args.sshPort);
 			args = new SshFenceByTcpPort.Args("foo:2222");
-			NUnit.Framework.Assert.AreEqual("foo", args.user);
-			NUnit.Framework.Assert.AreEqual(2222, args.sshPort);
+			Assert.Equal("foo", args.user);
+			Assert.Equal(2222, args.sshPort);
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.HA.BadFencingConfigurationException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBadArgsParsing()
 		{
 			AssertBadArgs(":");

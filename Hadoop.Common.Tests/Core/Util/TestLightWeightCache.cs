@@ -35,7 +35,7 @@ namespace Org.Apache.Hadoop.Util
 			System.Console.Out.WriteLine(s);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLightWeightCache()
 		{
 			{
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Util
 			for (int i = 0; i < test.data.Size(); i++)
 			{
 				test.cache.Put(test.data.Get(i));
-				NUnit.Framework.Assert.IsTrue(test.cache.Size() <= sizeLimit);
+				Assert.True(test.cache.Size() <= sizeLimit);
 			}
 			Println("DONE " + test.Stat());
 		}
@@ -172,7 +172,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				test.Remove(test.data.Get(i_4));
 			}
-			NUnit.Framework.Assert.AreEqual(0, test.cache.Size());
+			Assert.Equal(0, test.cache.Size());
 			Println("DONE " + test.Stat());
 			//check remove and put again
 			Print("  check remove & put again ... ");
@@ -245,7 +245,7 @@ namespace Org.Apache.Hadoop.Util
 				data = new TestLightWeightCache.IntData(datasize, modulus);
 				cache = new LightWeightCache<TestLightWeightCache.IntEntry, TestLightWeightCache.IntEntry
 					>(tablelength, sizeLimit, creationExpirationPeriod, 0, new _Clock_232(this));
-				NUnit.Framework.Assert.AreEqual(0, cache.Size());
+				Assert.Equal(0, cache.Size());
 			}
 
 			private sealed class _Clock_232 : LightWeightCache.Clock
@@ -268,14 +268,14 @@ namespace Org.Apache.Hadoop.Util
 				bool c = cache.Contains(key);
 				if (c)
 				{
-					NUnit.Framework.Assert.IsTrue(hashMap.Contains(key));
+					Assert.True(hashMap.Contains(key));
 				}
 				else
 				{
 					TestLightWeightCache.IntEntry h = hashMap.Remove(key);
 					if (h != null)
 					{
-						NUnit.Framework.Assert.IsTrue(cache.IsExpired(h, currentTestTime));
+						Assert.True(cache.IsExpired(h, currentTestTime));
 					}
 				}
 				return c;
@@ -293,14 +293,14 @@ namespace Org.Apache.Hadoop.Util
 				TestLightWeightCache.IntEntry c = cache.Get(key);
 				if (c != null)
 				{
-					NUnit.Framework.Assert.AreEqual(hashMap.Get(key).id, c.id);
+					Assert.Equal(hashMap.Get(key).id, c.id);
 				}
 				else
 				{
 					TestLightWeightCache.IntEntry h = hashMap.Remove(key);
 					if (h != null)
 					{
-						NUnit.Framework.Assert.IsTrue(cache.IsExpired(h, currentTestTime));
+						Assert.True(cache.IsExpired(h, currentTestTime));
 					}
 				}
 				return c;
@@ -320,7 +320,7 @@ namespace Org.Apache.Hadoop.Util
 				TestLightWeightCache.IntEntry c = cache.Put(entry);
 				if (c != null)
 				{
-					NUnit.Framework.Assert.AreEqual(hashMap.Put(entry).id, c.id);
+					Assert.Equal(hashMap.Put(entry).id, c.id);
 				}
 				else
 				{
@@ -328,7 +328,7 @@ namespace Org.Apache.Hadoop.Util
 					if (h != null && h != entry)
 					{
 						// if h == entry, its expiration time is already updated
-						NUnit.Framework.Assert.IsTrue(cache.IsExpired(h, currentTestTime));
+						Assert.True(cache.IsExpired(h, currentTestTime));
 					}
 				}
 				return c;
@@ -348,14 +348,14 @@ namespace Org.Apache.Hadoop.Util
 				TestLightWeightCache.IntEntry c = cache.Remove(key);
 				if (c != null)
 				{
-					NUnit.Framework.Assert.AreEqual(c.id, hashMap.Remove(key).id);
+					Assert.Equal(c.id, hashMap.Remove(key).id);
 				}
 				else
 				{
 					TestLightWeightCache.IntEntry h = hashMap.Remove(key);
 					if (h != null)
 					{
-						NUnit.Framework.Assert.IsTrue(cache.IsExpired(h, currentTestTime));
+						Assert.True(cache.IsExpired(h, currentTestTime));
 					}
 				}
 				return c;
@@ -372,7 +372,7 @@ namespace Org.Apache.Hadoop.Util
 			private int SizeTest()
 			{
 				int c = cache.Size();
-				NUnit.Framework.Assert.IsTrue(hashMap.Size() >= c);
+				Assert.True(hashMap.Size() >= c);
 				return c;
 			}
 
@@ -440,7 +440,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				hashMap.Clear();
 				cache.Clear();
-				NUnit.Framework.Assert.AreEqual(0, Size());
+				Assert.Equal(0, Size());
 			}
 		}
 

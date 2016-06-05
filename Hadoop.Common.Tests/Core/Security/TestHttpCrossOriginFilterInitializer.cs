@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.Security
 {
 	public class TestHttpCrossOriginFilterInitializer
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetFilterParameters()
 		{
 			// Initialize configuration object
@@ -23,9 +23,9 @@ namespace Org.Apache.Hadoop.Security
 			string nestedvalue = filterParameters["nested.param"];
 			string outofscopeparam = filterParameters["outofscopeparam"];
 			// verify expected values are in place
-			NUnit.Framework.Assert.AreEqual("Could not find filter parameter", "rootvalue", rootvalue
+			Assert.Equal("Could not find filter parameter", "rootvalue", rootvalue
 				);
-			NUnit.Framework.Assert.AreEqual("Could not find filter parameter", "nestedvalue", 
+			Assert.Equal("Could not find filter parameter", "nestedvalue", 
 				nestedvalue);
 			NUnit.Framework.Assert.IsNull("Found unexpected value in filter parameters", outofscopeparam
 				);

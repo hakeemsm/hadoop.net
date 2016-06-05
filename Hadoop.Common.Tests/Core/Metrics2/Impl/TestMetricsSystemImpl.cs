@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitFirstVerifyStopInvokedImmediately()
 		{
 			DefaultMetricsSystem.Shutdown();
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitFirstVerifyCallBacks()
 		{
 			DefaultMetricsSystem.Shutdown();
@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultiThreadedPublish()
 		{
 			int numThreads = 10;
@@ -191,8 +191,8 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				t_1.Join();
 			}
-			NUnit.Framework.Assert.AreEqual(0L, ms.droppedPubAll.Value());
-			NUnit.Framework.Assert.IsTrue(StringUtils.Join("\n", Arrays.AsList(results)), Iterables
+			Assert.Equal(0L, ms.droppedPubAll.Value());
+			Assert.True(StringUtils.Join("\n", Arrays.AsList(results)), Iterables
 				.All(Arrays.AsList(results), new _Predicate_240()));
 			ms.Stop();
 			ms.Shutdown();
@@ -329,7 +329,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHangingSink()
 		{
 			new ConfigBuilder().Add("*.period", 8).Add("test.sink.test.class", typeof(TestMetricsSystemImpl.TestSink
@@ -345,12 +345,12 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				();
 			ms.RegisterSink("hanging", "Hang the sink!", hanging);
 			ms.PublishMetricsNow();
-			NUnit.Framework.Assert.AreEqual(1L, ms.droppedPubAll.Value());
+			Assert.Equal(1L, ms.droppedPubAll.Value());
 			NUnit.Framework.Assert.IsFalse(hanging.GetInterrupted());
 			ms.Stop();
 			ms.Shutdown();
-			NUnit.Framework.Assert.IsTrue(hanging.GetInterrupted());
-			NUnit.Framework.Assert.IsTrue("The sink didn't get called after its first hang " 
+			Assert.True(hanging.GetInterrupted());
+			Assert.True("The sink didn't get called after its first hang " 
 				+ "for subsequent records.", hanging.GetGotCalledSecondTime());
 		}
 
@@ -400,7 +400,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRegisterDups()
 		{
 			MetricsSystem ms = new MetricsSystemImpl();
@@ -427,7 +427,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			ms.Register(ts);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartStopStart()
 		{
 			DefaultMetricsSystem.Shutdown();
@@ -449,7 +449,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			ms.Shutdown();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUnregisterSource()
 		{
 			MetricsSystem ms = new MetricsSystemImpl();
@@ -470,7 +470,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			ms.Shutdown();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRegisterSourceWithoutName()
 		{
 			MetricsSystem ms = new MetricsSystemImpl();
@@ -494,7 +494,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		{
 			Log.Debug(recs);
 			MetricsRecord r = recs[0];
-			NUnit.Framework.Assert.AreEqual("name", "s1rec", r.Name());
+			Assert.Equal("name", "s1rec", r.Name());
 			MoreAsserts.AssertEquals("tags", new MetricsTag[] { Interns.Tag(MsInfo.Context, "test"
 				), Interns.Tag(MsInfo.Hostname, hostname) }, r.Tags());
 			MoreAsserts.AssertEquals("metrics", ((MetricsRecordBuilderImpl)((MetricsRecordBuilderImpl
@@ -503,12 +503,12 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				), 2L)).AddCounter(Interns.Info("S1NumOps", "Number of ops for s1"), 1L)).AddGauge
 				(Interns.Info("S1AvgTime", "Average time for s1"), 0.0)).Metrics(), r.Metrics());
 			r = recs[1];
-			NUnit.Framework.Assert.IsTrue("NumActiveSinks should be 3", Iterables.Contains(r.
+			Assert.True("NumActiveSinks should be 3", Iterables.Contains(r.
 				Metrics(), new MetricGaugeInt(MsInfo.NumActiveSinks, 3)));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestQSize()
 		{
 			new ConfigBuilder().Add("*.period", 8).Add("test.sink.test.class", typeof(TestMetricsSystemImpl.TestSink
@@ -528,7 +528,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 					)).When(slowSink).PutMetrics(Any<MetricsRecord>());
 				// trigger metric collection first time
 				ms.OnTimerEvent();
-				NUnit.Framework.Assert.IsTrue(reachedPutMetricSignal.Await(1, TimeUnit.Seconds));
+				Assert.True(reachedPutMetricSignal.Await(1, TimeUnit.Seconds));
 				// Now that the slow sink is still processing the first metric,
 				// its queue length should be 1 for the second collection.
 				ms.OnTimerEvent();
@@ -536,7 +536,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 					(r1.Capture());
 				IList<MetricsRecord> mr = r1.GetAllValues();
 				Number qSize = Iterables.Find(mr[1].Metrics(), new _Predicate_475()).Value();
-				NUnit.Framework.Assert.AreEqual(1, qSize);
+				Assert.Equal(1, qSize);
 			}
 			finally
 			{
@@ -636,7 +636,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				// trigger metric collection first time
 				ms.OnTimerEvent();
 				// Make sure that sink is collecting metrics
-				NUnit.Framework.Assert.IsTrue(collectingLatch.Await(1, TimeUnit.Seconds));
+				Assert.True(collectingLatch.Await(1, TimeUnit.Seconds));
 			}
 			finally
 			{

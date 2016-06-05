@@ -26,9 +26,9 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		private void CleanupFile(FileSystem fs, Path name)
 		{
-			NUnit.Framework.Assert.IsTrue(fs.Exists(name));
+			Assert.True(fs.Exists(name));
 			fs.Delete(name, true);
-			NUnit.Framework.Assert.IsTrue(!fs.Exists(name));
+			Assert.True(!fs.Exists(name));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			FileUtil.SetWritable(@base, true);
 			FileUtil.FullyDelete(@base);
-			NUnit.Framework.Assert.IsTrue(!@base.Exists());
+			Assert.True(!@base.Exists());
 		}
 
 		/// <summary>Test the capability of setting the working directory.</summary>
@@ -59,38 +59,38 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				// make sure it doesn't already exist
-				NUnit.Framework.Assert.IsTrue(!fileSys.Exists(subdir));
+				Assert.True(!fileSys.Exists(subdir));
 				// make it and check for it
-				NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(subdir));
-				NUnit.Framework.Assert.IsTrue(fileSys.IsDirectory(subdir));
+				Assert.True(fileSys.Mkdirs(subdir));
+				Assert.True(fileSys.IsDirectory(subdir));
 				fileSys.SetWorkingDirectory(subdir);
 				// create a directory and check for it
 				Path dir1 = new Path("dir1");
-				NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(dir1));
-				NUnit.Framework.Assert.IsTrue(fileSys.IsDirectory(dir1));
+				Assert.True(fileSys.Mkdirs(dir1));
+				Assert.True(fileSys.IsDirectory(dir1));
 				// delete the directory and make sure it went away
 				fileSys.Delete(dir1, true);
-				NUnit.Framework.Assert.IsTrue(!fileSys.Exists(dir1));
+				Assert.True(!fileSys.Exists(dir1));
 				// create files and manipulate them.
 				Path file1 = new Path("file1");
 				Path file2 = new Path("sub/file2");
 				string contents = FileSystemTestHelper.WriteFile(fileSys, file1, 1);
 				fileSys.CopyFromLocalFile(file1, file2);
-				NUnit.Framework.Assert.IsTrue(fileSys.Exists(file1));
-				NUnit.Framework.Assert.IsTrue(fileSys.IsFile(file1));
+				Assert.True(fileSys.Exists(file1));
+				Assert.True(fileSys.IsFile(file1));
 				CleanupFile(fileSys, file2);
 				fileSys.CopyToLocalFile(file1, file2);
 				CleanupFile(fileSys, file2);
 				// try a rename
 				fileSys.Rename(file1, file2);
-				NUnit.Framework.Assert.IsTrue(!fileSys.Exists(file1));
-				NUnit.Framework.Assert.IsTrue(fileSys.Exists(file2));
+				Assert.True(!fileSys.Exists(file1));
+				Assert.True(fileSys.Exists(file2));
 				fileSys.Rename(file2, file1);
 				// try reading a file
 				InputStream stm = fileSys.Open(file1);
 				byte[] buffer = new byte[3];
 				int bytesRead = stm.Read(buffer, 0, 3);
-				NUnit.Framework.Assert.AreEqual(contents, Sharpen.Runtime.GetStringForBytes(buffer
+				Assert.Equal(contents, Sharpen.Runtime.GetStringForBytes(buffer
 					, 0, bytesRead));
 				stm.Close();
 			}
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.FS
 				@in.ReadFully(readBuf, 0, bytesToVerify);
 				for (int i = 0; i < bytesToVerify; i++)
 				{
-					NUnit.Framework.Assert.AreEqual(expectedBytes[i], readBuf[i]);
+					Assert.Equal(expectedBytes[i], readBuf[i]);
 				}
 			}
 			finally
@@ -151,23 +151,23 @@ namespace Org.Apache.Hadoop.FS
 			Path src = new Path(TestRootDir, "dingo");
 			Path dst = new Path(TestRootDir, "yak");
 			FileSystemTestHelper.WriteFile(fileSys, src, 1);
-			NUnit.Framework.Assert.IsTrue(FileUtil.Copy(fileSys, src, fileSys, dst, true, false
+			Assert.True(FileUtil.Copy(fileSys, src, fileSys, dst, true, false
 				, conf));
-			NUnit.Framework.Assert.IsTrue(!fileSys.Exists(src) && fileSys.Exists(dst));
-			NUnit.Framework.Assert.IsTrue(FileUtil.Copy(fileSys, dst, fileSys, src, false, false
+			Assert.True(!fileSys.Exists(src) && fileSys.Exists(dst));
+			Assert.True(FileUtil.Copy(fileSys, dst, fileSys, src, false, false
 				, conf));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(src) && fileSys.Exists(dst));
-			NUnit.Framework.Assert.IsTrue(FileUtil.Copy(fileSys, src, fileSys, dst, true, true
+			Assert.True(fileSys.Exists(src) && fileSys.Exists(dst));
+			Assert.True(FileUtil.Copy(fileSys, src, fileSys, dst, true, true
 				, conf));
-			NUnit.Framework.Assert.IsTrue(!fileSys.Exists(src) && fileSys.Exists(dst));
+			Assert.True(!fileSys.Exists(src) && fileSys.Exists(dst));
 			fileSys.Mkdirs(src);
-			NUnit.Framework.Assert.IsTrue(FileUtil.Copy(fileSys, dst, fileSys, src, false, false
+			Assert.True(FileUtil.Copy(fileSys, dst, fileSys, src, false, false
 				, conf));
 			Path tmp = new Path(src, dst.GetName());
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(tmp) && fileSys.Exists(dst));
-			NUnit.Framework.Assert.IsTrue(FileUtil.Copy(fileSys, dst, fileSys, src, false, true
+			Assert.True(fileSys.Exists(tmp) && fileSys.Exists(dst));
+			Assert.True(FileUtil.Copy(fileSys, dst, fileSys, src, false, true
 				, conf));
-			NUnit.Framework.Assert.IsTrue(fileSys.Delete(tmp, true));
+			Assert.True(fileSys.Delete(tmp, true));
 			fileSys.Mkdirs(tmp);
 			try
 			{
@@ -185,7 +185,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			Path home = new Path(Runtime.GetProperty("user.home")).MakeQualified(fileSys);
 			Path fsHome = fileSys.GetHomeDirectory();
-			NUnit.Framework.Assert.AreEqual(home, fsHome);
+			Assert.Equal(home, fsHome);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -194,7 +194,7 @@ namespace Org.Apache.Hadoop.FS
 			Path path = new Path(TestRootDir, "foo%bar");
 			FileSystemTestHelper.WriteFile(fileSys, path, 1);
 			FileStatus status = fileSys.GetFileStatus(path);
-			NUnit.Framework.Assert.AreEqual(path.MakeQualified(fileSys), status.GetPath());
+			Assert.Equal(path.MakeQualified(fileSys), status.GetPath());
 			CleanupFile(fileSys, path);
 		}
 
@@ -203,15 +203,15 @@ namespace Org.Apache.Hadoop.FS
 		{
 			Path test_dir = new Path(TestRootDir, "test_dir");
 			Path test_file = new Path(test_dir, "file1");
-			NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(test_dir));
+			Assert.True(fileSys.Mkdirs(test_dir));
 			int fileSize = new Random().Next(1 << 20) + 1;
 			FileSystemTestHelper.WriteFile(fileSys, test_file, fileSize);
 			{
 				//check FileStatus and ContentSummary 
 				FileStatus status = fileSys.GetFileStatus(test_file);
-				NUnit.Framework.Assert.AreEqual(fileSize, status.GetLen());
+				Assert.Equal(fileSize, status.GetLen());
 				ContentSummary summary = fileSys.GetContentSummary(test_dir);
-				NUnit.Framework.Assert.AreEqual(fileSize, summary.GetLength());
+				Assert.Equal(fileSize, summary.GetLength());
 			}
 			// creating dir over a file
 			Path bad_dir = new Path(test_file, "another_dir");
@@ -243,13 +243,13 @@ namespace Org.Apache.Hadoop.FS
 			Path file1 = new Path(TestRootDir, "file1");
 			Path file2 = new Path(TestRootDir + "/dir1", "file2");
 			Path file3 = new Path(TestRootDir, "does-not-exist");
-			NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(dir1));
+			Assert.True(fileSys.Mkdirs(dir1));
 			FileSystemTestHelper.WriteFile(fileSys, file1, 1);
 			FileSystemTestHelper.WriteFile(fileSys, file2, 1);
 			NUnit.Framework.Assert.IsFalse("Returned true deleting non-existant path", fileSys
 				.Delete(file3));
-			NUnit.Framework.Assert.IsTrue("Did not delete file", fileSys.Delete(file1));
-			NUnit.Framework.Assert.IsTrue("Did not delete non-empty dir", fileSys.Delete(dir1
+			Assert.True("Did not delete file", fileSys.Delete(file1));
+			Assert.True("Did not delete non-empty dir", fileSys.Delete(dir1
 				));
 		}
 
@@ -264,7 +264,7 @@ namespace Org.Apache.Hadoop.FS
 					fileSchemeCount++;
 				}
 			}
-			NUnit.Framework.Assert.AreEqual(1, fileSchemeCount);
+			Assert.Equal(1, fileSchemeCount);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -285,13 +285,13 @@ namespace Org.Apache.Hadoop.FS
 			FilePath colonFile = new FilePath(TestRootDir, "foo:bar");
 			colonFile.Mkdirs();
 			FileStatus[] stats = fileSys.ListStatus(new Path(TestRootDir));
-			NUnit.Framework.Assert.AreEqual("Unexpected number of stats", 1, stats.Length);
-			NUnit.Framework.Assert.AreEqual("Bad path from stat", colonFile.GetAbsolutePath()
+			Assert.Equal("Unexpected number of stats", 1, stats.Length);
+			Assert.Equal("Bad path from stat", colonFile.GetAbsolutePath()
 				, stats[0].GetPath().ToUri().GetPath());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListStatusReturnConsistentPathOnWindows()
 		{
 			Assume.AssumeTrue(Shell.Windows);
@@ -303,8 +303,8 @@ namespace Org.Apache.Hadoop.FS
 			FilePath file = new FilePath(dirNoDriveSpec, "foo");
 			file.Mkdirs();
 			FileStatus[] stats = fileSys.ListStatus(new Path(dirNoDriveSpec));
-			NUnit.Framework.Assert.AreEqual("Unexpected number of stats", 1, stats.Length);
-			NUnit.Framework.Assert.AreEqual("Bad path from stat", new Path(file.GetPath()).ToUri
+			Assert.Equal("Unexpected number of stats", 1, stats.Length);
+			Assert.Equal("Bad path from stat", new Path(file.GetPath()).ToUri
 				().GetPath(), stats[0].GetPath().ToUri().GetPath());
 		}
 
@@ -312,11 +312,11 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestReportChecksumFailure()
 		{
 			@base.Mkdirs();
-			NUnit.Framework.Assert.IsTrue(@base.Exists() && @base.IsDirectory());
+			Assert.True(@base.Exists() && @base.IsDirectory());
 			FilePath dir1 = new FilePath(@base, "dir1");
 			FilePath dir2 = new FilePath(dir1, "dir2");
 			dir2.Mkdirs();
-			NUnit.Framework.Assert.IsTrue(dir2.Exists() && FileUtil.CanWrite(dir2));
+			Assert.True(dir2.Exists() && FileUtil.CanWrite(dir2));
 			string dataFileName = "corruptedData";
 			Path dataPath = new Path(new FilePath(dir2, dataFileName).ToURI());
 			Path checksumPath = fileSys.GetChecksumFile(dataPath);
@@ -329,13 +329,13 @@ namespace Org.Apache.Hadoop.FS
 			{
 				fsdos.Close();
 			}
-			NUnit.Framework.Assert.IsTrue(fileSys.PathToFile(dataPath).Exists());
+			Assert.True(fileSys.PathToFile(dataPath).Exists());
 			long dataFileLength = fileSys.GetFileStatus(dataPath).GetLen();
-			NUnit.Framework.Assert.IsTrue(dataFileLength > 0);
+			Assert.True(dataFileLength > 0);
 			// check the the checksum file is created and not empty:
-			NUnit.Framework.Assert.IsTrue(fileSys.PathToFile(checksumPath).Exists());
+			Assert.True(fileSys.PathToFile(checksumPath).Exists());
 			long checksumFileLength = fileSys.GetFileStatus(checksumPath).GetLen();
-			NUnit.Framework.Assert.IsTrue(checksumFileLength > 0);
+			Assert.True(checksumFileLength > 0);
 			// this is a hack to force the #reportChecksumFailure() method to stop
 			// climbing up at the 'base' directory and use 'dir1/bad_files' as the 
 			// corrupted files storage:
@@ -344,39 +344,39 @@ namespace Org.Apache.Hadoop.FS
 			FSDataInputStream checksumFsdis = fileSys.Open(checksumPath);
 			bool retryIsNecessary = fileSys.ReportChecksumFailure(dataPath, dataFsdis, 0, checksumFsdis
 				, 0);
-			NUnit.Framework.Assert.IsTrue(!retryIsNecessary);
+			Assert.True(!retryIsNecessary);
 			// the data file should be moved:
-			NUnit.Framework.Assert.IsTrue(!fileSys.PathToFile(dataPath).Exists());
+			Assert.True(!fileSys.PathToFile(dataPath).Exists());
 			// the checksum file should be moved:
-			NUnit.Framework.Assert.IsTrue(!fileSys.PathToFile(checksumPath).Exists());
+			Assert.True(!fileSys.PathToFile(checksumPath).Exists());
 			// check that the files exist in the new location where they were moved:
 			FilePath[] dir1files = dir1.ListFiles(new _FileFilter_352());
-			NUnit.Framework.Assert.IsTrue(dir1files != null);
-			NUnit.Framework.Assert.IsTrue(dir1files.Length == 1);
+			Assert.True(dir1files != null);
+			Assert.True(dir1files.Length == 1);
 			FilePath badFilesDir = dir1files[0];
 			FilePath[] badFiles = badFilesDir.ListFiles();
-			NUnit.Framework.Assert.IsTrue(badFiles != null);
-			NUnit.Framework.Assert.IsTrue(badFiles.Length == 2);
+			Assert.True(badFiles != null);
+			Assert.True(badFiles.Length == 2);
 			bool dataFileFound = false;
 			bool checksumFileFound = false;
 			foreach (FilePath badFile in badFiles)
 			{
 				if (badFile.GetName().StartsWith(dataFileName))
 				{
-					NUnit.Framework.Assert.IsTrue(dataFileLength == badFile.Length());
+					Assert.True(dataFileLength == badFile.Length());
 					dataFileFound = true;
 				}
 				else
 				{
 					if (badFile.GetName().Contains(dataFileName + ".crc"))
 					{
-						NUnit.Framework.Assert.IsTrue(checksumFileLength == badFile.Length());
+						Assert.True(checksumFileLength == badFile.Length());
 						checksumFileFound = true;
 					}
 				}
 			}
-			NUnit.Framework.Assert.IsTrue(dataFileFound);
-			NUnit.Framework.Assert.IsTrue(checksumFileFound);
+			Assert.True(dataFileFound);
+			Assert.True(checksumFileFound);
 		}
 
 		private sealed class _FileFilter_352 : FileFilter
@@ -400,13 +400,13 @@ namespace Org.Apache.Hadoop.FS
 			// support millisecond timestamps
 			long newModTime = 12345000;
 			FileStatus status = fileSys.GetFileStatus(path);
-			NUnit.Framework.Assert.IsTrue("check we're actually changing something", newModTime
+			Assert.True("check we're actually changing something", newModTime
 				 != status.GetModificationTime());
 			long accessTime = status.GetAccessTime();
 			fileSys.SetTimes(path, newModTime, -1);
 			status = fileSys.GetFileStatus(path);
-			NUnit.Framework.Assert.AreEqual(newModTime, status.GetModificationTime());
-			NUnit.Framework.Assert.AreEqual(accessTime, status.GetAccessTime());
+			Assert.Equal(newModTime, status.GetModificationTime());
+			Assert.Equal(accessTime, status.GetAccessTime());
 		}
 
 		/// <summary>
@@ -414,7 +414,7 @@ namespace Org.Apache.Hadoop.FS
 		/// wrong results after certain sequences of seeks and reads.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBufferedFSInputStream()
 		{
 			Configuration conf = new Configuration();
@@ -469,16 +469,16 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Tests a simple rename of a directory.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameDirectory()
 		{
 			Path src = new Path(TestRootDir, "dir1");
 			Path dst = new Path(TestRootDir, "dir2");
 			fileSys.Delete(src, true);
 			fileSys.Delete(dst, true);
-			NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(src));
-			NUnit.Framework.Assert.IsTrue(fileSys.Rename(src, dst));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(dst));
+			Assert.True(fileSys.Mkdirs(src));
+			Assert.True(fileSys.Rename(src, dst));
+			Assert.True(fileSys.Exists(dst));
 			NUnit.Framework.Assert.IsFalse(fileSys.Exists(src));
 		}
 
@@ -500,21 +500,21 @@ namespace Org.Apache.Hadoop.FS
 		/// /file2
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameReplaceExistingEmptyDirectory()
 		{
 			Path src = new Path(TestRootDir, "dir1");
 			Path dst = new Path(TestRootDir, "dir2");
 			fileSys.Delete(src, true);
 			fileSys.Delete(dst, true);
-			NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(src));
+			Assert.True(fileSys.Mkdirs(src));
 			FileSystemTestHelper.WriteFile(fileSys, new Path(src, "file1"), 1);
 			FileSystemTestHelper.WriteFile(fileSys, new Path(src, "file2"), 1);
-			NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(dst));
-			NUnit.Framework.Assert.IsTrue(fileSys.Rename(src, dst));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(dst));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(new Path(dst, "file1")));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(new Path(dst, "file2")));
+			Assert.True(fileSys.Mkdirs(dst));
+			Assert.True(fileSys.Rename(src, dst));
+			Assert.True(fileSys.Exists(dst));
+			Assert.True(fileSys.Exists(new Path(dst, "file1")));
+			Assert.True(fileSys.Exists(new Path(dst, "file2")));
 			NUnit.Framework.Assert.IsFalse(fileSys.Exists(src));
 		}
 
@@ -538,22 +538,22 @@ namespace Org.Apache.Hadoop.FS
 		/// /file2
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameMoveToExistingNonEmptyDirectory()
 		{
 			Path src = new Path(TestRootDir, "dir1/dir2/dir3");
 			Path dst = new Path(TestRootDir, "dir1");
 			fileSys.Delete(src, true);
 			fileSys.Delete(dst, true);
-			NUnit.Framework.Assert.IsTrue(fileSys.Mkdirs(src));
+			Assert.True(fileSys.Mkdirs(src));
 			FileSystemTestHelper.WriteFile(fileSys, new Path(src, "file1"), 1);
 			FileSystemTestHelper.WriteFile(fileSys, new Path(src, "file2"), 1);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(dst));
-			NUnit.Framework.Assert.IsTrue(fileSys.Rename(src, dst));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(dst));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(new Path(dst, "dir3")));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(new Path(dst, "dir3/file1")));
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(new Path(dst, "dir3/file2")));
+			Assert.True(fileSys.Exists(dst));
+			Assert.True(fileSys.Rename(src, dst));
+			Assert.True(fileSys.Exists(dst));
+			Assert.True(fileSys.Exists(new Path(dst, "dir3")));
+			Assert.True(fileSys.Exists(new Path(dst, "dir3/file1")));
+			Assert.True(fileSys.Exists(new Path(dst, "dir3/file2")));
 			NUnit.Framework.Assert.IsFalse(fileSys.Exists(src));
 		}
 
@@ -574,7 +574,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStripFragmentFromPath()
 		{
 			FileSystem fs = FileSystem.GetLocal(new Configuration());
@@ -584,12 +584,12 @@ namespace Org.Apache.Hadoop.FS
 			// Create test file with fragment
 			FileSystemTestHelper.CreateFile(fs, pathWithFragment);
 			Path resolved = fs.ResolvePath(pathWithFragment);
-			NUnit.Framework.Assert.AreEqual("resolvePath did not strip fragment from Path", pathQualified
+			Assert.Equal("resolvePath did not strip fragment from Path", pathQualified
 				, resolved);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileStatusPipeFile()
 		{
 			RawLocalFileSystem origFs = new RawLocalFileSystem();
@@ -606,7 +606,7 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.DoReturn(pipe).When(fs).PathToFile(path);
 			Org.Mockito.Mockito.DoReturn(stat).When(fs).GetFileStatus(path);
 			FileStatus[] stats = fs.ListStatus(path);
-			NUnit.Framework.Assert.IsTrue(stats != null && stats.Length == 1 && stats[0] == stat
+			Assert.True(stats != null && stats.Length == 1 && stats[0] == stat
 				);
 		}
 	}

@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Util
 			new GenericOptionsParser(conf, args);
 			string files = conf.Get("tmpfiles");
 			NUnit.Framework.Assert.IsNotNull("files is null", files);
-			NUnit.Framework.Assert.AreEqual("files option does not match", localFs.MakeQualified
+			Assert.Equal("files option does not match", localFs.MakeQualified
 				(tmpPath).ToString(), files);
 			// pass file as uri
 			Configuration conf1 = new Configuration();
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.Util
 			new GenericOptionsParser(conf1, args);
 			files = conf1.Get("tmpfiles");
 			NUnit.Framework.Assert.IsNotNull("files is null", files);
-			NUnit.Framework.Assert.AreEqual("files option does not match", localFs.MakeQualified
+			Assert.Equal("files option does not match", localFs.MakeQualified
 				(new Path(tmpURI)).ToString(), files);
 			// pass a file that does not exist.
 			// GenericOptionParser should throw exception
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.Util
 				th = e;
 			}
 			NUnit.Framework.Assert.IsNotNull("throwable is null", th);
-			NUnit.Framework.Assert.IsTrue("FileNotFoundException is not thrown", th is FileNotFoundException
+			Assert.True("FileNotFoundException is not thrown", th is FileNotFoundException
 				);
 			files = conf2.Get("tmpfiles");
 			NUnit.Framework.Assert.IsNull("files is not null", files);
@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.Util
 			args[0] = "--newOpt";
 			args[1] = "7";
 			GenericOptionsParser g = new GenericOptionsParser(opts, args);
-			NUnit.Framework.Assert.AreEqual("New option was ignored", "7", g.GetCommandLine()
+			Assert.Equal("New option was ignored", "7", g.GetCommandLine()
 				.GetOptionValues("newOpt")[0]);
 		}
 
@@ -166,9 +166,9 @@ namespace Org.Apache.Hadoop.Util
 			args[0] = "--conf=foo";
 			args[1] = "--conf=bar";
 			GenericOptionsParser g = new GenericOptionsParser(args);
-			NUnit.Framework.Assert.AreEqual("1st conf param is incorrect", "foo", g.GetCommandLine
+			Assert.Equal("1st conf param is incorrect", "foo", g.GetCommandLine
 				().GetOptionValues("conf")[0]);
-			NUnit.Framework.Assert.AreEqual("2st conf param is incorrect", "bar", g.GetCommandLine
+			Assert.Equal("2st conf param is incorrect", "bar", g.GetCommandLine
 				().GetOptionValues("conf")[1]);
 		}
 
@@ -220,7 +220,7 @@ namespace Org.Apache.Hadoop.Util
 				th = e;
 			}
 			NUnit.Framework.Assert.IsNotNull(th);
-			NUnit.Framework.Assert.IsTrue("FileNotFoundException is not thrown", th is FileNotFoundException
+			Assert.True("FileNotFoundException is not thrown", th is FileNotFoundException
 				);
 			// create file
 			Path tmpPath = localFs.MakeQualified(new Path(tmpFile.ToString()));
@@ -234,14 +234,14 @@ namespace Org.Apache.Hadoop.Util
 			new GenericOptionsParser(conf, args);
 			string fileName = conf.Get("mapreduce.job.credentials.binary");
 			NUnit.Framework.Assert.IsNotNull("files is null", fileName);
-			NUnit.Framework.Assert.AreEqual("files option does not match", tmpPath.ToString()
+			Assert.Equal("files option does not match", tmpPath.ToString()
 				, fileName);
 			Credentials ugiCreds = UserGroupInformation.GetCurrentUser().GetCredentials();
-			NUnit.Framework.Assert.AreEqual(1, ugiCreds.NumberOfTokens());
+			Assert.Equal(1, ugiCreds.NumberOfTokens());
 			Org.Apache.Hadoop.Security.Token.Token<object> ugiToken = ugiCreds.GetToken(new Text
 				("token-alias"));
 			NUnit.Framework.Assert.IsNotNull(ugiToken);
-			NUnit.Framework.Assert.AreEqual(token, ugiToken);
+			Assert.Equal(token, ugiToken);
 			localFs.Delete(new Path(testDir.GetAbsolutePath()), true);
 		}
 
@@ -317,7 +317,7 @@ namespace Org.Apache.Hadoop.Util
 			string[] remainingArgs = parser.GetRemainingArgs();
 			foreach (KeyValuePair<string, string> entry_1 in expectedMap)
 			{
-				NUnit.Framework.Assert.AreEqual(entry_1.Value, conf.Get(entry_1.Key));
+				Assert.Equal(entry_1.Value, conf.Get(entry_1.Key));
 			}
 			Assert.AssertArrayEquals(Arrays.ToString(remainingArgs) + Arrays.ToString(expectedRemainingArgs
 				), expectedRemainingArgs, remainingArgs);

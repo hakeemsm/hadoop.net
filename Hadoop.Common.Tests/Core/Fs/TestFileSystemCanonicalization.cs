@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// no ports
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortAuthority()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host", "myfs://host.a.b:123");
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPartialAuthority()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host.a", "myfs://host.a.b:123");
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFullAuthority()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host.a.b", "myfs://host.a.b:123");
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// with default ports
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortAuthorityWithDefaultPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host:123", "myfs://host.a.b:123");
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPartialAuthorityWithDefaultPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host.a:123", "myfs://host.a.b:123");
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFullAuthorityWithDefaultPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host.a.b:123", "myfs://host.a.b:123");
@@ -106,7 +106,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// with non-standard ports
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShortAuthorityWithOtherPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host:456", "myfs://host.a.b:456");
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPartialAuthorityWithOtherPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host.a:456", "myfs://host.a.b:456");
@@ -132,7 +132,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFullAuthorityWithOtherPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://host.a.b:456", "myfs://host.a.b:456");
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// ips
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIpAuthority()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://127.0.0.1", "myfs://127.0.0.1:123");
@@ -159,7 +159,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIpAuthorityWithDefaultPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://127.0.0.1:123", "myfs://127.0.0.1:123");
@@ -172,7 +172,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIpAuthorityWithOtherPort()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://127.0.0.1:456", "myfs://127.0.0.1:456");
@@ -186,7 +186,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// bad stuff
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMismatchedSchemes()
 		{
 			FileSystem fs = GetVerifiedFS("myfs2://simple", "myfs2://simple:123");
@@ -199,7 +199,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMismatchedHosts()
 		{
 			FileSystem fs = GetVerifiedFS("myfs://simple", "myfs://simple:123");
@@ -212,7 +212,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullAuthority()
 		{
 			FileSystem fs = GetVerifiedFS("myfs:///", "myfs:///");
@@ -226,7 +226,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthorityFromDefaultFS()
 		{
 			Configuration config = new Configuration();
@@ -258,8 +258,8 @@ namespace Org.Apache.Hadoop.FS
 			URI uri = URI.Create(authority);
 			URI canonicalUri = URI.Create(canonical);
 			FileSystem fs = new TestFileSystemCanonicalization.DummyFileSystem(uri, conf);
-			NUnit.Framework.Assert.AreEqual(uri, fs.GetUri());
-			NUnit.Framework.Assert.AreEqual(canonicalUri, fs.GetCanonicalUri());
+			Assert.Equal(uri, fs.GetUri());
+			Assert.Equal(canonicalUri, fs.GetCanonicalUri());
 			VerifyCheckPath(fs, "/file", true);
 			return fs;
 		}
@@ -293,18 +293,18 @@ namespace Org.Apache.Hadoop.FS
 			}
 			if (shouldPass)
 			{
-				NUnit.Framework.Assert.AreEqual(null, e);
+				Assert.Equal(null, e);
 				string pathAuthority = rawPath.ToUri().GetAuthority();
 				if (pathAuthority == null)
 				{
 					pathAuthority = fs.GetUri().GetAuthority();
 				}
-				NUnit.Framework.Assert.AreEqual(pathAuthority, fqPath.ToUri().GetAuthority());
+				Assert.Equal(pathAuthority, fqPath.ToUri().GetAuthority());
 			}
 			else
 			{
 				NUnit.Framework.Assert.IsNotNull("did not fail", e);
-				NUnit.Framework.Assert.AreEqual("Wrong FS: " + rawPath + ", expected: " + fs.GetUri
+				Assert.Equal("Wrong FS: " + rawPath + ", expected: " + fs.GetUri
 					(), e.Message);
 			}
 		}

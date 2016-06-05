@@ -75,7 +75,7 @@ namespace Org.Apache.Hadoop.FS
 			// create a symlink to dir
 			FilePath linkDir = new FilePath(del, "tmpDir");
 			FileUtil.SymLink(tmp.ToString(), linkDir.ToString());
-			NUnit.Framework.Assert.AreEqual(5, del.ListFiles().Length);
+			Assert.Equal(5, del.ListFiles().Length);
 			// create files in partitioned directories
 			CreateFile(partitioned, "part-r-00000", "foo");
 			CreateFile(partitioned, "part-r-00001", "bar");
@@ -117,13 +117,13 @@ namespace Org.Apache.Hadoop.FS
 			SetupDirs();
 			//Test existing files case 
 			FilePath[] files = FileUtil.ListFiles(partitioned);
-			NUnit.Framework.Assert.AreEqual(2, files.Length);
+			Assert.Equal(2, files.Length);
 			//Test existing directory with no files case 
 			FilePath newDir = new FilePath(tmp.GetPath(), "test");
 			newDir.Mkdir();
-			NUnit.Framework.Assert.IsTrue("Failed to create test dir", newDir.Exists());
+			Assert.True("Failed to create test dir", newDir.Exists());
 			files = FileUtil.ListFiles(newDir);
-			NUnit.Framework.Assert.AreEqual(0, files.Length);
+			Assert.Equal(0, files.Length);
 			newDir.Delete();
 			NUnit.Framework.Assert.IsFalse("Failed to delete test dir", newDir.Exists());
 			//Test non-existing directory case, this throws 
@@ -146,14 +146,14 @@ namespace Org.Apache.Hadoop.FS
 			SetupDirs();
 			//Test existing files case 
 			string[] files = FileUtil.List(partitioned);
-			NUnit.Framework.Assert.AreEqual("Unexpected number of pre-existing files", 2, files
+			Assert.Equal("Unexpected number of pre-existing files", 2, files
 				.Length);
 			//Test existing directory with no files case 
 			FilePath newDir = new FilePath(tmp.GetPath(), "test");
 			newDir.Mkdir();
-			NUnit.Framework.Assert.IsTrue("Failed to create test dir", newDir.Exists());
+			Assert.True("Failed to create test dir", newDir.Exists());
 			files = FileUtil.List(newDir);
-			NUnit.Framework.Assert.AreEqual("New directory unexpectedly contains files", 0, files
+			Assert.Equal("New directory unexpectedly contains files", 0, files
 				.Length);
 			newDir.Delete();
 			NUnit.Framework.Assert.IsFalse("Failed to delete test dir", newDir.Exists());
@@ -189,11 +189,11 @@ namespace Org.Apache.Hadoop.FS
 		private void CleanupImpl()
 		{
 			FileUtil.FullyDelete(del, true);
-			NUnit.Framework.Assert.IsTrue(!del.Exists());
+			Assert.True(!del.Exists());
 			FileUtil.FullyDelete(tmp, true);
-			NUnit.Framework.Assert.IsTrue(!tmp.Exists());
+			Assert.True(!tmp.Exists());
 			FileUtil.FullyDelete(partitioned, true);
-			NUnit.Framework.Assert.IsTrue(!partitioned.Exists());
+			Assert.True(!partitioned.Exists());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -201,7 +201,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			SetupDirs();
 			bool ret = FileUtil.FullyDelete(del);
-			NUnit.Framework.Assert.IsTrue(ret);
+			Assert.True(ret);
 			NUnit.Framework.Assert.IsFalse(del.Exists());
 			ValidateTmpDir();
 		}
@@ -220,21 +220,21 @@ namespace Org.Apache.Hadoop.FS
 		{
 			SetupDirs();
 			FilePath link = new FilePath(del, Link);
-			NUnit.Framework.Assert.AreEqual(5, del.List().Length);
+			Assert.Equal(5, del.List().Length);
 			// Since tmpDir is symlink to tmp, fullyDelete(tmpDir) should not
 			// delete contents of tmp. See setupDirs for details.
 			bool ret = FileUtil.FullyDelete(link);
-			NUnit.Framework.Assert.IsTrue(ret);
+			Assert.True(ret);
 			NUnit.Framework.Assert.IsFalse(link.Exists());
-			NUnit.Framework.Assert.AreEqual(4, del.List().Length);
+			Assert.Equal(4, del.List().Length);
 			ValidateTmpDir();
 			FilePath linkDir = new FilePath(del, "tmpDir");
 			// Since tmpDir is symlink to tmp, fullyDelete(tmpDir) should not
 			// delete contents of tmp. See setupDirs for details.
 			ret = FileUtil.FullyDelete(linkDir);
-			NUnit.Framework.Assert.IsTrue(ret);
+			Assert.True(ret);
 			NUnit.Framework.Assert.IsFalse(linkDir.Exists());
-			NUnit.Framework.Assert.AreEqual(3, del.List().Length);
+			Assert.Equal(3, del.List().Length);
 			ValidateTmpDir();
 		}
 
@@ -250,23 +250,23 @@ namespace Org.Apache.Hadoop.FS
 			// delete the directory tmp to make tmpDir a dangling link to dir tmp and
 			// to make y as a dangling link to file tmp/x
 			bool ret = FileUtil.FullyDelete(tmp);
-			NUnit.Framework.Assert.IsTrue(ret);
+			Assert.True(ret);
 			NUnit.Framework.Assert.IsFalse(tmp.Exists());
 			// dangling symlink to file
 			FilePath link = new FilePath(del, Link);
-			NUnit.Framework.Assert.AreEqual(5, del.List().Length);
+			Assert.Equal(5, del.List().Length);
 			// Even though 'y' is dangling symlink to file tmp/x, fullyDelete(y)
 			// should delete 'y' properly.
 			ret = FileUtil.FullyDelete(link);
-			NUnit.Framework.Assert.IsTrue(ret);
-			NUnit.Framework.Assert.AreEqual(4, del.List().Length);
+			Assert.True(ret);
+			Assert.Equal(4, del.List().Length);
 			// dangling symlink to directory
 			FilePath linkDir = new FilePath(del, "tmpDir");
 			// Even though tmpDir is dangling symlink to tmp, fullyDelete(tmpDir) should
 			// delete tmpDir properly.
 			ret = FileUtil.FullyDelete(linkDir);
-			NUnit.Framework.Assert.IsTrue(ret);
-			NUnit.Framework.Assert.AreEqual(3, del.List().Length);
+			Assert.True(ret);
+			Assert.Equal(3, del.List().Length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -274,17 +274,17 @@ namespace Org.Apache.Hadoop.FS
 		{
 			SetupDirs();
 			bool ret = FileUtil.FullyDeleteContents(del);
-			NUnit.Framework.Assert.IsTrue(ret);
-			NUnit.Framework.Assert.IsTrue(del.Exists());
-			NUnit.Framework.Assert.AreEqual(0, del.ListFiles().Length);
+			Assert.True(ret);
+			Assert.True(del.Exists());
+			Assert.Equal(0, del.ListFiles().Length);
 			ValidateTmpDir();
 		}
 
 		private void ValidateTmpDir()
 		{
-			NUnit.Framework.Assert.IsTrue(tmp.Exists());
-			NUnit.Framework.Assert.AreEqual(1, tmp.ListFiles().Length);
-			NUnit.Framework.Assert.IsTrue(new FilePath(tmp, File).Exists());
+			Assert.True(tmp.Exists());
+			Assert.Equal(1, tmp.ListFiles().Length);
+			Assert.True(new FilePath(tmp, File).Exists());
 		}
 
 		private readonly FilePath xSubDir;
@@ -369,15 +369,15 @@ namespace Org.Apache.Hadoop.FS
 			GrantPermissions(xSubDir);
 			GrantPermissions(xSubSubDir);
 			NUnit.Framework.Assert.IsFalse("The return value should have been false.", ret);
-			NUnit.Framework.Assert.IsTrue("The file file1 should not have been deleted.", new 
+			Assert.True("The file file1 should not have been deleted.", new 
 				FilePath(del, file1Name).Exists());
-			NUnit.Framework.Assert.AreEqual("The directory xSubDir *should* not have been deleted."
+			Assert.Equal("The directory xSubDir *should* not have been deleted."
 				, expectedRevokedPermissionDirsExist, xSubDir.Exists());
-			NUnit.Framework.Assert.AreEqual("The file file2 *should* not have been deleted.", 
+			Assert.Equal("The file file2 *should* not have been deleted.", 
 				expectedRevokedPermissionDirsExist, file2.Exists());
-			NUnit.Framework.Assert.AreEqual("The directory xSubSubDir *should* not have been deleted."
+			Assert.Equal("The directory xSubSubDir *should* not have been deleted."
 				, expectedRevokedPermissionDirsExist, xSubSubDir.Exists());
-			NUnit.Framework.Assert.AreEqual("The file file22 *should* not have been deleted."
+			Assert.Equal("The file file22 *should* not have been deleted."
 				, expectedRevokedPermissionDirsExist, file22.Exists());
 			NUnit.Framework.Assert.IsFalse("The directory ySubDir should have been deleted.", 
 				ySubDir.Exists());
@@ -511,17 +511,17 @@ namespace Org.Apache.Hadoop.FS
 		{
 			SetupDirs();
 			bool copyMergeResult = CopyMerge("partitioned", "tmp/merged");
-			NUnit.Framework.Assert.IsTrue("Expected successful copyMerge result.", copyMergeResult
+			Assert.True("Expected successful copyMerge result.", copyMergeResult
 				);
 			FilePath merged = new FilePath(TestDir, "tmp/merged");
-			NUnit.Framework.Assert.IsTrue("File tmp/merged must exist after copyMerge.", merged
+			Assert.True("File tmp/merged must exist after copyMerge.", merged
 				.Exists());
 			BufferedReader rdr = new BufferedReader(new FileReader(merged));
 			try
 			{
-				NUnit.Framework.Assert.AreEqual("Line 1 of merged file must contain \"foo\".", "foo"
+				Assert.Equal("Line 1 of merged file must contain \"foo\".", "foo"
 					, rdr.ReadLine());
-				NUnit.Framework.Assert.AreEqual("Line 2 of merged file must contain \"bar\".", "bar"
+				Assert.Equal("Line 2 of merged file must contain \"bar\".", "bar"
 					, rdr.ReadLine());
 				NUnit.Framework.Assert.IsNull("Expected end of file reading merged file.", rdr.ReadLine
 					());
@@ -578,16 +578,16 @@ namespace Org.Apache.Hadoop.FS
 			// Only two files (in partitioned).  Each has 3 characters + system-specific
 			// line separator.
 			long expected = 2 * (3 + Runtime.GetProperty("line.separator").Length);
-			NUnit.Framework.Assert.AreEqual(expected, du);
+			Assert.Equal(expected, du);
 			// target file does not exist:
 			FilePath doesNotExist = new FilePath(tmp, "QuickBrownFoxJumpsOverTheLazyDog");
 			long duDoesNotExist = FileUtil.GetDU(doesNotExist);
-			NUnit.Framework.Assert.AreEqual(0, duDoesNotExist);
+			Assert.Equal(0, duDoesNotExist);
 			// target file is not a directory:
 			FilePath notADirectory = new FilePath(partitioned, "part-r-00000");
 			long duNotADirectoryActual = FileUtil.GetDU(notADirectory);
 			long duNotADirectoryExpected = 3 + Runtime.GetProperty("line.separator").Length;
-			NUnit.Framework.Assert.AreEqual(duNotADirectoryExpected, duNotADirectoryActual);
+			Assert.Equal(duNotADirectoryExpected, duNotADirectoryActual);
 			try
 			{
 				// one of target files is not accessible, but the containing directory
@@ -603,7 +603,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				NUnit.Framework.Assert.IsFalse(FileUtil.CanRead(notADirectory));
 				long du3 = FileUtil.GetDU(partitioned);
-				NUnit.Framework.Assert.AreEqual(expected, du3);
+				Assert.Equal(expected, du3);
 				// some target files and containing directory are not accessible:
 				try
 				{
@@ -616,7 +616,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				NUnit.Framework.Assert.IsFalse(FileUtil.CanRead(partitioned));
 				long du4 = FileUtil.GetDU(partitioned);
-				NUnit.Framework.Assert.AreEqual(0, du4);
+				Assert.Equal(0, du4);
 			}
 			finally
 			{
@@ -653,15 +653,15 @@ namespace Org.Apache.Hadoop.FS
 			// successfully untar it into an existing dir:
 			FileUtil.UnTar(simpleTar, tmp);
 			// check result:
-			NUnit.Framework.Assert.IsTrue(new FilePath(tmp, "/bar/foo").Exists());
-			NUnit.Framework.Assert.AreEqual(12, new FilePath(tmp, "/bar/foo").Length());
+			Assert.True(new FilePath(tmp, "/bar/foo").Exists());
+			Assert.Equal(12, new FilePath(tmp, "/bar/foo").Length());
 			FilePath regularFile = new FilePath(tmp, "QuickBrownFoxJumpsOverTheLazyDog");
 			regularFile.CreateNewFile();
-			NUnit.Framework.Assert.IsTrue(regularFile.Exists());
+			Assert.True(regularFile.Exists());
 			try
 			{
 				FileUtil.UnTar(simpleTar, regularFile);
-				NUnit.Framework.Assert.IsTrue("An IOException expected.", false);
+				Assert.True("An IOException expected.", false);
 			}
 			catch (IOException)
 			{
@@ -676,40 +676,40 @@ namespace Org.Apache.Hadoop.FS
 			FilePath srcFile = new FilePath(tmp, "src");
 			// src exists, and target does not exist:
 			srcFile.CreateNewFile();
-			NUnit.Framework.Assert.IsTrue(srcFile.Exists());
+			Assert.True(srcFile.Exists());
 			FilePath targetFile = new FilePath(tmp, "target");
-			NUnit.Framework.Assert.IsTrue(!targetFile.Exists());
+			Assert.True(!targetFile.Exists());
 			FileUtil.ReplaceFile(srcFile, targetFile);
-			NUnit.Framework.Assert.IsTrue(!srcFile.Exists());
-			NUnit.Framework.Assert.IsTrue(targetFile.Exists());
+			Assert.True(!srcFile.Exists());
+			Assert.True(targetFile.Exists());
 			// src exists and target is a regular file: 
 			srcFile.CreateNewFile();
-			NUnit.Framework.Assert.IsTrue(srcFile.Exists());
+			Assert.True(srcFile.Exists());
 			FileUtil.ReplaceFile(srcFile, targetFile);
-			NUnit.Framework.Assert.IsTrue(!srcFile.Exists());
-			NUnit.Framework.Assert.IsTrue(targetFile.Exists());
+			Assert.True(!srcFile.Exists());
+			Assert.True(targetFile.Exists());
 			// src exists, and target is a non-empty directory: 
 			srcFile.CreateNewFile();
-			NUnit.Framework.Assert.IsTrue(srcFile.Exists());
+			Assert.True(srcFile.Exists());
 			targetFile.Delete();
 			targetFile.Mkdirs();
 			FilePath obstacle = new FilePath(targetFile, "obstacle");
 			obstacle.CreateNewFile();
-			NUnit.Framework.Assert.IsTrue(obstacle.Exists());
-			NUnit.Framework.Assert.IsTrue(targetFile.Exists() && targetFile.IsDirectory());
+			Assert.True(obstacle.Exists());
+			Assert.True(targetFile.Exists() && targetFile.IsDirectory());
 			try
 			{
 				FileUtil.ReplaceFile(srcFile, targetFile);
-				NUnit.Framework.Assert.IsTrue(false);
+				Assert.True(false);
 			}
 			catch (IOException)
 			{
 			}
 			// okay
 			// check up the post-condition: nothing is deleted:
-			NUnit.Framework.Assert.IsTrue(srcFile.Exists());
-			NUnit.Framework.Assert.IsTrue(targetFile.Exists() && targetFile.IsDirectory());
-			NUnit.Framework.Assert.IsTrue(obstacle.Exists());
+			Assert.True(srcFile.Exists());
+			Assert.True(targetFile.Exists() && targetFile.IsDirectory());
+			Assert.True(obstacle.Exists());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -723,12 +723,12 @@ namespace Org.Apache.Hadoop.FS
 				()));
 			NUnit.Framework.Assert.IsFalse(tmp2.GetAbsolutePath().Equals(baseFile.GetAbsolutePath
 				()));
-			NUnit.Framework.Assert.IsTrue(tmp1.Exists() && tmp2.Exists());
-			NUnit.Framework.Assert.IsTrue(tmp1.CanWrite() && tmp2.CanWrite());
-			NUnit.Framework.Assert.IsTrue(tmp1.CanRead() && tmp2.CanRead());
+			Assert.True(tmp1.Exists() && tmp2.Exists());
+			Assert.True(tmp1.CanWrite() && tmp2.CanWrite());
+			Assert.True(tmp1.CanRead() && tmp2.CanRead());
 			tmp1.Delete();
 			tmp2.Delete();
-			NUnit.Framework.Assert.IsTrue(!tmp1.Exists() && !tmp2.Exists());
+			Assert.True(!tmp1.Exists() && !tmp2.Exists());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -758,15 +758,15 @@ namespace Org.Apache.Hadoop.FS
 			// successfully untar it into an existing dir:
 			FileUtil.UnZip(simpleZip, tmp);
 			// check result:
-			NUnit.Framework.Assert.IsTrue(new FilePath(tmp, "foo").Exists());
-			NUnit.Framework.Assert.AreEqual(12, new FilePath(tmp, "foo").Length());
+			Assert.True(new FilePath(tmp, "foo").Exists());
+			Assert.Equal(12, new FilePath(tmp, "foo").Length());
 			FilePath regularFile = new FilePath(tmp, "QuickBrownFoxJumpsOverTheLazyDog");
 			regularFile.CreateNewFile();
-			NUnit.Framework.Assert.IsTrue(regularFile.Exists());
+			Assert.True(regularFile.Exists());
 			try
 			{
 				FileUtil.UnZip(simpleZip, regularFile);
-				NUnit.Framework.Assert.IsTrue("An IOException expected.", false);
+				Assert.True("An IOException expected.", false);
 			}
 			catch (IOException)
 			{
@@ -790,40 +790,40 @@ namespace Org.Apache.Hadoop.FS
 			// copy regular file:
 			FilePath dest = new FilePath(del, "dest");
 			bool result = FileUtil.Copy(fs, srcPath, dest, false, conf);
-			NUnit.Framework.Assert.IsTrue(result);
-			NUnit.Framework.Assert.IsTrue(dest.Exists());
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetBytesForString(content).Length
+			Assert.True(result);
+			Assert.True(dest.Exists());
+			Assert.Equal(Sharpen.Runtime.GetBytesForString(content).Length
 				 + Sharpen.Runtime.GetBytesForString(Runtime.GetProperty("line.separator")).Length
 				, dest.Length());
-			NUnit.Framework.Assert.IsTrue(srcFile.Exists());
+			Assert.True(srcFile.Exists());
 			// should not be deleted
 			// copy regular file, delete src:
 			dest.Delete();
-			NUnit.Framework.Assert.IsTrue(!dest.Exists());
+			Assert.True(!dest.Exists());
 			result = FileUtil.Copy(fs, srcPath, dest, true, conf);
-			NUnit.Framework.Assert.IsTrue(result);
-			NUnit.Framework.Assert.IsTrue(dest.Exists());
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetBytesForString(content).Length
+			Assert.True(result);
+			Assert.True(dest.Exists());
+			Assert.Equal(Sharpen.Runtime.GetBytesForString(content).Length
 				 + Sharpen.Runtime.GetBytesForString(Runtime.GetProperty("line.separator")).Length
 				, dest.Length());
-			NUnit.Framework.Assert.IsTrue(!srcFile.Exists());
+			Assert.True(!srcFile.Exists());
 			// should be deleted
 			// copy a dir:
 			dest.Delete();
-			NUnit.Framework.Assert.IsTrue(!dest.Exists());
+			Assert.True(!dest.Exists());
 			srcPath = new Path(partitioned.ToURI());
 			result = FileUtil.Copy(fs, srcPath, dest, true, conf);
-			NUnit.Framework.Assert.IsTrue(result);
-			NUnit.Framework.Assert.IsTrue(dest.Exists() && dest.IsDirectory());
+			Assert.True(result);
+			Assert.True(dest.Exists() && dest.IsDirectory());
 			FilePath[] files = dest.ListFiles();
-			NUnit.Framework.Assert.IsTrue(files != null);
-			NUnit.Framework.Assert.AreEqual(2, files.Length);
+			Assert.True(files != null);
+			Assert.Equal(2, files.Length);
 			foreach (FilePath f in files)
 			{
-				NUnit.Framework.Assert.AreEqual(3 + Sharpen.Runtime.GetBytesForString(Runtime.GetProperty
+				Assert.Equal(3 + Sharpen.Runtime.GetBytesForString(Runtime.GetProperty
 					("line.separator")).Length, f.Length());
 			}
-			NUnit.Framework.Assert.IsTrue(!partitioned.Exists());
+			Assert.True(!partitioned.Exists());
 		}
 
 		// should be deleted
@@ -832,35 +832,35 @@ namespace Org.Apache.Hadoop.FS
 			NUnit.Framework.Assert.IsNull(FileUtil.Stat2Paths(null));
 			FileStatus[] fileStatuses = new FileStatus[0];
 			Path[] paths = FileUtil.Stat2Paths(fileStatuses);
-			NUnit.Framework.Assert.AreEqual(0, paths.Length);
+			Assert.Equal(0, paths.Length);
 			Path path1 = new Path("file://foo");
 			Path path2 = new Path("file://moo");
 			fileStatuses = new FileStatus[] { new FileStatus(3, false, 0, 0, 0, path1), new FileStatus
 				(3, false, 0, 0, 0, path2) };
 			paths = FileUtil.Stat2Paths(fileStatuses);
-			NUnit.Framework.Assert.AreEqual(2, paths.Length);
-			NUnit.Framework.Assert.AreEqual(paths[0], path1);
-			NUnit.Framework.Assert.AreEqual(paths[1], path2);
+			Assert.Equal(2, paths.Length);
+			Assert.Equal(paths[0], path1);
+			Assert.Equal(paths[1], path2);
 		}
 
 		public virtual void TestStat2Paths2()
 		{
 			Path defaultPath = new Path("file://default");
 			Path[] paths = FileUtil.Stat2Paths(null, defaultPath);
-			NUnit.Framework.Assert.AreEqual(1, paths.Length);
-			NUnit.Framework.Assert.AreEqual(defaultPath, paths[0]);
+			Assert.Equal(1, paths.Length);
+			Assert.Equal(defaultPath, paths[0]);
 			paths = FileUtil.Stat2Paths(null, null);
-			NUnit.Framework.Assert.IsTrue(paths != null);
-			NUnit.Framework.Assert.AreEqual(1, paths.Length);
-			NUnit.Framework.Assert.AreEqual(null, paths[0]);
+			Assert.True(paths != null);
+			Assert.Equal(1, paths.Length);
+			Assert.Equal(null, paths[0]);
 			Path path1 = new Path("file://foo");
 			Path path2 = new Path("file://moo");
 			FileStatus[] fileStatuses = new FileStatus[] { new FileStatus(3, false, 0, 0, 0, 
 				path1), new FileStatus(3, false, 0, 0, 0, path2) };
 			paths = FileUtil.Stat2Paths(fileStatuses, defaultPath);
-			NUnit.Framework.Assert.AreEqual(2, paths.Length);
-			NUnit.Framework.Assert.AreEqual(paths[0], path1);
-			NUnit.Framework.Assert.AreEqual(paths[1], path2);
+			Assert.Equal(2, paths.Length);
+			Assert.Equal(paths[0], path1);
+			Assert.Equal(paths[1], path2);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -878,8 +878,8 @@ namespace Org.Apache.Hadoop.FS
 			//create the symlink
 			FileUtil.SymLink(file.GetAbsolutePath(), link.GetAbsolutePath());
 			//ensure that symlink length is correctly reported by Java
-			NUnit.Framework.Assert.AreEqual(data.Length, file.Length());
-			NUnit.Framework.Assert.AreEqual(data.Length, link.Length());
+			Assert.Equal(data.Length, file.Length());
+			Assert.Equal(data.Length, link.Length());
 			//ensure that we can read from link.
 			FileInputStream @in = new FileInputStream(link);
 			long len = 0;
@@ -888,7 +888,7 @@ namespace Org.Apache.Hadoop.FS
 				len++;
 			}
 			@in.Close();
-			NUnit.Framework.Assert.AreEqual(data.Length, len);
+			Assert.Equal(data.Length, len);
 		}
 
 		/// <summary>Test that rename on a symlink works as expected.</summary>
@@ -902,16 +902,16 @@ namespace Org.Apache.Hadoop.FS
 			FilePath link = new FilePath(del, "_link");
 			// create the symlink
 			FileUtil.SymLink(file.GetAbsolutePath(), link.GetAbsolutePath());
-			NUnit.Framework.Assert.IsTrue(file.Exists());
-			NUnit.Framework.Assert.IsTrue(link.Exists());
+			Assert.True(file.Exists());
+			Assert.True(link.Exists());
 			FilePath link2 = new FilePath(del, "_link2");
 			// Rename the symlink
-			NUnit.Framework.Assert.IsTrue(link.RenameTo(link2));
+			Assert.True(link.RenameTo(link2));
 			// Make sure the file still exists
 			// (NOTE: this would fail on Java6 on Windows if we didn't
 			// copy the file in FileUtil#symlink)
-			NUnit.Framework.Assert.IsTrue(file.Exists());
-			NUnit.Framework.Assert.IsTrue(link2.Exists());
+			Assert.True(file.Exists());
+			Assert.True(link2.Exists());
 			NUnit.Framework.Assert.IsFalse(link.Exists());
 		}
 
@@ -926,12 +926,12 @@ namespace Org.Apache.Hadoop.FS
 			FilePath link = new FilePath(del, "_link");
 			// create the symlink
 			FileUtil.SymLink(file.GetAbsolutePath(), link.GetAbsolutePath());
-			NUnit.Framework.Assert.IsTrue(file.Exists());
-			NUnit.Framework.Assert.IsTrue(link.Exists());
+			Assert.True(file.Exists());
+			Assert.True(link.Exists());
 			// make sure that deleting a symlink works properly
-			NUnit.Framework.Assert.IsTrue(link.Delete());
+			Assert.True(link.Delete());
 			NUnit.Framework.Assert.IsFalse(link.Exists());
-			NUnit.Framework.Assert.IsTrue(file.Exists());
+			Assert.True(file.Exists());
 		}
 
 		/// <summary>Test that length on a symlink works as expected.</summary>
@@ -947,23 +947,23 @@ namespace Org.Apache.Hadoop.FS
 			FileOutputStream os = new FileOutputStream(file);
 			os.Write(data);
 			os.Close();
-			NUnit.Framework.Assert.AreEqual(0, link.Length());
+			Assert.Equal(0, link.Length());
 			// create the symlink
 			FileUtil.SymLink(file.GetAbsolutePath(), link.GetAbsolutePath());
 			// ensure that File#length returns the target file and link size
-			NUnit.Framework.Assert.AreEqual(data.Length, file.Length());
-			NUnit.Framework.Assert.AreEqual(data.Length, link.Length());
+			Assert.Equal(data.Length, file.Length());
+			Assert.Equal(data.Length, link.Length());
 			file.Delete();
 			NUnit.Framework.Assert.IsFalse(file.Exists());
 			if (Shell.Windows && !Shell.IsJava7OrAbove())
 			{
 				// On Java6 on Windows, we copied the file
-				NUnit.Framework.Assert.AreEqual(data.Length, link.Length());
+				Assert.Equal(data.Length, link.Length());
 			}
 			else
 			{
 				// Otherwise, the target file size is zero
-				NUnit.Framework.Assert.AreEqual(0, link.Length());
+				Assert.Equal(0, link.Length());
 			}
 			link.Delete();
 			NUnit.Framework.Assert.IsFalse(link.Exists());
@@ -979,22 +979,22 @@ namespace Org.Apache.Hadoop.FS
 			FileUtil.UnTar(tarFile, untarDir);
 			string parentDir = untarDir.GetCanonicalPath() + Path.Separator + "name";
 			FilePath testFile = new FilePath(parentDir + Path.Separator + "version");
-			NUnit.Framework.Assert.IsTrue(testFile.Exists());
-			NUnit.Framework.Assert.IsTrue(testFile.Length() == 0);
+			Assert.True(testFile.Exists());
+			Assert.True(testFile.Length() == 0);
 			string imageDir = parentDir + Path.Separator + "image";
 			testFile = new FilePath(imageDir + Path.Separator + "fsimage");
-			NUnit.Framework.Assert.IsTrue(testFile.Exists());
-			NUnit.Framework.Assert.IsTrue(testFile.Length() == 157);
+			Assert.True(testFile.Exists());
+			Assert.True(testFile.Length() == 157);
 			string currentDir = parentDir + Path.Separator + "current";
 			testFile = new FilePath(currentDir + Path.Separator + "fsimage");
-			NUnit.Framework.Assert.IsTrue(testFile.Exists());
-			NUnit.Framework.Assert.IsTrue(testFile.Length() == 4331);
+			Assert.True(testFile.Exists());
+			Assert.True(testFile.Length() == 4331);
 			testFile = new FilePath(currentDir + Path.Separator + "edits");
-			NUnit.Framework.Assert.IsTrue(testFile.Exists());
-			NUnit.Framework.Assert.IsTrue(testFile.Length() == 1033);
+			Assert.True(testFile.Exists());
+			Assert.True(testFile.Length() == 1033);
 			testFile = new FilePath(currentDir + Path.Separator + "fstime");
-			NUnit.Framework.Assert.IsTrue(testFile.Exists());
-			NUnit.Framework.Assert.IsTrue(testFile.Length() == 8);
+			Assert.True(testFile.Exists());
+			Assert.True(testFile.Length() == 8);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1015,21 +1015,21 @@ namespace Org.Apache.Hadoop.FS
 		{
 			// setup test directory for files
 			NUnit.Framework.Assert.IsFalse(tmp.Exists());
-			NUnit.Framework.Assert.IsTrue(tmp.Mkdirs());
+			Assert.True(tmp.Mkdirs());
 			// create files expected to match a wildcard
 			IList<FilePath> wildcardMatches = Arrays.AsList(new FilePath(tmp, "wildcard1.jar"
 				), new FilePath(tmp, "wildcard2.jar"), new FilePath(tmp, "wildcard3.JAR"), new FilePath
 				(tmp, "wildcard4.JAR"));
 			foreach (FilePath wildcardMatch in wildcardMatches)
 			{
-				NUnit.Framework.Assert.IsTrue("failure creating file: " + wildcardMatch, wildcardMatch
+				Assert.True("failure creating file: " + wildcardMatch, wildcardMatch
 					.CreateNewFile());
 			}
 			// create non-jar files, which we expect to not be included in the classpath
-			NUnit.Framework.Assert.IsTrue(new FilePath(tmp, "text.txt").CreateNewFile());
-			NUnit.Framework.Assert.IsTrue(new FilePath(tmp, "executable.exe").CreateNewFile()
+			Assert.True(new FilePath(tmp, "text.txt").CreateNewFile());
+			Assert.True(new FilePath(tmp, "executable.exe").CreateNewFile()
 				);
-			NUnit.Framework.Assert.IsTrue(new FilePath(tmp, "README").CreateNewFile());
+			Assert.True(new FilePath(tmp, "README").CreateNewFile());
 			// create classpath jar
 			string wildcardPath = tmp.GetCanonicalPath() + FilePath.separator + "*";
 			string nonExistentSubdir = tmp.GetCanonicalPath() + Path.Separator + "subdir" + Path
@@ -1052,7 +1052,7 @@ namespace Org.Apache.Hadoop.FS
 				NUnit.Framework.Assert.IsNotNull(jarManifest);
 				Attributes mainAttributes = jarManifest.GetMainAttributes();
 				NUnit.Framework.Assert.IsNotNull(mainAttributes);
-				NUnit.Framework.Assert.IsTrue(mainAttributes.Contains(Attributes.Name.ClassPath));
+				Assert.True(mainAttributes.Contains(Attributes.Name.ClassPath));
 				string classPathAttr = mainAttributes.GetValue(Attributes.Name.ClassPath);
 				NUnit.Framework.Assert.IsNotNull(classPathAttr);
 				IList<string> expectedClassPaths = new AList<string>();
@@ -1097,7 +1097,7 @@ namespace Org.Apache.Hadoop.FS
 				IList<string> actualClassPaths = Arrays.AsList(classPathAttr.Split(" "));
 				expectedClassPaths.Sort();
 				actualClassPaths.Sort();
-				NUnit.Framework.Assert.AreEqual(expectedClassPaths, actualClassPaths);
+				Assert.Equal(expectedClassPaths, actualClassPaths);
 			}
 			finally
 			{

@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateExtension()
 		{
 			Configuration conf = new Configuration();
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			Org.Apache.Hadoop.Security.Token.Token<object>[] tokens = kpDTE2.AddDelegationTokens
 				("renewer", credentials);
 			NUnit.Framework.Assert.IsNotNull(tokens);
-			NUnit.Framework.Assert.AreEqual("kind", tokens[0].GetKind().ToString());
+			Assert.Equal("kind", tokens[0].GetKind().ToString());
 		}
 	}
 }

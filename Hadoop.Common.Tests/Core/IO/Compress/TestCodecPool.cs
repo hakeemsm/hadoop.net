@@ -23,16 +23,16 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// Get two compressors and return them
 			Compressor comp1 = CodecPool.GetCompressor(codec);
 			Compressor comp2 = CodecPool.GetCompressor(codec);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 2, CodecPool.GetLeasedCompressorsCount
+			Assert.Equal(LeaseCountErr, 2, CodecPool.GetLeasedCompressorsCount
 				(codec));
 			CodecPool.ReturnCompressor(comp2);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 1, CodecPool.GetLeasedCompressorsCount
+			Assert.Equal(LeaseCountErr, 1, CodecPool.GetLeasedCompressorsCount
 				(codec));
 			CodecPool.ReturnCompressor(comp1);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
+			Assert.Equal(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
 				(codec));
 			CodecPool.ReturnCompressor(comp1);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
+			Assert.Equal(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
 				(codec));
 		}
 
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			{
 				compressors.AddItem(CodecPool.GetCompressor(codec));
 			}
-			NUnit.Framework.Assert.AreEqual(10, compressors.Count);
+			Assert.Equal(10, compressors.Count);
 			foreach (Compressor compressor in compressors)
 			{
 				CodecPool.ReturnCompressor(compressor);
@@ -58,16 +58,16 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// Get two decompressors and return them
 			Decompressor decomp1 = CodecPool.GetDecompressor(codec);
 			Decompressor decomp2 = CodecPool.GetDecompressor(codec);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 2, CodecPool.GetLeasedDecompressorsCount
+			Assert.Equal(LeaseCountErr, 2, CodecPool.GetLeasedDecompressorsCount
 				(codec));
 			CodecPool.ReturnDecompressor(decomp2);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 1, CodecPool.GetLeasedDecompressorsCount
+			Assert.Equal(LeaseCountErr, 1, CodecPool.GetLeasedDecompressorsCount
 				(codec));
 			CodecPool.ReturnDecompressor(decomp1);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 0, CodecPool.GetLeasedDecompressorsCount
+			Assert.Equal(LeaseCountErr, 0, CodecPool.GetLeasedDecompressorsCount
 				(codec));
 			CodecPool.ReturnDecompressor(decomp1);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
+			Assert.Equal(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
 				(codec));
 		}
 
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// wait for completion
 			threadpool.Shutdown();
 			threadpool.AwaitTermination(1000, TimeUnit.Seconds);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
+			Assert.Equal(LeaseCountErr, 0, CodecPool.GetLeasedCompressorsCount
 				(codec));
 		}
 
@@ -149,7 +149,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// wait for completion
 			threadpool.Shutdown();
 			threadpool.AwaitTermination(1000, TimeUnit.Seconds);
-			NUnit.Framework.Assert.AreEqual(LeaseCountErr, 0, CodecPool.GetLeasedDecompressorsCount
+			Assert.Equal(LeaseCountErr, 0, CodecPool.GetLeasedDecompressorsCount
 				(codec));
 		}
 
@@ -203,7 +203,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			{
 				decompressors.AddItem(CodecPool.GetDecompressor(codec));
 			}
-			NUnit.Framework.Assert.AreEqual(10, decompressors.Count);
+			Assert.Equal(10, decompressors.Count);
 			foreach (Decompressor decompressor in decompressors)
 			{
 				CodecPool.ReturnDecompressor(decompressor);

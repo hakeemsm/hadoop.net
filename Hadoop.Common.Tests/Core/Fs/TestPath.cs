@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.FS
 				// expect to receive an IllegalArgumentException
 				emptyException = true;
 			}
-			NUnit.Framework.Assert.IsTrue(emptyException);
+			Assert.True(emptyException);
 			if (Path.Windows)
 			{
 				ToStringTest("c:");
@@ -76,118 +76,118 @@ namespace Org.Apache.Hadoop.FS
 
 		private void ToStringTest(string pathString)
 		{
-			NUnit.Framework.Assert.AreEqual(pathString, new Path(pathString).ToString());
+			Assert.Equal(pathString, new Path(pathString).ToString());
 		}
 
 		/// <exception cref="Sharpen.URISyntaxException"/>
 		public virtual void TestNormalize()
 		{
-			NUnit.Framework.Assert.AreEqual(string.Empty, new Path(".").ToString());
-			NUnit.Framework.Assert.AreEqual("..", new Path("..").ToString());
-			NUnit.Framework.Assert.AreEqual("/", new Path("/").ToString());
-			NUnit.Framework.Assert.AreEqual("/", new Path("//").ToString());
-			NUnit.Framework.Assert.AreEqual("/", new Path("///").ToString());
-			NUnit.Framework.Assert.AreEqual("//foo/", new Path("//foo/").ToString());
-			NUnit.Framework.Assert.AreEqual("//foo/", new Path("//foo//").ToString());
-			NUnit.Framework.Assert.AreEqual("//foo/bar", new Path("//foo//bar").ToString());
-			NUnit.Framework.Assert.AreEqual("/foo", new Path("/foo/").ToString());
-			NUnit.Framework.Assert.AreEqual("/foo", new Path("/foo/").ToString());
-			NUnit.Framework.Assert.AreEqual("foo", new Path("foo/").ToString());
-			NUnit.Framework.Assert.AreEqual("foo", new Path("foo//").ToString());
-			NUnit.Framework.Assert.AreEqual("foo/bar", new Path("foo//bar").ToString());
-			NUnit.Framework.Assert.AreEqual("hdfs://foo/foo2/bar/baz/", new Path(new URI("hdfs://foo//foo2///bar/baz///"
+			Assert.Equal(string.Empty, new Path(".").ToString());
+			Assert.Equal("..", new Path("..").ToString());
+			Assert.Equal("/", new Path("/").ToString());
+			Assert.Equal("/", new Path("//").ToString());
+			Assert.Equal("/", new Path("///").ToString());
+			Assert.Equal("//foo/", new Path("//foo/").ToString());
+			Assert.Equal("//foo/", new Path("//foo//").ToString());
+			Assert.Equal("//foo/bar", new Path("//foo//bar").ToString());
+			Assert.Equal("/foo", new Path("/foo/").ToString());
+			Assert.Equal("/foo", new Path("/foo/").ToString());
+			Assert.Equal("foo", new Path("foo/").ToString());
+			Assert.Equal("foo", new Path("foo//").ToString());
+			Assert.Equal("foo/bar", new Path("foo//bar").ToString());
+			Assert.Equal("hdfs://foo/foo2/bar/baz/", new Path(new URI("hdfs://foo//foo2///bar/baz///"
 				)).ToString());
 			if (Path.Windows)
 			{
-				NUnit.Framework.Assert.AreEqual("c:/a/b", new Path("c:\\a\\b").ToString());
+				Assert.Equal("c:/a/b", new Path("c:\\a\\b").ToString());
 			}
 		}
 
 		public virtual void TestIsAbsolute()
 		{
-			NUnit.Framework.Assert.IsTrue(new Path("/").IsAbsolute());
-			NUnit.Framework.Assert.IsTrue(new Path("/foo").IsAbsolute());
+			Assert.True(new Path("/").IsAbsolute());
+			Assert.True(new Path("/foo").IsAbsolute());
 			NUnit.Framework.Assert.IsFalse(new Path("foo").IsAbsolute());
 			NUnit.Framework.Assert.IsFalse(new Path("foo/bar").IsAbsolute());
 			NUnit.Framework.Assert.IsFalse(new Path(".").IsAbsolute());
 			if (Path.Windows)
 			{
-				NUnit.Framework.Assert.IsTrue(new Path("c:/a/b").IsAbsolute());
+				Assert.True(new Path("c:/a/b").IsAbsolute());
 				NUnit.Framework.Assert.IsFalse(new Path("c:a/b").IsAbsolute());
 			}
 		}
 
 		public virtual void TestParent()
 		{
-			NUnit.Framework.Assert.AreEqual(new Path("/foo"), new Path("/foo/bar").GetParent(
+			Assert.Equal(new Path("/foo"), new Path("/foo/bar").GetParent(
 				));
-			NUnit.Framework.Assert.AreEqual(new Path("foo"), new Path("foo/bar").GetParent());
-			NUnit.Framework.Assert.AreEqual(new Path("/"), new Path("/foo").GetParent());
-			NUnit.Framework.Assert.AreEqual(null, new Path("/").GetParent());
+			Assert.Equal(new Path("foo"), new Path("foo/bar").GetParent());
+			Assert.Equal(new Path("/"), new Path("/foo").GetParent());
+			Assert.Equal(null, new Path("/").GetParent());
 			if (Path.Windows)
 			{
-				NUnit.Framework.Assert.AreEqual(new Path("c:/"), new Path("c:/foo").GetParent());
+				Assert.Equal(new Path("c:/"), new Path("c:/foo").GetParent());
 			}
 		}
 
 		public virtual void TestChild()
 		{
-			NUnit.Framework.Assert.AreEqual(new Path("."), new Path(".", "."));
-			NUnit.Framework.Assert.AreEqual(new Path("/"), new Path("/", "."));
-			NUnit.Framework.Assert.AreEqual(new Path("/"), new Path(".", "/"));
-			NUnit.Framework.Assert.AreEqual(new Path("/foo"), new Path("/", "foo"));
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar"), new Path("/foo", "bar"));
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz"), new Path("/foo/bar", "baz"
+			Assert.Equal(new Path("."), new Path(".", "."));
+			Assert.Equal(new Path("/"), new Path("/", "."));
+			Assert.Equal(new Path("/"), new Path(".", "/"));
+			Assert.Equal(new Path("/foo"), new Path("/", "foo"));
+			Assert.Equal(new Path("/foo/bar"), new Path("/foo", "bar"));
+			Assert.Equal(new Path("/foo/bar/baz"), new Path("/foo/bar", "baz"
 				));
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz"), new Path("/foo", "bar/baz"
+			Assert.Equal(new Path("/foo/bar/baz"), new Path("/foo", "bar/baz"
 				));
-			NUnit.Framework.Assert.AreEqual(new Path("foo"), new Path(".", "foo"));
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar"), new Path("foo", "bar"));
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/baz"), new Path("foo", "bar/baz"
+			Assert.Equal(new Path("foo"), new Path(".", "foo"));
+			Assert.Equal(new Path("foo/bar"), new Path("foo", "bar"));
+			Assert.Equal(new Path("foo/bar/baz"), new Path("foo", "bar/baz"
 				));
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/baz"), new Path("foo/bar", "baz"
+			Assert.Equal(new Path("foo/bar/baz"), new Path("foo/bar", "baz"
 				));
-			NUnit.Framework.Assert.AreEqual(new Path("/foo"), new Path("/bar", "/foo"));
+			Assert.Equal(new Path("/foo"), new Path("/bar", "/foo"));
 			if (Path.Windows)
 			{
-				NUnit.Framework.Assert.AreEqual(new Path("c:/foo"), new Path("/bar", "c:/foo"));
-				NUnit.Framework.Assert.AreEqual(new Path("c:/foo"), new Path("d:/bar", "c:/foo"));
+				Assert.Equal(new Path("c:/foo"), new Path("/bar", "c:/foo"));
+				Assert.Equal(new Path("c:/foo"), new Path("d:/bar", "c:/foo"));
 			}
 		}
 
 		public virtual void TestPathThreeArgContructor()
 		{
-			NUnit.Framework.Assert.AreEqual(new Path("foo"), new Path(null, null, "foo"));
-			NUnit.Framework.Assert.AreEqual(new Path("scheme:///foo"), new Path("scheme", null
+			Assert.Equal(new Path("foo"), new Path(null, null, "foo"));
+			Assert.Equal(new Path("scheme:///foo"), new Path("scheme", null
 				, "/foo"));
-			NUnit.Framework.Assert.AreEqual(new Path("scheme://authority/foo"), new Path("scheme"
+			Assert.Equal(new Path("scheme://authority/foo"), new Path("scheme"
 				, "authority", "/foo"));
 			if (Path.Windows)
 			{
-				NUnit.Framework.Assert.AreEqual(new Path("c:/foo/bar"), new Path(null, null, "c:/foo/bar"
+				Assert.Equal(new Path("c:/foo/bar"), new Path(null, null, "c:/foo/bar"
 					));
-				NUnit.Framework.Assert.AreEqual(new Path("c:/foo/bar"), new Path(null, null, "/c:/foo/bar"
+				Assert.Equal(new Path("c:/foo/bar"), new Path(null, null, "/c:/foo/bar"
 					));
 			}
 			else
 			{
-				NUnit.Framework.Assert.AreEqual(new Path("./a:b"), new Path(null, null, "a:b"));
+				Assert.Equal(new Path("./a:b"), new Path(null, null, "a:b"));
 			}
 			// Resolution tests
 			if (Path.Windows)
 			{
-				NUnit.Framework.Assert.AreEqual(new Path("c:/foo/bar"), new Path("/fou", new Path
+				Assert.Equal(new Path("c:/foo/bar"), new Path("/fou", new Path
 					(null, null, "c:/foo/bar")));
-				NUnit.Framework.Assert.AreEqual(new Path("c:/foo/bar"), new Path("/fou", new Path
+				Assert.Equal(new Path("c:/foo/bar"), new Path("/fou", new Path
 					(null, null, "/c:/foo/bar")));
-				NUnit.Framework.Assert.AreEqual(new Path("/foo/bar"), new Path("/foo", new Path(null
+				Assert.Equal(new Path("/foo/bar"), new Path("/foo", new Path(null
 					, null, "bar")));
 			}
 			else
 			{
-				NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/a:b"), new Path("/foo/bar", new 
+				Assert.Equal(new Path("/foo/bar/a:b"), new Path("/foo/bar", new 
 					Path(null, null, "a:b")));
-				NUnit.Framework.Assert.AreEqual(new Path("/a:b"), new Path("/foo/bar", new Path(null
+				Assert.Equal(new Path("/a:b"), new Path("/foo/bar", new Path(null
 					, null, "/a:b")));
 			}
 		}
@@ -200,52 +200,52 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestDots()
 		{
 			// Test Path(String) 
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz").ToString(), "/foo/bar/baz"
+			Assert.Equal(new Path("/foo/bar/baz").ToString(), "/foo/bar/baz"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar", ".").ToString(), "/foo/bar");
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/../baz").ToString(), "/foo/baz"
+			Assert.Equal(new Path("/foo/bar", ".").ToString(), "/foo/bar");
+			Assert.Equal(new Path("/foo/bar/../baz").ToString(), "/foo/baz"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/./baz").ToString(), "/foo/bar/baz"
+			Assert.Equal(new Path("/foo/bar/./baz").ToString(), "/foo/bar/baz"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz/../../fud").ToString(), "/foo/fud"
+			Assert.Equal(new Path("/foo/bar/baz/../../fud").ToString(), "/foo/fud"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz/.././../fud").ToString(), 
+			Assert.Equal(new Path("/foo/bar/baz/.././../fud").ToString(), 
 				"/foo/fud");
-			NUnit.Framework.Assert.AreEqual(new Path("../../foo/bar").ToString(), "../../foo/bar"
+			Assert.Equal(new Path("../../foo/bar").ToString(), "../../foo/bar"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path(".././../foo/bar").ToString(), "../../foo/bar"
+			Assert.Equal(new Path(".././../foo/bar").ToString(), "../../foo/bar"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("./foo/bar/baz").ToString(), "foo/bar/baz"
+			Assert.Equal(new Path("./foo/bar/baz").ToString(), "foo/bar/baz"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/../../baz/boo").ToString(), "/baz/boo"
+			Assert.Equal(new Path("/foo/bar/../../baz/boo").ToString(), "/baz/boo"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/").ToString(), "foo/bar");
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/../baz").ToString(), "foo/baz");
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/../../baz/boo").ToString(), "baz/boo"
+			Assert.Equal(new Path("foo/bar/").ToString(), "foo/bar");
+			Assert.Equal(new Path("foo/bar/../baz").ToString(), "foo/baz");
+			Assert.Equal(new Path("foo/bar/../../baz/boo").ToString(), "baz/boo"
 				);
 			// Test Path(Path,Path)
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar", "baz/boo").ToString(), "/foo/bar/baz/boo"
+			Assert.Equal(new Path("/foo/bar", "baz/boo").ToString(), "/foo/bar/baz/boo"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/", "baz/bud").ToString(), "foo/bar/baz/bud"
+			Assert.Equal(new Path("foo/bar/", "baz/bud").ToString(), "foo/bar/baz/bud"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar", "../../boo/bud").ToString(), 
+			Assert.Equal(new Path("/foo/bar", "../../boo/bud").ToString(), 
 				"/boo/bud");
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar", "../../boo/bud").ToString(), 
+			Assert.Equal(new Path("foo/bar", "../../boo/bud").ToString(), 
 				"boo/bud");
-			NUnit.Framework.Assert.AreEqual(new Path(".", "boo/bud").ToString(), "boo/bud");
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz", "../../boo/bud").ToString
+			Assert.Equal(new Path(".", "boo/bud").ToString(), "boo/bud");
+			Assert.Equal(new Path("/foo/bar/baz", "../../boo/bud").ToString
 				(), "/foo/boo/bud");
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/baz", "../../boo/bud").ToString
+			Assert.Equal(new Path("foo/bar/baz", "../../boo/bud").ToString
 				(), "foo/boo/bud");
-			NUnit.Framework.Assert.AreEqual(new Path("../../", "../../boo/bud").ToString(), "../../../../boo/bud"
+			Assert.Equal(new Path("../../", "../../boo/bud").ToString(), "../../../../boo/bud"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("../../foo", "../../../boo/bud").ToString
+			Assert.Equal(new Path("../../foo", "../../../boo/bud").ToString
 				(), "../../../../boo/bud");
-			NUnit.Framework.Assert.AreEqual(new Path("../../foo/bar", "../boo/bud").ToString(
+			Assert.Equal(new Path("../../foo/bar", "../boo/bud").ToString(
 				), "../../foo/boo/bud");
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/baz", "../../..").ToString(), string.Empty
+			Assert.Equal(new Path("foo/bar/baz", "../../..").ToString(), string.Empty
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("foo/bar/baz", "../../../../..").ToString
+			Assert.Equal(new Path("foo/bar/baz", "../../../../..").ToString
 				(), "../..");
 		}
 
@@ -258,11 +258,11 @@ namespace Org.Apache.Hadoop.FS
 			{
 				return;
 			}
-			NUnit.Framework.Assert.AreEqual(new Path("c:\\foo\\bar").ToString(), "c:/foo/bar"
+			Assert.Equal(new Path("c:\\foo\\bar").ToString(), "c:/foo/bar"
 				);
-			NUnit.Framework.Assert.AreEqual(new Path("c:/foo/bar").ToString(), "c:/foo/bar");
-			NUnit.Framework.Assert.AreEqual(new Path("/c:/foo/bar").ToString(), "c:/foo/bar");
-			NUnit.Framework.Assert.AreEqual(new Path("file://c:/foo/bar").ToString(), "file://c:/foo/bar"
+			Assert.Equal(new Path("c:/foo/bar").ToString(), "c:/foo/bar");
+			Assert.Equal(new Path("/c:/foo/bar").ToString(), "c:/foo/bar");
+			Assert.Equal(new Path("file://c:/foo/bar").ToString(), "file://c:/foo/bar"
 				);
 		}
 
@@ -296,14 +296,14 @@ namespace Org.Apache.Hadoop.FS
 		{
 			Path parent = new Path("foo1://bar1/baz1");
 			Path child = new Path("foo2://bar2/baz2");
-			NUnit.Framework.Assert.AreEqual(child, new Path(parent, child));
+			Assert.Equal(child, new Path(parent, child));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestScheme()
 		{
-			NUnit.Framework.Assert.AreEqual("foo:/bar", new Path("foo:/", "/bar").ToString());
-			NUnit.Framework.Assert.AreEqual("foo://bar/baz", new Path("foo://bar/", "/baz").ToString
+			Assert.Equal("foo:/bar", new Path("foo:/", "/bar").ToString());
+			Assert.Equal("foo://bar/baz", new Path("foo://bar/", "/baz").ToString
 				());
 		}
 
@@ -313,20 +313,20 @@ namespace Org.Apache.Hadoop.FS
 		{
 			URI uri = new URI("file:///bar#baz");
 			Path path = new Path(uri);
-			NUnit.Framework.Assert.IsTrue(uri.Equals(new URI(path.ToString())));
+			Assert.True(uri.Equals(new URI(path.ToString())));
 			FileSystem fs = path.GetFileSystem(new Configuration());
-			NUnit.Framework.Assert.IsTrue(uri.Equals(new URI(fs.MakeQualified(path).ToString(
+			Assert.True(uri.Equals(new URI(fs.MakeQualified(path).ToString(
 				))));
 			// uri without hash
 			URI uri2 = new URI("file:///bar/baz");
-			NUnit.Framework.Assert.IsTrue(uri2.Equals(new URI(fs.MakeQualified(new Path(uri2)
+			Assert.True(uri2.Equals(new URI(fs.MakeQualified(new Path(uri2)
 				).ToString())));
-			NUnit.Framework.Assert.AreEqual("foo://bar/baz#boo", new Path("foo://bar/", new Path
+			Assert.Equal("foo://bar/baz#boo", new Path("foo://bar/", new Path
 				(new URI("/baz#boo"))).ToString());
-			NUnit.Framework.Assert.AreEqual("foo://bar/baz/fud#boo", new Path(new Path(new URI
+			Assert.Equal("foo://bar/baz/fud#boo", new Path(new Path(new URI
 				("foo://bar/baz#bud")), new Path(new URI("fud#boo"))).ToString());
 			// if the child uri is absolute path
-			NUnit.Framework.Assert.AreEqual("foo://bar/fud#boo", new Path(new Path(new URI("foo://bar/baz#bud"
+			Assert.Equal("foo://bar/fud#boo", new Path(new Path(new URI("foo://bar/baz#bud"
 				)), new Path(new URI("/fud#boo"))).ToString());
 		}
 
@@ -336,30 +336,30 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestPathToUriConversion()
 		{
 			// Path differs from URI in that it ignores the query part..
-			NUnit.Framework.Assert.AreEqual("? mark char in to URI", new URI(null, null, "/foo?bar"
+			Assert.Equal("? mark char in to URI", new URI(null, null, "/foo?bar"
 				, null, null), new Path("/foo?bar").ToUri());
-			NUnit.Framework.Assert.AreEqual("escape slashes chars in to URI", new URI(null, null
+			Assert.Equal("escape slashes chars in to URI", new URI(null, null
 				, "/foo\"bar", null, null), new Path("/foo\"bar").ToUri());
-			NUnit.Framework.Assert.AreEqual("spaces in chars to URI", new URI(null, null, "/foo bar"
+			Assert.Equal("spaces in chars to URI", new URI(null, null, "/foo bar"
 				, null, null), new Path("/foo bar").ToUri());
 			// therefore "foo?bar" is a valid Path, so a URI created from a Path
 			// has path "foo?bar" where in a straight URI the path part is just "foo"
-			NUnit.Framework.Assert.AreEqual("/foo?bar", new Path("http://localhost/foo?bar").
+			Assert.Equal("/foo?bar", new Path("http://localhost/foo?bar").
 				ToUri().GetPath());
-			NUnit.Framework.Assert.AreEqual("/foo", new URI("http://localhost/foo?bar").GetPath
+			Assert.Equal("/foo", new URI("http://localhost/foo?bar").GetPath
 				());
 			// The path part handling in Path is equivalent to URI
-			NUnit.Framework.Assert.AreEqual(new URI("/foo;bar").GetPath(), new Path("/foo;bar"
+			Assert.Equal(new URI("/foo;bar").GetPath(), new Path("/foo;bar"
 				).ToUri().GetPath());
-			NUnit.Framework.Assert.AreEqual(new URI("/foo;bar"), new Path("/foo;bar").ToUri()
+			Assert.Equal(new URI("/foo;bar"), new Path("/foo;bar").ToUri()
 				);
-			NUnit.Framework.Assert.AreEqual(new URI("/foo+bar"), new Path("/foo+bar").ToUri()
+			Assert.Equal(new URI("/foo+bar"), new Path("/foo+bar").ToUri()
 				);
-			NUnit.Framework.Assert.AreEqual(new URI("/foo-bar"), new Path("/foo-bar").ToUri()
+			Assert.Equal(new URI("/foo-bar"), new Path("/foo-bar").ToUri()
 				);
-			NUnit.Framework.Assert.AreEqual(new URI("/foo=bar"), new Path("/foo=bar").ToUri()
+			Assert.Equal(new URI("/foo=bar"), new Path("/foo=bar").ToUri()
 				);
-			NUnit.Framework.Assert.AreEqual(new URI("/foo,bar"), new Path("/foo,bar").ToUri()
+			Assert.Equal(new URI("/foo,bar"), new Path("/foo,bar").ToUri()
 				);
 		}
 
@@ -369,29 +369,29 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestReservedCharacters()
 		{
 			// URI encodes the path
-			NUnit.Framework.Assert.AreEqual("/foo%20bar", new URI(null, null, "/foo bar", null
+			Assert.Equal("/foo%20bar", new URI(null, null, "/foo bar", null
 				, null).GetRawPath());
 			// URI#getPath decodes the path
-			NUnit.Framework.Assert.AreEqual("/foo bar", new URI(null, null, "/foo bar", null, 
+			Assert.Equal("/foo bar", new URI(null, null, "/foo bar", null, 
 				null).GetPath());
 			// URI#toString returns an encoded path
-			NUnit.Framework.Assert.AreEqual("/foo%20bar", new URI(null, null, "/foo bar", null
+			Assert.Equal("/foo%20bar", new URI(null, null, "/foo bar", null
 				, null).ToString());
-			NUnit.Framework.Assert.AreEqual("/foo%20bar", new Path("/foo bar").ToUri().ToString
+			Assert.Equal("/foo%20bar", new Path("/foo bar").ToUri().ToString
 				());
 			// Reserved chars are not encoded
-			NUnit.Framework.Assert.AreEqual("/foo;bar", new URI("/foo;bar").GetPath());
-			NUnit.Framework.Assert.AreEqual("/foo;bar", new URI("/foo;bar").GetRawPath());
-			NUnit.Framework.Assert.AreEqual("/foo+bar", new URI("/foo+bar").GetPath());
-			NUnit.Framework.Assert.AreEqual("/foo+bar", new URI("/foo+bar").GetRawPath());
+			Assert.Equal("/foo;bar", new URI("/foo;bar").GetPath());
+			Assert.Equal("/foo;bar", new URI("/foo;bar").GetRawPath());
+			Assert.Equal("/foo+bar", new URI("/foo+bar").GetPath());
+			Assert.Equal("/foo+bar", new URI("/foo+bar").GetRawPath());
 			// URI#getPath decodes the path part (and URL#getPath does not decode)
-			NUnit.Framework.Assert.AreEqual("/foo bar", new Path("http://localhost/foo bar").
+			Assert.Equal("/foo bar", new Path("http://localhost/foo bar").
 				ToUri().GetPath());
-			NUnit.Framework.Assert.AreEqual("/foo%20bar", new Path("http://localhost/foo bar"
+			Assert.Equal("/foo%20bar", new Path("http://localhost/foo bar"
 				).ToUri().ToURL().AbsolutePath);
-			NUnit.Framework.Assert.AreEqual("/foo?bar", new URI("http", "localhost", "/foo?bar"
+			Assert.Equal("/foo?bar", new URI("http", "localhost", "/foo?bar"
 				, null, null).GetPath());
-			NUnit.Framework.Assert.AreEqual("/foo%3Fbar", new URI("http", "localhost", "/foo?bar"
+			Assert.Equal("/foo%3Fbar", new URI("http", "localhost", "/foo?bar"
 				, null, null).ToURL().AbsolutePath);
 		}
 
@@ -401,21 +401,21 @@ namespace Org.Apache.Hadoop.FS
 			URI defaultUri = new URI("hdfs://host1/dir1");
 			URI wd = new URI("hdfs://host2/dir2");
 			// The scheme from defaultUri is used but the path part is not
-			NUnit.Framework.Assert.AreEqual(new Path("hdfs://host1/dir/file"), new Path("file"
+			Assert.Equal(new Path("hdfs://host1/dir/file"), new Path("file"
 				).MakeQualified(defaultUri, new Path("/dir")));
 			// The defaultUri is only used if the path + wd has no scheme    
-			NUnit.Framework.Assert.AreEqual(new Path("hdfs://host2/dir2/file"), new Path("file"
+			Assert.Equal(new Path("hdfs://host2/dir2/file"), new Path("file"
 				).MakeQualified(defaultUri, new Path(wd)));
 		}
 
 		public virtual void TestGetName()
 		{
-			NUnit.Framework.Assert.AreEqual(string.Empty, new Path("/").GetName());
-			NUnit.Framework.Assert.AreEqual("foo", new Path("foo").GetName());
-			NUnit.Framework.Assert.AreEqual("foo", new Path("/foo").GetName());
-			NUnit.Framework.Assert.AreEqual("foo", new Path("/foo/").GetName());
-			NUnit.Framework.Assert.AreEqual("bar", new Path("/foo/bar").GetName());
-			NUnit.Framework.Assert.AreEqual("bar", new Path("hdfs://host/foo/bar").GetName());
+			Assert.Equal(string.Empty, new Path("/").GetName());
+			Assert.Equal("foo", new Path("foo").GetName());
+			Assert.Equal("foo", new Path("/foo").GetName());
+			Assert.Equal("foo", new Path("/foo/").GetName());
+			Assert.Equal("bar", new Path("/foo/bar").GetName());
+			Assert.Equal("bar", new Path("hdfs://host/foo/bar").GetName());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -438,7 +438,7 @@ namespace Org.Apache.Hadoop.FS
 				"test/build/data"), "testPathGlob"));
 			lfs.Delete(testRoot, true);
 			lfs.Mkdirs(testRoot);
-			NUnit.Framework.Assert.IsTrue(lfs.IsDirectory(testRoot));
+			Assert.True(lfs.IsDirectory(testRoot));
 			lfs.SetWorkingDirectory(testRoot);
 			// create a couple dirs with file in them
 			Path[] paths = new Path[] { new Path(testRoot, "*/f"), new Path(testRoot, "d1/f")
@@ -447,12 +447,12 @@ namespace Org.Apache.Hadoop.FS
 			foreach (Path p in paths)
 			{
 				lfs.Create(p).Close();
-				NUnit.Framework.Assert.IsTrue(lfs.Exists(p));
+				Assert.True(lfs.Exists(p));
 			}
 			// try the non-globbed listStatus
 			FileStatus[] stats = lfs.ListStatus(new Path(testRoot, "*"));
-			NUnit.Framework.Assert.AreEqual(1, stats.Length);
-			NUnit.Framework.Assert.AreEqual(new Path(testRoot, "*/f"), stats[0].GetPath());
+			Assert.Equal(1, stats.Length);
+			Assert.Equal(new Path(testRoot, "*/f"), stats[0].GetPath());
 			// ensure globStatus with "*" finds all dir contents
 			stats = lfs.GlobStatus(new Path(testRoot, "*"));
 			Arrays.Sort(stats);
@@ -461,42 +461,42 @@ namespace Org.Apache.Hadoop.FS
 			{
 				parentPaths[i] = paths[i].GetParent();
 			}
-			NUnit.Framework.Assert.AreEqual(MergeStatuses(parentPaths), MergeStatuses(stats));
+			Assert.Equal(MergeStatuses(parentPaths), MergeStatuses(stats));
 			// ensure that globStatus with an escaped "\*" only finds "*"
 			stats = lfs.GlobStatus(new Path(testRoot, "\\*"));
-			NUnit.Framework.Assert.AreEqual(1, stats.Length);
-			NUnit.Framework.Assert.AreEqual(new Path(testRoot, "*"), stats[0].GetPath());
+			Assert.Equal(1, stats.Length);
+			Assert.Equal(new Path(testRoot, "*"), stats[0].GetPath());
 			// try to glob the inner file for all dirs
 			stats = lfs.GlobStatus(new Path(testRoot, "*/f"));
-			NUnit.Framework.Assert.AreEqual(paths.Length, stats.Length);
-			NUnit.Framework.Assert.AreEqual(MergeStatuses(paths), MergeStatuses(stats));
+			Assert.Equal(paths.Length, stats.Length);
+			Assert.Equal(MergeStatuses(paths), MergeStatuses(stats));
 			// try to get the inner file for only the "*" dir
 			stats = lfs.GlobStatus(new Path(testRoot, "\\*/f"));
-			NUnit.Framework.Assert.AreEqual(1, stats.Length);
-			NUnit.Framework.Assert.AreEqual(new Path(testRoot, "*/f"), stats[0].GetPath());
+			Assert.Equal(1, stats.Length);
+			Assert.Equal(new Path(testRoot, "*/f"), stats[0].GetPath());
 			// try to glob all the contents of the "*" dir
 			stats = lfs.GlobStatus(new Path(testRoot, "\\*/*"));
-			NUnit.Framework.Assert.AreEqual(1, stats.Length);
-			NUnit.Framework.Assert.AreEqual(new Path(testRoot, "*/f"), stats[0].GetPath());
+			Assert.Equal(1, stats.Length);
+			Assert.Equal(new Path(testRoot, "*/f"), stats[0].GetPath());
 		}
 
 		public virtual void TestMergePaths()
 		{
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar"), Path.MergePaths(new Path("/foo"
+			Assert.Equal(new Path("/foo/bar"), Path.MergePaths(new Path("/foo"
 				), new Path("/bar")));
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz"), Path.MergePaths(new Path
+			Assert.Equal(new Path("/foo/bar/baz"), Path.MergePaths(new Path
 				("/foo/bar"), new Path("/baz")));
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar/baz"), Path.MergePaths(new Path
+			Assert.Equal(new Path("/foo/bar/baz"), Path.MergePaths(new Path
 				("/foo"), new Path("/bar/baz")));
-			NUnit.Framework.Assert.AreEqual(new Path(Shell.Windows ? "/C:/foo/bar" : "/C:/foo/C:/bar"
+			Assert.Equal(new Path(Shell.Windows ? "/C:/foo/bar" : "/C:/foo/C:/bar"
 				), Path.MergePaths(new Path("/C:/foo"), new Path("/C:/bar")));
-			NUnit.Framework.Assert.AreEqual(new Path(Shell.Windows ? "/C:/bar" : "/C:/C:/bar"
+			Assert.Equal(new Path(Shell.Windows ? "/C:/bar" : "/C:/C:/bar"
 				), Path.MergePaths(new Path("/C:/"), new Path("/C:/bar")));
-			NUnit.Framework.Assert.AreEqual(new Path("/bar"), Path.MergePaths(new Path("/"), 
+			Assert.Equal(new Path("/bar"), Path.MergePaths(new Path("/"), 
 				new Path("/bar")));
-			NUnit.Framework.Assert.AreEqual(new Path("viewfs:///foo/bar"), Path.MergePaths(new 
+			Assert.Equal(new Path("viewfs:///foo/bar"), Path.MergePaths(new 
 				Path("viewfs:///foo"), new Path("file:///bar")));
-			NUnit.Framework.Assert.AreEqual(new Path("viewfs://vfsauthority/foo/bar"), Path.MergePaths
+			Assert.Equal(new Path("viewfs://vfsauthority/foo/bar"), Path.MergePaths
 				(new Path("viewfs://vfsauthority/foo"), new Path("file://fileauthority/bar")));
 		}
 
@@ -506,9 +506,9 @@ namespace Org.Apache.Hadoop.FS
 			{
 				return;
 			}
-			NUnit.Framework.Assert.IsTrue(Path.IsWindowsAbsolutePath("C:\\test", false));
-			NUnit.Framework.Assert.IsTrue(Path.IsWindowsAbsolutePath("C:/test", false));
-			NUnit.Framework.Assert.IsTrue(Path.IsWindowsAbsolutePath("/C:/test", true));
+			Assert.True(Path.IsWindowsAbsolutePath("C:\\test", false));
+			Assert.True(Path.IsWindowsAbsolutePath("C:/test", false));
+			Assert.True(Path.IsWindowsAbsolutePath("/C:/test", true));
 			NUnit.Framework.Assert.IsFalse(Path.IsWindowsAbsolutePath("/test", false));
 			NUnit.Framework.Assert.IsFalse(Path.IsWindowsAbsolutePath("/test", true));
 			NUnit.Framework.Assert.IsFalse(Path.IsWindowsAbsolutePath("C:test", false));

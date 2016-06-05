@@ -20,18 +20,18 @@ namespace Org.Apache.Hadoop.FS
 			Configuration conf = new Configuration();
 			FileSystem.SetDefaultUri(conf, defaultUri);
 			AbstractFileSystem ftpFs = AbstractFileSystem.Get(FtpUriNoPort, conf);
-			NUnit.Framework.Assert.AreEqual(FtpUriWithPort, ftpFs.GetUri());
+			Assert.Equal(FtpUriWithPort, ftpFs.GetUri());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultURIwithOutPort()
 		{
 			TestDefaultUriInternal("hdfs://dummyhost");
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultURIwithPort()
 		{
 			TestDefaultUriInternal("hdfs://dummyhost:8020");

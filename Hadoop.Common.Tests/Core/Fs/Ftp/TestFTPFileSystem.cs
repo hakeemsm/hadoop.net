@@ -24,11 +24,11 @@ namespace Org.Apache.Hadoop.FS.Ftp
 	public class TestFTPFileSystem
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFTPDefaultPort()
 		{
 			FTPFileSystem ftp = new FTPFileSystem();
-			NUnit.Framework.Assert.AreEqual(FTP.DefaultPort, ftp.GetDefaultPort());
+			Assert.Equal(FTP.DefaultPort, ftp.GetDefaultPort());
 		}
 	}
 }

@@ -58,8 +58,8 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			string[] delArgs = new string[] { "delete", keyName, "-f", "-provider", jceksProvider
 				 };
 			rc = ks.Run(delArgs);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains(keyName + " has been "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains(keyName + " has been "
 				 + "successfully deleted."));
 		}
 
@@ -76,12 +76,12 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			string[] listArgsM = new string[] { "list", "-metadata", "-provider", jceksProvider
 				 };
 			rc = ks.Run(wantMetadata ? listArgsM : listArgs);
-			NUnit.Framework.Assert.AreEqual(0, rc);
+			Assert.Equal(0, rc);
 			return outContent.ToString();
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKeySuccessfulKeyLifecycle()
 		{
 			int rc = 0;
@@ -91,20 +91,20 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			outContent.Reset();
 			string[] args1 = new string[] { "create", keyName, "-provider", jceksProvider };
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains(keyName + " has been "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains(keyName + " has been "
 				 + "successfully created"));
 			string listOut = ListKeys(ks, false);
-			NUnit.Framework.Assert.IsTrue(listOut.Contains(keyName));
+			Assert.True(listOut.Contains(keyName));
 			listOut = ListKeys(ks, true);
-			NUnit.Framework.Assert.IsTrue(listOut.Contains(keyName));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("description"));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("created"));
+			Assert.True(listOut.Contains(keyName));
+			Assert.True(listOut.Contains("description"));
+			Assert.True(listOut.Contains("created"));
 			outContent.Reset();
 			string[] args2 = new string[] { "roll", keyName, "-provider", jceksProvider };
 			rc = ks.Run(args2);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("key1 has been successfully "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("key1 has been successfully "
 				 + "rolled."));
 			DeleteKey(ks, keyName);
 			listOut = ListKeys(ks, false);
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 
 		/* HADOOP-10586 KeyShell didn't allow -description. */
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKeySuccessfulCreationWithDescription()
 		{
 			outContent.Reset();
@@ -123,16 +123,16 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			KeyShell ks = new KeyShell();
 			ks.SetConf(new Configuration());
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("key1 has been successfully "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("key1 has been successfully "
 				 + "created"));
 			string listOut = ListKeys(ks, true);
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("description"));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("someDescription"));
+			Assert.True(listOut.Contains("description"));
+			Assert.True(listOut.Contains("someDescription"));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidKeySize()
 		{
 			string[] args1 = new string[] { "create", "key1", "-size", "56", "-provider", jceksProvider
@@ -141,13 +141,13 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			KeyShell ks = new KeyShell();
 			ks.SetConf(new Configuration());
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(1, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("key1 has not been created."
+			Assert.Equal(1, rc);
+			Assert.True(outContent.ToString().Contains("key1 has not been created."
 				));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidCipher()
 		{
 			string[] args1 = new string[] { "create", "key1", "-cipher", "LJM", "-provider", 
@@ -156,13 +156,13 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			KeyShell ks = new KeyShell();
 			ks.SetConf(new Configuration());
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(1, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("key1 has not been created."
+			Assert.Equal(1, rc);
+			Assert.True(outContent.ToString().Contains("key1 has not been created."
 				));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidProvider()
 		{
 			string[] args1 = new string[] { "create", "key1", "-cipher", "AES", "-provider", 
@@ -171,13 +171,13 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			KeyShell ks = new KeyShell();
 			ks.SetConf(new Configuration());
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(1, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("There are no valid "
+			Assert.Equal(1, rc);
+			Assert.True(outContent.ToString().Contains("There are no valid "
 				 + "KeyProviders configured."));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTransientProviderWarning()
 		{
 			string[] args1 = new string[] { "create", "key1", "-cipher", "AES", "-provider", 
@@ -186,13 +186,13 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			KeyShell ks = new KeyShell();
 			ks.SetConf(new Configuration());
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("WARNING: you are modifying a "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("WARNING: you are modifying a "
 				 + "transient provider."));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTransientProviderOnlyConfig()
 		{
 			string[] args1 = new string[] { "create", "key1" };
@@ -202,13 +202,13 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			config.Set(KeyProviderFactory.KeyProviderPath, "user:///");
 			ks.SetConf(config);
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(1, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("There are no valid "
+			Assert.Equal(1, rc);
+			Assert.True(outContent.ToString().Contains("There are no valid "
 				 + "KeyProviders configured."));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFullCipher()
 		{
 			string keyName = "key1";
@@ -218,14 +218,14 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			KeyShell ks = new KeyShell();
 			ks.SetConf(new Configuration());
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains(keyName + " has been "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains(keyName + " has been "
 				 + "successfully created"));
 			DeleteKey(ks, keyName);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAttributes()
 		{
 			int rc;
@@ -235,55 +235,55 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			string[] args1 = new string[] { "create", "keyattr1", "-provider", jceksProvider, 
 				"-attr", "foo=bar" };
 			rc = ks.Run(args1);
-			NUnit.Framework.Assert.AreEqual(0, rc);
-			NUnit.Framework.Assert.IsTrue(outContent.ToString().Contains("keyattr1 has been "
+			Assert.Equal(0, rc);
+			Assert.True(outContent.ToString().Contains("keyattr1 has been "
 				 + "successfully created"));
 			/* ...and list to see that we have the attr */
 			string listOut = ListKeys(ks, true);
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("keyattr1"));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("attributes: [foo=bar]"));
+			Assert.True(listOut.Contains("keyattr1"));
+			Assert.True(listOut.Contains("attributes: [foo=bar]"));
 			/* Negative tests: no attribute */
 			outContent.Reset();
 			string[] args2 = new string[] { "create", "keyattr2", "-provider", jceksProvider, 
 				"-attr", "=bar" };
 			rc = ks.Run(args2);
-			NUnit.Framework.Assert.AreEqual(1, rc);
+			Assert.Equal(1, rc);
 			/* Not in attribute = value form */
 			outContent.Reset();
 			args2[5] = "foo";
 			rc = ks.Run(args2);
-			NUnit.Framework.Assert.AreEqual(1, rc);
+			Assert.Equal(1, rc);
 			/* No attribute or value */
 			outContent.Reset();
 			args2[5] = "=";
 			rc = ks.Run(args2);
-			NUnit.Framework.Assert.AreEqual(1, rc);
+			Assert.Equal(1, rc);
 			/* Legal: attribute is a, value is b=c */
 			outContent.Reset();
 			args2[5] = "a=b=c";
 			rc = ks.Run(args2);
-			NUnit.Framework.Assert.AreEqual(0, rc);
+			Assert.Equal(0, rc);
 			listOut = ListKeys(ks, true);
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("keyattr2"));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("attributes: [a=b=c]"));
+			Assert.True(listOut.Contains("keyattr2"));
+			Assert.True(listOut.Contains("attributes: [a=b=c]"));
 			/* Test several attrs together... */
 			outContent.Reset();
 			string[] args3 = new string[] { "create", "keyattr3", "-provider", jceksProvider, 
 				"-attr", "foo = bar", "-attr", " glarch =baz  ", "-attr", "abc=def" };
 			rc = ks.Run(args3);
-			NUnit.Framework.Assert.AreEqual(0, rc);
+			Assert.Equal(0, rc);
 			/* ...and list to ensure they're there. */
 			listOut = ListKeys(ks, true);
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("keyattr3"));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("[foo=bar]"));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("[glarch=baz]"));
-			NUnit.Framework.Assert.IsTrue(listOut.Contains("[abc=def]"));
+			Assert.True(listOut.Contains("keyattr3"));
+			Assert.True(listOut.Contains("[foo=bar]"));
+			Assert.True(listOut.Contains("[glarch=baz]"));
+			Assert.True(listOut.Contains("[abc=def]"));
 			/* Negative test - repeated attributes should fail */
 			outContent.Reset();
 			string[] args4 = new string[] { "create", "keyattr4", "-provider", jceksProvider, 
 				"-attr", "foo=bar", "-attr", "foo=glarch" };
 			rc = ks.Run(args4);
-			NUnit.Framework.Assert.AreEqual(1, rc);
+			Assert.Equal(1, rc);
 			/* Clean up to be a good citizen */
 			DeleteKey(ks, "keyattr1");
 			DeleteKey(ks, "keyattr2");

@@ -42,11 +42,11 @@ namespace Org.Apache.Hadoop.FS
 			)
 		{
 			IList<string> actualExpansions = GlobExpander.Expand(filePattern);
-			NUnit.Framework.Assert.AreEqual("Different number of expansions", expectedExpansions
+			Assert.Equal("Different number of expansions", expectedExpansions
 				.Length, actualExpansions.Count);
 			for (int i = 0; i < expectedExpansions.Length; i++)
 			{
-				NUnit.Framework.Assert.AreEqual("Expansion of " + filePattern, expectedExpansions
+				Assert.Equal("Expansion of " + filePattern, expectedExpansions
 					[i], actualExpansions[i]);
 			}
 		}

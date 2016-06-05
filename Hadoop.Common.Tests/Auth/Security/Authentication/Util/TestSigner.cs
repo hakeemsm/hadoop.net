@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 	public class TestSigner
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullAndEmptyString()
 		{
 			Signer signer = new Signer(CreateStringSignerSecretProvider());
@@ -42,30 +42,30 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSignature()
 		{
 			Signer signer = new Signer(CreateStringSignerSecretProvider());
 			string s1 = signer.Sign("ok");
 			string s2 = signer.Sign("ok");
 			string s3 = signer.Sign("wrong");
-			NUnit.Framework.Assert.AreEqual(s1, s2);
+			Assert.Equal(s1, s2);
 			Assert.AssertNotEquals(s1, s3);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerify()
 		{
 			Signer signer = new Signer(CreateStringSignerSecretProvider());
 			string t = "test";
 			string s = signer.Sign(t);
 			string e = signer.VerifyAndExtract(s);
-			NUnit.Framework.Assert.AreEqual(t, e);
+			Assert.Equal(t, e);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInvalidSignedText()
 		{
 			Signer signer = new Signer(CreateStringSignerSecretProvider());
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTampering()
 		{
 			Signer signer = new Signer(CreateStringSignerSecretProvider());
@@ -118,7 +118,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleSecrets()
 		{
 			TestSigner.TestSignerSecretProvider secretProvider = new TestSigner.TestSignerSecretProvider
@@ -128,24 +128,24 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			string t1 = "test";
 			string s1 = signer.Sign(t1);
 			string e1 = signer.VerifyAndExtract(s1);
-			NUnit.Framework.Assert.AreEqual(t1, e1);
+			Assert.Equal(t1, e1);
 			secretProvider.SetPreviousSecret("secretA");
 			string t2 = "test";
 			string s2 = signer.Sign(t2);
 			string e2 = signer.VerifyAndExtract(s2);
-			NUnit.Framework.Assert.AreEqual(t2, e2);
-			NUnit.Framework.Assert.AreEqual(s1, s2);
+			Assert.Equal(t2, e2);
+			Assert.Equal(s1, s2);
 			//check is using current secret for signing
 			secretProvider.SetCurrentSecret("secretC");
 			secretProvider.SetPreviousSecret("secretB");
 			string t3 = "test";
 			string s3 = signer.Sign(t3);
 			string e3 = signer.VerifyAndExtract(s3);
-			NUnit.Framework.Assert.AreEqual(t3, e3);
+			Assert.Equal(t3, e3);
 			Assert.AssertNotEquals(s1, s3);
 			//check not using current secret for signing
 			string e1b = signer.VerifyAndExtract(s1);
-			NUnit.Framework.Assert.AreEqual(t1, e1b);
+			Assert.Equal(t1, e1b);
 			// previous secret still valid
 			secretProvider.SetCurrentSecret("secretD");
 			secretProvider.SetPreviousSecret("secretC");

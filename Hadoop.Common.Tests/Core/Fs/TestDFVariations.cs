@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			FileUtil.SetWritable(test_root, true);
 			FileUtil.FullyDelete(test_root);
-			NUnit.Framework.Assert.IsTrue(!test_root.Exists());
+			Assert.True(!test_root.Exists());
 		}
 
 		public class XXDF : DF
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.FS
 			TestDFVariations.XXDF df = new TestDFVariations.XXDF();
 			string expectedMount = Shell.Windows ? Sharpen.Runtime.Substring(df.GetDirPath(), 
 				0, 2) : "/foo/bar";
-			NUnit.Framework.Assert.AreEqual("Invalid mount point", expectedMount, df.GetMount
+			Assert.Equal("Invalid mount point", expectedMount, df.GetMount
 				());
 		}
 
@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.FS
 			TestDFVariations.XXDF df = new TestDFVariations.XXDF();
 			string expectedFileSystem = Shell.Windows ? Sharpen.Runtime.Substring(df.GetDirPath
 				(), 0, 2) : "/dev/sda3";
-			NUnit.Framework.Assert.AreEqual("Invalid filesystem", expectedFileSystem, df.GetFilesystem
+			Assert.Equal("Invalid filesystem", expectedFileSystem, df.GetFilesystem
 				());
 		}
 
@@ -152,11 +152,11 @@ namespace Org.Apache.Hadoop.FS
 			DF df = new DF(new FilePath(workingDir), 0L);
 			string mountPath = df.GetMount();
 			FilePath mountDir = new FilePath(mountPath);
-			NUnit.Framework.Assert.IsTrue("Mount dir [" + mountDir.GetAbsolutePath() + "] should exist."
+			Assert.True("Mount dir [" + mountDir.GetAbsolutePath() + "] should exist."
 				, mountDir.Exists());
-			NUnit.Framework.Assert.IsTrue("Mount dir [" + mountDir.GetAbsolutePath() + "] should be directory."
+			Assert.True("Mount dir [" + mountDir.GetAbsolutePath() + "] should be directory."
 				, mountDir.IsDirectory());
-			NUnit.Framework.Assert.IsTrue("Working dir [" + workingDir + "] should start with ["
+			Assert.True("Working dir [" + workingDir + "] should start with ["
 				 + mountPath + "].", workingDir.StartsWith(mountPath));
 		}
 	}

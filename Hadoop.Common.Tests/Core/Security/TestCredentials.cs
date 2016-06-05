@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Security
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReadWriteStorage<T>()
 			where T : TokenIdentifier
 		{
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.Security
 			// get the tokens and compare the services
 			ICollection<Org.Apache.Hadoop.Security.Token.Token<TokenIdentifier>> list = ts.GetAllTokens
 				();
-			NUnit.Framework.Assert.AreEqual("getAllTokens should return collection of size 2"
+			Assert.Equal("getAllTokens should return collection of size 2"
 				, list.Count, 2);
 			bool foundFirst = false;
 			bool foundSecond = false;
@@ -84,17 +84,17 @@ namespace Org.Apache.Hadoop.Security
 					foundSecond = true;
 				}
 			}
-			NUnit.Framework.Assert.IsTrue("Tokens for services service1 and service2 must be present"
+			Assert.True("Tokens for services service1 and service2 must be present"
 				, foundFirst && foundSecond);
 			// compare secret keys
 			int mapLen = m.Count;
-			NUnit.Framework.Assert.AreEqual("wrong number of keys in the Storage", mapLen, ts
+			Assert.Equal("wrong number of keys in the Storage", mapLen, ts
 				.NumberOfSecretKeys());
 			foreach (Text a in m.Keys)
 			{
 				byte[] kTS = ts.GetSecretKey(a);
 				byte[] kLocal = m[a];
-				NUnit.Framework.Assert.IsTrue("keys don't match for " + a, WritableComparator.CompareBytes
+				Assert.True("keys don't match for " + a, WritableComparator.CompareBytes
 					(kTS, 0, kTS.Length, kLocal, 0, kLocal.Length) == 0);
 			}
 			tmpFileName.Delete();
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.Security
 			<TokenIdentifier>(), new Org.Apache.Hadoop.Security.Token.Token<TokenIdentifier>
 			() };
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void AddAll()
 		{
 			Credentials creds = new Credentials();
@@ -127,23 +127,23 @@ namespace Org.Apache.Hadoop.Security
 			credsToAdd.AddSecretKey(secret[0], secret[3].GetBytes());
 			credsToAdd.AddSecretKey(secret[2], secret[2].GetBytes());
 			creds.AddAll(credsToAdd);
-			NUnit.Framework.Assert.AreEqual(3, creds.NumberOfTokens());
-			NUnit.Framework.Assert.AreEqual(3, creds.NumberOfSecretKeys());
+			Assert.Equal(3, creds.NumberOfTokens());
+			Assert.Equal(3, creds.NumberOfSecretKeys());
 			// existing token & secret should be overwritten
-			NUnit.Framework.Assert.AreEqual(token[3], creds.GetToken(service[0]));
-			NUnit.Framework.Assert.AreEqual(secret[3], new Text(creds.GetSecretKey(secret[0])
+			Assert.Equal(token[3], creds.GetToken(service[0]));
+			Assert.Equal(secret[3], new Text(creds.GetSecretKey(secret[0])
 				));
 			// non-duplicate token & secret should be present
-			NUnit.Framework.Assert.AreEqual(token[1], creds.GetToken(service[1]));
-			NUnit.Framework.Assert.AreEqual(secret[1], new Text(creds.GetSecretKey(secret[1])
+			Assert.Equal(token[1], creds.GetToken(service[1]));
+			Assert.Equal(secret[1], new Text(creds.GetSecretKey(secret[1])
 				));
 			// new token & secret should be added
-			NUnit.Framework.Assert.AreEqual(token[2], creds.GetToken(service[2]));
-			NUnit.Framework.Assert.AreEqual(secret[2], new Text(creds.GetSecretKey(secret[2])
+			Assert.Equal(token[2], creds.GetToken(service[2]));
+			Assert.Equal(secret[2], new Text(creds.GetSecretKey(secret[2])
 				));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void MergeAll()
 		{
 			Credentials creds = new Credentials();
@@ -158,23 +158,23 @@ namespace Org.Apache.Hadoop.Security
 			credsToAdd.AddSecretKey(secret[0], secret[3].GetBytes());
 			credsToAdd.AddSecretKey(secret[2], secret[2].GetBytes());
 			creds.MergeAll(credsToAdd);
-			NUnit.Framework.Assert.AreEqual(3, creds.NumberOfTokens());
-			NUnit.Framework.Assert.AreEqual(3, creds.NumberOfSecretKeys());
+			Assert.Equal(3, creds.NumberOfTokens());
+			Assert.Equal(3, creds.NumberOfSecretKeys());
 			// existing token & secret should not be overwritten
-			NUnit.Framework.Assert.AreEqual(token[0], creds.GetToken(service[0]));
-			NUnit.Framework.Assert.AreEqual(secret[0], new Text(creds.GetSecretKey(secret[0])
+			Assert.Equal(token[0], creds.GetToken(service[0]));
+			Assert.Equal(secret[0], new Text(creds.GetSecretKey(secret[0])
 				));
 			// non-duplicate token & secret should be present
-			NUnit.Framework.Assert.AreEqual(token[1], creds.GetToken(service[1]));
-			NUnit.Framework.Assert.AreEqual(secret[1], new Text(creds.GetSecretKey(secret[1])
+			Assert.Equal(token[1], creds.GetToken(service[1]));
+			Assert.Equal(secret[1], new Text(creds.GetSecretKey(secret[1])
 				));
 			// new token & secret should be added
-			NUnit.Framework.Assert.AreEqual(token[2], creds.GetToken(service[2]));
-			NUnit.Framework.Assert.AreEqual(secret[2], new Text(creds.GetSecretKey(secret[2])
+			Assert.Equal(token[2], creds.GetToken(service[2]));
+			Assert.Equal(secret[2], new Text(creds.GetSecretKey(secret[2])
 				));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddTokensToUGI()
 		{
 			UserGroupInformation ugi = UserGroupInformation.CreateRemoteUser("someone");
@@ -189,7 +189,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				NUnit.Framework.Assert.AreSame(token[i_1], creds.GetToken(service[i_1]));
 			}
-			NUnit.Framework.Assert.AreEqual(service.Length, creds.NumberOfTokens());
+			Assert.Equal(service.Length, creds.NumberOfTokens());
 		}
 	}
 }

@@ -239,7 +239,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void Test1()
 		{
 			ProtocolProxy<object> proxy;
@@ -247,18 +247,18 @@ namespace Org.Apache.Hadoop.Ipc
 				.versionID, addr, conf);
 			TestMultipleProtocolServer.Foo0 foo0 = (TestMultipleProtocolServer.Foo0)proxy.GetProxy
 				();
-			NUnit.Framework.Assert.AreEqual("Foo0", foo0.Ping());
+			Assert.Equal("Foo0", foo0.Ping());
 			proxy = RPC.GetProtocolProxy<TestMultipleProtocolServer.Foo1>(TestMultipleProtocolServer.Foo1
 				.versionID, addr, conf);
 			TestMultipleProtocolServer.Foo1 foo1 = (TestMultipleProtocolServer.Foo1)proxy.GetProxy
 				();
-			NUnit.Framework.Assert.AreEqual("Foo1", foo1.Ping());
-			NUnit.Framework.Assert.AreEqual("Foo1", foo1.Ping());
+			Assert.Equal("Foo1", foo1.Ping());
+			Assert.Equal("Foo1", foo1.Ping());
 			proxy = RPC.GetProtocolProxy<TestMultipleProtocolServer.Bar>(TestMultipleProtocolServer.Foo1
 				.versionID, addr, conf);
 			TestMultipleProtocolServer.Bar bar = (TestMultipleProtocolServer.Bar)proxy.GetProxy
 				();
-			NUnit.Framework.Assert.AreEqual(99, bar.Echo(99));
+			Assert.Equal(99, bar.Echo(99));
 			// Now test Mixin class method
 			TestMultipleProtocolServer.Mixin mixin = bar;
 			mixin.Hello();
@@ -282,7 +282,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// Similarly getProtocolSignature should work.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNonExistingProtocol2()
 		{
 			ProtocolProxy<object> proxy;
@@ -290,7 +290,7 @@ namespace Org.Apache.Hadoop.Ipc
 				.versionID, addr, conf);
 			TestMultipleProtocolServer.FooUnimplemented foo = (TestMultipleProtocolServer.FooUnimplemented
 				)proxy.GetProxy();
-			NUnit.Framework.Assert.AreEqual(TestMultipleProtocolServer.Foo1.versionID, foo.GetProtocolVersion
+			Assert.Equal(TestMultipleProtocolServer.Foo1.versionID, foo.GetProtocolVersion
 				(RPC.GetProtocolName(typeof(TestMultipleProtocolServer.FooUnimplemented)), TestMultipleProtocolServer.FooUnimplemented
 				.versionID));
 			foo.GetProtocolSignature(RPC.GetProtocolName(typeof(TestMultipleProtocolServer.FooUnimplemented
@@ -307,7 +307,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		// Now test a PB service - a server  hosts both PB and Writable Rpcs.
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPBService()
 		{
 			// Set RPC engine to protobuf RPC engine

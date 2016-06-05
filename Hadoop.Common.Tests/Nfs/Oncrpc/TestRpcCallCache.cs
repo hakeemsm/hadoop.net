@@ -21,15 +21,15 @@ namespace Org.Apache.Hadoop.Oncrpc
 			new RpcCallCache("test", -1);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRpcCallCacheConstructor()
 		{
 			RpcCallCache cache = new RpcCallCache("test", 100);
-			NUnit.Framework.Assert.AreEqual("test", cache.GetProgram());
+			Assert.Equal("test", cache.GetProgram());
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddRemoveEntries()
 		{
 			RpcCallCache cache = new RpcCallCache("test", 100);
@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 
 		private void ValidateInprogressCacheEntry(RpcCallCache.CacheEntry c)
 		{
-			NUnit.Framework.Assert.IsTrue(c.IsInProgress());
+			Assert.True(c.IsInProgress());
 			NUnit.Framework.Assert.IsFalse(c.IsCompleted());
 			NUnit.Framework.Assert.IsNull(c.GetResponse());
 		}
@@ -59,16 +59,16 @@ namespace Org.Apache.Hadoop.Oncrpc
 			)
 		{
 			NUnit.Framework.Assert.IsFalse(c.IsInProgress());
-			NUnit.Framework.Assert.IsTrue(c.IsCompleted());
-			NUnit.Framework.Assert.AreEqual(response, c.GetResponse());
+			Assert.True(c.IsCompleted());
+			Assert.Equal(response, c.GetResponse());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheEntry()
 		{
 			RpcCallCache.CacheEntry c = new RpcCallCache.CacheEntry();
 			ValidateInprogressCacheEntry(c);
-			NUnit.Framework.Assert.IsTrue(c.IsInProgress());
+			Assert.True(c.IsInProgress());
 			NUnit.Framework.Assert.IsFalse(c.IsCompleted());
 			NUnit.Framework.Assert.IsNull(c.GetResponse());
 			RpcResponse response = Org.Mockito.Mockito.Mock<RpcResponse>();
@@ -77,7 +77,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheFunctionality()
 		{
 			RpcCallCache cache = new RpcCallCache("Test", 10);
@@ -90,7 +90,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 				cache.CheckOrAddToCache(clientIp, 0);
 				size = Math.Min(++size, 10);
 				System.Console.Out.WriteLine("Cache size " + cache.Size());
-				NUnit.Framework.Assert.AreEqual(size, cache.Size());
+				Assert.Equal(size, cache.Size());
 				// Ensure the cache size is correct
 				// Ensure the cache entries are correct
 				int startEntry = Math.Max(clientId - 10 + 1, 0);
@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 				{
 					RpcCallCache.ClientRequest key = iterator.Next().Key;
 					System.Console.Out.WriteLine("Entry " + key.GetClientId());
-					NUnit.Framework.Assert.AreEqual(Sharpen.Extensions.GetAddressByName("1.1.1." + (startEntry
+					Assert.Equal(Sharpen.Extensions.GetAddressByName("1.1.1." + (startEntry
 						 + i)), key.GetClientId());
 				}
 				// Ensure cache entries are returned as in progress.
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 					RpcCallCache.CacheEntry e = cache.CheckOrAddToCache(Sharpen.Extensions.GetAddressByName
 						("1.1.1." + (startEntry + i_1)), 0);
 					NUnit.Framework.Assert.IsNotNull(e);
-					NUnit.Framework.Assert.IsTrue(e.IsInProgress());
+					Assert.True(e.IsInProgress());
 					NUnit.Framework.Assert.IsFalse(e.IsCompleted());
 				}
 			}

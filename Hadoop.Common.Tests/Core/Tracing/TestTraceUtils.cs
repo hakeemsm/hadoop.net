@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.Tracing
 	{
 		private static string TestPrefix = "test.prefix.htrace.";
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrappedHadoopConf()
 		{
 			string key = "sampler";
@@ -17,10 +17,10 @@ namespace Org.Apache.Hadoop.Tracing
 			Configuration conf = new Configuration();
 			conf.Set(TestPrefix + key, value);
 			HTraceConfiguration wrapped = TraceUtils.WrapHadoopConf(TestPrefix, conf);
-			NUnit.Framework.Assert.AreEqual(value, wrapped.Get(key));
+			Assert.Equal(value, wrapped.Get(key));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExtraConfig()
 		{
 			string key = "test.extra.config";
@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.Tracing
 			extraConfig.AddItem(new SpanReceiverInfo.ConfigurationPair(key, newValue));
 			HTraceConfiguration wrapped = TraceUtils.WrapHadoopConf(TestPrefix, conf, extraConfig
 				);
-			NUnit.Framework.Assert.AreEqual(newValue, wrapped.Get(key));
+			Assert.Equal(newValue, wrapped.Get(key));
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.Util
 			int[] arr = GenericsUtil.ToArray(list);
 			for (int i_1 = 0; i_1 < arr.Length; i_1++)
 			{
-				NUnit.Framework.Assert.AreEqual("Array has identical elements as input list", list
+				Assert.Equal("Array has identical elements as input list", list
 					[i_1], arr[i_1]);
 			}
 		}
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Util
 			IList<string> list = new AList<string>();
 			//this method should not throw IndexOutOfBoundsException
 			string[] arr = GenericsUtil.ToArray<string, string>(list);
-			NUnit.Framework.Assert.AreEqual("Assert list creation w/ no elements results in length 0"
+			Assert.Equal("Assert list creation w/ no elements results in length 0"
 				, 0, arr.Length);
 		}
 
@@ -86,8 +86,8 @@ namespace Org.Apache.Hadoop.Util
 				//this cast would fail, if we had not used GenericsUtil.toArray, since the
 				//rmethod would return Object[] rather than String[]
 				string[] arr = testSubject.FuncThatUsesToArray();
-				NUnit.Framework.Assert.AreEqual("test1", arr[0]);
-				NUnit.Framework.Assert.AreEqual("test2", arr[1]);
+				Assert.Equal("test1", arr[0]);
+				Assert.Equal("test2", arr[1]);
 			}
 			catch (InvalidCastException)
 			{
@@ -100,11 +100,11 @@ namespace Org.Apache.Hadoop.Util
 		{
 			GenericOptionsParser parser = new GenericOptionsParser(new Configuration(), new string
 				[] { "-jt" });
-			NUnit.Framework.Assert.AreEqual(0, parser.GetRemainingArgs().Length);
+			Assert.Equal(0, parser.GetRemainingArgs().Length);
 			//  test if -D accepts -Dx=y=z
 			parser = new GenericOptionsParser(new Configuration(), new string[] { "-Dx=y=z" }
 				);
-			NUnit.Framework.Assert.AreEqual("Options parser gets entire ='s expresion", "y=z"
+			Assert.Equal("Options parser gets entire ='s expresion", "y=z"
 				, parser.GetConfiguration().Get("x"));
 		}
 
@@ -113,13 +113,13 @@ namespace Org.Apache.Hadoop.Util
 			//test with Integer
 			int x = 42;
 			Type c = GenericsUtil.GetClass(x);
-			NUnit.Framework.Assert.AreEqual("Correct generic type is acquired from object", typeof(
+			Assert.Equal("Correct generic type is acquired from object", typeof(
 				int), c);
 			//test with GenericClass<Integer>
 			TestGenericsUtil.GenericClass<int> testSubject = new TestGenericsUtil.GenericClass
 				<int>(this);
 			Type c2 = GenericsUtil.GetClass(testSubject);
-			NUnit.Framework.Assert.AreEqual("Inner generics are acquired from object.", typeof(
+			Assert.Equal("Inner generics are acquired from object.", typeof(
 				TestGenericsUtil.GenericClass), c2);
 		}
 	}

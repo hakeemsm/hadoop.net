@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDynamicBloomFilter()
 		{
 			int hashId = Org.Apache.Hadoop.Util.Hash.Hash.JenkinsHash;
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCountingBloomFilter()
 		{
 			int hashId = Org.Apache.Hadoop.Util.Hash.Hash.JenkinsHash;
@@ -111,20 +111,20 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				hashId);
 			Key key = new Key(new byte[] { 48, 48 });
 			filter.Add(key);
-			NUnit.Framework.Assert.IsTrue("CountingBloomFilter.membership error ", filter.MembershipTest
+			Assert.True("CountingBloomFilter.membership error ", filter.MembershipTest
 				(key));
-			NUnit.Framework.Assert.IsTrue("CountingBloomFilter.approximateCount error", filter
+			Assert.True("CountingBloomFilter.approximateCount error", filter
 				.ApproximateCount(key) == 1);
 			filter.Add(key);
-			NUnit.Framework.Assert.IsTrue("CountingBloomFilter.approximateCount error", filter
+			Assert.True("CountingBloomFilter.approximateCount error", filter
 				.ApproximateCount(key) == 2);
 			filter.Delete(key);
-			NUnit.Framework.Assert.IsTrue("CountingBloomFilter.membership error ", filter.MembershipTest
+			Assert.True("CountingBloomFilter.membership error ", filter.MembershipTest
 				(key));
 			filter.Delete(key);
 			NUnit.Framework.Assert.IsFalse("CountingBloomFilter.membership error ", filter.MembershipTest
 				(key));
-			NUnit.Framework.Assert.IsTrue("CountingBloomFilter.approximateCount error", filter
+			Assert.True("CountingBloomFilter.approximateCount error", filter
 				.ApproximateCount(key) == 0);
 			BloomFilterCommonTester.Of(hashId, numInsertions).WithFilterInstance(filter).WithTestCases
 				(ImmutableSet.Of(BloomFilterCommonTester.BloomFilterTestStrategy.KeyTestStrategy
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				)).Test();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRetouchedBloomFilterSpecific()
 		{
 			int numInsertions = 1000;
@@ -194,7 +194,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFiltersWithJenkinsHash()
 		{
 			int hashId = Org.Apache.Hadoop.Util.Hash.Hash.JenkinsHash;
@@ -209,7 +209,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				)).Test();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFiltersWithMurmurHash()
 		{
 			int hashId = Org.Apache.Hadoop.Util.Hash.Hash.MurmurHash;
@@ -224,7 +224,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				)).Test();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNot()
 		{
 			BloomFilter bf = new BloomFilter(8, 1, Org.Apache.Hadoop.Util.Hash.Hash.JenkinsHash

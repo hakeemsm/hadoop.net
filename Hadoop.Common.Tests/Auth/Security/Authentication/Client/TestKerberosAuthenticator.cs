@@ -87,9 +87,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 				Uri url = new Uri(auth.GetBaseURL());
 				HttpURLConnection conn = (HttpURLConnection)url.OpenConnection();
 				conn.Connect();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
 					());
-				NUnit.Framework.Assert.IsTrue(conn.GetHeaderField(KerberosAuthenticator.WwwAuthenticate
+				Assert.True(conn.GetHeaderField(KerberosAuthenticator.WwwAuthenticate
 					) != null);
 			}
 			finally

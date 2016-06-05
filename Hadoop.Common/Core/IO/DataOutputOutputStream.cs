@@ -3,20 +3,20 @@ using Sharpen;
 
 namespace Org.Apache.Hadoop.IO
 {
-	/// <summary>OutputStream implementation that wraps a DataOutput.</summary>
+	/// <summary>OutputStream implementation that wraps a BinaryWriter.</summary>
 	public class DataOutputOutputStream : OutputStream
 	{
-		private readonly DataOutput @out;
+		private readonly BinaryWriter @out;
 
-		/// <summary>Construct an OutputStream from the given DataOutput.</summary>
+		/// <summary>Construct an OutputStream from the given BinaryWriter.</summary>
 		/// <remarks>
-		/// Construct an OutputStream from the given DataOutput. If 'out'
+		/// Construct an OutputStream from the given BinaryWriter. If 'out'
 		/// is already an OutputStream, simply returns it. Otherwise, wraps
 		/// it in an OutputStream.
 		/// </remarks>
-		/// <param name="out">the DataOutput to wrap</param>
+		/// <param name="out">the BinaryWriter to wrap</param>
 		/// <returns>an OutputStream instance that outputs to 'out'</returns>
-		public static OutputStream ConstructOutputStream(DataOutput @out)
+		public static OutputStream ConstructOutputStream(BinaryWriter @out)
 		{
 			if (@out is OutputStream)
 			{
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		private DataOutputOutputStream(DataOutput @out)
+		private DataOutputOutputStream(BinaryWriter @out)
 		{
 			this.@out = @out;
 		}

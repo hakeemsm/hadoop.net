@@ -235,13 +235,13 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 				catch (IOException e)
 				{
-					NUnit.Framework.Assert.IsTrue("Exception from RPC exchange() " + e, false);
+					Assert.True("Exception from RPC exchange() " + e, false);
 				}
-				NUnit.Framework.Assert.AreEqual(indata.Length, outdata.Length);
-				NUnit.Framework.Assert.AreEqual(3, val);
+				Assert.Equal(indata.Length, outdata.Length);
+				Assert.Equal(3, val);
 				for (int i = 0; i < outdata.Length; i++)
 				{
-					NUnit.Framework.Assert.AreEqual(outdata[i], i);
+					Assert.Equal(outdata[i], i);
 				}
 			}
 		}
@@ -276,7 +276,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 				catch (IOException e)
 				{
-					NUnit.Framework.Assert.IsTrue("SlowRPC ping exception " + e, false);
+					Assert.True("SlowRPC ping exception " + e, false);
 				}
 			}
 		}
@@ -361,7 +361,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConfRpc()
 		{
 			Server server = new RPC.Builder(conf).SetProtocol(typeof(TestRPC.TestProtocol)).SetInstance
@@ -370,21 +370,21 @@ namespace Org.Apache.Hadoop.Ipc
 			// Just one handler
 			int confQ = conf.GetInt(CommonConfigurationKeys.IpcServerHandlerQueueSizeKey, CommonConfigurationKeys
 				.IpcServerHandlerQueueSizeDefault);
-			NUnit.Framework.Assert.AreEqual(confQ, server.GetMaxQueueSize());
+			Assert.Equal(confQ, server.GetMaxQueueSize());
 			int confReaders = conf.GetInt(CommonConfigurationKeys.IpcServerRpcReadThreadsKey, 
 				CommonConfigurationKeys.IpcServerRpcReadThreadsDefault);
-			NUnit.Framework.Assert.AreEqual(confReaders, server.GetNumReaders());
+			Assert.Equal(confReaders, server.GetNumReaders());
 			server.Stop();
 			server = new RPC.Builder(conf).SetProtocol(typeof(TestRPC.TestProtocol)).SetInstance
 				(new TestRPC.TestImpl()).SetBindAddress(Address).SetPort(0).SetNumHandlers(1).SetnumReaders
 				(3).SetQueueSizePerHandler(200).SetVerbose(false).Build();
-			NUnit.Framework.Assert.AreEqual(3, server.GetNumReaders());
-			NUnit.Framework.Assert.AreEqual(200, server.GetMaxQueueSize());
+			Assert.Equal(3, server.GetNumReaders());
+			Assert.Equal(200, server.GetMaxQueueSize());
 			server.Stop();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyAddress()
 		{
 			Server server = new RPC.Builder(conf).SetProtocol(typeof(TestRPC.TestProtocol)).SetInstance
@@ -397,7 +397,7 @@ namespace Org.Apache.Hadoop.Ipc
 				// create a client
 				proxy = RPC.GetProxy<TestRPC.TestProtocol>(TestRPC.TestProtocol.versionID, addr, 
 					conf);
-				NUnit.Framework.Assert.AreEqual(addr, RPC.GetServerAddress(proxy));
+				Assert.Equal(addr, RPC.GetServerAddress(proxy));
 			}
 			finally
 			{
@@ -410,7 +410,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSlowRpc()
 		{
 			System.Console.Out.WriteLine("Testing Slow RPC");
@@ -430,12 +430,12 @@ namespace Org.Apache.Hadoop.Ipc
 				Sharpen.Thread thread = new Sharpen.Thread(slowrpc, "SlowRPC");
 				thread.Start();
 				// send a slow RPC, which won't return until two fast pings
-				NUnit.Framework.Assert.IsTrue("Slow RPC should not have finished1.", !slowrpc.IsDone
+				Assert.True("Slow RPC should not have finished1.", !slowrpc.IsDone
 					());
 				proxy.SlowPing(false);
 				// first fast ping
 				// verify that the first RPC is still stuck
-				NUnit.Framework.Assert.IsTrue("Slow RPC should not have finished2.", !slowrpc.IsDone
+				Assert.True("Slow RPC should not have finished2.", !slowrpc.IsDone
 					());
 				proxy.SlowPing(false);
 				// second fast ping
@@ -464,7 +464,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCalls()
 		{
 			TestCallsInternal(conf);
@@ -484,9 +484,9 @@ namespace Org.Apache.Hadoop.Ipc
 					conf);
 				proxy.Ping();
 				string stringResult = proxy.Echo("foo");
-				NUnit.Framework.Assert.AreEqual(stringResult, "foo");
+				Assert.Equal(stringResult, "foo");
 				stringResult = proxy.Echo((string)null);
-				NUnit.Framework.Assert.AreEqual(stringResult, null);
+				Assert.Equal(stringResult, null);
 				// Check rpcMetrics 
 				MetricsRecordBuilder rb = MetricsAsserts.GetMetrics(server.rpcMetrics.Name());
 				MetricsAsserts.AssertCounter("RpcProcessingTimeNumOps", 3L, rb);
@@ -498,23 +498,23 @@ namespace Org.Apache.Hadoop.Ipc
 				// Number of calls to ping method should be 1
 				MetricsAsserts.AssertCounter("PingNumOps", 1L, rb);
 				string[] stringResults = proxy.Echo(new string[] { "foo", "bar" });
-				NUnit.Framework.Assert.IsTrue(Arrays.Equals(stringResults, new string[] { "foo", 
+				Assert.True(Arrays.Equals(stringResults, new string[] { "foo", 
 					"bar" }));
 				stringResults = proxy.Echo((string[])null);
-				NUnit.Framework.Assert.IsTrue(Arrays.Equals(stringResults, null));
+				Assert.True(Arrays.Equals(stringResults, null));
 				UTF8 utf8Result = (UTF8)proxy.Echo(new UTF8("hello world"));
-				NUnit.Framework.Assert.AreEqual(new UTF8("hello world"), utf8Result);
+				Assert.Equal(new UTF8("hello world"), utf8Result);
 				utf8Result = (UTF8)proxy.Echo((UTF8)null);
-				NUnit.Framework.Assert.AreEqual(null, utf8Result);
+				Assert.Equal(null, utf8Result);
 				int intResult = proxy.Add(1, 2);
-				NUnit.Framework.Assert.AreEqual(intResult, 3);
+				Assert.Equal(intResult, 3);
 				intResult = proxy.Add(new int[] { 1, 2 });
-				NUnit.Framework.Assert.AreEqual(intResult, 3);
+				Assert.Equal(intResult, 3);
 				// Test protobufs
 				DescriptorProtos.EnumDescriptorProto sendProto = ((DescriptorProtos.EnumDescriptorProto
 					)DescriptorProtos.EnumDescriptorProto.NewBuilder().SetName("test").Build());
 				DescriptorProtos.EnumDescriptorProto retProto = proxy.ExchangeProto(sendProto);
-				NUnit.Framework.Assert.AreEqual(sendProto, retProto);
+				Assert.Equal(sendProto, retProto);
 				NUnit.Framework.Assert.AreNotSame(sendProto, retProto);
 				bool caught = false;
 				try
@@ -529,7 +529,7 @@ namespace Org.Apache.Hadoop.Ipc
 					}
 					caught = true;
 				}
-				NUnit.Framework.Assert.IsTrue(caught);
+				Assert.True(caught);
 				rb = MetricsAsserts.GetMetrics(server.rpcDetailedMetrics.Name());
 				MetricsAsserts.AssertCounter("IOExceptionNumOps", 1L, rb);
 				proxy.TestServerGet();
@@ -569,7 +569,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStandaloneClient()
 		{
 			try
@@ -620,7 +620,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				if (expectFailure)
 				{
-					NUnit.Framework.Assert.IsTrue(e.UnwrapRemoteException() is AuthorizationException
+					Assert.True(e.UnwrapRemoteException() is AuthorizationException
 						);
 				}
 				else
@@ -652,7 +652,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServerAddress()
 		{
 			Server server = new RPC.Builder(conf).SetProtocol(typeof(TestRPC.TestProtocol)).SetInstance
@@ -667,11 +667,11 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				server.Stop();
 			}
-			NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.GetLocalHost(), bindAddr.Address);
+			Assert.Equal(Sharpen.Runtime.GetLocalHost(), bindAddr.Address);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthorization()
 		{
 			Configuration conf = new Configuration();
@@ -718,27 +718,27 @@ namespace Org.Apache.Hadoop.Ipc
 		/// be stopped without error.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopMockObject()
 		{
 			RPC.StopProxy(MockitoUtil.MockProtocol<TestRPC.TestProtocol>());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopProxy()
 		{
 			TestRPC.StoppedProtocol proxy = RPC.GetProxy<TestRPC.StoppedProtocol>(TestRPC.StoppedProtocol
 				.versionID, null, conf);
 			TestRPC.StoppedInvocationHandler invocationHandler = (TestRPC.StoppedInvocationHandler
 				)Proxy.GetInvocationHandler(proxy);
-			NUnit.Framework.Assert.AreEqual(0, invocationHandler.GetCloseCalled());
+			Assert.Equal(0, invocationHandler.GetCloseCalled());
 			RPC.StopProxy(proxy);
-			NUnit.Framework.Assert.AreEqual(1, invocationHandler.GetCloseCalled());
+			Assert.Equal(1, invocationHandler.GetCloseCalled());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrappedStopProxy()
 		{
 			TestRPC.StoppedProtocol wrappedProxy = RPC.GetProxy<TestRPC.StoppedProtocol>(TestRPC.StoppedProtocol
@@ -747,13 +747,13 @@ namespace Org.Apache.Hadoop.Ipc
 				)Proxy.GetInvocationHandler(wrappedProxy);
 			TestRPC.StoppedProtocol proxy = (TestRPC.StoppedProtocol)RetryProxy.Create<TestRPC.StoppedProtocol
 				>(wrappedProxy, RetryPolicies.RetryForever);
-			NUnit.Framework.Assert.AreEqual(0, invocationHandler.GetCloseCalled());
+			Assert.Equal(0, invocationHandler.GetCloseCalled());
 			RPC.StopProxy(proxy);
-			NUnit.Framework.Assert.AreEqual(1, invocationHandler.GetCloseCalled());
+			Assert.Equal(1, invocationHandler.GetCloseCalled());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestErrorMsgForInsecureClient()
 		{
 			Configuration serverConf = new Configuration(conf);
@@ -777,7 +777,7 @@ namespace Org.Apache.Hadoop.Ipc
 			catch (RemoteException e)
 			{
 				Log.Info("LOGGING MESSAGE: " + e.GetLocalizedMessage());
-				NUnit.Framework.Assert.IsTrue(e.UnwrapRemoteException() is AccessControlException
+				Assert.True(e.UnwrapRemoteException() is AccessControlException
 					);
 				succeeded = true;
 			}
@@ -789,7 +789,7 @@ namespace Org.Apache.Hadoop.Ipc
 					RPC.StopProxy(proxy);
 				}
 			}
-			NUnit.Framework.Assert.IsTrue(succeeded);
+			Assert.True(succeeded);
 			conf.SetInt(CommonConfigurationKeys.IpcServerRpcReadThreadsKey, 2);
 			UserGroupInformation.SetConfiguration(serverConf);
 			Server multiServer = new RPC.Builder(serverConf).SetProtocol(typeof(TestRPC.TestProtocol
@@ -809,7 +809,7 @@ namespace Org.Apache.Hadoop.Ipc
 			catch (RemoteException e)
 			{
 				Log.Info("LOGGING MESSAGE: " + e.GetLocalizedMessage());
-				NUnit.Framework.Assert.IsTrue(e.UnwrapRemoteException() is AccessControlException
+				Assert.True(e.UnwrapRemoteException() is AccessControlException
 					);
 				succeeded = true;
 			}
@@ -821,7 +821,7 @@ namespace Org.Apache.Hadoop.Ipc
 					RPC.StopProxy(proxy);
 				}
 			}
-			NUnit.Framework.Assert.IsTrue(succeeded);
+			Assert.True(succeeded);
 		}
 
 		/// <summary>
@@ -854,11 +854,11 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <summary>Test that server.stop() properly stops all threads</summary>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopsAllThreads()
 		{
 			int threadsBefore = CountThreads("Server$Listener$Reader");
-			NUnit.Framework.Assert.AreEqual("Expect no Reader threads running before test", 0
+			Assert.Equal("Expect no Reader threads running before test", 0
 				, threadsBefore);
 			Server server = new RPC.Builder(conf).SetProtocol(typeof(TestRPC.TestProtocol)).SetInstance
 				(new TestRPC.TestImpl()).SetBindAddress(Address).SetPort(0).SetNumHandlers(5).SetVerbose
@@ -878,19 +878,19 @@ namespace Org.Apache.Hadoop.Ipc
 				while (threadsRunning == 0 && totalSleepTime < 5000);
 				// Validate that at least one thread started (we didn't timeout)
 				threadsRunning = CountThreads("Server$Listener$Reader");
-				NUnit.Framework.Assert.IsTrue(threadsRunning > 0);
+				Assert.True(threadsRunning > 0);
 			}
 			finally
 			{
 				server.Stop();
 			}
 			int threadsAfter = CountThreads("Server$Listener$Reader");
-			NUnit.Framework.Assert.AreEqual("Expect no Reader threads left running after test"
+			Assert.Equal("Expect no Reader threads left running after test"
 				, 0, threadsAfter);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRPCBuilder()
 		{
 			// Test mandatory field conf
@@ -1014,7 +1014,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 			latch.Await();
 			// should not cause any other thread to get an error
-			NUnit.Framework.Assert.IsTrue("rpc got exception " + error.Get(), error.Get() == 
+			Assert.True("rpc got exception " + error.Get(), error.Get() == 
 				null);
 			server.Stop();
 		}
@@ -1076,7 +1076,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConnectionPing()
 		{
 			Configuration conf = new Configuration();
@@ -1105,7 +1105,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRpcMetrics()
 		{
 			Configuration configuration = new Configuration();
@@ -1128,9 +1128,9 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 				MetricsRecordBuilder rpcMetrics = MetricsAsserts.GetMetrics(server.GetRpcMetrics(
 					).Name());
-				NUnit.Framework.Assert.IsTrue("Expected non-zero rpc queue time", MetricsAsserts.GetLongCounter
+				Assert.True("Expected non-zero rpc queue time", MetricsAsserts.GetLongCounter
 					("RpcQueueTimeNumOps", rpcMetrics) > 0);
-				NUnit.Framework.Assert.IsTrue("Expected non-zero rpc processing time", MetricsAsserts.GetLongCounter
+				Assert.True("Expected non-zero rpc processing time", MetricsAsserts.GetLongCounter
 					("RpcProcessingTimeNumOps", rpcMetrics) > 0);
 				MetricsAsserts.AssertQuantileGauges("RpcQueueTime" + interval + "s", rpcMetrics);
 				MetricsAsserts.AssertQuantileGauges("RpcProcessingTime" + interval + "s", rpcMetrics
@@ -1181,7 +1181,7 @@ namespace Org.Apache.Hadoop.Ipc
 				try
 				{
 					server.Stop();
-					NUnit.Framework.Assert.AreEqual("Not enough clients", numClients, res.Count);
+					Assert.Equal("Not enough clients", numClients, res.Count);
 					foreach (Future<Void> f in res)
 					{
 						try
@@ -1191,7 +1191,7 @@ namespace Org.Apache.Hadoop.Ipc
 						}
 						catch (ExecutionException e)
 						{
-							NUnit.Framework.Assert.IsTrue("Unexpected exception: " + e, e.InnerException is IOException
+							Assert.True("Unexpected exception: " + e, e.InnerException is IOException
 								);
 							Log.Info("Expected exception", e.InnerException);
 						}

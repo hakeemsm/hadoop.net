@@ -7,18 +7,18 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
 	public class TestKMSACLs
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaults()
 		{
 			KMSACLs acls = new KMSACLs(new Configuration(false));
 			foreach (KMSACLs.Type type in KMSACLs.Type.Values())
 			{
-				NUnit.Framework.Assert.IsTrue(acls.HasAccess(type, UserGroupInformation.CreateRemoteUser
+				Assert.True(acls.HasAccess(type, UserGroupInformation.CreateRemoteUser
 					("foo")));
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCustom()
 		{
 			Configuration conf = new Configuration(false);
@@ -29,14 +29,14 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			KMSACLs acls = new KMSACLs(conf);
 			foreach (KMSACLs.Type type_1 in KMSACLs.Type.Values())
 			{
-				NUnit.Framework.Assert.IsTrue(acls.HasAccess(type_1, UserGroupInformation.CreateRemoteUser
+				Assert.True(acls.HasAccess(type_1, UserGroupInformation.CreateRemoteUser
 					(type_1.ToString())));
 				NUnit.Framework.Assert.IsFalse(acls.HasAccess(type_1, UserGroupInformation.CreateRemoteUser
 					("foo")));
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKeyAclConfigurationLoad()
 		{
 			Configuration conf = new Configuration(false);
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			conf.Set(KMSConfiguration.DefaultKeyAclPrefix + "MANAGEMENT", "ROLLOVER");
 			conf.Set(KMSConfiguration.WhitelistKeyAclPrefix + "MANAGEMENT", "DECRYPT_EEK");
 			KMSACLs acls = new KMSACLs(conf);
-			NUnit.Framework.Assert.IsTrue("expected key ACL size is 2 but got " + acls.keyAcls
+			Assert.True("expected key ACL size is 2 but got " + acls.keyAcls
 				.Count, acls.keyAcls.Count == 2);
 		}
 	}

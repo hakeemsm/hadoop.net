@@ -94,41 +94,47 @@ namespace Hadoop.Common.Core.IO
 			return result;
 		}
 
-		/// <summary>
-		/// Returns the raw bytes; however, only data up to
-		/// <see cref="GetLength()"/>
-		/// is
-		/// valid. Please use
-		/// <see cref="CopyBytes()"/>
-		/// if you
-		/// need the returned array to be precisely the length of the data.
-		/// </summary>
-		public override byte[] GetBytes()
-		{
-			return bytes;
-		}
+        /// <summary>
+        /// Returns the raw bytes; however, only data up to
+        /// <see cref="GetLength()"/>
+        /// is
+        /// valid. Please use
+        /// <see cref="CopyBytes()"/>
+        /// if you
+        /// need the returned array to be precisely the length of the data.
+        /// </summary>
+        public override byte[] Bytes
+        {
+            get
+            {
+                return bytes;
+            }
+        }
 
-		/// <summary>Returns the number of bytes in the byte array</summary>
-		public override int GetLength()
-		{
-			return length;
-		}
+        /// <summary>Returns the number of bytes in the byte array</summary>
+        public override int Length
+        {
+            get
+            {
+                return length;
+            }
+        }
 
-		/// <summary>
-		/// Returns the Unicode Scalar Value (32-bit integer value)
-		/// for the character at <code>position</code>.
-		/// </summary>
-		/// <remarks>
-		/// Returns the Unicode Scalar Value (32-bit integer value)
-		/// for the character at <code>position</code>. Note that this
-		/// method avoids using the converter or doing String instantiation
-		/// </remarks>
-		/// <returns>
-		/// the Unicode scalar value at position or -1
-		/// if the position is invalid or points to a
-		/// trailing byte
-		/// </returns>
-		public virtual int CharAt(int position)
+        /// <summary>
+        /// Returns the Unicode Scalar Value (32-bit integer value)
+        /// for the character at <code>position</code>.
+        /// </summary>
+        /// <remarks>
+        /// Returns the Unicode Scalar Value (32-bit integer value)
+        /// for the character at <code>position</code>. Note that this
+        /// method avoids using the converter or doing String instantiation
+        /// </remarks>
+        /// <returns>
+        /// the Unicode scalar value at position or -1
+        /// if the position is invalid or points to a
+        /// trailing byte
+        /// </returns>
+        public virtual int CharAt(int position)
 		{
 			if (position > this.length)
 			{
@@ -243,7 +249,7 @@ namespace Hadoop.Common.Core.IO
 		/// <summary>copy a text.</summary>
 		public virtual void Set(Text other)
 		{
-			Set(other.GetBytes(), 0, other.GetLength());
+			Set(other.Bytes, 0, other.Length);
 		}
 
 		/// <summary>Set the Text to range of bytes</summary>
@@ -378,16 +384,16 @@ namespace Hadoop.Common.Core.IO
 		/// write this object to out
 		/// length uses zero-compressed encoding
 		/// </summary>
-		/// <seealso cref="IWritable.Write(System.IO.DataOutput)"/>
+		/// <seealso cref="IWritable.Write(System.IO.BinaryWriter)"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			WritableUtils.WriteVInt(@out, length);
 			@out.Write(bytes, 0, length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out, int maxLength)
+		public virtual void Write(BinaryWriter @out, int maxLength)
 		{
 			if (length > maxLength)
 			{
@@ -567,7 +573,7 @@ namespace Hadoop.Common.Core.IO
 
 		/// <summary>Write a UTF8 encoded string to out</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteString(DataOutput @out, string s)
+		public static int WriteString(BinaryWriter @out, string s)
 		{
 			ByteBuffer bytes = Encode(s);
 			int length = bytes.Limit();
@@ -578,7 +584,7 @@ namespace Hadoop.Common.Core.IO
 
 		/// <summary>Write a UTF8 encoded string with a maximum size to out</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteString(DataOutput @out, string s, int maxLength)
+		public static int WriteString(BinaryWriter @out, string s, int maxLength)
 		{
 			ByteBuffer bytes = Encode(s);
 			int length = bytes.Limit();

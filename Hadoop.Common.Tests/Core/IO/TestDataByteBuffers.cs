@@ -16,40 +16,40 @@ namespace Org.Apache.Hadoop.IO
 				{
 					case 0:
 					{
-						NUnit.Framework.Assert.AreEqual(unchecked((byte)(r.Next() & unchecked((int)(0xFF)
+						Assert.Equal(unchecked((byte)(r.Next() & unchecked((int)(0xFF)
 							))), @in.ReadByte());
 						break;
 					}
 
 					case 1:
 					{
-						NUnit.Framework.Assert.AreEqual((short)(r.Next() & unchecked((int)(0xFFFF))), @in
+						Assert.Equal((short)(r.Next() & unchecked((int)(0xFFFF))), @in
 							.ReadShort());
 						break;
 					}
 
 					case 2:
 					{
-						NUnit.Framework.Assert.AreEqual(r.Next(), @in.ReadInt());
+						Assert.Equal(r.Next(), @in.ReadInt());
 						break;
 					}
 
 					case 3:
 					{
-						NUnit.Framework.Assert.AreEqual(r.NextLong(), @in.ReadLong());
+						Assert.Equal(r.NextLong(), @in.ReadLong());
 						break;
 					}
 
 					case 4:
 					{
-						NUnit.Framework.Assert.AreEqual(double.DoubleToLongBits(r.NextDouble()), double.DoubleToLongBits
+						Assert.Equal(double.DoubleToLongBits(r.NextDouble()), double.DoubleToLongBits
 							(@in.ReadDouble()));
 						break;
 					}
 
 					case 5:
 					{
-						NUnit.Framework.Assert.AreEqual(Sharpen.Runtime.FloatToIntBits(r.NextFloat()), Sharpen.Runtime.FloatToIntBits
+						Assert.Equal(Sharpen.Runtime.FloatToIntBits(r.NextFloat()), Sharpen.Runtime.FloatToIntBits
 							(@in.ReadFloat()));
 						break;
 					}
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static void WriteJunk(DataOutput @out, Random r, long seed, int iter)
+		private static void WriteJunk(BinaryWriter @out, Random r, long seed, int iter)
 		{
 			r.SetSeed(seed);
 			for (int i = 0; i < iter; ++i)
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBaseBuffers()
 		{
 			DataOutputBuffer dob = new DataOutputBuffer();
@@ -143,7 +143,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestByteBuffers()
 		{
 			DataOutputByteBuffer dob = new DataOutputByteBuffer();
@@ -175,7 +175,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDataOutputByteBufferCompatibility()
 		{
 			DataOutputBuffer dob = new DataOutputBuffer();
@@ -187,27 +187,27 @@ namespace Org.Apache.Hadoop.IO
 			WriteJunk(dob, r, seed, 1000);
 			WriteJunk(dobb, r, seed, 1000);
 			byte[] check = ToBytes(dobb.GetData(), dobb.GetLength());
-			NUnit.Framework.Assert.AreEqual(check.Length, dob.GetLength());
+			Assert.Equal(check.Length, dob.GetLength());
 			Assert.AssertArrayEquals(check, Arrays.CopyOf(dob.GetData(), dob.GetLength()));
 			dob.Reset();
 			dobb.Reset();
 			WriteJunk(dob, r, seed, 3000);
 			WriteJunk(dobb, r, seed, 3000);
 			check = ToBytes(dobb.GetData(), dobb.GetLength());
-			NUnit.Framework.Assert.AreEqual(check.Length, dob.GetLength());
+			Assert.Equal(check.Length, dob.GetLength());
 			Assert.AssertArrayEquals(check, Arrays.CopyOf(dob.GetData(), dob.GetLength()));
 			dob.Reset();
 			dobb.Reset();
 			WriteJunk(dob, r, seed, 1000);
 			WriteJunk(dobb, r, seed, 1000);
 			check = ToBytes(dobb.GetData(), dobb.GetLength());
-			NUnit.Framework.Assert.AreEqual("Failed Checking length = " + check.Length, check
+			Assert.Equal("Failed Checking length = " + check.Length, check
 				.Length, dob.GetLength());
 			Assert.AssertArrayEquals(check, Arrays.CopyOf(dob.GetData(), dob.GetLength()));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDataInputByteBufferCompatibility()
 		{
 			DataOutputBuffer dob = new DataOutputBuffer();
@@ -223,7 +223,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDataOutputByteBufferCompatibility()
 		{
 			DataOutputByteBuffer dob = new DataOutputByteBuffer();

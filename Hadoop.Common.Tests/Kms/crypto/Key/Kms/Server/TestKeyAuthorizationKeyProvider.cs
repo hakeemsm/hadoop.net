@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		private const string Cipher = "AES";
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateKey()
 		{
 			Configuration conf = new Configuration();
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOpsWhenACLAttributeExists()
 		{
 			Configuration conf = new Configuration();

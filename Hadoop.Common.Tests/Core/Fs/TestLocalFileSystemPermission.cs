@@ -31,9 +31,9 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		private void CleanupFile(FileSystem fs, Path name)
 		{
-			NUnit.Framework.Assert.IsTrue(fs.Exists(name));
+			Assert.True(fs.Exists(name));
 			fs.Delete(name, true);
-			NUnit.Framework.Assert.IsTrue(!fs.Exists(name));
+			Assert.True(!fs.Exists(name));
 		}
 
 		/// <summary>Test LocalFileSystem.setPermission</summary>
@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				FsPermission initialPermission = GetPermission(localfs, f);
 				System.Console.Out.WriteLine(filename + ": " + initialPermission);
-				NUnit.Framework.Assert.AreEqual(FsPermission.GetFileDefault().ApplyUMask(FsPermission
+				Assert.Equal(FsPermission.GetFileDefault().ApplyUMask(FsPermission
 					.GetUMask(conf)), initialPermission);
 			}
 			catch (Exception e)
@@ -68,9 +68,9 @@ namespace Org.Apache.Hadoop.FS
 				FsPermission all = new FsPermission((short)0x1ff);
 				FsPermission none = new FsPermission((short)0);
 				localfs.SetPermission(f, none);
-				NUnit.Framework.Assert.AreEqual(none, GetPermission(localfs, f));
+				Assert.Equal(none, GetPermission(localfs, f));
 				localfs.SetPermission(f, all);
-				NUnit.Framework.Assert.AreEqual(all, GetPermission(localfs, f));
+				Assert.Equal(all, GetPermission(localfs, f));
 			}
 			finally
 			{
@@ -120,12 +120,12 @@ namespace Org.Apache.Hadoop.FS
 			{
 				string g0 = groups[0];
 				localfs.SetOwner(f, null, g0);
-				NUnit.Framework.Assert.AreEqual(g0, GetGroup(localfs, f));
+				Assert.Equal(g0, GetGroup(localfs, f));
 				if (groups.Count > 1)
 				{
 					string g1 = groups[1];
 					localfs.SetOwner(f, null, g1);
-					NUnit.Framework.Assert.AreEqual(g1, GetGroup(localfs, f));
+					Assert.Equal(g1, GetGroup(localfs, f));
 				}
 				else
 				{

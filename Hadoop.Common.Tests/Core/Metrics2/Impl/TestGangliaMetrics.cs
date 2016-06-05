@@ -18,7 +18,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			 };
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTagsForPrefix()
 		{
 			ConfigBuilder cb = new ConfigBuilder().Add("test.sink.ganglia.tagsForPrefix.all", 
@@ -37,25 +37,25 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				);
 			StringBuilder sb = new StringBuilder();
 			sink.AppendPrefix(record, sb);
-			NUnit.Framework.Assert.AreEqual(".NumActiveSources=foo.NumActiveSinks=bar.NumAllSinks=haa"
+			Assert.Equal(".NumActiveSources=foo.NumActiveSinks=bar.NumAllSinks=haa"
 				, sb.ToString());
 			tags.Set(0, new MetricsTag(MsInfo.Context, "some"));
 			sb = new StringBuilder();
 			sink.AppendPrefix(record, sb);
-			NUnit.Framework.Assert.AreEqual(".NumActiveSources=foo.NumActiveSinks=bar", sb.ToString
+			Assert.Equal(".NumActiveSources=foo.NumActiveSinks=bar", sb.ToString
 				());
 			tags.Set(0, new MetricsTag(MsInfo.Context, "none"));
 			sb = new StringBuilder();
 			sink.AppendPrefix(record, sb);
-			NUnit.Framework.Assert.AreEqual(string.Empty, sb.ToString());
+			Assert.Equal(string.Empty, sb.ToString());
 			tags.Set(0, new MetricsTag(MsInfo.Context, "nada"));
 			sb = new StringBuilder();
 			sink.AppendPrefix(record, sb);
-			NUnit.Framework.Assert.AreEqual(string.Empty, sb.ToString());
+			Assert.Equal(string.Empty, sb.ToString());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGangliaMetrics2()
 		{
 			ConfigBuilder cb = new ConfigBuilder().Add("default.period", 10).Add("test.sink.gsink30.context"
@@ -118,11 +118,11 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				if (!foundMetrics[index_1])
 				{
-					NUnit.Framework.Assert.IsTrue("Missing metrics: " + expectedMetrics[index_1], false
+					Assert.True("Missing metrics: " + expectedMetrics[index_1], false
 						);
 				}
 			}
-			NUnit.Framework.Assert.AreEqual("Mismatch in record count: ", expectedCount, bytearrlist
+			Assert.Equal("Mismatch in record count: ", expectedCount, bytearrlist
 				.Count);
 		}
 

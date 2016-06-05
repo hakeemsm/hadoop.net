@@ -34,9 +34,9 @@ namespace Org.Apache.Hadoop.FS
 			Assert.AssertArrayEquals(cachedHosts, loc.GetCachedHosts());
 			Assert.AssertArrayEquals(names, loc.GetNames());
 			Assert.AssertArrayEquals(topologyPaths, loc.GetTopologyPaths());
-			NUnit.Framework.Assert.AreEqual(offset, loc.GetOffset());
-			NUnit.Framework.Assert.AreEqual(length, loc.GetLength());
-			NUnit.Framework.Assert.AreEqual(corrupt, loc.IsCorrupt());
+			Assert.Equal(offset, loc.GetOffset());
+			Assert.Equal(length, loc.GetLength());
+			Assert.Equal(corrupt, loc.IsCorrupt());
 		}
 
 		/// <summary>Call all the constructors and verify the delegation is working properly</summary>

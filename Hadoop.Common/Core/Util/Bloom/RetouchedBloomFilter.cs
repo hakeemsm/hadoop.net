@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 
 		// Writable
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(DataOutput @out)
+		public override void Write(BinaryWriter @out)
 		{
 			base.Write(@out);
 			for (int i = 0; i < fpVector.Length; i++)

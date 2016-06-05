@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		/// <summary>Common use cases</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCommon()
 		{
 			string filename = GetTestFilename("test-metrics2");
@@ -34,11 +34,11 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		{
 			IDictionary<string, MetricsConfig> map = c.GetInstanceConfigs("t1");
 			IDictionary<string, MetricsConfig> map2 = c.GetInstanceConfigs("t2");
-			NUnit.Framework.Assert.AreEqual("number of t1 instances", 2, map.Count);
-			NUnit.Framework.Assert.AreEqual("number of t2 instances", 1, map2.Count);
-			NUnit.Framework.Assert.IsTrue("contains t1 instance i1", map.Contains("i1"));
-			NUnit.Framework.Assert.IsTrue("contains t1 instance 42", map.Contains("42"));
-			NUnit.Framework.Assert.IsTrue("contains t2 instance i1", map2.Contains("i1"));
+			Assert.Equal("number of t1 instances", 2, map.Count);
+			Assert.Equal("number of t2 instances", 1, map2.Count);
+			Assert.True("contains t1 instance i1", map.Contains("i1"));
+			Assert.True("contains t1 instance 42", map.Contains("42"));
+			Assert.True("contains t2 instance i1", map2.Contains("i1"));
 			MetricsConfig t1i1 = map["i1"];
 			MetricsConfig t1i42 = map["42"];
 			MetricsConfig t2i1 = map2["i1"];
@@ -56,30 +56,30 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			ConfigUtil.AssertEq(t2expected1, t2i1);
 			Log.Debug("asserting foo == default foo");
 			// Check default lookups
-			NUnit.Framework.Assert.AreEqual("value of foo in t1 instance i1", "default foo", 
+			Assert.Equal("value of foo in t1 instance i1", "default foo", 
 				t1i1.GetString("foo"));
-			NUnit.Framework.Assert.AreEqual("value of bar in t1 instance i1", "p1.t1 default bar"
+			Assert.Equal("value of bar in t1 instance i1", "p1.t1 default bar"
 				, t1i1.GetString("bar"));
-			NUnit.Framework.Assert.AreEqual("value of foo in t1 instance 42", "default foo", 
+			Assert.Equal("value of foo in t1 instance 42", "default foo", 
 				t1i42.GetString("foo"));
-			NUnit.Framework.Assert.AreEqual("value of foo in t2 instance i1", "p1.t2.i1.foo", 
+			Assert.Equal("value of foo in t2 instance i1", "p1.t2.i1.foo", 
 				t2i1.GetString("foo"));
-			NUnit.Framework.Assert.AreEqual("value of bar in t2 instance i1", "p1 default bar"
+			Assert.Equal("value of bar in t2 instance i1", "p1 default bar"
 				, t2i1.GetString("bar"));
 		}
 
 		/// <summary>Should not throw if missing config files</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMissingFiles()
 		{
 			MetricsConfig config = MetricsConfig.Create("JobTracker", "non-existent.properties"
 				);
-			NUnit.Framework.Assert.IsTrue(config.IsEmpty());
+			Assert.True(config.IsEmpty());
 		}
 
 		/// <summary>Test the config file load order</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLoadFirst()
 		{
 			string filename = GetTestFilename("hadoop-metrics2-p1");

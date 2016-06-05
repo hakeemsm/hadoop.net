@@ -1,50 +1,44 @@
-using Hadoop.Common.Core.IO;
-using Sharpen;
+using System;
+using Org.Apache.Hadoop.IO;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>
 	/// Interface supported by
 	/// <see cref="IWritableComparable{T}"/>
 	/// types supporting ordering/permutation by a representative set of bytes.
 	/// </summary>
-	public abstract class BinaryComparable : Comparable<BinaryComparable>
+	public abstract class BinaryComparable : IComparable<BinaryComparable>
 	{
-		/// <summary>Return n st bytes 0..n-1 from {#getBytes()} are valid.</summary>
-		public abstract int GetLength();
+        /// <summary>Return n st bytes 0..n-1 from {#getBytes()} are valid.</summary>
+        public abstract int Length { get; }
 
-		/// <summary>Return representative byte array for this instance.</summary>
-		public abstract byte[] GetBytes();
+        /// <summary>Return representative byte array for this instance.</summary>
+        public abstract byte[] Bytes { get; }
 
-		/// <summary>Compare bytes from {#getBytes()}.</summary>
-		/// <seealso cref="WritableComparator.CompareBytes(byte[], int, int, byte[], int, int)
-		/// 	"/>
-		public virtual int CompareTo(BinaryComparable other)
+        /// <summary>Compare bytes from {#getBytes()}.</summary>
+        /// <seealso cref="WritableComparator.CompareBytes(byte[], int, int, byte[], int, int)
+        /// 	"/>
+        public virtual int CompareTo(BinaryComparable other)
 		{
 			if (this == other)
 			{
 				return 0;
 			}
-			return WritableComparator.CompareBytes(GetBytes(), 0, GetLength(), other.GetBytes
-				(), 0, other.GetLength());
+			return WritableComparator.CompareBytes(Bytes, 0, Length, other.Bytes, 0, other.Length);
 		}
 
 		/// <summary>Compare bytes from {#getBytes()} to those provided.</summary>
 		public virtual int CompareTo(byte[] other, int off, int len)
 		{
-			return WritableComparator.CompareBytes(GetBytes(), 0, GetLength(), other, off, len
-				);
+			return WritableComparator.CompareBytes(Bytes, 0, Length, other, off, len);
 		}
 
 		/// <summary>Return true if bytes from {#getBytes()} match.</summary>
 		public override bool Equals(object other)
 		{
-			if (!(other is BinaryComparable))
-			{
-				return false;
-			}
-			BinaryComparable that = (BinaryComparable)other;
-			if (this.GetLength() != that.GetLength())
+		    BinaryComparable that = other as BinaryComparable;
+			if (this.Length!= that?.Length)
 			{
 				return false;
 			}
@@ -55,7 +49,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <seealso cref="WritableComparator.HashBytes(byte[], int)"/>
 		public override int GetHashCode()
 		{
-			return WritableComparator.HashBytes(GetBytes(), GetLength());
+			return WritableComparator.HashBytes(Bytes, Length);
 		}
 	}
 }

@@ -42,14 +42,14 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			fcTarget.Delete(chrootedTo, true);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBasicPaths()
 		{
 			URI uri = fc.GetDefaultFileSystem().GetUri();
-			NUnit.Framework.Assert.AreEqual(chrootedTo.ToUri(), uri);
-			NUnit.Framework.Assert.AreEqual(fc.MakeQualified(new Path(Runtime.GetProperty("user.home"
+			Assert.Equal(chrootedTo.ToUri(), uri);
+			Assert.Equal(fc.MakeQualified(new Path(Runtime.GetProperty("user.home"
 				))), fc.GetWorkingDirectory());
-			NUnit.Framework.Assert.AreEqual(fc.MakeQualified(new Path(Runtime.GetProperty("user.home"
+			Assert.Equal(fc.MakeQualified(new Path(Runtime.GetProperty("user.home"
 				))), fc.GetHomeDirectory());
 			/*
 			* ChRootedFs as its uri like file:///chrootRoot.
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			FsConstants.LOCAL_FS_URI, null),
 			fc.makeQualified(new Path( "/foo/bar")));
 			*/
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar").MakeQualified(FsConstants.LocalFsUri
+			Assert.Equal(new Path("/foo/bar").MakeQualified(FsConstants.LocalFsUri
 				, null), fc.MakeQualified(new Path("/foo/bar")));
 		}
 
@@ -73,34 +73,34 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// target file system (ie fclocal) that has been chrooted.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateDelete()
 		{
 			// Create file 
 			fileContextTestHelper.CreateFileNonRecursive(fc, "/foo");
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fc, new Path("/foo")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
+			Assert.True(FileContextTestHelper.IsFile(fc, new Path("/foo")));
+			Assert.True(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
 				, "foo")));
 			// Create file with recursive dir
 			fileContextTestHelper.CreateFile(fc, "/newDir/foo");
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fc, new Path("/newDir/foo"
+			Assert.True(FileContextTestHelper.IsFile(fc, new Path("/newDir/foo"
 				)));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
+			Assert.True(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
 				, "newDir/foo")));
 			// Delete the created file
-			NUnit.Framework.Assert.IsTrue(fc.Delete(new Path("/newDir/foo"), false));
+			Assert.True(fc.Delete(new Path("/newDir/foo"), false));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc, new Path("/newDir/foo"
 				)));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fcTarget, new Path(chrootedTo
 				, "newDir/foo")));
 			// Create file with a 2 component dirs recursively
 			fileContextTestHelper.CreateFile(fc, "/newDir/newDir2/foo");
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fc, new Path("/newDir/newDir2/foo"
+			Assert.True(FileContextTestHelper.IsFile(fc, new Path("/newDir/newDir2/foo"
 				)));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
+			Assert.True(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
 				, "newDir/newDir2/foo")));
 			// Delete the created file
-			NUnit.Framework.Assert.IsTrue(fc.Delete(new Path("/newDir/newDir2/foo"), false));
+			Assert.True(fc.Delete(new Path("/newDir/newDir2/foo"), false));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc, new Path("/newDir/newDir2/foo"
 				)));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fcTarget, new Path(chrootedTo
@@ -108,27 +108,27 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirDelete()
 		{
 			fc.Mkdir(fileContextTestHelper.GetTestRootPath(fc, "/dirX"), FileContext.DefaultPerm
 				, false);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc, new Path("/dirX")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fcTarget, new Path(chrootedTo
+			Assert.True(FileContextTestHelper.IsDir(fc, new Path("/dirX")));
+			Assert.True(FileContextTestHelper.IsDir(fcTarget, new Path(chrootedTo
 				, "dirX")));
 			fc.Mkdir(fileContextTestHelper.GetTestRootPath(fc, "/dirX/dirY"), FileContext.DefaultPerm
 				, false);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc, new Path("/dirX/dirY"
+			Assert.True(FileContextTestHelper.IsDir(fc, new Path("/dirX/dirY"
 				)));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fcTarget, new Path(chrootedTo
+			Assert.True(FileContextTestHelper.IsDir(fcTarget, new Path(chrootedTo
 				, "dirX/dirY")));
 			// Delete the created dir
-			NUnit.Framework.Assert.IsTrue(fc.Delete(new Path("/dirX/dirY"), false));
+			Assert.True(fc.Delete(new Path("/dirX/dirY"), false));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc, new Path("/dirX/dirY"
 				)));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fcTarget, new Path(chrootedTo
 				, "dirX/dirY")));
-			NUnit.Framework.Assert.IsTrue(fc.Delete(new Path("/dirX"), false));
+			Assert.True(fc.Delete(new Path("/dirX"), false));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc, new Path("/dirX")
 				));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fcTarget, new Path(chrootedTo
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRename()
 		{
 			// Rename a file
@@ -146,9 +146,9 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				)));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fcTarget, new Path(chrootedTo
 				, "newDir/foo")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fc, fileContextTestHelper
+			Assert.True(FileContextTestHelper.IsFile(fc, fileContextTestHelper
 				.GetTestRootPath(fc, "/newDir/fooBar")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
+			Assert.True(FileContextTestHelper.IsFile(fcTarget, new Path(chrootedTo
 				, "newDir/fooBar")));
 			// Rename a dir
 			fc.Mkdir(new Path("/newDir/dirFoo"), FileContext.DefaultPerm, false);
@@ -157,9 +157,9 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				)));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fcTarget, new Path(chrootedTo
 				, "newDir/dirFoo")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc, fileContextTestHelper
+			Assert.True(FileContextTestHelper.IsDir(fc, fileContextTestHelper
 				.GetTestRootPath(fc, "/newDir/dirFooBar")));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fcTarget, new Path(chrootedTo
+			Assert.True(FileContextTestHelper.IsDir(fcTarget, new Path(chrootedTo
 				, "newDir/dirFooBar")));
 		}
 
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// Unfortunately there is not way to distinguish the two file systems
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameAcrossFs()
 		{
 			fc.Mkdir(new Path("/newDir/dirFoo"), FileContext.DefaultPerm, true);
@@ -178,16 +178,16 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestList()
 		{
 			FileStatus fs = fc.GetFileStatus(new Path("/"));
-			NUnit.Framework.Assert.IsTrue(fs.IsDirectory());
+			Assert.True(fs.IsDirectory());
 			//  should return the full path not the chrooted path
-			NUnit.Framework.Assert.AreEqual(fs.GetPath(), chrootedTo);
+			Assert.Equal(fs.GetPath(), chrootedTo);
 			// list on Slash
 			FileStatus[] dirPaths = fc.Util().ListStatus(new Path("/"));
-			NUnit.Framework.Assert.AreEqual(0, dirPaths.Length);
+			Assert.Equal(0, dirPaths.Length);
 			fileContextTestHelper.CreateFileNonRecursive(fc, "/foo");
 			fileContextTestHelper.CreateFileNonRecursive(fc, "/bar");
 			fc.Mkdir(new Path("/dirX"), FileContext.DefaultPerm, false);
@@ -195,24 +195,24 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				, false);
 			fc.Mkdir(new Path("/dirX/dirXX"), FileContext.DefaultPerm, false);
 			dirPaths = fc.Util().ListStatus(new Path("/"));
-			NUnit.Framework.Assert.AreEqual(4, dirPaths.Length);
+			Assert.Equal(4, dirPaths.Length);
 			// Note the the file status paths are the full paths on target
 			fs = fileContextTestHelper.ContainsPath(fcTarget, "foo", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue(fs.IsFile());
+			Assert.True(fs.IsFile());
 			fs = fileContextTestHelper.ContainsPath(fcTarget, "bar", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue(fs.IsFile());
+			Assert.True(fs.IsFile());
 			fs = fileContextTestHelper.ContainsPath(fcTarget, "dirX", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue(fs.IsDirectory());
+			Assert.True(fs.IsDirectory());
 			fs = fileContextTestHelper.ContainsPath(fcTarget, "dirY", dirPaths);
 			NUnit.Framework.Assert.IsNotNull(fs);
-			NUnit.Framework.Assert.IsTrue(fs.IsDirectory());
+			Assert.True(fs.IsDirectory());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWorkingDirectory()
 		{
 			// First we cd to our test root
@@ -220,36 +220,36 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			Path workDir = new Path("/testWd");
 			Path fqWd = fc.MakeQualified(workDir);
 			fc.SetWorkingDirectory(workDir);
-			NUnit.Framework.Assert.AreEqual(fqWd, fc.GetWorkingDirectory());
+			Assert.Equal(fqWd, fc.GetWorkingDirectory());
 			fc.SetWorkingDirectory(new Path("."));
-			NUnit.Framework.Assert.AreEqual(fqWd, fc.GetWorkingDirectory());
+			Assert.Equal(fqWd, fc.GetWorkingDirectory());
 			fc.SetWorkingDirectory(new Path(".."));
-			NUnit.Framework.Assert.AreEqual(fqWd.GetParent(), fc.GetWorkingDirectory());
+			Assert.Equal(fqWd.GetParent(), fc.GetWorkingDirectory());
 			// cd using a relative path
 			// Go back to our test root
 			workDir = new Path("/testWd");
 			fqWd = fc.MakeQualified(workDir);
 			fc.SetWorkingDirectory(workDir);
-			NUnit.Framework.Assert.AreEqual(fqWd, fc.GetWorkingDirectory());
+			Assert.Equal(fqWd, fc.GetWorkingDirectory());
 			Path relativeDir = new Path("existingDir1");
 			Path absoluteDir = new Path(workDir, "existingDir1");
 			fc.Mkdir(absoluteDir, FileContext.DefaultPerm, true);
 			Path fqAbsoluteDir = fc.MakeQualified(absoluteDir);
 			fc.SetWorkingDirectory(relativeDir);
-			NUnit.Framework.Assert.AreEqual(fqAbsoluteDir, fc.GetWorkingDirectory());
+			Assert.Equal(fqAbsoluteDir, fc.GetWorkingDirectory());
 			// cd using a absolute path
 			absoluteDir = new Path("/test/existingDir2");
 			fqAbsoluteDir = fc.MakeQualified(absoluteDir);
 			fc.Mkdir(absoluteDir, FileContext.DefaultPerm, true);
 			fc.SetWorkingDirectory(absoluteDir);
-			NUnit.Framework.Assert.AreEqual(fqAbsoluteDir, fc.GetWorkingDirectory());
+			Assert.Equal(fqAbsoluteDir, fc.GetWorkingDirectory());
 			// Now open a file relative to the wd we just set above.
 			Path absolutePath = new Path(absoluteDir, "foo");
 			fc.Create(absolutePath, EnumSet.Of(CreateFlag.Create)).Close();
 			fc.Open(new Path("foo")).Close();
 			// Now mkdir relative to the dir we cd'ed to
 			fc.Mkdir(new Path("newDir"), FileContext.DefaultPerm, true);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc, new Path(absoluteDir
+			Assert.True(FileContextTestHelper.IsDir(fc, new Path(absoluteDir
 				, "newDir")));
 			absoluteDir = fileContextTestHelper.GetTestRootPath(fc, "nonexistingPath");
 			try
@@ -266,20 +266,20 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			absoluteDir = new Path(LocalFsRootUri + "/existingDir");
 			fc.Mkdir(absoluteDir, FileContext.DefaultPerm, true);
 			fc.SetWorkingDirectory(absoluteDir);
-			NUnit.Framework.Assert.AreEqual(absoluteDir, fc.GetWorkingDirectory());
+			Assert.Equal(absoluteDir, fc.GetWorkingDirectory());
 		}
 
 		/*
 		* Test resolvePath(p)
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestResolvePath()
 		{
-			NUnit.Framework.Assert.AreEqual(chrootedTo, fc.GetDefaultFileSystem().ResolvePath
+			Assert.Equal(chrootedTo, fc.GetDefaultFileSystem().ResolvePath
 				(new Path("/")));
 			fileContextTestHelper.CreateFile(fc, "/foo");
-			NUnit.Framework.Assert.AreEqual(new Path(chrootedTo, "foo"), fc.GetDefaultFileSystem
+			Assert.Equal(new Path(chrootedTo, "foo"), fc.GetDefaultFileSystem
 				().ResolvePath(new Path("/foo")));
 		}
 
@@ -290,19 +290,19 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsValidNameValidInBaseFs()
 		{
 			AbstractFileSystem baseFs = Org.Mockito.Mockito.Spy(fc.GetDefaultFileSystem());
 			ChRootedFs chRootedFs = new ChRootedFs(baseFs, new Path("/chroot"));
 			Org.Mockito.Mockito.DoReturn(true).When(baseFs).IsValidName(Org.Mockito.Mockito.AnyString
 				());
-			NUnit.Framework.Assert.IsTrue(chRootedFs.IsValidName("/test"));
+			Assert.True(chRootedFs.IsValidName("/test"));
 			Org.Mockito.Mockito.Verify(baseFs).IsValidName("/chroot/test");
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsValidNameInvalidInBaseFs()
 		{
 			AbstractFileSystem baseFs = Org.Mockito.Mockito.Spy(fc.GetDefaultFileSystem());

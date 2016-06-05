@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Sharpen.URISyntaxException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileStatusSerialziation()
 		{
 			string testfilename = "testFileStatusSerialziation";
@@ -40,13 +40,13 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					fos.Close();
 				}
 			}
-			NUnit.Framework.Assert.AreEqual((long)content.Length, infile.Length());
+			Assert.Equal((long)content.Length, infile.Length());
 			Configuration conf = new Configuration();
 			ConfigUtil.AddLink(conf, "/foo/bar/baz", TestDir.ToURI());
 			FileSystem vfs = FileSystem.Get(FsConstants.ViewfsUri, conf);
-			NUnit.Framework.Assert.AreEqual(typeof(ViewFileSystem), vfs.GetType());
+			Assert.Equal(typeof(ViewFileSystem), vfs.GetType());
 			FileStatus stat = vfs.GetFileStatus(new Path("/foo/bar/baz", testfilename));
-			NUnit.Framework.Assert.AreEqual(content.Length, stat.GetLen());
+			Assert.Equal(content.Length, stat.GetLen());
 			// check serialization/deserialization
 			DataOutputBuffer dob = new DataOutputBuffer();
 			stat.Write(dob);
@@ -54,13 +54,13 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			dib.Reset(dob.GetData(), 0, dob.GetLength());
 			FileStatus deSer = new FileStatus();
 			deSer.ReadFields(dib);
-			NUnit.Framework.Assert.AreEqual(content.Length, deSer.GetLen());
+			Assert.Equal(content.Length, deSer.GetLen());
 		}
 
 		// Tests that ViewFileSystem.getFileChecksum calls res.targetFileSystem
 		// .getFileChecksum with res.remainingPath and not with f
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetFileChecksum()
 		{
 			FileSystem mockFS = Org.Mockito.Mockito.Mock<FileSystem>();

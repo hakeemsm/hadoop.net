@@ -31,18 +31,18 @@ namespace Org.Apache.Hadoop.FS.Contract.Localfs
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestContractWorks()
 		{
 			string key = GetContract().GetConfKey(SupportsAtomicRename);
 			NUnit.Framework.Assert.IsNotNull("not set: " + key, GetContract().GetConf().Get(key
 				));
-			NUnit.Framework.Assert.IsTrue("not true: " + key, GetContract().IsSupported(SupportsAtomicRename
+			Assert.True("not true: " + key, GetContract().IsSupported(SupportsAtomicRename
 				, false));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestContractResourceOnClasspath()
 		{
 			Uri url = this.GetType().GetClassLoader().GetResource(LocalFSContract.ContractXml

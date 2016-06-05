@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 				);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEntryEquals()
 		{
 			NUnit.Framework.Assert.AreNotSame(Entry1, Entry2);
@@ -102,10 +102,10 @@ namespace Org.Apache.Hadoop.FS.Permission
 			NUnit.Framework.Assert.AreNotSame(Entry2, Entry3);
 			NUnit.Framework.Assert.AreNotSame(Entry2, Entry4);
 			NUnit.Framework.Assert.AreNotSame(Entry3, Entry4);
-			NUnit.Framework.Assert.AreEqual(Entry1, Entry1);
-			NUnit.Framework.Assert.AreEqual(Entry2, Entry2);
-			NUnit.Framework.Assert.AreEqual(Entry1, Entry2);
-			NUnit.Framework.Assert.AreEqual(Entry2, Entry1);
+			Assert.Equal(Entry1, Entry1);
+			Assert.Equal(Entry2, Entry2);
+			Assert.Equal(Entry1, Entry2);
+			Assert.Equal(Entry2, Entry1);
 			NUnit.Framework.Assert.IsFalse(Entry1.Equals(Entry3));
 			NUnit.Framework.Assert.IsFalse(Entry1.Equals(Entry4));
 			NUnit.Framework.Assert.IsFalse(Entry3.Equals(Entry4));
@@ -113,59 +113,59 @@ namespace Org.Apache.Hadoop.FS.Permission
 			NUnit.Framework.Assert.IsFalse(Entry1.Equals(new object()));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEntryHashCode()
 		{
-			NUnit.Framework.Assert.AreEqual(Entry1.GetHashCode(), Entry2.GetHashCode());
+			Assert.Equal(Entry1.GetHashCode(), Entry2.GetHashCode());
 			NUnit.Framework.Assert.IsFalse(Entry1.GetHashCode() == Entry3.GetHashCode());
 			NUnit.Framework.Assert.IsFalse(Entry1.GetHashCode() == Entry4.GetHashCode());
 			NUnit.Framework.Assert.IsFalse(Entry3.GetHashCode() == Entry4.GetHashCode());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEntryScopeIsAccessIfUnspecified()
 		{
-			NUnit.Framework.Assert.AreEqual(AclEntryScope.Access, Entry1.GetScope());
-			NUnit.Framework.Assert.AreEqual(AclEntryScope.Access, Entry2.GetScope());
-			NUnit.Framework.Assert.AreEqual(AclEntryScope.Access, Entry3.GetScope());
-			NUnit.Framework.Assert.AreEqual(AclEntryScope.Default, Entry4.GetScope());
+			Assert.Equal(AclEntryScope.Access, Entry1.GetScope());
+			Assert.Equal(AclEntryScope.Access, Entry2.GetScope());
+			Assert.Equal(AclEntryScope.Access, Entry3.GetScope());
+			Assert.Equal(AclEntryScope.Default, Entry4.GetScope());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStatusEquals()
 		{
 			NUnit.Framework.Assert.AreNotSame(Status1, Status2);
 			NUnit.Framework.Assert.AreNotSame(Status1, Status3);
 			NUnit.Framework.Assert.AreNotSame(Status2, Status3);
-			NUnit.Framework.Assert.AreEqual(Status1, Status1);
-			NUnit.Framework.Assert.AreEqual(Status2, Status2);
-			NUnit.Framework.Assert.AreEqual(Status1, Status2);
-			NUnit.Framework.Assert.AreEqual(Status2, Status1);
+			Assert.Equal(Status1, Status1);
+			Assert.Equal(Status2, Status2);
+			Assert.Equal(Status1, Status2);
+			Assert.Equal(Status2, Status1);
 			NUnit.Framework.Assert.IsFalse(Status1.Equals(Status3));
 			NUnit.Framework.Assert.IsFalse(Status2.Equals(Status3));
 			NUnit.Framework.Assert.IsFalse(Status1.Equals(null));
 			NUnit.Framework.Assert.IsFalse(Status1.Equals(new object()));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStatusHashCode()
 		{
-			NUnit.Framework.Assert.AreEqual(Status1.GetHashCode(), Status2.GetHashCode());
+			Assert.Equal(Status1.GetHashCode(), Status2.GetHashCode());
 			NUnit.Framework.Assert.IsFalse(Status1.GetHashCode() == Status3.GetHashCode());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToString()
 		{
-			NUnit.Framework.Assert.AreEqual("user:user1:rwx", Entry1.ToString());
-			NUnit.Framework.Assert.AreEqual("user:user1:rwx", Entry2.ToString());
-			NUnit.Framework.Assert.AreEqual("group:group2:rw-", Entry3.ToString());
-			NUnit.Framework.Assert.AreEqual("default:other::---", Entry4.ToString());
-			NUnit.Framework.Assert.AreEqual("owner: owner1, group: group1, acl: {entries: [user:user1:rwx, group:group2:rw-, default:other::---], stickyBit: false}"
+			Assert.Equal("user:user1:rwx", Entry1.ToString());
+			Assert.Equal("user:user1:rwx", Entry2.ToString());
+			Assert.Equal("group:group2:rw-", Entry3.ToString());
+			Assert.Equal("default:other::---", Entry4.ToString());
+			Assert.Equal("owner: owner1, group: group1, acl: {entries: [user:user1:rwx, group:group2:rw-, default:other::---], stickyBit: false}"
 				, Status1.ToString());
-			NUnit.Framework.Assert.AreEqual("owner: owner1, group: group1, acl: {entries: [user:user1:rwx, group:group2:rw-, default:other::---], stickyBit: false}"
+			Assert.Equal("owner: owner1, group: group1, acl: {entries: [user:user1:rwx, group:group2:rw-, default:other::---], stickyBit: false}"
 				, Status2.ToString());
-			NUnit.Framework.Assert.AreEqual("owner: owner2, group: group2, acl: {entries: [], stickyBit: true}"
+			Assert.Equal("owner: owner2, group: group2, acl: {entries: [], stickyBit: true}"
 				, Status3.ToString());
 		}
 	}

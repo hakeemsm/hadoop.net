@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Metrics.Ganglia
 	public class TestGangliaContext
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShouldCreateDatagramSocketByDefault()
 		{
 			GangliaContext context = new GangliaContext();
@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.Metrics.Ganglia
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShouldCreateDatagramSocketIfMulticastIsDisabled()
 		{
 			GangliaContext context = new GangliaContext();
@@ -48,22 +48,22 @@ namespace Org.Apache.Hadoop.Metrics.Ganglia
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShouldCreateMulticastSocket()
 		{
 			GangliaContext context = new GangliaContext();
 			ContextFactory factory = ContextFactory.GetFactory();
 			factory.SetAttribute("gangliaContext.multicast", "true");
 			context.Init("gangliaContext", factory);
-			NUnit.Framework.Assert.IsTrue("Did not create MulticastSocket", context.datagramSocket
+			Assert.True("Did not create MulticastSocket", context.datagramSocket
 				 is MulticastSocket);
 			MulticastSocket multicastSocket = (MulticastSocket)context.datagramSocket;
-			NUnit.Framework.Assert.AreEqual("Did not set default TTL", multicastSocket.GetTimeToLive
+			Assert.Equal("Did not set default TTL", multicastSocket.GetTimeToLive
 				(), 1);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestShouldSetMulticastSocketTtl()
 		{
 			GangliaContext context = new GangliaContext();
@@ -72,12 +72,12 @@ namespace Org.Apache.Hadoop.Metrics.Ganglia
 			factory.SetAttribute("gangliaContext.multicast.ttl", "10");
 			context.Init("gangliaContext", factory);
 			MulticastSocket multicastSocket = (MulticastSocket)context.datagramSocket;
-			NUnit.Framework.Assert.AreEqual("Did not set TTL", multicastSocket.GetTimeToLive(
+			Assert.Equal("Did not set TTL", multicastSocket.GetTimeToLive(
 				), 10);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCloseShouldCloseTheSocketWhichIsCreatedByInit()
 		{
 			AbstractMetricsContext context = new GangliaContext();
@@ -86,7 +86,7 @@ namespace Org.Apache.Hadoop.Metrics.Ganglia
 			NUnit.Framework.Assert.IsFalse("Socket already closed", gangliaContext.datagramSocket
 				.IsClosed());
 			context.Close();
-			NUnit.Framework.Assert.IsTrue("Socket not closed", gangliaContext.datagramSocket.
+			Assert.True("Socket not closed", gangliaContext.datagramSocket.
 				IsClosed());
 		}
 	}

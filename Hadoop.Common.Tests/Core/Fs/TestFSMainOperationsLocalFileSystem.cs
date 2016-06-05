@@ -39,13 +39,13 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public override void TestWDAbsolute()
 		{
 			Path absoluteDir = GetTestRootPath(fSys, "test/existingDir");
 			fSys.Mkdirs(absoluteDir);
 			fSys.SetWorkingDirectory(absoluteDir);
-			NUnit.Framework.Assert.AreEqual(absoluteDir, fSys.GetWorkingDirectory());
+			Assert.Equal(absoluteDir, fSys.GetWorkingDirectory());
 		}
 	}
 }

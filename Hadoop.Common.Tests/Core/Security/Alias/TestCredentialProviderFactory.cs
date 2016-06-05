@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			, "/tmp"), "creds");
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFactory()
 		{
 			Configuration conf = new Configuration();
@@ -33,16 +33,16 @@ namespace Org.Apache.Hadoop.Security.Alias
 				);
 			IList<CredentialProvider> providers = CredentialProviderFactory.GetProviders(conf
 				);
-			NUnit.Framework.Assert.AreEqual(2, providers.Count);
-			NUnit.Framework.Assert.AreEqual(typeof(UserProvider), providers[0].GetType());
-			NUnit.Framework.Assert.AreEqual(typeof(JavaKeyStoreProvider), providers[1].GetType
+			Assert.Equal(2, providers.Count);
+			Assert.Equal(typeof(UserProvider), providers[0].GetType());
+			Assert.Equal(typeof(JavaKeyStoreProvider), providers[1].GetType
 				());
-			NUnit.Framework.Assert.AreEqual(userUri, providers[0].ToString());
-			NUnit.Framework.Assert.AreEqual(jksUri, providers[1].ToString());
+			Assert.Equal(userUri, providers[0].ToString());
+			Assert.Equal(jksUri, providers[1].ToString());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFactoryErrors()
 		{
 			Configuration conf = new Configuration();
@@ -51,17 +51,17 @@ namespace Org.Apache.Hadoop.Security.Alias
 			{
 				IList<CredentialProvider> providers = CredentialProviderFactory.GetProviders(conf
 					);
-				NUnit.Framework.Assert.IsTrue("should throw!", false);
+				Assert.True("should throw!", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("No CredentialProviderFactory for unknown:/// in "
+				Assert.Equal("No CredentialProviderFactory for unknown:/// in "
 					 + CredentialProviderFactory.CredentialProviderPath, e.Message);
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUriErrors()
 		{
 			Configuration conf = new Configuration();
@@ -70,11 +70,11 @@ namespace Org.Apache.Hadoop.Security.Alias
 			{
 				IList<CredentialProvider> providers = CredentialProviderFactory.GetProviders(conf
 					);
-				NUnit.Framework.Assert.IsTrue("should throw!", false);
+				Assert.True("should throw!", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Bad configuration of " + CredentialProviderFactory
+				Assert.Equal("Bad configuration of " + CredentialProviderFactory
 					.CredentialProviderPath + " at unkn@own:/x/y", e.Message);
 			}
 		}
@@ -96,8 +96,8 @@ namespace Org.Apache.Hadoop.Security.Alias
 			CredentialProvider provider = CredentialProviderFactory.GetProviders(conf)[0];
 			char[] passwd = GeneratePassword(16);
 			// ensure that we get nulls when the key isn't there
-			NUnit.Framework.Assert.AreEqual(null, provider.GetCredentialEntry("no-such-key"));
-			NUnit.Framework.Assert.AreEqual(null, provider.GetCredentialEntry("key"));
+			Assert.Equal(null, provider.GetCredentialEntry("no-such-key"));
+			Assert.Equal(null, provider.GetCredentialEntry("key"));
 			// create a new key
 			try
 			{
@@ -115,22 +115,22 @@ namespace Org.Apache.Hadoop.Security.Alias
 			try
 			{
 				provider.CreateCredentialEntry("pass", passwd);
-				NUnit.Framework.Assert.IsTrue("should throw", false);
+				Assert.True("should throw", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Credential pass already exists in " + ourUrl, e.
+				Assert.Equal("Credential pass already exists in " + ourUrl, e.
 					Message);
 			}
 			provider.DeleteCredentialEntry("pass");
 			try
 			{
 				provider.DeleteCredentialEntry("pass");
-				NUnit.Framework.Assert.IsTrue("should throw", false);
+				Assert.True("should throw", false);
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Credential pass does not exist in " + ourUrl, e.
+				Assert.Equal("Credential pass does not exist in " + ourUrl, e.
 					Message);
 			}
 			char[] passTwo = new char[] { '1', '2', '3' };
@@ -151,22 +151,22 @@ namespace Org.Apache.Hadoop.Security.Alias
 			Assert.AssertArrayEquals(null, conf.GetPassword("onetwothree"));
 			// get a new instance of the provider to ensure it was saved correctly
 			provider = CredentialProviderFactory.GetProviders(conf)[0];
-			NUnit.Framework.Assert.IsTrue(provider != null);
+			Assert.True(provider != null);
 			Assert.AssertArrayEquals(new char[] { '1', '2', '3' }, provider.GetCredentialEntry
 				("pass2").GetCredential());
 			Assert.AssertArrayEquals(passwd, provider.GetCredentialEntry("pass").GetCredential
 				());
 			IList<string> creds = provider.GetAliases();
-			NUnit.Framework.Assert.IsTrue("Credentials should have been returned.", creds.Count
+			Assert.True("Credentials should have been returned.", creds.Count
 				 == 2);
-			NUnit.Framework.Assert.IsTrue("Returned Credentials should have included pass.", 
+			Assert.True("Returned Credentials should have included pass.", 
 				creds.Contains("pass"));
-			NUnit.Framework.Assert.IsTrue("Returned Credentials should have included pass2.", 
+			Assert.True("Returned Credentials should have included pass2.", 
 				creds.Contains("pass2"));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserProvider()
 		{
 			Configuration conf = new Configuration();
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJksProvider()
 		{
 			Configuration conf = new Configuration();
@@ -193,15 +193,15 @@ namespace Org.Apache.Hadoop.Security.Alias
 			Path path = ProviderUtils.UnnestUri(new URI(ourUrl));
 			FileSystem fs = path.GetFileSystem(conf);
 			FileStatus s = fs.GetFileStatus(path);
-			NUnit.Framework.Assert.IsTrue(s.GetPermission().ToString().Equals("rwx------"));
-			NUnit.Framework.Assert.IsTrue(file + " should exist", file.IsFile());
+			Assert.True(s.GetPermission().ToString().Equals("rwx------"));
+			Assert.True(file + " should exist", file.IsFile());
 			// check permission retention after explicit change
 			fs.SetPermission(path, new FsPermission("777"));
 			CheckPermissionRetention(conf, ourUrl, path);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLocalJksProvider()
 		{
 			Configuration conf = new Configuration();
@@ -215,9 +215,9 @@ namespace Org.Apache.Hadoop.Security.Alias
 			Path path = ProviderUtils.UnnestUri(new URI(ourUrl));
 			FileSystem fs = path.GetFileSystem(conf);
 			FileStatus s = fs.GetFileStatus(path);
-			NUnit.Framework.Assert.IsTrue("Unexpected permissions: " + s.GetPermission().ToString
+			Assert.True("Unexpected permissions: " + s.GetPermission().ToString
 				(), s.GetPermission().ToString().Equals("rwx------"));
-			NUnit.Framework.Assert.IsTrue(file + " should exist", file.IsFile());
+			Assert.True(file + " should exist", file.IsFile());
 			// check permission retention after explicit change
 			fs.SetPermission(path, new FsPermission("777"));
 			CheckPermissionRetention(conf, ourUrl, path);
@@ -251,7 +251,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 				));
 			FileSystem fs = path.GetFileSystem(conf);
 			FileStatus s = fs.GetFileStatus(path);
-			NUnit.Framework.Assert.IsTrue("Permissions should have been retained from the preexisting "
+			Assert.True("Permissions should have been retained from the preexisting "
 				 + "keystore.", s.GetPermission().ToString().Equals("rwxrwxrwx"));
 		}
 	}

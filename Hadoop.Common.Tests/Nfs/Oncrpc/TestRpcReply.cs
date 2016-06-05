@@ -10,12 +10,12 @@ namespace Org.Apache.Hadoop.Oncrpc
 	/// </summary>
 	public class TestRpcReply
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReplyStateFromValue()
 		{
-			NUnit.Framework.Assert.AreEqual(RpcReply.ReplyState.MsgAccepted, RpcReply.ReplyState
+			Assert.Equal(RpcReply.ReplyState.MsgAccepted, RpcReply.ReplyState
 				.FromValue(0));
-			NUnit.Framework.Assert.AreEqual(RpcReply.ReplyState.MsgDenied, RpcReply.ReplyState
+			Assert.Equal(RpcReply.ReplyState.MsgDenied, RpcReply.ReplyState
 				.FromValue(1));
 		}
 
@@ -24,14 +24,14 @@ namespace Org.Apache.Hadoop.Oncrpc
 			RpcReply.ReplyState.FromValue(2);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRpcReply()
 		{
 			RpcReply reply = new _RpcReply_44(0, RpcReply.ReplyState.MsgAccepted, new VerifierNone
 				());
-			NUnit.Framework.Assert.AreEqual(0, reply.GetXid());
-			NUnit.Framework.Assert.AreEqual(RpcMessage.Type.RpcReply, reply.GetMessageType());
-			NUnit.Framework.Assert.AreEqual(RpcReply.ReplyState.MsgAccepted, reply.GetState()
+			Assert.Equal(0, reply.GetXid());
+			Assert.Equal(RpcMessage.Type.RpcReply, reply.GetMessageType());
+			Assert.Equal(RpcReply.ReplyState.MsgAccepted, reply.GetState()
 				);
 		}
 

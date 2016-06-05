@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.IO
 		/// method
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetClosestOnCurrentApi()
 		{
 			string TestPrefix = "testGetClosestOnCurrentApi.mapfile";
@@ -149,19 +149,19 @@ namespace Org.Apache.Hadoop.IO
 				Text value = new Text();
 				// Test get closest with step forward
 				Text closest = (Text)reader.GetClosest(key, value);
-				NUnit.Framework.Assert.AreEqual(new Text("61"), closest);
+				Assert.Equal(new Text("61"), closest);
 				// Test get closest with step back
 				closest = (Text)reader.GetClosest(key, value, true);
-				NUnit.Framework.Assert.AreEqual(new Text("51"), closest);
+				Assert.Equal(new Text("51"), closest);
 				// Test get closest when we pass explicit key
 				Text explicitKey = new Text("21");
 				closest = (Text)reader.GetClosest(explicitKey, value);
-				NUnit.Framework.Assert.AreEqual(new Text("21"), explicitKey);
+				Assert.Equal(new Text("21"), explicitKey);
 				// Test what happens at boundaries. Assert if searching a key that is
 				// less than first key in the mapfile, that the first key is returned.
 				key = new Text("00");
 				closest = (Text)reader.GetClosest(key, value);
-				NUnit.Framework.Assert.AreEqual(FirstKey, System.Convert.ToInt32(closest.ToString
+				Assert.Equal(FirstKey, System.Convert.ToInt32(closest.ToString
 					()));
 				// Assert that null is returned if key is > last entry in mapfile.
 				key = new Text("92");
@@ -170,7 +170,7 @@ namespace Org.Apache.Hadoop.IO
 					);
 				// If we were looking for the key before, we should get the last key
 				closest = (Text)reader.GetClosest(key, value, true);
-				NUnit.Framework.Assert.AreEqual(new Text("91"), closest);
+				Assert.Equal(new Text("91"), closest);
 			}
 			finally
 			{
@@ -184,7 +184,7 @@ namespace Org.Apache.Hadoop.IO
 		/// method
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMidKeyOnCurrentApi()
 		{
 			// Write a mapfile of simple data: keys are
@@ -202,7 +202,7 @@ namespace Org.Apache.Hadoop.IO
 				}
 				writer.Close();
 				reader = CreateReader(TestPrefix, typeof(IntWritable));
-				NUnit.Framework.Assert.AreEqual(new IntWritable((Size - 1) / 2), reader.MidKey());
+				Assert.Equal(new IntWritable((Size - 1) / 2), reader.MidKey());
 			}
 			finally
 			{
@@ -215,7 +215,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Writer.rename()</c>
 		/// method
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRename()
 		{
 			string NewFileName = "test-new.mapfile";
@@ -248,7 +248,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>IOException</c>
 		/// 
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameWithException()
 		{
 			string ErrorMessage = "Can't rename file";
@@ -270,7 +270,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException ex)
 			{
-				NUnit.Framework.Assert.AreEqual("testRenameWithException invalid IOExceptionMessage !!!"
+				Assert.Equal("testRenameWithException invalid IOExceptionMessage !!!"
 					, ex.Message, ErrorMessage);
 			}
 			finally
@@ -279,7 +279,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameWithFalse()
 		{
 			string ErrorMessage = "Could not rename";
@@ -300,7 +300,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException ex)
 			{
-				NUnit.Framework.Assert.IsTrue("testRenameWithFalse invalid IOExceptionMessage error !!!"
+				Assert.True("testRenameWithFalse invalid IOExceptionMessage error !!!"
 					, ex.Message.StartsWith(ErrorMessage));
 			}
 			finally
@@ -316,7 +316,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Writer</c>
 		/// constructor
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWriteWithFailDirCreation()
 		{
 			string ErrorMessage = "Mkdirs failed to create directory";
@@ -335,7 +335,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException ex)
 			{
-				NUnit.Framework.Assert.IsTrue("testWriteWithFailDirCreation ex error !!!", ex.Message
+				Assert.True("testWriteWithFailDirCreation ex error !!!", ex.Message
 					.StartsWith(ErrorMessage));
 			}
 			finally
@@ -349,7 +349,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Reader.finalKey()</c>
 		/// method
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOnFinalKey()
 		{
 			string TestMethodKey = "testOnFinalKey.mapfile";
@@ -367,7 +367,7 @@ namespace Org.Apache.Hadoop.IO
 				reader = CreateReader(TestMethodKey, typeof(IntWritable));
 				IntWritable expectedKey = new IntWritable(0);
 				reader.FinalKey(expectedKey);
-				NUnit.Framework.Assert.AreEqual("testOnFinalKey not same !!!", expectedKey, new IntWritable
+				Assert.Equal("testOnFinalKey not same !!!", expectedKey, new IntWritable
 					(9));
 			}
 			catch (IOException)
@@ -388,7 +388,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>keyClass(), valueClass()</c>
 		/// methods
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKeyValueClasses()
 		{
 			Type keyClass = typeof(IntWritable);
@@ -414,7 +414,7 @@ namespace Org.Apache.Hadoop.IO
 		/// with wrong class key
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReaderGetClosest()
 		{
 			string TestMethodKey = "testReaderWithWrongKeyClass.mapfile";
@@ -448,7 +448,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Writer.append()</c>
 		/// with wrong key class
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReaderWithWrongValueClass()
 		{
 			string TestMethodKey = "testReaderWithWrongValueClass.mapfile";
@@ -475,7 +475,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Reader.next(key, value)</c>
 		/// for iteration.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReaderKeyIteration()
 		{
 			string TestMethodKey = "testReaderKeyIteration.mapfile";
@@ -507,7 +507,7 @@ namespace Org.Apache.Hadoop.IO
 					}
 					reader.Reset();
 				}
-				NUnit.Framework.Assert.IsTrue("reader seek error !!!", reader.Seek(new IntWritable
+				Assert.True("reader seek error !!!", reader.Seek(new IntWritable
 					(Size / 2)));
 				NUnit.Framework.Assert.IsFalse("reader seek error !!!", reader.Seek(new IntWritable
 					(Size * 2)));
@@ -527,7 +527,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Writer.testFix</c>
 		/// method
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFix()
 		{
 			string IndexLessMapFile = "testFix.mapfile";
@@ -551,7 +551,7 @@ namespace Org.Apache.Hadoop.IO
 				}
 				if (isDeleted)
 				{
-					NUnit.Framework.Assert.IsTrue("testFix error !!!", MapFile.Fix(fs, dir, typeof(IntWritable
+					Assert.True("testFix error !!!", MapFile.Fix(fs, dir, typeof(IntWritable
 						), typeof(Text), true, conf) == PairSize);
 				}
 			}
@@ -569,7 +569,7 @@ namespace Org.Apache.Hadoop.IO
 		/// test all available constructor for
 		/// <c>MapFile.Writer</c>
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeprecatedConstructors()
 		{
 			string path = new Path(TestDir, "writes.mapfile").ToString();
@@ -624,7 +624,7 @@ namespace Org.Apache.Hadoop.IO
 		/// constructor
 		/// with IllegalArgumentException
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKeyLessWriterCreation()
 		{
 			MapFile.Writer writer = null;
@@ -651,7 +651,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Writer</c>
 		/// constructor with IOException
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPathExplosionWriterCreation()
 		{
 			Path path = new Path(TestDir, "testPathExplosionWriterCreation.mapfile");
@@ -670,7 +670,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException ex)
 			{
-				NUnit.Framework.Assert.AreEqual("testPathExplosionWriterCreation ex message error !!!"
+				Assert.Equal("testPathExplosionWriterCreation ex message error !!!"
 					, ex.Message, TestErrorMessage);
 			}
 			catch (Exception)
@@ -689,7 +689,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <c>MapFile.Writer.append</c>
 		/// method with desc order
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDescOrderWithThrowExceptionWriterAppend()
 		{
 			MapFile.Writer writer = null;
@@ -717,7 +717,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMainMethodMapFile()
 		{
 			string inFile = "mainMethodMapFile.mapfile";
@@ -744,7 +744,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>Test getClosest feature.</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetClosest()
 		{
 			// Write a mapfile of simple data: keys are
@@ -760,7 +760,7 @@ namespace Org.Apache.Hadoop.IO
 				writer = new MapFile.Writer(conf, fs, qualifiedDirName.ToString(), typeof(Text), 
 					typeof(Text));
 				// Assert that the index interval is 1
-				NUnit.Framework.Assert.AreEqual(3, writer.GetIndexInterval());
+				Assert.Equal(3, writer.GetIndexInterval());
 				// Add entries up to 100 in intervals of ten.
 				int FirstKey = 10;
 				for (int i = FirstKey; i < 100; i += 10)
@@ -776,21 +776,21 @@ namespace Org.Apache.Hadoop.IO
 				Text value = new Text();
 				Text closest = (Text)reader.GetClosest(key, value);
 				// Assert that closest after 55 is 60
-				NUnit.Framework.Assert.AreEqual(new Text("60"), closest);
+				Assert.Equal(new Text("60"), closest);
 				// Get closest that falls before the passed key: 50
 				closest = (Text)reader.GetClosest(key, value, true);
-				NUnit.Framework.Assert.AreEqual(new Text("50"), closest);
+				Assert.Equal(new Text("50"), closest);
 				// Test get closest when we pass explicit key
 				Text Twenty = new Text("20");
 				closest = (Text)reader.GetClosest(Twenty, value);
-				NUnit.Framework.Assert.AreEqual(Twenty, closest);
+				Assert.Equal(Twenty, closest);
 				closest = (Text)reader.GetClosest(Twenty, value, true);
-				NUnit.Framework.Assert.AreEqual(Twenty, closest);
+				Assert.Equal(Twenty, closest);
 				// Test what happens at boundaries. Assert if searching a key that is
 				// less than first key in the mapfile, that the first key is returned.
 				key = new Text("00");
 				closest = (Text)reader.GetClosest(key, value);
-				NUnit.Framework.Assert.AreEqual(FirstKey, System.Convert.ToInt32(closest.ToString
+				Assert.Equal(FirstKey, System.Convert.ToInt32(closest.ToString
 					()));
 				// If we're looking for the first key before, and we pass in a key before
 				// the first key in the file, we should get null
@@ -802,7 +802,7 @@ namespace Org.Apache.Hadoop.IO
 				NUnit.Framework.Assert.IsNull(closest);
 				// If we were looking for the key before, we should get the last key
 				closest = (Text)reader.GetClosest(key, value, true);
-				NUnit.Framework.Assert.AreEqual(new Text("90"), closest);
+				Assert.Equal(new Text("90"), closest);
 			}
 			finally
 			{
@@ -811,7 +811,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMidKey()
 		{
 			// Write a mapfile of simple data: keys are
@@ -828,7 +828,7 @@ namespace Org.Apache.Hadoop.IO
 				writer.Close();
 				// Now do getClosest on created mapfile.
 				reader = new MapFile.Reader(qualifiedDirName, conf);
-				NUnit.Framework.Assert.AreEqual(new IntWritable(1), reader.MidKey());
+				Assert.Equal(new IntWritable(1), reader.MidKey());
 			}
 			finally
 			{
@@ -837,7 +837,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMidKeyEmpty()
 		{
 			// Write a mapfile of simple data: keys are
@@ -851,7 +851,7 @@ namespace Org.Apache.Hadoop.IO
 			MapFile.Reader reader = new MapFile.Reader(qualifiedDirName, conf);
 			try
 			{
-				NUnit.Framework.Assert.AreEqual(null, reader.MidKey());
+				Assert.Equal(null, reader.MidKey());
 			}
 			finally
 			{
@@ -860,7 +860,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMerge()
 		{
 			string TestMethodKey = "testMerge.mapfile";
@@ -900,9 +900,9 @@ namespace Org.Apache.Hadoop.IO
 					IntWritable prev = new IntWritable(start);
 					while (reader.Next(key, value))
 					{
-						NUnit.Framework.Assert.IsTrue("Next key should be always equal or more", prev.Get
+						Assert.True("Next key should be always equal or more", prev.Get
 							() <= key.Get());
-						NUnit.Framework.Assert.AreEqual(expectedIterator.Next(), key.Get());
+						Assert.Equal(expectedIterator.Next(), key.Get());
 						prev.Set(key.Get());
 					}
 					reader.Reset();

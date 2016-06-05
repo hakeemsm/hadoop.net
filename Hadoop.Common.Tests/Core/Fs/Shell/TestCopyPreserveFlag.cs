@@ -63,25 +63,25 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// <exception cref="System.IO.IOException"/>
 		private void AssertAttributesPreserved()
 		{
-			NUnit.Framework.Assert.AreEqual(ModificationTime, fs.GetFileStatus(To).GetModificationTime
+			Assert.Equal(ModificationTime, fs.GetFileStatus(To).GetModificationTime
 				());
-			NUnit.Framework.Assert.AreEqual(Permissions, fs.GetFileStatus(To).GetPermission()
+			Assert.Equal(Permissions, fs.GetFileStatus(To).GetPermission()
 				);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
 		private void AssertAttributesChanged()
 		{
-			NUnit.Framework.Assert.IsTrue(ModificationTime != fs.GetFileStatus(To).GetModificationTime
+			Assert.True(ModificationTime != fs.GetFileStatus(To).GetModificationTime
 				());
-			NUnit.Framework.Assert.IsTrue(!Permissions.Equals(fs.GetFileStatus(To).GetPermission
+			Assert.True(!Permissions.Equals(fs.GetFileStatus(To).GetPermission
 				()));
 		}
 
 		private void Run(CommandWithDestination cmd, params string[] args)
 		{
 			cmd.SetConf(conf);
-			NUnit.Framework.Assert.AreEqual(0, cmd.Run(args));
+			Assert.Equal(0, cmd.Run(args));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -130,9 +130,9 @@ namespace Org.Apache.Hadoop.FS.Shell
 		public virtual void TestDirectoryCpWithP()
 		{
 			Run(new CopyCommands.CP(), "-p", "d1", "d3");
-			NUnit.Framework.Assert.AreEqual(fs.GetFileStatus(new Path("d1")).GetModificationTime
+			Assert.Equal(fs.GetFileStatus(new Path("d1")).GetModificationTime
 				(), fs.GetFileStatus(new Path("d3")).GetModificationTime());
-			NUnit.Framework.Assert.AreEqual(fs.GetFileStatus(new Path("d1")).GetPermission(), 
+			Assert.Equal(fs.GetFileStatus(new Path("d1")).GetPermission(), 
 				fs.GetFileStatus(new Path("d3")).GetPermission());
 		}
 
@@ -140,9 +140,9 @@ namespace Org.Apache.Hadoop.FS.Shell
 		public virtual void TestDirectoryCpWithoutP()
 		{
 			Run(new CopyCommands.CP(), "d1", "d4");
-			NUnit.Framework.Assert.IsTrue(fs.GetFileStatus(new Path("d1")).GetModificationTime
+			Assert.True(fs.GetFileStatus(new Path("d1")).GetModificationTime
 				() != fs.GetFileStatus(new Path("d4")).GetModificationTime());
-			NUnit.Framework.Assert.IsTrue(!fs.GetFileStatus(new Path("d1")).GetPermission().Equals
+			Assert.True(!fs.GetFileStatus(new Path("d1")).GetPermission().Equals
 				(fs.GetFileStatus(new Path("d4")).GetPermission()));
 		}
 	}

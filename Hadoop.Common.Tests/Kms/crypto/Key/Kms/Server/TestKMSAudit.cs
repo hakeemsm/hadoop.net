@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAggregation()
 		{
 			UserGroupInformation luser = Org.Mockito.Mockito.Mock<UserGroupInformation>();
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			Sharpen.Thread.Sleep(1500);
 			string @out = GetAndResetLogOutput();
 			System.Console.Out.WriteLine(@out);
-			NUnit.Framework.Assert.IsTrue(@out.Matches("OK\\[op=DECRYPT_EEK, key=k1, user=luser, accessCount=1, interval=[^m]{1,4}ms\\] testmsg"
+			Assert.True(@out.Matches("OK\\[op=DECRYPT_EEK, key=k1, user=luser, accessCount=1, interval=[^m]{1,4}ms\\] testmsg"
 				 + "OK\\[op=DELETE_KEY, key=k1, user=luser\\] testmsg" + "OK\\[op=ROLL_NEW_VERSION, key=k1, user=luser\\] testmsg"
 				 + "OK\\[op=DECRYPT_EEK, key=k1, user=luser, accessCount=6, interval=[^m]{1,4}ms\\] testmsg"
 				 + "OK\\[op=DECRYPT_EEK, key=k1, user=luser, accessCount=1, interval=[^m]{1,4}ms\\] testmsg"
@@ -90,7 +90,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		// Not aggregated !!
 		// Aggregated
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAggregationUnauth()
 		{
 			UserGroupInformation luser = Org.Mockito.Mockito.Mock<UserGroupInformation>();
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			Sharpen.Thread.Sleep(2000);
 			string @out = GetAndResetLogOutput();
 			System.Console.Out.WriteLine(@out);
-			NUnit.Framework.Assert.IsTrue(@out.Matches("UNAUTHORIZED\\[op=GENERATE_EEK, key=k2, user=luser\\] "
+			Assert.True(@out.Matches("UNAUTHORIZED\\[op=GENERATE_EEK, key=k2, user=luser\\] "
 				 + "OK\\[op=GENERATE_EEK, key=k3, user=luser, accessCount=1, interval=[^m]{1,4}ms\\] testmsg"
 				 + "OK\\[op=GENERATE_EEK, key=k3, user=luser, accessCount=5, interval=[^m]{1,4}ms\\] testmsg"
 				 + "UNAUTHORIZED\\[op=GENERATE_EEK, key=k3, user=luser\\] " + "OK\\[op=GENERATE_EEK, key=k3, user=luser, accessCount=1, interval=[^m]{1,4}ms\\] testmsg"

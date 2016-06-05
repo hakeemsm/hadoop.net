@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>write short value</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteShort(value);
 		}

@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		protected internal virtual void AddConfResource(string resource)
 		{
 			bool found = MaybeAddConfResource(resource);
-			NUnit.Framework.Assert.IsTrue("Resource not found " + resource, found);
+			Assert.True("Resource not found " + resource, found);
 		}
 
 		/// <summary>

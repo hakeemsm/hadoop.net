@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		/// - org.apache.hadoop.security.ShellBasedUnixGroupsNetgroupMapping
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNetgroups()
 		{
 			if (!NativeCodeLoader.IsNativeCodeLoaded())
@@ -115,10 +115,10 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		{
 			// check that the netgroups are working
 			IList<string> elvisGroups = groups.GetGroups("elvis");
-			NUnit.Framework.Assert.IsTrue(elvisGroups.Contains("@lasVegas"));
-			NUnit.Framework.Assert.IsTrue(elvisGroups.Contains("@memphis"));
+			Assert.True(elvisGroups.Contains("@lasVegas"));
+			Assert.True(elvisGroups.Contains("@memphis"));
 			IList<string> jerryLeeLewisGroups = groups.GetGroups("jerryLeeLewis");
-			NUnit.Framework.Assert.IsTrue(jerryLeeLewisGroups.Contains("@memphis"));
+			Assert.True(jerryLeeLewisGroups.Contains("@memphis"));
 			// allowed becuase his netgroup is in ACL
 			UserGroupInformation elvis = UserGroupInformation.CreateRemoteUser("elvis");
 			AssertUserAllowed(elvis, acl);
@@ -133,46 +133,46 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWildCardAccessControlList()
 		{
 			AccessControlList acl;
 			acl = new AccessControlList("*");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			acl = new AccessControlList("  * ");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			acl = new AccessControlList(" *");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			acl = new AccessControlList("*  ");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 		}
 
 		// Check if AccessControlList.toString() works as expected.
 		// Also validate if getAclString() for various cases.
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAclString()
 		{
 			AccessControlList acl;
 			acl = new AccessControlList("*");
-			NUnit.Framework.Assert.IsTrue(acl.ToString().Equals("All users are allowed"));
+			Assert.True(acl.ToString().Equals("All users are allowed"));
 			ValidateGetAclString(acl);
 			acl = new AccessControlList(" ");
-			NUnit.Framework.Assert.IsTrue(acl.ToString().Equals("No users are allowed"));
+			Assert.True(acl.ToString().Equals("No users are allowed"));
 			acl = new AccessControlList("user1,user2");
-			NUnit.Framework.Assert.IsTrue(acl.ToString().Equals("Users [user1, user2] are allowed"
+			Assert.True(acl.ToString().Equals("Users [user1, user2] are allowed"
 				));
 			ValidateGetAclString(acl);
 			acl = new AccessControlList("user1,user2 ");
 			// with space
-			NUnit.Framework.Assert.IsTrue(acl.ToString().Equals("Users [user1, user2] are allowed"
+			Assert.True(acl.ToString().Equals("Users [user1, user2] are allowed"
 				));
 			ValidateGetAclString(acl);
 			acl = new AccessControlList(" group1,group2");
-			NUnit.Framework.Assert.IsTrue(acl.ToString().Equals("Members of the groups [group1, group2] are allowed"
+			Assert.True(acl.ToString().Equals("Members of the groups [group1, group2] are allowed"
 				));
 			ValidateGetAclString(acl);
 			acl = new AccessControlList("user1,user2 group1,group2");
-			NUnit.Framework.Assert.IsTrue(acl.ToString().Equals("Users [user1, user2] and " +
+			Assert.True(acl.ToString().Equals("Users [user1, user2] and " +
 				 "members of the groups [group1, group2] are allowed"));
 			ValidateGetAclString(acl);
 		}
@@ -181,12 +181,12 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		// a new ACL instance from the value returned by getAclString().
 		private void ValidateGetAclString(AccessControlList acl)
 		{
-			NUnit.Framework.Assert.IsTrue(acl.ToString().Equals(new AccessControlList(acl.GetAclString
+			Assert.True(acl.ToString().Equals(new AccessControlList(acl.GetAclString
 				()).ToString()));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAccessControlList()
 		{
 			AccessControlList acl;
@@ -194,101 +194,101 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			ICollection<string> groups;
 			acl = new AccessControlList("drwho tardis");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 1);
-			NUnit.Framework.Assert.AreEqual(users.GetEnumerator().Next(), "drwho");
+			Assert.Equal(users.Count, 1);
+			Assert.Equal(users.GetEnumerator().Next(), "drwho");
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 1);
-			NUnit.Framework.Assert.AreEqual(groups.GetEnumerator().Next(), "tardis");
+			Assert.Equal(groups.Count, 1);
+			Assert.Equal(groups.GetEnumerator().Next(), "tardis");
 			acl = new AccessControlList("drwho");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 1);
-			NUnit.Framework.Assert.AreEqual(users.GetEnumerator().Next(), "drwho");
+			Assert.Equal(users.Count, 1);
+			Assert.Equal(users.GetEnumerator().Next(), "drwho");
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 0);
+			Assert.Equal(groups.Count, 0);
 			acl = new AccessControlList("drwho ");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 1);
-			NUnit.Framework.Assert.AreEqual(users.GetEnumerator().Next(), "drwho");
+			Assert.Equal(users.Count, 1);
+			Assert.Equal(users.GetEnumerator().Next(), "drwho");
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 0);
+			Assert.Equal(groups.Count, 0);
 			acl = new AccessControlList(" tardis");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 0);
+			Assert.Equal(users.Count, 0);
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 1);
-			NUnit.Framework.Assert.AreEqual(groups.GetEnumerator().Next(), "tardis");
+			Assert.Equal(groups.Count, 1);
+			Assert.Equal(groups.GetEnumerator().Next(), "tardis");
 			IEnumerator<string> iter;
 			acl = new AccessControlList("drwho,joe tardis, users");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 2);
+			Assert.Equal(users.Count, 2);
 			iter = users.GetEnumerator();
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "drwho");
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "joe");
+			Assert.Equal(iter.Next(), "drwho");
+			Assert.Equal(iter.Next(), "joe");
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 2);
+			Assert.Equal(groups.Count, 2);
 			iter = groups.GetEnumerator();
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "tardis");
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "users");
+			Assert.Equal(iter.Next(), "tardis");
+			Assert.Equal(iter.Next(), "users");
 		}
 
 		/// <summary>Test addUser/Group and removeUser/Group api.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddRemoveAPI()
 		{
 			AccessControlList acl;
 			ICollection<string> users;
 			ICollection<string> groups;
 			acl = new AccessControlList(" ");
-			NUnit.Framework.Assert.AreEqual(0, acl.GetUsers().Count);
-			NUnit.Framework.Assert.AreEqual(0, acl.GetGroups().Count);
-			NUnit.Framework.Assert.AreEqual(" ", acl.GetAclString());
+			Assert.Equal(0, acl.GetUsers().Count);
+			Assert.Equal(0, acl.GetGroups().Count);
+			Assert.Equal(" ", acl.GetAclString());
 			acl.AddUser("drwho");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 1);
-			NUnit.Framework.Assert.AreEqual(users.GetEnumerator().Next(), "drwho");
-			NUnit.Framework.Assert.AreEqual("drwho ", acl.GetAclString());
+			Assert.Equal(users.Count, 1);
+			Assert.Equal(users.GetEnumerator().Next(), "drwho");
+			Assert.Equal("drwho ", acl.GetAclString());
 			acl.AddGroup("tardis");
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 1);
-			NUnit.Framework.Assert.AreEqual(groups.GetEnumerator().Next(), "tardis");
-			NUnit.Framework.Assert.AreEqual("drwho tardis", acl.GetAclString());
+			Assert.Equal(groups.Count, 1);
+			Assert.Equal(groups.GetEnumerator().Next(), "tardis");
+			Assert.Equal("drwho tardis", acl.GetAclString());
 			acl.AddUser("joe");
 			acl.AddGroup("users");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 2);
+			Assert.Equal(users.Count, 2);
 			IEnumerator<string> iter = users.GetEnumerator();
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "drwho");
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "joe");
+			Assert.Equal(iter.Next(), "drwho");
+			Assert.Equal(iter.Next(), "joe");
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 2);
+			Assert.Equal(groups.Count, 2);
 			iter = groups.GetEnumerator();
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "tardis");
-			NUnit.Framework.Assert.AreEqual(iter.Next(), "users");
-			NUnit.Framework.Assert.AreEqual("drwho,joe tardis,users", acl.GetAclString());
+			Assert.Equal(iter.Next(), "tardis");
+			Assert.Equal(iter.Next(), "users");
+			Assert.Equal("drwho,joe tardis,users", acl.GetAclString());
 			acl.RemoveUser("joe");
 			acl.RemoveGroup("users");
 			users = acl.GetUsers();
-			NUnit.Framework.Assert.AreEqual(users.Count, 1);
+			Assert.Equal(users.Count, 1);
 			NUnit.Framework.Assert.IsFalse(users.Contains("joe"));
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(groups.Count, 1);
+			Assert.Equal(groups.Count, 1);
 			NUnit.Framework.Assert.IsFalse(groups.Contains("users"));
-			NUnit.Framework.Assert.AreEqual("drwho tardis", acl.GetAclString());
+			Assert.Equal("drwho tardis", acl.GetAclString());
 			acl.RemoveGroup("tardis");
 			groups = acl.GetGroups();
-			NUnit.Framework.Assert.AreEqual(0, groups.Count);
+			Assert.Equal(0, groups.Count);
 			NUnit.Framework.Assert.IsFalse(groups.Contains("tardis"));
-			NUnit.Framework.Assert.AreEqual("drwho ", acl.GetAclString());
+			Assert.Equal("drwho ", acl.GetAclString());
 			acl.RemoveUser("drwho");
-			NUnit.Framework.Assert.AreEqual(0, users.Count);
+			Assert.Equal(0, users.Count);
 			NUnit.Framework.Assert.IsFalse(users.Contains("drwho"));
-			NUnit.Framework.Assert.AreEqual(0, acl.GetGroups().Count);
-			NUnit.Framework.Assert.AreEqual(0, acl.GetUsers().Count);
-			NUnit.Framework.Assert.AreEqual(" ", acl.GetAclString());
+			Assert.Equal(0, acl.GetGroups().Count);
+			Assert.Equal(0, acl.GetUsers().Count);
+			Assert.Equal(" ", acl.GetAclString());
 		}
 
 		/// <summary>Tests adding/removing wild card as the user/group.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddRemoveWildCard()
 		{
 			AccessControlList acl = new AccessControlList("drwho tardis");
@@ -302,7 +302,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 				th = t;
 			}
 			NUnit.Framework.Assert.IsNotNull(th);
-			NUnit.Framework.Assert.IsTrue(th is ArgumentException);
+			Assert.True(th is ArgumentException);
 			th = null;
 			try
 			{
@@ -313,7 +313,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 				th = t;
 			}
 			NUnit.Framework.Assert.IsNotNull(th);
-			NUnit.Framework.Assert.IsTrue(th is ArgumentException);
+			Assert.True(th is ArgumentException);
 			th = null;
 			try
 			{
@@ -324,7 +324,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 				th = t;
 			}
 			NUnit.Framework.Assert.IsNotNull(th);
-			NUnit.Framework.Assert.IsTrue(th is ArgumentException);
+			Assert.True(th is ArgumentException);
 			th = null;
 			try
 			{
@@ -335,35 +335,35 @@ namespace Org.Apache.Hadoop.Security.Authorize
 				th = t;
 			}
 			NUnit.Framework.Assert.IsNotNull(th);
-			NUnit.Framework.Assert.IsTrue(th is ArgumentException);
+			Assert.True(th is ArgumentException);
 		}
 
 		/// <summary>Tests adding user/group to an wild card acl.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddRemoveToWildCardACL()
 		{
 			AccessControlList acl = new AccessControlList(" * ");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			UserGroupInformation drwho = UserGroupInformation.CreateUserForTesting("drwho@APACHE.ORG"
 				, new string[] { "aliens" });
 			UserGroupInformation drwho2 = UserGroupInformation.CreateUserForTesting("drwho2@APACHE.ORG"
 				, new string[] { "tardis" });
 			acl.AddUser("drwho");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			NUnit.Framework.Assert.IsFalse(acl.GetAclString().Contains("drwho"));
 			acl.AddGroup("tardis");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			NUnit.Framework.Assert.IsFalse(acl.GetAclString().Contains("tardis"));
 			acl.RemoveUser("drwho");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			AssertUserAllowed(drwho, acl);
 			acl.RemoveGroup("tardis");
-			NUnit.Framework.Assert.IsTrue(acl.IsAllAllowed());
+			Assert.True(acl.IsAllAllowed());
 			AssertUserAllowed(drwho2, acl);
 		}
 
 		/// <summary>Verify the method isUserAllowed()</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsUserAllowed()
 		{
 			AccessControlList acl;
@@ -408,7 +408,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 
 		private void AssertUserAllowed(UserGroupInformation ugi, AccessControlList acl)
 		{
-			NUnit.Framework.Assert.IsTrue("User " + ugi + " is not granted the access-control!!"
+			Assert.True("User " + ugi + " is not granted the access-control!!"
 				, acl.IsUserAllowed(ugi));
 		}
 

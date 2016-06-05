@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.Util
 				iter.Next();
 				iter.Remove();
 			}
-			NUnit.Framework.Assert.AreEqual(0, set.Size());
+			Assert.Equal(0, set.Size());
 		}
 
 		public virtual void TestRemoveSomeViaIterator()
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Util
 			for (IEnumerator<TestLightWeightGSet.TestElement> iter_2 = set.GetEnumerator(); iter_2
 				.HasNext(); )
 			{
-				NUnit.Framework.Assert.IsTrue(iter_2.Next().GetVal() <= mode);
+				Assert.True(iter_2.Next().GetVal() <= mode);
 			}
 		}
 	}

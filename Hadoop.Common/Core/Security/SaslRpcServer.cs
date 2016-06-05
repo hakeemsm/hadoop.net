@@ -293,7 +293,7 @@ namespace Org.Apache.Hadoop.Security
 
 			/// <summary>Write to out</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(DataOutput @out)
+			public void Write(BinaryWriter @out)
 			{
 				@out.Write(SaslRpcServer.AuthMethod.code);
 			}

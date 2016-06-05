@@ -192,23 +192,23 @@ namespace Org.Apache.Hadoop.FS
 			NUnit.Framework.Assert.IsNotNull(s);
 			if (expectedType == FSTestWrapper.FileType.isDir)
 			{
-				NUnit.Framework.Assert.IsTrue(s.IsDirectory());
+				Assert.True(s.IsDirectory());
 			}
 			else
 			{
 				if (expectedType == FSTestWrapper.FileType.isFile)
 				{
-					NUnit.Framework.Assert.IsTrue(s.IsFile());
+					Assert.True(s.IsFile());
 				}
 				else
 				{
 					if (expectedType == FSTestWrapper.FileType.isSymlink)
 					{
-						NUnit.Framework.Assert.IsTrue(s.IsSymlink());
+						Assert.True(s.IsSymlink());
 					}
 				}
 			}
-			NUnit.Framework.Assert.AreEqual(fs.MakeQualified(new Path(path)), s.GetPath());
+			Assert.Equal(fs.MakeQualified(new Path(path)), s.GetPath());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -219,23 +219,23 @@ namespace Org.Apache.Hadoop.FS
 			NUnit.Framework.Assert.IsNotNull(s);
 			if (expectedType == FSTestWrapper.FileType.isDir)
 			{
-				NUnit.Framework.Assert.IsTrue(s.IsDirectory());
+				Assert.True(s.IsDirectory());
 			}
 			else
 			{
 				if (expectedType == FSTestWrapper.FileType.isFile)
 				{
-					NUnit.Framework.Assert.IsTrue(s.IsFile());
+					Assert.True(s.IsFile());
 				}
 				else
 				{
 					if (expectedType == FSTestWrapper.FileType.isSymlink)
 					{
-						NUnit.Framework.Assert.IsTrue(s.IsSymlink());
+						Assert.True(s.IsSymlink());
 					}
 				}
 			}
-			NUnit.Framework.Assert.AreEqual(fs.MakeQualified(new Path(path)), s.GetPath());
+			Assert.Equal(fs.MakeQualified(new Path(path)), s.GetPath());
 		}
 
 		//

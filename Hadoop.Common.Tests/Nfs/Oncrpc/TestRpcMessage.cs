@@ -27,15 +27,15 @@ namespace Org.Apache.Hadoop.Oncrpc
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRpcMessage()
 		{
 			RpcMessage msg = GetRpcMessage(0, RpcMessage.Type.RpcCall);
-			NUnit.Framework.Assert.AreEqual(0, msg.GetXid());
-			NUnit.Framework.Assert.AreEqual(RpcMessage.Type.RpcCall, msg.GetMessageType());
+			Assert.Equal(0, msg.GetXid());
+			Assert.Equal(RpcMessage.Type.RpcCall, msg.GetMessageType());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestValidateMessage()
 		{
 			RpcMessage msg = GetRpcMessage(0, RpcMessage.Type.RpcCall);

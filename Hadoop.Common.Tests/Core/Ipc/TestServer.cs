@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Ipc
 	public class TestServer
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBind()
 		{
 			Configuration conf = new Configuration();
@@ -30,9 +30,9 @@ namespace Org.Apache.Hadoop.Ipc
 				Server.Bind(socket2, address2, 10, conf, "TestRange");
 				try
 				{
-					NUnit.Framework.Assert.IsTrue(socket2.IsBound());
-					NUnit.Framework.Assert.IsTrue(socket2.GetLocalPort() > min);
-					NUnit.Framework.Assert.IsTrue(socket2.GetLocalPort() <= max);
+					Assert.True(socket2.IsBound());
+					Assert.True(socket2.GetLocalPort() > min);
+					Assert.True(socket2.GetLocalPort() <= max);
 				}
 				finally
 				{
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBindSimple()
 		{
 			Socket socket = new Socket();
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Server.Bind(socket, address, 10);
 			try
 			{
-				NUnit.Framework.Assert.IsTrue(socket.IsBound());
+				Assert.True(socket.IsBound());
 			}
 			finally
 			{
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEmptyConfig()
 		{
 			Configuration conf = new Configuration();
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Ipc
 			try
 			{
 				Server.Bind(socket, address, 10, conf, "TestRange");
-				NUnit.Framework.Assert.IsTrue(socket.IsBound());
+				Assert.True(socket.IsBound());
 			}
 			finally
 			{
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBindError()
 		{
 			Configuration conf = new Configuration();
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					socket2.Close();
 				}
-				NUnit.Framework.Assert.IsTrue("Failed to catch the expected bind exception", caught
+				Assert.True("Failed to catch the expected bind exception", caught
 					);
 			}
 			finally
@@ -117,15 +117,15 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExceptionsHandler()
 		{
 			Server.ExceptionsHandler handler = new Server.ExceptionsHandler();
 			handler.AddTerseExceptions(typeof(IOException));
 			handler.AddTerseExceptions(typeof(RpcServerException), typeof(IpcException));
-			NUnit.Framework.Assert.IsTrue(handler.IsTerse(typeof(IOException)));
-			NUnit.Framework.Assert.IsTrue(handler.IsTerse(typeof(RpcServerException)));
-			NUnit.Framework.Assert.IsTrue(handler.IsTerse(typeof(IpcException)));
+			Assert.True(handler.IsTerse(typeof(IOException)));
+			Assert.True(handler.IsTerse(typeof(RpcServerException)));
+			Assert.True(handler.IsTerse(typeof(IpcException)));
 			NUnit.Framework.Assert.IsFalse(handler.IsTerse(typeof(RpcClientException)));
 		}
 	}

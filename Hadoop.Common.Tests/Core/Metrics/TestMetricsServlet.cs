@@ -39,10 +39,10 @@ namespace Org.Apache.Hadoop.Metrics
 			r.SetMetric("testMetric2", 33);
 			r.Update();
 			IDictionary<string, ICollection<OutputRecord>> m = nc1.GetAllRecords();
-			NUnit.Framework.Assert.AreEqual(1, m.Count);
-			NUnit.Framework.Assert.AreEqual(1, m.Values.Count);
+			Assert.Equal(1, m.Count);
+			Assert.Equal(1, m.Values.Count);
 			ICollection<OutputRecord> outputRecords = m.Values.GetEnumerator().Next();
-			NUnit.Framework.Assert.AreEqual(1, outputRecords.Count);
+			Assert.Equal(1, outputRecords.Count);
 			outputRecord = outputRecords.GetEnumerator().Next();
 		}
 
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Metrics
 			MetricsServlet.TagsMetricsPair pair = new MetricsServlet.TagsMetricsPair(outputRecord
 				.GetTagsCopy(), outputRecord.GetMetricsCopy());
 			string s = JSON.ToString(pair);
-			NUnit.Framework.Assert.AreEqual("[{\"testTag1\":\"testTagValue1\",\"testTag2\":\"testTagValue2\"},"
+			Assert.Equal("[{\"testTag1\":\"testTagValue1\",\"testTag2\":\"testTagValue2\"},"
 				 + "{\"testMetric1\":1,\"testMetric2\":33}]", s);
 		}
 
@@ -62,12 +62,12 @@ namespace Org.Apache.Hadoop.Metrics
 			MetricsServlet servlet = new MetricsServlet();
 			IDictionary<string, IDictionary<string, IList<MetricsServlet.TagsMetricsPair>>> m
 				 = servlet.MakeMap(contexts);
-			NUnit.Framework.Assert.AreEqual("Map missing contexts", 2, m.Count);
-			NUnit.Framework.Assert.IsTrue(m.Contains("test1"));
+			Assert.Equal("Map missing contexts", 2, m.Count);
+			Assert.True(m.Contains("test1"));
 			IDictionary<string, IList<MetricsServlet.TagsMetricsPair>> m2 = m["test1"];
-			NUnit.Framework.Assert.AreEqual("Missing records", 1, m2.Count);
-			NUnit.Framework.Assert.IsTrue(m2.Contains("testRecord"));
-			NUnit.Framework.Assert.AreEqual("Wrong number of tags-values pairs.", 1, m2["testRecord"
+			Assert.Equal("Missing records", 1, m2.Count);
+			Assert.True(m2.Contains("testRecord"));
+			Assert.Equal("Wrong number of tags-values pairs.", 1, m2["testRecord"
 				].Count);
 		}
 
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.Metrics
 			servlet.PrintMap(@out, servlet.MakeMap(contexts));
 			string Expected = string.Empty + "test1\n" + "  testRecord\n" + "    {testTag1=testTagValue1,testTag2=testTagValue2}:\n"
 				 + "      testMetric1=1\n" + "      testMetric2=33\n" + "test2\n";
-			NUnit.Framework.Assert.AreEqual(Expected, sw.ToString());
+			Assert.Equal(Expected, sw.ToString());
 		}
 	}
 }

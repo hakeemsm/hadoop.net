@@ -430,19 +430,19 @@ namespace Org.Apache.Hadoop.IO
 			// read first value from reader1
 			Text text = new Text();
 			reader1.Next(text);
-			NUnit.Framework.Assert.AreEqual("file1-1", text.ToString());
+			Assert.Equal("file1-1", text.ToString());
 			// The second reader _could_ get the same 4 BuiltInZLibInflater 
 			// instances from the CodePool as reader1
 			SequenceFile.Reader reader2 = new SequenceFile.Reader(fs, path2, conf);
 			// read first value from reader2
 			reader2.Next(text);
-			NUnit.Framework.Assert.AreEqual("file2-1", text.ToString());
+			Assert.Equal("file2-1", text.ToString());
 			// read second value from reader1
 			reader1.Next(text);
-			NUnit.Framework.Assert.AreEqual("file1-2", text.ToString());
+			Assert.Equal("file1-2", text.ToString());
 			// read second value from reader2 (this throws an exception)
 			reader2.Next(text);
-			NUnit.Framework.Assert.AreEqual("file2-2", text.ToString());
+			Assert.Equal("file2-2", text.ToString());
 			NUnit.Framework.Assert.IsFalse(reader1.Next(text));
 			NUnit.Framework.Assert.IsFalse(reader2.Next(text));
 		}
@@ -506,7 +506,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			NUnit.Framework.Assert.IsNotNull(path + " should have been opened.", openedFile[0
 				]);
-			NUnit.Framework.Assert.IsTrue("InputStream for " + path + " should have been closed."
+			Assert.True("InputStream for " + path + " should have been closed."
 				, openedFile[0].IsClosed());
 		}
 
@@ -590,7 +590,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(e.Message.StartsWith("Could not find a serializer for the Key class: '"
+				Assert.True(e.Message.StartsWith("Could not find a serializer for the Key class: '"
 					 + typeof(string).FullName + "'."));
 			}
 			try
@@ -603,7 +603,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(e.Message.StartsWith("Could not find a serializer for the Value class: '"
+				Assert.True(e.Message.StartsWith("Could not find a serializer for the Value class: '"
 					 + typeof(string).FullName + "'."));
 			}
 			// Write a simple file to test deserialization failures with
@@ -620,7 +620,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(e.Message.StartsWith("Could not find a deserializer for the Key class: '"
+				Assert.True(e.Message.StartsWith("Could not find a deserializer for the Key class: '"
 					 + typeof(RandomDatum).FullName + "'."));
 			}
 		}

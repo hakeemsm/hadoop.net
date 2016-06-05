@@ -46,9 +46,9 @@ namespace Org.Apache.Hadoop.IO
 				// generate a random string
 				string before = GetTestString();
 				// Check that the bytes are stored correctly in Modified-UTF8 format.
-				// Note that the BinaryReader and DataOutput interfaces convert between
+				// Note that the BinaryReader and BinaryWriter interfaces convert between
 				// bytes and Strings using the Modified-UTF8 format.
-				NUnit.Framework.Assert.AreEqual(before, ReadModifiedUTF(UTF8.GetBytes(before)));
+				Assert.Equal(before, ReadModifiedUTF(UTF8.GetBytes(before)));
 			}
 		}
 
@@ -78,11 +78,11 @@ namespace Org.Apache.Hadoop.IO
 				// test that it reads correctly
 				@in.Reset(@out.GetData(), @out.GetLength());
 				string after = UTF8.ReadString(@in);
-				NUnit.Framework.Assert.AreEqual(before, after);
+				Assert.Equal(before, after);
 				// test that it reads correctly with BinaryReader
 				@in.Reset(@out.GetData(), @out.GetLength());
 				string after2 = @in.ReadUTF();
-				NUnit.Framework.Assert.AreEqual(before, after2);
+				Assert.Equal(before, after2);
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO
 			string s = new string(new char[] { 0 });
 			DataOutputBuffer dob = new DataOutputBuffer();
 			new UTF8(s).Write(dob);
-			NUnit.Framework.Assert.AreEqual(s, Sharpen.Runtime.GetStringForBytes(dob.GetData(
+			Assert.Equal(s, Sharpen.Runtime.GetStringForBytes(dob.GetData(
 				), 2, dob.GetLength() - 2, "UTF-8"));
 		}
 
@@ -110,11 +110,11 @@ namespace Org.Apache.Hadoop.IO
 			string catFace = "\uD83D\uDC31";
 			// This encodes to 4 bytes in UTF-8:
 			byte[] encoded = Sharpen.Runtime.GetBytesForString(catFace, "UTF-8");
-			NUnit.Framework.Assert.AreEqual(4, encoded.Length);
-			NUnit.Framework.Assert.AreEqual("f09f90b1", StringUtils.ByteToHexString(encoded));
+			Assert.Equal(4, encoded.Length);
+			Assert.Equal("f09f90b1", StringUtils.ByteToHexString(encoded));
 			// Decode back to String using our own decoder
 			string roundTrip = UTF8.FromBytes(encoded);
-			NUnit.Framework.Assert.AreEqual(catFace, roundTrip);
+			Assert.Equal(catFace, roundTrip);
 		}
 
 		/// <summary>Test that decoding invalid UTF8 throws an appropriate error message.</summary>

@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.IO
 			BoundedByteArrayOutputStream stream = new BoundedByteArrayOutputStream(Size);
 			// Write to the stream, get the data back and check for contents
 			stream.Write(Input, 0, Size);
-			NUnit.Framework.Assert.IsTrue("Array Contents Mismatch", Arrays.Equals(Input, stream
+			Assert.True("Array Contents Mismatch", Arrays.Equals(Input, stream
 				.GetBuffer()));
 			// Try writing beyond end of buffer. Should throw an exception
 			bool caughtException = false;
@@ -34,14 +34,14 @@ namespace Org.Apache.Hadoop.IO
 			{
 				caughtException = true;
 			}
-			NUnit.Framework.Assert.IsTrue("Writing beyond limit did not throw an exception", 
+			Assert.True("Writing beyond limit did not throw an exception", 
 				caughtException);
 			//Reset the stream and try, should succeed 
 			stream.Reset();
-			NUnit.Framework.Assert.IsTrue("Limit did not get reset correctly", (stream.GetLimit
+			Assert.True("Limit did not get reset correctly", (stream.GetLimit
 				() == Size));
 			stream.Write(Input, 0, Size);
-			NUnit.Framework.Assert.IsTrue("Array Contents Mismatch", Arrays.Equals(Input, stream
+			Assert.True("Array Contents Mismatch", Arrays.Equals(Input, stream
 				.GetBuffer()));
 			// Try writing one more byte, should fail
 			caughtException = false;
@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.IO
 			// Reset the stream, but set a lower limit. Writing beyond
 			// the limit should throw an exception
 			stream.Reset(Size - 1);
-			NUnit.Framework.Assert.IsTrue("Limit did not get reset correctly", (stream.GetLimit
+			Assert.True("Limit did not get reset correctly", (stream.GetLimit
 				() == Size - 1));
 			caughtException = false;
 			try
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 				caughtException = true;
 			}
-			NUnit.Framework.Assert.IsTrue("Writing beyond limit did not throw an exception", 
+			Assert.True("Writing beyond limit did not throw an exception", 
 				caughtException);
 		}
 
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO
 				);
 			// Write to the stream, get the data back and check for contents
 			stream.Write(Input, 0, Size);
-			NUnit.Framework.Assert.IsTrue("Array Contents Mismatch", Arrays.Equals(Input, stream
+			Assert.True("Array Contents Mismatch", Arrays.Equals(Input, stream
 				.GetBuffer()));
 			// Try writing beyond end of buffer. Should throw an exception
 			bool caughtException = false;
@@ -104,15 +104,15 @@ namespace Org.Apache.Hadoop.IO
 			{
 				caughtException = true;
 			}
-			NUnit.Framework.Assert.IsTrue("Writing beyond limit did not throw an exception", 
+			Assert.True("Writing beyond limit did not throw an exception", 
 				caughtException);
 			//Reset the stream and try, should succeed
 			byte[] newBuf = new byte[Size];
 			stream.ResetBuffer(newBuf, 0, newBuf.Length);
-			NUnit.Framework.Assert.IsTrue("Limit did not get reset correctly", (stream.GetLimit
+			Assert.True("Limit did not get reset correctly", (stream.GetLimit
 				() == Size));
 			stream.Write(Input, 0, Size);
-			NUnit.Framework.Assert.IsTrue("Array Contents Mismatch", Arrays.Equals(Input, stream
+			Assert.True("Array Contents Mismatch", Arrays.Equals(Input, stream
 				.GetBuffer()));
 			// Try writing one more byte, should fail
 			caughtException = false;
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 				caughtException = true;
 			}
-			NUnit.Framework.Assert.IsTrue("Writing beyond limit did not throw an exception", 
+			Assert.True("Writing beyond limit did not throw an exception", 
 				caughtException);
 		}
 	}

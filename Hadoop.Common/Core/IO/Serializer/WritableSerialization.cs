@@ -17,7 +17,7 @@ namespace Org.Apache.Hadoop.IO.Serializer
 	/// for
 	/// <see cref="IWritable"/>
 	/// s that delegates to
-	/// <see cref="IWritable.Write(System.IO.DataOutput)"/>
+	/// <see cref="IWritable.Write(System.IO.BinaryWriter)"/>
 	/// and
 	/// <see cref="IWritable.ReadFields(System.IO.BinaryReader)"/>
 	/// .

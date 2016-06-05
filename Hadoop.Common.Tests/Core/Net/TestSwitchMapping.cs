@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.Net
 		/// implementations
 		/// </summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStandaloneClassesAssumedMultiswitch()
 		{
 			DNSToSwitchMapping mapping = new TestSwitchMapping.StandaloneSwitchMapping();
@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Net
 		/// mapping, which again handles arbitrary DNSToSwitchMapping implementations
 		/// </summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachingRelays()
 		{
 			CachedDNSToSwitchMapping mapping = new CachedDNSToSwitchMapping(new TestSwitchMapping.StandaloneSwitchMapping
@@ -41,17 +41,17 @@ namespace Org.Apache.Hadoop.Net
 		/// mapping, which again handles arbitrary DNSToSwitchMapping implementations
 		/// </summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachingRelaysStringOperations()
 		{
 			Configuration conf = new Configuration();
 			string scriptname = "mappingscript.sh";
 			conf.Set(CommonConfigurationKeys.NetTopologyScriptFileNameKey, scriptname);
 			ScriptBasedMapping scriptMapping = new ScriptBasedMapping(conf);
-			NUnit.Framework.Assert.IsTrue("Did not find " + scriptname + " in " + scriptMapping
+			Assert.True("Did not find " + scriptname + " in " + scriptMapping
 				, scriptMapping.ToString().Contains(scriptname));
 			CachedDNSToSwitchMapping mapping = new CachedDNSToSwitchMapping(scriptMapping);
-			NUnit.Framework.Assert.IsTrue("Did not find " + scriptname + " in " + mapping, mapping
+			Assert.True("Did not find " + scriptname + " in " + mapping, mapping
 				.ToString().Contains(scriptname));
 		}
 
@@ -60,20 +60,20 @@ namespace Org.Apache.Hadoop.Net
 		/// mapping, which again handles arbitrary DNSToSwitchMapping implementations
 		/// </summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachingRelaysStringOperationsToNullScript()
 		{
 			Configuration conf = new Configuration();
 			ScriptBasedMapping scriptMapping = new ScriptBasedMapping(conf);
-			NUnit.Framework.Assert.IsTrue("Did not find " + ScriptBasedMapping.NoScript + " in "
+			Assert.True("Did not find " + ScriptBasedMapping.NoScript + " in "
 				 + scriptMapping, scriptMapping.ToString().Contains(ScriptBasedMapping.NoScript)
 				);
 			CachedDNSToSwitchMapping mapping = new CachedDNSToSwitchMapping(scriptMapping);
-			NUnit.Framework.Assert.IsTrue("Did not find " + ScriptBasedMapping.NoScript + " in "
+			Assert.True("Did not find " + ScriptBasedMapping.NoScript + " in "
 				 + mapping, mapping.ToString().Contains(ScriptBasedMapping.NoScript));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullMapping()
 		{
 			NUnit.Framework.Assert.IsFalse(AbstractDNSToSwitchMapping.IsMappingSingleSwitch(null

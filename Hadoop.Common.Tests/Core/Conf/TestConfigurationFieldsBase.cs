@@ -289,8 +289,8 @@ namespace Org.Apache.Hadoop.Conf
 		{
 			InitializeMemberVariables();
 			// Error if subclass hasn't set class members
-			NUnit.Framework.Assert.IsTrue(xmlFilename != null);
-			NUnit.Framework.Assert.IsTrue(configurationClasses != null);
+			Assert.True(xmlFilename != null);
+			Assert.True(configurationClasses != null);
 			// Create class member/value map
 			configurationMemberVariables = new Dictionary<string, string>();
 			foreach (Type c in configurationClasses)
@@ -317,12 +317,12 @@ namespace Org.Apache.Hadoop.Conf
 		/// Compares the properties that are in the Configuration class, but not
 		/// in the XML properties file.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompareConfigurationClassAgainstXml()
 		{
 			// Error if subclass hasn't set class members
-			NUnit.Framework.Assert.IsTrue(xmlFilename != null);
-			NUnit.Framework.Assert.IsTrue(configurationClasses != null);
+			Assert.True(xmlFilename != null);
+			Assert.True(configurationClasses != null);
 			int missingXmlSize = configurationFieldsMissingInXmlFile.Count;
 			foreach (Type c in configurationClasses)
 			{
@@ -359,7 +359,7 @@ namespace Org.Apache.Hadoop.Conf
 			System.Console.Out.WriteLine();
 			if (errorIfMissingXmlProps)
 			{
-				NUnit.Framework.Assert.IsTrue(xmlErrorMsg.ToString(), missingXmlSize == 0);
+				Assert.True(xmlErrorMsg.ToString(), missingXmlSize == 0);
 			}
 		}
 
@@ -367,12 +367,12 @@ namespace Org.Apache.Hadoop.Conf
 		/// Compares the properties that are in the XML properties file, but not
 		/// in the Configuration class.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompareXmlAgainstConfigurationClass()
 		{
 			// Error if subclass hasn't set class members
-			NUnit.Framework.Assert.IsTrue(xmlFilename != null);
-			NUnit.Framework.Assert.IsTrue(configurationClasses != null);
+			Assert.True(xmlFilename != null);
+			Assert.True(configurationClasses != null);
 			int missingConfigSize = xmlFieldsMissingInConfiguration.Count;
 			System.Console.Out.WriteLine("File " + xmlFilename + " (" + xmlKeyValueMap.Count 
 				+ " properties)");
@@ -404,7 +404,7 @@ namespace Org.Apache.Hadoop.Conf
 			System.Console.Out.WriteLine();
 			if (errorIfMissingConfigProps)
 			{
-				NUnit.Framework.Assert.IsTrue(configErrorMsg.ToString(), missingConfigSize == 0);
+				Assert.True(configErrorMsg.ToString(), missingConfigSize == 0);
 			}
 		}
 	}

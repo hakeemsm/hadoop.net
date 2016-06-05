@@ -149,7 +149,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 			//sanity check to make sure that the test FS picked up really matches
 			//the scheme chosen. This is to avoid defaulting back to the localFS
 			//which would be drastic for root FS tests
-			NUnit.Framework.Assert.AreEqual("wrong filesystem of " + fsURI, contract.GetScheme
+			Assert.Equal("wrong filesystem of " + fsURI, contract.GetScheme
 				(), fsURI.GetScheme());
 			//create the test path
 			testPath = GetContract().GetTestPath();
@@ -306,7 +306,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// <exception cref="System.IO.IOException">IO problems during file operations</exception>
 		protected internal virtual void Mkdirs(Org.Apache.Hadoop.FS.Path path)
 		{
-			NUnit.Framework.Assert.IsTrue("Failed to mkdir " + path, fileSystem.Mkdirs(path));
+			Assert.True("Failed to mkdir " + path, fileSystem.Mkdirs(path));
 		}
 
 		/// <summary>Assert that a delete succeeded</summary>
@@ -327,7 +327,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// <param name="result">read result to validate</param>
 		protected internal virtual void AssertMinusOne(string text, int result)
 		{
-			NUnit.Framework.Assert.AreEqual(text + " wrong read result " + result, -1, result
+			Assert.Equal(text + " wrong read result " + result, -1, result
 				);
 		}
 

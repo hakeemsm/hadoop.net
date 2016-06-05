@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			NUnit.Framework.Assert.IsNotNull(factory);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRegistration()
 		{
 			Assert.AssertArrayEquals(new string[] {  }, factory.GetNames());
@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			Assert.AssertArrayEquals(new string[] { "tc1", "tc2", "tc2.1", "tc3" }, names);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetInstances()
 		{
 			factory.RegisterCommands(typeof(TestCommandFactory.TestRegistrar));
@@ -43,19 +43,19 @@ namespace Org.Apache.Hadoop.FS.Shell
 			NUnit.Framework.Assert.IsNull(instance);
 			instance = factory.GetInstance("tc1");
 			NUnit.Framework.Assert.IsNotNull(instance);
-			NUnit.Framework.Assert.AreEqual(typeof(TestCommandFactory.TestCommand1), instance
+			Assert.Equal(typeof(TestCommandFactory.TestCommand1), instance
 				.GetType());
-			NUnit.Framework.Assert.AreEqual("tc1", instance.GetCommandName());
+			Assert.Equal("tc1", instance.GetCommandName());
 			instance = factory.GetInstance("tc2");
 			NUnit.Framework.Assert.IsNotNull(instance);
-			NUnit.Framework.Assert.AreEqual(typeof(TestCommandFactory.TestCommand2), instance
+			Assert.Equal(typeof(TestCommandFactory.TestCommand2), instance
 				.GetType());
-			NUnit.Framework.Assert.AreEqual("tc2", instance.GetCommandName());
+			Assert.Equal("tc2", instance.GetCommandName());
 			instance = factory.GetInstance("tc2.1");
 			NUnit.Framework.Assert.IsNotNull(instance);
-			NUnit.Framework.Assert.AreEqual(typeof(TestCommandFactory.TestCommand2), instance
+			Assert.Equal(typeof(TestCommandFactory.TestCommand2), instance
 				.GetType());
-			NUnit.Framework.Assert.AreEqual("tc2.1", instance.GetCommandName());
+			Assert.Equal("tc2.1", instance.GetCommandName());
 		}
 
 		internal class TestRegistrar

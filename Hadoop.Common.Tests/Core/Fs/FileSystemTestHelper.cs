@@ -222,7 +222,7 @@ namespace Org.Apache.Hadoop.FS
 				, remaining)) != -1; offset += n)
 			{
 			}
-			NUnit.Framework.Assert.AreEqual(offset, Math.Min(b.Length, @in.GetPos()));
+			Assert.Equal(offset, Math.Min(b.Length, @in.GetPos()));
 			@in.Close();
 			string s = Sharpen.Runtime.GetStringForBytes(b, 0, offset);
 			return s;
@@ -277,23 +277,23 @@ namespace Org.Apache.Hadoop.FS
 			NUnit.Framework.Assert.IsNotNull(s);
 			if (expectedType == FileSystemTestHelper.FileType.isDir)
 			{
-				NUnit.Framework.Assert.IsTrue(s.IsDirectory());
+				Assert.True(s.IsDirectory());
 			}
 			else
 			{
 				if (expectedType == FileSystemTestHelper.FileType.isFile)
 				{
-					NUnit.Framework.Assert.IsTrue(s.IsFile());
+					Assert.True(s.IsFile());
 				}
 				else
 				{
 					if (expectedType == FileSystemTestHelper.FileType.isSymlink)
 					{
-						NUnit.Framework.Assert.IsTrue(s.IsSymlink());
+						Assert.True(s.IsSymlink());
 					}
 				}
 			}
-			NUnit.Framework.Assert.AreEqual(aFs.MakeQualified(new Path(path)), s.GetPath());
+			Assert.Equal(aFs.MakeQualified(new Path(path)), s.GetPath());
 		}
 
 		/// <summary>

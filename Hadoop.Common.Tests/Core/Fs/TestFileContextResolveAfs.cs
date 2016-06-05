@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.FS
 			localFs.Create(localPath);
 			fc.CreateSymlink(localPath, linkPath, true);
 			ICollection<AbstractFileSystem> afsList = fc.ResolveAbstractFileSystems(linkPath);
-			NUnit.Framework.Assert.AreEqual(1, afsList.Count);
+			Assert.Equal(1, afsList.Count);
 			localFs.DeleteOnExit(localPath);
 			localFs.DeleteOnExit(linkPath);
 			localFs.Close();

@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				Text.WriteString(@out, foo);
 			}
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				@out.WriteInt(bar);
 			}
@@ -116,12 +116,12 @@ namespace Org.Apache.Hadoop.IO
 			{
 				base.ReadFields(@in);
 				//needs a configuration parameter
-				NUnit.Framework.Assert.AreEqual("Configuration is not set for the wrapped object"
+				Assert.Equal("Configuration is not set for the wrapped object"
 					, ConfTestValue, GetConf().Get(ConfTestKey));
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				base.Write(@out);
 			}
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.IO
 			//test configuration
 			System.Console.Out.WriteLine("Testing if Configuration is passed to wrapped classes"
 				);
-			NUnit.Framework.Assert.IsTrue(after.Get() is Configurable);
+			Assert.True(after.Get() is Configurable);
 			NUnit.Framework.Assert.IsNotNull(((Configurable)after.Get()).GetConf());
 		}
 
@@ -224,7 +224,7 @@ namespace Org.Apache.Hadoop.IO
 			TestGenericWritable.FooGenericWritable generic = new TestGenericWritable.FooGenericWritable
 				();
 			generic.Set(foo);
-			NUnit.Framework.Assert.AreEqual(foo, generic.Get());
+			Assert.Equal(foo, generic.Get());
 		}
 	}
 }

@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultiNodeOperations()
 		{
 			for (int i = 0; i < TestRetries; i++)
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNodeUpAferAWhile()
 		{
 			for (int i = 0; i < TestRetries; i++)
@@ -187,7 +187,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenewTokenSingleManager()
 		{
 			for (int i = 0; i < TestRetries; i++)
@@ -208,7 +208,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCancelTokenSingleManager()
 		{
 			for (int i = 0; i < TestRetries; i++)
@@ -244,16 +244,16 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			ZKDelegationTokenSecretManager zksm = (ZKDelegationTokenSecretManager)sm;
 			ExecutorService es = zksm.GetListenerThreadPool();
 			tm.Destroy();
-			NUnit.Framework.Assert.IsTrue(es.IsShutdown());
+			Assert.True(es.IsShutdown());
 			// wait for the pool to terminate
 			long timeout = conf.GetLong(ZKDelegationTokenSecretManager.ZkDtsmZkShutdownTimeout
 				, ZKDelegationTokenSecretManager.ZkDtsmZkShutdownTimeoutDefault);
 			Sharpen.Thread.Sleep(timeout * 3);
-			NUnit.Framework.Assert.IsTrue(es.IsTerminated());
+			Assert.True(es.IsTerminated());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopThreads()
 		{
 			DelegationTokenManager tm1 = null;
@@ -301,7 +301,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestACLs()
 		{
 			DelegationTokenManager tm1;
@@ -355,8 +355,8 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			)
 		{
 			IList<ACL> acls = curatorFramework.GetACL().ForPath(path);
-			NUnit.Framework.Assert.AreEqual(1, acls.Count);
-			NUnit.Framework.Assert.AreEqual(expectedACL, acls[0]);
+			Assert.Equal(1, acls.Count);
+			Assert.Equal(expectedACL, acls[0]);
 		}
 
 		// Since it is possible that there can be a delay for the cancel token message

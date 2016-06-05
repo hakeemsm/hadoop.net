@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 	public class TestMetricsSourceAdapter
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPurgeOldMetrics()
 		{
 			// create test source with a single metric counter of value 1
@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				sawIt |= mBeanAttributeInfo.GetName().Equals(source.lastKeyName);
 			}
-			NUnit.Framework.Assert.IsTrue("The last generated metric is not exported to jmx", 
+			Assert.True("The last generated metric is not exported to jmx", 
 				sawIt);
 			Sharpen.Thread.Sleep(1000);
 			// skip JMX cache TTL
@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				sawIt |= mBeanAttributeInfo_1.GetName().Equals(source.lastKeyName);
 			}
-			NUnit.Framework.Assert.IsTrue("The last generated metric is not exported to jmx", 
+			Assert.True("The last generated metric is not exported to jmx", 
 				sawIt);
 		}
 
@@ -64,7 +64,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetMetricsAndJmx()
 		{
 			// create test source with a single metric counter of value 0
@@ -80,21 +80,21 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			IEnumerable<MetricsRecordImpl> metricsRecords = sa.GetMetrics(builder, true);
 			// Validate getMetrics and JMX initial values
 			MetricsRecordImpl metricsRecord = metricsRecords.GetEnumerator().Next();
-			NUnit.Framework.Assert.AreEqual(0L, metricsRecord.Metrics().GetEnumerator().Next(
+			Assert.Equal(0L, metricsRecord.Metrics().GetEnumerator().Next(
 				).Value());
 			Sharpen.Thread.Sleep(100);
 			// skip JMX cache TTL
-			NUnit.Framework.Assert.AreEqual(0L, (Number)sa.GetAttribute("C1"));
+			Assert.Equal(0L, (Number)sa.GetAttribute("C1"));
 			// change metric value
 			source.IncrementCnt();
 			// validate getMetrics and JMX
 			builder = new MetricsCollectorImpl();
 			metricsRecords = sa.GetMetrics(builder, true);
 			metricsRecord = metricsRecords.GetEnumerator().Next();
-			NUnit.Framework.Assert.IsTrue(metricsRecord.Metrics().GetEnumerator().HasNext());
+			Assert.True(metricsRecord.Metrics().GetEnumerator().HasNext());
 			Sharpen.Thread.Sleep(100);
 			// skip JMX cache TTL
-			NUnit.Framework.Assert.AreEqual(1L, (Number)sa.GetAttribute("C1"));
+			Assert.Equal(1L, (Number)sa.GetAttribute("C1"));
 		}
 
 		private class TestSource

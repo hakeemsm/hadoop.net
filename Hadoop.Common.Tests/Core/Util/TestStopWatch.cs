@@ -7,21 +7,21 @@ namespace Org.Apache.Hadoop.Util
 	public class TestStopWatch
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartAndStop()
 		{
 			using (StopWatch sw = new StopWatch())
 			{
 				NUnit.Framework.Assert.IsFalse(sw.IsRunning());
 				sw.Start();
-				NUnit.Framework.Assert.IsTrue(sw.IsRunning());
+				Assert.True(sw.IsRunning());
 				sw.Stop();
 				NUnit.Framework.Assert.IsFalse(sw.IsRunning());
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopInTryWithResource()
 		{
 			using (StopWatch sw = new StopWatch())
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Util
 
 		// make sure that no exception is thrown.
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExceptions()
 		{
 			StopWatch sw = new StopWatch();
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (Exception e)
 			{
-				NUnit.Framework.Assert.IsTrue("IllegalStateException is expected", e is InvalidOperationException
+				Assert.True("IllegalStateException is expected", e is InvalidOperationException
 					);
 			}
 			sw.Reset();
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (Exception e)
 			{
-				NUnit.Framework.Assert.IsTrue("IllegalStateException is expected", e is InvalidOperationException
+				Assert.True("IllegalStateException is expected", e is InvalidOperationException
 					);
 			}
 		}

@@ -38,8 +38,8 @@ namespace Org.Apache.Hadoop.Util
 		[NUnit.Framework.SetUp]
 		public virtual void SetUp()
 		{
-			NUnit.Framework.Assert.IsTrue(FileUtil.FullyDelete(TestDir));
-			NUnit.Framework.Assert.IsTrue(TestDir.Mkdirs());
+			Assert.True(FileUtil.FullyDelete(TestDir));
+			Assert.True(TestDir.Mkdirs());
 			oldStdout = System.Console.Out;
 			oldStderr = System.Console.Error;
 			stdout = new ByteArrayOutputStream();
@@ -56,33 +56,33 @@ namespace Org.Apache.Hadoop.Util
 			Runtime.SetOut(oldStdout);
 			Runtime.SetErr(oldStderr);
 			IOUtils.Cleanup(Log, printStdout, printStderr);
-			NUnit.Framework.Assert.IsTrue(FileUtil.FullyDelete(TestDir));
+			Assert.True(FileUtil.FullyDelete(TestDir));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGlob()
 		{
 			Classpath.Main(new string[] { "--glob" });
 			string strOut = new string(stdout.ToByteArray(), Utf8);
-			NUnit.Framework.Assert.AreEqual(Runtime.GetProperty("java.class.path"), strOut.Trim
+			Assert.Equal(Runtime.GetProperty("java.class.path"), strOut.Trim
 				());
-			NUnit.Framework.Assert.IsTrue(stderr.ToByteArray().Length == 0);
+			Assert.True(stderr.ToByteArray().Length == 0);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJar()
 		{
 			FilePath file = new FilePath(TestDir, "classpath.jar");
 			Classpath.Main(new string[] { "--jar", file.GetAbsolutePath() });
-			NUnit.Framework.Assert.IsTrue(stdout.ToByteArray().Length == 0);
-			NUnit.Framework.Assert.IsTrue(stderr.ToByteArray().Length == 0);
-			NUnit.Framework.Assert.IsTrue(file.Exists());
+			Assert.True(stdout.ToByteArray().Length == 0);
+			Assert.True(stderr.ToByteArray().Length == 0);
+			Assert.True(file.Exists());
 			AssertJar(file);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJarReplace()
 		{
 			// Run the command twice with the same output jar file, and expect success.
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJarFileMissing()
 		{
 			try
@@ -101,31 +101,31 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (ExitUtil.ExitException)
 			{
-				NUnit.Framework.Assert.IsTrue(stdout.ToByteArray().Length == 0);
+				Assert.True(stdout.ToByteArray().Length == 0);
 				string strErr = new string(stderr.ToByteArray(), Utf8);
-				NUnit.Framework.Assert.IsTrue(strErr.Contains("requires path of jar"));
+				Assert.True(strErr.Contains("requires path of jar"));
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHelp()
 		{
 			Classpath.Main(new string[] { "--help" });
 			string strOut = new string(stdout.ToByteArray(), Utf8);
-			NUnit.Framework.Assert.IsTrue(strOut.Contains("Prints the classpath"));
-			NUnit.Framework.Assert.IsTrue(stderr.ToByteArray().Length == 0);
+			Assert.True(strOut.Contains("Prints the classpath"));
+			Assert.True(stderr.ToByteArray().Length == 0);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHelpShort()
 		{
 			Classpath.Main(new string[] { "-h" });
 			string strOut = new string(stdout.ToByteArray(), Utf8);
-			NUnit.Framework.Assert.IsTrue(strOut.Contains("Prints the classpath"));
-			NUnit.Framework.Assert.IsTrue(stderr.ToByteArray().Length == 0);
+			Assert.True(strOut.Contains("Prints the classpath"));
+			Assert.True(stderr.ToByteArray().Length == 0);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUnrecognized()
 		{
 			try
@@ -135,9 +135,9 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (ExitUtil.ExitException)
 			{
-				NUnit.Framework.Assert.IsTrue(stdout.ToByteArray().Length == 0);
+				Assert.True(stdout.ToByteArray().Length == 0);
 				string strErr = new string(stderr.ToByteArray(), Utf8);
-				NUnit.Framework.Assert.IsTrue(strErr.Contains("unrecognized option"));
+				Assert.True(strErr.Contains("unrecognized option"));
 			}
 		}
 
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Util
 				NUnit.Framework.Assert.IsNotNull(manifest);
 				Attributes mainAttributes = manifest.GetMainAttributes();
 				NUnit.Framework.Assert.IsNotNull(mainAttributes);
-				NUnit.Framework.Assert.IsTrue(mainAttributes.Contains(Attributes.Name.ClassPath));
+				Assert.True(mainAttributes.Contains(Attributes.Name.ClassPath));
 				string classPathAttr = mainAttributes.GetValue(Attributes.Name.ClassPath);
 				NUnit.Framework.Assert.IsNotNull(classPathAttr);
 				NUnit.Framework.Assert.IsFalse(classPathAttr.IsEmpty());

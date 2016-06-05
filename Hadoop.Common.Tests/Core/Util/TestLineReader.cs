@@ -17,7 +17,7 @@ namespace Org.Apache.Hadoop.Util
 		private Text line;
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCustomDelimiter()
 		{
 			/* TEST_1
@@ -69,9 +69,9 @@ namespace Org.Apache.Hadoop.Util
 				(TestData)), Sharpen.Runtime.GetBytesForString(Delimiter));
 			line = new Org.Apache.Hadoop.IO.Text();
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual(fillerString.ToString(), line.ToString());
+			Assert.Equal(fillerString.ToString(), line.ToString());
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual(Expected, line.ToString());
+			Assert.Equal(Expected, line.ToString());
 			/*TEST_2
 			* The test scenario is such that,
 			* the character/s preceding the delimiter,
@@ -89,19 +89,19 @@ namespace Org.Apache.Hadoop.Util
 			lineReader = new LineReader(new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString
 				(TestData)), Sharpen.Runtime.GetBytesForString(Delimiter));
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual(string.Empty, line.ToString());
+			Assert.Equal(string.Empty, line.ToString());
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual("Kerala ", line.ToString());
+			Assert.Equal("Kerala ", line.ToString());
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual("Bangalore", line.ToString());
+			Assert.Equal("Bangalore", line.ToString());
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual(" North Korea", line.ToString());
+			Assert.Equal(" North Korea", line.ToString());
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual(string.Empty, line.ToString());
+			Assert.Equal(string.Empty, line.ToString());
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual("Guantanamo", line.ToString());
+			Assert.Equal("Guantanamo", line.ToString());
 			lineReader.ReadLine(line);
-			NUnit.Framework.Assert.AreEqual(("ecord" + "recor" + "core"), line.ToString());
+			Assert.Equal(("ecord" + "recor" + "core"), line.ToString());
 		}
 	}
 }

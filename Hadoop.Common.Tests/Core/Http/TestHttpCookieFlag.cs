@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHttpCookie()
 		{
 			Uri @base = new Uri("http://" + NetUtils.GetHostPortString(server.GetConnectorAddress
@@ -96,14 +96,14 @@ namespace Org.Apache.Hadoop.Http
 				();
 			string header = conn.GetHeaderField("Set-Cookie");
 			IList<HttpCookie> cookies = HttpCookie.Parse(header);
-			NUnit.Framework.Assert.IsTrue(!cookies.IsEmpty());
-			NUnit.Framework.Assert.IsTrue(header.Contains("; HttpOnly"));
-			NUnit.Framework.Assert.IsTrue("token".Equals(cookies[0].GetValue()));
+			Assert.True(!cookies.IsEmpty());
+			Assert.True(header.Contains("; HttpOnly"));
+			Assert.True("token".Equals(cookies[0].GetValue()));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Sharpen.GeneralSecurityException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHttpsCookie()
 		{
 			Uri @base = new Uri("https://" + NetUtils.GetHostPortString(server.GetConnectorAddress
@@ -113,10 +113,10 @@ namespace Org.Apache.Hadoop.Http
 			conn.SetSSLSocketFactory(clientSslFactory.CreateSSLSocketFactory());
 			string header = conn.GetHeaderField("Set-Cookie");
 			IList<HttpCookie> cookies = HttpCookie.Parse(header);
-			NUnit.Framework.Assert.IsTrue(!cookies.IsEmpty());
-			NUnit.Framework.Assert.IsTrue(header.Contains("; HttpOnly"));
-			NUnit.Framework.Assert.IsTrue(cookies[0].GetSecure());
-			NUnit.Framework.Assert.IsTrue("token".Equals(cookies[0].GetValue()));
+			Assert.True(!cookies.IsEmpty());
+			Assert.True(header.Contains("; HttpOnly"));
+			Assert.True(cookies[0].GetSecure());
+			Assert.True("token".Equals(cookies[0].GetValue()));
 		}
 
 		/// <exception cref="System.Exception"/>

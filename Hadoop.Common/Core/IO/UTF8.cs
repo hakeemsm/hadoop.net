@@ -140,7 +140,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			@out.WriteShort(length);
 			@out.Write(bytes, 0, length);
@@ -365,9 +365,9 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Write a UTF-8 encoded string.</summary>
-		/// <seealso cref="System.IO.DataOutput.WriteUTF(string)"/>
+		/// <seealso cref="System.IO.BinaryWriter.WriteUTF(string)"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteString(DataOutput @out, string s)
+		public static int WriteString(BinaryWriter @out, string s)
 		{
 			if (s.Length > unchecked((int)(0xffff)) / 3)
 			{
@@ -415,7 +415,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static void WriteChars(DataOutput @out, string s, int start, int length)
+		private static void WriteChars(BinaryWriter @out, string s, int start, int length)
 		{
 			int end = start + length;
 			for (int i = start; i < end; i++)

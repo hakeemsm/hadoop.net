@@ -12,7 +12,7 @@ namespace Org.Apache.Hadoop.Http
 
 		/// <summary>Test that the test server is loadable on the classpath</summary>
 		/// <exception cref="System.Exception">if something went wrong</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestValidServerResource()
 		{
 			HttpServer2 server = null;
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Http
 
 		/// <summary>Test that an invalid webapp triggers an exception</summary>
 		/// <exception cref="System.Exception">if something went wrong</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMissingServerResource()
 		{
 			try

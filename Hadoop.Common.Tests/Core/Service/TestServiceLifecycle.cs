@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.Service
 		/// more to verify that service's counters work than anything else
 		/// </summary>
 		/// <exception cref="System.Exception">if necessary</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWalkthrough()
 		{
 			BreakableService svc = new BreakableService();
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Service
 
 		/// <summary>call init twice</summary>
 		/// <exception cref="System.Exception">if necessary</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitTwice()
 		{
 			BreakableService svc = new BreakableService();
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Service
 
 		/// <summary>Call start twice</summary>
 		/// <exception cref="System.Exception">if necessary</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartTwice()
 		{
 			BreakableService svc = new BreakableService();
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.Service
 		/// is thrown.
 		/// </summary>
 		/// <exception cref="System.Exception">if necessary</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopTwice()
 		{
 			BreakableService svc = new BreakableService();
@@ -84,7 +84,7 @@ namespace Org.Apache.Hadoop.Service
 		/// operation, it stays in the created state, even after stopping it
 		/// </summary>
 		/// <exception cref="System.Exception">if necessary</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopFailedInit()
 		{
 			BreakableService svc = new BreakableService(true, false, false);
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.Service
 		/// operation, it stays in the created state, even after stopping it
 		/// </summary>
 		/// <exception cref="System.Exception">if necessary</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopFailedStart()
 		{
 			BreakableService svc = new BreakableService(false, true, false);
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.Service
 		/// its state does not change.
 		/// </summary>
 		/// <exception cref="System.Exception">if necessary</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFailingStop()
 		{
 			BreakableService svc = new BreakableService(false, false, true);
@@ -159,7 +159,7 @@ namespace Org.Apache.Hadoop.Service
 		/// service enters the stopped state
 		/// </summary>
 		/// <exception cref="System.Exception">on a failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopUnstarted()
 		{
 			BreakableService svc = new BreakableService();
@@ -174,7 +174,7 @@ namespace Org.Apache.Hadoop.Service
 		/// operation, stop was called.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopFailingInitAndStop()
 		{
 			BreakableService svc = new BreakableService(true, false, true);
@@ -186,22 +186,22 @@ namespace Org.Apache.Hadoop.Service
 			}
 			catch (BreakableService.BrokenLifecycleEvent e)
 			{
-				NUnit.Framework.Assert.AreEqual(Service.STATE.Inited, e.state);
+				Assert.Equal(Service.STATE.Inited, e.state);
 			}
 			//the service state is stopped
 			AssertServiceStateStopped(svc);
-			NUnit.Framework.Assert.AreEqual(Service.STATE.Inited, svc.GetFailureState());
+			Assert.Equal(Service.STATE.Inited, svc.GetFailureState());
 			Exception failureCause = svc.GetFailureCause();
 			NUnit.Framework.Assert.IsNotNull("Null failure cause in " + svc, failureCause);
 			BreakableService.BrokenLifecycleEvent cause = (BreakableService.BrokenLifecycleEvent
 				)failureCause;
 			NUnit.Framework.Assert.IsNotNull("null state in " + cause + " raised by " + svc, 
 				cause.state);
-			NUnit.Framework.Assert.AreEqual(Service.STATE.Inited, cause.state);
+			Assert.Equal(Service.STATE.Inited, cause.state);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInitNullConf()
 		{
 			BreakableService svc = new BreakableService(false, false, false);
@@ -217,7 +217,7 @@ namespace Org.Apache.Hadoop.Service
 
 		//expected
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceNotifications()
 		{
 			BreakableService svc = new BreakableService(false, false, false);
@@ -236,7 +236,7 @@ namespace Org.Apache.Hadoop.Service
 		/// <summary>Test that when a service listener is unregistered, it stops being invoked
 		/// 	</summary>
 		/// <exception cref="System.Exception">on a failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceNotificationsStopOnceUnregistered()
 		{
 			BreakableService svc = new BreakableService(false, false, false);
@@ -264,7 +264,7 @@ namespace Org.Apache.Hadoop.Service
 		/// the copy precisely to prevent this problem.
 		/// </remarks>
 		/// <exception cref="System.Exception">on a failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceNotificationsUnregisterDuringCallback()
 		{
 			BreakableService svc = new BreakableService(false, false, false);
@@ -300,12 +300,12 @@ namespace Org.Apache.Hadoop.Service
 		private void AssertEventCount(BreakableStateChangeListener listener, int expected
 			)
 		{
-			NUnit.Framework.Assert.AreEqual(listener.ToString(), expected, listener.GetEventCount
+			Assert.Equal(listener.ToString(), expected, listener.GetEventCount
 				());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServiceFailingNotifications()
 		{
 			BreakableService svc = new BreakableService(false, false, false);
@@ -318,11 +318,11 @@ namespace Org.Apache.Hadoop.Service
 			svc.Start();
 			//counter went up
 			AssertEventCount(listener, 2);
-			NUnit.Framework.Assert.AreEqual(1, listener.GetFailureCount());
+			Assert.Equal(1, listener.GetFailureCount());
 			//stop the service -this doesn't fail
 			svc.Stop();
 			AssertEventCount(listener, 3);
-			NUnit.Framework.Assert.AreEqual(1, listener.GetFailureCount());
+			Assert.Equal(1, listener.GetFailureCount());
 			svc.Stop();
 		}
 
@@ -331,7 +331,7 @@ namespace Org.Apache.Hadoop.Service
 		/// and use notifications to manage it
 		/// </summary>
 		/// <exception cref="System.Exception">on a failure</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListenerWithNotifications()
 		{
 			//this tests that a listener can get notified when a service is stopped
@@ -349,14 +349,14 @@ namespace Org.Apache.Hadoop.Service
 				Sharpen.Runtime.Wait(listener, 20000);
 			}
 			long duration = Runtime.CurrentTimeMillis() - start;
-			NUnit.Framework.Assert.AreEqual(Service.STATE.Stopped, listener.notifyingState);
+			Assert.Equal(Service.STATE.Stopped, listener.notifyingState);
 			AssertServiceInState(service, Service.STATE.Stopped);
-			NUnit.Framework.Assert.IsTrue("Duration of " + duration + " too long", duration <
+			Assert.True("Duration of " + duration + " too long", duration <
 				 10000);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSelfTerminatingService()
 		{
 			TestServiceLifecycle.SelfTerminatingService service = new TestServiceLifecycle.SelfTerminatingService
@@ -372,7 +372,7 @@ namespace Org.Apache.Hadoop.Service
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartInInitService()
 		{
 			Org.Apache.Hadoop.Service.Service service = new TestServiceLifecycle.StartInInitService
@@ -385,7 +385,7 @@ namespace Org.Apache.Hadoop.Service
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopInInitService()
 		{
 			Org.Apache.Hadoop.Service.Service service = new TestServiceLifecycle.StopInInitService

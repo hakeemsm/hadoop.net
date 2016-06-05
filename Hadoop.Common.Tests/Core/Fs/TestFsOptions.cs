@@ -5,7 +5,7 @@ namespace Org.Apache.Hadoop.FS
 {
 	public class TestFsOptions
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProcessChecksumOpt()
 		{
 			Options.ChecksumOpt defaultOpt = new Options.ChecksumOpt(DataChecksum.Type.Crc32, 
@@ -33,17 +33,17 @@ namespace Org.Apache.Hadoop.FS
 		private void CheckParams(Options.ChecksumOpt expected, Options.ChecksumOpt obtained
 			)
 		{
-			NUnit.Framework.Assert.AreEqual(expected.GetChecksumType(), obtained.GetChecksumType
+			Assert.Equal(expected.GetChecksumType(), obtained.GetChecksumType
 				());
-			NUnit.Framework.Assert.AreEqual(expected.GetBytesPerChecksum(), obtained.GetBytesPerChecksum
+			Assert.Equal(expected.GetBytesPerChecksum(), obtained.GetBytesPerChecksum
 				());
 		}
 
 		private void CheckParams(DataChecksum.Type type, int bpc, Options.ChecksumOpt obtained
 			)
 		{
-			NUnit.Framework.Assert.AreEqual(type, obtained.GetChecksumType());
-			NUnit.Framework.Assert.AreEqual(bpc, obtained.GetBytesPerChecksum());
+			Assert.Equal(type, obtained.GetChecksumType());
+			Assert.Equal(bpc, obtained.GetBytesPerChecksum());
 		}
 	}
 }

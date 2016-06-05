@@ -152,13 +152,13 @@ namespace Org.Apache.Hadoop.FS
 			// We can stat a dangling link
 			UserGroupInformation user = UserGroupInformation.GetCurrentUser();
 			FileStatus fsd = wrapper.GetFileLinkStatus(link);
-			NUnit.Framework.Assert.AreEqual(fileQual, fsd.GetSymlink());
-			NUnit.Framework.Assert.IsTrue(fsd.IsSymlink());
+			Assert.Equal(fileQual, fsd.GetSymlink());
+			Assert.True(fsd.IsSymlink());
 			NUnit.Framework.Assert.IsFalse(fsd.IsDirectory());
-			NUnit.Framework.Assert.AreEqual(user.GetUserName(), fsd.GetOwner());
+			Assert.Equal(user.GetUserName(), fsd.GetOwner());
 			// Compare against user's primary group
-			NUnit.Framework.Assert.AreEqual(user.GetGroupNames()[0], fsd.GetGroup());
-			NUnit.Framework.Assert.AreEqual(linkQual, fsd.GetPath());
+			Assert.Equal(user.GetGroupNames()[0], fsd.GetGroup());
+			Assert.Equal(linkQual, fsd.GetPath());
 			// Accessing the link 
 			try
 			{
@@ -189,13 +189,13 @@ namespace Org.Apache.Hadoop.FS
 			wrapper.SetWorkingDirectory(dir);
 			// Link target is partially qualified, we get the same back.
 			wrapper.CreateSymlink(fileQual, link, false);
-			NUnit.Framework.Assert.AreEqual(fileQual, wrapper.GetFileLinkStatus(link).GetSymlink
+			Assert.Equal(fileQual, wrapper.GetFileLinkStatus(link).GetSymlink
 				());
 			// Because the target was specified with an absolute path the
 			// link fails to resolve after moving the parent directory. 
 			wrapper.Rename(dir, dirNew);
 			// The target is still the old path
-			NUnit.Framework.Assert.AreEqual(fileQual, wrapper.GetFileLinkStatus(linkNew).GetSymlink
+			Assert.Equal(fileQual, wrapper.GetFileLinkStatus(linkNew).GetSymlink
 				());
 			try
 			{

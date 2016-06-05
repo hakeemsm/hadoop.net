@@ -8,7 +8,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 	public class TestFileSignerSecretProvider
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetSecrets()
 		{
 			FilePath testDir = new FilePath(Runtime.GetProperty("test.build.data", "target/test-dir"
@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			Assert.AssertArrayEquals(Sharpen.Runtime.GetBytesForString(secretValue), secretProvider
 				.GetCurrentSecret());
 			byte[][] allSecrets = secretProvider.GetAllSecrets();
-			NUnit.Framework.Assert.AreEqual(1, allSecrets.Length);
+			Assert.Equal(1, allSecrets.Length);
 			Assert.AssertArrayEquals(Sharpen.Runtime.GetBytesForString(secretValue), allSecrets
 				[0]);
 		}

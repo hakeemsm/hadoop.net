@@ -76,12 +76,12 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEcho()
 		{
-			NUnit.Framework.Assert.AreEqual("a:b\nc:d\n", ReadOut(new Uri(baseUrl, "/echo?a=b&c=d"
+			Assert.Equal("a:b\nc:d\n", ReadOut(new Uri(baseUrl, "/echo?a=b&c=d"
 				)));
-			NUnit.Framework.Assert.AreEqual("a:b\nc&lt;:d\ne:&gt;\n", ReadOut(new Uri(baseUrl
+			Assert.Equal("a:b\nc&lt;:d\ne:&gt;\n", ReadOut(new Uri(baseUrl
 				, "/echo?a=b&c<=d&e=>")));
 		}
 
@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.Http
 		/// names and values included.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLongHeader()
 		{
 			Uri url = new Uri(baseUrl, "/longheader");

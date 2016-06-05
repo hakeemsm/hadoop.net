@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.Security
 		/// relogin from keytab as well. This will catch regressions like HADOOP-10786.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUGILoginFromKeytab()
 		{
 			UserGroupInformation.SetShouldRenewImmediatelyForTests(true);
@@ -63,14 +63,14 @@ namespace Org.Apache.Hadoop.Security
 			kdc.CreatePrincipal(keytab, principal);
 			UserGroupInformation.LoginUserFromKeytab(principal, keytab.GetPath());
 			UserGroupInformation ugi = UserGroupInformation.GetLoginUser();
-			NUnit.Framework.Assert.IsTrue("UGI should be configured to login from keytab", ugi
+			Assert.True("UGI should be configured to login from keytab", ugi
 				.IsFromKeytab());
 			// Verify relogin from keytab.
 			User user = ugi.GetSubject().GetPrincipals<User>().GetEnumerator().Next();
 			long firstLogin = user.GetLastLogin();
 			ugi.ReloginFromKeytab();
 			long secondLogin = user.GetLastLogin();
-			NUnit.Framework.Assert.IsTrue("User should have been able to relogin from keytab"
+			Assert.True("User should have been able to relogin from keytab"
 				, secondLogin > firstLogin);
 		}
 	}

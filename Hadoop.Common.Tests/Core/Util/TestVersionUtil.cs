@@ -4,35 +4,35 @@ namespace Org.Apache.Hadoop.Util
 {
 	public class TestVersionUtil
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompareVersions()
 		{
 			// Equal versions are equal.
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("2.0.0", "2.0.0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("2.0.0a", "2.0.0a"
+			Assert.Equal(0, VersionUtil.CompareVersions("2.0.0", "2.0.0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("2.0.0a", "2.0.0a"
 				));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("2.0.0-SNAPSHOT", 
+			Assert.Equal(0, VersionUtil.CompareVersions("2.0.0-SNAPSHOT", 
 				"2.0.0-SNAPSHOT"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1", "1"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1", "1.0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1", "1.0.0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0", "1"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0", "1.0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0", "1.0.0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0.0", "1"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0.0", "1.0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0.0", "1.0.0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0.0-alpha-1", "1.0.0-a1"
+			Assert.Equal(0, VersionUtil.CompareVersions("1", "1"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1", "1.0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1", "1.0.0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0", "1"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0", "1.0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0", "1.0.0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0.0", "1"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0.0", "1.0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0.0", "1.0.0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0.0-alpha-1", "1.0.0-a1"
 				));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0.0-alpha-2", "1.0.0-a2"
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0.0-alpha-2", "1.0.0-a2"
 				));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.0.0-alpha1", "1.0.0-alpha-1"
+			Assert.Equal(0, VersionUtil.CompareVersions("1.0.0-alpha1", "1.0.0-alpha-1"
 				));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1a0", "1.0.0-alpha-0"
+			Assert.Equal(0, VersionUtil.CompareVersions("1a0", "1.0.0-alpha-0"
 				));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1a0", "1-a0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.a0", "1-a0"));
-			NUnit.Framework.Assert.AreEqual(0, VersionUtil.CompareVersions("1.a0", "1.0.0-alpha-0"
+			Assert.Equal(0, VersionUtil.CompareVersions("1a0", "1-a0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.a0", "1-a0"));
+			Assert.Equal(0, VersionUtil.CompareVersions("1.a0", "1.0.0-alpha-0"
 				));
 			// Assert that lower versions are lower, and higher versions are higher.
 			AssertExpectedValues("1", "2.0.0");
@@ -76,8 +76,8 @@ namespace Org.Apache.Hadoop.Util
 
 		private static void AssertExpectedValues(string lower, string higher)
 		{
-			NUnit.Framework.Assert.IsTrue(VersionUtil.CompareVersions(lower, higher) < 0);
-			NUnit.Framework.Assert.IsTrue(VersionUtil.CompareVersions(higher, lower) > 0);
+			Assert.True(VersionUtil.CompareVersions(lower, higher) < 0);
+			Assert.True(VersionUtil.CompareVersions(higher, lower) > 0);
 		}
 	}
 }

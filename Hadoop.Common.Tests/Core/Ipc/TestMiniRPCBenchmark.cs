@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Ipc
 	public class TestMiniRPCBenchmark
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSimple()
 		{
 			Configuration conf = new Configuration();

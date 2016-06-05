@@ -28,11 +28,11 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileContextNoCache()
 		{
 			FileContext fc1 = FileContext.GetLocalFSFileContext();
-			NUnit.Framework.Assert.IsTrue(fc1 != fc);
+			Assert.True(fc1 != fc);
 		}
 
 		protected internal override bool ListCorruptedBlocksSupported()
@@ -41,14 +41,14 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultFilePermission()
 		{
 			Path file = fileContextTestHelper.GetTestRootPath(fc, "testDefaultFilePermission"
 				);
 			FileContextTestHelper.CreateFile(fc, file);
 			FsPermission expect = FileContext.FileDefaultPerm.ApplyUMask(fc.GetUMask());
-			NUnit.Framework.Assert.AreEqual(expect, fc.GetFileStatus(file).GetPermission());
+			Assert.Equal(expect, fc.GetFileStatus(file).GetPermission());
 		}
 	}
 }

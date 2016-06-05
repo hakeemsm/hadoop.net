@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.Oncrpc.Security
 	/// </summary>
 	public class TestCredentialsSys
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReadWrite()
 		{
 			CredentialsSys credential = new CredentialsSys();
@@ -19,8 +19,8 @@ namespace Org.Apache.Hadoop.Oncrpc.Security
 			credential.Write(xdr);
 			CredentialsSys newCredential = new CredentialsSys();
 			newCredential.Read(xdr.AsReadOnlyWrap());
-			NUnit.Framework.Assert.AreEqual(0, newCredential.GetUID());
-			NUnit.Framework.Assert.AreEqual(1, newCredential.GetGID());
+			Assert.Equal(0, newCredential.GetUID());
+			Assert.Equal(1, newCredential.GetGID());
 		}
 	}
 }

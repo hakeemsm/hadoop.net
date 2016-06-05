@@ -35,7 +35,7 @@ namespace Org.Apache.Hadoop.Util
 
 		/// <summary>This test creates some ExampleTasks and runs them.</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAsyncDiskService()
 		{
 			string[] vols = new string[] { "/0", "/1" };
@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				Fail("AsyncDiskService didn't shutdown in 5 seconds.");
 			}
-			NUnit.Framework.Assert.AreEqual(total, count);
+			Assert.Equal(total, count);
 		}
 	}
 }

@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(DataOutput @out)
+		public override void Write(BinaryWriter @out)
 		{
 			base.Write(@out);
 			// Write out the number of entries in the map

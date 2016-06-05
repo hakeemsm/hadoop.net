@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			Org.Mockito.Mockito.Reset(mockFs);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ProcessOptionsHumanReadable()
 		{
 			List<string> options = new List<string>();
@@ -56,10 +56,10 @@ namespace Org.Apache.Hadoop.FS.Shell
 			Count count = new Count();
 			count.ProcessOptions(options);
 			NUnit.Framework.Assert.IsFalse(count.IsShowQuotas());
-			NUnit.Framework.Assert.IsTrue(count.IsHumanReadable());
+			Assert.True(count.IsHumanReadable());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ProcessOptionsAll()
 		{
 			List<string> options = new List<string>();
@@ -68,13 +68,13 @@ namespace Org.Apache.Hadoop.FS.Shell
 			options.AddItem("dummy");
 			Count count = new Count();
 			count.ProcessOptions(options);
-			NUnit.Framework.Assert.IsTrue(count.IsShowQuotas());
-			NUnit.Framework.Assert.IsTrue(count.IsHumanReadable());
+			Assert.True(count.IsShowQuotas());
+			Assert.True(count.IsHumanReadable());
 		}
 
 		// check quotas are reported correctly
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ProcessPathShowQuotas()
 		{
 			Path path = new Path("mockfs:/test");
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 
 		// check counts without quotas are reported correctly
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ProcessPathNoQuotas()
 		{
 			Path path = new Path("mockfs:/test");
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ProcessPathShowQuotasHuman()
 		{
 			Path path = new Path("mockfs:/test");
@@ -131,7 +131,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ProcessPathNoQuotasHuman()
 		{
 			Path path = new Path("mockfs:/test");
@@ -148,49 +148,49 @@ namespace Org.Apache.Hadoop.FS.Shell
 			Org.Mockito.Mockito.Verify(@out).WriteLine(Human + NoQuotas + path.ToString());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void GetCommandName()
 		{
 			Count count = new Count();
 			string actual = count.GetCommandName();
 			string expected = "count";
-			NUnit.Framework.Assert.AreEqual("Count.getCommandName", expected, actual);
+			Assert.Equal("Count.getCommandName", expected, actual);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void IsDeprecated()
 		{
 			Count count = new Count();
 			bool actual = count.IsDeprecated();
 			bool expected = false;
-			NUnit.Framework.Assert.AreEqual("Count.isDeprecated", expected, actual);
+			Assert.Equal("Count.isDeprecated", expected, actual);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void GetReplacementCommand()
 		{
 			Count count = new Count();
 			string actual = count.GetReplacementCommand();
 			string expected = null;
-			NUnit.Framework.Assert.AreEqual("Count.getReplacementCommand", expected, actual);
+			Assert.Equal("Count.getReplacementCommand", expected, actual);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void GetName()
 		{
 			Count count = new Count();
 			string actual = count.GetName();
 			string expected = "count";
-			NUnit.Framework.Assert.AreEqual("Count.getName", expected, actual);
+			Assert.Equal("Count.getName", expected, actual);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void GetUsage()
 		{
 			Count count = new Count();
 			string actual = count.GetUsage();
 			string expected = "-count [-q] [-h] <path> ...";
-			NUnit.Framework.Assert.AreEqual("Count.getUsage", expected, actual);
+			Assert.Equal("Count.getUsage", expected, actual);
 		}
 
 		internal class MockContentSummary : ContentSummary

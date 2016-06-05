@@ -1,9 +1,8 @@
 using System;
-using Sharpen;
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
-	[System.ObsoleteAttribute(@"use java.io.Closeable")]
+	[Obsolete(@"IDisposable")]
 	public interface Closeable : IDisposable
 	{
 	}

@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.HA
 			// Format the base dir, should succeed
 			thrs = new MiniZKFCCluster.DummyZKFCThread[2];
 			thrs[0] = new MiniZKFCCluster.DummyZKFCThread(this, ctx, svcs[0]);
-			NUnit.Framework.Assert.AreEqual(0, thrs[0].zkfc.Run(new string[] { "-formatZK" })
+			Assert.Equal(0, thrs[0].zkfc.Run(new string[] { "-formatZK" })
 				);
 			ctx.AddThread(thrs[0]);
 			thrs[0].Start();
@@ -265,7 +265,7 @@ namespace Org.Apache.Hadoop.HA
 			{
 				try
 				{
-					NUnit.Framework.Assert.AreEqual(0, this.zkfc.Run(new string[0]));
+					Assert.Equal(0, this.zkfc.Run(new string[0]));
 				}
 				catch (Exception)
 				{

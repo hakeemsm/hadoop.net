@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Log
 				log.Debug("log.debug1");
 				log.Info("log.info1");
 				log.Error("log.error1");
-				NUnit.Framework.Assert.IsTrue(!Level.Error.Equals(log.GetEffectiveLevel()));
+				Assert.True(!Level.Error.Equals(log.GetEffectiveLevel()));
 				HttpServer2 server = new HttpServer2.Builder().SetName("..").AddEndpoint(new URI(
 					"http://localhost:0")).SetFindPort(true).Build();
 				server.Start();
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.Log
 				log.Debug("log.debug2");
 				log.Info("log.info2");
 				log.Error("log.error2");
-				NUnit.Framework.Assert.IsTrue(Level.Error.Equals(log.GetEffectiveLevel()));
+				Assert.True(Level.Error.Equals(log.GetEffectiveLevel()));
 				//command line
 				string[] args = new string[] { "-setlevel", authority, logName, Level.Debug.ToString
 					() };
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.Log
 				log.Debug("log.debug3");
 				log.Info("log.info3");
 				log.Error("log.error3");
-				NUnit.Framework.Assert.IsTrue(Level.Debug.Equals(log.GetEffectiveLevel()));
+				Assert.True(Level.Debug.Equals(log.GetEffectiveLevel()));
 			}
 			else
 			{

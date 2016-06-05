@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddRemoveRenewAction()
 		{
 			Text service = new Text("myservice");
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.DoReturn(conf).When(fs).GetConf();
 			Org.Mockito.Mockito.DoReturn(token).When(fs).GetRenewToken();
 			renewer.AddRenewAction(fs);
-			NUnit.Framework.Assert.AreEqual("FileSystem not added to DelegationTokenRenewer", 
+			Assert.Equal("FileSystem not added to DelegationTokenRenewer", 
 				1, renewer.GetRenewQueueLength());
 			Sharpen.Thread.Sleep(RenewCycle * 2);
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtLeast(2)).Renew(Eq(conf));
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.FS
 				);
 			Org.Mockito.Mockito.Verify(fs, Org.Mockito.Mockito.Never()).SetDelegationToken(Any
 				<Org.Apache.Hadoop.Security.Token.Token>());
-			NUnit.Framework.Assert.AreEqual("FileSystem not removed from DelegationTokenRenewer"
+			Assert.Equal("FileSystem not removed from DelegationTokenRenewer"
 				, 0, renewer.GetRenewQueueLength());
 		}
 
@@ -90,7 +90,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddRenewActionWithNoToken()
 		{
 			Configuration conf = Org.Mockito.Mockito.Mock<Configuration>();
@@ -100,12 +100,12 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.DoReturn(null).When(fs).GetRenewToken();
 			renewer.AddRenewAction(fs);
 			Org.Mockito.Mockito.Verify(fs).GetRenewToken();
-			NUnit.Framework.Assert.AreEqual(0, renewer.GetRenewQueueLength());
+			Assert.Equal(0, renewer.GetRenewQueueLength());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetNewTokenOnRenewFailure()
 		{
 			Text service = new Text("myservice");
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.DoAnswer(new _Answer_128(token2)).When(fs).AddDelegationTokens
 				(null, null);
 			renewer.AddRenewAction(fs);
-			NUnit.Framework.Assert.AreEqual(1, renewer.GetRenewQueueLength());
+			Assert.Equal(1, renewer.GetRenewQueueLength());
 			Sharpen.Thread.Sleep(RenewCycle);
 			Org.Mockito.Mockito.Verify(fs).GetRenewToken();
 			Org.Mockito.Mockito.Verify(token1, Org.Mockito.Mockito.AtLeast(1)).Renew(Eq(conf)
@@ -134,10 +134,10 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.Verify(token1, Org.Mockito.Mockito.AtMost(2)).Renew(Eq(conf));
 			Org.Mockito.Mockito.Verify(fs).AddDelegationTokens(null, null);
 			Org.Mockito.Mockito.Verify(fs).SetDelegationToken(Eq(token2));
-			NUnit.Framework.Assert.AreEqual(1, renewer.GetRenewQueueLength());
+			Assert.Equal(1, renewer.GetRenewQueueLength());
 			renewer.RemoveRenewAction(fs);
 			Org.Mockito.Mockito.Verify(token2).Cancel(Eq(conf));
-			NUnit.Framework.Assert.AreEqual(0, renewer.GetRenewQueueLength());
+			Assert.Equal(0, renewer.GetRenewQueueLength());
 		}
 
 		private sealed class _Answer_117 : Answer<long>
@@ -171,7 +171,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStopRenewalWhenFsGone()
 		{
 			Configuration conf = Org.Mockito.Mockito.Mock<Configuration>();
@@ -185,7 +185,7 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.DoReturn(conf).When(fs).GetConf();
 			Org.Mockito.Mockito.DoReturn(token).When(fs).GetRenewToken();
 			renewer.AddRenewAction(fs);
-			NUnit.Framework.Assert.AreEqual(1, renewer.GetRenewQueueLength());
+			Assert.Equal(1, renewer.GetRenewQueueLength());
 			Sharpen.Thread.Sleep(RenewCycle);
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtLeast(1)).Renew(Eq(conf));
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtMost(2)).Renew(Eq(conf));
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.FS
 			Sharpen.Thread.Sleep(RenewCycle);
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtLeast(1)).Renew(Eq(conf));
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtMost(2)).Renew(Eq(conf));
-			NUnit.Framework.Assert.AreEqual(0, renewer.GetRenewQueueLength());
+			Assert.Equal(0, renewer.GetRenewQueueLength());
 		}
 
 		private sealed class _Answer_157 : Answer<long>
@@ -240,11 +240,11 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.DoReturn(token2).When(fs2).GetRenewToken();
 			renewer.AddRenewAction(fs1);
 			renewer.AddRenewAction(fs2);
-			NUnit.Framework.Assert.AreEqual(2, renewer.GetRenewQueueLength());
+			Assert.Equal(2, renewer.GetRenewQueueLength());
 			renewer.RemoveRenewAction(fs1);
-			NUnit.Framework.Assert.AreEqual(1, renewer.GetRenewQueueLength());
+			Assert.Equal(1, renewer.GetRenewQueueLength());
 			renewer.RemoveRenewAction(fs2);
-			NUnit.Framework.Assert.AreEqual(0, renewer.GetRenewQueueLength());
+			Assert.Equal(0, renewer.GetRenewQueueLength());
 			Org.Mockito.Mockito.Verify(token1).Cancel(Eq(conf));
 			Org.Mockito.Mockito.Verify(token2).Cancel(Eq(conf));
 		}

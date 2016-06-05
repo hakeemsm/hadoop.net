@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.Security
 		/// .
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateProxyUser()
 		{
 			// ensure that doAs works correctly
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Security
 				, realUserUgi);
 			UserGroupInformation curUGI = proxyUserUgi.DoAs(new _PrivilegedExceptionAction_122
 				());
-			NUnit.Framework.Assert.AreEqual(ProxyUserName + " (auth:PROXY) via " + RealUserName
+			Assert.Equal(ProxyUserName + " (auth:PROXY) via " + RealUserName
 				 + " (auth:SIMPLE)", curUGI.ToString());
 		}
 
@@ -187,8 +187,8 @@ namespace Org.Apache.Hadoop.Security
 			{
 				this._enclosing.proxy = RPC.GetProxy<TestDoAsEffectiveUser.TestProtocol>(TestDoAsEffectiveUser.TestProtocol
 					.versionID, NetUtils.GetConnectAddress(server), conf);
-				NUnit.Framework.Assert.AreEqual(ugi.ToString(), this._enclosing.proxy.AMethod());
-				NUnit.Framework.Assert.AreEqual(ugi.ToString(), this._enclosing.proxy.GetServerRemoteUser
+				Assert.Equal(ugi.ToString(), this._enclosing.proxy.AMethod());
+				Assert.Equal(ugi.ToString(), this._enclosing.proxy.GetServerRemoteUser
 					());
 				return null;
 			}
@@ -278,7 +278,7 @@ namespace Org.Apache.Hadoop.Security
 		* Tests authorization of superuser's ip.
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRealUserIPAuthorizationFailure()
 		{
 			Configuration conf = new Configuration();
@@ -345,7 +345,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRealUserIPNotSpecified()
 		{
 			Configuration conf = new Configuration();
@@ -409,7 +409,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRealUserGroupNotSpecified()
 		{
 			Configuration conf = new Configuration();
@@ -471,7 +471,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRealUserGroupAuthorizationFailure()
 		{
 			Configuration conf = new Configuration();
@@ -541,7 +541,7 @@ namespace Org.Apache.Hadoop.Security
 		*  user.
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyWithToken()
 		{
 			Configuration conf = new Configuration(masterConf);
@@ -570,7 +570,7 @@ namespace Org.Apache.Hadoop.Security
 			string retVal = proxyUserUgi.DoAs(new _PrivilegedExceptionAction_457(this, addr, 
 				conf, server));
 			//The user returned by server must be the one in the token.
-			NUnit.Framework.Assert.AreEqual(RealUserName + " (auth:TOKEN) via SomeSuperUser (auth:SIMPLE)"
+			Assert.Equal(RealUserName + " (auth:TOKEN) via SomeSuperUser (auth:SIMPLE)"
 				, retVal);
 		}
 
@@ -625,7 +625,7 @@ namespace Org.Apache.Hadoop.Security
 		* this user.
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTokenBySuperUser()
 		{
 			TestSaslRPC.TestTokenSecretManager sm = new TestSaslRPC.TestTokenSecretManager();
@@ -652,7 +652,7 @@ namespace Org.Apache.Hadoop.Security
 			string retVal = current.DoAs(new _PrivilegedExceptionAction_509(this, addr, newConf
 				, server));
 			string expected = RealUserName + " (auth:TOKEN) via SomeSuperUser (auth:SIMPLE)";
-			NUnit.Framework.Assert.AreEqual(retVal + "!=" + expected, expected, retVal);
+			Assert.Equal(retVal + "!=" + expected, expected, retVal);
 		}
 
 		private sealed class _PrivilegedExceptionAction_509 : PrivilegedExceptionAction<string

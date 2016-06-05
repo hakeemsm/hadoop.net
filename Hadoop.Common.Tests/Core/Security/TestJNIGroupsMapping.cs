@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJNIGroupsMapping()
 		{
 			//for the user running the test, check whether the 

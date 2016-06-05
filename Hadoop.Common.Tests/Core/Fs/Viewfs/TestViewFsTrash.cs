@@ -64,7 +64,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTrash()
 		{
 			TestTrash.TrashShell(conf, fileSystemTestHelper.GetTestRootPath(fsView), fsTarget

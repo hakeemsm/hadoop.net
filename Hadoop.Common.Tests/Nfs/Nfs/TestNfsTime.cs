@@ -6,15 +6,15 @@ namespace Org.Apache.Hadoop.Nfs
 {
 	public class TestNfsTime
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstructor()
 		{
 			NfsTime nfstime = new NfsTime(1001);
-			NUnit.Framework.Assert.AreEqual(1, nfstime.GetSeconds());
-			NUnit.Framework.Assert.AreEqual(1000000, nfstime.GetNseconds());
+			Assert.Equal(1, nfstime.GetSeconds());
+			Assert.Equal(1000000, nfstime.GetNseconds());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSerializeDeserialize()
 		{
 			// Serialize NfsTime
@@ -24,7 +24,7 @@ namespace Org.Apache.Hadoop.Nfs
 			// Deserialize it back
 			NfsTime t2 = NfsTime.Deserialize(xdr.AsReadOnlyWrap());
 			// Ensure the NfsTimes are equal
-			NUnit.Framework.Assert.AreEqual(t1, t2);
+			Assert.Equal(t1, t2);
 		}
 	}
 }

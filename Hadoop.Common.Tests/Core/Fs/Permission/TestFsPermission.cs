@@ -13,31 +13,31 @@ namespace Org.Apache.Hadoop.FS.Permission
 			//implies
 			foreach (FsAction a in FsAction.Values())
 			{
-				NUnit.Framework.Assert.IsTrue(FsAction.All.Implies(a));
+				Assert.True(FsAction.All.Implies(a));
 			}
 			foreach (FsAction a_1 in FsAction.Values())
 			{
-				NUnit.Framework.Assert.IsTrue(a_1 == FsAction.None ? FsAction.None.Implies(a_1) : 
+				Assert.True(a_1 == FsAction.None ? FsAction.None.Implies(a_1) : 
 					!FsAction.None.Implies(a_1));
 			}
 			foreach (FsAction a_2 in FsAction.Values())
 			{
-				NUnit.Framework.Assert.IsTrue(a_2 == FsAction.ReadExecute || a_2 == FsAction.Read
+				Assert.True(a_2 == FsAction.ReadExecute || a_2 == FsAction.Read
 					 || a_2 == FsAction.Execute || a_2 == FsAction.None ? FsAction.ReadExecute.Implies
 					(a_2) : !FsAction.ReadExecute.Implies(a_2));
 			}
 			//masks
-			NUnit.Framework.Assert.AreEqual(FsAction.Execute, FsAction.Execute.And(FsAction.ReadExecute
+			Assert.Equal(FsAction.Execute, FsAction.Execute.And(FsAction.ReadExecute
 				));
-			NUnit.Framework.Assert.AreEqual(FsAction.Read, FsAction.Read.And(FsAction.ReadExecute
+			Assert.Equal(FsAction.Read, FsAction.Read.And(FsAction.ReadExecute
 				));
-			NUnit.Framework.Assert.AreEqual(FsAction.None, FsAction.Write.And(FsAction.ReadExecute
+			Assert.Equal(FsAction.None, FsAction.Write.And(FsAction.ReadExecute
 				));
-			NUnit.Framework.Assert.AreEqual(FsAction.Read, FsAction.ReadExecute.And(FsAction.
+			Assert.Equal(FsAction.Read, FsAction.ReadExecute.And(FsAction.
 				ReadWrite));
-			NUnit.Framework.Assert.AreEqual(FsAction.None, FsAction.ReadExecute.And(FsAction.
+			Assert.Equal(FsAction.None, FsAction.ReadExecute.And(FsAction.
 				Write));
-			NUnit.Framework.Assert.AreEqual(FsAction.WriteExecute, FsAction.All.And(FsAction.
+			Assert.Equal(FsAction.WriteExecute, FsAction.All.And(FsAction.
 				WriteExecute));
 		}
 
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		{
 			for (short s = 0; s <= 0x3ff; s++)
 			{
-				NUnit.Framework.Assert.AreEqual(s, new FsPermission(s).ToShort());
+				Assert.Equal(s, new FsPermission(s).ToShort());
 			}
 			short s_1 = 0;
 			foreach (bool sb in new bool[] { false, true })
@@ -62,9 +62,9 @@ namespace Org.Apache.Hadoop.FS.Permission
 						{
 							// Cover constructor with sticky bit.
 							FsPermission f = new FsPermission(u, g, o, sb);
-							NUnit.Framework.Assert.AreEqual(s_1, f.ToShort());
+							Assert.Equal(s_1, f.ToShort());
 							FsPermission f2 = new FsPermission(f);
-							NUnit.Framework.Assert.AreEqual(s_1, f2.ToShort());
+							Assert.Equal(s_1, f2.ToShort());
 							s_1++;
 						}
 					}
@@ -87,27 +87,27 @@ namespace Org.Apache.Hadoop.FS.Permission
 							// Check that sticky bit is represented correctly.
 							if (f.GetStickyBit() && f.GetOtherAction().Implies(FsAction.Execute))
 							{
-								NUnit.Framework.Assert.AreEqual('t', fString[8]);
+								Assert.Equal('t', fString[8]);
 							}
 							else
 							{
 								if (f.GetStickyBit() && !f.GetOtherAction().Implies(FsAction.Execute))
 								{
-									NUnit.Framework.Assert.AreEqual('T', fString[8]);
+									Assert.Equal('T', fString[8]);
 								}
 								else
 								{
 									if (!f.GetStickyBit() && f.GetOtherAction().Implies(FsAction.Execute))
 									{
-										NUnit.Framework.Assert.AreEqual('x', fString[8]);
+										Assert.Equal('x', fString[8]);
 									}
 									else
 									{
-										NUnit.Framework.Assert.AreEqual('-', fString[8]);
+										Assert.Equal('-', fString[8]);
 									}
 								}
 							}
-							NUnit.Framework.Assert.AreEqual(9, fString.Length);
+							Assert.Equal(9, fString.Length);
 						}
 					}
 				}
@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 					char replacement = b[9] == 'x' ? 't' : 'T';
 					Sharpen.Runtime.SetCharAt(b, 9, replacement);
 				}
-				NUnit.Framework.Assert.AreEqual(i, FsPermission.ValueOf(b.ToString()).ToShort());
+				Assert.Equal(i, FsPermission.ValueOf(b.ToString()).ToShort());
 			}
 		}
 
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 						string asOctal = string.Format("%1$03o", f.ToShort());
 						conf.Set(FsPermission.UmaskLabel, asOctal);
 						FsPermission fromConf = FsPermission.GetUMask(conf);
-						NUnit.Framework.Assert.AreEqual(f, fromConf);
+						Assert.Equal(f, fromConf);
 					}
 				}
 			}
@@ -426,7 +426,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			{
 				conf.Set(FsPermission.UmaskLabel, symbolic[i][0]);
 				short val = short.ValueOf(symbolic[i][1], 8);
-				NUnit.Framework.Assert.AreEqual(val, FsPermission.GetUMask(conf).ToShort());
+				Assert.Equal(val, FsPermission.GetUMask(conf).ToShort());
 			}
 		}
 
@@ -443,7 +443,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 				}
 				catch (ArgumentException iae)
 				{
-					NUnit.Framework.Assert.IsTrue("Exception should specify parsing error and invalid umask: "
+					Assert.True("Exception should specify parsing error and invalid umask: "
 						 + iae.Message, IsCorrectExceptionMessage(iae.Message, b));
 				}
 			}
@@ -463,7 +463,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			conf.Set(FsPermission.DeprecatedUmaskLabel, "302");
 			// 302 = 0456
 			FsPermission umask = FsPermission.GetUMask(conf);
-			NUnit.Framework.Assert.AreEqual(0x12e, umask.ToShort());
+			Assert.Equal(0x12e, umask.ToShort());
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			children.AddItem(second);
 			children.AddItem(first);
 			and.AddChildren(children);
-			NUnit.Framework.Assert.AreEqual(Result.Pass, and.Apply(pathData, -1));
+			Assert.Equal(Result.Pass, and.Apply(pathData, -1));
 			Org.Mockito.Mockito.Verify(first).Apply(pathData, -1);
 			Org.Mockito.Mockito.Verify(second).Apply(pathData, -1);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(first);
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			children.AddItem(second);
 			children.AddItem(first);
 			and.AddChildren(children);
-			NUnit.Framework.Assert.AreEqual(Result.Fail, and.Apply(pathData, -1));
+			Assert.Equal(Result.Fail, and.Apply(pathData, -1));
 			Org.Mockito.Mockito.Verify(first).Apply(pathData, -1);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(first);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(second);
@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			children.AddItem(second);
 			children.AddItem(first);
 			and.AddChildren(children);
-			NUnit.Framework.Assert.AreEqual(Result.Fail, and.Apply(pathData, -1));
+			Assert.Equal(Result.Fail, and.Apply(pathData, -1));
 			Org.Mockito.Mockito.Verify(first).Apply(pathData, -1);
 			Org.Mockito.Mockito.Verify(second).Apply(pathData, -1);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(first);
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			children.AddItem(second);
 			children.AddItem(first);
 			and.AddChildren(children);
-			NUnit.Framework.Assert.AreEqual(Result.Fail, and.Apply(pathData, -1));
+			Assert.Equal(Result.Fail, and.Apply(pathData, -1));
 			Org.Mockito.Mockito.Verify(first).Apply(pathData, -1);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(first);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(second);
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			children.AddItem(second);
 			children.AddItem(first);
 			and.AddChildren(children);
-			NUnit.Framework.Assert.AreEqual(Result.Stop, and.Apply(pathData, -1));
+			Assert.Equal(Result.Stop, and.Apply(pathData, -1));
 			Org.Mockito.Mockito.Verify(first).Apply(pathData, -1);
 			Org.Mockito.Mockito.Verify(second).Apply(pathData, -1);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(first);
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			children.AddItem(second);
 			children.AddItem(first);
 			and.AddChildren(children);
-			NUnit.Framework.Assert.AreEqual(Result.Stop, and.Apply(pathData, -1));
+			Assert.Equal(Result.Stop, and.Apply(pathData, -1));
 			Org.Mockito.Mockito.Verify(first).Apply(pathData, -1);
 			Org.Mockito.Mockito.Verify(second).Apply(pathData, -1);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(first);
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			children.AddItem(second);
 			children.AddItem(first);
 			and.AddChildren(children);
-			NUnit.Framework.Assert.AreEqual(Result.Stop.Combine(Result.Fail), and.Apply(pathData
+			Assert.Equal(Result.Stop.Combine(Result.Fail), and.Apply(pathData
 				, -1));
 			Org.Mockito.Mockito.Verify(first).Apply(pathData, -1);
 			Org.Mockito.Mockito.Verify(second).Apply(pathData, -1);

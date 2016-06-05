@@ -30,47 +30,47 @@ namespace Org.Apache.Hadoop.Util
 		/// <exception cref="System.Exception"/>
 		public virtual void TestEscapeString()
 		{
-			NUnit.Framework.Assert.AreEqual(NullStr, StringUtils.EscapeString(NullStr));
-			NUnit.Framework.Assert.AreEqual(EmptyStr, StringUtils.EscapeString(EmptyStr));
-			NUnit.Framework.Assert.AreEqual(StrWoSpecialChars, StringUtils.EscapeString(StrWoSpecialChars
+			Assert.Equal(NullStr, StringUtils.EscapeString(NullStr));
+			Assert.Equal(EmptyStr, StringUtils.EscapeString(EmptyStr));
+			Assert.Equal(StrWoSpecialChars, StringUtils.EscapeString(StrWoSpecialChars
 				));
-			NUnit.Framework.Assert.AreEqual(EscapedStrWithComma, StringUtils.EscapeString(StrWithComma
+			Assert.Equal(EscapedStrWithComma, StringUtils.EscapeString(StrWithComma
 				));
-			NUnit.Framework.Assert.AreEqual(EscapedStrWithEscape, StringUtils.EscapeString(StrWithEscape
+			Assert.Equal(EscapedStrWithEscape, StringUtils.EscapeString(StrWithEscape
 				));
-			NUnit.Framework.Assert.AreEqual(EscapedStrWithBoth2, StringUtils.EscapeString(StrWithBoth2
+			Assert.Equal(EscapedStrWithBoth2, StringUtils.EscapeString(StrWithBoth2
 				));
 		}
 
 		/// <exception cref="System.Exception"/>
 		public virtual void TestSplit()
 		{
-			NUnit.Framework.Assert.AreEqual(NullStr, StringUtils.Split(NullStr));
+			Assert.Equal(NullStr, StringUtils.Split(NullStr));
 			string[] splits = StringUtils.Split(EmptyStr);
-			NUnit.Framework.Assert.AreEqual(0, splits.Length);
+			Assert.Equal(0, splits.Length);
 			splits = StringUtils.Split(",,");
-			NUnit.Framework.Assert.AreEqual(0, splits.Length);
+			Assert.Equal(0, splits.Length);
 			splits = StringUtils.Split(StrWoSpecialChars);
-			NUnit.Framework.Assert.AreEqual(1, splits.Length);
-			NUnit.Framework.Assert.AreEqual(StrWoSpecialChars, splits[0]);
+			Assert.Equal(1, splits.Length);
+			Assert.Equal(StrWoSpecialChars, splits[0]);
 			splits = StringUtils.Split(StrWithComma);
-			NUnit.Framework.Assert.AreEqual(2, splits.Length);
-			NUnit.Framework.Assert.AreEqual("A", splits[0]);
-			NUnit.Framework.Assert.AreEqual("B", splits[1]);
+			Assert.Equal(2, splits.Length);
+			Assert.Equal("A", splits[0]);
+			Assert.Equal("B", splits[1]);
 			splits = StringUtils.Split(EscapedStrWithComma);
-			NUnit.Framework.Assert.AreEqual(1, splits.Length);
-			NUnit.Framework.Assert.AreEqual(EscapedStrWithComma, splits[0]);
+			Assert.Equal(1, splits.Length);
+			Assert.Equal(EscapedStrWithComma, splits[0]);
 			splits = StringUtils.Split(StrWithEscape);
-			NUnit.Framework.Assert.AreEqual(1, splits.Length);
-			NUnit.Framework.Assert.AreEqual(StrWithEscape, splits[0]);
+			Assert.Equal(1, splits.Length);
+			Assert.Equal(StrWithEscape, splits[0]);
 			splits = StringUtils.Split(StrWithBoth2);
-			NUnit.Framework.Assert.AreEqual(3, splits.Length);
-			NUnit.Framework.Assert.AreEqual(EmptyStr, splits[0]);
-			NUnit.Framework.Assert.AreEqual("A\\,", splits[1]);
-			NUnit.Framework.Assert.AreEqual("B\\\\", splits[2]);
+			Assert.Equal(3, splits.Length);
+			Assert.Equal(EmptyStr, splits[0]);
+			Assert.Equal("A\\,", splits[1]);
+			Assert.Equal("B\\\\", splits[2]);
 			splits = StringUtils.Split(EscapedStrWithBoth2);
-			NUnit.Framework.Assert.AreEqual(1, splits.Length);
-			NUnit.Framework.Assert.AreEqual(EscapedStrWithBoth2, splits[0]);
+			Assert.Equal(1, splits.Length);
+			Assert.Equal(EscapedStrWithBoth2, splits[0]);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -88,9 +88,9 @@ namespace Org.Apache.Hadoop.Util
 		/// <exception cref="System.Exception"/>
 		public virtual void TestUnescapeString()
 		{
-			NUnit.Framework.Assert.AreEqual(NullStr, StringUtils.UnEscapeString(NullStr));
-			NUnit.Framework.Assert.AreEqual(EmptyStr, StringUtils.UnEscapeString(EmptyStr));
-			NUnit.Framework.Assert.AreEqual(StrWoSpecialChars, StringUtils.UnEscapeString(StrWoSpecialChars
+			Assert.Equal(NullStr, StringUtils.UnEscapeString(NullStr));
+			Assert.Equal(EmptyStr, StringUtils.UnEscapeString(EmptyStr));
+			Assert.Equal(StrWoSpecialChars, StringUtils.UnEscapeString(StrWoSpecialChars
 				));
 			try
 			{
@@ -101,7 +101,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 			}
 			// expected
-			NUnit.Framework.Assert.AreEqual(StrWithComma, StringUtils.UnEscapeString(EscapedStrWithComma
+			Assert.Equal(StrWithComma, StringUtils.UnEscapeString(EscapedStrWithComma
 				));
 			try
 			{
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 			}
 			// expected
-			NUnit.Framework.Assert.AreEqual(StrWithEscape, StringUtils.UnEscapeString(EscapedStrWithEscape
+			Assert.Equal(StrWithEscape, StringUtils.UnEscapeString(EscapedStrWithEscape
 				));
 			try
 			{
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 			}
 			// expected
-			NUnit.Framework.Assert.AreEqual(StrWithBoth2, StringUtils.UnEscapeString(EscapedStrWithBoth2
+			Assert.Equal(StrWithBoth2, StringUtils.UnEscapeString(EscapedStrWithBoth2
 				));
 		}
 
@@ -135,41 +135,41 @@ namespace Org.Apache.Hadoop.Util
 			long m = 1024;
 			foreach (string s in symbol)
 			{
-				NUnit.Framework.Assert.AreEqual(0, StringUtils.TraditionalBinaryPrefix.String2long
+				Assert.Equal(0, StringUtils.TraditionalBinaryPrefix.String2long
 					(0 + s));
-				NUnit.Framework.Assert.AreEqual(m, StringUtils.TraditionalBinaryPrefix.String2long
+				Assert.Equal(m, StringUtils.TraditionalBinaryPrefix.String2long
 					(1 + s));
 				m *= 1024;
 			}
-			NUnit.Framework.Assert.AreEqual(0L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(0L, StringUtils.TraditionalBinaryPrefix.String2long
 				("0"));
-			NUnit.Framework.Assert.AreEqual(1024L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(1024L, StringUtils.TraditionalBinaryPrefix.String2long
 				("1k"));
-			NUnit.Framework.Assert.AreEqual(-1024L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(-1024L, StringUtils.TraditionalBinaryPrefix.String2long
 				("-1k"));
-			NUnit.Framework.Assert.AreEqual(1259520L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(1259520L, StringUtils.TraditionalBinaryPrefix.String2long
 				("1230K"));
-			NUnit.Framework.Assert.AreEqual(-1259520L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(-1259520L, StringUtils.TraditionalBinaryPrefix.String2long
 				("-1230K"));
-			NUnit.Framework.Assert.AreEqual(104857600L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(104857600L, StringUtils.TraditionalBinaryPrefix.String2long
 				("100m"));
-			NUnit.Framework.Assert.AreEqual(-104857600L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(-104857600L, StringUtils.TraditionalBinaryPrefix.String2long
 				("-100M"));
-			NUnit.Framework.Assert.AreEqual(956703965184L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(956703965184L, StringUtils.TraditionalBinaryPrefix.String2long
 				("891g"));
-			NUnit.Framework.Assert.AreEqual(-956703965184L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(-956703965184L, StringUtils.TraditionalBinaryPrefix.String2long
 				("-891G"));
-			NUnit.Framework.Assert.AreEqual(501377302265856L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(501377302265856L, StringUtils.TraditionalBinaryPrefix.String2long
 				("456t"));
-			NUnit.Framework.Assert.AreEqual(-501377302265856L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(-501377302265856L, StringUtils.TraditionalBinaryPrefix.String2long
 				("-456T"));
-			NUnit.Framework.Assert.AreEqual(11258999068426240L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(11258999068426240L, StringUtils.TraditionalBinaryPrefix.String2long
 				("10p"));
-			NUnit.Framework.Assert.AreEqual(-11258999068426240L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(-11258999068426240L, StringUtils.TraditionalBinaryPrefix.String2long
 				("-10P"));
-			NUnit.Framework.Assert.AreEqual(1152921504606846976L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(1152921504606846976L, StringUtils.TraditionalBinaryPrefix.String2long
 				("1e"));
-			NUnit.Framework.Assert.AreEqual(-1152921504606846976L, StringUtils.TraditionalBinaryPrefix.String2long
+			Assert.Equal(-1152921504606846976L, StringUtils.TraditionalBinaryPrefix.String2long
 				("-1E"));
 			string tooLargeNumStr = "10e";
 			try
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (ArgumentException e)
 			{
-				NUnit.Framework.Assert.AreEqual(tooLargeNumStr + " does not fit in a Long", e.Message
+				Assert.Equal(tooLargeNumStr + " does not fit in a Long", e.Message
 					);
 			}
 			string tooSmallNumStr = "-10e";
@@ -192,7 +192,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (ArgumentException e)
 			{
-				NUnit.Framework.Assert.AreEqual(tooSmallNumStr + " does not fit in a Long", e.Message
+				Assert.Equal(tooSmallNumStr + " does not fit in a Long", e.Message
 					);
 			}
 			string invalidFormatNumStr = "10kb";
@@ -205,34 +205,34 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (ArgumentException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Invalid size prefix '" + invalidPrefix + "' in '"
+				Assert.Equal("Invalid size prefix '" + invalidPrefix + "' in '"
 					 + invalidFormatNumStr + "'. Allowed prefixes are k, m, g, t, p, e(case insensitive)"
 					, e.Message);
 			}
 			//test long2string(..)
-			NUnit.Framework.Assert.AreEqual("0", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("0", StringUtils.TraditionalBinaryPrefix.Long2String
 				(0, null, 2));
 			for (int decimalPlace = 0; decimalPlace < 2; decimalPlace++)
 			{
 				for (int n = 1; n < StringUtils.TraditionalBinaryPrefix.Kilo.value; n++)
 				{
-					NUnit.Framework.Assert.AreEqual(n + string.Empty, StringUtils.TraditionalBinaryPrefix.Long2String
+					Assert.Equal(n + string.Empty, StringUtils.TraditionalBinaryPrefix.Long2String
 						(n, null, decimalPlace));
-					NUnit.Framework.Assert.AreEqual(-n + string.Empty, StringUtils.TraditionalBinaryPrefix.Long2String
+					Assert.Equal(-n + string.Empty, StringUtils.TraditionalBinaryPrefix.Long2String
 						(-n, null, decimalPlace));
 				}
-				NUnit.Framework.Assert.AreEqual("1 K", StringUtils.TraditionalBinaryPrefix.Long2String
+				Assert.Equal("1 K", StringUtils.TraditionalBinaryPrefix.Long2String
 					(1L << 10, null, decimalPlace));
-				NUnit.Framework.Assert.AreEqual("-1 K", StringUtils.TraditionalBinaryPrefix.Long2String
+				Assert.Equal("-1 K", StringUtils.TraditionalBinaryPrefix.Long2String
 					(-1L << 10, null, decimalPlace));
 			}
-			NUnit.Framework.Assert.AreEqual("8.00 E", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("8.00 E", StringUtils.TraditionalBinaryPrefix.Long2String
 				(long.MaxValue, null, 2));
-			NUnit.Framework.Assert.AreEqual("8.00 E", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("8.00 E", StringUtils.TraditionalBinaryPrefix.Long2String
 				(long.MaxValue - 1, null, 2));
-			NUnit.Framework.Assert.AreEqual("-8 E", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("-8 E", StringUtils.TraditionalBinaryPrefix.Long2String
 				(long.MinValue, null, 2));
-			NUnit.Framework.Assert.AreEqual("-8.00 E", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("-8.00 E", StringUtils.TraditionalBinaryPrefix.Long2String
 				(long.MinValue + 1, null, 2));
 			string[] zeros = new string[] { " ", ".0 ", ".00 " };
 			for (int decimalPlace_1 = 0; decimalPlace_1 < zeros.Length; decimalPlace_1++)
@@ -246,51 +246,51 @@ namespace Org.Apache.Hadoop.Util
 						// n = 2^e
 						long n = 1L << e;
 						string expected = (n / p.value) + " " + p.symbol;
-						NUnit.Framework.Assert.AreEqual("n=" + n, expected, StringUtils.TraditionalBinaryPrefix.Long2String
+						Assert.Equal("n=" + n, expected, StringUtils.TraditionalBinaryPrefix.Long2String
 							(n, null, 2));
 					}
 					{
 						// n = 2^e + 1
 						long n = (1L << e) + 1;
 						string expected = (n / p.value) + trailingZeros + p.symbol;
-						NUnit.Framework.Assert.AreEqual("n=" + n, expected, StringUtils.TraditionalBinaryPrefix.Long2String
+						Assert.Equal("n=" + n, expected, StringUtils.TraditionalBinaryPrefix.Long2String
 							(n, null, decimalPlace_1));
 					}
 					{
 						// n = 2^e - 1
 						long n = (1L << e) - 1;
 						string expected = ((n + 1) / p.value) + trailingZeros + p.symbol;
-						NUnit.Framework.Assert.AreEqual("n=" + n, expected, StringUtils.TraditionalBinaryPrefix.Long2String
+						Assert.Equal("n=" + n, expected, StringUtils.TraditionalBinaryPrefix.Long2String
 							(n, null, decimalPlace_1));
 					}
 				}
 			}
-			NUnit.Framework.Assert.AreEqual("1.50 K", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("1.50 K", StringUtils.TraditionalBinaryPrefix.Long2String
 				(3L << 9, null, 2));
-			NUnit.Framework.Assert.AreEqual("1.5 K", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("1.5 K", StringUtils.TraditionalBinaryPrefix.Long2String
 				(3L << 9, null, 1));
-			NUnit.Framework.Assert.AreEqual("1.50 M", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("1.50 M", StringUtils.TraditionalBinaryPrefix.Long2String
 				(3L << 19, null, 2));
-			NUnit.Framework.Assert.AreEqual("2 M", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("2 M", StringUtils.TraditionalBinaryPrefix.Long2String
 				(3L << 19, null, 0));
-			NUnit.Framework.Assert.AreEqual("3 G", StringUtils.TraditionalBinaryPrefix.Long2String
+			Assert.Equal("3 G", StringUtils.TraditionalBinaryPrefix.Long2String
 				(3L << 30, null, 2));
 			// test byteDesc(..)
-			NUnit.Framework.Assert.AreEqual("0 B", StringUtils.ByteDesc(0));
-			NUnit.Framework.Assert.AreEqual("-100 B", StringUtils.ByteDesc(-100));
-			NUnit.Framework.Assert.AreEqual("1 KB", StringUtils.ByteDesc(1024));
-			NUnit.Framework.Assert.AreEqual("1.50 KB", StringUtils.ByteDesc(3L << 9));
-			NUnit.Framework.Assert.AreEqual("1.50 MB", StringUtils.ByteDesc(3L << 19));
-			NUnit.Framework.Assert.AreEqual("3 GB", StringUtils.ByteDesc(3L << 30));
+			Assert.Equal("0 B", StringUtils.ByteDesc(0));
+			Assert.Equal("-100 B", StringUtils.ByteDesc(-100));
+			Assert.Equal("1 KB", StringUtils.ByteDesc(1024));
+			Assert.Equal("1.50 KB", StringUtils.ByteDesc(3L << 9));
+			Assert.Equal("1.50 MB", StringUtils.ByteDesc(3L << 19));
+			Assert.Equal("3 GB", StringUtils.ByteDesc(3L << 30));
 			// test formatPercent(..)
-			NUnit.Framework.Assert.AreEqual("10%", StringUtils.FormatPercent(0.1, 0));
-			NUnit.Framework.Assert.AreEqual("10.0%", StringUtils.FormatPercent(0.1, 1));
-			NUnit.Framework.Assert.AreEqual("10.00%", StringUtils.FormatPercent(0.1, 2));
-			NUnit.Framework.Assert.AreEqual("1%", StringUtils.FormatPercent(0.00543, 0));
-			NUnit.Framework.Assert.AreEqual("0.5%", StringUtils.FormatPercent(0.00543, 1));
-			NUnit.Framework.Assert.AreEqual("0.54%", StringUtils.FormatPercent(0.00543, 2));
-			NUnit.Framework.Assert.AreEqual("0.543%", StringUtils.FormatPercent(0.00543, 3));
-			NUnit.Framework.Assert.AreEqual("0.5430%", StringUtils.FormatPercent(0.00543, 4));
+			Assert.Equal("10%", StringUtils.FormatPercent(0.1, 0));
+			Assert.Equal("10.0%", StringUtils.FormatPercent(0.1, 1));
+			Assert.Equal("10.00%", StringUtils.FormatPercent(0.1, 2));
+			Assert.Equal("1%", StringUtils.FormatPercent(0.00543, 0));
+			Assert.Equal("0.5%", StringUtils.FormatPercent(0.00543, 1));
+			Assert.Equal("0.54%", StringUtils.FormatPercent(0.00543, 2));
+			Assert.Equal("0.543%", StringUtils.FormatPercent(0.00543, 3));
+			Assert.Equal("0.5430%", StringUtils.FormatPercent(0.00543, 4));
 		}
 
 		public virtual void TestJoin()
@@ -299,11 +299,11 @@ namespace Org.Apache.Hadoop.Util
 			s.AddItem("a");
 			s.AddItem("b");
 			s.AddItem("c");
-			NUnit.Framework.Assert.AreEqual(string.Empty, StringUtils.Join(":", s.SubList(0, 
+			Assert.Equal(string.Empty, StringUtils.Join(":", s.SubList(0, 
 				0)));
-			NUnit.Framework.Assert.AreEqual("a", StringUtils.Join(":", s.SubList(0, 1)));
-			NUnit.Framework.Assert.AreEqual("a:b", StringUtils.Join(":", s.SubList(0, 2)));
-			NUnit.Framework.Assert.AreEqual("a:b:c", StringUtils.Join(":", s.SubList(0, 3)));
+			Assert.Equal("a", StringUtils.Join(":", s.SubList(0, 1)));
+			Assert.Equal("a:b", StringUtils.Join(":", s.SubList(0, 2)));
+			Assert.Equal("a:b:c", StringUtils.Join(":", s.SubList(0, 3)));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -334,36 +334,36 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestCamelize()
 		{
 			// common use cases
-			NUnit.Framework.Assert.AreEqual("Map", StringUtils.Camelize("MAP"));
-			NUnit.Framework.Assert.AreEqual("JobSetup", StringUtils.Camelize("JOB_SETUP"));
-			NUnit.Framework.Assert.AreEqual("SomeStuff", StringUtils.Camelize("some_stuff"));
+			Assert.Equal("Map", StringUtils.Camelize("MAP"));
+			Assert.Equal("JobSetup", StringUtils.Camelize("JOB_SETUP"));
+			Assert.Equal("SomeStuff", StringUtils.Camelize("some_stuff"));
 			// sanity checks for ascii alphabet against unexpected locale issues.
-			NUnit.Framework.Assert.AreEqual("Aa", StringUtils.Camelize("aA"));
-			NUnit.Framework.Assert.AreEqual("Bb", StringUtils.Camelize("bB"));
-			NUnit.Framework.Assert.AreEqual("Cc", StringUtils.Camelize("cC"));
-			NUnit.Framework.Assert.AreEqual("Dd", StringUtils.Camelize("dD"));
-			NUnit.Framework.Assert.AreEqual("Ee", StringUtils.Camelize("eE"));
-			NUnit.Framework.Assert.AreEqual("Ff", StringUtils.Camelize("fF"));
-			NUnit.Framework.Assert.AreEqual("Gg", StringUtils.Camelize("gG"));
-			NUnit.Framework.Assert.AreEqual("Hh", StringUtils.Camelize("hH"));
-			NUnit.Framework.Assert.AreEqual("Ii", StringUtils.Camelize("iI"));
-			NUnit.Framework.Assert.AreEqual("Jj", StringUtils.Camelize("jJ"));
-			NUnit.Framework.Assert.AreEqual("Kk", StringUtils.Camelize("kK"));
-			NUnit.Framework.Assert.AreEqual("Ll", StringUtils.Camelize("lL"));
-			NUnit.Framework.Assert.AreEqual("Mm", StringUtils.Camelize("mM"));
-			NUnit.Framework.Assert.AreEqual("Nn", StringUtils.Camelize("nN"));
-			NUnit.Framework.Assert.AreEqual("Oo", StringUtils.Camelize("oO"));
-			NUnit.Framework.Assert.AreEqual("Pp", StringUtils.Camelize("pP"));
-			NUnit.Framework.Assert.AreEqual("Qq", StringUtils.Camelize("qQ"));
-			NUnit.Framework.Assert.AreEqual("Rr", StringUtils.Camelize("rR"));
-			NUnit.Framework.Assert.AreEqual("Ss", StringUtils.Camelize("sS"));
-			NUnit.Framework.Assert.AreEqual("Tt", StringUtils.Camelize("tT"));
-			NUnit.Framework.Assert.AreEqual("Uu", StringUtils.Camelize("uU"));
-			NUnit.Framework.Assert.AreEqual("Vv", StringUtils.Camelize("vV"));
-			NUnit.Framework.Assert.AreEqual("Ww", StringUtils.Camelize("wW"));
-			NUnit.Framework.Assert.AreEqual("Xx", StringUtils.Camelize("xX"));
-			NUnit.Framework.Assert.AreEqual("Yy", StringUtils.Camelize("yY"));
-			NUnit.Framework.Assert.AreEqual("Zz", StringUtils.Camelize("zZ"));
+			Assert.Equal("Aa", StringUtils.Camelize("aA"));
+			Assert.Equal("Bb", StringUtils.Camelize("bB"));
+			Assert.Equal("Cc", StringUtils.Camelize("cC"));
+			Assert.Equal("Dd", StringUtils.Camelize("dD"));
+			Assert.Equal("Ee", StringUtils.Camelize("eE"));
+			Assert.Equal("Ff", StringUtils.Camelize("fF"));
+			Assert.Equal("Gg", StringUtils.Camelize("gG"));
+			Assert.Equal("Hh", StringUtils.Camelize("hH"));
+			Assert.Equal("Ii", StringUtils.Camelize("iI"));
+			Assert.Equal("Jj", StringUtils.Camelize("jJ"));
+			Assert.Equal("Kk", StringUtils.Camelize("kK"));
+			Assert.Equal("Ll", StringUtils.Camelize("lL"));
+			Assert.Equal("Mm", StringUtils.Camelize("mM"));
+			Assert.Equal("Nn", StringUtils.Camelize("nN"));
+			Assert.Equal("Oo", StringUtils.Camelize("oO"));
+			Assert.Equal("Pp", StringUtils.Camelize("pP"));
+			Assert.Equal("Qq", StringUtils.Camelize("qQ"));
+			Assert.Equal("Rr", StringUtils.Camelize("rR"));
+			Assert.Equal("Ss", StringUtils.Camelize("sS"));
+			Assert.Equal("Tt", StringUtils.Camelize("tT"));
+			Assert.Equal("Uu", StringUtils.Camelize("uU"));
+			Assert.Equal("Vv", StringUtils.Camelize("vV"));
+			Assert.Equal("Ww", StringUtils.Camelize("wW"));
+			Assert.Equal("Xx", StringUtils.Camelize("xX"));
+			Assert.Equal("Yy", StringUtils.Camelize("yY"));
+			Assert.Equal("Zz", StringUtils.Camelize("zZ"));
 		}
 
 		public virtual void TestStringToURI()
@@ -377,17 +377,17 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (ArgumentException iae)
 			{
-				NUnit.Framework.Assert.AreEqual("Failed to create uri for file://", iae.Message);
+				Assert.Equal("Failed to create uri for file://", iae.Message);
 			}
 		}
 
 		public virtual void TestSimpleHostName()
 		{
-			NUnit.Framework.Assert.AreEqual("Should return hostname when FQDN is specified", 
+			Assert.Equal("Should return hostname when FQDN is specified", 
 				"hadoop01", StringUtils.SimpleHostname("hadoop01.domain.com"));
-			NUnit.Framework.Assert.AreEqual("Should return hostname when only hostname is specified"
+			Assert.Equal("Should return hostname when only hostname is specified"
 				, "hadoop01", StringUtils.SimpleHostname("hadoop01"));
-			NUnit.Framework.Assert.AreEqual("Should not truncate when IP address is passed", 
+			Assert.Equal("Should not truncate when IP address is passed", 
 				"10.10.5.68", StringUtils.SimpleHostname("10.10.5.68"));
 		}
 
@@ -399,19 +399,19 @@ namespace Org.Apache.Hadoop.Util
 			replacements["BAZ"] = "two";
 			replacements["NUMBERS123"] = "one-two-three";
 			replacements["UNDER_SCORES"] = "___";
-			NUnit.Framework.Assert.AreEqual("one", StringUtils.ReplaceTokens("$FOO", pattern, 
+			Assert.Equal("one", StringUtils.ReplaceTokens("$FOO", pattern, 
 				replacements));
-			NUnit.Framework.Assert.AreEqual("two", StringUtils.ReplaceTokens("$BAZ", pattern, 
+			Assert.Equal("two", StringUtils.ReplaceTokens("$BAZ", pattern, 
 				replacements));
-			NUnit.Framework.Assert.AreEqual(string.Empty, StringUtils.ReplaceTokens("$BAR", pattern
+			Assert.Equal(string.Empty, StringUtils.ReplaceTokens("$BAR", pattern
 				, replacements));
-			NUnit.Framework.Assert.AreEqual(string.Empty, StringUtils.ReplaceTokens(string.Empty
+			Assert.Equal(string.Empty, StringUtils.ReplaceTokens(string.Empty
 				, pattern, replacements));
-			NUnit.Framework.Assert.AreEqual("one-two-three", StringUtils.ReplaceTokens("$NUMBERS123"
+			Assert.Equal("one-two-three", StringUtils.ReplaceTokens("$NUMBERS123"
 				, pattern, replacements));
-			NUnit.Framework.Assert.AreEqual("___", StringUtils.ReplaceTokens("$UNDER_SCORES", 
+			Assert.Equal("___", StringUtils.ReplaceTokens("$UNDER_SCORES", 
 				pattern, replacements));
-			NUnit.Framework.Assert.AreEqual("//one//two//", StringUtils.ReplaceTokens("//$FOO/$BAR/$BAZ//"
+			Assert.Equal("//one//two//", StringUtils.ReplaceTokens("//$FOO/$BAR/$BAZ//"
 				, pattern, replacements));
 		}
 
@@ -421,31 +421,31 @@ namespace Org.Apache.Hadoop.Util
 			IDictionary<string, string> replacements = new Dictionary<string, string>();
 			replacements["foo"] = "zoo";
 			replacements["baz"] = "zaz";
-			NUnit.Framework.Assert.AreEqual("zoo", StringUtils.ReplaceTokens("%foo%", pattern
+			Assert.Equal("zoo", StringUtils.ReplaceTokens("%foo%", pattern
 				, replacements));
-			NUnit.Framework.Assert.AreEqual("zaz", StringUtils.ReplaceTokens("%baz%", pattern
+			Assert.Equal("zaz", StringUtils.ReplaceTokens("%baz%", pattern
 				, replacements));
-			NUnit.Framework.Assert.AreEqual(string.Empty, StringUtils.ReplaceTokens("%bar%", 
+			Assert.Equal(string.Empty, StringUtils.ReplaceTokens("%bar%", 
 				pattern, replacements));
-			NUnit.Framework.Assert.AreEqual(string.Empty, StringUtils.ReplaceTokens(string.Empty
+			Assert.Equal(string.Empty, StringUtils.ReplaceTokens(string.Empty
 				, pattern, replacements));
-			NUnit.Framework.Assert.AreEqual("zoo__zaz", StringUtils.ReplaceTokens("%foo%_%bar%_%baz%"
+			Assert.Equal("zoo__zaz", StringUtils.ReplaceTokens("%foo%_%bar%_%baz%"
 				, pattern, replacements));
-			NUnit.Framework.Assert.AreEqual("begin zoo__zaz end", StringUtils.ReplaceTokens("begin %foo%_%bar%_%baz% end"
+			Assert.Equal("begin zoo__zaz end", StringUtils.ReplaceTokens("begin %foo%_%bar%_%baz% end"
 				, pattern, replacements));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetUniqueNonEmptyTrimmedStrings()
 		{
 			string ToSplit = ",foo, bar,baz,,blah,blah,bar,";
 			ICollection<string> col = StringUtils.GetTrimmedStringCollection(ToSplit);
-			NUnit.Framework.Assert.AreEqual(4, col.Count);
-			NUnit.Framework.Assert.IsTrue(col.ContainsAll(Arrays.AsList(new string[] { "foo", 
+			Assert.Equal(4, col.Count);
+			Assert.True(col.ContainsAll(Arrays.AsList(new string[] { "foo", 
 				"bar", "baz", "blah" })));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLowerAndUpperStrings()
 		{
 			CultureInfo defaultLocale = CultureInfo.CurrentCulture;
@@ -459,9 +459,9 @@ namespace Org.Apache.Hadoop.Util
 				Assert.AssertNotEquals(lowerStr, upperStr.ToLower());
 				Assert.AssertNotEquals(upperStr, lowerStr.ToUpper());
 				// This should be true regardless of locale.
-				NUnit.Framework.Assert.AreEqual(lowerStr, StringUtils.ToLowerCase(upperStr));
-				NUnit.Framework.Assert.AreEqual(upperStr, StringUtils.ToUpperCase(lowerStr));
-				NUnit.Framework.Assert.IsTrue(StringUtils.EqualsIgnoreCase(upperStr, lowerStr));
+				Assert.Equal(lowerStr, StringUtils.ToLowerCase(upperStr));
+				Assert.Equal(upperStr, StringUtils.ToUpperCase(lowerStr));
+				Assert.True(StringUtils.EqualsIgnoreCase(upperStr, lowerStr));
 			}
 			finally
 			{

@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Security.Token
 			Org.Apache.Hadoop.Security.Token.Token<TokenIdentifier> destToken = new Org.Apache.Hadoop.Security.Token.Token
 				<TokenIdentifier>();
 			destToken.ReadFields(@in);
-			NUnit.Framework.Assert.IsTrue(CheckEqual(sourceToken, destToken));
+			Assert.True(CheckEqual(sourceToken, destToken));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Security.Token
 					, new Text(val), new Text(val));
 				string encode = orig.EncodeToUrlString();
 				copy.DecodeFromUrlString(encode);
-				NUnit.Framework.Assert.AreEqual(orig, copy);
+				Assert.Equal(orig, copy);
 				CheckUrlSafe(encode);
 			}
 		}
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.Security.Token
 				>(id, secretManager);
 			TokenIdentifier idCopy = token.DecodeIdentifier();
 			NUnit.Framework.Assert.AreNotSame(id, idCopy);
-			NUnit.Framework.Assert.AreEqual(id, idCopy);
+			Assert.Equal(id, idCopy);
 		}
 	}
 }

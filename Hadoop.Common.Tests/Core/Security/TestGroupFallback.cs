@@ -12,7 +12,7 @@ namespace Org.Apache.Hadoop.Security
 		public static readonly Log Log = LogFactory.GetLog(typeof(TestGroupFallback));
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGroupShell()
 		{
 			Logger.GetRootLogger().SetLevel(Level.Debug);
@@ -23,11 +23,11 @@ namespace Org.Apache.Hadoop.Security
 			string username = Runtime.GetProperty("user.name");
 			IList<string> groupList = groups.GetGroups(username);
 			Log.Info(username + " has GROUPS: " + groupList.ToString());
-			NUnit.Framework.Assert.IsTrue(groupList.Count > 0);
+			Assert.True(groupList.Count > 0);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNetgroupShell()
 		{
 			Logger.GetRootLogger().SetLevel(Level.Debug);
@@ -38,11 +38,11 @@ namespace Org.Apache.Hadoop.Security
 			string username = Runtime.GetProperty("user.name");
 			IList<string> groupList = groups.GetGroups(username);
 			Log.Info(username + " has GROUPS: " + groupList.ToString());
-			NUnit.Framework.Assert.IsTrue(groupList.Count > 0);
+			Assert.True(groupList.Count > 0);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGroupWithFallback()
 		{
 			Log.Info("running 'mvn -Pnative -DTestGroupFallback clear test' will " + "test the normal path and 'mvn -DTestGroupFallback clear test' will"
@@ -55,11 +55,11 @@ namespace Org.Apache.Hadoop.Security
 			string username = Runtime.GetProperty("user.name");
 			IList<string> groupList = groups.GetGroups(username);
 			Log.Info(username + " has GROUPS: " + groupList.ToString());
-			NUnit.Framework.Assert.IsTrue(groupList.Count > 0);
+			Assert.True(groupList.Count > 0);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNetgroupWithFallback()
 		{
 			Log.Info("running 'mvn -Pnative -DTestGroupFallback clear test' will " + "test the normal path and 'mvn -DTestGroupFallback clear test' will"
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Security
 			string username = Runtime.GetProperty("user.name");
 			IList<string> groupList = groups.GetGroups(username);
 			Log.Info(username + " has GROUPS: " + groupList.ToString());
-			NUnit.Framework.Assert.IsTrue(groupList.Count > 0);
+			Assert.True(groupList.Count > 0);
 		}
 	}
 }

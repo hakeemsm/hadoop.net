@@ -54,10 +54,10 @@ namespace Org.Apache.Hadoop.IO
 				int size = 10;
 				WriteData(fs, size);
 				SetFile.Reader reader = CreateReader(fs);
-				NUnit.Framework.Assert.IsTrue("testSetFileWithConstruction1 error !!!", reader.Next
+				Assert.True("testSetFileWithConstruction1 error !!!", reader.Next
 					(new IntWritable(0)));
 				// don't know why reader.get(i) return i+1
-				NUnit.Framework.Assert.AreEqual("testSetFileWithConstruction2 error !!!", new IntWritable
+				Assert.Equal("testSetFileWithConstruction2 error !!!", new IntWritable
 					(size / 2 + 1), reader.Get(new IntWritable(size / 2)));
 				NUnit.Framework.Assert.IsNull("testSetFileWithConstruction3 error !!!", reader.Get
 					(new IntWritable(size * 2)));

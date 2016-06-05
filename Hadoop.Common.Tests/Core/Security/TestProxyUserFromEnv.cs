@@ -7,13 +7,13 @@ namespace Org.Apache.Hadoop.Security
 	{
 		/// <summary>Test HADOOP_PROXY_USER for impersonation</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUserFromEnvironment()
 		{
 			string proxyUser = "foo.bar";
 			Runtime.SetProperty(UserGroupInformation.HadoopProxyUser, proxyUser);
 			UserGroupInformation ugi = UserGroupInformation.GetLoginUser();
-			NUnit.Framework.Assert.AreEqual(proxyUser, ugi.GetUserName());
+			Assert.Equal(proxyUser, ugi.GetUserName());
 			UserGroupInformation realUgi = ugi.GetRealUser();
 			NUnit.Framework.Assert.IsNotNull(realUgi);
 			// get the expected real user name
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				realUser = Sharpen.Runtime.Substring(realUser, backslashIndex + 1);
 			}
-			NUnit.Framework.Assert.AreEqual(realUser, realUgi.GetUserName());
+			Assert.Equal(realUser, realUgi.GetUserName());
 		}
 	}
 }

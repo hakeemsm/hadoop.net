@@ -20,14 +20,14 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCache()
 		{
-			NUnit.Framework.Assert.AreEqual(0, CacheSize());
+			Assert.Equal(0, CacheSize());
 			DoTestCache();
-			NUnit.Framework.Assert.AreEqual(toConstruct.Length, CacheSize());
+			Assert.Equal(toConstruct.Length, CacheSize());
 			ReflectionUtils.ClearCache();
-			NUnit.Framework.Assert.AreEqual(0, CacheSize());
+			Assert.Equal(0, CacheSize());
 		}
 
 		private void DoTestCache()
@@ -37,13 +37,13 @@ namespace Org.Apache.Hadoop.Util
 				Type cl = toConstruct[i];
 				object x = ReflectionUtils.NewInstance(cl, null);
 				object y = ReflectionUtils.NewInstance(cl, null);
-				NUnit.Framework.Assert.AreEqual(cl, x.GetType());
-				NUnit.Framework.Assert.AreEqual(cl, y.GetType());
+				Assert.Equal(cl, x.GetType());
+				Assert.Equal(cl, y.GetType());
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestThreadSafe()
 		{
 			Sharpen.Thread[] th = new Sharpen.Thread[32];
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Util
 			return ReflectionUtils.GetCacheSize();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCantCreate()
 		{
 			try
@@ -101,13 +101,13 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (RuntimeException rte)
 			{
-				NUnit.Framework.Assert.AreEqual(typeof(MissingMethodException), rte.InnerException
+				Assert.Equal(typeof(MissingMethodException), rte.InnerException
 					.GetType());
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCacheDoesntLeak()
 		{
 			int iterations = 9999;
@@ -119,13 +119,13 @@ namespace Org.Apache.Hadoop.Util
 				Type cl = Sharpen.Runtime.GetType("org.apache.hadoop.util.TestReflectionUtils$LoadedInChild"
 					, false, loader);
 				object o = ReflectionUtils.NewInstance(cl, null);
-				NUnit.Framework.Assert.AreEqual(cl, o.GetType());
+				Assert.Equal(cl, o.GetType());
 			}
 			System.GC.Collect();
-			NUnit.Framework.Assert.IsTrue(CacheSize() + " too big", CacheSize() < iterations);
+			Assert.True(CacheSize() + " too big", CacheSize() < iterations);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetDeclaredFieldsIncludingInherited()
 		{
 			TestReflectionUtils.Parent child = new _Parent_118();
@@ -165,10 +165,10 @@ namespace Org.Apache.Hadoop.Util
 					}
 				}
 			}
-			NUnit.Framework.Assert.IsTrue("Missing parent field", containsParentField);
-			NUnit.Framework.Assert.IsTrue("Missing child field", containsChildField);
-			NUnit.Framework.Assert.IsTrue("Missing parent method", containsParentMethod);
-			NUnit.Framework.Assert.IsTrue("Missing child method", containsChildMethod);
+			Assert.True("Missing parent field", containsParentField);
+			Assert.True("Missing child field", containsChildField);
+			Assert.True("Missing parent method", containsParentMethod);
+			Assert.True("Missing child method", containsChildMethod);
 		}
 
 		private sealed class _Parent_118 : TestReflectionUtils.Parent

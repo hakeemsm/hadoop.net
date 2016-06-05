@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestSocketPathSetGet()
 		{
-			NUnit.Framework.Assert.AreEqual("/var/run/hdfs/sock.100", DomainSocket.GetEffectivePath
+			Assert.Equal("/var/run/hdfs/sock.100", DomainSocket.GetEffectivePath
 				("/var/run/hdfs/sock._PORT", 100));
 		}
 
@@ -97,7 +97,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 				}
 				try
 				{
-					NUnit.Framework.Assert.AreEqual(-1, conn.GetInputStream().Read());
+					Assert.Equal(-1, conn.GetInputStream().Read());
 				}
 				catch (IOException e)
 				{
@@ -332,12 +332,12 @@ namespace Org.Apache.Hadoop.Net.Unix
 				int newBufSize = bufSize / 2;
 				serv.SetAttribute(DomainSocket.ReceiveBufferSize, newBufSize);
 				int nextBufSize = serv.GetAttribute(DomainSocket.ReceiveBufferSize);
-				NUnit.Framework.Assert.AreEqual(newBufSize, nextBufSize);
+				Assert.Equal(newBufSize, nextBufSize);
 				// Let's set a server timeout
 				int newTimeout = 1000;
 				serv.SetAttribute(DomainSocket.ReceiveTimeout, newTimeout);
 				int nextTimeout = serv.GetAttribute(DomainSocket.ReceiveTimeout);
-				NUnit.Framework.Assert.AreEqual(newTimeout, nextTimeout);
+				Assert.Equal(newTimeout, nextTimeout);
 				try
 				{
 					serv.Accept();
@@ -557,14 +557,14 @@ namespace Org.Apache.Hadoop.Net.Unix
 						);
 					reader.Init(conn);
 					reader.ReadFully(in1, 0, in1.Length);
-					NUnit.Framework.Assert.IsTrue(Arrays.Equals(clientMsg1, in1));
+					Assert.True(Arrays.Equals(clientMsg1, in1));
 					TestDomainSocket.WriteStrategy writer = System.Activator.CreateInstance(writeStrategyClass
 						);
 					writer.Init(conn);
 					writer.Write(serverMsg1);
 					InputStream connInputStream = conn.GetInputStream();
 					int in2 = connInputStream.Read();
-					NUnit.Framework.Assert.AreEqual((int)clientMsg2, in2);
+					Assert.Equal((int)clientMsg2, in2);
 					conn.Close();
 				}
 				catch (Exception e)
@@ -623,7 +623,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 					reader.Init(client);
 					byte[] in1 = new byte[serverMsg1.Length];
 					reader.ReadFully(in1, 0, in1.Length);
-					NUnit.Framework.Assert.IsTrue(Arrays.Equals(serverMsg1, in1));
+					Assert.True(Arrays.Equals(serverMsg1, in1));
 					OutputStream clientOutputStream = client.GetOutputStream();
 					clientOutputStream.Write(clientMsg2);
 					client.Close();
@@ -818,7 +818,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 					byte[] in1 = new byte[clientMsg1.Length];
 					InputStream connInputStream = conn.GetInputStream();
 					IOUtils.ReadFully(connInputStream, in1, 0, in1.Length);
-					NUnit.Framework.Assert.IsTrue(Arrays.Equals(clientMsg1, in1));
+					Assert.True(Arrays.Equals(clientMsg1, in1));
 					DomainSocket domainConn = (DomainSocket)conn;
 					domainConn.SendFileDescriptors(passedFds, serverMsg1, 0, serverMsg1.Length);
 					conn.Close();
@@ -868,9 +868,9 @@ namespace Org.Apache.Hadoop.Net.Unix
 					byte[] in1 = new byte[serverMsg1.Length];
 					FileInputStream[] recvFis = new FileInputStream[passedFds.Length];
 					int r = domainConn.RecvFileInputStreams(recvFis, in1, 0, in1.Length - 1);
-					NUnit.Framework.Assert.IsTrue(r > 0);
+					Assert.True(r > 0);
 					IOUtils.ReadFully(clientInputStream, in1, r, in1.Length - r);
-					NUnit.Framework.Assert.IsTrue(Arrays.Equals(serverMsg1, in1));
+					Assert.True(Arrays.Equals(serverMsg1, in1));
 					for (int i = 0; i < passedFds.Length; i++)
 					{
 						NUnit.Framework.Assert.IsNotNull(recvFis[i]);
@@ -978,11 +978,11 @@ namespace Org.Apache.Hadoop.Net.Unix
 			socks[0].GetOutputStream().Write(1);
 			socks[0].GetOutputStream().Write(2);
 			socks[0].GetOutputStream().Write(3);
-			NUnit.Framework.Assert.IsTrue(readerThread.IsAlive());
+			Assert.True(readerThread.IsAlive());
 			socks[0].Shutdown();
 			readerThread.Join();
 			NUnit.Framework.Assert.IsFalse(failed.Get());
-			NUnit.Framework.Assert.AreEqual(3, bytesRead.Get());
+			Assert.Equal(3, bytesRead.Get());
 			IOUtils.Cleanup(null, socks);
 		}
 

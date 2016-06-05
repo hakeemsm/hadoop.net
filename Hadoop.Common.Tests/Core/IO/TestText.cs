@@ -90,7 +90,7 @@ namespace Org.Apache.Hadoop.IO
 			string before = "Bad \t encoding \t testcase";
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text(before);
 			string after = text.ToString();
-			NUnit.Framework.Assert.IsTrue(before.Equals(after));
+			Assert.True(before.Equals(after));
 			for (int i = 0; i < NumIterations; i++)
 			{
 				// generate a random string
@@ -106,11 +106,11 @@ namespace Org.Apache.Hadoop.IO
 				ByteBuffer bb = Org.Apache.Hadoop.IO.Text.Encode(before);
 				byte[] utf8Text = ((byte[])bb.Array());
 				byte[] utf8Java = Sharpen.Runtime.GetBytesForString(before, "UTF-8");
-				NUnit.Framework.Assert.AreEqual(0, WritableComparator.CompareBytes(utf8Text, 0, bb
+				Assert.Equal(0, WritableComparator.CompareBytes(utf8Text, 0, bb
 					.Limit(), utf8Java, 0, utf8Java.Length));
 				// test utf8 to string
 				after = Org.Apache.Hadoop.IO.Text.Decode(utf8Java);
-				NUnit.Framework.Assert.IsTrue(before.Equals(after));
+				Assert.True(before.Equals(after));
 			}
 		}
 
@@ -137,13 +137,13 @@ namespace Org.Apache.Hadoop.IO
 				// test that it reads correctly
 				@in.Reset(@out.GetData(), @out.GetLength());
 				string after = Org.Apache.Hadoop.IO.Text.ReadString(@in);
-				NUnit.Framework.Assert.IsTrue(before.Equals(after));
+				Assert.True(before.Equals(after));
 				// Test compatibility with Java's other decoder 
 				int strLenSize = WritableUtils.GetVIntSize(Org.Apache.Hadoop.IO.Text.Utf8Length(before
 					));
 				string after2 = Sharpen.Runtime.GetStringForBytes(@out.GetData(), strLenSize, @out
 					.GetLength() - strLenSize, "UTF-8");
-				NUnit.Framework.Assert.IsTrue(before.Equals(after2));
+				Assert.True(before.Equals(after2));
 			}
 		}
 
@@ -178,7 +178,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			@in.Reset();
 			after = Org.Apache.Hadoop.IO.Text.ReadString(@in, len + 1);
-			NUnit.Framework.Assert.IsTrue(str.Equals(after));
+			Assert.True(str.Equals(after));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -228,10 +228,10 @@ namespace Org.Apache.Hadoop.IO
 					, 0, out2.GetLength());
 				// compare two strings
 				int ret2 = txt1.CompareTo(txt2);
-				NUnit.Framework.Assert.AreEqual(ret1, ret2);
-				NUnit.Framework.Assert.AreEqual("Equivalence of different txt objects, same content"
+				Assert.Equal(ret1, ret2);
+				Assert.Equal("Equivalence of different txt objects, same content"
 					, 0, txt1.CompareTo(txt3));
-				NUnit.Framework.Assert.AreEqual("Equvalence of data output buffers", 0, comparator
+				Assert.Equal("Equvalence of data output buffers", 0, comparator
 					.Compare(out1.GetData(), 0, out3.GetLength(), out3.GetData(), 0, out3.GetLength(
 					)));
 			}
@@ -242,10 +242,10 @@ namespace Org.Apache.Hadoop.IO
 		{
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text("abcd\u20acbdcd\u20ac"
 				);
-			NUnit.Framework.Assert.IsTrue(text.Find("abd") == -1);
-			NUnit.Framework.Assert.IsTrue(text.Find("ac") == -1);
-			NUnit.Framework.Assert.IsTrue(text.Find("\u20ac") == 4);
-			NUnit.Framework.Assert.IsTrue(text.Find("\u20ac", 5) == 11);
+			Assert.True(text.Find("abd") == -1);
+			Assert.True(text.Find("ac") == -1);
+			Assert.True(text.Find("\u20ac") == 4);
+			Assert.True(text.Find("\u20ac", 5) == 11);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -253,9 +253,9 @@ namespace Org.Apache.Hadoop.IO
 		{
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text("abcd");
 			text.Set(Sharpen.Runtime.GetBytesForString("a"));
-			NUnit.Framework.Assert.AreEqual(text.GetLength(), 1);
-			NUnit.Framework.Assert.AreEqual(text.Find("a"), 0);
-			NUnit.Framework.Assert.AreEqual(text.Find("b"), -1);
+			Assert.Equal(text.GetLength(), 1);
+			Assert.Equal(text.Find("a"), 0);
+			Assert.Equal(text.Find("b"), -1);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -273,21 +273,21 @@ namespace Org.Apache.Hadoop.IO
 		{
 			// Test lengths on an empty text object
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text();
-			NUnit.Framework.Assert.AreEqual("Actual string on an empty text object must be an empty string"
+			Assert.Equal("Actual string on an empty text object must be an empty string"
 				, string.Empty, text.ToString());
-			NUnit.Framework.Assert.AreEqual("Underlying byte array length must be zero", 0, text
+			Assert.Equal("Underlying byte array length must be zero", 0, text
 				.GetBytes().Length);
-			NUnit.Framework.Assert.AreEqual("String's length must be zero", 0, text.GetLength
+			Assert.Equal("String's length must be zero", 0, text.GetLength
 				());
 			// Test if clear works as intended
 			text = new Org.Apache.Hadoop.IO.Text("abcd\u20acbdcd\u20ac");
 			int len = text.GetLength();
 			text.Clear();
-			NUnit.Framework.Assert.AreEqual("String must be empty after clear()", string.Empty
+			Assert.Equal("String must be empty after clear()", string.Empty
 				, text.ToString());
-			NUnit.Framework.Assert.IsTrue("Length of the byte array must not decrease after clear()"
+			Assert.True("Length of the byte array must not decrease after clear()"
 				, text.GetBytes().Length >= len);
-			NUnit.Framework.Assert.AreEqual("Length of the string must be reset to 0 after clear()"
+			Assert.Equal("Length of the string must be reset to 0 after clear()"
 				, 0, text.GetLength());
 		}
 
@@ -297,15 +297,15 @@ namespace Org.Apache.Hadoop.IO
 			Org.Apache.Hadoop.IO.Text a = new Org.Apache.Hadoop.IO.Text("abc");
 			Org.Apache.Hadoop.IO.Text b = new Org.Apache.Hadoop.IO.Text("a");
 			b.Set(a);
-			NUnit.Framework.Assert.AreEqual("abc", b.ToString());
+			Assert.Equal("abc", b.ToString());
 			a.Append(Sharpen.Runtime.GetBytesForString("xdefgxxx"), 1, 4);
-			NUnit.Framework.Assert.AreEqual("modified aliased string", "abc", b.ToString());
-			NUnit.Framework.Assert.AreEqual("appended string incorrectly", "abcdefg", a.ToString
+			Assert.Equal("modified aliased string", "abc", b.ToString());
+			Assert.Equal("appended string incorrectly", "abcdefg", a.ToString
 				());
 			// add an extra byte so that capacity = 14 and length = 8
 			a.Append(new byte[] { (byte)('d') }, 0, 1);
-			NUnit.Framework.Assert.AreEqual(14, a.GetBytes().Length);
-			NUnit.Framework.Assert.AreEqual(8, a.CopyBytes().Length);
+			Assert.Equal(14, a.GetBytes().Length);
+			Assert.Equal(8, a.CopyBytes().Length);
 		}
 
 		private class ConcurrentEncodeDecodeThread : Sharpen.Thread
@@ -329,7 +329,7 @@ namespace Org.Apache.Hadoop.IO
 						WritableUtils.WriteString(@out, name);
 						@in.Reset(@out.GetData(), @out.GetLength());
 						string s = WritableUtils.ReadString(@in);
-						NUnit.Framework.Assert.AreEqual("input buffer reset contents = " + name, name, s);
+						Assert.Equal("input buffer reset contents = " + name, name, s);
 					}
 					catch (Exception ioe)
 					{
@@ -367,10 +367,10 @@ namespace Org.Apache.Hadoop.IO
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text(line);
 			for (int i = 0; i < line.Length; i++)
 			{
-				NUnit.Framework.Assert.IsTrue("testCharAt error1 !!!", text.CharAt(i) == line[i]);
+				Assert.True("testCharAt error1 !!!", text.CharAt(i) == line[i]);
 			}
-			NUnit.Framework.Assert.AreEqual("testCharAt error2 !!!", -1, text.CharAt(-1));
-			NUnit.Framework.Assert.AreEqual("testCharAt error3 !!!", -1, text.CharAt(100));
+			Assert.Equal("testCharAt error2 !!!", -1, text.CharAt(-1));
+			Assert.Equal("testCharAt error3 !!!", -1, text.CharAt(100));
 		}
 
 		/// <summary>
@@ -417,15 +417,15 @@ namespace Org.Apache.Hadoop.IO
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text();
 			@in.Reset(inputBytes, inputBytes.Length);
 			text.ReadWithKnownLength(@in, 5);
-			NUnit.Framework.Assert.AreEqual("hello", text.ToString());
+			Assert.Equal("hello", text.ToString());
 			// Read longer length, make sure it lengthens
 			@in.Reset(inputBytes, inputBytes.Length);
 			text.ReadWithKnownLength(@in, 7);
-			NUnit.Framework.Assert.AreEqual("hello w", text.ToString());
+			Assert.Equal("hello w", text.ToString());
 			// Read shorter length, make sure it shortens
 			@in.Reset(inputBytes, inputBytes.Length);
 			text.ReadWithKnownLength(@in, 2);
-			NUnit.Framework.Assert.AreEqual("he", text.ToString());
+			Assert.Equal("he", text.ToString());
 		}
 
 		/// <summary>
@@ -442,7 +442,7 @@ namespace Org.Apache.Hadoop.IO
 				ByteBuffer bytes = ByteBuffer.Wrap(new byte[] { unchecked((byte)(-2)), 45, 23, 12
 					, 76, 89 });
 				Org.Apache.Hadoop.IO.Text.BytesToCodePoint(bytes);
-				NUnit.Framework.Assert.IsTrue("testBytesToCodePoint error !!!", bytes.Position() 
+				Assert.True("testBytesToCodePoint error !!!", bytes.Position() 
 					== 6);
 			}
 			catch (BufferUnderflowException)
@@ -474,17 +474,17 @@ namespace Org.Apache.Hadoop.IO
 
 		public virtual void TestUtf8Length()
 		{
-			NUnit.Framework.Assert.AreEqual("testUtf8Length1 error   !!!", 1, Org.Apache.Hadoop.IO.Text
+			Assert.Equal("testUtf8Length1 error   !!!", 1, Org.Apache.Hadoop.IO.Text
 				.Utf8Length(new string(new char[] { (char)1 })));
-			NUnit.Framework.Assert.AreEqual("testUtf8Length127 error !!!", 1, Org.Apache.Hadoop.IO.Text
+			Assert.Equal("testUtf8Length127 error !!!", 1, Org.Apache.Hadoop.IO.Text
 				.Utf8Length(new string(new char[] { (char)127 })));
-			NUnit.Framework.Assert.AreEqual("testUtf8Length128 error !!!", 2, Org.Apache.Hadoop.IO.Text
+			Assert.Equal("testUtf8Length128 error !!!", 2, Org.Apache.Hadoop.IO.Text
 				.Utf8Length(new string(new char[] { (char)128 })));
-			NUnit.Framework.Assert.AreEqual("testUtf8Length193 error !!!", 2, Org.Apache.Hadoop.IO.Text
+			Assert.Equal("testUtf8Length193 error !!!", 2, Org.Apache.Hadoop.IO.Text
 				.Utf8Length(new string(new char[] { (char)193 })));
-			NUnit.Framework.Assert.AreEqual("testUtf8Length225 error !!!", 2, Org.Apache.Hadoop.IO.Text
+			Assert.Equal("testUtf8Length225 error !!!", 2, Org.Apache.Hadoop.IO.Text
 				.Utf8Length(new string(new char[] { (char)225 })));
-			NUnit.Framework.Assert.AreEqual("testUtf8Length254 error !!!", 2, Org.Apache.Hadoop.IO.Text
+			Assert.Equal("testUtf8Length254 error !!!", 2, Org.Apache.Hadoop.IO.Text
 				.Utf8Length(new string(new char[] { (char)254 })));
 		}
 

@@ -53,10 +53,10 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 					expectedOwner = adminsGroupString;
 				}
 			}
-			NUnit.Framework.Assert.AreEqual(expectedOwner, owner);
+			Assert.Equal(expectedOwner, owner);
 			NUnit.Framework.Assert.IsNotNull(stat.GetGroup());
-			NUnit.Framework.Assert.IsTrue(!stat.GetGroup().IsEmpty());
-			NUnit.Framework.Assert.AreEqual("Stat mode field should indicate a regular file", 
+			Assert.True(!stat.GetGroup().IsEmpty());
+			Assert.Equal("Stat mode field should indicate a regular file", 
 				NativeIO.POSIX.Stat.SIfreg, stat.GetMode() & NativeIO.POSIX.Stat.SIfmt);
 		}
 
@@ -108,11 +108,11 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 					try
 					{
 						NativeIO.POSIX.Stat stat = NativeIO.POSIX.GetFstat(fos.GetFD());
-						NUnit.Framework.Assert.AreEqual(Runtime.GetProperty("user.name"), stat.GetOwner()
+						Assert.Equal(Runtime.GetProperty("user.name"), stat.GetOwner()
 							);
 						NUnit.Framework.Assert.IsNotNull(stat.GetGroup());
-						NUnit.Framework.Assert.IsTrue(!stat.GetGroup().IsEmpty());
-						NUnit.Framework.Assert.AreEqual("Stat mode field should indicate a regular file", 
+						Assert.True(!stat.GetGroup().IsEmpty());
+						Assert.Equal("Stat mode field should indicate a regular file", 
 							NativeIO.POSIX.Stat.SIfreg, stat.GetMode() & NativeIO.POSIX.Stat.SIfmt);
 					}
 					catch (Exception t)
@@ -139,7 +139,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			catch (NativeIOException nioe)
 			{
 				Log.Info("Got expected exception", nioe);
-				NUnit.Framework.Assert.AreEqual(Errno.Ebadf, nioe.GetErrno());
+				Assert.Equal(Errno.Ebadf, nioe.GetErrno());
 			}
 		}
 
@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			try
 			{
 				FilePath testfile = new FilePath(TestDir, "testSetFilePointer");
-				NUnit.Framework.Assert.IsTrue("Create test subject", testfile.Exists() || testfile
+				Assert.True("Create test subject", testfile.Exists() || testfile
 					.CreateNewFile());
 				FileWriter writer = new FileWriter(testfile);
 				try
@@ -189,7 +189,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 				try
 				{
 					int c = reader.Read();
-					NUnit.Framework.Assert.IsTrue("Unexpected character: " + c, c == 'b');
+					Assert.True("Unexpected character: " + c, c == 'b');
 				}
 				catch (Exception readerException)
 				{
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			try
 			{
 				FilePath testfile = new FilePath(TestDir, "testCreateFile");
-				NUnit.Framework.Assert.IsTrue("Create test subject", testfile.Exists() || testfile
+				Assert.True("Create test subject", testfile.Exists() || testfile
 					.CreateNewFile());
 				FileDescriptor fd = NativeIO.Windows.CreateFile(testfile.GetCanonicalPath(), NativeIO.Windows
 					.GenericRead, NativeIO.Windows.FileShareRead | NativeIO.Windows.FileShareWrite |
@@ -229,7 +229,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 					fin.Read();
 					FilePath newfile = new FilePath(TestDir, "testRenamedFile");
 					bool renamed = testfile.RenameTo(newfile);
-					NUnit.Framework.Assert.IsTrue("Rename failed.", renamed);
+					Assert.True("Rename failed.", renamed);
 					fin.Read();
 				}
 				catch (Exception e)
@@ -256,27 +256,27 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 				return;
 			}
 			FilePath testFile = new FilePath(TestDir, "testfileaccess");
-			NUnit.Framework.Assert.IsTrue(testFile.CreateNewFile());
+			Assert.True(testFile.CreateNewFile());
 			// Validate ACCESS_READ
 			FileUtil.SetReadable(testFile, false);
 			NUnit.Framework.Assert.IsFalse(NativeIO.Windows.Access(testFile.GetAbsolutePath()
 				, NativeIO.Windows.AccessRight.AccessRead));
 			FileUtil.SetReadable(testFile, true);
-			NUnit.Framework.Assert.IsTrue(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
+			Assert.True(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
 				NativeIO.Windows.AccessRight.AccessRead));
 			// Validate ACCESS_WRITE
 			FileUtil.SetWritable(testFile, false);
 			NUnit.Framework.Assert.IsFalse(NativeIO.Windows.Access(testFile.GetAbsolutePath()
 				, NativeIO.Windows.AccessRight.AccessWrite));
 			FileUtil.SetWritable(testFile, true);
-			NUnit.Framework.Assert.IsTrue(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
+			Assert.True(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
 				NativeIO.Windows.AccessRight.AccessWrite));
 			// Validate ACCESS_EXECUTE
 			FileUtil.SetExecutable(testFile, false);
 			NUnit.Framework.Assert.IsFalse(NativeIO.Windows.Access(testFile.GetAbsolutePath()
 				, NativeIO.Windows.AccessRight.AccessExecute));
 			FileUtil.SetExecutable(testFile, true);
-			NUnit.Framework.Assert.IsTrue(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
+			Assert.True(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
 				NativeIO.Windows.AccessRight.AccessExecute));
 			// Validate that access checks work as expected for long paths
 			// Assemble a path longer then 260 chars (MAX_PATH)
@@ -287,28 +287,28 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			}
 			testFileRelativePath += "testfileaccess";
 			testFile = new FilePath(TestDir, testFileRelativePath);
-			NUnit.Framework.Assert.IsTrue(testFile.GetParentFile().Mkdirs());
-			NUnit.Framework.Assert.IsTrue(testFile.CreateNewFile());
+			Assert.True(testFile.GetParentFile().Mkdirs());
+			Assert.True(testFile.CreateNewFile());
 			// Validate ACCESS_READ
 			FileUtil.SetReadable(testFile, false);
 			NUnit.Framework.Assert.IsFalse(NativeIO.Windows.Access(testFile.GetAbsolutePath()
 				, NativeIO.Windows.AccessRight.AccessRead));
 			FileUtil.SetReadable(testFile, true);
-			NUnit.Framework.Assert.IsTrue(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
+			Assert.True(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
 				NativeIO.Windows.AccessRight.AccessRead));
 			// Validate ACCESS_WRITE
 			FileUtil.SetWritable(testFile, false);
 			NUnit.Framework.Assert.IsFalse(NativeIO.Windows.Access(testFile.GetAbsolutePath()
 				, NativeIO.Windows.AccessRight.AccessWrite));
 			FileUtil.SetWritable(testFile, true);
-			NUnit.Framework.Assert.IsTrue(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
+			Assert.True(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
 				NativeIO.Windows.AccessRight.AccessWrite));
 			// Validate ACCESS_EXECUTE
 			FileUtil.SetExecutable(testFile, false);
 			NUnit.Framework.Assert.IsFalse(NativeIO.Windows.Access(testFile.GetAbsolutePath()
 				, NativeIO.Windows.AccessRight.AccessExecute));
 			FileUtil.SetExecutable(testFile, true);
-			NUnit.Framework.Assert.IsTrue(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
+			Assert.True(NativeIO.Windows.Access(testFile.GetAbsolutePath(), 
 				NativeIO.Windows.AccessRight.AccessExecute));
 		}
 
@@ -329,7 +329,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			catch (NativeIOException nioe)
 			{
 				Log.Info("Got expected exception", nioe);
-				NUnit.Framework.Assert.AreEqual(Errno.Enoent, nioe.GetErrno());
+				Assert.Equal(Errno.Enoent, nioe.GetErrno());
 			}
 		}
 
@@ -344,7 +344,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			FileDescriptor fd = NativeIO.POSIX.Open(new FilePath(TestDir, "testWorkingOpen").
 				GetAbsolutePath(), NativeIO.POSIX.OWronly | NativeIO.POSIX.OCreat, 0x1c0);
 			NUnit.Framework.Assert.IsNotNull(true);
-			NUnit.Framework.Assert.IsTrue(fd.Valid());
+			Assert.True(fd.Valid());
 			FileOutputStream fos = new FileOutputStream(fd);
 			fos.Write(Sharpen.Runtime.GetBytesForString("foo"));
 			fos.Close();
@@ -360,7 +360,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			catch (NativeIOException nioe)
 			{
 				Log.Info("Got expected exception for failed exclusive create", nioe);
-				NUnit.Framework.Assert.AreEqual(Errno.Eexist, nioe.GetErrno());
+				Assert.Equal(Errno.Eexist, nioe.GetErrno());
 			}
 		}
 
@@ -380,7 +380,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 				FileDescriptor fd = NativeIO.POSIX.Open(new FilePath(TestDir, "testNoFdLeak").GetAbsolutePath
 					(), NativeIO.POSIX.OWronly | NativeIO.POSIX.OCreat, 0x1c0);
 				NUnit.Framework.Assert.IsNotNull(true);
-				NUnit.Framework.Assert.IsTrue(fd.Valid());
+				Assert.True(fd.Valid());
 				FileOutputStream fos = new FileOutputStream(fd);
 				fos.Write(Sharpen.Runtime.GetBytesForString("foo"));
 				fos.Close();
@@ -402,10 +402,10 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			}
 			catch (NativeIOException nioe)
 			{
-				NUnit.Framework.Assert.AreEqual(Errno.Enoent, nioe.GetErrno());
+				Assert.Equal(Errno.Enoent, nioe.GetErrno());
 			}
 			FilePath toChmod = new FilePath(TestDir, "testChmod");
-			NUnit.Framework.Assert.IsTrue("Create test subject", toChmod.Exists() || toChmod.
+			Assert.True("Create test subject", toChmod.Exists() || toChmod.
 				Mkdir());
 			NativeIO.POSIX.Chmod(toChmod.GetAbsolutePath(), 0x1ff);
 			AssertPermissions(toChmod, 0x1ff);
@@ -450,7 +450,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			}
 			catch (NativeIOException nioe)
 			{
-				NUnit.Framework.Assert.AreEqual(Errno.Ebadf, nioe.GetErrno());
+				Assert.Equal(Errno.Ebadf, nioe.GetErrno());
 			}
 			try
 			{
@@ -494,7 +494,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			}
 			catch (NativeIOException nioe)
 			{
-				NUnit.Framework.Assert.AreEqual(Errno.Ebadf, nioe.GetErrno());
+				Assert.Equal(Errno.Ebadf, nioe.GetErrno());
 			}
 		}
 
@@ -504,7 +504,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			FileSystem localfs = FileSystem.GetLocal(new Configuration());
 			FsPermission perms = localfs.GetFileStatus(new Path(f.GetAbsolutePath())).GetPermission
 				();
-			NUnit.Framework.Assert.AreEqual(expected, perms.ToShort());
+			Assert.Equal(expected, perms.ToShort());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -545,23 +545,23 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			{
 				if (Path.Windows)
 				{
-					NUnit.Framework.Assert.AreEqual(string.Format("The system cannot find the file specified.%n"
+					Assert.Equal(string.Format("The system cannot find the file specified.%n"
 						), e.Message);
 				}
 				else
 				{
-					NUnit.Framework.Assert.AreEqual(Errno.Enoent, e.GetErrno());
+					Assert.Equal(Errno.Enoent, e.GetErrno());
 				}
 			}
 			// Test renaming a file to itself.  It should succeed and do nothing.
 			FilePath sourceFile = new FilePath(TestDir, "source");
-			NUnit.Framework.Assert.IsTrue(sourceFile.CreateNewFile());
+			Assert.True(sourceFile.CreateNewFile());
 			NativeIO.RenameTo(sourceFile, sourceFile);
 			// Test renaming a source to a destination.
 			NativeIO.RenameTo(sourceFile, targetFile);
 			// Test renaming a source to a path which uses a file as a directory.
 			sourceFile = new FilePath(TestDir, "source");
-			NUnit.Framework.Assert.IsTrue(sourceFile.CreateNewFile());
+			Assert.True(sourceFile.CreateNewFile());
 			FilePath badTarget = new FilePath(targetFile, "subdir");
 			try
 			{
@@ -572,12 +572,12 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			{
 				if (Path.Windows)
 				{
-					NUnit.Framework.Assert.AreEqual(string.Format("The parameter is incorrect.%n"), e
+					Assert.Equal(string.Format("The parameter is incorrect.%n"), e
 						.Message);
 				}
 				else
 				{
-					NUnit.Framework.Assert.AreEqual(Errno.Enotdir, e.GetErrno());
+					Assert.Equal(Errno.Enotdir, e.GetErrno());
 				}
 			}
 			FileUtils.DeleteQuietly(TestDir);
@@ -624,7 +624,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 				{
 					sum += mapbuf.Get(i_1);
 				}
-				NUnit.Framework.Assert.AreEqual("Expected sums to be equal", bufSum, sum);
+				Assert.Equal("Expected sums to be equal", bufSum, sum);
 				// munmap the buffer, which also implicitly unlocks it
 				NativeIO.POSIX.Munmap(mapbuf);
 			}
@@ -675,7 +675,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 					mapBuf.Put(bytesToWrite);
 				}
 				NativeIO.CopyFileUnbuffered(srcFile, dstFile);
-				NUnit.Framework.Assert.AreEqual(srcFile.Length(), dstFile.Length());
+				Assert.Equal(srcFile.Length(), dstFile.Length());
 			}
 			finally
 			{

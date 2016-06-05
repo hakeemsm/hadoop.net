@@ -62,20 +62,20 @@ namespace Org.Apache.Hadoop.Net
 
 		private void AssertSingleSwitch(DNSToSwitchMapping mapping)
 		{
-			NUnit.Framework.Assert.AreEqual("Expected a single switch mapping " + mapping, true
+			Assert.Equal("Expected a single switch mapping " + mapping, true
 				, AbstractDNSToSwitchMapping.IsMappingSingleSwitch(mapping));
 		}
 
 		private void AssertMultiSwitch(DNSToSwitchMapping mapping)
 		{
-			NUnit.Framework.Assert.AreEqual("Expected a multi switch mapping " + mapping, false
+			Assert.Equal("Expected a multi switch mapping " + mapping, false
 				, AbstractDNSToSwitchMapping.IsMappingSingleSwitch(mapping));
 		}
 
 		protected internal virtual void AssertMapSize(AbstractDNSToSwitchMapping switchMapping
 			, int expectedSize)
 		{
-			NUnit.Framework.Assert.AreEqual("Expected two entries in the map " + switchMapping
+			Assert.Equal("Expected two entries in the map " + switchMapping
 				.DumpTopology(), expectedSize, switchMapping.GetSwitchMap().Count);
 		}
 
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStaticIsSingleSwitchOnNullScript()
 		{
 			StaticMapping mapping = NewInstance(null);
@@ -97,7 +97,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStaticIsMultiSwitchOnScript()
 		{
 			StaticMapping mapping = NewInstance("ls");
@@ -105,27 +105,27 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAddResolveNodes()
 		{
 			StaticMapping mapping = NewInstance();
 			StaticMapping.AddNodeToRack("n1", "/r1");
 			IList<string> queryList = CreateQueryList();
 			IList<string> resolved = mapping.Resolve(queryList);
-			NUnit.Framework.Assert.AreEqual(2, resolved.Count);
-			NUnit.Framework.Assert.AreEqual("/r1", resolved[0]);
-			NUnit.Framework.Assert.AreEqual(NetworkTopology.DefaultRack, resolved[1]);
+			Assert.Equal(2, resolved.Count);
+			Assert.Equal("/r1", resolved[0]);
+			Assert.Equal(NetworkTopology.DefaultRack, resolved[1]);
 			// get the switch map and examine it
 			IDictionary<string, string> switchMap = mapping.GetSwitchMap();
 			string topology = mapping.DumpTopology();
 			Log.Info(topology);
-			NUnit.Framework.Assert.AreEqual(topology, 1, switchMap.Count);
-			NUnit.Framework.Assert.AreEqual(topology, "/r1", switchMap["n1"]);
+			Assert.Equal(topology, 1, switchMap.Count);
+			Assert.Equal(topology, "/r1", switchMap["n1"]);
 		}
 
 		/// <summary>Verify that a configuration string builds a topology</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReadNodesFromConfig()
 		{
 			StaticMapping mapping = NewInstance();
@@ -141,21 +141,21 @@ namespace Org.Apache.Hadoop.Net
 			l1.AddItem("unknown");
 			l1.AddItem("n2");
 			IList<string> resolved = mapping.Resolve(l1);
-			NUnit.Framework.Assert.AreEqual(3, resolved.Count);
-			NUnit.Framework.Assert.AreEqual("/r1", resolved[0]);
-			NUnit.Framework.Assert.AreEqual(NetworkTopology.DefaultRack, resolved[1]);
-			NUnit.Framework.Assert.AreEqual("/r2", resolved[2]);
+			Assert.Equal(3, resolved.Count);
+			Assert.Equal("/r1", resolved[0]);
+			Assert.Equal(NetworkTopology.DefaultRack, resolved[1]);
+			Assert.Equal("/r2", resolved[2]);
 			IDictionary<string, string> switchMap = mapping.GetSwitchMap();
 			string topology = mapping.DumpTopology();
 			Log.Info(topology);
-			NUnit.Framework.Assert.AreEqual(topology, 2, switchMap.Count);
-			NUnit.Framework.Assert.AreEqual(topology, "/r1", switchMap["n1"]);
+			Assert.Equal(topology, 2, switchMap.Count);
+			Assert.Equal(topology, "/r1", switchMap["n1"]);
 			NUnit.Framework.Assert.IsNull(topology, switchMap["unknown"]);
 		}
 
 		/// <summary>Verify that if the inner mapping is single-switch, so is the cached one</summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachingRelaysSingleSwitchQueries()
 		{
 			//create a single switch map
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>Verify that if the inner mapping is multi-switch, so is the cached one</summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachingRelaysMultiSwitchQueries()
 		{
 			StaticMapping staticMapping = NewInstance("top");
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>This test verifies that resultion queries get relayed to the inner rack</summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachingRelaysResolveQueries()
 		{
 			StaticMapping mapping = NewInstance();
@@ -202,7 +202,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>This test verifies that resultion queries get relayed to the inner rack</summary>
 		/// <exception cref="System.Exception">on any problem</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCachingCachesNegativeEntries()
 		{
 			StaticMapping staticMapping = NewInstance();

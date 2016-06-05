@@ -47,10 +47,10 @@ namespace Org.Apache.Hadoop.Portmap
 					++i;
 					Sharpen.Thread.Sleep(ShortTimeoutMilliseconds);
 				}
-				NUnit.Framework.Assert.IsTrue("Failed to connect to the server", s.Connected && i
+				Assert.True("Failed to connect to the server", s.Connected && i
 					 < RetryTimes);
 				int b = s.GetInputStream().Read();
-				NUnit.Framework.Assert.IsTrue("The server failed to disconnect", b == -1);
+				Assert.True("The server failed to disconnect", b == -1);
 			}
 			finally
 			{
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Portmap
 					break;
 				}
 			}
-			NUnit.Framework.Assert.IsTrue("Registration failed", found);
+			Assert.True("Registration failed", found);
 		}
 	}
 }

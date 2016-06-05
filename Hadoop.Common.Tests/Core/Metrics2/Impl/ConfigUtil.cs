@@ -46,16 +46,16 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			for (IEnumerator<object> it = expected.GetKeys(); it.HasNext(); )
 			{
 				string key = (string)it.Next();
-				NUnit.Framework.Assert.IsTrue("actual should contain " + key, actual.ContainsKey(
+				Assert.True("actual should contain " + key, actual.ContainsKey(
 					key));
-				NUnit.Framework.Assert.AreEqual("value of " + key, expected.GetProperty(key), actual
+				Assert.Equal("value of " + key, expected.GetProperty(key), actual
 					.GetProperty(key));
 			}
 			// Check that the actual config has no extra properties
 			for (IEnumerator<object> it_1 = actual.GetKeys(); it_1.HasNext(); )
 			{
 				string key = (string)it_1.Next();
-				NUnit.Framework.Assert.IsTrue("expected should contain " + key, expected.ContainsKey
+				Assert.True("expected should contain " + key, expected.ContainsKey
 					(key));
 			}
 		}

@@ -131,13 +131,13 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			byte[] result = new byte[dataLen];
 			int n = ReadAll(@in, result, 0, dataLen);
-			NUnit.Framework.Assert.AreEqual(dataLen, n);
+			Assert.Equal(dataLen, n);
 			byte[] expectedData = new byte[n];
 			System.Array.Copy(data, 0, expectedData, 0, n);
 			Assert.AssertArrayEquals(result, expectedData);
 			// EOF
 			n = @in.Read(result, 0, dataLen);
-			NUnit.Framework.Assert.AreEqual(n, -1);
+			Assert.Equal(n, -1);
 			@in.Close();
 		}
 
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Crypto
 			WriteData(@out);
 			if (@out is FSDataOutputStream)
 			{
-				NUnit.Framework.Assert.AreEqual(((FSDataOutputStream)@out).GetPos(), GetDataLen()
+				Assert.Equal(((FSDataOutputStream)@out).GetPos(), GetDataLen()
 					);
 			}
 		}
@@ -241,7 +241,7 @@ namespace Org.Apache.Hadoop.Crypto
 			ReadAll(@in, readBuf, 0, bytesToVerify);
 			for (int i = 0; i < bytesToVerify; i++)
 			{
-				NUnit.Framework.Assert.AreEqual(expectedBytes[i], readBuf[i]);
+				Assert.Equal(expectedBytes[i], readBuf[i]);
 			}
 		}
 
@@ -281,7 +281,7 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			byte[] result = new byte[dataLen];
 			int n = ReadAll(@in, pos, result, 0, dataLen);
-			NUnit.Framework.Assert.AreEqual(dataLen, n + pos);
+			Assert.Equal(dataLen, n + pos);
 			byte[] readData = new byte[n];
 			System.Array.Copy(result, 0, readData, 0, n);
 			byte[] expectedData = new byte[n];
@@ -367,7 +367,7 @@ namespace Org.Apache.Hadoop.Crypto
 				GenericTestUtils.AssertExceptionContains("Cannot seek to negative " + "offset", e
 					);
 			}
-			NUnit.Framework.Assert.AreEqual(pos, ((Seekable)@in).GetPos());
+			Assert.Equal(pos, ((Seekable)@in).GetPos());
 			// Pos: dataLen + 3
 			try
 			{
@@ -378,7 +378,7 @@ namespace Org.Apache.Hadoop.Crypto
 			{
 				GenericTestUtils.AssertExceptionContains("Cannot seek after EOF", e);
 			}
-			NUnit.Framework.Assert.AreEqual(pos, ((Seekable)@in).GetPos());
+			Assert.Equal(pos, ((Seekable)@in).GetPos());
 			@in.Close();
 		}
 
@@ -388,7 +388,7 @@ namespace Org.Apache.Hadoop.Crypto
 			byte[] result = new byte[dataLen];
 			((Seekable)@in).Seek(pos);
 			int n = ReadAll(@in, result, 0, dataLen);
-			NUnit.Framework.Assert.AreEqual(dataLen, n + pos);
+			Assert.Equal(dataLen, n + pos);
 			byte[] readData = new byte[n];
 			System.Array.Copy(result, 0, readData, 0, n);
 			byte[] expectedData = new byte[n];
@@ -406,9 +406,9 @@ namespace Org.Apache.Hadoop.Crypto
 			InputStream @in = GetInputStream(defaultBufferSize);
 			byte[] result = new byte[dataLen];
 			int n1 = ReadAll(@in, result, 0, dataLen / 3);
-			NUnit.Framework.Assert.AreEqual(n1, ((Seekable)@in).GetPos());
+			Assert.Equal(n1, ((Seekable)@in).GetPos());
 			int n2 = ReadAll(@in, result, n1, dataLen - n1);
-			NUnit.Framework.Assert.AreEqual(n1 + n2, ((Seekable)@in).GetPos());
+			Assert.Equal(n1 + n2, ((Seekable)@in).GetPos());
 			@in.Close();
 		}
 
@@ -421,9 +421,9 @@ namespace Org.Apache.Hadoop.Crypto
 			InputStream @in = GetInputStream(defaultBufferSize);
 			byte[] result = new byte[dataLen];
 			int n1 = ReadAll(@in, result, 0, dataLen / 3);
-			NUnit.Framework.Assert.AreEqual(@in.Available(), dataLen - n1);
+			Assert.Equal(@in.Available(), dataLen - n1);
 			int n2 = ReadAll(@in, result, n1, dataLen - n1);
-			NUnit.Framework.Assert.AreEqual(@in.Available(), dataLen - n1 - n2);
+			Assert.Equal(@in.Available(), dataLen - n1 - n2);
 			@in.Close();
 		}
 
@@ -437,10 +437,10 @@ namespace Org.Apache.Hadoop.Crypto
 			InputStream @in = GetInputStream(defaultBufferSize);
 			byte[] result = new byte[dataLen];
 			int n1 = ReadAll(@in, result, 0, dataLen / 3);
-			NUnit.Framework.Assert.AreEqual(n1, ((Seekable)@in).GetPos());
+			Assert.Equal(n1, ((Seekable)@in).GetPos());
 			long skipped = @in.Skip(dataLen / 3);
 			int n2 = ReadAll(@in, result, 0, dataLen);
-			NUnit.Framework.Assert.AreEqual(dataLen, n1 + skipped + n2);
+			Assert.Equal(dataLen, n1 + skipped + n2);
 			byte[] readData = new byte[n2];
 			System.Array.Copy(result, 0, readData, 0, n2);
 			byte[] expectedData = new byte[n2];
@@ -457,7 +457,7 @@ namespace Org.Apache.Hadoop.Crypto
 			}
 			// Skip after EOF
 			skipped = @in.Skip(3);
-			NUnit.Framework.Assert.AreEqual(skipped, 0);
+			Assert.Equal(skipped, 0);
 			@in.Close();
 		}
 
@@ -466,7 +466,7 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			buf.Position(bufPos);
 			int n = ((ByteBufferReadable)@in).Read(buf);
-			NUnit.Framework.Assert.AreEqual(bufPos + n, buf.Position());
+			Assert.Equal(bufPos + n, buf.Position());
 			byte[] readData = new byte[n];
 			buf.Rewind();
 			buf.Position(bufPos);
@@ -539,21 +539,21 @@ namespace Org.Apache.Hadoop.Crypto
 			System.Array.Copy(data, 0, expectedData, 0, len1);
 			Assert.AssertArrayEquals(readData, expectedData);
 			long pos = ((Seekable)@in).GetPos();
-			NUnit.Framework.Assert.AreEqual(len1, pos);
+			Assert.Equal(len1, pos);
 			// Seek forward len2
 			((Seekable)@in).Seek(pos + len2);
 			// Skip forward len2
 			long n = @in.Skip(len2);
-			NUnit.Framework.Assert.AreEqual(len2, n);
+			Assert.Equal(len2, n);
 			// Pos: 1/4 dataLen
 			PositionedReadCheck(@in, dataLen / 4);
 			// Pos should be len1 + len2 + len2
 			pos = ((Seekable)@in).GetPos();
-			NUnit.Framework.Assert.AreEqual(len1 + len2 + len2, pos);
+			Assert.Equal(len1 + len2 + len2, pos);
 			// Read forward len1
 			ByteBuffer buf = ByteBuffer.Allocate(len1);
 			int nRead = ((ByteBufferReadable)@in).Read(buf);
-			NUnit.Framework.Assert.AreEqual(nRead, buf.Position());
+			Assert.Equal(nRead, buf.Position());
 			readData = new byte[nRead];
 			buf.Rewind();
 			buf.Get(readData);
@@ -563,7 +563,7 @@ namespace Org.Apache.Hadoop.Crypto
 			long lastPos = pos;
 			// Pos should be lastPos + nRead
 			pos = ((Seekable)@in).GetPos();
-			NUnit.Framework.Assert.AreEqual(lastPos + nRead, pos);
+			Assert.Equal(lastPos + nRead, pos);
 			// Pos: 1/3 dataLen
 			PositionedReadCheck(@in, dataLen / 3);
 			// Read forward len1
@@ -575,11 +575,11 @@ namespace Org.Apache.Hadoop.Crypto
 			lastPos = pos;
 			// Pos should be lastPos + len1
 			pos = ((Seekable)@in).GetPos();
-			NUnit.Framework.Assert.AreEqual(lastPos + len1, pos);
+			Assert.Equal(lastPos + len1, pos);
 			// Read forward len1
 			buf = ByteBuffer.Allocate(len1);
 			nRead = ((ByteBufferReadable)@in).Read(buf);
-			NUnit.Framework.Assert.AreEqual(nRead, buf.Position());
+			Assert.Equal(nRead, buf.Position());
 			readData = new byte[nRead];
 			buf.Rewind();
 			buf.Get(readData);
@@ -589,12 +589,12 @@ namespace Org.Apache.Hadoop.Crypto
 			lastPos = pos;
 			// Pos should be lastPos + nRead
 			pos = ((Seekable)@in).GetPos();
-			NUnit.Framework.Assert.AreEqual(lastPos + nRead, pos);
+			Assert.Equal(lastPos + nRead, pos);
 			// ByteBuffer read after EOF
 			((Seekable)@in).Seek(dataLen);
 			buf.Clear();
 			n = ((ByteBufferReadable)@in).Read(buf);
-			NUnit.Framework.Assert.AreEqual(n, -1);
+			Assert.Equal(n, -1);
 			@in.Close();
 		}
 
@@ -644,7 +644,7 @@ namespace Org.Apache.Hadoop.Crypto
 			byte[] result = new byte[dataLen];
 			((Seekable)@in).SeekToNewSource(targetPos);
 			int n = ReadAll(@in, result, 0, dataLen);
-			NUnit.Framework.Assert.AreEqual(dataLen, n + targetPos);
+			Assert.Equal(dataLen, n + targetPos);
 			byte[] readData = new byte[n];
 			System.Array.Copy(result, 0, readData, 0, n);
 			byte[] expectedData = new byte[n];

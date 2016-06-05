@@ -192,7 +192,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRawHttpCalls()
 		{
 			Org.Mortbay.Jetty.Server jetty = CreateJettyServer();
@@ -210,20 +210,20 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				Uri authURL = new Uri(GetJettyURL() + "/foo/bar?authenticated=foo");
 				// unauthenticated access to URL
 				HttpURLConnection conn = (HttpURLConnection)nonAuthURL.OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
 					());
 				// authenticated access to URL
 				conn = (HttpURLConnection)authURL.OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				// unauthenticated access to get delegation token
 				Uri url = new Uri(nonAuthURL.ToExternalForm() + "?op=GETDELEGATIONTOKEN");
 				conn = (HttpURLConnection)url.OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
 					());
 				// authenticated access to get delegation token
 				url = new Uri(authURL.ToExternalForm() + "&op=GETDELEGATIONTOKEN&renewer=foo");
 				conn = (HttpURLConnection)url.OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				ObjectMapper mapper = new ObjectMapper();
 				IDictionary map = mapper.ReadValue<IDictionary>(conn.GetInputStream());
 				string dt = (string)((IDictionary)map["Token"])["urlString"];
@@ -231,47 +231,47 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				// delegation token access to URL
 				url = new Uri(nonAuthURL.ToExternalForm() + "?delegation=" + dt);
 				conn = (HttpURLConnection)url.OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				// delegation token and authenticated access to URL
 				url = new Uri(authURL.ToExternalForm() + "&delegation=" + dt);
 				conn = (HttpURLConnection)url.OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				// renewew delegation token, unauthenticated access to URL
 				url = new Uri(nonAuthURL.ToExternalForm() + "?op=RENEWDELEGATIONTOKEN&token=" + dt
 					);
 				conn = (HttpURLConnection)url.OpenConnection();
 				conn.SetRequestMethod("PUT");
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
 					());
 				// renewew delegation token, authenticated access to URL
 				url = new Uri(authURL.ToExternalForm() + "&op=RENEWDELEGATIONTOKEN&token=" + dt);
 				conn = (HttpURLConnection)url.OpenConnection();
 				conn.SetRequestMethod("PUT");
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				// renewew delegation token, authenticated access to URL, not renewer
 				url = new Uri(GetJettyURL() + "/foo/bar?authenticated=bar&op=RENEWDELEGATIONTOKEN&token="
 					 + dt);
 				conn = (HttpURLConnection)url.OpenConnection();
 				conn.SetRequestMethod("PUT");
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpForbidden, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpForbidden, conn.GetResponseCode
 					());
 				// cancel delegation token, nonauthenticated access to URL
 				url = new Uri(nonAuthURL.ToExternalForm() + "?op=CANCELDELEGATIONTOKEN&token=" + 
 					dt);
 				conn = (HttpURLConnection)url.OpenConnection();
 				conn.SetRequestMethod("PUT");
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				// cancel canceled delegation token, nonauthenticated access to URL
 				url = new Uri(nonAuthURL.ToExternalForm() + "?op=CANCELDELEGATIONTOKEN&token=" + 
 					dt);
 				conn = (HttpURLConnection)url.OpenConnection();
 				conn.SetRequestMethod("PUT");
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpNotFound, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpNotFound, conn.GetResponseCode
 					());
 				// get new delegation token
 				url = new Uri(authURL.ToExternalForm() + "&op=GETDELEGATIONTOKEN&renewer=foo");
 				conn = (HttpURLConnection)url.OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				mapper = new ObjectMapper();
 				map = mapper.ReadValue<IDictionary>(conn.GetInputStream());
 				dt = (string)((IDictionary)map["Token"])["urlString"];
@@ -280,7 +280,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				url = new Uri(authURL.ToExternalForm() + "&op=CANCELDELEGATIONTOKEN&token=" + dt);
 				conn = (HttpURLConnection)url.OpenConnection();
 				conn.SetRequestMethod("PUT");
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 			}
 			finally
 			{
@@ -289,14 +289,14 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenAuthenticatorCallsWithHeader()
 		{
 			TestDelegationTokenAuthenticatorCalls(false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenAuthenticatorCallsWithQueryString()
 		{
 			TestDelegationTokenAuthenticatorCalls(true);
@@ -330,11 +330,11 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				}
 				catch (Exception ex)
 				{
-					NUnit.Framework.Assert.IsTrue(ex.Message.Contains("401"));
+					Assert.True(ex.Message.Contains("401"));
 				}
 				aUrl.GetDelegationToken(authURL, token, FooUser);
 				NUnit.Framework.Assert.IsNotNull(token.GetDelegationToken());
-				NUnit.Framework.Assert.AreEqual(new Text("token-kind"), token.GetDelegationToken(
+				Assert.Equal(new Text("token-kind"), token.GetDelegationToken(
 					).GetKind());
 				aUrl.RenewDelegationToken(authURL, token);
 				try
@@ -344,7 +344,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				}
 				catch (Exception ex)
 				{
-					NUnit.Framework.Assert.IsTrue(ex.Message.Contains("401"));
+					Assert.True(ex.Message.Contains("401"));
 				}
 				aUrl.GetDelegationToken(authURL, token, FooUser);
 				try
@@ -354,7 +354,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				}
 				catch (Exception ex)
 				{
-					NUnit.Framework.Assert.IsTrue(ex.Message.Contains("403"));
+					Assert.True(ex.Message.Contains("403"));
 				}
 				aUrl.GetDelegationToken(authURL, token, FooUser);
 				aUrl.CancelDelegationToken(authURL, token);
@@ -367,7 +367,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				}
 				catch (Exception ex)
 				{
-					NUnit.Framework.Assert.IsTrue(ex.Message.Contains("401"));
+					Assert.True(ex.Message.Contains("401"));
 				}
 				aUrl.GetDelegationToken(authURL, token, "foo");
 				UserGroupInformation ugi = UserGroupInformation.GetCurrentUser();
@@ -396,7 +396,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			{
 				HttpURLConnection conn = aUrl.OpenConnection(nonAuthURL, new DelegationTokenAuthenticatedURL.Token
 					());
-				NUnit.Framework.Assert.AreEqual(HttpServletResponse.ScOk, conn.GetResponseCode());
+				Assert.Equal(HttpServletResponse.ScOk, conn.GetResponseCode());
 				if (useQS)
 				{
 					NUnit.Framework.Assert.IsNull(conn.GetHeaderField("UsingHeader"));
@@ -432,7 +432,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExternalDelegationTokenSecretManager()
 		{
 			TestWebDelegationToken.DummyDelegationTokenSecretManager secretMgr = new TestWebDelegationToken.DummyDelegationTokenSecretManager
@@ -457,7 +457,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				DelegationTokenAuthenticatedURL aUrl = new DelegationTokenAuthenticatedURL();
 				aUrl.GetDelegationToken(authURL, token, FooUser);
 				NUnit.Framework.Assert.IsNotNull(token.GetDelegationToken());
-				NUnit.Framework.Assert.AreEqual(new Text("fooKind"), token.GetDelegationToken().GetKind
+				Assert.Equal(new Text("fooKind"), token.GetDelegationToken().GetKind
 					());
 			}
 			finally
@@ -502,7 +502,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenAuthenticationURLWithNoDTFilter()
 		{
 			TestDelegationTokenAuthenticatedURLWithNoDT(typeof(TestWebDelegationToken.NoDTFilter
@@ -510,7 +510,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenAuthenticationURLWithNoDTHandler()
 		{
 			TestDelegationTokenAuthenticatedURLWithNoDT(typeof(TestWebDelegationToken.NoDTHandlerDTAFilter
@@ -557,10 +557,10 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 					();
 				DelegationTokenAuthenticatedURL aUrl = new DelegationTokenAuthenticatedURL();
 				HttpURLConnection conn = aUrl.OpenConnection(url, token);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				IList<string> ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual(TestWebDelegationToken.FooUser, ret[0]);
+				Assert.Equal(1, ret.Count);
+				Assert.Equal(TestWebDelegationToken.FooUser, ret[0]);
 				try
 				{
 					aUrl.GetDelegationToken(url, token, TestWebDelegationToken.FooUser);
@@ -568,7 +568,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				}
 				catch (AuthenticationException ex)
 				{
-					NUnit.Framework.Assert.IsTrue(ex.Message.Contains("delegation token operation"));
+					Assert.True(ex.Message.Contains("delegation token operation"));
 				}
 				return null;
 			}
@@ -600,7 +600,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFallbackToPseudoDelegationTokenAuthenticator()
 		{
 			Org.Mortbay.Jetty.Server jetty = CreateJettyServer();
@@ -639,13 +639,13 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 					();
 				DelegationTokenAuthenticatedURL aUrl = new DelegationTokenAuthenticatedURL();
 				HttpURLConnection conn = aUrl.OpenConnection(url, token);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				IList<string> ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual(TestWebDelegationToken.FooUser, ret[0]);
+				Assert.Equal(1, ret.Count);
+				Assert.Equal(TestWebDelegationToken.FooUser, ret[0]);
 				aUrl.GetDelegationToken(url, token, TestWebDelegationToken.FooUser);
 				NUnit.Framework.Assert.IsNotNull(token.GetDelegationToken());
-				NUnit.Framework.Assert.AreEqual(new Text("token-kind"), token.GetDelegationToken(
+				Assert.Equal(new Text("token-kind"), token.GetDelegationToken(
 					).GetKind());
 				return null;
 			}
@@ -764,14 +764,14 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKerberosDelegationTokenAuthenticator()
 		{
 			TestKerberosDelegationTokenAuthenticator(false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKerberosDelegationTokenAuthenticatorWithDoAs()
 		{
 			TestKerberosDelegationTokenAuthenticator(true);
@@ -786,7 +786,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			conf.Set("hadoop.security.authentication", "kerberos");
 			UserGroupInformation.SetConfiguration(conf);
 			FilePath testDir = new FilePath("target/" + UUID.RandomUUID().ToString());
-			NUnit.Framework.Assert.IsTrue(testDir.Mkdirs());
+			Assert.True(testDir.Mkdirs());
 			MiniKdc kdc = new MiniKdc(MiniKdc.CreateConf(), testDir);
 			Org.Mortbay.Jetty.Server jetty = CreateJettyServer();
 			Context context = new Context();
@@ -814,7 +814,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				}
 				catch (AuthenticationException ex)
 				{
-					NUnit.Framework.Assert.IsTrue(ex.Message.Contains("GSSException"));
+					Assert.True(ex.Message.Contains("GSSException"));
 				}
 				DoAsKerberosUser("client", keytabFile.GetAbsolutePath(), new _Callable_778(aUrl, 
 					url, token, doAs, doAsUser));
@@ -844,7 +844,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			{
 				aUrl.GetDelegationToken(url, token, doAs ? doAsUser : "client", doAsUser);
 				NUnit.Framework.Assert.IsNotNull(token.GetDelegationToken());
-				NUnit.Framework.Assert.AreEqual(new Text("token-kind"), token.GetDelegationToken(
+				Assert.Equal(new Text("token-kind"), token.GetDelegationToken(
 					).GetKind());
 				ByteArrayInputStream buf = new ByteArrayInputStream(token.GetDelegationToken().GetIdentifier
 					());
@@ -853,11 +853,11 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 					));
 				id.ReadFields(dis);
 				dis.Close();
-				NUnit.Framework.Assert.AreEqual(doAs ? new Text(TestWebDelegationToken.OkUser) : 
+				Assert.Equal(doAs ? new Text(TestWebDelegationToken.OkUser) : 
 					new Text("client"), id.GetOwner());
 				if (doAs)
 				{
-					NUnit.Framework.Assert.AreEqual(new Text("client"), id.GetRealUser());
+					Assert.Equal(new Text("client"), id.GetRealUser());
 				}
 				aUrl.RenewDelegationToken(url, token, doAsUser);
 				NUnit.Framework.Assert.IsNotNull(token.GetDelegationToken());
@@ -870,7 +870,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				}
 				catch (Exception ex)
 				{
-					NUnit.Framework.Assert.IsTrue(ex.Message.Contains("403"));
+					Assert.True(ex.Message.Contains("403"));
 				}
 				aUrl.GetDelegationToken(url, token, TestWebDelegationToken.FooUser, doAsUser);
 				aUrl.CancelDelegationToken(url, token, doAsUser);
@@ -890,7 +890,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUser()
 		{
 			Org.Mortbay.Jetty.Server jetty = CreateJettyServer();
@@ -909,17 +909,17 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				string strUrl = string.Format("%s?user.name=%s&doas=%s", url.ToExternalForm(), FooUser
 					, OkUser);
 				HttpURLConnection conn = (HttpURLConnection)new Uri(strUrl).OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				IList<string> ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual(OkUser, ret[0]);
+				Assert.Equal(1, ret.Count);
+				Assert.Equal(OkUser, ret[0]);
 				strUrl = string.Format("%s?user.name=%s&DOAS=%s", url.ToExternalForm(), FooUser, 
 					OkUser);
 				conn = (HttpURLConnection)new Uri(strUrl).OpenConnection();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual(OkUser, ret[0]);
+				Assert.Equal(1, ret.Count);
+				Assert.Equal(OkUser, ret[0]);
 				UserGroupInformation ugi = UserGroupInformation.CreateRemoteUser(FooUser);
 				ugi.DoAs(new _PrivilegedExceptionAction_858(url));
 			}
@@ -949,22 +949,22 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 				DelegationTokenAuthenticatedURL aUrl = new DelegationTokenAuthenticatedURL();
 				HttpURLConnection conn = aUrl.OpenConnection(url, token, TestWebDelegationToken.OkUser
 					);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				IList<string> ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual(TestWebDelegationToken.OkUser, ret[0]);
+				Assert.Equal(1, ret.Count);
+				Assert.Equal(TestWebDelegationToken.OkUser, ret[0]);
 				conn = aUrl.OpenConnection(url, token, TestWebDelegationToken.FailUser);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpForbidden, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpForbidden, conn.GetResponseCode
 					());
 				aUrl.GetDelegationToken(url, token, TestWebDelegationToken.FooUser);
 				UserGroupInformation ugi = UserGroupInformation.GetCurrentUser();
 				ugi.AddToken(token.GetDelegationToken());
 				token = new DelegationTokenAuthenticatedURL.Token();
 				conn = aUrl.OpenConnection(url, token, TestWebDelegationToken.OkUser);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual(TestWebDelegationToken.FooUser, ret[0]);
+				Assert.Equal(1, ret.Count);
+				Assert.Equal(TestWebDelegationToken.FooUser, ret[0]);
 				return null;
 			}
 
@@ -998,7 +998,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHttpUGI()
 		{
 			Org.Mortbay.Jetty.Server jetty = CreateJettyServer();
@@ -1039,16 +1039,16 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 					();
 				DelegationTokenAuthenticatedURL aUrl = new DelegationTokenAuthenticatedURL();
 				HttpURLConnection conn = aUrl.OpenConnection(url, token);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				IList<string> ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual("remoteuser=" + TestWebDelegationToken.FooUser + 
+				Assert.Equal(1, ret.Count);
+				Assert.Equal("remoteuser=" + TestWebDelegationToken.FooUser + 
 					":ugi=" + TestWebDelegationToken.FooUser, ret[0]);
 				conn = aUrl.OpenConnection(url, token, TestWebDelegationToken.OkUser);
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				ret = IOUtils.ReadLines(conn.GetInputStream());
-				NUnit.Framework.Assert.AreEqual(1, ret.Count);
-				NUnit.Framework.Assert.AreEqual("realugi=" + TestWebDelegationToken.FooUser + ":remoteuser="
+				Assert.Equal(1, ret.Count);
+				Assert.Equal("realugi=" + TestWebDelegationToken.FooUser + ":remoteuser="
 					 + TestWebDelegationToken.OkUser + ":ugi=" + TestWebDelegationToken.OkUser, ret[
 					0]);
 				return null;

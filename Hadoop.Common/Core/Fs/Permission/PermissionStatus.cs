@@ -116,7 +116,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			Write(@out, username, groupname, permission);
 		}
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		/// from its base components.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Write(DataOutput @out, string username, string groupname, FsPermission
+		public static void Write(BinaryWriter @out, string username, string groupname, FsPermission
 			 permission)
 		{
 			Text.WriteString(@out, username, Text.DefaultMaxLen);

@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkDirDepth1()
 		{
 			FileSystem fs = GetFileSystem();
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRmEmptyRootDirNonRecursive()
 		{
 			//extra sanity checks here to avoid support calls about complete loss of data
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRmNonEmptyRootDirNonRecursive()
 		{
 			//extra sanity checks here to avoid support calls about complete loss of data
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRmRootRecursive()
 		{
 			//extra sanity checks here to avoid support calls about complete loss of data
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateFileOverRoot()
 		{
 			Path root = new Path("/");

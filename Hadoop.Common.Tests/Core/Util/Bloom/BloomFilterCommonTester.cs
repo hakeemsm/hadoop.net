@@ -178,19 +178,19 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					<int> falsePositives)
 				{
 					filter.Add(this.keys);
-					NUnit.Framework.Assert.IsTrue(" might contain key error ", filter.MembershipTest(
+					Assert.True(" might contain key error ", filter.MembershipTest(
 						new Key(Sharpen.Runtime.GetBytesForString("100"))));
-					NUnit.Framework.Assert.IsTrue(" might contain key error ", filter.MembershipTest(
+					Assert.True(" might contain key error ", filter.MembershipTest(
 						new Key(Sharpen.Runtime.GetBytesForString("200"))));
 					filter.Add(Sharpen.Collections.ToArray(this.keys, new Key[] {  }));
-					NUnit.Framework.Assert.IsTrue(" might contain key error ", filter.MembershipTest(
+					Assert.True(" might contain key error ", filter.MembershipTest(
 						new Key(Sharpen.Runtime.GetBytesForString("100"))));
-					NUnit.Framework.Assert.IsTrue(" might contain key error ", filter.MembershipTest(
+					Assert.True(" might contain key error ", filter.MembershipTest(
 						new Key(Sharpen.Runtime.GetBytesForString("200"))));
 					filter.Add(new _AbstractCollection_167(this));
-					NUnit.Framework.Assert.IsTrue(" might contain key error ", filter.MembershipTest(
+					Assert.True(" might contain key error ", filter.MembershipTest(
 						new Key(Sharpen.Runtime.GetBytesForString("100"))));
-					NUnit.Framework.Assert.IsTrue(" might contain key error ", filter.MembershipTest(
+					Assert.True(" might contain key error ", filter.MembershipTest(
 						new Key(Sharpen.Runtime.GetBytesForString("200"))));
 				}
 
@@ -232,12 +232,12 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				{
 					string line = "werabsdbe";
 					Key key = new Key(Sharpen.Runtime.GetBytesForString(line));
-					NUnit.Framework.Assert.IsTrue("default key weight error ", key.GetWeight() == 1d);
+					Assert.True("default key weight error ", key.GetWeight() == 1d);
 					key.Set(Sharpen.Runtime.GetBytesForString(line), 2d);
-					NUnit.Framework.Assert.IsTrue(" setted key weight error ", key.GetWeight() == 2d);
+					Assert.True(" setted key weight error ", key.GetWeight() == 2d);
 					Key sKey = new Key(Sharpen.Runtime.GetBytesForString(line), 2d);
-					NUnit.Framework.Assert.IsTrue("equals error", key.Equals(sKey));
-					NUnit.Framework.Assert.IsTrue("hashcode error", key.GetHashCode() == sKey.GetHashCode
+					Assert.True("equals error", key.Equals(sKey));
+					Assert.True("hashcode error", key.GetHashCode() == sKey.GetHashCode
 						());
 					sKey = new Key(Sharpen.Runtime.GetBytesForString(line.Concat("a")), 2d);
 					NUnit.Framework.Assert.IsFalse("equals error", key.Equals(sKey));
@@ -248,9 +248,9 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					NUnit.Framework.Assert.IsFalse("hashcode error", key.GetHashCode() == sKey.GetHashCode
 						());
 					key.IncrementWeight();
-					NUnit.Framework.Assert.IsTrue("weight error", key.GetWeight() == 3d);
+					Assert.True("weight error", key.GetWeight() == 3d);
 					key.IncrementWeight(2d);
-					NUnit.Framework.Assert.IsTrue("weight error", key.GetWeight() == 5d);
+					Assert.True("weight error", key.GetWeight() == 5d);
 				}
 
 				private void CheckOnReadWrite()
@@ -267,7 +267,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						NUnit.Framework.Assert.IsFalse("checkOnReadWrite equals error", restoredKey.Equals
 							(originKey));
 						restoredKey.ReadFields(@in);
-						NUnit.Framework.Assert.IsTrue("checkOnReadWrite equals error", restoredKey.Equals
+						Assert.True("checkOnReadWrite equals error", restoredKey.Equals
 							(originKey));
 						@out.Reset();
 					}
@@ -462,7 +462,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					// check on present even key
 					for (int i_1 = 0; i_1 < numInsertions; i_1 += 2)
 					{
-						NUnit.Framework.Assert.IsTrue(" filter might contains " + i_1, filter.MembershipTest
+						Assert.True(" filter might contains " + i_1, filter.MembershipTest
 							(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_1)))));
 					}
 					// check on absent odd in event
@@ -516,7 +516,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						tempFilter.ReadFields(@in);
 						foreach (int slot_1 in list)
 						{
-							NUnit.Framework.Assert.IsTrue("read/write mask check filter error on " + slot_1, 
+							Assert.True("read/write mask check filter error on " + slot_1, 
 								filter.MembershipTest(new Key(Sharpen.Runtime.GetBytesForString(slot_1.ToString(
 								)))));
 						}
@@ -614,7 +614,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					{
 						if (i_1 >= startIntersection && i_1 <= endIntersection)
 						{
-							NUnit.Framework.Assert.IsTrue(" filter might contains " + i_1, filter.MembershipTest
+							Assert.True(" filter might contains " + i_1, filter.MembershipTest
 								(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_1)))));
 						}
 					}
@@ -653,7 +653,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					// check on present all key
 					for (int i_2 = 0; i_2 < numInsertions; i_2++)
 					{
-						NUnit.Framework.Assert.IsTrue(" filter might contains " + i_2, filter.MembershipTest
+						Assert.True(" filter might contains " + i_2, filter.MembershipTest
 							(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_2)))));
 					}
 				}

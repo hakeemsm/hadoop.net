@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Test
 		/// <summary>Assert that a given file exists.</summary>
 		public static void AssertExists(FilePath f)
 		{
-			NUnit.Framework.Assert.IsTrue("File " + f + " should exist", f.Exists());
+			Assert.True("File " + f + " should exist", f.Exists());
 		}
 
 		/// <summary>List all of the files in 'dir' that match the regex 'pattern'.</summary>
@@ -108,14 +108,14 @@ namespace Org.Apache.Hadoop.Test
 				}
 			}
 			ICollection<string> expectedSet = Sets.NewTreeSet(Arrays.AsList(expectedMatches));
-			NUnit.Framework.Assert.AreEqual("Bad files matching " + pattern + " in " + dir, Joiner
+			Assert.Equal("Bad files matching " + pattern + " in " + dir, Joiner
 				.On(",").Join(expectedSet), Joiner.On(",").Join(found));
 		}
 
 		public static void AssertExceptionContains(string @string, Exception t)
 		{
 			string msg = t.Message;
-			NUnit.Framework.Assert.IsTrue("Expected to find '" + @string + "' but got unexpected exception:"
+			Assert.True("Expected to find '" + @string + "' but got unexpected exception:"
 				 + StringUtils.StringifyException(t), msg.Contains(@string));
 		}
 
@@ -405,7 +405,7 @@ namespace Org.Apache.Hadoop.Test
 
 		public static void AssertMatches(string output, string pattern)
 		{
-			NUnit.Framework.Assert.IsTrue("Expected output to match /" + pattern + "/" + " but got:\n"
+			Assert.True("Expected output to match /" + pattern + "/" + " but got:\n"
 				 + output, Sharpen.Pattern.Compile(pattern).Matcher(output).Find());
 		}
 
@@ -417,7 +417,7 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertValueWithinRange(long expectedMin, long expectedMax, long
 			 actual)
 		{
-			NUnit.Framework.Assert.IsTrue("Expected " + actual + " to be in range (" + expectedMin
+			Assert.True("Expected " + actual + " to be in range (" + expectedMin
 				 + "," + expectedMax + ")", expectedMin <= actual && actual <= expectedMax);
 		}
 

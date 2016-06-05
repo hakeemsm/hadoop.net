@@ -72,13 +72,13 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		private void CleanupFile(FileContext fc, Path name)
 		{
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc, name));
+			Assert.True(FileContextTestHelper.Exists(fc, name));
 			fc.Delete(name, true);
-			NUnit.Framework.Assert.IsTrue(!FileContextTestHelper.Exists(fc, name));
+			Assert.True(!FileContextTestHelper.Exists(fc, name));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreatePermission()
 		{
 			if (Path.Windows)
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetPermission()
 		{
 			if (Path.Windows)
@@ -122,7 +122,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetOwner()
 		{
 			if (Path.Windows)
@@ -157,12 +157,12 @@ namespace Org.Apache.Hadoop.FS
 			{
 				string g0 = groups[0];
 				fc.SetOwner(f, null, g0);
-				NUnit.Framework.Assert.AreEqual(g0, fc.GetFileStatus(f).GetGroup());
+				Assert.Equal(g0, fc.GetFileStatus(f).GetGroup());
 				if (groups.Count > 1)
 				{
 					string g1 = groups[1];
 					fc.SetOwner(f, null, g1);
-					NUnit.Framework.Assert.AreEqual(g1, fc.GetFileStatus(f).GetGroup());
+					Assert.Equal(g1, fc.GetFileStatus(f).GetGroup());
 				}
 				else
 				{
@@ -187,13 +187,13 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUgi()
 		{
 			UserGroupInformation otherUser = UserGroupInformation.CreateRemoteUser("otherUser"
 				);
 			FileContext newFc = otherUser.DoAs(new _PrivilegedExceptionAction_194());
-			NUnit.Framework.Assert.AreEqual("otherUser", newFc.GetUgi().GetUserName());
+			Assert.Equal("otherUser", newFc.GetUgi().GetUserName());
 		}
 
 		private sealed class _PrivilegedExceptionAction_194 : PrivilegedExceptionAction<FileContext
@@ -226,7 +226,7 @@ namespace Org.Apache.Hadoop.FS
 		internal virtual void DoFilePermissionCheck(FsPermission expectedPerm, FsPermission
 			 actualPerm)
 		{
-			NUnit.Framework.Assert.AreEqual(expectedPerm.ApplyUMask(GetFileMask()), actualPerm
+			Assert.Equal(expectedPerm.ApplyUMask(GetFileMask()), actualPerm
 				);
 		}
 

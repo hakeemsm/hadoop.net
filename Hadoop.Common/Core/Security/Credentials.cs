@@ -216,10 +216,10 @@ namespace Org.Apache.Hadoop.Security
 			os.Close();
 		}
 
-		/// <summary>Stores all the keys to DataOutput</summary>
+		/// <summary>Stores all the keys to BinaryWriter</summary>
 		/// <param name="out"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			// write out tokens first
 			WritableUtils.WriteVInt(@out, tokenMap.Count);

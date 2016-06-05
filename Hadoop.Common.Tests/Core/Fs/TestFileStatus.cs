@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Check that the write and readField methods work correctly.</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileStatusWritable()
 		{
 			FileStatus[] tests = new FileStatus[] { new FileStatus(1, false, 5, 3, 4, 5, null
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.FS
 			Log.Info("Writing FileStatuses to a ByteArrayOutputStream");
 			// Writing input list to ByteArrayOutputStream
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			DataOutput @out = new DataOutputStream(baos);
+			BinaryWriter @out = new DataOutputStream(baos);
 			foreach (FileStatus fs in tests)
 			{
 				fs.Write(@out);
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS
 			foreach (FileStatus fs_1 in tests)
 			{
 				dest.ReadFields(@in);
-				NUnit.Framework.Assert.AreEqual("Different FileStatuses in iteration " + iterator
+				Assert.Equal("Different FileStatuses in iteration " + iterator
 					, dest, fs_1);
 				iterator++;
 			}
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Check that the full parameter constructor works correctly.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ConstructorFull()
 		{
 			bool isdir = false;
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Check that the non-symlink constructor works correctly.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ConstructorNoSymlink()
 		{
 			bool isdir = true;
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.FS
 		/// correctly.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ConstructorNoOwner()
 		{
 			bool isdir = true;
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Check that the no parameter constructor works correctly.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ConstructorBlank()
 		{
 			FileStatus fileStatus = new FileStatus();
@@ -116,7 +116,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Check that FileStatus are equal if their paths are equal.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEquals()
 		{
 			Path path = new Path("path");
@@ -124,11 +124,11 @@ namespace Org.Apache.Hadoop.FS
 				("-rw-rw-rw-"), "one", "one", null, path);
 			FileStatus fileStatus2 = new FileStatus(2, true, 2, 2, 2, 2, FsPermission.ValueOf
 				("---x--x--x"), "two", "two", null, path);
-			NUnit.Framework.Assert.AreEqual(fileStatus1, fileStatus2);
+			Assert.Equal(fileStatus1, fileStatus2);
 		}
 
 		/// <summary>Check that FileStatus are not equal if their paths are not equal.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNotEquals()
 		{
 			Path path1 = new Path("path1");
@@ -143,7 +143,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Check that toString produces the expected output for a file.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ToStringFile()
 		{
 			bool isdir = false;
@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Check that toString produces the expected output for a directory.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ToStringDir()
 		{
 			FileStatus fileStatus = new FileStatus(Length, true, Replication, Blksize, Mtime, 
@@ -164,7 +164,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Check that toString produces the expected output for a symlink.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void ToStringSymlink()
 		{
 			bool isdir = false;
@@ -192,25 +192,25 @@ namespace Org.Apache.Hadoop.FS
 			 replication, long blocksize, long mtime, long atime, FsPermission permission, string
 			 owner, string group, Path symlink, Path path)
 		{
-			NUnit.Framework.Assert.AreEqual(length, fileStatus.GetLen());
-			NUnit.Framework.Assert.AreEqual(isdir, fileStatus.IsDirectory());
-			NUnit.Framework.Assert.AreEqual(replication, fileStatus.GetReplication());
-			NUnit.Framework.Assert.AreEqual(blocksize, fileStatus.GetBlockSize());
-			NUnit.Framework.Assert.AreEqual(mtime, fileStatus.GetModificationTime());
-			NUnit.Framework.Assert.AreEqual(atime, fileStatus.GetAccessTime());
-			NUnit.Framework.Assert.AreEqual(permission, fileStatus.GetPermission());
-			NUnit.Framework.Assert.AreEqual(owner, fileStatus.GetOwner());
-			NUnit.Framework.Assert.AreEqual(group, fileStatus.GetGroup());
+			Assert.Equal(length, fileStatus.GetLen());
+			Assert.Equal(isdir, fileStatus.IsDirectory());
+			Assert.Equal(replication, fileStatus.GetReplication());
+			Assert.Equal(blocksize, fileStatus.GetBlockSize());
+			Assert.Equal(mtime, fileStatus.GetModificationTime());
+			Assert.Equal(atime, fileStatus.GetAccessTime());
+			Assert.Equal(permission, fileStatus.GetPermission());
+			Assert.Equal(owner, fileStatus.GetOwner());
+			Assert.Equal(group, fileStatus.GetGroup());
 			if (symlink == null)
 			{
 				NUnit.Framework.Assert.IsFalse(fileStatus.IsSymlink());
 			}
 			else
 			{
-				NUnit.Framework.Assert.IsTrue(fileStatus.IsSymlink());
-				NUnit.Framework.Assert.AreEqual(symlink, fileStatus.GetSymlink());
+				Assert.True(fileStatus.IsSymlink());
+				Assert.Equal(symlink, fileStatus.GetSymlink());
 			}
-			NUnit.Framework.Assert.AreEqual(path, fileStatus.GetPath());
+			Assert.Equal(path, fileStatus.GetPath());
 		}
 
 		/// <summary>Validates the toString method for FileStatus.</summary>
@@ -243,7 +243,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				expected.Append("isSymlink=").Append(false).Append("}");
 			}
-			NUnit.Framework.Assert.AreEqual(expected.ToString(), fileStatus.ToString());
+			Assert.Equal(expected.ToString(), fileStatus.ToString());
 		}
 	}
 }

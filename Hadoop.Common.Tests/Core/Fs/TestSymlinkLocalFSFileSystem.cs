@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException);
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException);
 			}
 			// Fails with overwrite as well
 			try
@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				// Todo: Fix this test when HADOOP-9819 is fixed.
-				NUnit.Framework.Assert.IsTrue(UnwrapException(e) is FileAlreadyExistsException ||
+				Assert.True(UnwrapException(e) is FileAlreadyExistsException ||
 					 UnwrapException(e) is FileNotFoundException);
 			}
 		}

@@ -150,14 +150,14 @@ namespace Org.Apache.Hadoop.IO
 				for (int i_1 = 0; i_1 < Size; i_1++)
 				{
 					nextWritable = (LongWritable)reader.Next(nextWritable);
-					NUnit.Framework.Assert.AreEqual(nextWritable.Get(), i_1);
+					Assert.Equal(nextWritable.Get(), i_1);
 				}
-				NUnit.Framework.Assert.IsTrue("testArrayFileIteration seek error !!!", reader.Seek
+				Assert.True("testArrayFileIteration seek error !!!", reader.Seek
 					(new LongWritable(6)));
 				nextWritable = (LongWritable)reader.Next(nextWritable);
-				NUnit.Framework.Assert.IsTrue("testArrayFileIteration error !!!", reader.Key() ==
+				Assert.True("testArrayFileIteration error !!!", reader.Key() ==
 					 7);
-				NUnit.Framework.Assert.IsTrue("testArrayFileIteration error !!!", nextWritable.Equals
+				Assert.True("testArrayFileIteration error !!!", nextWritable.Equals
 					(new LongWritable(7)));
 				NUnit.Framework.Assert.IsFalse("testArrayFileIteration error !!!", reader.Seek(new 
 					LongWritable(Size + 5)));

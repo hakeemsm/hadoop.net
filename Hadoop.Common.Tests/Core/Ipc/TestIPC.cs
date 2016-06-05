@@ -270,12 +270,12 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				string message = e.Message;
 				string addressText = address.GetHostName() + ":" + address.Port;
-				NUnit.Framework.Assert.IsTrue("Did not find " + addressText + " in " + message, message
+				Assert.True("Did not find " + addressText + " in " + message, message
 					.Contains(addressText));
 				Exception cause = e.InnerException;
 				NUnit.Framework.Assert.IsNotNull("No nested exception in " + e, cause);
 				string causeText = cause.Message;
-				NUnit.Framework.Assert.IsTrue("Did not find " + causeText + " in " + message, message
+				Assert.True("Did not find " + causeText + " in " + message, message
 					.Contains(causeText));
 			}
 			finally
@@ -352,7 +352,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				base.Write(@out);
 				MaybeThrowIOE();
@@ -366,7 +366,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				base.Write(@out);
 				MaybeThrowRTE();
@@ -505,7 +505,7 @@ namespace Org.Apache.Hadoop.Ipc
 		private static void AssertExceptionContains(Exception t, string substring)
 		{
 			string msg = StringUtils.StringifyException(t);
-			NUnit.Framework.Assert.IsTrue("Exception should contain substring '" + substring 
+			Assert.True("Exception should contain substring '" + substring 
 				+ "':\n" + msg, msg.Contains(substring));
 			Log.Info("Got expected exception", t);
 		}
@@ -529,7 +529,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue(e.Message.Contains("Injected fault"));
+				Assert.True(e.Message.Contains("Injected fault"));
 			}
 			finally
 			{
@@ -571,7 +571,7 @@ namespace Org.Apache.Hadoop.Ipc
 				catch (Exception e)
 				{
 					Log.Info("caught expected exception", e);
-					NUnit.Framework.Assert.IsTrue(StringUtils.StringifyException(e).Contains("Injected fault"
+					Assert.True(StringUtils.StringifyException(e).Contains("Injected fault"
 						));
 				}
 				// Resetting to the normal socket behavior should succeed
@@ -788,8 +788,8 @@ namespace Org.Apache.Hadoop.Ipc
 				Sharpen.Thread.Sleep(100);
 			}
 			Log.Info("ipc layer should be blocked");
-			NUnit.Framework.Assert.AreEqual(callQ, server.GetCallQueueLen());
-			NUnit.Framework.Assert.AreEqual(initialClients, server.GetNumOpenConnections());
+			Assert.Equal(callQ, server.GetCallQueueLen());
+			Assert.Equal(initialClients, server.GetNumOpenConnections());
 			// now flood the server with the rest of the connections, the reader's
 			// connection queues should fill and then the listener should block
 			for (int i_2 = initialClients; i_2 < clients; i_2++)
@@ -806,11 +806,11 @@ namespace Org.Apache.Hadoop.Ipc
 			// check a few times to make sure we didn't go over
 			for (int i_3 = 0; i_3 < 4; i_3++)
 			{
-				NUnit.Framework.Assert.AreEqual(maxAccept, server.GetNumOpenConnections());
+				Assert.Equal(maxAccept, server.GetNumOpenConnections());
 				Sharpen.Thread.Sleep(100);
 			}
 			// sanity check that no calls have finished
-			NUnit.Framework.Assert.AreEqual(clients, callFinishedLatch.GetCount());
+			Assert.Equal(clients, callFinishedLatch.GetCount());
 			Log.Info("releasing the calls");
 			server.callBlockLatch.CountDown();
 			callFinishedLatch.Await();
@@ -818,7 +818,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				t.Join();
 			}
-			NUnit.Framework.Assert.AreEqual(0, failures.Get());
+			Assert.Equal(0, failures.Get());
 			server.Stop();
 		}
 
@@ -906,12 +906,12 @@ namespace Org.Apache.Hadoop.Ipc
 				// all calls blocked in handler so all connections made
 				allCallLatch.Await();
 				NUnit.Framework.Assert.IsFalse(error.Get());
-				NUnit.Framework.Assert.AreEqual(clients, server.GetNumOpenConnections());
+				Assert.Equal(clients, server.GetNumOpenConnections());
 				// wake up blocked calls and wait for client call to return, no
 				// connections should have closed
 				callBarrier.Await();
 				callReturned.Await();
-				NUnit.Framework.Assert.AreEqual(clients, server.GetNumOpenConnections());
+				Assert.Equal(clients, server.GetNumOpenConnections());
 				// server won't close till maxIdle*2, so give scanning thread time to
 				// be almost ready to close idle connection.  after which it should
 				// close max connections on every cleanupInterval
@@ -920,17 +920,17 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					Sharpen.Thread.Sleep(cleanupInterval);
 					NUnit.Framework.Assert.IsFalse(error.Get());
-					NUnit.Framework.Assert.AreEqual(i_1, server.GetNumOpenConnections());
+					Assert.Equal(i_1, server.GetNumOpenConnections());
 				}
 				// connection for the first blocked call should still be open
 				Sharpen.Thread.Sleep(cleanupInterval);
 				NUnit.Framework.Assert.IsFalse(error.Get());
-				NUnit.Framework.Assert.AreEqual(1, server.GetNumOpenConnections());
+				Assert.Equal(1, server.GetNumOpenConnections());
 				// wake up call and ensure connection times out
 				firstCallBarrier.Await();
 				Sharpen.Thread.Sleep(maxIdle * 2);
 				NUnit.Framework.Assert.IsFalse(error.Get());
-				NUnit.Framework.Assert.AreEqual(0, server.GetNumOpenConnections());
+				Assert.Equal(0, server.GetNumOpenConnections());
 			}
 			finally
 			{
@@ -1079,7 +1079,7 @@ namespace Org.Apache.Hadoop.Ipc
 				server.Stop();
 			}
 			long endFds = CountOpenFileDescriptors();
-			NUnit.Framework.Assert.IsTrue("Leaked " + (endFds - startFds) + " file descriptors"
+			Assert.True("Leaked " + (endFds - startFds) + " file descriptors"
 				, endFds - startFds < 20);
 		}
 
@@ -1095,7 +1095,7 @@ namespace Org.Apache.Hadoop.Ipc
 			client.Stop();
 			try
 			{
-				NUnit.Framework.Assert.IsTrue(Sharpen.Thread.CurrentThread().IsInterrupted());
+				Assert.True(Sharpen.Thread.CurrentThread().IsInterrupted());
 				Log.Info("Expected thread interrupt during client cleanup");
 			}
 			catch (Exception)
@@ -1227,8 +1227,8 @@ namespace Org.Apache.Hadoop.Ipc
 				)
 			{
 				base.CheckResponse(header);
-				NUnit.Framework.Assert.AreEqual(info.id, header.GetCallId());
-				NUnit.Framework.Assert.AreEqual(info.retry, header.GetRetryCount());
+				Assert.Equal(info.id, header.GetCallId());
+				Assert.Equal(info.retry, header.GetRetryCount());
 			}
 
 			private readonly TestIPC.CallInfo info;
@@ -1243,8 +1243,8 @@ namespace Org.Apache.Hadoop.Ipc
 
 			public void Run()
 			{
-				NUnit.Framework.Assert.AreEqual(info.id, Server.GetCallId());
-				NUnit.Framework.Assert.AreEqual(info.retry, Server.GetCallRetryCount());
+				Assert.Equal(info.id, Server.GetCallId());
+				Assert.Equal(info.retry, Server.GetCallRetryCount());
 			}
 
 			private readonly TestIPC.CallInfo info;
@@ -1275,7 +1275,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				server.Start();
 				retryProxy.DummyRun();
-				NUnit.Framework.Assert.AreEqual(TestIPC.TestInvocationHandler.retry, totalRetry +
+				Assert.Equal(TestIPC.TestInvocationHandler.retry, totalRetry +
 					 1);
 			}
 			finally
@@ -1297,7 +1297,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			public void Run()
 			{
-				NUnit.Framework.Assert.AreEqual(this.retryCount++, Server.GetCallRetryCount());
+				Assert.Equal(this.retryCount++, Server.GetCallRetryCount());
 			}
 		}
 
@@ -1335,7 +1335,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			public void Run()
 			{
-				NUnit.Framework.Assert.AreEqual(0, Server.GetCallRetryCount());
+				Assert.Equal(0, Server.GetCallRetryCount());
 			}
 		}
 
@@ -1376,7 +1376,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			public void Run()
 			{
-				NUnit.Framework.Assert.AreEqual(retryCount, Server.GetCallRetryCount());
+				Assert.Equal(retryCount, Server.GetCallRetryCount());
 			}
 
 			private readonly int retryCount;
@@ -1421,7 +1421,7 @@ namespace Org.Apache.Hadoop.Ipc
 				server.Stop();
 			}
 			int expectedCallCount = callerCount * perCallerCallCount;
-			NUnit.Framework.Assert.AreEqual(expectedCallCount, callIds.Count);
+			Assert.Equal(expectedCallCount, callIds.Count);
 			// It is not guaranteed that the server executes requests in sequential order
 			// of client call ID, so we must sort the call IDs before checking that it
 			// contains every expected value.
@@ -1429,7 +1429,7 @@ namespace Org.Apache.Hadoop.Ipc
 			int startID = callIds[0];
 			for (int i_2 = 0; i_2 < expectedCallCount; ++i_2)
 			{
-				NUnit.Framework.Assert.AreEqual(startID + i_2, callIds[i_2]);
+				Assert.Equal(startID + i_2, callIds[i_2]);
 			}
 		}
 
@@ -1449,7 +1449,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMaxConnections()
 		{
 			conf.SetInt("ipc.server.max.connections", 5);
@@ -1460,7 +1460,7 @@ namespace Org.Apache.Hadoop.Ipc
 				server = new TestIPC.TestServer(3, false);
 				IPEndPoint addr = NetUtils.GetConnectAddress(server);
 				server.Start();
-				NUnit.Framework.Assert.AreEqual(0, server.GetNumOpenConnections());
+				Assert.Equal(0, server.GetNumOpenConnections());
 				for (int i = 0; i < 10; i++)
 				{
 					connectors[i] = new _Thread_1235(addr);
@@ -1468,7 +1468,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 				Sharpen.Thread.Sleep(1000);
 				// server should only accept up to 5 connections
-				NUnit.Framework.Assert.AreEqual(5, server.GetNumOpenConnections());
+				Assert.Equal(5, server.GetNumOpenConnections());
 				for (int i_1 = 0; i_1 < 10; i_1++)
 				{
 					connectors[i_1].Join();
@@ -1528,11 +1528,11 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClientGetTimeout()
 		{
 			Configuration config = new Configuration();
-			NUnit.Framework.Assert.AreEqual(Client.GetTimeout(config), -1);
+			Assert.Equal(Client.GetTimeout(config), -1);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -1574,7 +1574,7 @@ namespace Org.Apache.Hadoop.Ipc
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				IOUtils.CopyBytes(@in, baos, 256);
 				byte[] responseData = baos.ToByteArray();
-				NUnit.Framework.Assert.AreEqual(StringUtils.ByteToHexString(expectedResponse), StringUtils
+				Assert.Equal(StringUtils.ByteToHexString(expectedResponse), StringUtils
 					.ByteToHexString(responseData));
 			}
 			finally

@@ -38,16 +38,16 @@ namespace Org.Apache.Hadoop.HA
 		/// Test that the exit code of the script determines
 		/// whether the fencer succeeded or failed
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBasicSuccessFailure()
 		{
-			NUnit.Framework.Assert.IsTrue(fencer.TryFence(TestTarget, "echo"));
+			Assert.True(fencer.TryFence(TestTarget, "echo"));
 			NUnit.Framework.Assert.IsFalse(fencer.TryFence(TestTarget, "exit 1"));
 			// bad path should also fail
 			NUnit.Framework.Assert.IsFalse(fencer.TryFence(TestTarget, "xxxxxxxxxxxx"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCheckNoArgs()
 		{
 			try
@@ -58,12 +58,12 @@ namespace Org.Apache.Hadoop.HA
 			}
 			catch (BadFencingConfigurationException confe)
 			{
-				NUnit.Framework.Assert.IsTrue("Unexpected exception:" + StringUtils.StringifyException
+				Assert.True("Unexpected exception:" + StringUtils.StringifyException
 					(confe), confe.Message.Contains("No argument passed"));
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCheckParensNoArgs()
 		{
 			try
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.HA
 			}
 			catch (BadFencingConfigurationException confe)
 			{
-				NUnit.Framework.Assert.IsTrue("Unexpected exception:" + StringUtils.StringifyException
+				Assert.True("Unexpected exception:" + StringUtils.StringifyException
 					(confe), confe.Message.Contains("Unable to parse line: 'shell()'"));
 			}
 		}
@@ -83,10 +83,10 @@ namespace Org.Apache.Hadoop.HA
 		/// Test that lines on stdout get passed as INFO
 		/// level messages
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStdoutLogging()
 		{
-			NUnit.Framework.Assert.IsTrue(fencer.TryFence(TestTarget, "echo hello"));
+			Assert.True(fencer.TryFence(TestTarget, "echo hello"));
 			Org.Mockito.Mockito.Verify(ShellCommandFencer.Log).Info(Org.Mockito.Mockito.EndsWith
 				("echo hello: hello"));
 		}
@@ -95,10 +95,10 @@ namespace Org.Apache.Hadoop.HA
 		/// Test that lines on stderr get passed as
 		/// WARN level log messages
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStderrLogging()
 		{
-			NUnit.Framework.Assert.IsTrue(fencer.TryFence(TestTarget, "echo hello>&2"));
+			Assert.True(fencer.TryFence(TestTarget, "echo hello>&2"));
 			Org.Mockito.Mockito.Verify(ShellCommandFencer.Log).Warn(Org.Mockito.Mockito.EndsWith
 				("echo hello>&2: hello"));
 		}
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.HA
 		/// Verify that the Configuration gets passed as
 		/// environment variables to the fencer.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConfAsEnvironment()
 		{
 			if (!Shell.Windows)
@@ -128,7 +128,7 @@ namespace Org.Apache.Hadoop.HA
 		/// Verify that information about the fencing target gets passed as
 		/// environment variables to the fencer.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTargetAsEnvironment()
 		{
 			if (!Shell.Windows)
@@ -160,22 +160,22 @@ namespace Org.Apache.Hadoop.HA
 			NUnit.Framework.Assert.IsFalse(fencer.TryFence(TestTarget, "read"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCommandAbbreviation()
 		{
-			NUnit.Framework.Assert.AreEqual("a...f", ShellCommandFencer.Abbreviate("abcdef", 
+			Assert.Equal("a...f", ShellCommandFencer.Abbreviate("abcdef", 
 				5));
-			NUnit.Framework.Assert.AreEqual("abcdef", ShellCommandFencer.Abbreviate("abcdef", 
+			Assert.Equal("abcdef", ShellCommandFencer.Abbreviate("abcdef", 
 				6));
-			NUnit.Framework.Assert.AreEqual("abcdef", ShellCommandFencer.Abbreviate("abcdef", 
+			Assert.Equal("abcdef", ShellCommandFencer.Abbreviate("abcdef", 
 				7));
-			NUnit.Framework.Assert.AreEqual("a...g", ShellCommandFencer.Abbreviate("abcdefg", 
+			Assert.Equal("a...g", ShellCommandFencer.Abbreviate("abcdefg", 
 				5));
-			NUnit.Framework.Assert.AreEqual("a...h", ShellCommandFencer.Abbreviate("abcdefgh"
+			Assert.Equal("a...h", ShellCommandFencer.Abbreviate("abcdefgh"
 				, 5));
-			NUnit.Framework.Assert.AreEqual("a...gh", ShellCommandFencer.Abbreviate("abcdefgh"
+			Assert.Equal("a...gh", ShellCommandFencer.Abbreviate("abcdefgh"
 				, 6));
-			NUnit.Framework.Assert.AreEqual("ab...gh", ShellCommandFencer.Abbreviate("abcdefgh"
+			Assert.Equal("ab...gh", ShellCommandFencer.Abbreviate("abcdefgh"
 				, 7));
 		}
 	}

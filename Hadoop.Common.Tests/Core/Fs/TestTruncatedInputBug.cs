@@ -51,8 +51,8 @@ namespace Org.Apache.Hadoop.FS
 				// First create a test input file.
 				Path testFile = new Path(TestRootDir, "HADOOP-1489");
 				WriteFile(fileSys, testFile, fileSize);
-				NUnit.Framework.Assert.IsTrue(fileSys.Exists(testFile));
-				NUnit.Framework.Assert.IsTrue(fileSys.GetFileStatus(testFile).GetLen() == fileSize
+				Assert.True(fileSys.Exists(testFile));
+				Assert.True(fileSys.GetFileStatus(testFile).GetLen() == fileSize
 					);
 				// Now read the file for ioBufSize bytes
 				FSDataInputStream @in = fileSys.Open(testFile, ioBufSize);
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.FS
 				@in.Close();
 				System.Console.Out.WriteLine("Read " + filePos + " bytes." + " file size=" + fileSize
 					);
-				NUnit.Framework.Assert.IsTrue(filePos == fileSize);
+				Assert.True(filePos == fileSize);
 			}
 			finally
 			{

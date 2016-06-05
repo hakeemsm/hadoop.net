@@ -58,26 +58,26 @@ namespace Org.Apache.Hadoop.IO
 			TestWritable.TestWritable(md5Hash00);
 			TestWritable.TestWritable(md5HashFF);
 			// test equals()
-			NUnit.Framework.Assert.AreEqual(md5Hash, md5Hash);
-			NUnit.Framework.Assert.AreEqual(md5Hash00, md5Hash00);
-			NUnit.Framework.Assert.AreEqual(md5HashFF, md5HashFF);
+			Assert.Equal(md5Hash, md5Hash);
+			Assert.Equal(md5Hash00, md5Hash00);
+			Assert.Equal(md5HashFF, md5HashFF);
 			// test compareTo()
-			NUnit.Framework.Assert.IsTrue(md5Hash.CompareTo(md5Hash) == 0);
-			NUnit.Framework.Assert.IsTrue(md5Hash00.CompareTo(md5Hash) < 0);
-			NUnit.Framework.Assert.IsTrue(md5HashFF.CompareTo(md5Hash) > 0);
+			Assert.True(md5Hash.CompareTo(md5Hash) == 0);
+			Assert.True(md5Hash00.CompareTo(md5Hash) < 0);
+			Assert.True(md5HashFF.CompareTo(md5Hash) > 0);
 			// test toString and string ctor
-			NUnit.Framework.Assert.AreEqual(md5Hash, new MD5Hash(md5Hash.ToString()));
-			NUnit.Framework.Assert.AreEqual(md5Hash00, new MD5Hash(md5Hash00.ToString()));
-			NUnit.Framework.Assert.AreEqual(md5HashFF, new MD5Hash(md5HashFF.ToString()));
-			NUnit.Framework.Assert.AreEqual(unchecked((int)(0x01020304)), orderedHash.QuarterDigest
+			Assert.Equal(md5Hash, new MD5Hash(md5Hash.ToString()));
+			Assert.Equal(md5Hash00, new MD5Hash(md5Hash00.ToString()));
+			Assert.Equal(md5HashFF, new MD5Hash(md5HashFF.ToString()));
+			Assert.Equal(unchecked((int)(0x01020304)), orderedHash.QuarterDigest
 				());
-			NUnit.Framework.Assert.AreEqual(unchecked((int)(0xfffefdfc)), backwardHash.QuarterDigest
+			Assert.Equal(unchecked((int)(0xfffefdfc)), backwardHash.QuarterDigest
 				());
-			NUnit.Framework.Assert.AreEqual(unchecked((long)(0x0102030405060708L)), orderedHash
+			Assert.Equal(unchecked((long)(0x0102030405060708L)), orderedHash
 				.HalfDigest());
-			NUnit.Framework.Assert.AreEqual(unchecked((long)(0xfffefdfcfbfaf9f8L)), backwardHash
+			Assert.Equal(unchecked((long)(0xfffefdfcfbfaf9f8L)), backwardHash
 				.HalfDigest());
-			NUnit.Framework.Assert.IsTrue("hash collision", closeHash1.GetHashCode() != closeHash2
+			Assert.True("hash collision", closeHash1.GetHashCode() != closeHash2
 				.GetHashCode());
 			Sharpen.Thread t1 = new _Thread_93(md5HashFF);
 			Sharpen.Thread t2 = new _Thread_103(md5Hash00);
@@ -99,7 +99,7 @@ namespace Org.Apache.Hadoop.IO
 				for (int i = 0; i < 100; i++)
 				{
 					MD5Hash hash = new MD5Hash(Org.Apache.Hadoop.IO.TestMD5Hash.Dff);
-					NUnit.Framework.Assert.AreEqual(hash, md5HashFF);
+					Assert.Equal(hash, md5HashFF);
 				}
 			}
 
@@ -118,7 +118,7 @@ namespace Org.Apache.Hadoop.IO
 				for (int i = 0; i < 100; i++)
 				{
 					MD5Hash hash = new MD5Hash(Org.Apache.Hadoop.IO.TestMD5Hash.D00);
-					NUnit.Framework.Assert.AreEqual(hash, md5Hash00);
+					Assert.Equal(hash, md5Hash00);
 				}
 			}
 
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.IO
 			// Calculate the correct digest for the test string
 			MD5Hash expectedHash = MD5Hash.Digest(TestString);
 			// Hashing again should give the same result
-			NUnit.Framework.Assert.AreEqual(expectedHash, MD5Hash.Digest(TestString));
+			Assert.Equal(expectedHash, MD5Hash.Digest(TestString));
 			// Try to hash a stream which will fail halfway through
 			try
 			{
@@ -147,7 +147,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			// expected
 			// Make sure we get the same result
-			NUnit.Framework.Assert.AreEqual(expectedHash, MD5Hash.Digest(TestString));
+			Assert.Equal(expectedHash, MD5Hash.Digest(TestString));
 		}
 
 		private sealed class _ByteArrayInputStream_122 : ByteArrayInputStream

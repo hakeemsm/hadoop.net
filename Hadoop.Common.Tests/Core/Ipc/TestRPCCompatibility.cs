@@ -132,7 +132,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVersion0ClientVersion1Server()
 		{
 			// old client vs new server
@@ -153,7 +153,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVersion1ClientVersion0Server()
 		{
 			// old client vs new server
@@ -227,7 +227,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVersion2ClientVersion1Server()
 		{
 			// Compatible new client & old server
@@ -243,14 +243,14 @@ namespace Org.Apache.Hadoop.Ipc
 			TestRPCCompatibility.Version2Client client = new TestRPCCompatibility.Version2Client
 				(this);
 			client.Ping();
-			NUnit.Framework.Assert.AreEqual("hello", client.Echo("hello"));
+			Assert.Equal("hello", client.Echo("hello"));
 			// echo(int) is not supported by server, so returning 3
 			// This verifies that echo(int) and echo(String)'s hash codes are different
-			NUnit.Framework.Assert.AreEqual(3, client.Echo(3));
+			Assert.Equal(3, client.Echo(3));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVersion2ClientVersion2Server()
 		{
 			// equal version client and server
@@ -266,9 +266,9 @@ namespace Org.Apache.Hadoop.Ipc
 			TestRPCCompatibility.Version2Client client = new TestRPCCompatibility.Version2Client
 				(this);
 			client.Ping();
-			NUnit.Framework.Assert.AreEqual("hello", client.Echo("hello"));
+			Assert.Equal("hello", client.Echo("hello"));
 			// now that echo(int) is supported by the server, echo(int) should return -3
-			NUnit.Framework.Assert.AreEqual(-3, client.Echo(3));
+			Assert.Equal(-3, client.Echo(3));
 		}
 
 		public interface TestProtocol3
@@ -283,7 +283,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHashCode()
 		{
 			// make sure that overriding methods have different hashcodes
@@ -298,7 +298,7 @@ namespace Org.Apache.Hadoop.Ipc
 			// from different declaring classes have the same hash code
 			int intEchoHash1 = ProtocolSignature.GetFingerprint(typeof(TestRPCCompatibility.TestProtocol2
 				).GetMethod("echo", typeof(int)));
-			NUnit.Framework.Assert.AreEqual(intEchoHash, intEchoHash1);
+			Assert.Equal(intEchoHash, intEchoHash1);
 			// Methods with the same name and parameter types but different returning
 			// types have different hash codes
 			int stringEchoHash1 = ProtocolSignature.GetFingerprint(typeof(TestRPCCompatibility.TestProtocol2
@@ -319,7 +319,7 @@ namespace Org.Apache.Hadoop.Ipc
 				 });
 			int hash2 = ProtocolSignature.GetFingerprint(new MethodInfo[] { strMethod, intMethod
 				 });
-			NUnit.Framework.Assert.AreEqual(hash1, hash2);
+			Assert.Equal(hash1, hash2);
 		}
 
 		public abstract class TestProtocol4 : TestRPCCompatibility.TestProtocol2
@@ -335,7 +335,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVersionMismatch()
 		{
 			server = new RPC.Builder(conf).SetProtocol(typeof(TestRPCCompatibility.TestProtocol2
@@ -352,9 +352,9 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 			catch (RemoteException ex)
 			{
-				NUnit.Framework.Assert.AreEqual(typeof(RPC.VersionMismatch).FullName, ex.GetClassName
+				Assert.Equal(typeof(RPC.VersionMismatch).FullName, ex.GetClassName
 					());
-				NUnit.Framework.Assert.IsTrue(ex.GetErrorCode().Equals(RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto
+				Assert.True(ex.GetErrorCode().Equals(RpcHeaderProtos.RpcResponseHeaderProto.RpcErrorCodeProto
 					.ErrorRpcVersionMismatch));
 			}
 			catch (IOException ex)
@@ -364,7 +364,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsMethodSupported()
 		{
 			server = new RPC.Builder(conf).SetProtocol(typeof(TestRPCCompatibility.TestProtocol2
@@ -377,7 +377,7 @@ namespace Org.Apache.Hadoop.Ipc
 			bool supported = RpcClientUtil.IsMethodSupported(proxy, typeof(TestRPCCompatibility.TestProtocol2
 				), RPC.RpcKind.RpcWritable, RPC.GetProtocolVersion(typeof(TestRPCCompatibility.TestProtocol2
 				)), "echo");
-			NUnit.Framework.Assert.IsTrue(supported);
+			Assert.True(supported);
 			supported = RpcClientUtil.IsMethodSupported(proxy, typeof(TestRPCCompatibility.TestProtocol2
 				), RPC.RpcKind.RpcProtocolBuffer, RPC.GetProtocolVersion(typeof(TestRPCCompatibility.TestProtocol2
 				)), "echo");
@@ -389,7 +389,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// the server registry to extract protocol signatures and versions.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProtocolMetaInfoSSTranslatorPB()
 		{
 			TestRPCCompatibility.TestImpl1 impl = new TestRPCCompatibility.TestImpl1();
@@ -405,13 +405,13 @@ namespace Org.Apache.Hadoop.Ipc
 				(null, CreateGetProtocolSigRequestProto(typeof(TestRPCCompatibility.TestProtocol1
 				), RPC.RpcKind.RpcProtocolBuffer));
 			//No signatures should be found
-			NUnit.Framework.Assert.AreEqual(0, resp.GetProtocolSignatureCount());
+			Assert.Equal(0, resp.GetProtocolSignatureCount());
 			resp = xlator.GetProtocolSignature(null, CreateGetProtocolSigRequestProto(typeof(
 				TestRPCCompatibility.TestProtocol1), RPC.RpcKind.RpcWritable));
-			NUnit.Framework.Assert.AreEqual(1, resp.GetProtocolSignatureCount());
+			Assert.Equal(1, resp.GetProtocolSignatureCount());
 			ProtocolInfoProtos.ProtocolSignatureProto sig = resp.GetProtocolSignatureList()[0
 				];
-			NUnit.Framework.Assert.AreEqual(TestRPCCompatibility.TestProtocol1.versionID, sig
+			Assert.Equal(TestRPCCompatibility.TestProtocol1.versionID, sig
 				.GetVersion());
 			bool found = false;
 			int expected = ProtocolSignature.GetFingerprint(typeof(TestRPCCompatibility.TestProtocol1
@@ -424,7 +424,7 @@ namespace Org.Apache.Hadoop.Ipc
 					break;
 				}
 			}
-			NUnit.Framework.Assert.IsTrue(found);
+			Assert.True(found);
 		}
 
 		private ProtocolInfoProtos.GetProtocolSignatureRequestProto CreateGetProtocolSigRequestProto

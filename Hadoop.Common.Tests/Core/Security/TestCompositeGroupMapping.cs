@@ -162,37 +162,37 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleGroupsMapping()
 		{
 			Groups groups = new Groups(conf);
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups(john.name)[0].Equals(john.group));
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups(hdfs.name)[0].Equals(hdfs.group));
+			Assert.True(groups.GetGroups(john.name)[0].Equals(john.group));
+			Assert.True(groups.GetGroups(hdfs.name)[0].Equals(hdfs.group));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleGroupsMappingWithCombined()
 		{
 			conf.Set(CompositeGroupsMapping.MappingProvidersCombinedConfigKey, "true");
 			Groups groups = new Groups(conf);
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups(jack.name).Count == 2);
+			Assert.True(groups.GetGroups(jack.name).Count == 2);
 			// the configured providers list in order is "userProvider,clusterProvider"
 			// group -> userProvider, group2 -> clusterProvider
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups(jack.name).Contains(jack.group));
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups(jack.name).Contains(jack.group2));
+			Assert.True(groups.GetGroups(jack.name).Contains(jack.group));
+			Assert.True(groups.GetGroups(jack.name).Contains(jack.group2));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleGroupsMappingWithoutCombined()
 		{
 			conf.Set(CompositeGroupsMapping.MappingProvidersCombinedConfigKey, "false");
 			Groups groups = new Groups(conf);
 			// the configured providers list in order is "userProvider,clusterProvider"
 			// group -> userProvider, group2 -> clusterProvider
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups(jack.name).Count == 1);
-			NUnit.Framework.Assert.IsTrue(groups.GetGroups(jack.name)[0].Equals(jack.group));
+			Assert.True(groups.GetGroups(jack.name).Count == 1);
+			Assert.True(groups.GetGroups(jack.name)[0].Equals(jack.group));
 		}
 	}
 }

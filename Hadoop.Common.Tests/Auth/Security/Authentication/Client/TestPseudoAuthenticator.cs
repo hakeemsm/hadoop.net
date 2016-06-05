@@ -17,16 +17,16 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetUserName()
 		{
 			PseudoAuthenticator authenticator = new PseudoAuthenticator();
-			NUnit.Framework.Assert.AreEqual(Runtime.GetProperty("user.name"), authenticator.GetUserName
+			Assert.Equal(Runtime.GetProperty("user.name"), authenticator.GetUserName
 				());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAnonymousAllowed()
 		{
 			AuthenticatorTestCase auth = new AuthenticatorTestCase();
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 				Uri url = new Uri(auth.GetBaseURL());
 				HttpURLConnection conn = (HttpURLConnection)url.OpenConnection();
 				conn.Connect();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 			}
 			finally
 			{
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAnonymousDisallowed()
 		{
 			AuthenticatorTestCase auth = new AuthenticatorTestCase();
@@ -59,11 +59,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 				Uri url = new Uri(auth.GetBaseURL());
 				HttpURLConnection conn = (HttpURLConnection)url.OpenConnection();
 				conn.Connect();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
+				Assert.Equal(HttpURLConnection.HttpUnauthorized, conn.GetResponseCode
 					());
-				NUnit.Framework.Assert.IsTrue(conn.GetHeaderFields().Contains("WWW-Authenticate")
+				Assert.True(conn.GetHeaderFields().Contains("WWW-Authenticate")
 					);
-				NUnit.Framework.Assert.AreEqual("Authentication required", conn.GetResponseMessage
+				Assert.Equal("Authentication required", conn.GetResponseMessage
 					());
 			}
 			finally
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthenticationAnonymousAllowed()
 		{
 			AuthenticatorTestCase auth = new AuthenticatorTestCase();
@@ -83,7 +83,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthenticationAnonymousDisallowed()
 		{
 			AuthenticatorTestCase auth = new AuthenticatorTestCase();
@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthenticationAnonymousAllowedWithPost()
 		{
 			AuthenticatorTestCase auth = new AuthenticatorTestCase();
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthenticationAnonymousDisallowedWithPost()
 		{
 			AuthenticatorTestCase auth = new AuthenticatorTestCase();

@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.FS
 		private static int OtherPort = 4321;
 
 		/// <exception cref="Sharpen.URISyntaxException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCheckPathWithNoPorts()
 		{
 			URI uri = new URI("dummy://dummy-host");
@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="Sharpen.URISyntaxException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCheckPathWithDefaultPort()
 		{
 			URI uri = new URI("dummy://dummy-host:" + DefaultPort);
@@ -29,7 +29,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="Sharpen.URISyntaxException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCheckPathWithTheSameNonDefaultPort()
 		{
 			URI uri = new URI("dummy://dummy-host:" + OtherPort);

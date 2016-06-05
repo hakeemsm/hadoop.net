@@ -24,7 +24,7 @@ namespace Org.Apache.Hadoop.Conf
 				);
 			NUnit.Framework.Assert.IsFalse(conf.IsReloaded());
 			Configuration.AddDefaultResource(EmptyConfigurationXml);
-			NUnit.Framework.Assert.IsTrue(conf.IsReloaded());
+			Assert.True(conf.IsReloaded());
 			Properties properties = conf.GetProperties();
 		}
 
@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.Conf
 			conf.SetQuietMode(false);
 			NUnit.Framework.Assert.IsFalse(conf.IsReloaded());
 			conf.AddResource("not-a-valid-resource");
-			NUnit.Framework.Assert.IsTrue(conf.IsReloaded());
+			Assert.True(conf.IsReloaded());
 			try
 			{
 				Properties properties = conf.GetProperties();
@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.Conf
 			}
 			catch (RuntimeException e)
 			{
-				NUnit.Framework.Assert.IsTrue(e.ToString(), e.Message.Contains("not found"));
+				Assert.True(e.ToString(), e.Message.Contains("not found"));
 			}
 		}
 

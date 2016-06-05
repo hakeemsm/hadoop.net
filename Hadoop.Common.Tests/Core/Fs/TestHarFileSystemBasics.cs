@@ -60,9 +60,9 @@ namespace Org.Apache.Hadoop.FS
 			Path indexPath = new Path(harPath, "_index");
 			Path masterIndexPath = new Path(harPath, "_masterindex");
 			localFileSystem.CreateNewFile(indexPath);
-			NUnit.Framework.Assert.IsTrue(localFileSystem.Exists(indexPath));
+			Assert.True(localFileSystem.Exists(indexPath));
 			localFileSystem.CreateNewFile(masterIndexPath);
-			NUnit.Framework.Assert.IsTrue(localFileSystem.Exists(masterIndexPath));
+			Assert.True(localFileSystem.Exists(masterIndexPath));
 			WriteVersionToMasterIndexImpl(HarFileSystem.Version, masterIndexPath);
 			HarFileSystem harFileSystem = new HarFileSystem(localFileSystem);
 			URI uri = new URI("har://" + harPath.ToString());
@@ -77,9 +77,9 @@ namespace Org.Apache.Hadoop.FS
 			Path indexPath = new Path(aHarPath, "_index");
 			Path masterIndexPath = new Path(aHarPath, "_masterindex");
 			localFileSystem.CreateNewFile(indexPath);
-			NUnit.Framework.Assert.IsTrue(localFileSystem.Exists(indexPath));
+			Assert.True(localFileSystem.Exists(indexPath));
 			localFileSystem.CreateNewFile(masterIndexPath);
-			NUnit.Framework.Assert.IsTrue(localFileSystem.Exists(masterIndexPath));
+			Assert.True(localFileSystem.Exists(masterIndexPath));
 			WriteVersionToMasterIndexImpl(HarFileSystem.Version, masterIndexPath);
 			HarFileSystem harFileSystem = new HarFileSystem(localFileSystem);
 			URI uri = new URI("har://" + aHarPath.ToString());
@@ -146,32 +146,32 @@ namespace Org.Apache.Hadoop.FS
 
 		// ======== Positive tests:
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPositiveHarFileSystemBasics()
 		{
 			// check Har version:
-			NUnit.Framework.Assert.AreEqual(HarFileSystem.Version, harFileSystem.GetHarVersion
+			Assert.Equal(HarFileSystem.Version, harFileSystem.GetHarVersion
 				());
 			// check Har URI:
 			URI harUri = harFileSystem.GetUri();
-			NUnit.Framework.Assert.AreEqual(harPath.ToUri().GetPath(), harUri.GetPath());
-			NUnit.Framework.Assert.AreEqual("har", harUri.GetScheme());
+			Assert.Equal(harPath.ToUri().GetPath(), harUri.GetPath());
+			Assert.Equal("har", harUri.GetScheme());
 			// check Har home path:
 			Path homePath = harFileSystem.GetHomeDirectory();
-			NUnit.Framework.Assert.AreEqual(harPath.ToUri().GetPath(), homePath.ToUri().GetPath
+			Assert.Equal(harPath.ToUri().GetPath(), homePath.ToUri().GetPath
 				());
 			// check working directory:
 			Path workDirPath0 = harFileSystem.GetWorkingDirectory();
-			NUnit.Framework.Assert.AreEqual(homePath, workDirPath0);
+			Assert.Equal(homePath, workDirPath0);
 			// check that its impossible to reset the working directory
 			// (#setWorkingDirectory should have no effect):
 			harFileSystem.SetWorkingDirectory(new Path("/foo/bar"));
-			NUnit.Framework.Assert.AreEqual(workDirPath0, harFileSystem.GetWorkingDirectory()
+			Assert.Equal(workDirPath0, harFileSystem.GetWorkingDirectory()
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPositiveNewHarFsOnTheSameUnderlyingFs()
 		{
 			// Init 2nd har file system on the same underlying FS, so the
@@ -180,11 +180,11 @@ namespace Org.Apache.Hadoop.FS
 			URI uri = new URI("har://" + harPath.ToString());
 			hfs.Initialize(uri, new Configuration());
 			// the metadata should be reused from cache:
-			NUnit.Framework.Assert.IsTrue(hfs.GetMetadata() == harFileSystem.GetMetadata());
+			Assert.True(hfs.GetMetadata() == harFileSystem.GetMetadata());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPositiveLruMetadataCacheFs()
 		{
 			// Init 2nd har file system on the same underlying FS, so the
@@ -193,7 +193,7 @@ namespace Org.Apache.Hadoop.FS
 			URI uri = new URI("har://" + harPath.ToString());
 			hfs.Initialize(uri, new Configuration());
 			// the metadata should be reused from cache:
-			NUnit.Framework.Assert.IsTrue(hfs.GetMetadata() == harFileSystem.GetMetadata());
+			Assert.True(hfs.GetMetadata() == harFileSystem.GetMetadata());
 			// Create more hars, until the cache is full + 1; the last creation should evict the first entry from the cache
 			for (int i = 0; i <= hfs.MetadataCacheEntriesDefault; i++)
 			{
@@ -204,11 +204,11 @@ namespace Org.Apache.Hadoop.FS
 			hfs = new HarFileSystem(localFileSystem);
 			uri = new URI("har://" + harPath.ToString());
 			hfs.Initialize(uri, new Configuration());
-			NUnit.Framework.Assert.IsTrue(hfs.GetMetadata() != harFileSystem.GetMetadata());
+			Assert.True(hfs.GetMetadata() != harFileSystem.GetMetadata());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPositiveInitWithoutUnderlyingFS()
 		{
 			// Init HarFS with no constructor arg, so that the underlying FS object
@@ -219,7 +219,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPositiveListFilesNotEndInColon()
 		{
 			// re-initialize the har file system with host name
@@ -228,12 +228,12 @@ namespace Org.Apache.Hadoop.FS
 			harFileSystem.Initialize(uri, conf);
 			Path p1 = new Path("har://file-localhost" + harPath.ToString());
 			Path p2 = harFileSystem.MakeQualified(p1);
-			NUnit.Framework.Assert.IsTrue(p2.ToUri().ToString().StartsWith("har://file-localhost/"
+			Assert.True(p2.ToUri().ToString().StartsWith("har://file-localhost/"
 				));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListLocatedStatus()
 		{
 			string testHarPath = this.GetType().GetResource("/test.har").AbsolutePath;
@@ -252,16 +252,16 @@ namespace Org.Apache.Hadoop.FS
 			while (fileList.HasNext())
 			{
 				string fileName = fileList.Next().GetPath().GetName();
-				NUnit.Framework.Assert.IsTrue(fileName + " not in expected files list", expectedFileNames
+				Assert.True(fileName + " not in expected files list", expectedFileNames
 					.Contains(fileName));
 				expectedFileNames.Remove(fileName);
 			}
-			NUnit.Framework.Assert.AreEqual("Didn't find all of the expected file names: " + 
+			Assert.Equal("Didn't find all of the expected file names: " + 
 				expectedFileNames, 0, expectedFileNames.Count);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMakeQualifiedPath()
 		{
 			// Construct a valid har file system path with authority that
@@ -272,14 +272,14 @@ namespace Org.Apache.Hadoop.FS
 				().GetPath().ToString();
 			Path path = new Path(harPathWithUserinfo);
 			Path qualifiedPath = path.GetFileSystem(conf).MakeQualified(path);
-			NUnit.Framework.Assert.IsTrue(string.Format("The qualified path (%s) did not match the expected path (%s)."
+			Assert.True(string.Format("The qualified path (%s) did not match the expected path (%s)."
 				, qualifiedPath.ToString(), harPathWithUserinfo), qualifiedPath.ToString().Equals
 				(harPathWithUserinfo));
 		}
 
 		// ========== Negative:
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeInitWithoutIndex()
 		{
 			// delete the index file:
@@ -300,7 +300,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// ok, expected.
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeGetHarVersionOnNotInitializedFS()
 		{
 			HarFileSystem hfs = new HarFileSystem(localFileSystem);
@@ -317,7 +317,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// ok, expected.
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeInitWithAnUnsupportedVersion()
 		{
 			// NB: should wait at least 1 second to ensure the timestamp of the master
@@ -344,7 +344,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// ok, expected.
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNegativeHarFsModifications()
 		{
 			// all the modification methods of HarFS must lead to IOE.
@@ -436,7 +436,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// ok, expected.
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHarFsWithoutAuthority()
 		{
 			URI uri = harFileSystem.GetUri();

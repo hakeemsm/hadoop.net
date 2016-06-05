@@ -385,7 +385,7 @@ namespace Org.Apache.Hadoop.HA
 			FilePath tmpDir = new FilePath(tmpFile + ".dir");
 			NUnit.Framework.Assert.IsFalse(tmpDir.Exists());
 			// never true if tmpfile does it's job
-			NUnit.Framework.Assert.IsTrue(tmpDir.Mkdirs());
+			Assert.True(tmpDir.Mkdirs());
 			return tmpDir;
 		}
 
@@ -413,7 +413,7 @@ namespace Org.Apache.Hadoop.HA
 				factory = ServerCnxnFactory.CreateFactory(Port, maxCnxns);
 			}
 			factory.Startup(zks);
-			NUnit.Framework.Assert.IsTrue("waiting for server up", ClientBaseWithFixes.WaitForServerUp
+			Assert.True("waiting for server up", ClientBaseWithFixes.WaitForServerUp
 				("127.0.0.1:" + Port, ConnectionTimeout));
 			return factory;
 		}
@@ -438,7 +438,7 @@ namespace Org.Apache.Hadoop.HA
 					Log.Warn("Error closing logs ", ie);
 				}
 				int Port = GetPort(hostPort);
-				NUnit.Framework.Assert.IsTrue("waiting for server down", ClientBaseWithFixes.WaitForServerDown
+				Assert.True("waiting for server down", ClientBaseWithFixes.WaitForServerDown
 					("127.0.0.1:" + Port, ConnectionTimeout));
 			}
 		}
@@ -576,7 +576,7 @@ namespace Org.Apache.Hadoop.HA
 			portNumFile.Delete();
 			if (tmpDir != null)
 			{
-				NUnit.Framework.Assert.IsTrue("delete " + tmpDir.ToString(), RecursiveDelete(tmpDir
+				Assert.True("delete " + tmpDir.ToString(), RecursiveDelete(tmpDir
 					));
 			}
 			// This has to be set to null when the same instance of this class is reused between test cases
@@ -590,7 +590,7 @@ namespace Org.Apache.Hadoop.HA
 				FilePath[] children = d.ListFiles();
 				foreach (FilePath f in children)
 				{
-					NUnit.Framework.Assert.IsTrue("delete " + f.ToString(), RecursiveDelete(f));
+					Assert.True("delete " + f.ToString(), RecursiveDelete(f));
 				}
 			}
 			return d.Delete();

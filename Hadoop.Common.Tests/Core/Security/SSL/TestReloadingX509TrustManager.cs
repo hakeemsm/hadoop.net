@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReload()
 		{
 			Sharpen.KeyPair kp = KeyStoreTestUtil.GenerateKeyPair("RSA");
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			try
 			{
 				tm.Init();
-				NUnit.Framework.Assert.AreEqual(1, tm.GetAcceptedIssuers().Length);
+				Assert.Equal(1, tm.GetAcceptedIssuers().Length);
 				// Wait so that the file modification time is different
 				Sharpen.Thread.Sleep((tm.GetReloadInterval() + 1000));
 				// Add another cert
@@ -83,10 +83,10 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				certs["cert2"] = cert2;
 				KeyStoreTestUtil.CreateTrustStore(truststoreLocation, "password", certs);
 				// and wait to be sure reload has taken place
-				NUnit.Framework.Assert.AreEqual(10, tm.GetReloadInterval());
+				Assert.Equal(10, tm.GetReloadInterval());
 				// Wait so that the file modification time is different
 				Sharpen.Thread.Sleep((tm.GetReloadInterval() + 200));
-				NUnit.Framework.Assert.AreEqual(2, tm.GetAcceptedIssuers().Length);
+				Assert.Equal(2, tm.GetAcceptedIssuers().Length);
 			}
 			finally
 			{
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReloadMissingTrustStore()
 		{
 			Sharpen.KeyPair kp = KeyStoreTestUtil.GenerateKeyPair("RSA");
@@ -108,13 +108,13 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			try
 			{
 				tm.Init();
-				NUnit.Framework.Assert.AreEqual(1, tm.GetAcceptedIssuers().Length);
+				Assert.Equal(1, tm.GetAcceptedIssuers().Length);
 				X509Certificate cert = tm.GetAcceptedIssuers()[0];
 				new FilePath(truststoreLocation).Delete();
 				// Wait so that the file modification time is different
 				Sharpen.Thread.Sleep((tm.GetReloadInterval() + 200));
-				NUnit.Framework.Assert.AreEqual(1, tm.GetAcceptedIssuers().Length);
-				NUnit.Framework.Assert.AreEqual(cert, tm.GetAcceptedIssuers()[0]);
+				Assert.Equal(1, tm.GetAcceptedIssuers().Length);
+				Assert.Equal(cert, tm.GetAcceptedIssuers()[0]);
 			}
 			finally
 			{
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReloadCorruptTrustStore()
 		{
 			Sharpen.KeyPair kp = KeyStoreTestUtil.GenerateKeyPair("RSA");
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			try
 			{
 				tm.Init();
-				NUnit.Framework.Assert.AreEqual(1, tm.GetAcceptedIssuers().Length);
+				Assert.Equal(1, tm.GetAcceptedIssuers().Length);
 				X509Certificate cert = tm.GetAcceptedIssuers()[0];
 				OutputStream os = new FileOutputStream(truststoreLocation);
 				os.Write(1);
@@ -145,8 +145,8 @@ namespace Org.Apache.Hadoop.Security.Ssl
 					);
 				// Wait so that the file modification time is different
 				Sharpen.Thread.Sleep((tm.GetReloadInterval() + 200));
-				NUnit.Framework.Assert.AreEqual(1, tm.GetAcceptedIssuers().Length);
-				NUnit.Framework.Assert.AreEqual(cert, tm.GetAcceptedIssuers()[0]);
+				Assert.Equal(1, tm.GetAcceptedIssuers().Length);
+				Assert.Equal(cert, tm.GetAcceptedIssuers()[0]);
 			}
 			finally
 			{

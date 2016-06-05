@@ -65,10 +65,10 @@ namespace Org.Apache.Hadoop.IO
 			@in.Reset(@out.GetData(), @out.GetLength());
 			destArray.ReadFields(@in);
 			Writable[] destElements = destArray.Get();
-			NUnit.Framework.Assert.IsTrue(destElements.Length == elements.Length);
+			Assert.True(destElements.Length == elements.Length);
 			for (int i = 0; i < elements.Length; i++)
 			{
-				NUnit.Framework.Assert.AreEqual(destElements[i], elements[i]);
+				Assert.Equal(destElements[i], elements[i]);
 			}
 		}
 
@@ -85,12 +85,12 @@ namespace Org.Apache.Hadoop.IO
 				();
 			arrayWritable.Set(elements);
 			object array = arrayWritable.ToArray();
-			NUnit.Framework.Assert.IsTrue("TestArrayWritable testArrayWritableToArray error!!! "
+			Assert.True("TestArrayWritable testArrayWritableToArray error!!! "
 				, array is Text[]);
 			Text[] destElements = (Text[])array;
 			for (int i = 0; i < elements.Length; i++)
 			{
-				NUnit.Framework.Assert.AreEqual(destElements[i], elements[i]);
+				Assert.Equal(destElements[i], elements[i]);
 			}
 		}
 
@@ -128,7 +128,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			string[] original = new string[] { "test1", "test2", "test3" };
 			ArrayWritable arrayWritable = new ArrayWritable(original);
-			NUnit.Framework.Assert.AreEqual("testArrayWritableStringConstructor class error!!!"
+			Assert.Equal("testArrayWritableStringConstructor class error!!!"
 				, typeof(UTF8), arrayWritable.GetValueClass());
 			Assert.AssertArrayEquals("testArrayWritableStringConstructor toString error!!!", 
 				original, arrayWritable.ToStrings());

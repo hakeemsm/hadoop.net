@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.IO
 		private const string TestFileName = "test_file";
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyBytesShouldCloseStreamsWhenCloseIsTrue()
 		{
 			InputStream inputStream = Org.Mockito.Mockito.Mock<InputStream>();
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyBytesShouldCloseInputSteamWhenOutputStreamCloseThrowsException
 			()
 		{
@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyBytesShouldNotCloseStreamsWhenCloseIsFalse()
 		{
 			InputStream inputStream = Org.Mockito.Mockito.Mock<InputStream>();
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyBytesWithCountShouldCloseStreamsWhenCloseIsTrue()
 		{
 			InputStream inputStream = Org.Mockito.Mockito.Mock<InputStream>();
@@ -76,7 +76,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyBytesWithCountShouldNotCloseStreamsWhenCloseIsFalse()
 		{
 			InputStream inputStream = Org.Mockito.Mockito.Mock<InputStream>();
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyBytesWithCountShouldThrowOutTheStreamClosureExceptions
 			()
 		{
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.AreEqual("Not throwing the expected exception.", "Exception in closing the stream"
+				Assert.Equal("Not throwing the expected exception.", "Exception in closing the stream"
 					, e.Message);
 			}
 			Org.Mockito.Mockito.Verify(inputStream, Org.Mockito.Mockito.AtLeastOnce()).Close(
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWriteFully()
 		{
 			int InputBufferLen = 10000;
@@ -135,19 +135,19 @@ namespace Org.Apache.Hadoop.IO
 				raf.Read(output);
 				for (int i_1 = 0; i_1 < input.Length; i_1++)
 				{
-					NUnit.Framework.Assert.AreEqual(input[i_1], output[i_1]);
+					Assert.Equal(input[i_1], output[i_1]);
 				}
 				buf.Rewind();
 				IOUtils.WriteFully(fc, buf, Halfway);
 				for (int i_2 = 0; i_2 < Halfway; i_2++)
 				{
-					NUnit.Framework.Assert.AreEqual(input[i_2], output[i_2]);
+					Assert.Equal(input[i_2], output[i_2]);
 				}
 				raf.Seek(0);
 				raf.Read(output);
 				for (int i_3 = Halfway; i_3 < input.Length; i_3++)
 				{
-					NUnit.Framework.Assert.AreEqual(input[i_3 - Halfway], output[i_3]);
+					Assert.Equal(input[i_3 - Halfway], output[i_3]);
 				}
 			}
 			finally
@@ -161,7 +161,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrappedReadForCompressedData()
 		{
 			byte[] buf = new byte[2];
@@ -171,7 +171,7 @@ namespace Org.Apache.Hadoop.IO
 				));
 			try
 			{
-				NUnit.Framework.Assert.AreEqual("Check expected value", 1, IOUtils.WrappedReadForCompressedData
+				Assert.Equal("Check expected value", 1, IOUtils.WrappedReadForCompressedData
 					(mockStream, buf, 0, 1));
 			}
 			catch (IOException)
@@ -190,7 +190,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSkipFully()
 		{
 			byte[] inArray = new byte[] { 0, 1, 2, 3, 4 };
@@ -207,7 +207,7 @@ namespace Org.Apache.Hadoop.IO
 				}
 				catch (EOFException e)
 				{
-					NUnit.Framework.Assert.AreEqual("Premature EOF from inputStream " + "after skipping 1 byte(s)."
+					Assert.Equal("Premature EOF from inputStream " + "after skipping 1 byte(s)."
 						, e.Message);
 				}
 				@in.Reset();
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.IO
 				}
 				catch (EOFException e)
 				{
-					NUnit.Framework.Assert.AreEqual("Premature EOF from inputStream " + "after skipping 5 byte(s)."
+					Assert.Equal("Premature EOF from inputStream " + "after skipping 5 byte(s)."
 						, e.Message);
 				}
 				@in.Reset();
@@ -230,7 +230,7 @@ namespace Org.Apache.Hadoop.IO
 				}
 				catch (EOFException e)
 				{
-					NUnit.Framework.Assert.AreEqual("Premature EOF from inputStream " + "after skipping 0 byte(s)."
+					Assert.Equal("Premature EOF from inputStream " + "after skipping 0 byte(s)."
 						, e.Message);
 				}
 			}
@@ -253,7 +253,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListDirectory()
 		{
 			FilePath dir = new FilePath("testListDirectory");
@@ -272,15 +272,15 @@ namespace Org.Apache.Hadoop.IO
 					);
 				foreach (string entry_1 in list)
 				{
-					NUnit.Framework.Assert.IsTrue(entries.Remove(entry_1));
+					Assert.True(entries.Remove(entry_1));
 				}
-				NUnit.Framework.Assert.IsTrue(entries.Contains("entry3"));
+				Assert.True(entries.Contains("entry3"));
 				list = IOUtils.ListDirectory(dir, null);
 				foreach (string entry_2 in list)
 				{
 					entries.Remove(entry_2);
 				}
-				NUnit.Framework.Assert.IsTrue(entries.IsEmpty());
+				Assert.True(entries.IsEmpty());
 			}
 			finally
 			{

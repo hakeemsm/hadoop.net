@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			Assume.AssumeTrue(OpensslCipher.GetLoadingFailureReason() == null);
 			OpensslCipher cipher = OpensslCipher.GetInstance("AES/CTR/NoPadding");
-			NUnit.Framework.Assert.IsTrue(cipher != null);
+			Assert.True(cipher != null);
 			try
 			{
 				cipher = OpensslCipher.GetInstance("AES2/CTR/NoPadding");
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			Assume.AssumeTrue(OpensslCipher.GetLoadingFailureReason() == null);
 			OpensslCipher cipher = OpensslCipher.GetInstance("AES/CTR/NoPadding");
-			NUnit.Framework.Assert.IsTrue(cipher != null);
+			Assert.True(cipher != null);
 			cipher.Init(OpensslCipher.EncryptMode, key, iv);
 			// Require direct buffers
 			ByteBuffer input = ByteBuffer.Allocate(1024);
@@ -86,7 +86,7 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			Assume.AssumeTrue(OpensslCipher.GetLoadingFailureReason() == null);
 			OpensslCipher cipher = OpensslCipher.GetInstance("AES/CTR/NoPadding");
-			NUnit.Framework.Assert.IsTrue(cipher != null);
+			Assert.True(cipher != null);
 			cipher.Init(OpensslCipher.EncryptMode, key, iv);
 			// Require direct buffer
 			ByteBuffer output = ByteBuffer.Allocate(1024);

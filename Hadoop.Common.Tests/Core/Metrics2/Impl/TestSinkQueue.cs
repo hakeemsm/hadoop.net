@@ -12,21 +12,21 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		/// <summary>Test common use case</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCommon()
 		{
 			SinkQueue<int> q = new SinkQueue<int>(2);
 			q.Enqueue(1);
-			NUnit.Framework.Assert.AreEqual("queue front", 1, (int)q.Front());
-			NUnit.Framework.Assert.AreEqual("queue back", 1, (int)q.Back());
-			NUnit.Framework.Assert.AreEqual("element", 1, (int)q.Dequeue());
-			NUnit.Framework.Assert.IsTrue("should enqueue", q.Enqueue(2));
+			Assert.Equal("queue front", 1, (int)q.Front());
+			Assert.Equal("queue back", 1, (int)q.Back());
+			Assert.Equal("element", 1, (int)q.Dequeue());
+			Assert.True("should enqueue", q.Enqueue(2));
 			q.Consume(new _Consumer_50());
-			NUnit.Framework.Assert.IsTrue("should enqueue", q.Enqueue(3));
-			NUnit.Framework.Assert.AreEqual("element", 3, (int)q.Dequeue());
-			NUnit.Framework.Assert.AreEqual("queue size", 0, q.Size());
-			NUnit.Framework.Assert.AreEqual("queue front", null, q.Front());
-			NUnit.Framework.Assert.AreEqual("queue back", null, q.Back());
+			Assert.True("should enqueue", q.Enqueue(3));
+			Assert.Equal("element", 3, (int)q.Dequeue());
+			Assert.Equal("queue size", 0, q.Size());
+			Assert.Equal("queue front", null, q.Front());
+			Assert.Equal("queue back", null, q.Back());
 		}
 
 		private sealed class _Consumer_50 : SinkQueue.Consumer<int>
@@ -37,13 +37,13 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 			public void Consume(int e)
 			{
-				NUnit.Framework.Assert.AreEqual("element", 2, (int)e);
+				Assert.Equal("element", 2, (int)e);
 			}
 		}
 
 		/// <summary>Test blocking when queue is empty</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestEmptyBlocking()
 		{
 			TestEmptyBlocking(0);
@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				try
 				{
-					NUnit.Framework.Assert.AreEqual("element", 1, (int)q.Dequeue());
+					Assert.Equal("element", 1, (int)q.Dequeue());
 					q.Consume(new _Consumer_79(trigger));
 				}
 				catch (Exception e)
@@ -99,7 +99,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 				public void Consume(int e)
 				{
-					NUnit.Framework.Assert.AreEqual("element", 2, (int)e);
+					Assert.Equal("element", 2, (int)e);
 					trigger.Run();
 				}
 
@@ -113,16 +113,16 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		/// <summary>Test nonblocking enqueue when queue is full</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFull()
 		{
 			SinkQueue<int> q = new SinkQueue<int>(1);
 			q.Enqueue(1);
-			NUnit.Framework.Assert.IsTrue("should drop", !q.Enqueue(2));
-			NUnit.Framework.Assert.AreEqual("element", 1, (int)q.Dequeue());
+			Assert.True("should drop", !q.Enqueue(2));
+			Assert.Equal("element", 1, (int)q.Dequeue());
 			q.Enqueue(3);
 			q.Consume(new _Consumer_114());
-			NUnit.Framework.Assert.AreEqual("queue size", 0, q.Size());
+			Assert.Equal("queue size", 0, q.Size());
 		}
 
 		private sealed class _Consumer_114 : SinkQueue.Consumer<int>
@@ -133,13 +133,13 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 			public void Consume(int e)
 			{
-				NUnit.Framework.Assert.AreEqual("element", 3, (int)e);
+				Assert.Equal("element", 3, (int)e);
 			}
 		}
 
 		/// <summary>Test the consumeAll method</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConsumeAll()
 		{
 			int capacity = 64;
@@ -147,9 +147,9 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			SinkQueue<int> q = new SinkQueue<int>(capacity);
 			for (int i = 0; i < capacity; ++i)
 			{
-				NUnit.Framework.Assert.IsTrue("should enqueue", q.Enqueue(i));
+				Assert.True("should enqueue", q.Enqueue(i));
 			}
-			NUnit.Framework.Assert.IsTrue("should not enqueue", !q.Enqueue(capacity));
+			Assert.True("should not enqueue", !q.Enqueue(capacity));
 			Runnable trigger = Org.Mockito.Mockito.Mock<Runnable>();
 			q.ConsumeAll(new _Consumer_136(trigger));
 			Org.Mockito.Mockito.Verify(trigger, Org.Mockito.Mockito.Times(capacity)).Run();
@@ -167,7 +167,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 			public void Consume(int e)
 			{
-				NUnit.Framework.Assert.AreEqual("element", this.expected++, (int)e);
+				Assert.Equal("element", this.expected++, (int)e);
 				trigger.Run();
 			}
 
@@ -176,7 +176,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		/// <summary>Test the consumer throwing exceptions</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConsumerException()
 		{
 			SinkQueue<int> q = new SinkQueue<int>(1);
@@ -191,8 +191,8 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				NUnit.Framework.Assert.AreSame("consumer exception", ex, expected);
 			}
 			// The queue should be in consistent state after exception
-			NUnit.Framework.Assert.AreEqual("queue size", 1, q.Size());
-			NUnit.Framework.Assert.AreEqual("element", 1, (int)q.Dequeue());
+			Assert.Equal("queue size", 1, q.Size());
+			Assert.Equal("element", 1, (int)q.Dequeue());
 		}
 
 		private sealed class _Consumer_157 : SinkQueue.Consumer<int>
@@ -211,7 +211,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		}
 
 		/// <summary>Test the clear method</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClear()
 		{
 			SinkQueue<int> q = new SinkQueue<int>(128);
@@ -219,43 +219,43 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				q.Enqueue(i);
 			}
-			NUnit.Framework.Assert.AreEqual("queue size", q.Capacity(), q.Size());
+			Assert.Equal("queue size", q.Capacity(), q.Size());
 			q.Clear();
-			NUnit.Framework.Assert.AreEqual("queue size", 0, q.Size());
+			Assert.Equal("queue size", 0, q.Size());
 		}
 
 		/// <summary>Test consumers that take their time.</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHangingConsumer()
 		{
 			SinkQueue<int> q = NewSleepingConsumerQueue(2, 1, 2);
-			NUnit.Framework.Assert.AreEqual("queue back", 2, (int)q.Back());
-			NUnit.Framework.Assert.IsTrue("should drop", !q.Enqueue(3));
+			Assert.Equal("queue back", 2, (int)q.Back());
+			Assert.True("should drop", !q.Enqueue(3));
 			// should not block
-			NUnit.Framework.Assert.AreEqual("queue size", 2, q.Size());
-			NUnit.Framework.Assert.AreEqual("queue head", 1, (int)q.Front());
-			NUnit.Framework.Assert.AreEqual("queue back", 2, (int)q.Back());
+			Assert.Equal("queue size", 2, q.Size());
+			Assert.Equal("queue head", 1, (int)q.Front());
+			Assert.Equal("queue back", 2, (int)q.Back());
 		}
 
 		/// <summary>Test concurrent consumer access, which is illegal</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConcurrentConsumers()
 		{
 			SinkQueue<int> q = NewSleepingConsumerQueue(2, 1);
-			NUnit.Framework.Assert.IsTrue("should enqueue", q.Enqueue(2));
-			NUnit.Framework.Assert.AreEqual("queue back", 2, (int)q.Back());
-			NUnit.Framework.Assert.IsTrue("should drop", !q.Enqueue(3));
+			Assert.True("should enqueue", q.Enqueue(2));
+			Assert.Equal("queue back", 2, (int)q.Back());
+			Assert.True("should drop", !q.Enqueue(3));
 			// should not block
 			ShouldThrowCME(new _Fun_206(q));
 			ShouldThrowCME(new _Fun_211(q));
 			ShouldThrowCME(new _Fun_216(q));
 			ShouldThrowCME(new _Fun_221(q));
 			// The queue should still be in consistent state after all the exceptions
-			NUnit.Framework.Assert.AreEqual("queue size", 2, q.Size());
-			NUnit.Framework.Assert.AreEqual("queue front", 1, (int)q.Front());
-			NUnit.Framework.Assert.AreEqual("queue back", 2, (int)q.Back());
+			Assert.Equal("queue size", 2, q.Size());
+			Assert.Equal("queue front", 1, (int)q.Front());
+			Assert.Equal("queue back", 2, (int)q.Back());
 		}
 
 		private sealed class _Fun_206 : TestSinkQueue.Fun

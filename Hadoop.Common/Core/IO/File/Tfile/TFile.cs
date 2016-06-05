@@ -1813,9 +1813,9 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					/// <exception cref="System.IO.IOException"/>
 					public virtual int GetKey(BytesWritable key)
 					{
-						key.SetSize(this.GetKeyLength());
-						this.GetKey(key.GetBytes());
-						return key.GetLength();
+						key.Size = this.GetKeyLength();
+						this.GetKey(key.Bytes);
+						return key.Length;
 					}
 
 					/// <summary>Copy the value into BytesWritable.</summary>
@@ -1836,11 +1836,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 							int remain;
 							while ((remain = this._enclosing.valueBufferInputStream.GetRemain()) > 0)
 							{
-								value.SetSize(size + remain);
-								dis.ReadFully(value.GetBytes(), size, remain);
+								value.Size = size + remain;
+								dis.ReadFully(value.Bytes, size, remain);
 								size += remain;
 							}
-							return value.GetLength();
+							return value.Length;
 						}
 						finally
 						{
@@ -1882,9 +1882,9 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 							while ((chunkSize = this._enclosing.valueBufferInputStream.GetRemain()) > 0)
 							{
 								chunkSize = Math.Min(chunkSize, TFile.Reader.Scanner.MaxValTransferBufSize);
-								this._enclosing.valTransferBuffer.SetSize(chunkSize);
-								dis.ReadFully(this._enclosing.valTransferBuffer.GetBytes(), 0, chunkSize);
-								@out.Write(this._enclosing.valTransferBuffer.GetBytes(), 0, chunkSize);
+								this._enclosing.valTransferBuffer.Size = chunkSize;
+								dis.ReadFully(this._enclosing.valTransferBuffer.Bytes, 0, chunkSize);
+								@out.Write(this._enclosing.valTransferBuffer.Bytes, 0, chunkSize);
 								size += chunkSize;
 							}
 							return size;
@@ -2286,7 +2286,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(DataOutput @out)
+			public void Write(BinaryWriter @out)
 			{
 				TFile.ApiVersion.Write(@out);
 				Utils.WriteVLong(@out, recordCount);
@@ -2486,7 +2486,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(DataOutput @out)
+			public virtual void Write(BinaryWriter @out)
 			{
 				if (firstKey == null)
 				{
@@ -2558,7 +2558,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(DataOutput @out)
+			public void Write(BinaryWriter @out)
 			{
 				Utils.WriteVInt(@out, key.Length);
 				@out.Write(key, 0, key.Length);

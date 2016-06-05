@@ -18,11 +18,11 @@ namespace Hadoop.Common.Tests.Core.IO
 				inMap[keys[i]] = values[i];
 			}
 			MapWritable outMap = new MapWritable(inMap);
-			NUnit.Framework.Assert.AreEqual(inMap.Count, outMap.Count);
+			Assert.Equal(inMap.Count, outMap.Count);
 			foreach (KeyValuePair<Writable, Writable> e in inMap)
 			{
-				NUnit.Framework.Assert.IsTrue(outMap.Contains(e.Key));
-				NUnit.Framework.Assert.AreEqual(0, ((WritableComparable)outMap[e.Key]).CompareTo(
+				Assert.True(outMap.Contains(e.Key));
+				Assert.Equal(0, ((WritableComparable)outMap[e.Key]).CompareTo(
 					e.Value));
 			}
 			// Now for something a little harder...
@@ -33,17 +33,17 @@ namespace Hadoop.Common.Tests.Core.IO
 			MapWritable copyOfMapOfMaps = new MapWritable(mapOfMaps);
 			for (int i_1 = 0; i_1 < maps.Length; i_1++)
 			{
-				NUnit.Framework.Assert.IsTrue(copyOfMapOfMaps.Contains(maps[i_1]));
+				Assert.True(copyOfMapOfMaps.Contains(maps[i_1]));
 				MapWritable a = (MapWritable)mapOfMaps[maps[i_1]];
 				MapWritable b = (MapWritable)copyOfMapOfMaps[maps[i_1]];
-				NUnit.Framework.Assert.AreEqual(a.Count, b.Count);
+				Assert.Equal(a.Count, b.Count);
 				foreach (Writable key in a.Keys)
 				{
-					NUnit.Framework.Assert.IsTrue(b.Contains(key));
+					Assert.True(b.Contains(key));
 					// This will work because we know what we put into each set
 					WritableComparable aValue = (WritableComparable)a[key];
 					WritableComparable bValue = (WritableComparable)b[key];
-					NUnit.Framework.Assert.AreEqual(0, aValue.CompareTo(bValue));
+					Assert.Equal(0, aValue.CompareTo(bValue));
 				}
 			}
 		}
@@ -57,7 +57,7 @@ namespace Hadoop.Common.Tests.Core.IO
 			inMap[new Text("key2")] = new UTF8("value2");
 			MapWritable outMap = new MapWritable(inMap);
 			MapWritable copyOfCopy = new MapWritable(outMap);
-			NUnit.Framework.Assert.AreEqual(1, copyOfCopy.GetNewClasses());
+			Assert.Equal(1, copyOfCopy.GetNewClasses());
 		}
 
 		/// <summary>Assert MapWritable does not grow across calls to readFields.</summary>
@@ -85,8 +85,8 @@ namespace Hadoop.Common.Tests.Core.IO
 			ByteArrayInputStream bais = new ByteArrayInputStream(baos.ToByteArray());
 			DataInputStream dis = new DataInputStream(bais);
 			m.ReadFields(dis);
-			NUnit.Framework.Assert.AreEqual(count, m.Count);
-			NUnit.Framework.Assert.IsTrue(m[t].Equals(t));
+			Assert.Equal(count, m.Count);
+			Assert.True(m[t].Equals(t));
 			dis.Close();
 		}
 
@@ -104,10 +104,10 @@ namespace Hadoop.Common.Tests.Core.IO
 			// equal
 			map3[k2] = value;
 			// not equal
-			NUnit.Framework.Assert.IsTrue(map1.Equals(map2));
-			NUnit.Framework.Assert.IsTrue(map2.Equals(map1));
+			Assert.True(map1.Equals(map2));
+			Assert.True(map2.Equals(map1));
 			NUnit.Framework.Assert.IsFalse(map1.Equals(map3));
-			NUnit.Framework.Assert.AreEqual(map1.GetHashCode(), map2.GetHashCode());
+			Assert.Equal(map1.GetHashCode(), map2.GetHashCode());
 			NUnit.Framework.Assert.IsFalse(map1.GetHashCode() == map3.GetHashCode());
 		}
 	}

@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			internal MutableRates rs1;
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFields()
 		{
 			TestMetricsAnnotations.MyMetrics metrics = new TestMetricsAnnotations.MyMetrics();
@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMethods()
 		{
 			TestMetricsAnnotations.MyMetrics2 metrics = new TestMetricsAnnotations.MyMetrics2
@@ -190,7 +190,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClasses()
 		{
 			MetricsRecordBuilder rb = MetricsAsserts.GetMetrics(MetricsAnnotations.MakeSource
@@ -223,7 +223,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestHybrid()
 		{
 			TestMetricsAnnotations.HybridMetrics metrics = new TestMetricsAnnotations.HybridMetrics

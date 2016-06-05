@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 			Assume.AssumeTrue(ZlibFactory.IsNativeZlibLoaded(new Configuration()));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestZlibCompressorDecompressor()
 		{
 			try
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorDecompressorWithExeedBufferLimit()
 		{
 			int ByteSize = 100 * 1024;
@@ -64,7 +64,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestZlibCompressorDecompressorWithConfiguration()
 		{
 			Configuration conf = new Configuration();
@@ -94,12 +94,12 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 			}
 			else
 			{
-				NUnit.Framework.Assert.IsTrue("ZlibFactory is using native libs against request", 
+				Assert.True("ZlibFactory is using native libs against request", 
 					ZlibFactory.IsNativeZlibLoaded(conf));
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestZlibCompressDecompress()
 		{
 			byte[] rawData = null;
@@ -113,14 +113,14 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 				NUnit.Framework.Assert.IsFalse("testZlibCompressDecompress finished error", compressor
 					.Finished());
 				compressor.SetInput(rawData, 0, rawData.Length);
-				NUnit.Framework.Assert.IsTrue("testZlibCompressDecompress getBytesRead before error"
+				Assert.True("testZlibCompressDecompress getBytesRead before error"
 					, compressor.GetBytesRead() == 0);
 				compressor.Finish();
 				byte[] compressedResult = new byte[rawDataSize];
 				int cSize = compressor.Compress(compressedResult, 0, rawDataSize);
-				NUnit.Framework.Assert.IsTrue("testZlibCompressDecompress getBytesRead ather error"
+				Assert.True("testZlibCompressDecompress getBytesRead ather error"
 					, compressor.GetBytesRead() == rawDataSize);
-				NUnit.Framework.Assert.IsTrue("testZlibCompressDecompress compressed size no less then original size"
+				Assert.True("testZlibCompressDecompress compressed size no less then original size"
 					, cSize < rawDataSize);
 				decompressor.SetInput(compressedResult, 0, cSize);
 				byte[] decompressedBytes = new byte[rawDataSize];
@@ -164,7 +164,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 					outBuf.Flip();
 					while (outBuf.Remaining() > 0)
 					{
-						NUnit.Framework.Assert.AreEqual(expected.Get(), outBuf.Get());
+						Assert.Equal(expected.Get(), outBuf.Get());
 					}
 					outBuf.Clear();
 				}
@@ -172,13 +172,13 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 			outBuf.Flip();
 			while (outBuf.Remaining() > 0)
 			{
-				NUnit.Framework.Assert.AreEqual(expected.Get(), outBuf.Get());
+				Assert.Equal(expected.Get(), outBuf.Get());
 			}
 			outBuf.Clear();
-			NUnit.Framework.Assert.AreEqual(0, expected.Remaining());
+			Assert.Equal(0, expected.Remaining());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestZlibDirectCompressDecompress()
 		{
 			int[] size = new int[] { 1, 4, 16, 4 * 1024, 64 * 1024, 128 * 1024, 1024 * 1024 };
@@ -196,7 +196,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestZlibCompressorDecompressorSetDictionary()
 		{
 			Configuration conf = new Configuration();
@@ -212,26 +212,26 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 			}
 			else
 			{
-				NUnit.Framework.Assert.IsTrue("ZlibFactory is using native libs against request", 
+				Assert.True("ZlibFactory is using native libs against request", 
 					ZlibFactory.IsNativeZlibLoaded(conf));
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestZlibFactory()
 		{
 			Configuration cfg = new Configuration();
-			NUnit.Framework.Assert.IsTrue("testZlibFactory compression level error !!!", ZlibCompressor.CompressionLevel
+			Assert.True("testZlibFactory compression level error !!!", ZlibCompressor.CompressionLevel
 				.DefaultCompression == ZlibFactory.GetCompressionLevel(cfg));
-			NUnit.Framework.Assert.IsTrue("testZlibFactory compression strategy error !!!", ZlibCompressor.CompressionStrategy
+			Assert.True("testZlibFactory compression strategy error !!!", ZlibCompressor.CompressionStrategy
 				.DefaultStrategy == ZlibFactory.GetCompressionStrategy(cfg));
 			ZlibFactory.SetCompressionLevel(cfg, ZlibCompressor.CompressionLevel.BestCompression
 				);
-			NUnit.Framework.Assert.IsTrue("testZlibFactory compression strategy error !!!", ZlibCompressor.CompressionLevel
+			Assert.True("testZlibFactory compression strategy error !!!", ZlibCompressor.CompressionLevel
 				.BestCompression == ZlibFactory.GetCompressionLevel(cfg));
 			ZlibFactory.SetCompressionStrategy(cfg, ZlibCompressor.CompressionStrategy.Filtered
 				);
-			NUnit.Framework.Assert.IsTrue("testZlibFactory compression strategy error !!!", ZlibCompressor.CompressionStrategy
+			Assert.True("testZlibFactory compression strategy error !!!", ZlibCompressor.CompressionStrategy
 				.Filtered == ZlibFactory.GetCompressionStrategy(cfg));
 		}
 
@@ -315,26 +315,26 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 				cSize = zlibCompressor.Compress(compressedByte, 0, compressedByte.Length);
 			}
 			zlibCompressor.Reset();
-			NUnit.Framework.Assert.IsTrue(zlibDecompressor.GetBytesWritten() == 0);
-			NUnit.Framework.Assert.IsTrue(zlibDecompressor.GetBytesRead() == 0);
-			NUnit.Framework.Assert.IsTrue(zlibDecompressor.NeedsInput());
+			Assert.True(zlibDecompressor.GetBytesWritten() == 0);
+			Assert.True(zlibDecompressor.GetBytesRead() == 0);
+			Assert.True(zlibDecompressor.NeedsInput());
 			zlibDecompressor.SetInput(compressedByte, 0, cSize);
 			NUnit.Framework.Assert.IsFalse(zlibDecompressor.NeedsInput());
 			while (!zlibDecompressor.Finished())
 			{
 				zlibDecompressor.Decompress(decompressedRawData, 0, decompressedRawData.Length);
 			}
-			NUnit.Framework.Assert.IsTrue(zlibDecompressor.GetBytesWritten() == rawData.Length
+			Assert.True(zlibDecompressor.GetBytesWritten() == rawData.Length
 				);
-			NUnit.Framework.Assert.IsTrue(zlibDecompressor.GetBytesRead() == cSize);
+			Assert.True(zlibDecompressor.GetBytesRead() == cSize);
 			zlibDecompressor.Reset();
-			NUnit.Framework.Assert.IsTrue(zlibDecompressor.GetRemaining() == 0);
+			Assert.True(zlibDecompressor.GetRemaining() == 0);
 			Assert.AssertArrayEquals("testZlibCompressorDecompressorWithConfiguration array equals error"
 				, rawData, decompressedRawData);
 			return decompressedRawData;
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBuiltInGzipDecompressorExceptions()
 		{
 			BuiltInGzipDecompressor decompresser = new BuiltInGzipDecompressor();
@@ -364,9 +364,9 @@ namespace Org.Apache.Hadoop.IO.Compress.Zlib
 				NUnit.Framework.Assert.Fail("testBuiltInGzipDecompressorExceptions aioob error" +
 					 ex);
 			}
-			NUnit.Framework.Assert.IsTrue("decompresser.getBytesRead error", decompresser.GetBytesRead
+			Assert.True("decompresser.getBytesRead error", decompresser.GetBytesRead
 				() == 0);
-			NUnit.Framework.Assert.IsTrue("decompresser.getRemaining error", decompresser.GetRemaining
+			Assert.True("decompresser.getRemaining error", decompresser.GetRemaining
 				() == 0);
 			decompresser.Reset();
 			decompresser.End();

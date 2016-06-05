@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Security
 		/// Cache two groups with a set of users.
 		/// Test membership correctness.
 		/// </remarks>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMembership()
 		{
 			IList<string> users = new AList<string>();
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Security
 		/// Clear cache, remove a user from the group and cache the group
 		/// Test membership correctness.
 		/// </remarks>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestUserRemoval()
 		{
 			IList<string> users = new AList<string>();
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.Security
 		/// Clear cache, cache only one group.
 		/// Test membership correctness.
 		/// </remarks>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGroupRemoval()
 		{
 			IList<string> users = new AList<string>();
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Security
 		{
 			IList<string> groups = new AList<string>();
 			NetgroupCache.GetNetgroups(user, groups);
-			NUnit.Framework.Assert.AreEqual(size, groups.Count);
+			Assert.Equal(size, groups.Count);
 			if (size > 0)
 			{
 				bool present = false;
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.Security
 						break;
 					}
 				}
-				NUnit.Framework.Assert.IsTrue(present);
+				Assert.True(present);
 			}
 		}
 	}

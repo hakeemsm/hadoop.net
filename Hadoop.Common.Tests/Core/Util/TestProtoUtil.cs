@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.Util
 		/// by ProtoBuf's CodedOutputStream.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVarInt()
 		{
 			// Test a few manufactured values
@@ -46,17 +46,17 @@ namespace Org.Apache.Hadoop.Util
 			cout.Flush();
 			DataInputStream dis = new DataInputStream(new ByteArrayInputStream(baos.ToByteArray
 				()));
-			NUnit.Framework.Assert.AreEqual(value, ProtoUtil.ReadRawVarint32(dis));
+			Assert.Equal(value, ProtoUtil.ReadRawVarint32(dis));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRpcClientId()
 		{
 			byte[] uuid = ClientId.GetClientId();
 			RpcHeaderProtos.RpcRequestHeaderProto header = ProtoUtil.MakeRpcRequestHeader(RPC.RpcKind
 				.RpcProtocolBuffer, RpcHeaderProtos.RpcRequestHeaderProto.OperationProto.RpcFinalPacket
 				, 0, RpcConstants.InvalidRetryCount, uuid);
-			NUnit.Framework.Assert.IsTrue(Arrays.Equals(uuid, header.GetClientId().ToByteArray
+			Assert.True(Arrays.Equals(uuid, header.GetClientId().ToByteArray
 				()));
 		}
 	}

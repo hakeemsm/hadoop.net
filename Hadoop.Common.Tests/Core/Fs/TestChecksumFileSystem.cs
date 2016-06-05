@@ -21,28 +21,28 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestgetChecksumLength()
 		{
-			NUnit.Framework.Assert.AreEqual(8, ChecksumFileSystem.GetChecksumLength(0L, 512));
-			NUnit.Framework.Assert.AreEqual(12, ChecksumFileSystem.GetChecksumLength(1L, 512)
+			Assert.Equal(8, ChecksumFileSystem.GetChecksumLength(0L, 512));
+			Assert.Equal(12, ChecksumFileSystem.GetChecksumLength(1L, 512)
 				);
-			NUnit.Framework.Assert.AreEqual(12, ChecksumFileSystem.GetChecksumLength(512L, 512
+			Assert.Equal(12, ChecksumFileSystem.GetChecksumLength(512L, 512
 				));
-			NUnit.Framework.Assert.AreEqual(16, ChecksumFileSystem.GetChecksumLength(513L, 512
+			Assert.Equal(16, ChecksumFileSystem.GetChecksumLength(513L, 512
 				));
-			NUnit.Framework.Assert.AreEqual(16, ChecksumFileSystem.GetChecksumLength(1023L, 512
+			Assert.Equal(16, ChecksumFileSystem.GetChecksumLength(1023L, 512
 				));
-			NUnit.Framework.Assert.AreEqual(16, ChecksumFileSystem.GetChecksumLength(1024L, 512
+			Assert.Equal(16, ChecksumFileSystem.GetChecksumLength(1024L, 512
 				));
-			NUnit.Framework.Assert.AreEqual(408, ChecksumFileSystem.GetChecksumLength(100L, 1
+			Assert.Equal(408, ChecksumFileSystem.GetChecksumLength(100L, 1
 				));
-			NUnit.Framework.Assert.AreEqual(4000000000008L, ChecksumFileSystem.GetChecksumLength
+			Assert.Equal(4000000000008L, ChecksumFileSystem.GetChecksumLength
 				(10000000000000L, 10));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyChecksum()
 		{
 			Path testPath = new Path(TestRootDir, "testPath");
@@ -63,12 +63,12 @@ namespace Org.Apache.Hadoop.FS
 			FileSystemTestHelper.ReadFile(localFs, testPath, 1024);
 			FileSystemTestHelper.ReadFile(localFs, testPath, 1025);
 			localFs.Delete(localFs.GetChecksumFile(testPath), true);
-			NUnit.Framework.Assert.IsTrue("checksum deleted", !localFs.Exists(localFs.GetChecksumFile
+			Assert.True("checksum deleted", !localFs.Exists(localFs.GetChecksumFile
 				(testPath)));
 			//copying the wrong checksum file
 			FileUtil.Copy(localFs, localFs.GetChecksumFile(testPath11), localFs, localFs.GetChecksumFile
 				(testPath), false, true, localFs.GetConf());
-			NUnit.Framework.Assert.IsTrue("checksum exists", localFs.Exists(localFs.GetChecksumFile
+			Assert.True("checksum exists", localFs.Exists(localFs.GetChecksumFile
 				(testPath)));
 			bool errorRead = false;
 			try
@@ -79,15 +79,15 @@ namespace Org.Apache.Hadoop.FS
 			{
 				errorRead = true;
 			}
-			NUnit.Framework.Assert.IsTrue("error reading", errorRead);
+			Assert.True("error reading", errorRead);
 			//now setting verify false, the read should succeed
 			localFs.SetVerifyChecksum(false);
 			string str = FileSystemTestHelper.ReadFile(localFs, testPath, 1024).ToString();
-			NUnit.Framework.Assert.IsTrue("read", "testing".Equals(str));
+			Assert.True("read", "testing".Equals(str));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultiChunkFile()
 		{
 			Path testPath = new Path(TestRootDir, "testMultiChunk");
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.FS
 		/// ChecksumException is thrown
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTruncatedChecksum()
 		{
 			Path testPath = new Path(TestRootDir, "testtruncatedcrc");
@@ -144,11 +144,11 @@ namespace Org.Apache.Hadoop.FS
 			// telling it not to verify checksums, should avoid issue.
 			localFs.SetVerifyChecksum(false);
 			string str = FileSystemTestHelper.ReadFile(localFs, testPath, 1024).ToString();
-			NUnit.Framework.Assert.IsTrue("read", "testing truncation".Equals(str));
+			Assert.True("read", "testing truncation".Equals(str));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStreamType()
 		{
 			Path testPath = new Path(TestRootDir, "testStreamType");
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.FS
 			FSDataInputStream @in = null;
 			localFs.SetVerifyChecksum(true);
 			@in = localFs.Open(testPath);
-			NUnit.Framework.Assert.IsTrue("stream is input checker", @in.GetWrappedStream() is
+			Assert.True("stream is input checker", @in.GetWrappedStream() is
 				 FSInputChecker);
 			localFs.SetVerifyChecksum(false);
 			@in = localFs.Open(testPath);
@@ -165,7 +165,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCorruptedChecksum()
 		{
 			Path testPath = new Path(TestRootDir, "testCorruptChecksum");
@@ -174,15 +174,15 @@ namespace Org.Apache.Hadoop.FS
 			FSDataOutputStream @out = localFs.Create(testPath, true);
 			@out.Write(Sharpen.Runtime.GetBytesForString("testing 1 2 3"));
 			@out.Close();
-			NUnit.Framework.Assert.IsTrue(localFs.Exists(checksumPath));
+			Assert.True(localFs.Exists(checksumPath));
 			FileStatus stat = localFs.GetFileStatus(checksumPath);
 			// alter file directly so checksum is invalid
 			@out = localFs.GetRawFileSystem().Create(testPath, true);
 			@out.Write(Sharpen.Runtime.GetBytesForString("testing stale checksum"));
 			@out.Close();
-			NUnit.Framework.Assert.IsTrue(localFs.Exists(checksumPath));
+			Assert.True(localFs.Exists(checksumPath));
 			// checksum didn't change on disk
-			NUnit.Framework.Assert.AreEqual(stat, localFs.GetFileStatus(checksumPath));
+			Assert.Equal(stat, localFs.GetFileStatus(checksumPath));
 			Exception e = null;
 			try
 			{
@@ -199,11 +199,11 @@ namespace Org.Apache.Hadoop.FS
 			}
 			localFs.SetVerifyChecksum(false);
 			string str = FileSystemTestHelper.ReadFile(localFs, testPath, 1024);
-			NUnit.Framework.Assert.AreEqual("testing stale checksum", str);
+			Assert.Equal("testing stale checksum", str);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameFileToFile()
 		{
 			Path srcPath = new Path(TestRootDir, "testRenameSrc");
@@ -212,7 +212,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameFileIntoDir()
 		{
 			Path srcPath = new Path(TestRootDir, "testRenameSrc");
@@ -222,12 +222,12 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameFileIntoDirFile()
 		{
 			Path srcPath = new Path(TestRootDir, "testRenameSrc");
 			Path dstPath = new Path(TestRootDir, "testRenameDir/testRenameDst");
-			NUnit.Framework.Assert.IsTrue(localFs.Mkdirs(dstPath));
+			Assert.True(localFs.Mkdirs(dstPath));
 			VerifyRename(srcPath, dstPath, false);
 		}
 
@@ -244,21 +244,21 @@ namespace Org.Apache.Hadoop.FS
 			}
 			// ensure file + checksum are moved
 			FileSystemTestHelper.WriteFile(localFs, srcPath, 1);
-			NUnit.Framework.Assert.IsTrue(localFs.Exists(localFs.GetChecksumFile(srcPath)));
-			NUnit.Framework.Assert.IsTrue(localFs.Rename(srcPath, dstPath));
-			NUnit.Framework.Assert.IsTrue(localFs.Exists(localFs.GetChecksumFile(realDstPath)
+			Assert.True(localFs.Exists(localFs.GetChecksumFile(srcPath)));
+			Assert.True(localFs.Rename(srcPath, dstPath));
+			Assert.True(localFs.Exists(localFs.GetChecksumFile(realDstPath)
 				));
 			// create a file with no checksum, rename, ensure dst checksum is removed    
 			FileSystemTestHelper.WriteFile(localFs.GetRawFileSystem(), srcPath, 1);
 			NUnit.Framework.Assert.IsFalse(localFs.Exists(localFs.GetChecksumFile(srcPath)));
-			NUnit.Framework.Assert.IsTrue(localFs.Rename(srcPath, dstPath));
+			Assert.True(localFs.Rename(srcPath, dstPath));
 			NUnit.Framework.Assert.IsFalse(localFs.Exists(localFs.GetChecksumFile(realDstPath
 				)));
 			// create file with checksum, rename over prior dst with no checksum
 			FileSystemTestHelper.WriteFile(localFs, srcPath, 1);
-			NUnit.Framework.Assert.IsTrue(localFs.Exists(localFs.GetChecksumFile(srcPath)));
-			NUnit.Framework.Assert.IsTrue(localFs.Rename(srcPath, dstPath));
-			NUnit.Framework.Assert.IsTrue(localFs.Exists(localFs.GetChecksumFile(realDstPath)
+			Assert.True(localFs.Exists(localFs.GetChecksumFile(srcPath)));
+			Assert.True(localFs.Rename(srcPath, dstPath));
+			Assert.True(localFs.Exists(localFs.GetChecksumFile(realDstPath)
 				));
 		}
 	}

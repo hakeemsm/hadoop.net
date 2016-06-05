@@ -8,12 +8,12 @@ namespace Org.Apache.Hadoop.Util
 	{
 		internal readonly DirectBufferPool pool = new DirectBufferPool();
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBasics()
 		{
 			ByteBuffer a = pool.GetBuffer(100);
-			NUnit.Framework.Assert.AreEqual(100, a.Capacity());
-			NUnit.Framework.Assert.AreEqual(100, a.Remaining());
+			Assert.Equal(100, a.Capacity());
+			Assert.Equal(100, a.Remaining());
 			pool.ReturnBuffer(a);
 			// Getting a new buffer should return the same one
 			ByteBuffer b = pool.GetBuffer(100);
@@ -26,22 +26,22 @@ namespace Org.Apache.Hadoop.Util
 			pool.ReturnBuffer(c);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBuffersAreReset()
 		{
 			ByteBuffer a = pool.GetBuffer(100);
 			a.PutInt(unchecked((int)(0xdeadbeef)));
-			NUnit.Framework.Assert.AreEqual(96, a.Remaining());
+			Assert.Equal(96, a.Remaining());
 			pool.ReturnBuffer(a);
 			// Even though we return the same buffer,
 			// its position should be reset to 0
 			ByteBuffer b = pool.GetBuffer(100);
 			NUnit.Framework.Assert.AreSame(a, b);
-			NUnit.Framework.Assert.AreEqual(100, a.Remaining());
+			Assert.Equal(100, a.Remaining());
 			pool.ReturnBuffer(b);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWeakRefClearing()
 		{
 			// Allocate and return 10 buffers.
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				pool.ReturnBuffer(buf_1);
 			}
-			NUnit.Framework.Assert.AreEqual(10, pool.CountBuffersOfSize(100));
+			Assert.Equal(10, pool.CountBuffersOfSize(100));
 			// Clear out any references to the buffers, and force
 			// GC. Weak refs should get cleared.
 			bufs.Clear();
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.Util
 			ByteBuffer buf_2 = pool.GetBuffer(100);
 			// the act of getting a buffer should clear all the nulled
 			// references from the pool.
-			NUnit.Framework.Assert.AreEqual(0, pool.CountBuffersOfSize(100));
+			Assert.Equal(0, pool.CountBuffersOfSize(100));
 			pool.ReturnBuffer(buf_2);
 		}
 	}

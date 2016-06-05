@@ -22,14 +22,14 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 {
 	public class TestInterns
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInfo()
 		{
 			MetricsInfo info = Interns.Info("m", "m desc");
 			NUnit.Framework.Assert.AreSame("same info", info, Interns.Info("m", "m desc"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTag()
 		{
 			MetricsTag tag = Interns.Tag("t", "t desc", "t value");
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 				));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInfoOverflow()
 		{
 			MetricsInfo i0 = Interns.Info("m0", "m desc");
@@ -64,7 +64,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			NUnit.Framework.Assert.AreNotSame("i1 is gone", i1, Interns.Info("m1", "m desc"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTagOverflow()
 		{
 			MetricsTag t0 = Interns.Tag("t0", "t desc", "t value");

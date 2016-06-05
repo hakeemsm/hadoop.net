@@ -75,7 +75,7 @@ namespace Hadoop.Common.Tests.Core.Fs
 				argv.AddItem(group);
 			}
 			Sharpen.Collections.AddAll(argv, files);
-			NUnit.Framework.Assert.AreEqual(exit, fsShell.Run(Sharpen.Collections.ToArray(argv
+			Assert.Equal(exit, fsShell.Run(Sharpen.Collections.ToArray(argv
 				, new string[0])));
 			for (int i_1 = 0; i_1 < files.Length; i_1++)
 			{
@@ -84,9 +84,9 @@ namespace Hadoop.Common.Tests.Core.Fs
 				{
 					for (int j = 0; j < stats.Length; j++)
 					{
-						NUnit.Framework.Assert.AreEqual("check owner of " + files[i_1], ((owner != null) ? 
+						Assert.Equal("check owner of " + files[i_1], ((owner != null) ? 
 							"STUB-" + owner : oldStats[i_1][j].GetOwner()), stats[j].GetOwner());
-						NUnit.Framework.Assert.AreEqual("check group of " + files[i_1], ((group != null) ? 
+						Assert.Equal("check group of " + files[i_1], ((group != null) ? 
 							"STUB-" + group : oldStats[i_1][j].GetGroup()), stats[j].GetGroup());
 					}
 				}
@@ -115,26 +115,26 @@ namespace Hadoop.Common.Tests.Core.Fs
 			string f7 = new Path(TestRootDir, "testChmod/file*").ToUri().GetPath();
 			// create and write test file
 			WriteFile(fileSys, p1);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p1));
+			Assert.True(fileSys.Exists(p1));
 			// Test 1: Test 1: exit code for chmod on existing is 0
 			string[] argv = new string[] { "-chmod", "777", f1 };
-			NUnit.Framework.Assert.AreEqual(0, fsShell.Run(argv));
+			Assert.Equal(0, fsShell.Run(argv));
 			// Test 2: exit code for chmod on non-existing path is 1
 			string[] argv2 = new string[] { "-chmod", "777", f2 };
-			NUnit.Framework.Assert.AreEqual(1, fsShell.Run(argv2));
+			Assert.Equal(1, fsShell.Run(argv2));
 			// Test 3: exit code for chmod on non-existing path with globbed input is 1
 			string[] argv3 = new string[] { "-chmod", "777", f3 };
-			NUnit.Framework.Assert.AreEqual(1, fsShell.Run(argv3));
+			Assert.Equal(1, fsShell.Run(argv3));
 			// create required files
 			WriteFile(fileSys, p4);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p4));
+			Assert.True(fileSys.Exists(p4));
 			WriteFile(fileSys, p5);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p5));
+			Assert.True(fileSys.Exists(p5));
 			WriteFile(fileSys, p6);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p6));
+			Assert.True(fileSys.Exists(p6));
 			// Test 4: exit code for chmod on existing path with globbed input is 0
 			string[] argv4 = new string[] { "-chmod", "777", f7 };
-			NUnit.Framework.Assert.AreEqual(0, fsShell.Run(argv4));
+			Assert.Equal(0, fsShell.Run(argv4));
 		}
 
 		/// <summary>Test Chown 1.</summary>
@@ -159,7 +159,7 @@ namespace Hadoop.Common.Tests.Core.Fs
 			string f7 = new Path(TestRootDir, "testChown/file*").ToUri().GetPath();
 			// create and write test file
 			WriteFile(fileSys, p1);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p1));
+			Assert.True(fileSys.Exists(p1));
 			// Test 1: exit code for chown on existing file is 0
 			Change(0, "admin", null, f1);
 			// Test 2: exit code for chown on non-existing path is 1
@@ -168,11 +168,11 @@ namespace Hadoop.Common.Tests.Core.Fs
 			Change(1, "admin", null, f3);
 			// create required files
 			WriteFile(fileSys, p4);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p4));
+			Assert.True(fileSys.Exists(p4));
 			WriteFile(fileSys, p5);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p5));
+			Assert.True(fileSys.Exists(p5));
 			WriteFile(fileSys, p6);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p6));
+			Assert.True(fileSys.Exists(p6));
 			// Test 4: exit code for chown on existing path with globbed input is 0
 			Change(0, "admin", null, f7);
 			//Test 5: test for setOwner invocation on FS from command handler.
@@ -202,7 +202,7 @@ namespace Hadoop.Common.Tests.Core.Fs
 			string f7 = new Path(TestRootDir, "testChgrp/file*").ToUri().GetPath();
 			// create and write test file
 			WriteFile(fileSys, p1);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p1));
+			Assert.True(fileSys.Exists(p1));
 			// Test 1: exit code for chgrp on existing file is 0
 			Change(0, null, "admin", f1);
 			// Test 2: exit code for chgrp on non existing path is 1
@@ -214,11 +214,11 @@ namespace Hadoop.Common.Tests.Core.Fs
 			Change(1, null, "admin", f3, f1);
 			// create required files
 			WriteFile(fileSys, p4);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p4));
+			Assert.True(fileSys.Exists(p4));
 			WriteFile(fileSys, p5);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p5));
+			Assert.True(fileSys.Exists(p5));
 			WriteFile(fileSys, p6);
-			NUnit.Framework.Assert.IsTrue(fileSys.Exists(p6));
+			Assert.True(fileSys.Exists(p6));
 			// Test 4: exit code for chgrp on existing path with globbed input is 0
 			Change(0, null, "admin", f7);
 			Change(1, null, "admin", f2, f7);
@@ -244,14 +244,14 @@ namespace Hadoop.Common.Tests.Core.Fs
 				args[0] = "-get";
 				args[1] = new Path(tdir.ToUri().GetPath(), "/invalidSrc").ToString();
 				args[2] = new Path(tdir.ToUri().GetPath(), "/invalidDst").ToString();
-				NUnit.Framework.Assert.IsTrue("file exists", !fileSys.Exists(new Path(args[1])));
-				NUnit.Framework.Assert.IsTrue("file exists", !fileSys.Exists(new Path(args[2])));
+				Assert.True("file exists", !fileSys.Exists(new Path(args[1])));
+				Assert.True("file exists", !fileSys.Exists(new Path(args[2])));
 				int run = shell.Run(args);
 				results = bytes.ToString();
-				NUnit.Framework.Assert.AreEqual("Return code should be 1", 1, run);
-				NUnit.Framework.Assert.IsTrue(" Null is coming when source path is invalid. ", !results
+				Assert.Equal("Return code should be 1", 1, run);
+				Assert.True(" Null is coming when source path is invalid. ", !results
 					.Contains("get: null"));
-				NUnit.Framework.Assert.IsTrue(" Not displaying the intended message ", results.Contains
+				Assert.True(" Not displaying the intended message ", results.Contains
 					("get: `" + args[1] + "': No such file or directory"));
 			}
 			finally
@@ -275,9 +275,9 @@ namespace Hadoop.Common.Tests.Core.Fs
 			try
 			{
 				int exit = shell.Run(new string[] { "-rm", "nomatch*" });
-				NUnit.Framework.Assert.AreEqual(1, exit);
+				Assert.Equal(1, exit);
 				results = bytes.ToString();
-				NUnit.Framework.Assert.IsTrue(results.Contains("rm: `nomatch*': No such file or directory"
+				Assert.True(results.Contains("rm: `nomatch*': No such file or directory"
 					));
 			}
 			finally
@@ -300,8 +300,8 @@ namespace Hadoop.Common.Tests.Core.Fs
 			try
 			{
 				int exit = shell.Run(new string[] { "-rm", "-f", "nomatch*" });
-				NUnit.Framework.Assert.AreEqual(0, exit);
-				NUnit.Framework.Assert.IsTrue(bytes.ToString().IsEmpty());
+				Assert.Equal(0, exit);
+				Assert.True(bytes.ToString().IsEmpty());
 			}
 			finally
 			{
@@ -336,7 +336,7 @@ namespace Hadoop.Common.Tests.Core.Fs
 				int run = shell.Run(args);
 				results = bytes.ToString();
 				Log.Info("result=" + results);
-				NUnit.Framework.Assert.IsTrue("Return code should be 0", run == 0);
+				Assert.True("Return code should be 0", run == 0);
 			}
 			finally
 			{
@@ -347,7 +347,7 @@ namespace Hadoop.Common.Tests.Core.Fs
 
 		/// <summary>Tests combinations of valid and invalid user and group arguments to chown.
 		/// 	</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestChownUserAndGroupValidity()
 		{
 			// This test only covers argument parsing, so override to skip processing.
@@ -385,7 +385,7 @@ namespace Hadoop.Common.Tests.Core.Fs
 		}
 
 		/// <summary>Tests valid and invalid group arguments to chgrp.</summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestChgrpGroupValidity()
 		{
 			// This test only covers argument parsing, so override to skip processing.

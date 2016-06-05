@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultAcl()
 		{
 			ServiceAuthorizationManager serviceAuthorizationManager = new ServiceAuthorizationManager
@@ -50,10 +50,10 @@ namespace Org.Apache.Hadoop.Security.Authorize
 				());
 			AccessControlList acl = serviceAuthorizationManager.GetProtocolsAcls(typeof(TestRPC.TestProtocol
 				));
-			NUnit.Framework.Assert.AreEqual("user1 group1", acl.GetAclString());
+			Assert.Equal("user1 group1", acl.GetAclString());
 			acl = serviceAuthorizationManager.GetProtocolsAcls(typeof(TestServiceAuthorization.TestProtocol1
 				));
-			NUnit.Framework.Assert.AreEqual(AccessControlList.WildcardAclValue, acl.GetAclString
+			Assert.Equal(AccessControlList.WildcardAclValue, acl.GetAclString
 				());
 			// test with a default acl
 			conf.Set(CommonConfigurationKeys.HadoopSecurityServiceAuthorizationDefaultAcl, "user2 group2"
@@ -61,14 +61,14 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			serviceAuthorizationManager.Refresh(conf, new TestServiceAuthorization.TestPolicyProvider
 				());
 			acl = serviceAuthorizationManager.GetProtocolsAcls(typeof(TestRPC.TestProtocol));
-			NUnit.Framework.Assert.AreEqual("user1 group1", acl.GetAclString());
+			Assert.Equal("user1 group1", acl.GetAclString());
 			acl = serviceAuthorizationManager.GetProtocolsAcls(typeof(TestServiceAuthorization.TestProtocol1
 				));
-			NUnit.Framework.Assert.AreEqual("user2 group2", acl.GetAclString());
+			Assert.Equal("user2 group2", acl.GetAclString());
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBlockedAcl()
 		{
 			UserGroupInformation drwho = UserGroupInformation.CreateUserForTesting("drwho@EXAMPLE.COM"
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultBlockedAcl()
 		{
 			UserGroupInformation drwho = UserGroupInformation.CreateUserForTesting("drwho@EXAMPLE.COM"
@@ -208,7 +208,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 
 		// expects Exception
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMachineList()
 		{
 			UserGroupInformation drwho = UserGroupInformation.CreateUserForTesting("drwho@EXAMPLE.COM"
@@ -241,7 +241,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 
 		// expects Exception
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultMachineList()
 		{
 			UserGroupInformation drwho = UserGroupInformation.CreateUserForTesting("drwho@EXAMPLE.COM"
@@ -287,7 +287,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBlockedMachineList()
 		{
 			UserGroupInformation drwho = UserGroupInformation.CreateUserForTesting("drwho@EXAMPLE.COM"
@@ -337,7 +337,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		/// <exception cref="Sharpen.UnknownHostException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultBlockedMachineList()
 		{
 			UserGroupInformation drwho = UserGroupInformation.CreateUserForTesting("drwho@EXAMPLE.COM"

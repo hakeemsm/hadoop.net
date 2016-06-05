@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Util
 	public class TestHttpExceptionUtils
 	{
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateServletException()
 		{
 			StringWriter writer = new StringWriter();
@@ -29,37 +29,37 @@ namespace Org.Apache.Hadoop.Util
 			ObjectMapper mapper = new ObjectMapper();
 			IDictionary json = mapper.ReadValue<IDictionary>(writer.ToString());
 			json = (IDictionary)json[HttpExceptionUtils.ErrorJson];
-			NUnit.Framework.Assert.AreEqual(typeof(IOException).FullName, json[HttpExceptionUtils
+			Assert.Equal(typeof(IOException).FullName, json[HttpExceptionUtils
 				.ErrorClassnameJson]);
-			NUnit.Framework.Assert.AreEqual(typeof(IOException).Name, json[HttpExceptionUtils
+			Assert.Equal(typeof(IOException).Name, json[HttpExceptionUtils
 				.ErrorExceptionJson]);
-			NUnit.Framework.Assert.AreEqual("Hello IOEX", json[HttpExceptionUtils.ErrorMessageJson
+			Assert.Equal("Hello IOEX", json[HttpExceptionUtils.ErrorMessageJson
 				]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateJerseyException()
 		{
 			Exception ex = new IOException("Hello IOEX");
 			Response response = HttpExceptionUtils.CreateJerseyExceptionResponse(Response.Status
 				.InternalServerError, ex);
-			NUnit.Framework.Assert.AreEqual(Response.Status.InternalServerError.GetStatusCode
+			Assert.Equal(Response.Status.InternalServerError.GetStatusCode
 				(), response.GetStatus());
 			Assert.AssertArrayEquals(Sharpen.Collections.ToArray(Arrays.AsList(MediaType.ApplicationJsonType
 				)), Sharpen.Collections.ToArray(response.GetMetadata()["Content-Type"]));
 			IDictionary entity = (IDictionary)response.GetEntity();
 			entity = (IDictionary)entity[HttpExceptionUtils.ErrorJson];
-			NUnit.Framework.Assert.AreEqual(typeof(IOException).FullName, entity[HttpExceptionUtils
+			Assert.Equal(typeof(IOException).FullName, entity[HttpExceptionUtils
 				.ErrorClassnameJson]);
-			NUnit.Framework.Assert.AreEqual(typeof(IOException).Name, entity[HttpExceptionUtils
+			Assert.Equal(typeof(IOException).Name, entity[HttpExceptionUtils
 				.ErrorExceptionJson]);
-			NUnit.Framework.Assert.AreEqual("Hello IOEX", entity[HttpExceptionUtils.ErrorMessageJson
+			Assert.Equal("Hello IOEX", entity[HttpExceptionUtils.ErrorMessageJson
 				]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestValidateResponseOK()
 		{
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestValidateResponseNonJsonErrorMessage()
 		{
 			string msg = "stream";
@@ -96,14 +96,14 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (IOException ex)
 			{
-				NUnit.Framework.Assert.IsTrue(ex.Message.Contains("msg"));
-				NUnit.Framework.Assert.IsTrue(ex.Message.Contains(string.Empty + HttpURLConnection
+				Assert.True(ex.Message.Contains("msg"));
+				Assert.True(ex.Message.Contains(string.Empty + HttpURLConnection
 					.HttpBadRequest));
 			}
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestValidateResponseJsonErrorKnownException()
 		{
 			IDictionary<string, object> json = new Dictionary<string, object>();
@@ -128,12 +128,12 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (InvalidOperationException ex)
 			{
-				NUnit.Framework.Assert.AreEqual("EX", ex.Message);
+				Assert.Equal("EX", ex.Message);
 			}
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestValidateResponseJsonErrorUnknownException()
 		{
 			IDictionary<string, object> json = new Dictionary<string, object>();
@@ -158,8 +158,8 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (IOException ex)
 			{
-				NUnit.Framework.Assert.IsTrue(ex.Message.Contains("EX"));
-				NUnit.Framework.Assert.IsTrue(ex.Message.Contains("foo.FooException"));
+				Assert.True(ex.Message.Contains("EX"));
+				Assert.True(ex.Message.Contains("foo.FooException"));
 			}
 		}
 	}

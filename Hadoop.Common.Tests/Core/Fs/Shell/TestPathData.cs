@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			string dirString = "d1";
 			PathData item = new PathData(dirString, conf);
 			PathData[] items = item.GetDirectoryContents();
-			NUnit.Framework.Assert.AreEqual(SortedString("d1/f1", "d1/f1.1", "d1/f2"), SortedString
+			Assert.Equal(SortedString("d1/f1", "d1/f1.1", "d1/f2"), SortedString
 				(items));
 		}
 
@@ -75,7 +75,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			string dirString = fs.MakeQualified(new Path("d1")).ToString();
 			PathData item = new PathData(dirString, conf);
 			PathData[] items = item.GetDirectoryContents();
-			NUnit.Framework.Assert.AreEqual(SortedString(dirString + "/f1", dirString + "/f1.1"
+			Assert.Equal(SortedString(dirString + "/f1", dirString + "/f1.1"
 				, dirString + "/f2"), SortedString(items));
 		}
 
@@ -85,18 +85,18 @@ namespace Org.Apache.Hadoop.FS.Shell
 			string dirString = Path.CurDir;
 			PathData item = new PathData(dirString, conf);
 			PathData[] items = item.GetDirectoryContents();
-			NUnit.Framework.Assert.AreEqual(SortedString("d1", "d2"), SortedString(items));
+			Assert.Equal(SortedString("d1", "d2"), SortedString(items));
 		}
 
 		/// <exception cref="System.Exception"/>
 		public virtual void TestToFile()
 		{
 			PathData item = new PathData(".", conf);
-			NUnit.Framework.Assert.AreEqual(new FilePath(testDir.ToString()), item.ToFile());
+			Assert.Equal(new FilePath(testDir.ToString()), item.ToFile());
 			item = new PathData("d1/f1", conf);
-			NUnit.Framework.Assert.AreEqual(new FilePath(testDir + "/d1/f1"), item.ToFile());
+			Assert.Equal(new FilePath(testDir + "/d1/f1"), item.ToFile());
 			item = new PathData(testDir + "/d1/f1", conf);
-			NUnit.Framework.Assert.AreEqual(new FilePath(testDir + "/d1/f1"), item.ToFile());
+			Assert.Equal(new FilePath(testDir + "/d1/f1"), item.ToFile());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -114,10 +114,10 @@ namespace Org.Apache.Hadoop.FS.Shell
 			foreach (string path in winPaths)
 			{
 				item = new PathData(path, conf);
-				NUnit.Framework.Assert.AreEqual(new FilePath(path), item.ToFile());
+				Assert.Equal(new FilePath(path), item.ToFile());
 			}
 			item = new PathData("foo\\bar", conf);
-			NUnit.Framework.Assert.AreEqual(new FilePath(testDir + "\\foo\\bar"), item.ToFile
+			Assert.Equal(new FilePath(testDir + "\\foo\\bar"), item.ToFile
 				());
 		}
 
@@ -147,7 +147,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		public virtual void TestAbsoluteGlob()
 		{
 			PathData[] items = PathData.ExpandAsGlob(testDir + "/d1/f1*", conf);
-			NUnit.Framework.Assert.AreEqual(SortedString(testDir + "/d1/f1", testDir + "/d1/f1.1"
+			Assert.Equal(SortedString(testDir + "/d1/f1", testDir + "/d1/f1.1"
 				), SortedString(items));
 			string absolutePathNoDriveLetter = testDir + "/d1/f1";
 			if (Org.Apache.Hadoop.Util.Shell.Windows)
@@ -160,17 +160,17 @@ namespace Org.Apache.Hadoop.FS.Shell
 					2);
 			}
 			items = PathData.ExpandAsGlob(absolutePathNoDriveLetter, conf);
-			NUnit.Framework.Assert.AreEqual(SortedString(absolutePathNoDriveLetter), SortedString
+			Assert.Equal(SortedString(absolutePathNoDriveLetter), SortedString
 				(items));
 			items = PathData.ExpandAsGlob(".", conf);
-			NUnit.Framework.Assert.AreEqual(SortedString("."), SortedString(items));
+			Assert.Equal(SortedString("."), SortedString(items));
 		}
 
 		/// <exception cref="System.Exception"/>
 		public virtual void TestRelativeGlob()
 		{
 			PathData[] items = PathData.ExpandAsGlob("d1/f1*", conf);
-			NUnit.Framework.Assert.AreEqual(SortedString("d1/f1", "d1/f1.1"), SortedString(items
+			Assert.Equal(SortedString("d1/f1", "d1/f1.1"), SortedString(items
 				));
 		}
 
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		{
 			fs.SetWorkingDirectory(new Path("d1"));
 			PathData[] items = PathData.ExpandAsGlob("../d2/*", conf);
-			NUnit.Framework.Assert.AreEqual(SortedString("../d2/f3"), SortedString(items));
+			Assert.Equal(SortedString("../d2/f3"), SortedString(items));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -192,19 +192,19 @@ namespace Org.Apache.Hadoop.FS.Shell
 			// if the authority is null, however we need to test that the PathData
 			// toString() returns the given string, while Path toString() does
 			// the crunching
-			NUnit.Framework.Assert.AreEqual("file:/tmp", tmpDir.ToString());
+			Assert.Equal("file:/tmp", tmpDir.ToString());
 			CheckPathData(dirString, item);
 		}
 
 		/// <exception cref="System.Exception"/>
 		public virtual void CheckPathData(string dirString, PathData item)
 		{
-			NUnit.Framework.Assert.AreEqual("checking fs", fs, item.fs);
-			NUnit.Framework.Assert.AreEqual("checking string", dirString, item.ToString());
-			NUnit.Framework.Assert.AreEqual("checking path", fs.MakeQualified(new Path(item.ToString
+			Assert.Equal("checking fs", fs, item.fs);
+			Assert.Equal("checking string", dirString, item.ToString());
+			Assert.Equal("checking path", fs.MakeQualified(new Path(item.ToString
 				())), item.path);
-			NUnit.Framework.Assert.IsTrue("checking exist", item.stat != null);
-			NUnit.Framework.Assert.IsTrue("checking isDir", item.stat.IsDirectory());
+			Assert.True("checking exist", item.stat != null);
+			Assert.True("checking isDir", item.stat.IsDirectory());
 		}
 
 		/* junit does a lousy job of comparing arrays

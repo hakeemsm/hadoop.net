@@ -10,12 +10,12 @@ namespace Org.Apache.Hadoop.Util
 	public class TestJarFinder
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJar()
 		{
 			//picking a class that is for sure in a JAR in the classpath
 			string jar = JarFinder.GetJar(typeof(LogFactory));
-			NUnit.Framework.Assert.IsTrue(new FilePath(jar).Exists());
+			Assert.True(new FilePath(jar).Exists());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -48,17 +48,17 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExpandedClasspath()
 		{
 			//picking a class that is for sure in a directory in the classpath
 			//in this case the JAR is created on the fly
 			string jar = JarFinder.GetJar(typeof(TestJarFinder));
-			NUnit.Framework.Assert.IsTrue(new FilePath(jar).Exists());
+			Assert.True(new FilePath(jar).Exists());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExistingManifest()
 		{
 			FilePath dir = new FilePath(Runtime.GetProperty("test.build.dir", "target/test-dir"
@@ -86,7 +86,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoManifest()
 		{
 			FilePath dir = new FilePath(Runtime.GetProperty("test.build.dir", "target/test-dir"

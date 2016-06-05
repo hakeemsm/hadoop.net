@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServletFilter()
 		{
 			Configuration conf = new Configuration();
@@ -130,9 +130,9 @@ namespace Org.Apache.Hadoop.Http
 			//verify records
 			for (int i_1 = 0; i_1 < urls.Length; i_1++)
 			{
-				NUnit.Framework.Assert.IsTrue(Records.Remove(urls[i_1]));
+				Assert.True(Records.Remove(urls[i_1]));
 			}
-			NUnit.Framework.Assert.IsTrue(Records.IsEmpty());
+			Assert.True(Records.IsEmpty());
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 	public class TestStringSignerSecretProvider
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetSecrets()
 		{
 			string secretStr = "secret";
@@ -18,7 +18,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			byte[] secretBytes = Sharpen.Runtime.GetBytesForString(secretStr);
 			Assert.AssertArrayEquals(secretBytes, secretProvider.GetCurrentSecret());
 			byte[][] allSecrets = secretProvider.GetAllSecrets();
-			NUnit.Framework.Assert.AreEqual(1, allSecrets.Length);
+			Assert.Equal(1, allSecrets.Length);
 			Assert.AssertArrayEquals(secretBytes, allSecrets[0]);
 		}
 	}

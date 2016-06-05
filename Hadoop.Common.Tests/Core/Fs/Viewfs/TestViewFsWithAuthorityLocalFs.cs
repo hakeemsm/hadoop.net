@@ -41,16 +41,16 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			base.TearDown();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public override void TestBasicPaths()
 		{
-			NUnit.Framework.Assert.AreEqual(schemeWithAuthority, fcView.GetDefaultFileSystem(
+			Assert.Equal(schemeWithAuthority, fcView.GetDefaultFileSystem(
 				).GetUri());
-			NUnit.Framework.Assert.AreEqual(fcView.MakeQualified(new Path("/user/" + Runtime.
+			Assert.Equal(fcView.MakeQualified(new Path("/user/" + Runtime.
 				GetProperty("user.name"))), fcView.GetWorkingDirectory());
-			NUnit.Framework.Assert.AreEqual(fcView.MakeQualified(new Path("/user/" + Runtime.
+			Assert.Equal(fcView.MakeQualified(new Path("/user/" + Runtime.
 				GetProperty("user.name"))), fcView.GetHomeDirectory());
-			NUnit.Framework.Assert.AreEqual(new Path("/foo/bar").MakeQualified(schemeWithAuthority
+			Assert.Equal(new Path("/foo/bar").MakeQualified(schemeWithAuthority
 				, null), fcView.MakeQualified(new Path("/foo/bar")));
 		}
 	}

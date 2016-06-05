@@ -6,14 +6,14 @@ namespace Org.Apache.Hadoop.Http
 {
 	public class TestHttpRequestLog
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAppenderUndefined()
 		{
 			RequestLog requestLog = HttpRequestLog.GetRequestLog("test");
 			NUnit.Framework.Assert.IsNull("RequestLog should be null", requestLog);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAppenderDefined()
 		{
 			HttpRequestLogAppender requestLogAppender = new HttpRequestLogAppender();
@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.Http
 			RequestLog requestLog = HttpRequestLog.GetRequestLog("test");
 			Logger.GetLogger("http.requests.test").RemoveAppender(requestLogAppender);
 			NUnit.Framework.Assert.IsNotNull("RequestLog should not be null", requestLog);
-			NUnit.Framework.Assert.AreEqual("Class mismatch", typeof(NCSARequestLog), requestLog
+			Assert.Equal("Class mismatch", typeof(NCSARequestLog), requestLog
 				.GetType());
 		}
 	}

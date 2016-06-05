@@ -18,7 +18,7 @@ namespace Org.Apache.Hadoop.Http.Lib
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFilter()
 		{
 			FilterConfig config = MockConfig("myuser");
@@ -33,26 +33,26 @@ namespace Org.Apache.Hadoop.Http.Lib
 			Org.Mockito.Mockito.Verify(chain).DoFilter(wrapperArg.Capture(), Org.Mockito.Mockito
 				.AnyObject<ServletResponse>());
 			HttpServletRequestWrapper wrapper = wrapperArg.GetValue();
-			NUnit.Framework.Assert.AreEqual("myuser", wrapper.GetUserPrincipal().GetName());
-			NUnit.Framework.Assert.AreEqual("myuser", wrapper.GetRemoteUser());
+			Assert.Equal("myuser", wrapper.GetUserPrincipal().GetName());
+			Assert.Equal("myuser", wrapper.GetRemoteUser());
 			suf.Destroy();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOldStyleConfiguration()
 		{
 			Configuration conf = new Configuration();
 			conf.Set("dfs.web.ugi", "joe,group1,group2");
-			NUnit.Framework.Assert.AreEqual("joe", StaticUserWebFilter.GetUsernameFromConf(conf
+			Assert.Equal("joe", StaticUserWebFilter.GetUsernameFromConf(conf
 				));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConfiguration()
 		{
 			Configuration conf = new Configuration();
 			conf.Set(CommonConfigurationKeys.HadoopHttpStaticUser, "joe");
-			NUnit.Framework.Assert.AreEqual("joe", StaticUserWebFilter.GetUsernameFromConf(conf
+			Assert.Equal("joe", StaticUserWebFilter.GetUsernameFromConf(conf
 				));
 		}
 	}

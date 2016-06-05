@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSortedLongWritable()
 		{
 			Configuration conf = new Configuration();
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					for (; !scanner.AtEnd(); scanner.Advance())
 					{
 						scanner.Entry().GetValue(value);
-						NUnit.Framework.Assert.AreEqual(BuildValue(i), Sharpen.Runtime.GetStringForBytes(
+						Assert.Equal(BuildValue(i), Sharpen.Runtime.GetStringForBytes(
 							value.GetBytes(), 0, value.GetLength()));
 						++i;
 					}

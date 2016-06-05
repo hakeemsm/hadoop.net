@@ -182,14 +182,14 @@ namespace Org.Apache.Hadoop.Test
 				}
 				Sharpen.Thread.Sleep(100);
 			}
-			NUnit.Framework.Assert.AreEqual(3, CountStringOccurrences(s, "BLOCKED"));
+			Assert.Equal(3, CountStringOccurrences(s, "BLOCKED"));
 			Failure failure = new Failure(null, new Exception(TimedOutTestsListener.TestTimedOutPrefix
 				));
 			StringWriter writer = new StringWriter();
 			new TimedOutTestsListener(new PrintWriter(writer)).TestFailure(failure);
 			string @out = writer.ToString();
-			NUnit.Framework.Assert.IsTrue(@out.Contains("THREAD DUMP"));
-			NUnit.Framework.Assert.IsTrue(@out.Contains("DEADLOCKS DETECTED"));
+			Assert.True(@out.Contains("THREAD DUMP"));
+			Assert.True(@out.Contains("DEADLOCKS DETECTED"));
 			System.Console.Out.WriteLine(@out);
 		}
 

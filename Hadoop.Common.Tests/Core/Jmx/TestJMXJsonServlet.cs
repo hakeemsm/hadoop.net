@@ -47,11 +47,11 @@ namespace Org.Apache.Hadoop.Jmx
 		{
 			Sharpen.Pattern p = Sharpen.Pattern.Compile(re);
 			Matcher m = p.Matcher(value);
-			NUnit.Framework.Assert.IsTrue("'" + p + "' does not match " + value, m.Find());
+			Assert.True("'" + p + "' does not match " + value, m.Find());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestQury()
 		{
 			string result = ReadOutput(new Uri(baseUrl, "/jmx?qry=java.lang:type=Runtime"));
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Jmx
 			// test to CORS headers
 			HttpURLConnection conn = (HttpURLConnection)new Uri(baseUrl, "/jmx?qry=java.lang:type=Memory"
 				).OpenConnection();
-			NUnit.Framework.Assert.AreEqual("GET", conn.GetHeaderField(JMXJsonServlet.AccessControlAllowMethods
+			Assert.Equal("GET", conn.GetHeaderField(JMXJsonServlet.AccessControlAllowMethods
 				));
 			NUnit.Framework.Assert.IsNotNull(conn.GetHeaderField(JMXJsonServlet.AccessControlAllowOrigin
 				));

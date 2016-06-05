@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void Setup()
 		{
 			Assume.AssumeTrue(NativeCrc32.IsAvailable());
-			NUnit.Framework.Assert.AreEqual("These tests assume they can write a checksum value as a 4-byte int."
+			Assert.Equal("These tests assume they can write a checksum value as a 4-byte int."
 				, 4, checksumType.size);
 			Configuration conf = new Configuration();
 			bytesPerChecksum = conf.GetInt(IoBytesPerChecksumKey, IoBytesPerChecksumDefault);
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyChunkedSumsSuccess()
 		{
 			AllocateDirectByteBuffers();
@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyChunkedSumsFail()
 		{
 			AllocateDirectByteBuffers();
@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyChunkedSumsByteArraySuccess()
 		{
 			AllocateArrayByteBuffers();
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyChunkedSumsByteArrayFail()
 		{
 			AllocateArrayByteBuffers();
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCalculateChunkedSumsSuccess()
 		{
 			AllocateDirectByteBuffers();
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCalculateChunkedSumsFail()
 		{
 			AllocateDirectByteBuffers();
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCalculateChunkedSumsByteArraySuccess()
 		{
 			AllocateArrayByteBuffers();
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCalculateChunkedSumsByteArrayFail()
 		{
 			AllocateArrayByteBuffers();
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNativeVerifyChunkedSumsSuccess()
 		{
 			AllocateDirectByteBuffers();
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNativeVerifyChunkedSumsFail()
 		{
 			AllocateDirectByteBuffers();

@@ -189,20 +189,20 @@ namespace Org.Apache.Hadoop.IO.Compress
 				internal override void AssertCompression(string name, Compressor compressor, Decompressor
 					 decompressor, byte[] rawData)
 				{
-					NUnit.Framework.Assert.IsTrue(this.CheckSetInputNullPointerException(compressor));
-					NUnit.Framework.Assert.IsTrue(this.CheckSetInputNullPointerException(decompressor
+					Assert.True(this.CheckSetInputNullPointerException(compressor));
+					Assert.True(this.CheckSetInputNullPointerException(decompressor
 						));
-					NUnit.Framework.Assert.IsTrue(this.CheckCompressArrayIndexOutOfBoundsException(compressor
+					Assert.True(this.CheckCompressArrayIndexOutOfBoundsException(compressor
 						, rawData));
-					NUnit.Framework.Assert.IsTrue(this.CheckCompressArrayIndexOutOfBoundsException(decompressor
+					Assert.True(this.CheckCompressArrayIndexOutOfBoundsException(decompressor
 						, rawData));
-					NUnit.Framework.Assert.IsTrue(this.CheckCompressNullPointerException(compressor, 
+					Assert.True(this.CheckCompressNullPointerException(compressor, 
 						rawData));
-					NUnit.Framework.Assert.IsTrue(this.CheckCompressNullPointerException(decompressor
+					Assert.True(this.CheckCompressNullPointerException(decompressor
 						, rawData));
-					NUnit.Framework.Assert.IsTrue(this.CheckSetInputArrayIndexOutOfBoundsException(compressor
+					Assert.True(this.CheckSetInputArrayIndexOutOfBoundsException(compressor
 						));
-					NUnit.Framework.Assert.IsTrue(this.CheckSetInputArrayIndexOutOfBoundsException(decompressor
+					Assert.True(this.CheckSetInputArrayIndexOutOfBoundsException(decompressor
 						));
 				}
 
@@ -382,9 +382,9 @@ namespace Org.Apache.Hadoop.IO.Compress
 					byte[] decompressedBytes = new byte[rawData.Length];
 					try
 					{
-						NUnit.Framework.Assert.IsTrue(this.joiner.Join(name, "compressor.needsInput before error !!!"
+						Assert.True(this.joiner.Join(name, "compressor.needsInput before error !!!"
 							), compressor.NeedsInput());
-						NUnit.Framework.Assert.IsTrue(this.joiner.Join(name, "compressor.getBytesWritten before error !!!"
+						Assert.True(this.joiner.Join(name, "compressor.getBytesWritten before error !!!"
 							), compressor.GetBytesWritten() == 0);
 						compressor.SetInput(rawData, 0, rawData.Length);
 						compressor.Finish();
@@ -393,7 +393,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 							cSize += compressor.Compress(compressedResult, 0, compressedResult.Length);
 						}
 						compressor.Reset();
-						NUnit.Framework.Assert.IsTrue(this.joiner.Join(name, "decompressor.needsInput() before error !!!"
+						Assert.True(this.joiner.Join(name, "decompressor.needsInput() before error !!!"
 							), decompressor.NeedsInput());
 						decompressor.SetInput(compressedResult, 0, cSize);
 						NUnit.Framework.Assert.IsFalse(this.joiner.Join(name, "decompressor.needsInput() after error !!!"
@@ -404,7 +404,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 								.Length);
 						}
 						decompressor.Reset();
-						NUnit.Framework.Assert.IsTrue(this.joiner.Join(name, " byte size not equals error !!!"
+						Assert.True(this.joiner.Join(name, " byte size not equals error !!!"
 							), decompressedSize == rawData.Length);
 						Assert.AssertArrayEquals(this.joiner.Join(name, " byte arrays not equals error !!!"
 							), rawData, decompressedBytes);
@@ -451,7 +451,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 						// check compressed output
 						buf = bytesOut.ToByteArray();
 						int emSize = this.emptySize[compressor.GetType()];
-						NUnit.Framework.Assert.AreEqual(this.joiner.Join(name, "empty stream compressed output size != "
+						Assert.Equal(this.joiner.Join(name, "empty stream compressed output size != "
 							 + emSize), emSize, buf.Length);
 						// use compressed output as input for decompression
 						bytesIn = new ByteArrayInputStream(buf);
@@ -459,7 +459,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 						blockDecompressorStream = new BlockDecompressorStream(bytesIn, decompressor, 1024
 							);
 						// no byte is available because stream was closed
-						NUnit.Framework.Assert.AreEqual(this.joiner.Join(name, " return value is not -1")
+						Assert.Equal(this.joiner.Join(name, " return value is not -1")
 							, -1, blockDecompressorStream.Read());
 					}
 					catch (IOException e)

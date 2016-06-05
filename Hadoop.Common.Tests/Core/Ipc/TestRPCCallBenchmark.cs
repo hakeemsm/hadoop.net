@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Ipc
 			int rc = ToolRunner.Run(new RPCCallBenchmark(), new string[] { "--clientThreads", 
 				"30", "--serverThreads", "30", "--time", "5", "--serverReaderThreads", "4", "--messageSize"
 				, "1024", "--engine", "writable" });
-			NUnit.Framework.Assert.AreEqual(0, rc);
+			Assert.Equal(0, rc);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.Ipc
 			int rc = ToolRunner.Run(new RPCCallBenchmark(), new string[] { "--clientThreads", 
 				"30", "--serverThreads", "30", "--time", "5", "--serverReaderThreads", "4", "--messageSize"
 				, "1024", "--engine", "protobuf" });
-			NUnit.Framework.Assert.AreEqual(0, rc);
+			Assert.Equal(0, rc);
 		}
 	}
 }

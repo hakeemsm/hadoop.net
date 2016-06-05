@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.FS
 	public class TestFsShell
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConfWithInvalidFile()
 		{
 			string[] args = new string[1];

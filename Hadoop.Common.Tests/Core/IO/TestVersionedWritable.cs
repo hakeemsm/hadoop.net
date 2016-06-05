@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				base.Write(@out);
 				// version.
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.IO
 				, "Jumped", "Over", "The", "Lazy", "Dog" };
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				base.Write(@out);
 				@out.WriteUTF(shortTestString);

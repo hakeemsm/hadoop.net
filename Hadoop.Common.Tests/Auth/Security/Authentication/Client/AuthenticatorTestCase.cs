@@ -242,7 +242,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 					();
 				AuthenticatedURL aUrl = new AuthenticatedURL(authenticator, connConf);
 				HttpURLConnection conn = aUrl.OpenConnection(url, token);
-				NUnit.Framework.Assert.IsTrue(connConf.invoked);
+				Assert.True(connConf.invoked);
 				string tokenStr = token.ToString();
 				if (doPost)
 				{
@@ -256,20 +256,20 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 					writer.Write(Post);
 					writer.Close();
 				}
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
 				if (doPost)
 				{
 					BufferedReader reader = new BufferedReader(new InputStreamReader(conn.GetInputStream
 						()));
 					string echo = reader.ReadLine();
-					NUnit.Framework.Assert.AreEqual(Post, echo);
+					Assert.Equal(Post, echo);
 					NUnit.Framework.Assert.IsNull(reader.ReadLine());
 				}
 				aUrl = new AuthenticatedURL();
 				conn = aUrl.OpenConnection(url, token);
 				conn.Connect();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, conn.GetResponseCode());
-				NUnit.Framework.Assert.AreEqual(tokenStr, token.ToString());
+				Assert.Equal(HttpURLConnection.HttpOk, conn.GetResponseCode());
+				Assert.Equal(tokenStr, token.ToString());
 			}
 			finally
 			{
@@ -312,7 +312,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 			{
 				response = httpClient.Execute(request);
 				int httpStatus = response.GetStatusLine().GetStatusCode();
-				NUnit.Framework.Assert.AreEqual(HttpURLConnection.HttpOk, httpStatus);
+				Assert.Equal(HttpURLConnection.HttpOk, httpStatus);
 			}
 			finally
 			{

@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			print.SetOptions(options);
 			string filename = "/one/two/test";
 			PathData item = new PathData(filename, mockFs.GetConf());
-			NUnit.Framework.Assert.AreEqual(Result.Pass, print.Apply(item, -1));
+			Assert.Equal(Result.Pass, print.Apply(item, -1));
 			Org.Mockito.Mockito.Verify(@out).Write(filename + '\0');
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(@out);
 		}

@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMany()
 		{
 			//Write a big set of data, one of each primitive type array
@@ -74,18 +74,18 @@ namespace Org.Apache.Hadoop.IO
 				resultSet[x_1++] = apw.Get();
 			}
 			//validate data structures and values
-			NUnit.Framework.Assert.AreEqual(expectedResultSet.Length, resultSet.Length);
+			Assert.Equal(expectedResultSet.Length, resultSet.Length);
 			for (int x_2 = 0; x_2 < resultSet.Length; x_2++)
 			{
-				NUnit.Framework.Assert.AreEqual("ComponentType of array " + x_2, expectedResultSet
+				Assert.Equal("ComponentType of array " + x_2, expectedResultSet
 					[x_2].GetType().GetElementType(), resultSet[x_2].GetType().GetElementType());
 			}
-			NUnit.Framework.Assert.IsTrue("In and Out arrays didn't match values", Arrays.DeepEquals
+			Assert.True("In and Out arrays didn't match values", Arrays.DeepEquals
 				(expectedResultSet, resultSet));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestObjectLabeling()
 		{
 			//Do a few tricky experiments to make sure things are being written
@@ -101,35 +101,35 @@ namespace Org.Apache.Hadoop.IO
 			//Read the int[] object as written by ObjectWritable, but
 			//"going around" ObjectWritable
 			string className = UTF8.ReadString(@in);
-			NUnit.Framework.Assert.AreEqual("The int[] written by ObjectWritable was not labelled as "
+			Assert.Equal("The int[] written by ObjectWritable was not labelled as "
 				 + "an ArrayPrimitiveWritable.Internal", typeof(ArrayPrimitiveWritable.Internal)
 				.FullName, className);
 			ArrayPrimitiveWritable.Internal apwi = new ArrayPrimitiveWritable.Internal();
 			apwi.ReadFields(@in);
-			NUnit.Framework.Assert.AreEqual("The ArrayPrimitiveWritable.Internal component type was corrupted"
+			Assert.Equal("The ArrayPrimitiveWritable.Internal component type was corrupted"
 				, typeof(int), apw.GetComponentType());
-			NUnit.Framework.Assert.IsTrue("The int[] written by ObjectWritable as " + "ArrayPrimitiveWritable.Internal was corrupted"
+			Assert.True("The int[] written by ObjectWritable as " + "ArrayPrimitiveWritable.Internal was corrupted"
 				, Arrays.Equals(i, (int[])(apwi.Get())));
 			//Read the APW object as written by ObjectWritable, but
 			//"going around" ObjectWritable
 			string declaredClassName = UTF8.ReadString(@in);
-			NUnit.Framework.Assert.AreEqual("The APW written by ObjectWritable was not labelled as "
+			Assert.Equal("The APW written by ObjectWritable was not labelled as "
 				 + "declaredClass ArrayPrimitiveWritable", typeof(ArrayPrimitiveWritable).FullName
 				, declaredClassName);
 			className = UTF8.ReadString(@in);
-			NUnit.Framework.Assert.AreEqual("The APW written by ObjectWritable was not labelled as "
+			Assert.Equal("The APW written by ObjectWritable was not labelled as "
 				 + "class ArrayPrimitiveWritable", typeof(ArrayPrimitiveWritable).FullName, className
 				);
 			ArrayPrimitiveWritable apw2 = new ArrayPrimitiveWritable();
 			apw2.ReadFields(@in);
-			NUnit.Framework.Assert.AreEqual("The ArrayPrimitiveWritable component type was corrupted"
+			Assert.Equal("The ArrayPrimitiveWritable component type was corrupted"
 				, typeof(int), apw2.GetComponentType());
-			NUnit.Framework.Assert.IsTrue("The int[] written by ObjectWritable as " + "ArrayPrimitiveWritable was corrupted"
+			Assert.True("The int[] written by ObjectWritable as " + "ArrayPrimitiveWritable was corrupted"
 				, Arrays.Equals(i, (int[])(apw2.Get())));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestOldFormat()
 		{
 			//Make sure we still correctly write the old format if desired.
@@ -141,10 +141,10 @@ namespace Org.Apache.Hadoop.IO
 			//Read the int[] object as written by ObjectWritable, but
 			//"going around" ObjectWritable
 			string className = UTF8.ReadString(@in);
-			NUnit.Framework.Assert.AreEqual("The int[] written by ObjectWritable as a non-compact array "
+			Assert.Equal("The int[] written by ObjectWritable as a non-compact array "
 				 + "was not labelled as an array of int", i.GetType().FullName, className);
 			int length = @in.ReadInt();
-			NUnit.Framework.Assert.AreEqual("The int[] written by ObjectWritable as a non-compact array "
+			Assert.Equal("The int[] written by ObjectWritable as a non-compact array "
 				 + "was not expected length", i.Length, length);
 			int[] readValue = new int[length];
 			try
@@ -159,7 +159,7 @@ namespace Org.Apache.Hadoop.IO
 				Fail("The int[] written by ObjectWritable as a non-compact array " + "was corrupted.  Failed to correctly read int[] of length "
 					 + length + ". Got exception:\n" + StringUtils.StringifyException(e));
 			}
-			NUnit.Framework.Assert.IsTrue("The int[] written by ObjectWritable as a non-compact array "
+			Assert.True("The int[] written by ObjectWritable as a non-compact array "
 				 + "was corrupted.", Arrays.Equals(i, readValue));
 		}
 	}

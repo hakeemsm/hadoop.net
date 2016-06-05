@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.Test
 	{
 		public static readonly Log Log = LogFactory.GetLog(typeof(TestJUnitSetup));
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestJavaAssert()
 		{
 			try

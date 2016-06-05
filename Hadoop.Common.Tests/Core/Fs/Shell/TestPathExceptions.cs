@@ -12,36 +12,36 @@ namespace Org.Apache.Hadoop.FS.Shell
 		protected internal string error = "KABOOM";
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithDefaultString()
 		{
 			PathIOException pe = new PathIOException(path);
-			NUnit.Framework.Assert.AreEqual(new Path(path), pe.GetPath());
-			NUnit.Framework.Assert.AreEqual("`" + path + "': Input/output error", pe.Message);
+			Assert.Equal(new Path(path), pe.GetPath());
+			Assert.Equal("`" + path + "': Input/output error", pe.Message);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithThrowable()
 		{
 			IOException ioe = new IOException("KABOOM");
 			PathIOException pe = new PathIOException(path, ioe);
-			NUnit.Framework.Assert.AreEqual(new Path(path), pe.GetPath());
-			NUnit.Framework.Assert.AreEqual("`" + path + "': Input/output error: " + error, pe
+			Assert.Equal(new Path(path), pe.GetPath());
+			Assert.Equal("`" + path + "': Input/output error: " + error, pe
 				.Message);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWithCustomString()
 		{
 			PathIOException pe = new PathIOException(path, error);
-			NUnit.Framework.Assert.AreEqual(new Path(path), pe.GetPath());
-			NUnit.Framework.Assert.AreEqual("`" + path + "': " + error, pe.Message);
+			Assert.Equal(new Path(path), pe.GetPath());
+			Assert.Equal("`" + path + "': " + error, pe.Message);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRemoteExceptionUnwrap()
 		{
 			PathIOException pe;
@@ -50,15 +50,15 @@ namespace Org.Apache.Hadoop.FS.Shell
 			pe = new PathIOException(path);
 			re = new RemoteException(typeof(PathIOException).FullName, "test constructor1");
 			ie = re.UnwrapRemoteException();
-			NUnit.Framework.Assert.IsTrue(ie is PathIOException);
+			Assert.True(ie is PathIOException);
 			ie = re.UnwrapRemoteException(typeof(PathIOException));
-			NUnit.Framework.Assert.IsTrue(ie is PathIOException);
+			Assert.True(ie is PathIOException);
 			pe = new PathIOException(path, "constructor2");
 			re = new RemoteException(typeof(PathIOException).FullName, "test constructor2");
 			ie = re.UnwrapRemoteException();
-			NUnit.Framework.Assert.IsTrue(ie is PathIOException);
+			Assert.True(ie is PathIOException);
 			ie = re.UnwrapRemoteException(typeof(PathIOException));
-			NUnit.Framework.Assert.IsTrue(ie is PathIOException);
+			Assert.True(ie is PathIOException);
 		}
 	}
 }

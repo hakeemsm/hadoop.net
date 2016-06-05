@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			FileUtil.SetWritable(@base, true);
 			FileUtil.FullyDelete(@base);
-			NUnit.Framework.Assert.IsTrue(!@base.Exists());
+			Assert.True(!@base.Exists());
 		}
 
 		/// <exception cref="System.IO.IOException"/>

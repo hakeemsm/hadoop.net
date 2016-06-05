@@ -23,20 +23,20 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 		/// incremented correctly as items are added.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCount()
 		{
 			// Counts start off zero
-			NUnit.Framework.Assert.AreEqual(estimator.GetCount(), 0);
-			NUnit.Framework.Assert.AreEqual(estimator.GetSampleCount(), 0);
+			Assert.Equal(estimator.GetCount(), 0);
+			Assert.Equal(estimator.GetSampleCount(), 0);
 			// Snapshot should be null if there are no entries.
 			NUnit.Framework.Assert.IsNull(estimator.Snapshot());
 			// Count increment correctly by 1
 			estimator.Insert(1337);
-			NUnit.Framework.Assert.AreEqual(estimator.GetCount(), 1);
+			Assert.Equal(estimator.GetCount(), 1);
 			estimator.Snapshot();
-			NUnit.Framework.Assert.AreEqual(estimator.GetSampleCount(), 1);
-			NUnit.Framework.Assert.AreEqual("50.00 %ile +/- 5.00%: 1337\n" + "75.00 %ile +/- 2.50%: 1337\n"
+			Assert.Equal(estimator.GetSampleCount(), 1);
+			Assert.Equal("50.00 %ile +/- 5.00%: 1337\n" + "75.00 %ile +/- 2.50%: 1337\n"
 				 + "90.00 %ile +/- 1.00%: 1337\n" + "95.00 %ile +/- 0.50%: 1337\n" + "99.00 %ile +/- 0.10%: 1337"
 				, estimator.ToString());
 		}
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestClear()
 		{
 			for (int i = 0; i < 1000; i++)
@@ -56,8 +56,8 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 				estimator.Insert(i);
 			}
 			estimator.Clear();
-			NUnit.Framework.Assert.AreEqual(estimator.GetCount(), 0);
-			NUnit.Framework.Assert.AreEqual(estimator.GetSampleCount(), 0);
+			Assert.Equal(estimator.GetCount(), 0);
+			Assert.Equal(estimator.GetSampleCount(), 0);
 			NUnit.Framework.Assert.IsNull(estimator.Snapshot());
 		}
 
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 		/// specified error bounds for some randomly permuted streams of items.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestQuantileError()
 		{
 			int count = 100000;
@@ -95,8 +95,8 @@ namespace Org.Apache.Hadoop.Metrics2.Util
 					long estimate = snapshot[q];
 					System.Console.Out.WriteLine(string.Format("Expected %d with error %d, estimated %d"
 						, actual, error, estimate));
-					NUnit.Framework.Assert.IsTrue(estimate <= actual + error);
-					NUnit.Framework.Assert.IsTrue(estimate >= actual - error);
+					Assert.True(estimate <= actual + error);
+					Assert.True(estimate >= actual - error);
 				}
 			}
 		}

@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>Test the count of nodes with exclude list</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCountNumNodes()
 		{
 			// create the topology
@@ -72,29 +72,29 @@ namespace Org.Apache.Hadoop.Net
 			cluster.Add(node3);
 			// create exclude list
 			IList<Node> excludedNodes = new AList<Node>();
-			NUnit.Framework.Assert.AreEqual("4 nodes should be available", 4, cluster.CountNumOfAvailableNodes
+			Assert.Equal("4 nodes should be available", 4, cluster.CountNumOfAvailableNodes
 				(NodeBase.Root, excludedNodes));
 			TestClusterTopology.NodeElement deadNode = GetNewNode("node5", "/d1/r2");
 			excludedNodes.AddItem(deadNode);
-			NUnit.Framework.Assert.AreEqual("4 nodes should be available with extra excluded Node"
+			Assert.Equal("4 nodes should be available with extra excluded Node"
 				, 4, cluster.CountNumOfAvailableNodes(NodeBase.Root, excludedNodes));
 			// add one existing node to exclude list
 			excludedNodes.AddItem(node3);
-			NUnit.Framework.Assert.AreEqual("excluded nodes with ROOT scope should be considered"
+			Assert.Equal("excluded nodes with ROOT scope should be considered"
 				, 3, cluster.CountNumOfAvailableNodes(NodeBase.Root, excludedNodes));
-			NUnit.Framework.Assert.AreEqual("excluded nodes without ~ scope should be considered"
+			Assert.Equal("excluded nodes without ~ scope should be considered"
 				, 2, cluster.CountNumOfAvailableNodes("~" + deadNode.GetNetworkLocation(), excludedNodes
 				));
-			NUnit.Framework.Assert.AreEqual("excluded nodes with rack scope should be considered"
+			Assert.Equal("excluded nodes with rack scope should be considered"
 				, 1, cluster.CountNumOfAvailableNodes(deadNode.GetNetworkLocation(), excludedNodes
 				));
 			// adding the node in excluded scope to excluded list
 			excludedNodes.AddItem(node2);
-			NUnit.Framework.Assert.AreEqual("excluded nodes with ~ scope should be considered"
+			Assert.Equal("excluded nodes with ~ scope should be considered"
 				, 2, cluster.CountNumOfAvailableNodes("~" + deadNode.GetNetworkLocation(), excludedNodes
 				));
 			// getting count with non-exist scope.
-			NUnit.Framework.Assert.AreEqual("No nodes should be considered for non-exist scope"
+			Assert.Equal("No nodes should be considered for non-exist scope"
 				, 0, cluster.CountNumOfAvailableNodes("/non-exist", excludedNodes));
 		}
 

@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetfaclValidations()
 		{
 			NUnit.Framework.Assert.IsFalse("getfacl should fail without path", 0 == RunCommand
@@ -32,7 +32,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetfaclValidations()
 		{
 			NUnit.Framework.Assert.IsFalse("setfacl should fail without path", 0 == RunCommand
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetfaclValidationsWithoutPermissions()
 		{
 			IList<AclEntry> parsedList = new AList<AclEntry>();
@@ -63,13 +63,13 @@ namespace Org.Apache.Hadoop.FS.Shell
 			catch (ArgumentException)
 			{
 			}
-			NUnit.Framework.Assert.IsTrue(parsedList.Count == 0);
+			Assert.True(parsedList.Count == 0);
 			NUnit.Framework.Assert.IsFalse("setfacl should fail with less arguments", 0 == RunCommand
 				(new string[] { "-setfacl", "-m", "user:user1:", "/path" }));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleAclSpecParsing()
 		{
 			IList<AclEntry> parsedList = AclEntry.ParseAclSpec("group::rwx,user:user1:rwx,user:user2:rw-,"
@@ -90,12 +90,12 @@ namespace Org.Apache.Hadoop.FS.Shell
 			expectedList.AddItem(user2Acl);
 			expectedList.AddItem(group1Acl);
 			expectedList.AddItem(defaultAcl);
-			NUnit.Framework.Assert.AreEqual("Parsed Acl not correct", expectedList, parsedList
+			Assert.Equal("Parsed Acl not correct", expectedList, parsedList
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultipleAclSpecParsingWithoutPermissions()
 		{
 			IList<AclEntry> parsedList = AclEntry.ParseAclSpec("user::,user:user1:,group::,group:group1:,mask::,other::,"
@@ -121,12 +121,12 @@ namespace Org.Apache.Hadoop.FS.Shell
 			expectedList.AddItem(other);
 			expectedList.AddItem(defaultUser);
 			expectedList.AddItem(defaultMask);
-			NUnit.Framework.Assert.AreEqual("Parsed Acl not correct", expectedList, parsedList
+			Assert.Equal("Parsed Acl not correct", expectedList, parsedList
 				);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLsNoRpcForGetAclStatus()
 		{
 			Configuration conf = new Configuration();
@@ -134,19 +134,19 @@ namespace Org.Apache.Hadoop.FS.Shell
 			conf.SetClass("fs.stubfs.impl", typeof(TestAclCommands.StubFileSystem), typeof(FileSystem
 				));
 			conf.SetBoolean("stubfs.noRpcForGetAclStatus", true);
-			NUnit.Framework.Assert.AreEqual("ls must succeed even if getAclStatus RPC does not exist."
+			Assert.Equal("ls must succeed even if getAclStatus RPC does not exist."
 				, 0, ToolRunner.Run(conf, new FsShell(), new string[] { "-ls", "/" }));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLsAclsUnsupported()
 		{
 			Configuration conf = new Configuration();
 			conf.Set(CommonConfigurationKeys.FsDefaultNameKey, "stubfs:///");
 			conf.SetClass("fs.stubfs.impl", typeof(TestAclCommands.StubFileSystem), typeof(FileSystem
 				));
-			NUnit.Framework.Assert.AreEqual("ls must succeed even if FileSystem does not implement ACLs."
+			Assert.Equal("ls must succeed even if FileSystem does not implement ACLs."
 				, 0, ToolRunner.Run(conf, new FsShell(), new string[] { "-ls", "/" }));
 		}
 

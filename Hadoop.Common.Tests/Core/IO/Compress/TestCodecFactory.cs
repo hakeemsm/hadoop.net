@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		private static void CheckCodec(string msg, Type expected, CompressionCodec actual
 			)
 		{
-			NUnit.Framework.Assert.AreEqual(msg + " unexpected codec found", expected.FullName
+			Assert.Equal(msg + " unexpected codec found", expected.FullName
 				, actual.GetType().FullName);
 		}
 
@@ -146,10 +146,10 @@ namespace Org.Apache.Hadoop.IO.Compress
 			CompressionCodecFactory factory = new CompressionCodecFactory(new Configuration()
 				);
 			CompressionCodec codec = factory.GetCodec(new Path("/tmp/foo.bar"));
-			NUnit.Framework.Assert.AreEqual("default factory foo codec", null, codec);
+			Assert.Equal("default factory foo codec", null, codec);
 			codec = factory.GetCodecByClassName(typeof(TestCodecFactory.BarCodec).GetCanonicalName
 				());
-			NUnit.Framework.Assert.AreEqual("default factory foo codec", null, codec);
+			Assert.Equal("default factory foo codec", null, codec);
 			codec = factory.GetCodec(new Path("/tmp/foo.gz"));
 			CheckCodec("default factory for .gz", typeof(GzipCodec), codec);
 			codec = factory.GetCodecByClassName(typeof(GzipCodec).GetCanonicalName());
@@ -163,7 +163,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			codec = factory.GetCodecByName("gzipcodec");
 			CheckCodec("default factory for gzip codec", typeof(GzipCodec), codec);
 			Type klass = factory.GetCodecClassByName("gzipcodec");
-			NUnit.Framework.Assert.AreEqual(typeof(GzipCodec), klass);
+			Assert.Equal(typeof(GzipCodec), klass);
 			codec = factory.GetCodec(new Path("/tmp/foo.bz2"));
 			CheckCodec("default factory for .bz2", typeof(BZip2Codec), codec);
 			codec = factory.GetCodecByClassName(typeof(BZip2Codec).GetCanonicalName());
@@ -189,10 +189,10 @@ namespace Org.Apache.Hadoop.IO.Compress
 			factory = SetClasses(new Type[0]);
 			// gz, bz2, snappy, lz4 are picked up by service loader, but bar isn't
 			codec = factory.GetCodec(new Path("/tmp/foo.bar"));
-			NUnit.Framework.Assert.AreEqual("empty factory bar codec", null, codec);
+			Assert.Equal("empty factory bar codec", null, codec);
 			codec = factory.GetCodecByClassName(typeof(TestCodecFactory.BarCodec).GetCanonicalName
 				());
-			NUnit.Framework.Assert.AreEqual("empty factory bar codec", null, codec);
+			Assert.Equal("empty factory bar codec", null, codec);
 			codec = factory.GetCodec(new Path("/tmp/foo.gz"));
 			CheckCodec("empty factory gz codec", typeof(GzipCodec), codec);
 			codec = factory.GetCodecByClassName(typeof(GzipCodec).GetCanonicalName());

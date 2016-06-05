@@ -14,14 +14,14 @@ namespace Org.Apache.Hadoop.IO.Compress
 		private ByteArrayOutputStream bytesOut;
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRead1()
 		{
 			TestRead(0);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRead2()
 		{
 			// Test eof after getting non-zero block size info
@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			blockCompressorStream.Close();
 			// check compressed output 
 			buf = bytesOut.ToByteArray();
-			NUnit.Framework.Assert.AreEqual("empty file compressed output size is not " + (bufLen
+			Assert.Equal("empty file compressed output size is not " + (bufLen
 				 + 4), bufLen + 4, buf.Length);
 			// use compressed output as input for decompression
 			bytesIn = new ByteArrayInputStream(buf);
@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 				, new FakeDecompressor(), 1024);
 			try
 			{
-				NUnit.Framework.Assert.AreEqual("return value is not -1", -1, blockDecompressorStream
+				Assert.Equal("return value is not -1", -1, blockDecompressorStream
 					.Read());
 			}
 			catch (IOException e)

@@ -302,7 +302,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			{
 				Configuration conf = new Configuration();
 				Uri url = this.GetKMSUrl();
-				NUnit.Framework.Assert.AreEqual(keystore != null, url.Scheme.Equals("https"));
+				Assert.Equal(keystore != null, url.Scheme.Equals("https"));
 				URI uri = TestKMS.CreateKMSUri(this.GetKMSUrl());
 				if (ssl)
 				{
@@ -323,7 +323,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 							reloaderThread = thread;
 						}
 					}
-					NUnit.Framework.Assert.IsTrue("Reloader is not alive", reloaderThread.IsAlive());
+					Assert.True("Reloader is not alive", reloaderThread.IsAlive());
 					testKp.Close();
 					bool reloaderStillAlive = true;
 					for (int i = 0; i < 10; i++)
@@ -349,12 +349,12 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 					// getKeys() empty
 					KeyProvider kp = this._enclosing.CreateProvider(uri, conf);
 					// getKeys() empty
-					NUnit.Framework.Assert.IsTrue(kp.GetKeys().IsEmpty());
+					Assert.True(kp.GetKeys().IsEmpty());
 					Sharpen.Thread.Sleep(4000);
 					Org.Apache.Hadoop.Security.Token.Token<object>[] tokens = ((KeyProviderDelegationTokenExtension.DelegationTokenExtension
 						)kp).AddDelegationTokens("myuser", new Credentials());
-					NUnit.Framework.Assert.AreEqual(1, tokens.Length);
-					NUnit.Framework.Assert.AreEqual("kms-dt", tokens[0].GetKind().ToString());
+					Assert.Equal(1, tokens.Length);
+					Assert.Equal("kms-dt", tokens[0].GetKind().ToString());
 				}
 				return null;
 			}
@@ -374,12 +374,12 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				public Void Run()
 				{
 					KeyProvider kp = this._enclosing._enclosing.CreateProvider(uri, conf);
-					NUnit.Framework.Assert.IsTrue(kp.GetKeys().IsEmpty());
+					Assert.True(kp.GetKeys().IsEmpty());
 					Sharpen.Thread.Sleep(4000);
 					Org.Apache.Hadoop.Security.Token.Token<object>[] tokens = ((KeyProviderDelegationTokenExtension.DelegationTokenExtension
 						)kp).AddDelegationTokens("myuser", new Credentials());
-					NUnit.Framework.Assert.AreEqual(1, tokens.Length);
-					NUnit.Framework.Assert.AreEqual("kms-dt", tokens[0].GetKind().ToString());
+					Assert.Equal(1, tokens.Length);
+					Assert.Equal("kms-dt", tokens[0].GetKind().ToString());
 					return null;
 				}
 
@@ -400,35 +400,35 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartStopHttpPseudo()
 		{
 			TestStartStop(false, false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartStopHttpsPseudo()
 		{
 			TestStartStop(true, false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartStopHttpKerberos()
 		{
 			TestStartStop(false, true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStartStopHttpsKerberos()
 		{
 			TestStartStop(true, true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSProvider()
 		{
 			Configuration conf = new Configuration();
@@ -462,9 +462,9 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				URI uri = TestKMS.CreateKMSUri(this.GetKMSUrl());
 				KeyProvider kp = this._enclosing.CreateProvider(uri, conf);
 				// getKeys() empty
-				NUnit.Framework.Assert.IsTrue(kp.GetKeys().IsEmpty());
+				Assert.True(kp.GetKeys().IsEmpty());
 				// getKeysMetadata() empty
-				NUnit.Framework.Assert.AreEqual(0, kp.GetKeysMetadata().Length);
+				Assert.Equal(0, kp.GetKeysMetadata().Length);
 				// createKey()
 				KeyProvider.Options options = new KeyProvider.Options(conf);
 				options.SetCipher("AES/CTR/NoPadding");
@@ -476,24 +476,24 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				NUnit.Framework.Assert.IsNotNull(kv0.GetMaterial());
 				// getKeyVersion()
 				KeyProvider.KeyVersion kv1 = kp.GetKeyVersion(kv0.GetVersionName());
-				NUnit.Framework.Assert.AreEqual(kv0.GetVersionName(), kv1.GetVersionName());
+				Assert.Equal(kv0.GetVersionName(), kv1.GetVersionName());
 				NUnit.Framework.Assert.IsNotNull(kv1.GetMaterial());
 				// getCurrent()
 				KeyProvider.KeyVersion cv1 = kp.GetCurrentKey("k1");
-				NUnit.Framework.Assert.AreEqual(kv0.GetVersionName(), cv1.GetVersionName());
+				Assert.Equal(kv0.GetVersionName(), cv1.GetVersionName());
 				NUnit.Framework.Assert.IsNotNull(cv1.GetMaterial());
 				// getKeyMetadata() 1 version
 				KeyProvider.Metadata m1 = kp.GetMetadata("k1");
-				NUnit.Framework.Assert.AreEqual("AES/CTR/NoPadding", m1.GetCipher());
-				NUnit.Framework.Assert.AreEqual("AES", m1.GetAlgorithm());
-				NUnit.Framework.Assert.AreEqual(128, m1.GetBitLength());
-				NUnit.Framework.Assert.AreEqual(1, m1.GetVersions());
+				Assert.Equal("AES/CTR/NoPadding", m1.GetCipher());
+				Assert.Equal("AES", m1.GetAlgorithm());
+				Assert.Equal(128, m1.GetBitLength());
+				Assert.Equal(1, m1.GetVersions());
 				NUnit.Framework.Assert.IsNotNull(m1.GetCreated());
-				NUnit.Framework.Assert.IsTrue(started.Before(m1.GetCreated()));
+				Assert.True(started.Before(m1.GetCreated()));
 				// getKeyVersions() 1 version
 				IList<KeyProvider.KeyVersion> lkv1 = kp.GetKeyVersions("k1");
-				NUnit.Framework.Assert.AreEqual(1, lkv1.Count);
-				NUnit.Framework.Assert.AreEqual(kv0.GetVersionName(), lkv1[0].GetVersionName());
+				Assert.Equal(1, lkv1.Count);
+				Assert.Equal(kv0.GetVersionName(), lkv1[0].GetVersionName());
 				NUnit.Framework.Assert.IsNotNull(kv1.GetMaterial());
 				// rollNewVersion()
 				KeyProvider.KeyVersion kv2 = kp.RollNewVersion("k1");
@@ -509,59 +509,59 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				NUnit.Framework.Assert.IsFalse(eq);
 				// getCurrent()
 				KeyProvider.KeyVersion cv2 = kp.GetCurrentKey("k1");
-				NUnit.Framework.Assert.AreEqual(kv2.GetVersionName(), cv2.GetVersionName());
+				Assert.Equal(kv2.GetVersionName(), cv2.GetVersionName());
 				NUnit.Framework.Assert.IsNotNull(cv2.GetMaterial());
 				eq = true;
 				for (int i_1 = 0; i_1 < kv1.GetMaterial().Length; i_1++)
 				{
 					eq = eq && cv2.GetMaterial()[i_1] == kv2.GetMaterial()[i_1];
 				}
-				NUnit.Framework.Assert.IsTrue(eq);
+				Assert.True(eq);
 				// getKeyVersions() 2 versions
 				IList<KeyProvider.KeyVersion> lkv2 = kp.GetKeyVersions("k1");
-				NUnit.Framework.Assert.AreEqual(2, lkv2.Count);
-				NUnit.Framework.Assert.AreEqual(kv1.GetVersionName(), lkv2[0].GetVersionName());
+				Assert.Equal(2, lkv2.Count);
+				Assert.Equal(kv1.GetVersionName(), lkv2[0].GetVersionName());
 				NUnit.Framework.Assert.IsNotNull(lkv2[0].GetMaterial());
-				NUnit.Framework.Assert.AreEqual(kv2.GetVersionName(), lkv2[1].GetVersionName());
+				Assert.Equal(kv2.GetVersionName(), lkv2[1].GetVersionName());
 				NUnit.Framework.Assert.IsNotNull(lkv2[1].GetMaterial());
 				// getKeyMetadata() 2 version
 				KeyProvider.Metadata m2 = kp.GetMetadata("k1");
-				NUnit.Framework.Assert.AreEqual("AES/CTR/NoPadding", m2.GetCipher());
-				NUnit.Framework.Assert.AreEqual("AES", m2.GetAlgorithm());
-				NUnit.Framework.Assert.AreEqual(128, m2.GetBitLength());
-				NUnit.Framework.Assert.AreEqual(2, m2.GetVersions());
+				Assert.Equal("AES/CTR/NoPadding", m2.GetCipher());
+				Assert.Equal("AES", m2.GetAlgorithm());
+				Assert.Equal(128, m2.GetBitLength());
+				Assert.Equal(2, m2.GetVersions());
 				NUnit.Framework.Assert.IsNotNull(m2.GetCreated());
-				NUnit.Framework.Assert.IsTrue(started.Before(m2.GetCreated()));
+				Assert.True(started.Before(m2.GetCreated()));
 				// getKeys() 1 key
 				IList<string> ks1 = kp.GetKeys();
-				NUnit.Framework.Assert.AreEqual(1, ks1.Count);
-				NUnit.Framework.Assert.AreEqual("k1", ks1[0]);
+				Assert.Equal(1, ks1.Count);
+				Assert.Equal("k1", ks1[0]);
 				// getKeysMetadata() 1 key 2 versions
 				KeyProvider.Metadata[] kms1 = kp.GetKeysMetadata("k1");
-				NUnit.Framework.Assert.AreEqual(1, kms1.Length);
-				NUnit.Framework.Assert.AreEqual("AES/CTR/NoPadding", kms1[0].GetCipher());
-				NUnit.Framework.Assert.AreEqual("AES", kms1[0].GetAlgorithm());
-				NUnit.Framework.Assert.AreEqual(128, kms1[0].GetBitLength());
-				NUnit.Framework.Assert.AreEqual(2, kms1[0].GetVersions());
+				Assert.Equal(1, kms1.Length);
+				Assert.Equal("AES/CTR/NoPadding", kms1[0].GetCipher());
+				Assert.Equal("AES", kms1[0].GetAlgorithm());
+				Assert.Equal(128, kms1[0].GetBitLength());
+				Assert.Equal(2, kms1[0].GetVersions());
 				NUnit.Framework.Assert.IsNotNull(kms1[0].GetCreated());
-				NUnit.Framework.Assert.IsTrue(started.Before(kms1[0].GetCreated()));
+				Assert.True(started.Before(kms1[0].GetCreated()));
 				// test generate and decryption of EEK
 				KeyProvider.KeyVersion kv = kp.GetCurrentKey("k1");
 				KeyProviderCryptoExtension kpExt = KeyProviderCryptoExtension.CreateKeyProviderCryptoExtension
 					(kp);
 				KeyProviderCryptoExtension.EncryptedKeyVersion ek1 = kpExt.GenerateEncryptedKey(kv
 					.GetName());
-				NUnit.Framework.Assert.AreEqual(KeyProviderCryptoExtension.Eek, ek1.GetEncryptedKeyVersion
+				Assert.Equal(KeyProviderCryptoExtension.Eek, ek1.GetEncryptedKeyVersion
 					().GetVersionName());
 				NUnit.Framework.Assert.IsNotNull(ek1.GetEncryptedKeyVersion().GetMaterial());
-				NUnit.Framework.Assert.AreEqual(kv.GetMaterial().Length, ek1.GetEncryptedKeyVersion
+				Assert.Equal(kv.GetMaterial().Length, ek1.GetEncryptedKeyVersion
 					().GetMaterial().Length);
 				KeyProvider.KeyVersion k1 = kpExt.DecryptEncryptedKey(ek1);
-				NUnit.Framework.Assert.AreEqual(KeyProviderCryptoExtension.Ek, k1.GetVersionName(
+				Assert.Equal(KeyProviderCryptoExtension.Ek, k1.GetVersionName(
 					));
 				KeyProvider.KeyVersion k1a = kpExt.DecryptEncryptedKey(ek1);
 				Assert.AssertArrayEquals(k1.GetMaterial(), k1a.GetMaterial());
-				NUnit.Framework.Assert.AreEqual(kv.GetMaterial().Length, k1.GetMaterial().Length);
+				Assert.Equal(kv.GetMaterial().Length, k1.GetMaterial().Length);
 				KeyProviderCryptoExtension.EncryptedKeyVersion ek2 = kpExt.GenerateEncryptedKey(kv
 					.GetName());
 				KeyProvider.KeyVersion k2 = kpExt.DecryptEncryptedKey(ek2);
@@ -582,7 +582,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				}
 				catch (Exception e)
 				{
-					NUnit.Framework.Assert.IsTrue(e.Message.Contains("'k1@1' not found"));
+					Assert.True(e.Message.Contains("'k1@1' not found"));
 				}
 				// getKey()
 				NUnit.Framework.Assert.IsNull(kp.GetKeyVersion("k1"));
@@ -591,9 +591,9 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				// getMetadata()
 				NUnit.Framework.Assert.IsNull(kp.GetMetadata("k1"));
 				// getKeys() empty
-				NUnit.Framework.Assert.IsTrue(kp.GetKeys().IsEmpty());
+				Assert.True(kp.GetKeys().IsEmpty());
 				// getKeysMetadata() empty
-				NUnit.Framework.Assert.AreEqual(0, kp.GetKeysMetadata().Length);
+				Assert.Equal(0, kp.GetKeysMetadata().Length);
 				// createKey() no description, no tags
 				options = new KeyProvider.Options(conf);
 				options.SetCipher("AES/CTR/NoPadding");
@@ -601,7 +601,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				KeyProvider.KeyVersion kVer2 = kp.CreateKey("k2", options);
 				KeyProvider.Metadata meta = kp.GetMetadata("k2");
 				NUnit.Framework.Assert.IsNull(meta.GetDescription());
-				NUnit.Framework.Assert.AreEqual("k2", meta.GetAttributes()["key.acl.name"]);
+				Assert.Equal("k2", meta.GetAttributes()["key.acl.name"]);
 				// test key ACL.. k2 is granted only MANAGEMENT Op access
 				try
 				{
@@ -620,8 +620,8 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				options.SetDescription("d");
 				kp.CreateKey("k3", options);
 				meta = kp.GetMetadata("k3");
-				NUnit.Framework.Assert.AreEqual("d", meta.GetDescription());
-				NUnit.Framework.Assert.AreEqual("k3", meta.GetAttributes()["key.acl.name"]);
+				Assert.Equal("d", meta.GetDescription());
+				Assert.Equal("k3", meta.GetAttributes()["key.acl.name"]);
 				IDictionary<string, string> attributes = new Dictionary<string, string>();
 				attributes["a"] = "A";
 				// createKey() no description, tags
@@ -633,7 +633,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				kp.CreateKey("k4", options);
 				meta = kp.GetMetadata("k4");
 				NUnit.Framework.Assert.IsNull(meta.GetDescription());
-				NUnit.Framework.Assert.AreEqual(attributes, meta.GetAttributes());
+				Assert.Equal(attributes, meta.GetAttributes());
 				// createKey() description, tags
 				options = new KeyProvider.Options(conf);
 				options.SetCipher("AES/CTR/NoPadding");
@@ -643,17 +643,17 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				options.SetAttributes(attributes);
 				kp.CreateKey("k5", options);
 				meta = kp.GetMetadata("k5");
-				NUnit.Framework.Assert.AreEqual("d", meta.GetDescription());
-				NUnit.Framework.Assert.AreEqual(attributes, meta.GetAttributes());
+				Assert.Equal("d", meta.GetDescription());
+				Assert.Equal(attributes, meta.GetAttributes());
 				// test delegation token retrieval
 				KeyProviderDelegationTokenExtension kpdte = KeyProviderDelegationTokenExtension.CreateKeyProviderDelegationTokenExtension
 					(kp);
 				Credentials credentials = new Credentials();
 				kpdte.AddDelegationTokens("foo", credentials);
-				NUnit.Framework.Assert.AreEqual(1, credentials.GetAllTokens().Count);
+				Assert.Equal(1, credentials.GetAllTokens().Count);
 				IPEndPoint kmsAddr = new IPEndPoint(this.GetKMSUrl().GetHost(), this.GetKMSUrl().
 					Port);
-				NUnit.Framework.Assert.AreEqual(new Text("kms-dt"), credentials.GetToken(SecurityUtil
+				Assert.Equal(new Text("kms-dt"), credentials.GetToken(SecurityUtil
 					.BuildTokenService(kmsAddr)).GetKind());
 				// test rollover draining
 				KeyProviderCryptoExtension kpce = KeyProviderCryptoExtension.CreateKeyProviderCryptoExtension
@@ -676,7 +676,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKeyACLs()
 		{
 			Configuration conf = new Configuration();
@@ -1162,14 +1162,14 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSRestartKerberosAuth()
 		{
 			DoKMSRestart(true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSRestartSimpleAuth()
 		{
 			DoKMSRestart(false);
@@ -1303,7 +1303,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSAuthFailureRetry()
 		{
 			Configuration conf = new Configuration();
@@ -1430,7 +1430,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 					}
 					catch (IOException e)
 					{
-						NUnit.Framework.Assert.IsTrue("HTTP exception must be a 401 : " + e.Message, e.Message
+						Assert.True("HTTP exception must be a 401 : " + e.Message, e.Message
 							.Contains("401"));
 					}
 					return null;
@@ -1447,7 +1447,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestACLs()
 		{
 			Configuration conf = new Configuration();
@@ -2077,7 +2077,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSBlackList()
 		{
 			Configuration conf = new Configuration();
@@ -2238,7 +2238,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestServicePrincipalACLs()
 		{
 			Configuration conf = new Configuration();
@@ -2360,7 +2360,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		/// when the KMS client attempts to connect.
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSTimeout()
 		{
 			FilePath confDir = GetTestDir();
@@ -2394,7 +2394,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue("Caught unexpected exception" + e.ToString(), false
+				Assert.True("Caught unexpected exception" + e.ToString(), false
 					);
 			}
 			caughtTimeout = false;
@@ -2410,7 +2410,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue("Caught unexpected exception" + e.ToString(), false
+				Assert.True("Caught unexpected exception" + e.ToString(), false
 					);
 			}
 			caughtTimeout = false;
@@ -2427,15 +2427,15 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 			catch (IOException e)
 			{
-				NUnit.Framework.Assert.IsTrue("Caught unexpected exception" + e.ToString(), false
+				Assert.True("Caught unexpected exception" + e.ToString(), false
 					);
 			}
-			NUnit.Framework.Assert.IsTrue(caughtTimeout);
+			Assert.True(caughtTimeout);
 			sock.Close();
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDelegationTokenAccess()
 		{
 			Configuration conf = new Configuration();
@@ -2565,21 +2565,21 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSWithZKSigner()
 		{
 			DoKMSWithZK(true, false);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSWithZKDTSM()
 		{
 			DoKMSWithZK(false, true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKMSWithZKSignerAndDTSM()
 		{
 			DoKMSWithZK(true, true);
@@ -2698,14 +2698,14 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUserKerb()
 		{
 			DoProxyUserTest(true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProxyUserSimple()
 		{
 			DoProxyUserTest(false);
@@ -2890,14 +2890,14 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWebHDFSProxyUserKerb()
 		{
 			DoWebHDFSProxyUserTest(true);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWebHDFSProxyUserSimple()
 		{
 			DoWebHDFSProxyUserTest(false);
@@ -3037,7 +3037,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 						}
 						catch (Exception ex)
 						{
-							NUnit.Framework.Assert.IsTrue(ex.Message, ex.Message.Contains("Forbidden"));
+							Assert.True(ex.Message, ex.Message.Contains("Forbidden"));
 						}
 						return null;
 					}

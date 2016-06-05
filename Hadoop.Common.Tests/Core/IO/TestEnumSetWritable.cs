@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.IO
 			@in.Reset(@out.GetData(), @out.GetLength());
 			EnumSet<TestEnumSetWritable.TestEnumSet> read = ((EnumSetWritable<TestEnumSetWritable.TestEnumSet
 				>)ObjectWritable.ReadObject(@in, null)).Get();
-			NUnit.Framework.Assert.AreEqual(read, nonEmptyFlag);
+			Assert.Equal(read, nonEmptyFlag);
 		}
 
 		internal EnumSet<TestEnumSetWritable.TestEnumSet> emptyFlag = EnumSet.NoneOf<TestEnumSetWritable.TestEnumSet
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 				gotException = true;
 			}
-			NUnit.Framework.Assert.IsTrue("Instantiation of empty EnumSetWritable with no element type class "
+			Assert.True("Instantiation of empty EnumSetWritable with no element type class "
 				 + "provided should throw exception.", gotException);
 			EnumSetWritable<TestEnumSetWritable.TestEnumSet> emptyFlagWritable = new EnumSetWritable
 				<TestEnumSetWritable.TestEnumSet>(emptyFlag, typeof(TestEnumSetWritable.TestEnumSet
@@ -77,7 +77,7 @@ namespace Org.Apache.Hadoop.IO
 			@in.Reset(@out.GetData(), @out.GetLength());
 			EnumSet<TestEnumSetWritable.TestEnumSet> read = ((EnumSetWritable<TestEnumSetWritable.TestEnumSet
 				>)ObjectWritable.ReadObject(@in, null)).Get();
-			NUnit.Framework.Assert.AreEqual(read, emptyFlag);
+			Assert.Equal(read, emptyFlag);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 				gotException = true;
 			}
-			NUnit.Framework.Assert.IsTrue("Instantiation of empty EnumSetWritable with no element type class "
+			Assert.True("Instantiation of empty EnumSetWritable with no element type class "
 				 + "provided should throw exception", gotException);
 			EnumSetWritable<TestEnumSetWritable.TestEnumSet> nullFlagWritable = new EnumSetWritable
 				<TestEnumSetWritable.TestEnumSet>(null, typeof(TestEnumSetWritable.TestEnumSet));
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.IO
 			@in.Reset(@out.GetData(), @out.GetLength());
 			EnumSet<TestEnumSetWritable.TestEnumSet> read = ((EnumSetWritable<TestEnumSetWritable.TestEnumSet
 				>)ObjectWritable.ReadObject(@in, null)).Get();
-			NUnit.Framework.Assert.AreEqual(read, null);
+			Assert.Equal(read, null);
 		}
 
 		public EnumSetWritable<TestEnumSetWritable.TestEnumSet> testField;
@@ -131,13 +131,13 @@ namespace Org.Apache.Hadoop.IO
 			EnumSetWritable<TestEnumSetWritable.TestEnumSet> eset2 = new EnumSetWritable<TestEnumSetWritable.TestEnumSet
 				>(EnumSet.Of(TestEnumSetWritable.TestEnumSet.Append, TestEnumSetWritable.TestEnumSet
 				.Create), typeof(TestEnumSetWritable.TestEnumSet));
-			NUnit.Framework.Assert.IsTrue("testEnumSetWritableEquals error !!!", eset1.Equals
+			Assert.True("testEnumSetWritableEquals error !!!", eset1.Equals
 				(eset2));
 			NUnit.Framework.Assert.IsFalse("testEnumSetWritableEquals error !!!", eset1.Equals
 				(new EnumSetWritable<TestEnumSetWritable.TestEnumSet>(EnumSet.Of(TestEnumSetWritable.TestEnumSet
 				.Append, TestEnumSetWritable.TestEnumSet.Create, TestEnumSetWritable.TestEnumSet
 				.Overwrite), typeof(TestEnumSetWritable.TestEnumSet))));
-			NUnit.Framework.Assert.IsTrue("testEnumSetWritableEquals getElementType error !!!"
+			Assert.True("testEnumSetWritableEquals getElementType error !!!"
 				, eset1.GetElementType().Equals(typeof(TestEnumSetWritable.TestEnumSet)));
 		}
 
@@ -165,7 +165,7 @@ namespace Org.Apache.Hadoop.IO
 			IEnumerator<TestEnumSetWritable.TestEnumSet> srcIter = srcSet.GetEnumerator();
 			while (dstIter.HasNext() && srcIter.HasNext())
 			{
-				NUnit.Framework.Assert.AreEqual("testEnumSetWritableWriteRead error !!!", dstIter
+				Assert.Equal("testEnumSetWritableWriteRead error !!!", dstIter
 					.Next(), srcIter.Next());
 			}
 		}

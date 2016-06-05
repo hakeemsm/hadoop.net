@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteCompressedByteArray(DataOutput @out, byte[] bytes)
+		public static int WriteCompressedByteArray(BinaryWriter @out, byte[] bytes)
 		{
 			if (bytes != null)
 			{
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteCompressedString(DataOutput @out, string s)
+		public static int WriteCompressedString(BinaryWriter @out, string s)
 		{
 			return WriteCompressedByteArray(@out, (s != null) ? Sharpen.Runtime.GetBytesForString
 				(s, "UTF-8") : null);
@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteString(DataOutput @out, string s)
+		public static void WriteString(BinaryWriter @out, string s)
 		{
 			if (s != null)
 			{
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteStringArray(DataOutput @out, string[] s)
+		public static void WriteStringArray(BinaryWriter @out, string[] s)
 		{
 			@out.WriteInt(s.Length);
 			for (int i = 0; i < s.Length; i++)
@@ -162,7 +162,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteCompressedStringArray(DataOutput @out, string[] s)
+		public static void WriteCompressedStringArray(BinaryWriter @out, string[] s)
 		{
 			if (s == null)
 			{
@@ -289,7 +289,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="stream">Binary output stream</param>
 		/// <param name="i">Integer to be serialized</param>
 		/// <exception cref="System.IO.IOException"></exception>
-		public static void WriteVInt(DataOutput stream, int i)
+		public static void WriteVInt(BinaryWriter stream, int i)
 		{
 			WriteVLong(stream, i);
 		}
@@ -309,7 +309,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="stream">Binary output stream</param>
 		/// <param name="i">Long to be serialized</param>
 		/// <exception cref="System.IO.IOException"></exception>
-		public static void WriteVLong(DataOutput stream, long i)
+		public static void WriteVLong(BinaryWriter stream, long i)
 		{
 			if (i >= -112 && i <= 127)
 			{
@@ -471,11 +471,11 @@ namespace Org.Apache.Hadoop.IO
 			return T.ValueOf(enumType, Text.ReadString(@in));
 		}
 
-		/// <summary>writes String value of enum to DataOutput.</summary>
+		/// <summary>writes String value of enum to BinaryWriter.</summary>
 		/// <param name="out">Dataoutput stream</param>
 		/// <param name="enumVal">enum value</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteEnum<_T0>(DataOutput @out, Enum<_T0> enumVal)
+		public static void WriteEnum<_T0>(BinaryWriter @out, Enum<_T0> enumVal)
 			where _T0 : Enum<E>
 		{
 			Text.WriteString(@out, enumVal.Name());

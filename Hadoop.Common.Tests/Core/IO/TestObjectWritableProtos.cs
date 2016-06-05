@@ -8,21 +8,21 @@ namespace Org.Apache.Hadoop.IO
 	public class TestObjectWritableProtos
 	{
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProtoBufs()
 		{
 			DoTest(1);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProtoBufs2()
 		{
 			DoTest(2);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestProtoBufs3()
 		{
 			DoTest(3);
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.IO
 			for (int i_1 = 0; i_1 < numProtos; i_1++)
 			{
 				Message received = (Message)ObjectWritable.ReadObject(@in, conf);
-				NUnit.Framework.Assert.AreEqual(sent[i_1], received);
+				Assert.Equal(sent[i_1], received);
 			}
 		}
 	}

@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			FileOutputStream outStream = new FileOutputStream(inStream.GetFD());
 			outStream.Write(101);
 			inStream.GetChannel().Position(0);
-			NUnit.Framework.Assert.AreEqual(101, inStream.Read());
+			Assert.Equal(101, inStream.Read());
 			inStream.Close();
 			outStream.Close();
 			FileUtil.FullyDelete(path);
@@ -86,7 +86,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			SharedFileDescriptorFactory factory = SharedFileDescriptorFactory.Create("shm_", 
 				new string[] { nonExistentPath.GetAbsolutePath(), permissionDeniedPath.GetAbsolutePath
 				(), goodPath.GetAbsolutePath() });
-			NUnit.Framework.Assert.AreEqual(goodPath.GetAbsolutePath(), factory.GetPath());
+			Assert.Equal(goodPath.GetAbsolutePath(), factory.GetPath());
 			FileUtil.FullyDelete(goodPath);
 		}
 	}

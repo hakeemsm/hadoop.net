@@ -12,7 +12,7 @@ namespace Org.Apache.Hadoop.Util
 		/// Test different references are returned for any of string
 		/// instances that are equal to each other but not interned.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoIntern()
 		{
 			string literalABC = "ABC";
@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Util
 		/// Test the same strong reference is returned for any
 		/// of string instances that are equal to each other.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestStrongIntern()
 		{
 			string strongInternLiteralABC = StringInterner.StrongIntern("ABC");
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.Util
 		/// Test the same weak reference is returned for any
 		/// of string instances that are equal to each other.
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWeakIntern()
 		{
 			string weakInternLiteralABC = StringInterner.WeakIntern("ABC");

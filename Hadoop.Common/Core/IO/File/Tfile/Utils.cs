@@ -24,8 +24,8 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="out">output stream</param>
 		/// <param name="n">The integer to be encoded</param>
 		/// <exception cref="System.IO.IOException"/>
-		/// <seealso cref="WriteVLong(System.IO.DataOutput, long)"/>
-		public static void WriteVInt(DataOutput @out, int n)
+		/// <seealso cref="WriteVLong(System.IO.BinaryWriter, long)"/>
+		public static void WriteVInt(BinaryWriter @out, int n)
 		{
 			WriteVLong(@out, n);
 		}
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="out">output stream</param>
 		/// <param name="n">the integer number</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteVLong(DataOutput @out, long n)
+		public static void WriteVLong(BinaryWriter @out, long n)
 		{
 			if ((n < 128) && (n >= -32))
 			{
@@ -281,13 +281,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="out"/>
 		/// <param name="s"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteString(DataOutput @out, string s)
+		public static void WriteString(BinaryWriter @out, string s)
 		{
 			if (s != null)
 			{
 				Text text = new Text(s);
-				byte[] buffer = text.GetBytes();
-				int len = text.GetLength();
+				byte[] buffer = text.Bytes;
+				int len = text.Length;
 				WriteVInt(@out, len);
 				@out.Write(buffer, 0, len);
 			}
@@ -346,15 +346,15 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				this.minor = minor;
 			}
 
-			/// <summary>Write the objec to a DataOutput.</summary>
+			/// <summary>Write the objec to a BinaryWriter.</summary>
 			/// <remarks>
-			/// Write the objec to a DataOutput. The serialized format of the Version is
+			/// Write the objec to a BinaryWriter. The serialized format of the Version is
 			/// major version followed by minor version, both as big-endian short
 			/// integers.
 			/// </remarks>
-			/// <param name="out">The DataOutput object.</param>
+			/// <param name="out">The BinaryWriter object.</param>
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(DataOutput @out)
+			public void Write(BinaryWriter @out)
 			{
 				@out.WriteShort(major);
 				@out.WriteShort(minor);

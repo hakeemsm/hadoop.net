@@ -202,7 +202,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(DataOutput @out)
+			public override void Write(BinaryWriter @out)
 			{
 				tokenid.Write(@out);
 				realUser.Write(@out);
@@ -339,7 +339,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDigestRpc()
 		{
 			TestSaslRPC.TestTokenSecretManager sm = new TestSaslRPC.TestTokenSecretManager();
@@ -350,7 +350,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDigestRpcWithoutAnnotation()
 		{
 			TestSaslRPC.TestTokenSecretManager sm = new TestSaslRPC.TestTokenSecretManager();
@@ -369,7 +369,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestErrorMessage()
 		{
 			TestSaslRPC.BadTokenSecretManager sm = new TestSaslRPC.BadTokenSecretManager();
@@ -384,12 +384,12 @@ namespace Org.Apache.Hadoop.Ipc
 			catch (RemoteException e)
 			{
 				Log.Info("LOGGING MESSAGE: " + e.GetLocalizedMessage());
-				NUnit.Framework.Assert.AreEqual(ErrorMessage, e.GetLocalizedMessage());
-				NUnit.Framework.Assert.IsTrue(e.UnwrapRemoteException() is SecretManager.InvalidToken
+				Assert.Equal(ErrorMessage, e.GetLocalizedMessage());
+				Assert.True(e.UnwrapRemoteException() is SecretManager.InvalidToken
 					);
 				succeeded = true;
 			}
-			NUnit.Framework.Assert.IsTrue(succeeded);
+			Assert.True(succeeded);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -411,9 +411,9 @@ namespace Org.Apache.Hadoop.Ipc
 				proxy = RPC.GetProxy<TestSaslRPC.TestSaslProtocol>(TestSaslRPC.TestSaslProtocol.versionID
 					, addr, conf);
 				SaslRpcServer.AuthMethod authMethod = proxy.GetAuthMethod();
-				NUnit.Framework.Assert.AreEqual(SaslRpcServer.AuthMethod.Token, authMethod);
+				Assert.Equal(SaslRpcServer.AuthMethod.Token, authMethod);
 				//QOP must be auth
-				NUnit.Framework.Assert.AreEqual(expectedQop.saslQop, RPC.GetConnectionIdForProxy(
+				Assert.Equal(expectedQop.saslQop, RPC.GetConnectionIdForProxy(
 					proxy).GetSaslQop());
 				proxy.Ping();
 			}
@@ -428,7 +428,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPingInterval()
 		{
 			Configuration newConf = new Configuration(conf);
@@ -439,17 +439,17 @@ namespace Org.Apache.Hadoop.Ipc
 			newConf.SetBoolean(CommonConfigurationKeys.IpcClientPingKey, true);
 			Client.ConnectionId remoteId = Client.ConnectionId.GetConnectionId(new IPEndPoint
 				(0), typeof(TestSaslRPC.TestSaslProtocol), null, 0, newConf);
-			NUnit.Framework.Assert.AreEqual(CommonConfigurationKeys.IpcPingIntervalDefault, remoteId
+			Assert.Equal(CommonConfigurationKeys.IpcPingIntervalDefault, remoteId
 				.GetPingInterval());
 			// set doPing to false
 			newConf.SetBoolean(CommonConfigurationKeys.IpcClientPingKey, false);
 			remoteId = Client.ConnectionId.GetConnectionId(new IPEndPoint(0), typeof(TestSaslRPC.TestSaslProtocol
 				), null, 0, newConf);
-			NUnit.Framework.Assert.AreEqual(0, remoteId.GetPingInterval());
+			Assert.Equal(0, remoteId.GetPingInterval());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPerConnectionConf()
 		{
 			TestSaslRPC.TestTokenSecretManager sm = new TestSaslRPC.TestTokenSecretManager();
@@ -483,13 +483,13 @@ namespace Org.Apache.Hadoop.Ipc
 				proxy1.GetAuthMethod();
 				client = WritableRpcEngine.GetClient(newConf);
 				ICollection<Client.ConnectionId> conns = client.GetConnectionIds();
-				NUnit.Framework.Assert.AreEqual("number of connections in cache is wrong", 1, conns
+				Assert.Equal("number of connections in cache is wrong", 1, conns
 					.Count);
 				// same conf, connection should be re-used
 				proxy2 = RPC.GetProxy<TestSaslRPC.TestSaslProtocol>(TestSaslRPC.TestSaslProtocol.
 					versionID, addr, newConf);
 				proxy2.GetAuthMethod();
-				NUnit.Framework.Assert.AreEqual("number of connections in cache is wrong", 1, conns
+				Assert.Equal("number of connections in cache is wrong", 1, conns
 					.Count);
 				// different conf, new connection should be set up
 				newConf.SetInt(CommonConfigurationKeysPublic.IpcClientConnectionMaxidletimeKey, timeouts
@@ -497,14 +497,14 @@ namespace Org.Apache.Hadoop.Ipc
 				proxy3 = RPC.GetProxy<TestSaslRPC.TestSaslProtocol>(TestSaslRPC.TestSaslProtocol.
 					versionID, addr, newConf);
 				proxy3.GetAuthMethod();
-				NUnit.Framework.Assert.AreEqual("number of connections in cache is wrong", 2, conns
+				Assert.Equal("number of connections in cache is wrong", 2, conns
 					.Count);
 				// now verify the proxies have the correct connection ids and timeouts
 				Client.ConnectionId[] connsArray = new Client.ConnectionId[] { RPC.GetConnectionIdForProxy
 					(proxy1), RPC.GetConnectionIdForProxy(proxy2), RPC.GetConnectionIdForProxy(proxy3
 					) };
-				NUnit.Framework.Assert.AreEqual(connsArray[0], connsArray[1]);
-				NUnit.Framework.Assert.AreEqual(connsArray[0].GetMaxIdleTime(), timeouts[0]);
+				Assert.Equal(connsArray[0], connsArray[1]);
+				Assert.Equal(connsArray[0].GetMaxIdleTime(), timeouts[0]);
 				NUnit.Framework.Assert.IsFalse(connsArray[0].Equals(connsArray[2]));
 				NUnit.Framework.Assert.AreNotSame(connsArray[2].GetMaxIdleTime(), timeouts[1]);
 			}
@@ -565,14 +565,14 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSaslPlainServer()
 		{
 			RunNegotiation(new TestSaslRPC.TestPlainCallbacks.Client("user", "pass"), new TestSaslRPC.TestPlainCallbacks.Server
 				("user", "pass"));
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSaslPlainServerBadPassword()
 		{
 			SaslException e = null;
@@ -586,7 +586,7 @@ namespace Org.Apache.Hadoop.Ipc
 				e = se;
 			}
 			NUnit.Framework.Assert.IsNotNull(e);
-			NUnit.Framework.Assert.AreEqual("PLAIN auth failed: wrong password", e.Message);
+			Assert.Equal("PLAIN auth failed: wrong password", e.Message);
 		}
 
 		/// <exception cref="Javax.Security.Sasl.SaslException"/>
@@ -601,10 +601,10 @@ namespace Org.Apache.Hadoop.Ipc
 			NUnit.Framework.Assert.IsNotNull("failed to find PLAIN server", saslServer);
 			byte[] response = saslClient.EvaluateChallenge(new byte[0]);
 			NUnit.Framework.Assert.IsNotNull(response);
-			NUnit.Framework.Assert.IsTrue(saslClient.IsComplete());
+			Assert.True(saslClient.IsComplete());
 			response = saslServer.EvaluateResponse(response);
 			NUnit.Framework.Assert.IsNull(response);
-			NUnit.Framework.Assert.IsTrue(saslServer.IsComplete());
+			Assert.True(saslServer.IsComplete());
 			NUnit.Framework.Assert.IsNotNull(saslServer.GetAuthorizationID());
 		}
 
@@ -671,7 +671,7 @@ namespace Org.Apache.Hadoop.Ipc
 						if (callback is NameCallback)
 						{
 							nc = (NameCallback)callback;
-							NUnit.Framework.Assert.AreEqual(user, nc.GetName());
+							Assert.Equal(user, nc.GetName());
 						}
 						else
 						{
@@ -688,8 +688,8 @@ namespace Org.Apache.Hadoop.Ipc
 								if (callback is AuthorizeCallback)
 								{
 									ac = (AuthorizeCallback)callback;
-									NUnit.Framework.Assert.AreEqual(user, ac.GetAuthorizationID());
-									NUnit.Framework.Assert.AreEqual(user, ac.GetAuthenticationID());
+									Assert.Equal(user, ac.GetAuthorizationID());
+									Assert.Equal(user, ac.GetAuthenticationID());
 									ac.SetAuthorized(true);
 									ac.SetAuthorizedID(ac.GetAuthenticationID());
 								}
@@ -738,7 +738,7 @@ namespace Org.Apache.Hadoop.Ipc
 		*  simple server
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSimpleServer()
 		{
 			AssertAuthEquals(SaslRpcServer.AuthMethod.Simple, GetAuthMethod(SaslRpcServer.AuthMethod
@@ -753,7 +753,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNoClientFallbackToSimple()
 		{
 			clientFallBackToSimpleAllowed = false;
@@ -816,7 +816,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSimpleServerWithTokens()
 		{
 			// Client not using tokens
@@ -854,7 +854,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSimpleServerWithInvalidTokens()
 		{
 			// Tokens are ignored because client is reverted to simple
@@ -878,7 +878,7 @@ namespace Org.Apache.Hadoop.Ipc
 		*  token server
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTokenOnlyServer()
 		{
 			// simple client w/o tokens won't try SASL, so server denies
@@ -893,7 +893,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTokenOnlyServerWithTokens()
 		{
 			AssertAuthEquals(SaslRpcServer.AuthMethod.Token, GetAuthMethod(SaslRpcServer.AuthMethod
@@ -908,7 +908,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestTokenOnlyServerWithInvalidTokens()
 		{
 			AssertAuthEquals(BadToken, GetAuthMethod(SaslRpcServer.AuthMethod.Simple, SaslRpcServer.AuthMethod
@@ -926,7 +926,7 @@ namespace Org.Apache.Hadoop.Ipc
 		* kerberos server
 		*/
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKerberosServer()
 		{
 			// doesn't try SASL
@@ -944,7 +944,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKerberosServerWithTokens()
 		{
 			// can use tokens regardless of auth
@@ -961,7 +961,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestKerberosServerWithInvalidTokens()
 		{
 			AssertAuthEquals(BadToken, GetAuthMethod(SaslRpcServer.AuthMethod.Simple, SaslRpcServer.AuthMethod
@@ -1140,9 +1140,9 @@ namespace Org.Apache.Hadoop.Ipc
 					proxy = RPC.GetProxy<TestSaslRPC.TestSaslProtocol>(TestSaslRPC.TestSaslProtocol.versionID
 						, addr, clientConf);
 					proxy.Ping();
-					NUnit.Framework.Assert.AreEqual(clientUgi.GetUserName(), proxy.GetAuthUser());
+					Assert.Equal(clientUgi.GetUserName(), proxy.GetAuthUser());
 					SaslRpcServer.AuthMethod authMethod = proxy.GetAuthMethod();
-					NUnit.Framework.Assert.AreEqual((authMethod != SaslRpcServer.AuthMethod.Simple) ? 
+					Assert.Equal((authMethod != SaslRpcServer.AuthMethod.Simple) ? 
 						this._enclosing.expectedQop.saslQop : null, RPC.GetConnectionIdForProxy(proxy).GetSaslQop
 						());
 					return authMethod.ToString();
@@ -1168,7 +1168,7 @@ namespace Org.Apache.Hadoop.Ipc
 		private static void AssertAuthEquals(SaslRpcServer.AuthMethod expect, string actual
 			)
 		{
-			NUnit.Framework.Assert.AreEqual(expect.ToString(), actual);
+			Assert.Equal(expect.ToString(), actual);
 		}
 
 		private static void AssertAuthEquals(Sharpen.Pattern expect, string actual)
@@ -1176,12 +1176,12 @@ namespace Org.Apache.Hadoop.Ipc
 			// this allows us to see the regexp and the value it didn't match
 			if (!expect.Matcher(actual).Matches())
 			{
-				NUnit.Framework.Assert.AreEqual(expect, actual);
+				Assert.Equal(expect, actual);
 			}
 			else
 			{
 				// it failed
-				NUnit.Framework.Assert.IsTrue(true);
+				Assert.True(true);
 			}
 		}
 

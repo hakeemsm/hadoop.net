@@ -50,25 +50,25 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFcCopy()
 		{
 			string ts = "some random text";
 			Path file1 = fileContextTestHelper.GetTestRootPath(fc, "file1");
 			Path file2 = fileContextTestHelper.GetTestRootPath(fc, "file2");
 			FileContextTestHelper.WriteFile(fc, file1, Sharpen.Runtime.GetBytesForString(ts));
-			NUnit.Framework.Assert.IsTrue(fc.Util().Exists(file1));
+			Assert.True(fc.Util().Exists(file1));
 			fc.Util().Copy(file1, file2);
 			// verify that newly copied file2 exists
-			NUnit.Framework.Assert.IsTrue("Failed to copy file2  ", fc.Util().Exists(file2));
+			Assert.True("Failed to copy file2  ", fc.Util().Exists(file2));
 			// verify that file2 contains test string
-			NUnit.Framework.Assert.IsTrue("Copied files does not match ", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+			Assert.True("Copied files does not match ", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 				(ts), FileContextTestHelper.ReadFile(fc, file2, Sharpen.Runtime.GetBytesForString
 				(ts).Length)));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRecursiveFcCopy()
 		{
 			string ts = "some random text";
@@ -77,13 +77,13 @@ namespace Org.Apache.Hadoop.FS
 			Path file1 = new Path(dir1, "file1");
 			fc.Mkdir(dir1, null, false);
 			FileContextTestHelper.WriteFile(fc, file1, Sharpen.Runtime.GetBytesForString(ts));
-			NUnit.Framework.Assert.IsTrue(fc.Util().Exists(file1));
+			Assert.True(fc.Util().Exists(file1));
 			Path file2 = new Path(dir2, "file1");
 			fc.Util().Copy(dir1, dir2);
 			// verify that newly copied file2 exists
-			NUnit.Framework.Assert.IsTrue("Failed to copy file2  ", fc.Util().Exists(file2));
+			Assert.True("Failed to copy file2  ", fc.Util().Exists(file2));
 			// verify that file2 contains test string
-			NUnit.Framework.Assert.IsTrue("Copied files does not match ", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+			Assert.True("Copied files does not match ", Arrays.Equals(Sharpen.Runtime.GetBytesForString
 				(ts), FileContextTestHelper.ReadFile(fc, file2, Sharpen.Runtime.GetBytesForString
 				(ts).Length)));
 		}

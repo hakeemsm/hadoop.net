@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSomeNodes()
 		{
 			Timing timing = new Timing();
@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 				reaper.Start();
 				timing.ForWaiting().SleepABit();
 				Stat stat = client.CheckExists().ForPath("/test");
-				NUnit.Framework.Assert.AreEqual(stat.GetNumChildren(), nonEmptyNodes);
+				Assert.Equal(stat.GetNumChildren(), nonEmptyNodes);
 			}
 			finally
 			{
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSimple()
 		{
 			Timing timing = new Timing();
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 				reaper.Start();
 				timing.ForWaiting().SleepABit();
 				Stat stat = client.CheckExists().ForPath("/test");
-				NUnit.Framework.Assert.AreEqual(stat.GetNumChildren(), 0);
+				Assert.Equal(stat.GetNumChildren(), 0);
 			}
 			finally
 			{
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMultiPath()
 		{
 			Timing timing = new Timing();
@@ -141,11 +141,11 @@ namespace Org.Apache.Hadoop.Util.Curator
 				reaper.AddPath("/test1");
 				timing.ForWaiting().SleepABit();
 				Stat stat = client.CheckExists().ForPath("/test1");
-				NUnit.Framework.Assert.AreEqual(stat.GetNumChildren(), 0);
+				Assert.Equal(stat.GetNumChildren(), 0);
 				stat = client.CheckExists().ForPath("/test2");
-				NUnit.Framework.Assert.AreEqual(stat.GetNumChildren(), 0);
+				Assert.Equal(stat.GetNumChildren(), 0);
 				stat = client.CheckExists().ForPath("/test3");
-				NUnit.Framework.Assert.AreEqual(stat.GetNumChildren(), 10);
+				Assert.Equal(stat.GetNumChildren(), 10);
 			}
 			finally
 			{
@@ -155,7 +155,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNamespace()
 		{
 			Timing timing = new Timing();
@@ -175,10 +175,10 @@ namespace Org.Apache.Hadoop.Util.Curator
 				reaper.Start();
 				timing.ForWaiting().SleepABit();
 				Stat stat = client.CheckExists().ForPath("/test");
-				NUnit.Framework.Assert.AreEqual(stat.GetNumChildren(), 0);
+				Assert.Equal(stat.GetNumChildren(), 0);
 				stat = client.UsingNamespace(null).CheckExists().ForPath("/foo/test");
 				NUnit.Framework.Assert.IsNotNull(stat);
-				NUnit.Framework.Assert.AreEqual(stat.GetNumChildren(), 0);
+				Assert.Equal(stat.GetNumChildren(), 0);
 			}
 			finally
 			{

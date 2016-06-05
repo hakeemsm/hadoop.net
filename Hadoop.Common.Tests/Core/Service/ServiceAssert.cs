@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.Service
 			, Service.STATE state)
 		{
 			NUnit.Framework.Assert.IsNotNull("Null service", service);
-			NUnit.Framework.Assert.AreEqual("Service in wrong state: " + service, state, service
+			Assert.Equal("Service in wrong state: " + service, state, service
 				.GetServiceState());
 		}
 

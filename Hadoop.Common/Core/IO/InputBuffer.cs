@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.IO
 	/// </pre>
 	/// </summary>
 	/// <seealso cref="DataInputBuffer"/>
-	/// <seealso cref="System.IO.DataOutput"/>
+	/// <seealso cref="System.IO.BinaryWriter"/>
 	public class InputBuffer : FilterInputStream
 	{
 		private class Buffer : ByteArrayInputStream

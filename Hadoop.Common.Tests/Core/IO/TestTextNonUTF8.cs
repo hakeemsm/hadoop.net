@@ -29,7 +29,7 @@ namespace Org.Apache.Hadoop.IO
 			byte[] ret = t.GetBytes();
 			// asseting that the byte array are the same when the Text
 			// object is created.
-			NUnit.Framework.Assert.IsTrue(Arrays.Equals(b, ret));
+			Assert.True(Arrays.Equals(b, ret));
 		}
 
 		/// <exception cref="System.Exception"/>

@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 	{
 		private static readonly Random rnd = new Random(12345L);
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorDecompressor()
 		{
 			// no more for this data
@@ -64,7 +64,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorDecompressorWithExeedBufferLimit()
 		{
 			int ByteSize = 100 * 1024;

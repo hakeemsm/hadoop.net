@@ -34,49 +34,49 @@ namespace Org.Apache.Hadoop.FS.Shell
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetfattrValidations()
 		{
 			errContent.Reset();
 			NUnit.Framework.Assert.IsFalse("getfattr should fail without path", 0 == RunCommand
 				(new string[] { "-getfattr", "-d" }));
-			NUnit.Framework.Assert.IsTrue(errContent.ToString().Contains("<path> is missing")
+			Assert.True(errContent.ToString().Contains("<path> is missing")
 				);
 			errContent.Reset();
 			NUnit.Framework.Assert.IsFalse("getfattr should fail with extra argument", 0 == RunCommand
 				(new string[] { "-getfattr", "extra", "-d", "/test" }));
-			NUnit.Framework.Assert.IsTrue(errContent.ToString().Contains("Too many arguments"
+			Assert.True(errContent.ToString().Contains("Too many arguments"
 				));
 			errContent.Reset();
 			NUnit.Framework.Assert.IsFalse("getfattr should fail without \"-n name\" or \"-d\""
 				, 0 == RunCommand(new string[] { "-getfattr", "/test" }));
-			NUnit.Framework.Assert.IsTrue(errContent.ToString().Contains("Must specify '-n name' or '-d' option"
+			Assert.True(errContent.ToString().Contains("Must specify '-n name' or '-d' option"
 				));
 			errContent.Reset();
 			NUnit.Framework.Assert.IsFalse("getfattr should fail with invalid encoding", 0 ==
 				 RunCommand(new string[] { "-getfattr", "-d", "-e", "aaa", "/test" }));
-			NUnit.Framework.Assert.IsTrue(errContent.ToString().Contains("Invalid/unsupported encoding option specified: aaa"
+			Assert.True(errContent.ToString().Contains("Invalid/unsupported encoding option specified: aaa"
 				));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetfattrValidations()
 		{
 			errContent.Reset();
 			NUnit.Framework.Assert.IsFalse("setfattr should fail without path", 0 == RunCommand
 				(new string[] { "-setfattr", "-n", "user.a1" }));
-			NUnit.Framework.Assert.IsTrue(errContent.ToString().Contains("<path> is missing")
+			Assert.True(errContent.ToString().Contains("<path> is missing")
 				);
 			errContent.Reset();
 			NUnit.Framework.Assert.IsFalse("setfattr should fail with extra arguments", 0 == 
 				RunCommand(new string[] { "-setfattr", "extra", "-n", "user.a1", "/test" }));
-			NUnit.Framework.Assert.IsTrue(errContent.ToString().Contains("Too many arguments"
+			Assert.True(errContent.ToString().Contains("Too many arguments"
 				));
 			errContent.Reset();
 			NUnit.Framework.Assert.IsFalse("setfattr should fail without \"-n name\" or \"-x name\""
 				, 0 == RunCommand(new string[] { "-setfattr", "/test" }));
-			NUnit.Framework.Assert.IsTrue(errContent.ToString().Contains("Must specify '-n name' or '-x name' option"
+			Assert.True(errContent.ToString().Contains("Must specify '-n name' or '-x name' option"
 				));
 		}
 

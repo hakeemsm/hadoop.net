@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConcatEmptyFiles()
 		{
 			ContractTestUtils.Touch(GetFileSystem(), target);
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConcatMissingTarget()
 		{
 			try
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConcatFileOnFile()
 		{
 			byte[] block = ContractTestUtils.Dataset(TestFileLen, 0, 255);
@@ -97,7 +97,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConcatOnSelf()
 		{
 			byte[] block = ContractTestUtils.Dataset(TestFileLen, 0, 255);

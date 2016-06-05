@@ -59,12 +59,12 @@ namespace Org.Apache.Hadoop.FS
 				offEnd = (int)Math.Min(offEnd, status.GetLen());
 				BlockLocation first = locations[0];
 				BlockLocation last = locations[locations.Length - 1];
-				NUnit.Framework.Assert.IsTrue(first.GetOffset() <= offBegin);
-				NUnit.Framework.Assert.IsTrue(offEnd <= last.GetOffset() + last.GetLength());
+				Assert.True(first.GetOffset() <= offBegin);
+				Assert.True(offEnd <= last.GetOffset() + last.GetLength());
 			}
 			else
 			{
-				NUnit.Framework.Assert.IsTrue(locations.Length == 0);
+				Assert.True(locations.Length == 0);
 			}
 		}
 

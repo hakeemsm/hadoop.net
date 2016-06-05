@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 	public class TestViewFsURIs
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestURIEmptyPath()
 		{
 			Configuration conf = new Configuration();

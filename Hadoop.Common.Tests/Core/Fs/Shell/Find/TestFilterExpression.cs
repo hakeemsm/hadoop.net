@@ -29,7 +29,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void Expression()
 		{
-			NUnit.Framework.Assert.AreEqual(expr, test.expression);
+			Assert.Equal(expr, test.expression);
 		}
 
 		// test that setOptions method is called
@@ -49,8 +49,8 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			PathData item = Org.Mockito.Mockito.Mock<PathData>();
 			Org.Mockito.Mockito.When(expr.Apply(item, -1)).ThenReturn(Result.Pass).ThenReturn
 				(Result.Fail);
-			NUnit.Framework.Assert.AreEqual(Result.Pass, test.Apply(item, -1));
-			NUnit.Framework.Assert.AreEqual(Result.Fail, test.Apply(item, -1));
+			Assert.Equal(Result.Pass, test.Apply(item, -1));
+			Assert.Equal(Result.Fail, test.Apply(item, -1));
 			Org.Mockito.Mockito.Verify(expr, Org.Mockito.Mockito.Times(2)).Apply(item, -1);
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(expr);
 		}
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		public virtual void IsAction()
 		{
 			Org.Mockito.Mockito.When(expr.IsAction()).ThenReturn(true).ThenReturn(false);
-			NUnit.Framework.Assert.IsTrue(test.IsAction());
+			Assert.True(test.IsAction());
 			NUnit.Framework.Assert.IsFalse(test.IsAction());
 			Org.Mockito.Mockito.Verify(expr, Org.Mockito.Mockito.Times(2)).IsAction();
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(expr);
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		public virtual void IsOperator()
 		{
 			Org.Mockito.Mockito.When(expr.IsAction()).ThenReturn(true).ThenReturn(false);
-			NUnit.Framework.Assert.IsTrue(test.IsAction());
+			Assert.True(test.IsAction());
 			NUnit.Framework.Assert.IsFalse(test.IsAction());
 			Org.Mockito.Mockito.Verify(expr, Org.Mockito.Mockito.Times(2)).IsAction();
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(expr);
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			int precedence = 12345;
 			Org.Mockito.Mockito.When(expr.GetPrecedence()).ThenReturn(precedence);
-			NUnit.Framework.Assert.AreEqual(precedence, test.GetPrecedence());
+			Assert.Equal(precedence, test.GetPrecedence());
 			Org.Mockito.Mockito.Verify(expr).GetPrecedence();
 			Org.Mockito.Mockito.VerifyNoMoreInteractions(expr);
 		}

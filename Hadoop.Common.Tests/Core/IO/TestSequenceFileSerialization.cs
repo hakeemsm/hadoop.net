@@ -38,10 +38,10 @@ namespace Org.Apache.Hadoop.IO
 			writer.Append(2L, "two");
 			writer.Close();
 			SequenceFile.Reader reader = new SequenceFile.Reader(fs, file, conf);
-			NUnit.Framework.Assert.AreEqual(1L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("one", reader.GetCurrentValue((object)null));
-			NUnit.Framework.Assert.AreEqual(2L, reader.Next((object)null));
-			NUnit.Framework.Assert.AreEqual("two", reader.GetCurrentValue((object)null));
+			Assert.Equal(1L, reader.Next((object)null));
+			Assert.Equal("one", reader.GetCurrentValue((object)null));
+			Assert.Equal(2L, reader.Next((object)null));
+			Assert.Equal("two", reader.GetCurrentValue((object)null));
 			NUnit.Framework.Assert.IsNull(reader.Next((object)null));
 			reader.Close();
 		}

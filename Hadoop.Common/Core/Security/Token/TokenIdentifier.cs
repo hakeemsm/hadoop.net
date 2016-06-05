@@ -65,6 +65,6 @@ namespace Org.Apache.Hadoop.Security.Token
 
 		public abstract void ReadFields(BinaryReader arg1);
 
-		public abstract void Write(DataOutput arg1);
+		public abstract void Write(BinaryWriter arg1);
 	}
 }

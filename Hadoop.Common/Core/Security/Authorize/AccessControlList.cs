@@ -315,7 +315,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 
 		/// <summary>Serializes the AccessControlList object</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(DataOutput @out)
+		public virtual void Write(BinaryWriter @out)
 		{
 			string aclString = GetAclString();
 			Text.WriteString(@out, aclString);

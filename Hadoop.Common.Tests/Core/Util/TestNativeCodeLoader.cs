@@ -25,7 +25,7 @@ namespace Org.Apache.Hadoop.Util
 			return true;
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNativeCodeLoaded()
 		{
 			if (RequireTestJni() == false)

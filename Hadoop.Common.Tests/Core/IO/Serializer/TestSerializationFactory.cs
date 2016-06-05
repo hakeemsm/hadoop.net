@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.IO.Serializer
 {
 	public class TestSerializationFactory
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSerializerAvailability()
 		{
 			Configuration conf = new Configuration();
@@ -24,7 +24,7 @@ namespace Org.Apache.Hadoop.IO.Serializer
 				, factory.GetDeserializer<TestSerializationFactory>());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSerializationKeyIsTrimmed()
 		{
 			Configuration conf = new Configuration();

@@ -8,18 +8,18 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 	public class TestAuthenticatedURL
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToken()
 		{
 			AuthenticatedURL.Token token = new AuthenticatedURL.Token();
 			NUnit.Framework.Assert.IsFalse(token.IsSet());
 			token = new AuthenticatedURL.Token("foo");
-			NUnit.Framework.Assert.IsTrue(token.IsSet());
-			NUnit.Framework.Assert.AreEqual("foo", token.ToString());
+			Assert.True(token.IsSet());
+			Assert.Equal("foo", token.ToString());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestInjectToken()
 		{
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExtractTokenOK()
 		{
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
@@ -46,11 +46,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 			Org.Mockito.Mockito.When(conn.GetHeaderFields()).ThenReturn(headers);
 			AuthenticatedURL.Token token = new AuthenticatedURL.Token();
 			AuthenticatedURL.ExtractToken(conn, token);
-			NUnit.Framework.Assert.AreEqual(tokenStr, token.ToString());
+			Assert.Equal(tokenStr, token.ToString());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExtractTokenFail()
 		{
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConnectionConfigurator()
 		{
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
@@ -100,12 +100,12 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetAuthenticator()
 		{
 			Authenticator authenticator = Org.Mockito.Mockito.Mock<Authenticator>();
 			AuthenticatedURL aURL = new AuthenticatedURL(authenticator);
-			NUnit.Framework.Assert.AreEqual(authenticator, aURL.GetAuthenticator());
+			Assert.Equal(authenticator, aURL.GetAuthenticator());
 		}
 	}
 }

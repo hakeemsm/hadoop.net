@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			conf.Set("fs." + scheme + ".impl", clazz.FullName);
 			TestViewFileSystemDelegation.FakeFileSystem fs = (TestViewFileSystemDelegation.FakeFileSystem
 				)FileSystem.Get(uri, conf);
-			NUnit.Framework.Assert.AreEqual(uri, fs.GetUri());
+			Assert.Equal(uri, fs.GetUri());
 			Path targetPath = new FileSystemTestHelper().GetAbsoluteTestRootPath(fs);
 			ConfigUtil.AddLink(conf, "/mounts/" + scheme, targetPath.ToUri());
 			return fs;
@@ -57,15 +57,15 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			return ((TestChRootedFileSystem.MockFileSystem)fs).GetRawFileSystem();
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSanity()
 		{
-			NUnit.Framework.Assert.AreEqual("fs1:/", fs1.GetUri().ToString());
-			NUnit.Framework.Assert.AreEqual("fs2:/", fs2.GetUri().ToString());
+			Assert.Equal("fs1:/", fs1.GetUri().ToString());
+			Assert.Equal("fs2:/", fs2.GetUri().ToString());
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestVerifyChecksum()
 		{
 			CheckVerifyChecksum(false);
@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// translated as required.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAclMethods()
 		{
 			Configuration conf = ViewFileSystemTestSetup.CreateConfig();
@@ -119,8 +119,8 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		internal virtual void CheckVerifyChecksum(bool flag)
 		{
 			viewFs.SetVerifyChecksum(flag);
-			NUnit.Framework.Assert.AreEqual(flag, fs1.GetVerifyChecksum());
-			NUnit.Framework.Assert.AreEqual(flag, fs2.GetVerifyChecksum());
+			Assert.Equal(flag, fs1.GetVerifyChecksum());
+			Assert.Equal(flag, fs2.GetVerifyChecksum());
 		}
 
 		internal class FakeFileSystem : LocalFileSystem

@@ -8,24 +8,24 @@ namespace Org.Apache.Hadoop.Oncrpc.Security
 	/// </summary>
 	public class TestRpcAuthInfo
 	{
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAuthFlavor()
 		{
-			NUnit.Framework.Assert.AreEqual(RpcAuthInfo.AuthFlavor.AuthNone, RpcAuthInfo.AuthFlavor
+			Assert.Equal(RpcAuthInfo.AuthFlavor.AuthNone, RpcAuthInfo.AuthFlavor
 				.FromValue(0));
-			NUnit.Framework.Assert.AreEqual(RpcAuthInfo.AuthFlavor.AuthSys, RpcAuthInfo.AuthFlavor
+			Assert.Equal(RpcAuthInfo.AuthFlavor.AuthSys, RpcAuthInfo.AuthFlavor
 				.FromValue(1));
-			NUnit.Framework.Assert.AreEqual(RpcAuthInfo.AuthFlavor.AuthShort, RpcAuthInfo.AuthFlavor
+			Assert.Equal(RpcAuthInfo.AuthFlavor.AuthShort, RpcAuthInfo.AuthFlavor
 				.FromValue(2));
-			NUnit.Framework.Assert.AreEqual(RpcAuthInfo.AuthFlavor.AuthDh, RpcAuthInfo.AuthFlavor
+			Assert.Equal(RpcAuthInfo.AuthFlavor.AuthDh, RpcAuthInfo.AuthFlavor
 				.FromValue(3));
-			NUnit.Framework.Assert.AreEqual(RpcAuthInfo.AuthFlavor.RpcsecGss, RpcAuthInfo.AuthFlavor
+			Assert.Equal(RpcAuthInfo.AuthFlavor.RpcsecGss, RpcAuthInfo.AuthFlavor
 				.FromValue(6));
 		}
 
 		public virtual void TestInvalidAuthFlavor()
 		{
-			NUnit.Framework.Assert.AreEqual(RpcAuthInfo.AuthFlavor.AuthNone, RpcAuthInfo.AuthFlavor
+			Assert.Equal(RpcAuthInfo.AuthFlavor.AuthNone, RpcAuthInfo.AuthFlavor
 				.FromValue(4));
 		}
 	}

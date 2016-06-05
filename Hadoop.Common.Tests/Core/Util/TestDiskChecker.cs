@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				if (before != after)
 				{
-					NUnit.Framework.Assert.IsTrue(e.Message.StartsWith("Incorrect permission"));
+					Assert.True(e.Message.StartsWith("Incorrect permission"));
 				}
 			}
 		}
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				DiskChecker.CheckDir(FileSystem.GetLocal(new Configuration()), new Path(localDir.
 					GetAbsolutePath()), perm);
-				NUnit.Framework.Assert.IsTrue("checkDir success", success);
+				Assert.True("checkDir success", success);
 			}
 			catch (DiskChecker.DiskErrorException)
 			{
@@ -174,7 +174,7 @@ namespace Org.Apache.Hadoop.Util
 			try
 			{
 				DiskChecker.CheckDir(localDir);
-				NUnit.Framework.Assert.IsTrue("checkDir success", success);
+				Assert.True("checkDir success", success);
 			}
 			catch (DiskChecker.DiskErrorException e)
 			{

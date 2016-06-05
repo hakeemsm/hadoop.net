@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.Log
 		private static readonly JsonFactory factory = new MappingJsonFactory();
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstruction()
 		{
 			Log4Json l4j = new Log4Json();
@@ -32,7 +32,7 @@ namespace Org.Apache.Hadoop.Log
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestException()
 		{
 			Exception e = new NoRouteToHostException("that box caught fire 3 years ago");
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Log
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNestedException()
 		{
 			Exception e = new NoRouteToHostException("that box caught fire 3 years ago");
@@ -62,20 +62,20 @@ namespace Org.Apache.Hadoop.Log
 			AssertEntryEquals(rootNode, Log4Json.Time, timeStamp);
 			AssertEntryEquals(rootNode, Log4Json.ExceptionClass, ioe.GetType().FullName);
 			JsonNode node = AssertNodeContains(rootNode, Log4Json.Stack);
-			NUnit.Framework.Assert.IsTrue("Not an array: " + node, node.IsArray());
+			Assert.True("Not an array: " + node, node.IsArray());
 			node = AssertNodeContains(rootNode, Log4Json.Date);
-			NUnit.Framework.Assert.IsTrue("Not a string: " + node, node.IsTextual());
+			Assert.True("Not a string: " + node, node.IsTextual());
 			//rather than try and make assertions about the format of the text
 			//message equalling another ISO date, this test asserts that the hypen
 			//and colon characters are in the string.
 			string dateText = node.GetTextValue();
-			NUnit.Framework.Assert.IsTrue("No '-' in " + dateText, dateText.Contains("-"));
-			NUnit.Framework.Assert.IsTrue("No '-' in " + dateText, dateText.Contains(":"));
+			Assert.True("No '-' in " + dateText, dateText.Contains("-"));
+			Assert.True("No '-' in " + dateText, dateText.Contains(":"));
 		}
 
 		/// <summary>Create a log instance and and log to it</summary>
 		/// <exception cref="System.Exception">if it all goes wrong</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLog()
 		{
 			string message = "test message";
@@ -86,7 +86,7 @@ namespace Org.Apache.Hadoop.Log
 
 		/// <summary>Create a log instance and and log to it</summary>
 		/// <exception cref="System.Exception">if it all goes wrong</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLogExceptions()
 		{
 			string message = "test message";
@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.Log
 			 value)
 		{
 			JsonNode node = AssertNodeContains(rootNode, key);
-			NUnit.Framework.Assert.AreEqual(value, node.GetTextValue());
+			Assert.Equal(value, node.GetTextValue());
 		}
 
 		private JsonNode AssertNodeContains(ContainerNode rootNode, string key)
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.Log
 			value)
 		{
 			JsonNode node = AssertNodeContains(rootNode, key);
-			NUnit.Framework.Assert.AreEqual(value, node.GetNumberValue());
+			Assert.Equal(value, node.GetNumberValue());
 		}
 
 		/// <summary>Print out what's going on.</summary>

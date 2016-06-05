@@ -25,7 +25,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		private int seed = new Random().Next();
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDefaultCodec()
 		{
 			CodecTest(conf, seed, 0, "org.apache.hadoop.io.compress.DefaultCodec");
@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGzipCodec()
 		{
 			CodecTest(conf, seed, 0, "org.apache.hadoop.io.compress.GzipCodec");
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyCodec()
 		{
 			if (SnappyCodec.IsNativeCodeLoaded())
@@ -83,7 +83,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLz4Codec()
 		{
 			if (NativeCodeLoader.IsNativeCodeLoaded())
@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeflateCodec()
 		{
 			CodecTest(conf, seed, 0, "org.apache.hadoop.io.compress.DeflateCodec");
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGzipCodecWithParam()
 		{
 			Configuration conf = new Configuration(this.conf);
@@ -186,17 +186,17 @@ namespace Org.Apache.Hadoop.IO.Compress
 				RandomDatum v2 = new RandomDatum();
 				k2.ReadFields(inflateIn);
 				v2.ReadFields(inflateIn);
-				NUnit.Framework.Assert.IsTrue("original and compressed-then-decompressed-output not equal"
+				Assert.True("original and compressed-then-decompressed-output not equal"
 					, k1.Equals(k2) && v1.Equals(v2));
 				// original and compressed-then-decompressed-output have the same hashCode
 				IDictionary<RandomDatum, string> m = new Dictionary<RandomDatum, string>();
 				m[k1] = k1.ToString();
 				m[v1] = v1.ToString();
 				string result = m[k2];
-				NUnit.Framework.Assert.AreEqual("k1 and k2 hashcode not equal", result, k1.ToString
+				Assert.Equal("k1 and k2 hashcode not equal", result, k1.ToString
 					());
 				result = m[v2];
-				NUnit.Framework.Assert.AreEqual("v1 and v2 hashcode not equal", result, v1.ToString
+				Assert.Equal("v1 and v2 hashcode not equal", result, v1.ToString
 					());
 			}
 			// De-compress data byte-at-a-time
@@ -210,7 +210,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			do
 			{
 				expected = originalIn.Read();
-				NUnit.Framework.Assert.AreEqual("Inflated stream read by byte does not match", expected
+				Assert.Equal("Inflated stream read by byte does not match", expected
 					, inflateFilter.Read());
 			}
 			while (expected != -1);
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSplitableCodecs()
 		{
 			TestSplitableCodec(typeof(BZip2Codec));
@@ -273,7 +273,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 						break;
 					}
 					int seq2 = ReadLeadingInt(line);
-					NUnit.Framework.Assert.AreEqual("Mismatched lines", seq1 + 1, seq2);
+					Assert.Equal("Mismatched lines", seq1 + 1, seq2);
 				}
 			}
 			finally
@@ -339,7 +339,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCodecPoolGzipReuse()
 		{
 			Configuration conf = new Configuration();
@@ -355,7 +355,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			Compressor c2 = CodecPool.GetCompressor(dfc);
 			CodecPool.ReturnCompressor(c1);
 			CodecPool.ReturnCompressor(c2);
-			NUnit.Framework.Assert.IsTrue("Got mismatched ZlibCompressor", c2 != CodecPool.GetCompressor
+			Assert.True("Got mismatched ZlibCompressor", c2 != CodecPool.GetCompressor
 				(gzc));
 		}
 
@@ -374,7 +374,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 				);
 			Compressor c2 = CodecPool.GetCompressor(codec, conf);
 			// ensure same compressor placed earlier
-			NUnit.Framework.Assert.IsTrue("Got mismatched ZlibCompressor", c1 == c2);
+			Assert.True("Got mismatched ZlibCompressor", c1 == c2);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			CompressionOutputStream cos = null;
 			// write trivially compressable data
@@ -395,7 +395,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			}
 			byte[] outbytes = bos.ToByteArray();
 			// verify data were not compressed
-			NUnit.Framework.Assert.IsTrue("Compressed bytes contrary to configuration", outbytes
+			Assert.True("Compressed bytes contrary to configuration", outbytes
 				.Length >= b.Length);
 		}
 
@@ -439,12 +439,12 @@ namespace Org.Apache.Hadoop.IO.Compress
 			}
 			byte[] outbytes = bos.ToByteArray();
 			// verify data were not compressed
-			NUnit.Framework.Assert.IsTrue("Compressed bytes contrary to configuration(NO_COMPRESSION)"
+			Assert.True("Compressed bytes contrary to configuration(NO_COMPRESSION)"
 				, outbytes.Length >= b.Length);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCodecInitWithCompressionLevel()
 		{
 			Configuration conf = new Configuration();
@@ -466,7 +466,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCodecPoolCompressorReinit()
 		{
 			Configuration conf = new Configuration();
@@ -489,7 +489,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		/// <exception cref="System.TypeLoadException"/>
 		/// <exception cref="Sharpen.InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSequenceFileDefaultCodec()
 		{
 			SequenceFileCodecTest(conf, 100, "org.apache.hadoop.io.compress.DefaultCodec", 100
@@ -540,7 +540,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		/// <exception cref="System.TypeLoadException"/>
 		/// <exception cref="Sharpen.InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSequenceFileDeflateCodec()
 		{
 			SequenceFileCodecTest(conf, 100, "org.apache.hadoop.io.compress.DeflateCodec", 100
@@ -585,8 +585,8 @@ namespace Org.Apache.Hadoop.IO.Compress
 			{
 				while (reader.Next(key_1, value_1))
 				{
-					NUnit.Framework.Assert.AreEqual("key" + lc, key_1.ToString());
-					NUnit.Framework.Assert.AreEqual("value" + lc, value_1.ToString());
+					Assert.Equal("key" + lc, key_1.ToString());
+					Assert.Equal("value" + lc, value_1.ToString());
 					lc++;
 				}
 			}
@@ -594,7 +594,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			{
 				reader.Close();
 			}
-			NUnit.Framework.Assert.AreEqual(lines, lc);
+			Assert.Equal(lines, lc);
 			// Delete temporary files
 			fs.Delete(filePath, false);
 			Log.Info("SUCCESS! Completed SequenceFileCodecTest with codec \"" + codecClass + 
@@ -606,7 +606,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		/// stream would not properly reset the block decompressor state.
 		/// </summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSnappyMapFile()
 		{
 			Assume.AssumeTrue(SnappyCodec.IsNativeCodeLoaded());
@@ -688,7 +688,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGzipCompatibility()
 		{
 			Random r = new Random();
@@ -708,7 +708,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			CompressionCodec codec = ReflectionUtils.NewInstance<GzipCodec>(conf);
 			Decompressor decom = codec.CreateDecompressor();
 			NUnit.Framework.Assert.IsNotNull(decom);
-			NUnit.Framework.Assert.AreEqual(typeof(BuiltInGzipDecompressor), decom.GetType());
+			Assert.Equal(typeof(BuiltInGzipDecompressor), decom.GetType());
 			InputStream gzin = codec.CreateInputStream(gzbuf, decom);
 			dflbuf.Reset();
 			IOUtils.CopyBytes(gzin, dflbuf, 4096);
@@ -742,7 +742,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			CompressionCodec codec = ReflectionUtils.NewInstance<GzipCodec>(conf);
 			Decompressor decom = codec.CreateDecompressor();
 			NUnit.Framework.Assert.IsNotNull(decom);
-			NUnit.Framework.Assert.AreEqual(decomClass, decom.GetType());
+			Assert.Equal(decomClass, decom.GetType());
 			DataInputBuffer gzbuf = new DataInputBuffer();
 			gzbuf.Reset(dflbuf.GetData(), dflbuf.GetLength());
 			InputStream gzin = codec.CreateInputStream(gzbuf, decom);
@@ -753,7 +753,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestBuiltInGzipConcat()
 		{
 			Configuration conf = new Configuration();
@@ -762,7 +762,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNativeGzipConcat()
 		{
 			Configuration conf = new Configuration();
@@ -776,7 +776,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGzipCodecRead()
 		{
 			// Create a gzipped file and try to read it back, using a decompressor
@@ -789,7 +789,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// Ensure that the CodecPool has a BuiltInZlibInflater in it.
 			Decompressor zlibDecompressor = ZlibFactory.GetZlibDecompressor(conf);
 			NUnit.Framework.Assert.IsNotNull("zlibDecompressor is null!", zlibDecompressor);
-			NUnit.Framework.Assert.IsTrue("ZlibFactory returned unexpected inflator", zlibDecompressor
+			Assert.True("ZlibFactory returned unexpected inflator", zlibDecompressor
 				 is BuiltInZlibInflater);
 			CodecPool.ReturnDecompressor(zlibDecompressor);
 			// Now create a GZip text file.
@@ -810,7 +810,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			@is = codec.CreateInputStream(@is, decompressor);
 			BufferedReader br = new BufferedReader(new InputStreamReader(@is));
 			string line = br.ReadLine();
-			NUnit.Framework.Assert.AreEqual("Didn't get the same message back!", msg, line);
+			Assert.Equal("Didn't get the same message back!", msg, line);
 			br.Close();
 		}
 
@@ -822,7 +822,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			try
 			{
 				string line = r.ReadLine();
-				NUnit.Framework.Assert.AreEqual("Got invalid line back from " + filename, msg, line
+				Assert.Equal("Got invalid line back from " + filename, msg, line
 					);
 			}
 			finally
@@ -833,7 +833,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGzipLongOverflow()
 		{
 			Log.Info("testGzipLongOverflow");
@@ -845,7 +845,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// Ensure that the CodecPool has a BuiltInZlibInflater in it.
 			Decompressor zlibDecompressor = ZlibFactory.GetZlibDecompressor(conf);
 			NUnit.Framework.Assert.IsNotNull("zlibDecompressor is null!", zlibDecompressor);
-			NUnit.Framework.Assert.IsTrue("ZlibFactory returned unexpected inflator", zlibDecompressor
+			Assert.True("ZlibFactory returned unexpected inflator", zlibDecompressor
 				 is BuiltInZlibInflater);
 			CodecPool.ReturnDecompressor(zlibDecompressor);
 			// Now create a GZip text file.
@@ -876,10 +876,10 @@ namespace Org.Apache.Hadoop.IO.Compress
 			for (int j = 0; j < Nbuf; j++)
 			{
 				int n = br.Read(buf);
-				NUnit.Framework.Assert.AreEqual("got wrong read length!", n, buf.Length);
+				Assert.Equal("got wrong read length!", n, buf.Length);
 				for (int i_2 = 0; i_2 < buf.Length; i_2++)
 				{
-					NUnit.Framework.Assert.AreEqual("got wrong byte!", buf[i_2], '\0');
+					Assert.Equal("got wrong byte!", buf[i_2], '\0');
 				}
 			}
 			br.Close();
@@ -909,13 +909,13 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// Ensure that the CodecPool has a BuiltInZlibDeflater in it.
 			Compressor zlibCompressor = ZlibFactory.GetZlibCompressor(conf);
 			NUnit.Framework.Assert.IsNotNull("zlibCompressor is null!", zlibCompressor);
-			NUnit.Framework.Assert.IsTrue("ZlibFactory returned unexpected deflator", useNative
+			Assert.True("ZlibFactory returned unexpected deflator", useNative
 				 ? zlibCompressor is ZlibCompressor : zlibCompressor is BuiltInZlibDeflater);
 			CodecPool.ReturnCompressor(zlibCompressor);
 			// Create a GZIP text file via the Compressor interface.
 			CompressionCodecFactory ccf = new CompressionCodecFactory(conf);
 			CompressionCodec codec = ccf.GetCodec(new Path("foo.gz"));
-			NUnit.Framework.Assert.IsTrue("Codec for .gz file is not GzipCodec", codec is GzipCodec
+			Assert.True("Codec for .gz file is not GzipCodec", codec is GzipCodec
 				);
 			string msg = "This is the message we are going to compress.";
 			string tmpDir = Runtime.GetProperty("test.build.data", "/tmp/");
@@ -944,14 +944,14 @@ namespace Org.Apache.Hadoop.IO.Compress
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGzipCodecWriteJava()
 		{
 			TestGzipCodecWrite(false);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGzipNativeCodecWrite()
 		{
 			TestGzipCodecWrite(true);
@@ -969,13 +969,13 @@ namespace Org.Apache.Hadoop.IO.Compress
 			// This should give us a BuiltInZlibInflater.
 			Decompressor zlibDecompressor = ZlibFactory.GetZlibDecompressor(conf);
 			NUnit.Framework.Assert.IsNotNull("zlibDecompressor is null!", zlibDecompressor);
-			NUnit.Framework.Assert.IsTrue("ZlibFactory returned unexpected inflator", zlibDecompressor
+			Assert.True("ZlibFactory returned unexpected inflator", zlibDecompressor
 				 is BuiltInZlibInflater);
 			// its createOutputStream() just wraps the existing stream in a
 			// java.util.zip.GZIPOutputStream.
 			CompressionCodecFactory ccf = new CompressionCodecFactory(conf);
 			CompressionCodec codec = ccf.GetCodec(new Path("foo.gz"));
-			NUnit.Framework.Assert.IsTrue("Codec for .gz file is not GzipCodec", codec is GzipCodec
+			Assert.True("Codec for .gz file is not GzipCodec", codec is GzipCodec
 				);
 			// make sure we don't get a null decompressor
 			Decompressor codecDecompressor = codec.CreateDecompressor();

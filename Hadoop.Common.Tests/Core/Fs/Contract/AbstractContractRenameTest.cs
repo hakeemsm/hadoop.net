@@ -25,7 +25,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 	public abstract class AbstractContractRenameTest : AbstractFSContractTestBase
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameNewFileSameDir()
 		{
 			Describe("rename a file into a new file in the same directory");
@@ -35,7 +35,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 			ContractTestUtils.WriteDataset(GetFileSystem(), renameSrc, data, data.Length, 1024
 				 * 1024, false);
 			bool rename = Rename(renameSrc, renameTarget);
-			NUnit.Framework.Assert.IsTrue("rename(" + renameSrc + ", " + renameTarget + ") returned false"
+			Assert.True("rename(" + renameSrc + ", " + renameTarget + ") returned false"
 				, rename);
 			ContractTestUtils.AssertListStatusFinds(GetFileSystem(), renameTarget.GetParent()
 				, renameTarget);
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameNonexistentFile()
 		{
 			Describe("rename a file into a new file in the same directory");
@@ -97,7 +97,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// as well as those that do not (i.e. HDFS).
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameFileOverExistingFile()
 		{
 			Describe("Verify renaming a file onto an existing file matches expectations");
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 				if (renameOverwritesDest)
 				{
 					// the filesystem supports rename(file, file2) by overwriting file2
-					NUnit.Framework.Assert.IsTrue("Rename returned false", renamed);
+					Assert.True("Rename returned false", renamed);
 					destUnchanged = false;
 				}
 				else
@@ -147,7 +147,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameDirIntoExistingDir()
 		{
 			Describe("Verify renaming a dir into an existing dir puts it underneath" + " and leaves existing files alone"
@@ -170,12 +170,12 @@ namespace Org.Apache.Hadoop.FS.Contract
 			AssertIsFile(destFilePath);
 			AssertIsDirectory(renamedSrc);
 			ContractTestUtils.VerifyFileContents(fs, destFilePath, destDateset);
-			NUnit.Framework.Assert.IsTrue("rename returned false though the contents were copied"
+			Assert.True("rename returned false though the contents were copied"
 				, rename);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameFileNonexistentDir()
 		{
 			Describe("rename a file into a new file in the same directory");
@@ -190,7 +190,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 				bool rename = Rename(renameSrc, renameTarget);
 				if (renameCreatesDestDirs)
 				{
-					NUnit.Framework.Assert.IsTrue(rename);
+					Assert.True(rename);
 					ContractTestUtils.VerifyFileContents(GetFileSystem(), renameTarget, data);
 				}
 				else
@@ -207,7 +207,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRenameWithNonEmptySubDir()
 		{
 			Path renameTestDir = Path("testRenameWithNonEmptySubDir");

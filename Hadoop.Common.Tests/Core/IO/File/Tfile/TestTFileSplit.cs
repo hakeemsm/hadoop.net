@@ -74,10 +74,10 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					scanner.Advance();
 				}
 				scanner.Close();
-				NUnit.Framework.Assert.IsTrue(count > 0);
+				Assert.True(count > 0);
 				rowCount += count;
 			}
-			NUnit.Framework.Assert.AreEqual(rowCount, reader.GetEntryCount());
+			Assert.Equal(rowCount, reader.GetEntryCount());
 			reader.Close();
 		}
 
@@ -105,22 +105,22 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				long x = startRec;
 				while (!scanner.AtEnd())
 				{
-					NUnit.Framework.Assert.AreEqual("Incorrect RecNum returned by scanner", scanner.GetRecordNum
+					Assert.Equal("Incorrect RecNum returned by scanner", scanner.GetRecordNum
 						(), x);
 					scanner.Entry().Get(key, value);
 					++count;
-					NUnit.Framework.Assert.AreEqual("Incorrect RecNum returned by scanner", scanner.GetRecordNum
+					Assert.Equal("Incorrect RecNum returned by scanner", scanner.GetRecordNum
 						(), x);
 					scanner.Advance();
 					++x;
 				}
 				scanner.Close();
-				NUnit.Framework.Assert.IsTrue(count == (endRec - startRec));
+				Assert.True(count == (endRec - startRec));
 			}
 			// make sure specifying range at the end gives zero records.
 			TFile.Reader.Scanner scanner_1 = reader.CreateScannerByRecordNum(totalRecords, -1
 				);
-			NUnit.Framework.Assert.IsTrue(scanner_1.AtEnd());
+			Assert.True(scanner_1.AtEnd());
 		}
 
 		internal static string ComposeSortedKey(string prefix, int total, int value)
@@ -145,27 +145,27 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				end += (totalRecs / 2);
 			}
 			end += (totalRecs / 2) + 1;
-			NUnit.Framework.Assert.AreEqual("RecNum for offset=0 should be 0", 0, reader.GetRecordNumNear
+			Assert.Equal("RecNum for offset=0 should be 0", 0, reader.GetRecordNumNear
 				(0));
 			foreach (long x in new long[] { fileLen, fileLen + 1, 2 * fileLen })
 			{
-				NUnit.Framework.Assert.AreEqual("RecNum for offset>=fileLen should be total entries"
+				Assert.Equal("RecNum for offset>=fileLen should be total entries"
 					, totalRecs, reader.GetRecordNumNear(x));
 			}
 			for (long i = 0; i < 100; ++i)
 			{
-				NUnit.Framework.Assert.AreEqual("Locaton to RecNum conversion not symmetric", i, 
+				Assert.Equal("Locaton to RecNum conversion not symmetric", i, 
 					reader.GetRecordNumByLocation(reader.GetLocationByRecordNum(i)));
 			}
 			for (long i_1 = 1; i_1 < 100; ++i_1)
 			{
 				long x_1 = totalRecs - i_1;
-				NUnit.Framework.Assert.AreEqual("Locaton to RecNum conversion not symmetric", x_1
+				Assert.Equal("Locaton to RecNum conversion not symmetric", x_1
 					, reader.GetRecordNumByLocation(reader.GetLocationByRecordNum(x_1)));
 			}
 			for (long i_2 = begin; i_2 < end; ++i_2)
 			{
-				NUnit.Framework.Assert.AreEqual("Locaton to RecNum conversion not symmetric", i_2
+				Assert.Equal("Locaton to RecNum conversion not symmetric", i_2
 					, reader.GetRecordNumByLocation(reader.GetLocationByRecordNum(i_2)));
 			}
 			for (int i_3 = 0; i_3 < 1000; ++i_3)
@@ -175,7 +175,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				{
 					x_1 += totalRecs;
 				}
-				NUnit.Framework.Assert.AreEqual("Locaton to RecNum conversion not symmetric", x_1
+				Assert.Equal("Locaton to RecNum conversion not symmetric", x_1
 					, reader.GetRecordNumByLocation(reader.GetLocationByRecordNum(x_1)));
 			}
 		}

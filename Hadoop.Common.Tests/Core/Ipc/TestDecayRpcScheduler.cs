@@ -27,45 +27,45 @@ namespace Org.Apache.Hadoop.Ipc
 			scheduler = new DecayRpcScheduler(0, string.Empty, new Configuration());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestParsePeriod()
 		{
 			// By default
 			scheduler = new DecayRpcScheduler(1, string.Empty, new Configuration());
-			NUnit.Framework.Assert.AreEqual(DecayRpcScheduler.IpcCallqueueDecayschedulerPeriodDefault
+			Assert.Equal(DecayRpcScheduler.IpcCallqueueDecayschedulerPeriodDefault
 				, scheduler.GetDecayPeriodMillis());
 			// Custom
 			Configuration conf = new Configuration();
 			conf.SetLong("ns." + DecayRpcScheduler.IpcCallqueueDecayschedulerPeriodKey, 1058);
 			scheduler = new DecayRpcScheduler(1, "ns", conf);
-			NUnit.Framework.Assert.AreEqual(1058L, scheduler.GetDecayPeriodMillis());
+			Assert.Equal(1058L, scheduler.GetDecayPeriodMillis());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestParseFactor()
 		{
 			// Default
 			scheduler = new DecayRpcScheduler(1, string.Empty, new Configuration());
-			NUnit.Framework.Assert.AreEqual(DecayRpcScheduler.IpcCallqueueDecayschedulerFactorDefault
+			Assert.Equal(DecayRpcScheduler.IpcCallqueueDecayschedulerFactorDefault
 				, scheduler.GetDecayFactor(), 0.00001);
 			// Custom
 			Configuration conf = new Configuration();
 			conf.Set("prefix." + DecayRpcScheduler.IpcCallqueueDecayschedulerFactorKey, "0.125"
 				);
 			scheduler = new DecayRpcScheduler(1, "prefix", conf);
-			NUnit.Framework.Assert.AreEqual(0.125, scheduler.GetDecayFactor(), 0.00001);
+			Assert.Equal(0.125, scheduler.GetDecayFactor(), 0.00001);
 		}
 
 		public virtual void AssertEqualDecimalArrays(double[] a, double[] b)
 		{
-			NUnit.Framework.Assert.AreEqual(a.Length, b.Length);
+			Assert.Equal(a.Length, b.Length);
 			for (int i = 0; i < a.Length; i++)
 			{
-				NUnit.Framework.Assert.AreEqual(a[i], b[i], 0.00001);
+				Assert.Equal(a[i], b[i], 0.00001);
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestParseThresholds()
 		{
 			// Defaults vary by number of queues
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Ipc
 				());
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestAccumulate()
 		{
 			Configuration conf = new Configuration();
@@ -96,19 +96,19 @@ namespace Org.Apache.Hadoop.Ipc
 				);
 			// Never flush
 			scheduler = new DecayRpcScheduler(1, "ns", conf);
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetCallCountSnapshot().Count);
+			Assert.Equal(0, scheduler.GetCallCountSnapshot().Count);
 			// empty first
 			scheduler.GetPriorityLevel(MockCall("A"));
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetCallCountSnapshot()["A"]);
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(1, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(1, scheduler.GetCallCountSnapshot()["A"]);
 			scheduler.GetPriorityLevel(MockCall("A"));
 			scheduler.GetPriorityLevel(MockCall("B"));
 			scheduler.GetPriorityLevel(MockCall("A"));
-			NUnit.Framework.Assert.AreEqual(3, scheduler.GetCallCountSnapshot()["A"]);
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetCallCountSnapshot()["B"]);
+			Assert.Equal(3, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(1, scheduler.GetCallCountSnapshot()["B"]);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDecay()
 		{
 			Configuration conf = new Configuration();
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.Ipc
 			// Never
 			conf.Set("ns." + DecayRpcScheduler.IpcCallqueueDecayschedulerFactorKey, "0.5");
 			scheduler = new DecayRpcScheduler(1, "ns", conf);
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetTotalCallSnapshot());
+			Assert.Equal(0, scheduler.GetTotalCallSnapshot());
 			for (int i = 0; i < 4; i++)
 			{
 				scheduler.GetPriorityLevel(MockCall("A"));
@@ -126,28 +126,28 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				scheduler.GetPriorityLevel(MockCall("B"));
 			}
-			NUnit.Framework.Assert.AreEqual(12, scheduler.GetTotalCallSnapshot());
-			NUnit.Framework.Assert.AreEqual(4, scheduler.GetCallCountSnapshot()["A"]);
-			NUnit.Framework.Assert.AreEqual(8, scheduler.GetCallCountSnapshot()["B"]);
+			Assert.Equal(12, scheduler.GetTotalCallSnapshot());
+			Assert.Equal(4, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(8, scheduler.GetCallCountSnapshot()["B"]);
 			scheduler.ForceDecay();
-			NUnit.Framework.Assert.AreEqual(6, scheduler.GetTotalCallSnapshot());
-			NUnit.Framework.Assert.AreEqual(2, scheduler.GetCallCountSnapshot()["A"]);
-			NUnit.Framework.Assert.AreEqual(4, scheduler.GetCallCountSnapshot()["B"]);
+			Assert.Equal(6, scheduler.GetTotalCallSnapshot());
+			Assert.Equal(2, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(4, scheduler.GetCallCountSnapshot()["B"]);
 			scheduler.ForceDecay();
-			NUnit.Framework.Assert.AreEqual(3, scheduler.GetTotalCallSnapshot());
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetCallCountSnapshot()["A"]);
-			NUnit.Framework.Assert.AreEqual(2, scheduler.GetCallCountSnapshot()["B"]);
+			Assert.Equal(3, scheduler.GetTotalCallSnapshot());
+			Assert.Equal(1, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(2, scheduler.GetCallCountSnapshot()["B"]);
 			scheduler.ForceDecay();
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetTotalCallSnapshot());
-			NUnit.Framework.Assert.AreEqual(null, scheduler.GetCallCountSnapshot()["A"]);
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetCallCountSnapshot()["B"]);
+			Assert.Equal(1, scheduler.GetTotalCallSnapshot());
+			Assert.Equal(null, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(1, scheduler.GetCallCountSnapshot()["B"]);
 			scheduler.ForceDecay();
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetTotalCallSnapshot());
-			NUnit.Framework.Assert.AreEqual(null, scheduler.GetCallCountSnapshot()["A"]);
-			NUnit.Framework.Assert.AreEqual(null, scheduler.GetCallCountSnapshot()["B"]);
+			Assert.Equal(0, scheduler.GetTotalCallSnapshot());
+			Assert.Equal(null, scheduler.GetCallCountSnapshot()["A"]);
+			Assert.Equal(null, scheduler.GetCallCountSnapshot()["B"]);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPriority()
 		{
 			Configuration conf = new Configuration();
@@ -157,16 +157,16 @@ namespace Org.Apache.Hadoop.Ipc
 			conf.Set("ns." + DecayRpcScheduler.IpcCallqueueDecayschedulerThresholdsKey, "25, 50, 75"
 				);
 			scheduler = new DecayRpcScheduler(4, "ns", conf);
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetPriorityLevel(MockCall("A")));
-			NUnit.Framework.Assert.AreEqual(2, scheduler.GetPriorityLevel(MockCall("A")));
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetPriorityLevel(MockCall("B")));
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetPriorityLevel(MockCall("B")));
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetPriorityLevel(MockCall("C")));
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetPriorityLevel(MockCall("C")));
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetPriorityLevel(MockCall("A")));
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetPriorityLevel(MockCall("A")));
-			NUnit.Framework.Assert.AreEqual(1, scheduler.GetPriorityLevel(MockCall("A")));
-			NUnit.Framework.Assert.AreEqual(2, scheduler.GetPriorityLevel(MockCall("A")));
+			Assert.Equal(0, scheduler.GetPriorityLevel(MockCall("A")));
+			Assert.Equal(2, scheduler.GetPriorityLevel(MockCall("A")));
+			Assert.Equal(0, scheduler.GetPriorityLevel(MockCall("B")));
+			Assert.Equal(1, scheduler.GetPriorityLevel(MockCall("B")));
+			Assert.Equal(0, scheduler.GetPriorityLevel(MockCall("C")));
+			Assert.Equal(0, scheduler.GetPriorityLevel(MockCall("C")));
+			Assert.Equal(1, scheduler.GetPriorityLevel(MockCall("A")));
+			Assert.Equal(1, scheduler.GetPriorityLevel(MockCall("A")));
+			Assert.Equal(1, scheduler.GetPriorityLevel(MockCall("A")));
+			Assert.Equal(2, scheduler.GetPriorityLevel(MockCall("A")));
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -176,8 +176,8 @@ namespace Org.Apache.Hadoop.Ipc
 			conf.Set("ns." + DecayRpcScheduler.IpcCallqueueDecayschedulerPeriodKey, "10");
 			conf.Set("ns." + DecayRpcScheduler.IpcCallqueueDecayschedulerFactorKey, "0.5");
 			scheduler = new DecayRpcScheduler(1, "ns", conf);
-			NUnit.Framework.Assert.AreEqual(10, scheduler.GetDecayPeriodMillis());
-			NUnit.Framework.Assert.AreEqual(0, scheduler.GetTotalCallSnapshot());
+			Assert.Equal(10, scheduler.GetDecayPeriodMillis());
+			Assert.Equal(0, scheduler.GetTotalCallSnapshot());
 			for (int i = 0; i < 64; i++)
 			{
 				scheduler.GetPriorityLevel(MockCall("A"));

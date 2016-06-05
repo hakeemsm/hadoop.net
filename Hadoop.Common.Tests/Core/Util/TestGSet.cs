@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.Util
 			System.Console.Out.WriteLine(s);
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestExceptionCases()
 		{
 			{
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Util
 			return gset;
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGSet()
 		{
 			//The parameters are: table length, data size, modulus.
@@ -248,7 +248,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				test.Remove(test.data.Get(i_4));
 			}
-			NUnit.Framework.Assert.AreEqual(0, test.gset.Size());
+			Assert.Equal(0, test.gset.Size());
 			Println("DONE " + test.Stat());
 			//check remove and add again
 			Print("  check remove & add again ... ");
@@ -303,13 +303,13 @@ namespace Org.Apache.Hadoop.Util
 				Println(info);
 				data = new TestGSet.IntData(datasize, modulus);
 				gset = new LightWeightGSet<TestGSet.IntElement, TestGSet.IntElement>(tablelength);
-				NUnit.Framework.Assert.AreEqual(0, gset.Size());
+				Assert.Equal(0, gset.Size());
 			}
 
 			private bool ContainsTest(TestGSet.IntElement key)
 			{
 				bool e = expected.Contains(key);
-				NUnit.Framework.Assert.AreEqual(e, gset.Contains(key));
+				Assert.Equal(e, gset.Contains(key));
 				return e;
 			}
 
@@ -323,7 +323,7 @@ namespace Org.Apache.Hadoop.Util
 			private TestGSet.IntElement GetTest(TestGSet.IntElement key)
 			{
 				TestGSet.IntElement e = expected.Get(key);
-				NUnit.Framework.Assert.AreEqual(e.id, gset.Get(key).id);
+				Assert.Equal(e.id, gset.Get(key).id);
 				return e;
 			}
 
@@ -339,11 +339,11 @@ namespace Org.Apache.Hadoop.Util
 				TestGSet.IntElement e = expected.Put(element);
 				if (e == null)
 				{
-					NUnit.Framework.Assert.AreEqual(null, gset.Put(element));
+					Assert.Equal(null, gset.Put(element));
 				}
 				else
 				{
-					NUnit.Framework.Assert.AreEqual(e.id, gset.Put(element).id);
+					Assert.Equal(e.id, gset.Put(element).id);
 				}
 				return e;
 			}
@@ -360,11 +360,11 @@ namespace Org.Apache.Hadoop.Util
 				TestGSet.IntElement e = expected.Remove(key);
 				if (e == null)
 				{
-					NUnit.Framework.Assert.AreEqual(null, gset.Remove(key));
+					Assert.Equal(null, gset.Remove(key));
 				}
 				else
 				{
-					NUnit.Framework.Assert.AreEqual(e.id, gset.Remove(key).id);
+					Assert.Equal(e.id, gset.Remove(key).id);
 				}
 				return e;
 			}
@@ -379,7 +379,7 @@ namespace Org.Apache.Hadoop.Util
 			private int SizeTest()
 			{
 				int s = expected.Size();
-				NUnit.Framework.Assert.AreEqual(s, gset.Size());
+				Assert.Equal(s, gset.Size());
 				return s;
 			}
 
@@ -441,7 +441,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				expected.Clear();
 				gset.Clear();
-				NUnit.Framework.Assert.AreEqual(0, Size());
+				Assert.Equal(0, Size());
 			}
 		}
 
@@ -573,7 +573,7 @@ namespace Org.Apache.Hadoop.Util
 			LightWeightGSet.Log.Info("Validating - total memory " + maxMemory + " percent " +
 				 percent + " returned capacity " + capacity);
 			// Returned capacity is zero or power of two
-			NUnit.Framework.Assert.IsTrue(IsPowerOfTwo(capacity));
+			Assert.True(IsPowerOfTwo(capacity));
 			// Ensure the capacity returned is the nearest to the asked perecentage
 			int capacityPercent = GetPercent(maxMemory, capacity);
 			if (capacityPercent == percent)
@@ -584,11 +584,11 @@ namespace Org.Apache.Hadoop.Util
 			{
 				if (capacityPercent > percent)
 				{
-					NUnit.Framework.Assert.IsTrue(GetPercent(maxMemory, capacity * 2) > percent);
+					Assert.True(GetPercent(maxMemory, capacity * 2) > percent);
 				}
 				else
 				{
-					NUnit.Framework.Assert.IsTrue(GetPercent(maxMemory, capacity / 2) < percent);
+					Assert.True(GetPercent(maxMemory, capacity / 2) < percent);
 				}
 			}
 		}
@@ -597,7 +597,7 @@ namespace Org.Apache.Hadoop.Util
 		/// Test for
 		/// <see cref="LightWeightGSet{K, E}.ComputeCapacity(double, string)"/>
 		/// </summary>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestComputeCapacity()
 		{
 			// Tests for boundary conditions where percent or memory are zero

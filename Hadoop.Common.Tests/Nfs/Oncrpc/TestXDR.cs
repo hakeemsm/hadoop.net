@@ -17,7 +17,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			XDR r = w.AsReadOnlyWrap();
 			for (int i_1 = 0; i_1 < times; ++i_1)
 			{
-				NUnit.Framework.Assert.AreEqual(WriteValue, r.ReadInt());
+				Assert.Equal(WriteValue, r.ReadInt());
 			}
 		}
 
@@ -31,11 +31,11 @@ namespace Org.Apache.Hadoop.Oncrpc
 			XDR r = w.AsReadOnlyWrap();
 			for (int i_1 = 0; i_1 < times; ++i_1)
 			{
-				NUnit.Framework.Assert.AreEqual(WriteValue, r.ReadHyper());
+				Assert.Equal(WriteValue, r.ReadHyper());
 			}
 		}
 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestPerformance()
 		{
 			int TestTimes = 8 << 20;

@@ -18,7 +18,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on NullPointerException in {@code compressor.setInput()} 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorSetInputNullPointerException()
 		{
 			try
@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on NullPointerException in {@code decompressor.setInput()}
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDecompressorSetInputNullPointerException()
 		{
 			try
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on ArrayIndexOutOfBoundsException in {@code compressor.setInput()}
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorSetInputAIOBException()
 		{
 			try
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on ArrayIndexOutOfBoundsException in {@code decompressor.setInput()}
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDecompressorSetInputAIOUBException()
 		{
 			try
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on NullPointerException in {@code compressor.compress()}  
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorCompressNullPointerException()
 		{
 			try
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on NullPointerException in {@code decompressor.decompress()}  
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDecompressorCompressNullPointerException()
 		{
 			try
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on ArrayIndexOutOfBoundsException in {@code compressor.compress()}  
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorCompressAIOBException()
 		{
 			try
@@ -172,7 +172,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		//test on ArrayIndexOutOfBoundsException in decompressor.decompress()  
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDecompressorCompressAIOBException()
 		{
 			try
@@ -194,7 +194,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		// test Lz4Compressor compressor.compress()  
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestSetInputWithBytesSizeMoreThenDefaultLz4CompressorByfferSize
 			()
 		{
@@ -203,11 +203,11 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 			{
 				Lz4Compressor compressor = new Lz4Compressor();
 				byte[] bytes = Generate(BytesSize);
-				NUnit.Framework.Assert.IsTrue("needsInput error !!!", compressor.NeedsInput());
+				Assert.True("needsInput error !!!", compressor.NeedsInput());
 				compressor.SetInput(bytes, 0, bytes.Length);
 				byte[] emptyBytes = new byte[BytesSize];
 				int csize = compressor.Compress(emptyBytes, 0, bytes.Length);
-				NUnit.Framework.Assert.IsTrue("testSetInputWithBytesSizeMoreThenDefaultLz4CompressorByfferSize error !!!"
+				Assert.True("testSetInputWithBytesSizeMoreThenDefaultLz4CompressorByfferSize error !!!"
 					, csize != 0);
 			}
 			catch (Exception)
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		// test compress/decompress process 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressDecompress()
 		{
 			int ByteSize = 1024 * 54;
@@ -227,25 +227,25 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 			try
 			{
 				compressor.SetInput(bytes, 0, bytes.Length);
-				NUnit.Framework.Assert.IsTrue("Lz4CompressDecompress getBytesRead error !!!", compressor
+				Assert.True("Lz4CompressDecompress getBytesRead error !!!", compressor
 					.GetBytesRead() > 0);
-				NUnit.Framework.Assert.IsTrue("Lz4CompressDecompress getBytesWritten before compress error !!!"
+				Assert.True("Lz4CompressDecompress getBytesWritten before compress error !!!"
 					, compressor.GetBytesWritten() == 0);
 				byte[] compressed = new byte[ByteSize];
 				int cSize = compressor.Compress(compressed, 0, compressed.Length);
-				NUnit.Framework.Assert.IsTrue("Lz4CompressDecompress getBytesWritten after compress error !!!"
+				Assert.True("Lz4CompressDecompress getBytesWritten after compress error !!!"
 					, compressor.GetBytesWritten() > 0);
 				Lz4Decompressor decompressor = new Lz4Decompressor();
 				// set as input for decompressor only compressed data indicated with cSize
 				decompressor.SetInput(compressed, 0, cSize);
 				byte[] decompressed = new byte[ByteSize];
 				decompressor.Decompress(decompressed, 0, decompressed.Length);
-				NUnit.Framework.Assert.IsTrue("testLz4CompressDecompress finished error !!!", decompressor
+				Assert.True("testLz4CompressDecompress finished error !!!", decompressor
 					.Finished());
 				Assert.AssertArrayEquals(bytes, decompressed);
 				compressor.Reset();
 				decompressor.Reset();
-				NUnit.Framework.Assert.IsTrue("decompressor getRemaining error !!!", decompressor
+				Assert.True("decompressor getRemaining error !!!", decompressor
 					.GetRemaining() == 0);
 			}
 			catch (Exception)
@@ -255,7 +255,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		// test compress/decompress with empty stream
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorDecompressorEmptyStreamLogic()
 		{
 			ByteArrayInputStream bytesIn = null;
@@ -272,7 +272,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 				blockCompressorStream.Close();
 				// check compressed output
 				buf = bytesOut.ToByteArray();
-				NUnit.Framework.Assert.AreEqual("empty stream compressed output size != 4", 4, buf
+				Assert.Equal("empty stream compressed output size != 4", 4, buf
 					.Length);
 				// use compressed output as input for decompression
 				bytesIn = new ByteArrayInputStream(buf);
@@ -280,7 +280,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 				blockDecompressorStream = new BlockDecompressorStream(bytesIn, new Lz4Decompressor
 					(), 1024);
 				// no byte is available because stream was closed
-				NUnit.Framework.Assert.AreEqual("return value is not -1", -1, blockDecompressorStream
+				Assert.Equal("return value is not -1", -1, blockDecompressorStream
 					.Read());
 			}
 			catch (Exception e)
@@ -306,7 +306,7 @@ namespace Org.Apache.Hadoop.IO.Compress.Lz4
 		}
 
 		// test compress/decompress process through CompressionOutputStream/CompressionInputStream api 
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCompressorDecopressorLogicWithCompressionStreams()
 		{
 			DataOutputStream deflateOut = null;

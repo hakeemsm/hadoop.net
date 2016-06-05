@@ -25,7 +25,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 	public abstract class AbstractContractDeleteTest : AbstractFSContractTestBase
 	{
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteEmptyDirNonRecursive()
 		{
 			Path path = Path("testDeleteEmptyDirNonRecursive");
@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteEmptyDirRecursive()
 		{
 			Path path = Path("testDeleteEmptyDirRecursive");
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteNonexistentPathRecursive()
 		{
 			Path path = Path("testDeleteNonexistentPathRecursive");
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteNonexistentPathNonRecursive()
 		{
 			Path path = Path("testDeleteNonexistentPathNonRecursive");
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteNonEmptyDirNonRecursive()
 		{
 			Path path = Path("testDeleteNonEmptyDirNonRecursive");
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteNonEmptyDirRecursive()
 		{
 			Path path = Path("testDeleteNonEmptyDirNonRecursive");
@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteDeepEmptyDir()
 		{
 			Mkdirs(Path("testDeleteDeepEmptyDir/d1/d2/d3/d4"));
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteSingleFile()
 		{
 			// Test delete of just a file

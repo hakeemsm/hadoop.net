@@ -43,11 +43,11 @@ namespace Org.Apache.Hadoop.FS
 			FSDataOutputStream @out = lfs.Create(srcPath);
 			@out.WriteChars("hi");
 			@out.Close();
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(lfs.GetChecksumFile(srcPath)));
+			Assert.True(lfs.Exists(lfs.GetChecksumFile(srcPath)));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyNoCrc()
 		{
 			ShellRun(0, "-get", srcPath.ToString(), dstPath.ToString());
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyCrc()
 		{
 			ShellRun(0, "-get", "-crc", srcPath.ToString(), dstPath.ToString());
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCorruptedCopyCrc()
 		{
 			FSDataOutputStream @out = lfs.GetRawFileSystem().Create(srcPath);
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCorruptedCopyIgnoreCrc()
 		{
 			ShellRun(0, "-get", "-ignoreCrc", srcPath.ToString(), dstPath.ToString());
@@ -83,19 +83,19 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.IO.IOException"/>
 		private void CheckPath(Path p, bool expectChecksum)
 		{
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(p));
+			Assert.True(lfs.Exists(p));
 			bool hasChecksum = lfs.Exists(lfs.GetChecksumFile(p));
-			NUnit.Framework.Assert.AreEqual(expectChecksum, hasChecksum);
+			Assert.Equal(expectChecksum, hasChecksum);
 		}
 
 		/// <exception cref="System.Exception"/>
 		private void ShellRun(int n, params string[] args)
 		{
-			NUnit.Framework.Assert.AreEqual(n, shell.Run(args));
+			Assert.Equal(n, shell.Run(args));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyFileFromLocal()
 		{
 			Path testRoot = new Path(testRootDir, "testPutFile");
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyDirFromLocal()
 		{
 			Path testRoot = new Path(testRootDir, "testPutDir");
@@ -122,7 +122,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyFileFromWindowsLocalPath()
 		{
 			Assume.AssumeTrue(Path.Windows);
@@ -138,7 +138,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyDirFromWindowsLocalPath()
 		{
 			Assume.AssumeTrue(Path.Windows);
@@ -208,13 +208,13 @@ namespace Org.Apache.Hadoop.FS
 				if (isDir)
 				{
 					lfs.Mkdirs(dst);
-					NUnit.Framework.Assert.IsTrue(lfs.IsDirectory(dst));
+					Assert.True(lfs.IsDirectory(dst));
 				}
 				else
 				{
 					lfs.Mkdirs(new Path(dst.GetName()));
 					lfs.Create(dst).Close();
-					NUnit.Framework.Assert.IsTrue(lfs.IsFile(dst));
+					Assert.True(lfs.IsFile(dst));
 				}
 			}
 		}
@@ -265,20 +265,20 @@ namespace Org.Apache.Hadoop.FS
 			shell.Run(lsArgv);
 			if (exitCode == 0)
 			{
-				NUnit.Framework.Assert.IsTrue(lfs.Exists(target));
-				NUnit.Framework.Assert.IsTrue(lfs.IsFile(src) == lfs.IsFile(target));
-				NUnit.Framework.Assert.AreEqual(1, lfs.ListStatus(lfs.MakeQualified(target).GetParent
+				Assert.True(lfs.Exists(target));
+				Assert.True(lfs.IsFile(src) == lfs.IsFile(target));
+				Assert.Equal(1, lfs.ListStatus(lfs.MakeQualified(target).GetParent
 					()).Length);
 			}
 			else
 			{
-				NUnit.Framework.Assert.AreEqual(targetExists, lfs.Exists(target));
+				Assert.Equal(targetExists, lfs.Exists(target));
 			}
-			NUnit.Framework.Assert.AreEqual(exitCode, gotExit);
+			Assert.Equal(exitCode, gotExit);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRepresentsDir()
 		{
 			Path subdirDstPath = new Path(dstPath, srcPath.GetName());
@@ -286,8 +286,8 @@ namespace Org.Apache.Hadoop.FS
 			lfs.Delete(dstPath, true);
 			NUnit.Framework.Assert.IsFalse(lfs.Exists(dstPath));
 			argv = new string[] { "-put", srcPath.ToString(), dstPath.ToString() };
-			NUnit.Framework.Assert.AreEqual(0, shell.Run(argv));
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(dstPath) && lfs.IsFile(dstPath));
+			Assert.Equal(0, shell.Run(argv));
+			Assert.True(lfs.Exists(dstPath) && lfs.IsFile(dstPath));
 			lfs.Delete(dstPath, true);
 			NUnit.Framework.Assert.IsFalse(lfs.Exists(dstPath));
 			// since dst path looks like a dir, it should not copy the file and
@@ -297,7 +297,7 @@ namespace Org.Apache.Hadoop.FS
 			foreach (string suffix in new string[] { "/", "/." })
 			{
 				argv = new string[] { "-put", srcPath.ToString(), dstPath.ToString() + suffix };
-				NUnit.Framework.Assert.AreEqual(1, shell.Run(argv));
+				Assert.Equal(1, shell.Run(argv));
 				NUnit.Framework.Assert.IsFalse(lfs.Exists(dstPath));
 				NUnit.Framework.Assert.IsFalse(lfs.Exists(subdirDstPath));
 			}
@@ -309,22 +309,22 @@ namespace Org.Apache.Hadoop.FS
 				lfs.Delete(dstPath, true);
 				lfs.Mkdirs(dstPath);
 				argv = new string[] { "-put", srcPath.ToString(), dstPath.ToString() + suffix_1 };
-				NUnit.Framework.Assert.AreEqual(0, shell.Run(argv));
-				NUnit.Framework.Assert.IsTrue(lfs.Exists(subdirDstPath));
-				NUnit.Framework.Assert.IsTrue(lfs.IsFile(subdirDstPath));
+				Assert.Equal(0, shell.Run(argv));
+				Assert.True(lfs.Exists(subdirDstPath));
+				Assert.True(lfs.IsFile(subdirDstPath));
 			}
 			// ensure .. is interpreted as a dir
 			string dotdotDst = dstPath + "/foo/..";
 			lfs.Delete(dstPath, true);
 			lfs.Mkdirs(new Path(dstPath, "foo"));
 			argv = new string[] { "-put", srcPath.ToString(), dotdotDst };
-			NUnit.Framework.Assert.AreEqual(0, shell.Run(argv));
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(subdirDstPath));
-			NUnit.Framework.Assert.IsTrue(lfs.IsFile(subdirDstPath));
+			Assert.Equal(0, shell.Run(argv));
+			Assert.True(lfs.Exists(subdirDstPath));
+			Assert.True(lfs.IsFile(subdirDstPath));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCopyMerge()
 		{
 			Path root = new Path(testRootDir, "TestMerge");
@@ -340,48 +340,48 @@ namespace Org.Apache.Hadoop.FS
 			int exit;
 			// one file, kind of silly
 			exit = shell.Run(new string[] { "-getmerge", f1.ToString(), "out" });
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("f1", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("f1", ReadFile("out"));
 			exit = shell.Run(new string[] { "-getmerge", fnf.ToString(), "out" });
-			NUnit.Framework.Assert.AreEqual(1, exit);
+			Assert.Equal(1, exit);
 			NUnit.Framework.Assert.IsFalse(lfs.Exists(new Path("out")));
 			// two files
 			exit = shell.Run(new string[] { "-getmerge", f1.ToString(), f2.ToString(), "out" }
 				);
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("f1f2", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("f1f2", ReadFile("out"));
 			// two files, preserves order
 			exit = shell.Run(new string[] { "-getmerge", f2.ToString(), f1.ToString(), "out" }
 				);
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("f2f1", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("f2f1", ReadFile("out"));
 			// two files
 			exit = shell.Run(new string[] { "-getmerge", "-nl", f1.ToString(), f2.ToString(), 
 				"out" });
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("f1\nf2\n", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("f1\nf2\n", ReadFile("out"));
 			// glob three files
 			shell.Run(new string[] { "-getmerge", "-nl", new Path(root, "f*").ToString(), "out"
 				 });
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("f1\nf2\nf3\n", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("f1\nf2\nf3\n", ReadFile("out"));
 			// directory with 3 files, should skip subdir
 			shell.Run(new string[] { "-getmerge", "-nl", root.ToString(), "out" });
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("f1\nf2\nf3\n", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("f1\nf2\nf3\n", ReadFile("out"));
 			// subdir
 			shell.Run(new string[] { "-getmerge", "-nl", d.ToString(), "out" });
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("df1\ndf2\ndf3\n", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("df1\ndf2\ndf3\n", ReadFile("out"));
 			// file, dir, file
 			shell.Run(new string[] { "-getmerge", "-nl", f1.ToString(), d.ToString(), f2.ToString
 				(), "out" });
-			NUnit.Framework.Assert.AreEqual(0, exit);
-			NUnit.Framework.Assert.AreEqual("f1\ndf1\ndf2\ndf3\nf2\n", ReadFile("out"));
+			Assert.Equal(0, exit);
+			Assert.Equal("f1\ndf1\ndf2\ndf3\nf2\n", ReadFile("out"));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMoveFileFromLocal()
 		{
 			Path testRoot = new Path(testRootDir, "testPutFile");
@@ -392,14 +392,14 @@ namespace Org.Apache.Hadoop.FS
 			lfs.CreateNewFile(srcFile);
 			int exit = shell.Run(new string[] { "-moveFromLocal", srcFile.ToString(), target.
 				ToString() });
-			NUnit.Framework.Assert.AreEqual(0, exit);
+			Assert.Equal(0, exit);
 			NUnit.Framework.Assert.IsFalse(lfs.Exists(srcFile));
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(target));
-			NUnit.Framework.Assert.IsTrue(lfs.IsFile(target));
+			Assert.True(lfs.Exists(target));
+			Assert.True(lfs.IsFile(target));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMoveDirFromLocal()
 		{
 			Path testRoot = new Path(testRootDir, "testPutDir");
@@ -410,13 +410,13 @@ namespace Org.Apache.Hadoop.FS
 			Path targetDir = new Path(testRoot, "target");
 			int exit = shell.Run(new string[] { "-moveFromLocal", srcDir.ToString(), targetDir
 				.ToString() });
-			NUnit.Framework.Assert.AreEqual(0, exit);
+			Assert.Equal(0, exit);
 			NUnit.Framework.Assert.IsFalse(lfs.Exists(srcDir));
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(targetDir));
+			Assert.True(lfs.Exists(targetDir));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMoveDirFromLocalDestExists()
 		{
 			Path testRoot = new Path(testRootDir, "testPutDir");
@@ -428,18 +428,18 @@ namespace Org.Apache.Hadoop.FS
 			lfs.Mkdirs(targetDir);
 			int exit = shell.Run(new string[] { "-moveFromLocal", srcDir.ToString(), targetDir
 				.ToString() });
-			NUnit.Framework.Assert.AreEqual(0, exit);
+			Assert.Equal(0, exit);
 			NUnit.Framework.Assert.IsFalse(lfs.Exists(srcDir));
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(new Path(targetDir, srcDir.GetName())));
+			Assert.True(lfs.Exists(new Path(targetDir, srcDir.GetName())));
 			lfs.Mkdirs(srcDir);
 			exit = shell.Run(new string[] { "-moveFromLocal", srcDir.ToString(), targetDir.ToString
 				() });
-			NUnit.Framework.Assert.AreEqual(1, exit);
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(srcDir));
+			Assert.Equal(1, exit);
+			Assert.True(lfs.Exists(srcDir));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMoveFromWindowsLocalPath()
 		{
 			Assume.AssumeTrue(Path.Windows);
@@ -453,12 +453,12 @@ namespace Org.Apache.Hadoop.FS
 				();
 			ShellRun(0, "-moveFromLocal", winSrcFile, target.ToString());
 			NUnit.Framework.Assert.IsFalse(lfs.Exists(srcFile));
-			NUnit.Framework.Assert.IsTrue(lfs.Exists(target));
-			NUnit.Framework.Assert.IsTrue(lfs.IsFile(target));
+			Assert.True(lfs.Exists(target));
+			Assert.True(lfs.IsFile(target));
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetWindowsLocalPath()
 		{
 			Assume.AssumeTrue(Path.Windows);

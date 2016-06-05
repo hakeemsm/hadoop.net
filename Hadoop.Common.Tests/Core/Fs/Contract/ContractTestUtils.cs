@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 			}
 			else
 			{
-				NUnit.Framework.Assert.AreEqual("property " + key + " = " + val, expected, val);
+				Assert.Equal("property " + key + " = " + val, expected, val);
 			}
 		}
 
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 			{
 				RejectRootOperation(path);
 				bool deleted = fs.Delete(path, false);
-				NUnit.Framework.Assert.IsTrue("Deleted", deleted);
+				Assert.True("Deleted", deleted);
 				AssertPathDoesNotExist(fs, "Cleanup failed", path);
 			}
 		}
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		public static void WriteDataset(FileSystem fs, Path path, byte[] src, int len, int
 			 buffersize, bool overwrite)
 		{
-			NUnit.Framework.Assert.IsTrue("Not enough data in source array to write " + len +
+			Assert.True("Not enough data in source array to write " + len +
 				 " bytes", src.Length >= len);
 			FSDataOutputStream @out = fs.Create(path, overwrite, fs.GetConf().GetInt(IoFileBufferSize
 				, 4096), (short)1, buffersize);
@@ -169,8 +169,8 @@ namespace Org.Apache.Hadoop.FS.Contract
 		{
 			FileStatus stat = fs.GetFileStatus(path);
 			string statText = stat.ToString();
-			NUnit.Framework.Assert.IsTrue("not a file " + statText, stat.IsFile());
-			NUnit.Framework.Assert.AreEqual("wrong length " + statText, original.Length, stat
+			Assert.True("not a file " + statText, stat.IsFile());
+			Assert.Equal("wrong length " + statText, original.Length, stat
 				.GetLen());
 			byte[] bytes = ReadDataset(fs, path, original.Length);
 			CompareByteArrays(original, bytes, original.Length);
@@ -206,7 +206,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// <param name="len">length of bytes to compare</param>
 		public static void CompareByteArrays(byte[] original, byte[] received, int len)
 		{
-			NUnit.Framework.Assert.AreEqual("Number of bytes read != number written", len, received
+			Assert.Equal("Number of bytes read != number written", len, received
 				.Length);
 			int errors = 0;
 			int first_error_byte = -1;
@@ -429,7 +429,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		public static void AssertFileHasLength(FileSystem fs, Path path, int expected)
 		{
 			FileStatus status = fs.GetFileStatus(path);
-			NUnit.Framework.Assert.AreEqual("Wrong file length of file " + path + " status: "
+			Assert.Equal("Wrong file length of file " + path + " status: "
 				 + status, expected, status.GetLen());
 		}
 
@@ -447,7 +447,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		/// <param name="fileStatus">stats to check</param>
 		public static void AssertIsDirectory(FileStatus fileStatus)
 		{
-			NUnit.Framework.Assert.IsTrue("Should be a directory -but isn't: " + fileStatus, 
+			Assert.True("Should be a directory -but isn't: " + fileStatus, 
 				fileStatus.IsDirectory());
 		}
 
@@ -538,7 +538,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 			AssertPathExists(fs, "about to be deleted file", file);
 			bool deleted = fs.Delete(file, recursive);
 			string dir = Ls(fs, file.GetParent());
-			NUnit.Framework.Assert.IsTrue("Delete failed on " + file + ": " + dir, deleted);
+			Assert.True("Delete failed on " + file + ": " + dir, deleted);
 			AssertPathDoesNotExist(fs, "Deleted file", file);
 		}
 
@@ -723,7 +723,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 					found = true;
 				}
 			}
-			NUnit.Framework.Assert.IsTrue("Path " + subdir + " not found in directory " + dir
+			Assert.True("Path " + subdir + " not found in directory " + dir
 				 + ":" + builder, found);
 		}
 
@@ -882,7 +882,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 			string objectName = UUID.RandomUUID().ToString();
 			Path objectPath = new Path(parent, objectName);
 			// Write test file in a specific pattern
-			NUnit.Framework.Assert.AreEqual(fileSize, GenerateTestFile(fs, objectPath, fileSize
+			Assert.Equal(fileSize, GenerateTestFile(fs, objectPath, fileSize
 				, testBufferSize, modulus));
 			AssertPathExists(fs, "not created successful", objectPath);
 			// Now read the same file back and verify its content

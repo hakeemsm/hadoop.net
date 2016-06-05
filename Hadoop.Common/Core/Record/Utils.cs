@@ -386,7 +386,7 @@ namespace Org.Apache.Hadoop.Record
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		internal static void ToBinaryString(DataOutput @out, string str)
+		internal static void ToBinaryString(BinaryWriter @out, string str)
 		{
 			int strlen = str.Length;
 			byte[] bytes = new byte[strlen * 4];
@@ -582,7 +582,7 @@ namespace Org.Apache.Hadoop.Record
 		/// <param name="stream">Binary output stream</param>
 		/// <param name="i">Long to be serialized</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteVLong(DataOutput stream, long i)
+		public static void WriteVLong(BinaryWriter stream, long i)
 		{
 			WritableUtils.WriteVLong(stream, i);
 		}
@@ -591,7 +591,7 @@ namespace Org.Apache.Hadoop.Record
 		/// <param name="stream">Binary output stream</param>
 		/// <param name="i">int to be serialized</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteVInt(DataOutput stream, int i)
+		public static void WriteVInt(BinaryWriter stream, int i)
 		{
 			WritableUtils.WriteVInt(stream, i);
 		}

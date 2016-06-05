@@ -71,7 +71,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		public virtual void TestNameRules()
 		{
 			KerberosName kn = new KerberosName(KerberosTestUtils.GetServerPrincipal());
-			NUnit.Framework.Assert.AreEqual(KerberosTestUtils.GetRealm(), kn.GetRealm());
+			Assert.Equal(KerberosTestUtils.GetRealm(), kn.GetRealm());
 			//destroy handler created in setUp()
 			handler.Destroy();
 			KerberosName.SetRules("RULE:[1:$1@$0](.*@FOO)s/@.*//\nDEFAULT");
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			{
 			}
 			kn = new KerberosName("bar@BAR");
-			NUnit.Framework.Assert.AreEqual("bar", kn.GetShortName());
+			Assert.Equal("bar", kn.GetShortName());
 			kn = new KerberosName("bar@FOO");
 			try
 			{
@@ -102,13 +102,13 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		/// <exception cref="System.Exception"/>
 		public virtual void TestInit()
 		{
-			NUnit.Framework.Assert.AreEqual(KerberosTestUtils.GetKeytabFile(), handler.GetKeytab
+			Assert.Equal(KerberosTestUtils.GetKeytabFile(), handler.GetKeytab
 				());
 			ICollection<KerberosPrincipal> principals = handler.GetPrincipals();
 			Principal expectedPrincipal = new KerberosPrincipal(KerberosTestUtils.GetServerPrincipal
 				());
-			NUnit.Framework.Assert.IsTrue(principals.Contains(expectedPrincipal));
-			NUnit.Framework.Assert.AreEqual(1, principals.Count);
+			Assert.True(principals.Contains(expectedPrincipal));
+			Assert.Equal(1, principals.Count);
 		}
 
 		// dynamic configuration of HTTP principals
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			props.SetProperty(KerberosAuthenticationHandler.Principal, "*");
 			handler = GetNewAuthenticationHandler();
 			handler.Init(props);
-			NUnit.Framework.Assert.AreEqual(KerberosTestUtils.GetKeytabFile(), handler.GetKeytab
+			Assert.Equal(KerberosTestUtils.GetKeytabFile(), handler.GetKeytab
 				());
 			ICollection<KerberosPrincipal> loginPrincipals = handler.GetPrincipals();
 			foreach (string user in keytabUsers)
@@ -134,7 +134,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				Principal principal = new KerberosPrincipal(user + "@" + KerberosTestUtils.GetRealm
 					());
 				bool expected = user.StartsWith("HTTP/");
-				NUnit.Framework.Assert.AreEqual("checking for " + user, expected, loginPrincipals
+				Assert.Equal("checking for " + user, expected, loginPrincipals
 					.Contains(principal));
 			}
 		}
@@ -159,7 +159,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			}
 			catch (ServletException ex)
 			{
-				NUnit.Framework.Assert.AreEqual("Principals do not exist in the keytab", ex.InnerException
+				Assert.Equal("Principals do not exist in the keytab", ex.InnerException
 					.Message);
 			}
 			catch (Exception t)
@@ -171,7 +171,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		/// <exception cref="System.Exception"/>
 		public virtual void TestType()
 		{
-			NUnit.Framework.Assert.AreEqual(GetExpectedType(), handler.GetType());
+			Assert.Equal(GetExpectedType(), handler.GetType());
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -238,11 +238,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					.WwwAuthenticate), Org.Mockito.Mockito.Matches(KerberosAuthenticator.Negotiate +
 					 " .*"));
 				Org.Mockito.Mockito.Verify(response).SetStatus(HttpServletResponse.ScOk);
-				NUnit.Framework.Assert.AreEqual(KerberosTestUtils.GetClientPrincipal(), authToken
+				Assert.Equal(KerberosTestUtils.GetClientPrincipal(), authToken
 					.GetName());
-				NUnit.Framework.Assert.IsTrue(KerberosTestUtils.GetClientPrincipal().StartsWith(authToken
+				Assert.True(KerberosTestUtils.GetClientPrincipal().StartsWith(authToken
 					.GetUserName()));
-				NUnit.Framework.Assert.AreEqual(GetExpectedType(), authToken.GetType());
+				Assert.Equal(GetExpectedType(), authToken.GetType());
 			}
 			else
 			{

@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateFile()
 		{
 			string[] fileNames = new string[] { "testFile", "test File", "test*File", "test#File"
@@ -87,12 +87,12 @@ namespace Org.Apache.Hadoop.FS
 				// Now create file
 				FileContextTestHelper.CreateFile(fc1, testPath);
 				// Ensure fc2 has the created file
-				NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
+				Assert.True(FileContextTestHelper.Exists(fc2, testPath));
 			}
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateFileWithNullName()
 		{
 			string fileName = null;
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// expected
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateExistingFile()
 		{
 			string fileName = "testFile";
@@ -133,11 +133,11 @@ namespace Org.Apache.Hadoop.FS
 			}
 			// expected
 			// Ensure fc2 has the created file
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
+			Assert.True(FileContextTestHelper.Exists(fc2, testPath));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateFileInNonExistingDirectory()
 		{
 			string fileName = "testDir/testFile";
@@ -147,14 +147,14 @@ namespace Org.Apache.Hadoop.FS
 			// Create a file on fc2's file system using fc1
 			FileContextTestHelper.CreateFile(fc1, testPath);
 			// Ensure using fc2 that file is created
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc2, testPath.GetParent
+			Assert.True(FileContextTestHelper.IsDir(fc2, testPath.GetParent
 				()));
-			NUnit.Framework.Assert.AreEqual("testDir", testPath.GetParent().GetName());
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
+			Assert.Equal("testDir", testPath.GetParent().GetName());
+			Assert.True(FileContextTestHelper.Exists(fc2, testPath));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestCreateDirectory()
 		{
 			Path path = QualifiedPath("test/hadoop", fc2);
@@ -167,8 +167,8 @@ namespace Org.Apache.Hadoop.FS
 			// Create a directory on fc2's file system using fc1
 			fc1.Mkdir(path, FsPermission.GetDefault(), true);
 			// Ensure fc2 has directory
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc2, path));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, path));
+			Assert.True(FileContextTestHelper.IsDir(fc2, path));
+			Assert.True(FileContextTestHelper.Exists(fc2, path));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.IsFile(fc2, path));
 			// Test to create same dir twice, (HDFS mkdir is similar to mkdir -p )
 			fc1.Mkdir(subDirPath, FsPermission.GetDefault(), true);
@@ -178,11 +178,11 @@ namespace Org.Apache.Hadoop.FS
 			fc1.Mkdir(subDirPath, FsPermission.GetDefault(), true);
 			// Check parent dir
 			Path parentDir = path.GetParent();
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, parentDir));
+			Assert.True(FileContextTestHelper.Exists(fc2, parentDir));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.IsFile(fc2, parentDir));
 			// Check parent parent dir
 			Path grandparentDir = parentDir.GetParent();
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, grandparentDir));
+			Assert.True(FileContextTestHelper.Exists(fc2, grandparentDir));
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.IsFile(fc2, grandparentDir));
 			// Negative test cases
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc2, falsePath));
@@ -204,19 +204,19 @@ namespace Org.Apache.Hadoop.FS
 				// Now create directory
 				fc1.Mkdir(testPath, FsPermission.GetDefault(), true);
 				// Ensure fc2 has the created directory
-				NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
-				NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc2, testPath));
+				Assert.True(FileContextTestHelper.Exists(fc2, testPath));
+				Assert.True(FileContextTestHelper.IsDir(fc2, testPath));
 			}
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestMkdirsFailsForSubdirectoryOfExistingFile()
 		{
 			Path testDir = QualifiedPath("test/hadoop", fc2);
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc2, testDir));
 			fc2.Mkdir(testDir, FsPermission.GetDefault(), true);
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testDir));
+			Assert.True(FileContextTestHelper.Exists(fc2, testDir));
 			// Create file on fc1 using fc2 context
 			FileContextTestHelper.CreateFile(fc1, QualifiedPath("test/hadoop/file", fc2));
 			Path testSubDir = QualifiedPath("test/hadoop/file/subdir", fc2);
@@ -244,7 +244,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIsDirectory()
 		{
 			string dirName = "dirTest";
@@ -256,14 +256,14 @@ namespace Org.Apache.Hadoop.FS
 			// Create a directory on fc2's file system using fc1
 			fc1.Mkdir(existingPath, FsPermission.GetDefault(), true);
 			// Ensure fc2 has directory
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc2, existingPath));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc2, pathToRootDir));
+			Assert.True(FileContextTestHelper.IsDir(fc2, existingPath));
+			Assert.True(FileContextTestHelper.IsDir(fc2, pathToRootDir));
 			// Negative test case
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.IsDir(fc2, nonExistingPath));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteFile()
 		{
 			Path testPath = QualifiedPath("testFile", fc2);
@@ -272,7 +272,7 @@ namespace Org.Apache.Hadoop.FS
 			// First create a file on file system using fc1
 			FileContextTestHelper.CreateFile(fc1, testPath);
 			// Ensure file exist
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
+			Assert.True(FileContextTestHelper.Exists(fc2, testPath));
 			// Delete file using fc2
 			fc2.Delete(testPath, false);
 			// Ensure fc2 does not have deleted file
@@ -280,7 +280,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteNonExistingFile()
 		{
 			string testFileName = "testFile";
@@ -294,9 +294,9 @@ namespace Org.Apache.Hadoop.FS
 			// Create a file on fc2's file system using fc1
 			FileContextTestHelper.CreateFile(fc1, testPath);
 			// Ensure file exist
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
+			Assert.True(FileContextTestHelper.Exists(fc2, testPath));
 			// Delete test file, deleting existing file should return true
-			NUnit.Framework.Assert.IsTrue(fc2.Delete(testPath, false));
+			Assert.True(fc2.Delete(testPath, false));
 			// Ensure file does not exist
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc2, testPath));
 			// Delete on non existing file should return false
@@ -304,7 +304,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteNonExistingFileInDir()
 		{
 			string testFileInDir = "testDir/testDir/TestFile";
@@ -318,9 +318,9 @@ namespace Org.Apache.Hadoop.FS
 			// Create a file on fc2's file system using fc1
 			FileContextTestHelper.CreateFile(fc1, testPath);
 			// Ensure file exist
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
+			Assert.True(FileContextTestHelper.Exists(fc2, testPath));
 			// Delete test file, deleting existing file should return true
-			NUnit.Framework.Assert.IsTrue(fc2.Delete(testPath, false));
+			Assert.True(fc2.Delete(testPath, false));
 			// Ensure file does not exist
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc2, testPath));
 			// Delete on non existing file should return false
@@ -328,7 +328,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteDirectory()
 		{
 			string dirName = "dirTest";
@@ -338,8 +338,8 @@ namespace Org.Apache.Hadoop.FS
 			// Create a directory on fc2's file system using fc1
 			fc1.Mkdir(testDirPath, FsPermission.GetDefault(), true);
 			// Ensure dir is created
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testDirPath));
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc2, testDirPath));
+			Assert.True(FileContextTestHelper.Exists(fc2, testDirPath));
+			Assert.True(FileContextTestHelper.IsDir(fc2, testDirPath));
 			fc2.Delete(testDirPath, true);
 			// Ensure that directory is deleted
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.IsDir(fc2, testDirPath));
@@ -360,10 +360,10 @@ namespace Org.Apache.Hadoop.FS
 				// Now create directory
 				fc1.Mkdir(testPath, FsPermission.GetDefault(), true);
 				// Ensure fc2 has the created directory
-				NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
-				NUnit.Framework.Assert.IsTrue(FileContextTestHelper.IsDir(fc2, testPath));
+				Assert.True(FileContextTestHelper.Exists(fc2, testPath));
+				Assert.True(FileContextTestHelper.IsDir(fc2, testPath));
 				// Delete dir
-				NUnit.Framework.Assert.IsTrue(fc2.Delete(testPath, true));
+				Assert.True(fc2.Delete(testPath, true));
 				// verify if directory is deleted
 				NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc2, testPath));
 				NUnit.Framework.Assert.IsFalse(FileContextTestHelper.IsDir(fc2, testPath));
@@ -371,7 +371,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestDeleteNonExistingDirectory()
 		{
 			string testDirName = "testFile";
@@ -385,9 +385,9 @@ namespace Org.Apache.Hadoop.FS
 			// Create a file on fc2's file system using fc1
 			fc1.Mkdir(testPath, FsPermission.GetDefault(), true);
 			// Ensure dir exist
-			NUnit.Framework.Assert.IsTrue(FileContextTestHelper.Exists(fc2, testPath));
+			Assert.True(FileContextTestHelper.Exists(fc2, testPath));
 			// Delete test file, deleting existing file should return true
-			NUnit.Framework.Assert.IsTrue(fc2.Delete(testPath, false));
+			Assert.True(fc2.Delete(testPath, false));
 			// Ensure file does not exist
 			NUnit.Framework.Assert.IsFalse(FileContextTestHelper.Exists(fc2, testPath));
 			// Delete on non existing file should return false
@@ -395,7 +395,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestModificationTime()
 		{
 			string testFile = "file1";
@@ -408,11 +408,11 @@ namespace Org.Apache.Hadoop.FS
 			fc1ModificationTime = fc1.GetFileStatus(testPath).GetModificationTime();
 			fc2ModificationTime = fc2.GetFileStatus(testPath).GetModificationTime();
 			// Ensure fc1 and fc2 reports same modification time
-			NUnit.Framework.Assert.AreEqual(fc1ModificationTime, fc2ModificationTime);
+			Assert.Equal(fc1ModificationTime, fc2ModificationTime);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestFileStatus()
 		{
 			string fileName = "file1";
@@ -422,13 +422,13 @@ namespace Org.Apache.Hadoop.FS
 			FsStatus fc2Status = fc2.GetFsStatus(path2);
 			// FsStatus , used, free and capacity are non-negative longs
 			NUnit.Framework.Assert.IsNotNull(fc2Status);
-			NUnit.Framework.Assert.IsTrue(fc2Status.GetCapacity() > 0);
-			NUnit.Framework.Assert.IsTrue(fc2Status.GetRemaining() > 0);
-			NUnit.Framework.Assert.IsTrue(fc2Status.GetUsed() > 0);
+			Assert.True(fc2Status.GetCapacity() > 0);
+			Assert.True(fc2Status.GetRemaining() > 0);
+			Assert.True(fc2Status.GetUsed() > 0);
 		}
 
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetFileStatusThrowsExceptionForNonExistentFile()
 		{
 			string testFile = "test/hadoop/fileDoesNotExist";
@@ -445,7 +445,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// expected
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListStatusThrowsExceptionForNonExistentFile()
 		{
 			string testFile = "test/hadoop/file";
@@ -462,7 +462,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// expected
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestListStatus()
 		{
 			string hPrefix = "test/hadoop";
@@ -484,10 +484,10 @@ namespace Org.Apache.Hadoop.FS
 			}
 			// test listStatus that returns an array of FileStatus
 			FileStatus[] paths = fc1.Util().ListStatus(QualifiedPath("test", fc1));
-			NUnit.Framework.Assert.AreEqual(1, paths.Length);
-			NUnit.Framework.Assert.AreEqual(QualifiedPath(hPrefix, fc1), paths[0].GetPath());
+			Assert.Equal(1, paths.Length);
+			Assert.Equal(QualifiedPath(hPrefix, fc1), paths[0].GetPath());
 			paths = fc1.Util().ListStatus(QualifiedPath(hPrefix, fc1));
-			NUnit.Framework.Assert.AreEqual(testDirs.Count, paths.Length);
+			Assert.Equal(testDirs.Count, paths.Length);
 			for (int i = 0; i < testDirs.Count; i++)
 			{
 				bool found = false;
@@ -498,13 +498,13 @@ namespace Org.Apache.Hadoop.FS
 						found = true;
 					}
 				}
-				NUnit.Framework.Assert.IsTrue(testDirs[i] + " not found", found);
+				Assert.True(testDirs[i] + " not found", found);
 			}
 			paths = fc1.Util().ListStatus(QualifiedPath(dirs[0], fc1));
-			NUnit.Framework.Assert.AreEqual(0, paths.Length);
+			Assert.Equal(0, paths.Length);
 			// test listStatus that returns an iterator of FileStatus
 			RemoteIterator<FileStatus> pathsItor = fc1.ListStatus(QualifiedPath("test", fc1));
-			NUnit.Framework.Assert.AreEqual(QualifiedPath(hPrefix, fc1), pathsItor.Next().GetPath
+			Assert.Equal(QualifiedPath(hPrefix, fc1), pathsItor.Next().GetPath
 				());
 			NUnit.Framework.Assert.IsFalse(pathsItor.HasNext());
 			pathsItor = fc1.ListStatus(QualifiedPath(hPrefix, fc1));
@@ -521,9 +521,9 @@ namespace Org.Apache.Hadoop.FS
 						break;
 					}
 				}
-				NUnit.Framework.Assert.IsTrue(stat.GetPath() + " not found", found);
+				Assert.True(stat.GetPath() + " not found", found);
 			}
-			NUnit.Framework.Assert.AreEqual(testDirs.Count, dirLen);
+			Assert.Equal(testDirs.Count, dirLen);
 			pathsItor = fc1.ListStatus(QualifiedPath(dirs[0], fc1));
 			NUnit.Framework.Assert.IsFalse(pathsItor.HasNext());
 		}

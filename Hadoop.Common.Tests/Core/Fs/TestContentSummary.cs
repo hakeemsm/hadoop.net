@@ -7,23 +7,23 @@ namespace Org.Apache.Hadoop.FS
 	public class TestContentSummary
 	{
 		// check the empty constructor correctly initialises the object
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstructorEmpty()
 		{
 			ContentSummary contentSummary = new ContentSummary.Builder().Build();
-			NUnit.Framework.Assert.AreEqual("getLength", 0, contentSummary.GetLength());
-			NUnit.Framework.Assert.AreEqual("getFileCount", 0, contentSummary.GetFileCount());
-			NUnit.Framework.Assert.AreEqual("getDirectoryCount", 0, contentSummary.GetDirectoryCount
+			Assert.Equal("getLength", 0, contentSummary.GetLength());
+			Assert.Equal("getFileCount", 0, contentSummary.GetFileCount());
+			Assert.Equal("getDirectoryCount", 0, contentSummary.GetDirectoryCount
 				());
-			NUnit.Framework.Assert.AreEqual("getQuota", -1, contentSummary.GetQuota());
-			NUnit.Framework.Assert.AreEqual("getSpaceConsumed", 0, contentSummary.GetSpaceConsumed
+			Assert.Equal("getQuota", -1, contentSummary.GetQuota());
+			Assert.Equal("getSpaceConsumed", 0, contentSummary.GetSpaceConsumed
 				());
-			NUnit.Framework.Assert.AreEqual("getSpaceQuota", -1, contentSummary.GetSpaceQuota
+			Assert.Equal("getSpaceQuota", -1, contentSummary.GetSpaceQuota
 				());
 		}
 
 		// check the full constructor with quota information
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstructorWithQuota()
 		{
 			long length = 11111;
@@ -35,20 +35,20 @@ namespace Org.Apache.Hadoop.FS
 			ContentSummary contentSummary = new ContentSummary.Builder().Length(length).FileCount
 				(fileCount).DirectoryCount(directoryCount).Quota(quota).SpaceConsumed(spaceConsumed
 				).SpaceQuota(spaceQuota).Build();
-			NUnit.Framework.Assert.AreEqual("getLength", length, contentSummary.GetLength());
-			NUnit.Framework.Assert.AreEqual("getFileCount", fileCount, contentSummary.GetFileCount
+			Assert.Equal("getLength", length, contentSummary.GetLength());
+			Assert.Equal("getFileCount", fileCount, contentSummary.GetFileCount
 				());
-			NUnit.Framework.Assert.AreEqual("getDirectoryCount", directoryCount, contentSummary
+			Assert.Equal("getDirectoryCount", directoryCount, contentSummary
 				.GetDirectoryCount());
-			NUnit.Framework.Assert.AreEqual("getQuota", quota, contentSummary.GetQuota());
-			NUnit.Framework.Assert.AreEqual("getSpaceConsumed", spaceConsumed, contentSummary
+			Assert.Equal("getQuota", quota, contentSummary.GetQuota());
+			Assert.Equal("getSpaceConsumed", spaceConsumed, contentSummary
 				.GetSpaceConsumed());
-			NUnit.Framework.Assert.AreEqual("getSpaceQuota", spaceQuota, contentSummary.GetSpaceQuota
+			Assert.Equal("getSpaceQuota", spaceQuota, contentSummary.GetSpaceQuota
 				());
 		}
 
 		// check the constructor with quota information
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestConstructorNoQuota()
 		{
 			long length = 11111;
@@ -56,21 +56,21 @@ namespace Org.Apache.Hadoop.FS
 			long directoryCount = 33333;
 			ContentSummary contentSummary = new ContentSummary.Builder().Length(length).FileCount
 				(fileCount).DirectoryCount(directoryCount).SpaceConsumed(length).Build();
-			NUnit.Framework.Assert.AreEqual("getLength", length, contentSummary.GetLength());
-			NUnit.Framework.Assert.AreEqual("getFileCount", fileCount, contentSummary.GetFileCount
+			Assert.Equal("getLength", length, contentSummary.GetLength());
+			Assert.Equal("getFileCount", fileCount, contentSummary.GetFileCount
 				());
-			NUnit.Framework.Assert.AreEqual("getDirectoryCount", directoryCount, contentSummary
+			Assert.Equal("getDirectoryCount", directoryCount, contentSummary
 				.GetDirectoryCount());
-			NUnit.Framework.Assert.AreEqual("getQuota", -1, contentSummary.GetQuota());
-			NUnit.Framework.Assert.AreEqual("getSpaceConsumed", length, contentSummary.GetSpaceConsumed
+			Assert.Equal("getQuota", -1, contentSummary.GetQuota());
+			Assert.Equal("getSpaceConsumed", length, contentSummary.GetSpaceConsumed
 				());
-			NUnit.Framework.Assert.AreEqual("getSpaceQuota", -1, contentSummary.GetSpaceQuota
+			Assert.Equal("getSpaceQuota", -1, contentSummary.GetSpaceQuota
 				());
 		}
 
 		// check the write method
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestWrite()
 		{
 			long length = 11111;
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.FS
 			ContentSummary contentSummary = new ContentSummary.Builder().Length(length).FileCount
 				(fileCount).DirectoryCount(directoryCount).Quota(quota).SpaceConsumed(spaceConsumed
 				).SpaceQuota(spaceQuota).Build();
-			DataOutput @out = Org.Mockito.Mockito.Mock<DataOutput>();
+			BinaryWriter @out = Org.Mockito.Mockito.Mock<BinaryWriter>();
 			InOrder inOrder = Org.Mockito.Mockito.InOrder(@out);
 			contentSummary.Write(@out);
 			inOrder.Verify(@out).WriteLong(length);
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.FS
 
 		// check the readFields method
 		/// <exception cref="System.IO.IOException"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestReadFields()
 		{
 			long length = 11111;
@@ -110,36 +110,36 @@ namespace Org.Apache.Hadoop.FS
 				.ThenReturn(directoryCount).ThenReturn(quota).ThenReturn(spaceConsumed).ThenReturn
 				(spaceQuota);
 			contentSummary.ReadFields(@in);
-			NUnit.Framework.Assert.AreEqual("getLength", length, contentSummary.GetLength());
-			NUnit.Framework.Assert.AreEqual("getFileCount", fileCount, contentSummary.GetFileCount
+			Assert.Equal("getLength", length, contentSummary.GetLength());
+			Assert.Equal("getFileCount", fileCount, contentSummary.GetFileCount
 				());
-			NUnit.Framework.Assert.AreEqual("getDirectoryCount", directoryCount, contentSummary
+			Assert.Equal("getDirectoryCount", directoryCount, contentSummary
 				.GetDirectoryCount());
-			NUnit.Framework.Assert.AreEqual("getQuota", quota, contentSummary.GetQuota());
-			NUnit.Framework.Assert.AreEqual("getSpaceConsumed", spaceConsumed, contentSummary
+			Assert.Equal("getQuota", quota, contentSummary.GetQuota());
+			Assert.Equal("getSpaceConsumed", spaceConsumed, contentSummary
 				.GetSpaceConsumed());
-			NUnit.Framework.Assert.AreEqual("getSpaceQuota", spaceQuota, contentSummary.GetSpaceQuota
+			Assert.Equal("getSpaceQuota", spaceQuota, contentSummary.GetSpaceQuota
 				());
 		}
 
 		// check the header with quotas
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetHeaderWithQuota()
 		{
 			string header = "  name quota  rem name quota     space quota " + "rem space quota  directories        files              bytes ";
-			NUnit.Framework.Assert.AreEqual(header, ContentSummary.GetHeader(true));
+			Assert.Equal(header, ContentSummary.GetHeader(true));
 		}
 
 		// check the header without quotas
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetHeaderNoQuota()
 		{
 			string header = " directories        files              bytes ";
-			NUnit.Framework.Assert.AreEqual(header, ContentSummary.GetHeader(false));
+			Assert.Equal(header, ContentSummary.GetHeader(false));
 		}
 
 		// check the toString method with quotas
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToStringWithQuota()
 		{
 			long length = 11111;
@@ -153,11 +153,11 @@ namespace Org.Apache.Hadoop.FS
 				).SpaceQuota(spaceQuota).Build();
 			string expected = "       44444          -11111           66665           11110" 
 				+ "        33333        22222              11111 ";
-			NUnit.Framework.Assert.AreEqual(expected, contentSummary.ToString(true));
+			Assert.Equal(expected, contentSummary.ToString(true));
 		}
 
 		// check the toString method with quotas
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToStringNoQuota()
 		{
 			long length = 11111;
@@ -166,11 +166,11 @@ namespace Org.Apache.Hadoop.FS
 			ContentSummary contentSummary = new ContentSummary.Builder().Length(length).FileCount
 				(fileCount).DirectoryCount(directoryCount).Build();
 			string expected = "        none             inf            none" + "             inf        33333        22222              11111 ";
-			NUnit.Framework.Assert.AreEqual(expected, contentSummary.ToString(true));
+			Assert.Equal(expected, contentSummary.ToString(true));
 		}
 
 		// check the toString method with quotas
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToStringNoShowQuota()
 		{
 			long length = 11111;
@@ -183,11 +183,11 @@ namespace Org.Apache.Hadoop.FS
 				(fileCount).DirectoryCount(directoryCount).Quota(quota).SpaceConsumed(spaceConsumed
 				).SpaceQuota(spaceQuota).Build();
 			string expected = "       33333        22222              11111 ";
-			NUnit.Framework.Assert.AreEqual(expected, contentSummary.ToString(false));
+			Assert.Equal(expected, contentSummary.ToString(false));
 		}
 
 		// check the toString method (defaults to with quotas)
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToString()
 		{
 			long length = 11111;
@@ -200,11 +200,11 @@ namespace Org.Apache.Hadoop.FS
 				(fileCount).DirectoryCount(directoryCount).Quota(quota).SpaceConsumed(spaceConsumed
 				).SpaceQuota(spaceQuota).Build();
 			string expected = "       44444          -11111           66665" + "           11110        33333        22222              11111 ";
-			NUnit.Framework.Assert.AreEqual(expected, contentSummary.ToString());
+			Assert.Equal(expected, contentSummary.ToString());
 		}
 
 		// check the toString method with quotas
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToStringHumanWithQuota()
 		{
 			long length = long.MaxValue;
@@ -217,11 +217,11 @@ namespace Org.Apache.Hadoop.FS
 				(fileCount).DirectoryCount(directoryCount).Quota(quota).SpaceConsumed(spaceConsumed
 				).SpaceQuota(spaceQuota).Build();
 			string expected = "     212.0 M            1023               1 " + "           -1 G       32.6 K      211.9 M              8.0 E ";
-			NUnit.Framework.Assert.AreEqual(expected, contentSummary.ToString(true, true));
+			Assert.Equal(expected, contentSummary.ToString(true, true));
 		}
 
 		// check the toString method with quotas
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestToStringHumanNoShowQuota()
 		{
 			long length = long.MaxValue;
@@ -234,7 +234,7 @@ namespace Org.Apache.Hadoop.FS
 				(fileCount).DirectoryCount(directoryCount).Quota(quota).SpaceConsumed(spaceConsumed
 				).SpaceQuota(spaceQuota).Build();
 			string expected = "      32.6 K      211.9 M              8.0 E ";
-			NUnit.Framework.Assert.AreEqual(expected, contentSummary.ToString(false, true));
+			Assert.Equal(expected, contentSummary.ToString(false, true));
 		}
 	}
 }

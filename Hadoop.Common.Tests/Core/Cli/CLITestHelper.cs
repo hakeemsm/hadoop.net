@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.Cli
 					Log.Info("File: " + testConfigFile + " not found");
 					success = false;
 				}
-				NUnit.Framework.Assert.IsTrue("Error reading test config file", success);
+				Assert.True("Error reading test config file", success);
 			}
 		}
 
@@ -242,7 +242,7 @@ namespace Org.Apache.Hadoop.Cli
 			{
 				Log.Info("NONE");
 			}
-			NUnit.Framework.Assert.IsTrue("One of the tests failed. " + "See the Detailed results to identify "
+			Assert.True("One of the tests failed. " + "See the Detailed results to identify "
 				 + "the command that failed", overallResults);
 		}
 
@@ -282,7 +282,7 @@ namespace Org.Apache.Hadoop.Cli
 		/// <summary>TESTS RUNNER</summary>
 		public virtual void TestAll()
 		{
-			NUnit.Framework.Assert.IsTrue("Number of tests has to be greater then zero", testsFromConfigFile
+			Assert.True("Number of tests has to be greater then zero", testsFromConfigFile
 				.Count > 0);
 			Log.Info("TestAll");
 			// Run the tests defined in the testConf.xml config file.

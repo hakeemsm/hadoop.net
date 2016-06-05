@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>Test that asking for the default hostname works</summary>
 		/// <exception cref="System.Exception">if hostname lookups fail</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetLocalHost()
 		{
 			string hostname = DNS.GetDefaultHost(Default);
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Net
 		/// hence that caching is being used
 		/// </summary>
 		/// <exception cref="System.Exception">if hostname lookups fail</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetLocalHostIsFast()
 		{
 			string hostname1 = DNS.GetDefaultHost(Default);
@@ -37,16 +37,16 @@ namespace Org.Apache.Hadoop.Net
 			long t1 = Time.Now();
 			string hostname3 = DNS.GetDefaultHost(Default);
 			long t2 = Time.Now();
-			NUnit.Framework.Assert.AreEqual(hostname3, hostname2);
-			NUnit.Framework.Assert.AreEqual(hostname2, hostname1);
+			Assert.Equal(hostname3, hostname2);
+			Assert.Equal(hostname2, hostname1);
 			long interval = t2 - t1;
-			NUnit.Framework.Assert.IsTrue("Took too long to determine local host - caching is not working"
+			Assert.True("Took too long to determine local host - caching is not working"
 				, interval < 20000);
 		}
 
 		/// <summary>Test that our local IP address is not null</summary>
 		/// <exception cref="System.Exception">if something went wrong</exception>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLocalHostHasAnAddress()
 		{
 			NUnit.Framework.Assert.IsNotNull(GetLocalIPAddr());
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>Test null interface name</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestNullInterface()
 		{
 			try
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Net
 		// Expected
 		/// <summary>Get the IP addresses of an unknown interface</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestIPsOfUnknownInterface()
 		{
 			try
@@ -97,27 +97,27 @@ namespace Org.Apache.Hadoop.Net
 			}
 			catch (UnknownHostException e)
 			{
-				NUnit.Framework.Assert.AreEqual("No such interface name-of-an-unknown-interface", 
+				Assert.Equal("No such interface name-of-an-unknown-interface", 
 					e.Message);
 			}
 		}
 
 		/// <summary>Test the "default" IP addresses is the local IP addr</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestGetIPWithDefault()
 		{
 			string[] ips = DNS.GetIPs(Default);
-			NUnit.Framework.Assert.AreEqual("Should only return 1 default IP", 1, ips.Length);
-			NUnit.Framework.Assert.AreEqual(GetLocalIPAddr().GetHostAddress(), ips[0].ToString
+			Assert.Equal("Should only return 1 default IP", 1, ips.Length);
+			Assert.Equal(GetLocalIPAddr().GetHostAddress(), ips[0].ToString
 				());
 			string ip = DNS.GetDefaultIP(Default);
-			NUnit.Framework.Assert.AreEqual(ip, ips[0].ToString());
+			Assert.Equal(ip, ips[0].ToString());
 		}
 
 		/// <summary>TestCase: get our local address and reverse look it up</summary>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestRDNS()
 		{
 			IPAddress localhost = GetLocalIPAddr();
@@ -145,7 +145,7 @@ namespace Org.Apache.Hadoop.Net
 		/// If this fails, your machine's network is in a mess, go edit /etc/hosts
 		/// </remarks>
 		/// <exception cref="System.Exception"/>
-		[NUnit.Framework.Test]
+		[Fact]
 		public virtual void TestLocalhostResolves()
 		{
 			IPAddress localhost = Sharpen.Extensions.GetAddressByName("localhost");
