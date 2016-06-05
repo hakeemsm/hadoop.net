@@ -19,7 +19,7 @@
 */
 using System.Collections.Generic;
 using Org.Apache.Hadoop.Metrics.Spi;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics
 {

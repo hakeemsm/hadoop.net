@@ -3,8 +3,8 @@ using System.Text;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.Util
 		private static readonly FilePath TestDir = new FilePath(Runtime.GetProperty("test.build.data"
 			, "/tmp"), "TestClasspath");
 
-		private static readonly Encoding Utf8 = Sharpen.Extensions.GetEncoding("UTF-8");
+		private static readonly Encoding Utf8 = Extensions.GetEncoding("UTF-8");
 
 		static TestClasspath()
 		{

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using NUnit.Framework.Runner.Notification;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Test
 {
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Test
 				}
 			}
 
-			internal class DeadlockThread : Sharpen.Thread
+			internal class DeadlockThread : Thread
 			{
 				private Lock lock1 = null;
 
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.Test
 				{
 					break;
 				}
-				Sharpen.Thread.Sleep(100);
+				Thread.Sleep(100);
 			}
 			Assert.Equal(3, CountStringOccurrences(s, "BLOCKED"));
 			Failure failure = new Failure(null, new Exception(TimedOutTestsListener.TestTimedOutPrefix

@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.File;
+
+using File;
 
 namespace Org.Apache.Hadoop.FS
 {

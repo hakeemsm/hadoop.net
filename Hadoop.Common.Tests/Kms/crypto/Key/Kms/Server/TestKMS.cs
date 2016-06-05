@@ -17,7 +17,7 @@ using Org.Apache.Hadoop.Minikdc;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Security.Ssl;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -210,7 +210,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 			principals.AddItem("CREATE_MATERIAL");
 			principals.AddItem("ROLLOVER_MATERIAL");
-			kdc.CreatePrincipal(keytab, Sharpen.Collections.ToArray(principals, new string[principals
+			kdc.CreatePrincipal(keytab, Collections.ToArray(principals, new string[principals
 				.Count]));
 		}
 
@@ -307,15 +307,15 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				if (ssl)
 				{
 					KeyProvider testKp = this._enclosing.CreateProvider(uri, conf);
-					ThreadGroup threadGroup = Sharpen.Thread.CurrentThread().GetThreadGroup();
+					ThreadGroup threadGroup = Thread.CurrentThread().GetThreadGroup();
 					while (threadGroup.GetParent() != null)
 					{
 						threadGroup = threadGroup.GetParent();
 					}
-					Sharpen.Thread[] threads = new Sharpen.Thread[threadGroup.ActiveCount()];
+					Thread[] threads = new Thread[threadGroup.ActiveCount()];
 					threadGroup.Enumerate(threads);
-					Sharpen.Thread reloaderThread = null;
-					foreach (Sharpen.Thread thread in threads)
+					Thread reloaderThread = null;
+					foreach (Thread thread in threads)
 					{
 						if ((thread.GetName() != null) && (thread.GetName().Contains("Truststore reloader thread"
 							)))
@@ -333,7 +333,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 						{
 							break;
 						}
-						Sharpen.Thread.Sleep(1000);
+						Thread.Sleep(1000);
 					}
 					NUnit.Framework.Assert.IsFalse("Reloader is still alive", reloaderStillAlive);
 				}
@@ -350,7 +350,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 					KeyProvider kp = this._enclosing.CreateProvider(uri, conf);
 					// getKeys() empty
 					Assert.True(kp.GetKeys().IsEmpty());
-					Sharpen.Thread.Sleep(4000);
+					Thread.Sleep(4000);
 					Org.Apache.Hadoop.Security.Token.Token<object>[] tokens = ((KeyProviderDelegationTokenExtension.DelegationTokenExtension
 						)kp).AddDelegationTokens("myuser", new Credentials());
 					Assert.Equal(1, tokens.Length);
@@ -375,7 +375,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				{
 					KeyProvider kp = this._enclosing._enclosing.CreateProvider(uri, conf);
 					Assert.True(kp.GetKeys().IsEmpty());
-					Sharpen.Thread.Sleep(4000);
+					Thread.Sleep(4000);
 					Org.Apache.Hadoop.Security.Token.Token<object>[] tokens = ((KeyProviderDelegationTokenExtension.DelegationTokenExtension
 						)kp).AddDelegationTokens("myuser", new Credentials());
 					Assert.Equal(1, tokens.Length);
@@ -1371,7 +1371,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 					KeyProvider kp = this._enclosing._enclosing.CreateProvider(uri, conf);
 					kp.CreateKey("k0", new byte[16], new KeyProvider.Options(conf));
 					kp.CreateKey("k1", new byte[16], new KeyProvider.Options(conf));
-					Sharpen.Thread.Sleep(3500);
+					Thread.Sleep(3500);
 					kp.CreateKey("k2", new byte[16], new KeyProvider.Options(conf));
 					return null;
 				}
@@ -1422,7 +1422,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				{
 					KeyProvider kp = this._enclosing._enclosing.CreateProvider(uri, conf);
 					kp.CreateKey("k3", new byte[16], new KeyProvider.Options(conf));
-					Sharpen.Thread.Sleep(3500);
+					Thread.Sleep(3500);
 					try
 					{
 						kp.CreateKey("k4", new byte[16], new KeyProvider.Options(conf));
@@ -1525,11 +1525,11 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				//stop the reloader, to avoid running while we are writing the new file
 				KMSWebApp.GetACLs().StopReloader();
 				// test ACL reloading
-				Sharpen.Thread.Sleep(10);
+				Thread.Sleep(10);
 				// to ensure the ACLs file modifiedTime is newer
 				conf.Set(KMSACLs.Type.Create.GetAclConfigKey(), "foo");
 				TestKMS.WriteConf(testDir, conf);
-				Sharpen.Thread.Sleep(1000);
+				Thread.Sleep(1000);
 				KMSWebApp.GetACLs().Run();
 				// forcing a reload by hand.
 				// should not be able to create a key now
@@ -2371,7 +2371,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			int port;
 			try
 			{
-				sock = Sharpen.Extensions.CreateServerSocket(0, 50, Sharpen.Extensions.GetAddressByName
+				sock = Extensions.CreateServerSocket(0, 50, Extensions.GetAddressByName
 					("localhost"));
 				port = sock.GetLocalPort();
 			}

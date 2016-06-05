@@ -3,7 +3,7 @@ using System.Text;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {

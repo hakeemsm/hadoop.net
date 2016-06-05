@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Javax.Net;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Ipc
 					{
 						Client.Log.Debug("removing client from cache: " + client);
 					}
-					Sharpen.Collections.Remove(clients, client.GetSocketFactory());
+					Collections.Remove(clients, client.GetSocketFactory());
 				}
 			}
 			if (client.IsZeroReference())

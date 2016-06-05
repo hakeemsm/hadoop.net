@@ -2,7 +2,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {

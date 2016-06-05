@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.Util
 				}
 			}
 			// expected
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			int timersAfter = CountTimerThreads();
 			System.Console.Error.WriteLine("after: " + timersAfter);
 			Assert.Equal(timersBefore, timersAfter);

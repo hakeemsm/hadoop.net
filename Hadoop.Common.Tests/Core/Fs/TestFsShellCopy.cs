@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -474,7 +474,7 @@ namespace Org.Apache.Hadoop.FS
 			foreach (Path path in paths)
 			{
 				FSDataOutputStream @out = lfs.Create(path);
-				@out.Write(Sharpen.Runtime.GetBytesForString(path.GetName()));
+				@out.Write(Runtime.GetBytesForString(path.GetName()));
 				@out.Close();
 			}
 		}
@@ -489,7 +489,7 @@ namespace Org.Apache.Hadoop.FS
 			@in.ReadFully(buffer);
 			@in.Close();
 			lfs.Delete(path, false);
-			return Sharpen.Runtime.GetStringForBytes(buffer);
+			return Runtime.GetStringForBytes(buffer);
 		}
 
 		// path handles "." rather oddly

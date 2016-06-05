@@ -1,6 +1,6 @@
 using System.IO;
 using Hadoop.Common.Core.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.IO
 
 		public override int GetHashCode()
 		{
-			return Sharpen.Runtime.FloatToIntBits(value);
+			return Runtime.FloatToIntBits(value);
 		}
 
 		/// <summary>Compares two FloatWritables.</summary>

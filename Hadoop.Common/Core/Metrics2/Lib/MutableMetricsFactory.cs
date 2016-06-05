@@ -21,7 +21,7 @@ using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Annotation;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			string methodName = method.Name;
 			if (methodName.StartsWith("get"))
 			{
-				return StringUtils.Capitalize(Sharpen.Runtime.Substring(methodName, 3));
+				return StringUtils.Capitalize(Runtime.Substring(methodName, 3));
 			}
 			return StringUtils.Capitalize(methodName);
 		}

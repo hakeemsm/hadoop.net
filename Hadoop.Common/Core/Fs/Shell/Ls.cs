@@ -4,7 +4,7 @@ using System.Text;
 using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			string line = string.Format(lineFormat, (stat.IsDirectory() ? "d" : "-"), stat.GetPermission
 				() + (stat.GetPermission().GetAclBit() ? "+" : " "), (stat.IsFile() ? stat.GetReplication
 				() : "-"), stat.GetOwner(), stat.GetGroup(), FormatSize(stat.GetLen()), dateFormat
-				.Format(Sharpen.Extensions.CreateDate(stat.GetModificationTime())), item);
+				.Format(Extensions.CreateDate(stat.GetModificationTime())), item);
 			@out.WriteLine(line);
 		}
 

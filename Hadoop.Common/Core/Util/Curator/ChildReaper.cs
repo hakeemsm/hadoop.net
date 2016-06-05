@@ -7,7 +7,7 @@ using Org.Apache.Curator.Framework.Recipes.Locks;
 using Org.Apache.Curator.Utils;
 using Org.Apache.Zookeeper.Data;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Curator
 {
@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 		/// <summary>Creates a thread-safe set backed by a hash map.</summary>
 		/// <remarks>
 		/// Creates a thread-safe set backed by a hash map. The set is backed by a
-		/// <see cref="Sharpen.ConcurrentHashMap{K, V}"/>
+		/// <see cref="ConcurrentHashMap{K, V}"/>
 		/// instance, and thus carries the same concurrency
 		/// guarantees.
 		/// <p>Unlike

@@ -8,7 +8,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Filter;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -64,7 +64,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		internal const string SourceFilterKey = "source.filter";
 
-		internal static readonly Sharpen.Pattern InstanceRegex = Sharpen.Pattern.Compile(
+		internal static readonly Pattern InstanceRegex = Pattern.Compile(
 			"([^.*]+)\\..+");
 
 		internal static readonly Splitter Splitter = Splitter.On(',').TrimResults();
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			try
 			{
-				Type cls = Sharpen.Runtime.GetType(clsName, true, GetPluginLoader());
+				Type cls = Runtime.GetType(clsName, true, GetPluginLoader());
 				T plugin = (T)System.Activator.CreateInstance(cls);
 				plugin.Init(name.IsEmpty() ? this : ((Org.Apache.Hadoop.Metrics2.Impl.MetricsConfig
 					)Subset(name)));

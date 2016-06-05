@@ -2,8 +2,8 @@ using System;
 using Javax.Management;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2.Lib;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Metrics2.Util
 {

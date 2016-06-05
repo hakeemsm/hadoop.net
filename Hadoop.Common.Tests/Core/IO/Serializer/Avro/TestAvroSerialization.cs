@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Serializer;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Serializer.Avro
 {

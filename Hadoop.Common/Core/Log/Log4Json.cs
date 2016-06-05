@@ -6,7 +6,7 @@ using Org.Apache.Log4j.Spi;
 using Org.Codehaus.Jackson;
 using Org.Codehaus.Jackson.Map;
 using Org.Codehaus.Jackson.Node;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Log
 {
@@ -167,7 +167,7 @@ namespace Org.Apache.Hadoop.Log
 			json.WriteStartObject();
 			json.WriteStringField(Name, loggerName);
 			json.WriteNumberField(Time, timeStamp);
-			DateTime date = Sharpen.Extensions.CreateDate(timeStamp);
+			DateTime date = Extensions.CreateDate(timeStamp);
 			json.WriteStringField(Date, dateFormat.Format(date));
 			json.WriteStringField(Level, level);
 			json.WriteStringField(Thread, threadName);

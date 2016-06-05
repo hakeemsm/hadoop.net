@@ -20,7 +20,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Compress;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress.Bzip2
 {

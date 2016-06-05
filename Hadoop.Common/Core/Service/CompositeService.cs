@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Service
 {
@@ -159,7 +159,7 @@ namespace Org.Apache.Hadoop.Service
 		/// flag to say "only start services that are
 		/// started, not those that are NOTINITED or INITED.
 		/// </param>
-		/// <exception cref="Sharpen.RuntimeException">
+		/// <exception cref="RuntimeException">
 		/// the first exception raised during the
 		/// stop process -<i>after all services are stopped</i>
 		/// </exception>

@@ -19,7 +19,7 @@ using System;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress.Lz4
 {

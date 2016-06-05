@@ -17,7 +17,7 @@
 */
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				Assert.True(iter.HasNext());
 				int val = iter.Next();
-				Assert.Equal(Sharpen.Extensions.ValueOf(i_1), val);
+				Assert.Equal(Extensions.ValueOf(i_1), val);
 			}
 			NUnit.Framework.Assert.IsFalse(iter.HasNext());
 			Assert.Equal(NumElems, list.Count);
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				Assert.True(iter.HasNext());
 				int val = iter.Next();
-				Assert.Equal(Sharpen.Extensions.ValueOf(i_2), val);
+				Assert.Equal(Extensions.ValueOf(i_2), val);
 				if (i_2 % 2 == 0)
 				{
 					iter.Remove();
@@ -131,7 +131,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				Assert.True(iter.HasNext());
 				int val = iter.Next();
-				Assert.Equal(Sharpen.Extensions.ValueOf(1 + (2 * i_3)), val);
+				Assert.Equal(Extensions.ValueOf(1 + (2 * i_3)), val);
 				iter.Remove();
 			}
 			NUnit.Framework.Assert.IsFalse(iter.HasNext());
@@ -152,22 +152,22 @@ namespace Org.Apache.Hadoop.Util
 			{
 				list.AddItem(i);
 			}
-			Assert.Equal(Sharpen.Extensions.ValueOf(100), list[100]);
-			Assert.Equal(Sharpen.Extensions.ValueOf(1000), list[1000]);
-			Assert.Equal(Sharpen.Extensions.ValueOf(10000), list[10000]);
-			Assert.Equal(Sharpen.Extensions.ValueOf(100000), list[100000]);
+			Assert.Equal(Extensions.ValueOf(100), list[100]);
+			Assert.Equal(Extensions.ValueOf(1000), list[1000]);
+			Assert.Equal(Extensions.ValueOf(10000), list[10000]);
+			Assert.Equal(Extensions.ValueOf(100000), list[100000]);
 			IEnumerator<int> iter = list.GetEnumerator();
 			iter.Next();
 			iter.Remove();
-			Assert.Equal(Sharpen.Extensions.ValueOf(1), list[0]);
+			Assert.Equal(Extensions.ValueOf(1), list[0]);
 			iter = list.GetEnumerator();
 			for (int i_1 = 0; i_1 < 500; i_1++)
 			{
 				iter.Next();
 			}
 			iter.Remove();
-			Assert.Equal(Sharpen.Extensions.ValueOf(502), list[500]);
-			Assert.Equal(Sharpen.Extensions.ValueOf(602), list[600]);
+			Assert.Equal(Extensions.ValueOf(502), list[500]);
+			Assert.Equal(Extensions.ValueOf(602), list[600]);
 		}
 	}
 }

@@ -17,7 +17,7 @@
 */
 using Com.Sun.Javadoc;
 using Jdiff;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Classification.Tools
 {

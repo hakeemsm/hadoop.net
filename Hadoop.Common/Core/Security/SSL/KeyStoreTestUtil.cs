@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security.Alias;
 using Org.Bouncycastle.X509;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
@@ -19,26 +19,26 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		{
 			string file = klass.FullName;
 			file = file.Replace('.', '/') + ".class";
-			Uri url = Sharpen.Thread.CurrentThread().GetContextClassLoader().GetResource(file
+			Uri url = Thread.CurrentThread().GetContextClassLoader().GetResource(file
 				);
 			string baseDir = url.ToURI().GetPath();
-			baseDir = Sharpen.Runtime.Substring(baseDir, 0, baseDir.Length - file.Length - 1);
+			baseDir = Runtime.Substring(baseDir, 0, baseDir.Length - file.Length - 1);
 			return baseDir;
 		}
 
-		/// <exception cref="Sharpen.CertificateEncodingException"/>
-		/// <exception cref="Sharpen.InvalidKeyException"/>
+		/// <exception cref="CertificateEncodingException"/>
+		/// <exception cref="InvalidKeyException"/>
 		/// <exception cref="System.InvalidOperationException"/>
-		/// <exception cref="Sharpen.NoSuchProviderException"/>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
-		/// <exception cref="Sharpen.SignatureException"/>
-		public static X509Certificate GenerateCertificate(string dn, Sharpen.KeyPair pair
+		/// <exception cref="NoSuchProviderException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
+		/// <exception cref="SignatureException"/>
+		public static X509Certificate GenerateCertificate(string dn, KeyPair pair
 			, int days, string algorithm)
 		{
 			DateTime from = new DateTime();
-			DateTime to = Sharpen.Extensions.CreateDate(from.GetTime() + days * 86400000l);
+			DateTime to = Extensions.CreateDate(from.GetTime() + days * 86400000l);
 			BigInteger sn = new BigInteger(64, new SecureRandom());
-			Sharpen.KeyPair keyPair = pair;
+			KeyPair keyPair = pair;
 			X509V1CertificateGenerator certGen = new X509V1CertificateGenerator();
 			X500Principal dnName = new X500Principal(dn);
 			certGen.SetSerialNumber(sn);
@@ -52,15 +52,15 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			return cert;
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
-		public static Sharpen.KeyPair GenerateKeyPair(string algorithm)
+		/// <exception cref="NoSuchAlgorithmException"/>
+		public static KeyPair GenerateKeyPair(string algorithm)
 		{
 			KeyPairGenerator keyGen = KeyPairGenerator.GetInstance(algorithm);
 			keyGen.Initialize(1024);
 			return keyGen.GenKeyPair();
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		/// <exception cref="System.IO.IOException"/>
 		private static KeyStore CreateEmptyKeyStore()
 		{
@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			return ks;
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		/// <exception cref="System.IO.IOException"/>
 		private static void SaveKeyStore(KeyStore ks, string filename, string password)
 		{
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			}
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public static void CreateKeyStore(string filename, string password, string alias, 
 			Key privateKey, Certificate cert)
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		/// <param name="alias">String alias to use for the key</param>
 		/// <param name="privateKey">Key to save in keystore</param>
 		/// <param name="cert">Certificate to use as certificate chain associated to key</param>
-		/// <exception cref="Sharpen.GeneralSecurityException">for any error with the security APIs
+		/// <exception cref="GeneralSecurityException">for any error with the security APIs
 		/// 	</exception>
 		/// <exception cref="System.IO.IOException">if there is an I/O error saving the file</exception>
 		public static void CreateKeyStore(string filename, string password, string keyPassword
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			SaveKeyStore(ks, filename, password);
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public static void CreateTrustStore(string filename, string password, string alias
 			, Certificate cert)
@@ -125,7 +125,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			SaveKeyStore(ks, filename, password);
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public static void CreateTrustStore<T>(string filename, string password, IDictionary
 			<string, T> certs)
@@ -219,14 +219,14 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				>();
 			if (useClientCert)
 			{
-				Sharpen.KeyPair cKP = KeyStoreTestUtil.GenerateKeyPair("RSA");
+				KeyPair cKP = KeyStoreTestUtil.GenerateKeyPair("RSA");
 				X509Certificate cCert = KeyStoreTestUtil.GenerateCertificate("CN=localhost, O=client"
 					, cKP, 30, "SHA1withRSA");
 				KeyStoreTestUtil.CreateKeyStore(clientKS, clientPassword, "client", cKP.GetPrivate
 					(), cCert);
 				certs["client"] = cCert;
 			}
-			Sharpen.KeyPair sKP = KeyStoreTestUtil.GenerateKeyPair("RSA");
+			KeyPair sKP = KeyStoreTestUtil.GenerateKeyPair("RSA");
 			X509Certificate sCert = KeyStoreTestUtil.GenerateCertificate("CN=localhost, O=server"
 				, sKP, 30, "SHA1withRSA");
 			KeyStoreTestUtil.CreateKeyStore(serverKS, serverPassword, "server", sKP.GetPrivate
@@ -381,7 +381,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				throw;
 			}
 		}

@@ -3,7 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -209,7 +209,7 @@ namespace Org.Apache.Hadoop.FS
 			rand.NextBytes(buffer);
 			stm.Write(buffer);
 			stm.Close();
-			return Sharpen.Runtime.GetStringForBytes(buffer);
+			return Runtime.GetStringForBytes(buffer);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -224,7 +224,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			Assert.Equal(offset, Math.Min(b.Length, @in.GetPos()));
 			@in.Close();
-			string s = Sharpen.Runtime.GetStringForBytes(b, 0, offset);
+			string s = Runtime.GetStringForBytes(b, 0, offset);
 			return s;
 		}
 

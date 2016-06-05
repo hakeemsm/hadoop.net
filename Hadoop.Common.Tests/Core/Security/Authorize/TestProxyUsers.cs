@@ -5,7 +5,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authorize
 {
@@ -106,7 +106,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			UserGroupInformation realUserUgi = UserGroupInformation.CreateRemoteUser(RealUserName
 				);
 			UserGroupInformation proxyUserUgi = UserGroupInformation.CreateProxyUserForTesting
-				(ProxyUserName, realUserUgi, Sharpen.Collections.ToArray(groups.GetGroups(ProxyUserName
+				(ProxyUserName, realUserUgi, Collections.ToArray(groups.GetGroups(ProxyUserName
 				), new string[groups.GetGroups(ProxyUserName).Count]));
 			AssertAuthorized(proxyUserUgi, ProxyIp);
 		}

@@ -17,8 +17,8 @@
 */
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.IO
 {

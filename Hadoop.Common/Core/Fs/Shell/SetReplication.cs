@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -122,7 +122,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 					@out.Flush();
 					try
 					{
-						Sharpen.Thread.Sleep(10000);
+						Thread.Sleep(10000);
 					}
 					catch (Exception)
 					{

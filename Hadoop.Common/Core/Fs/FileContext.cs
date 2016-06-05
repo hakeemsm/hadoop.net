@@ -11,7 +11,7 @@ using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -431,7 +431,7 @@ namespace Org.Apache.Hadoop.FS
 		/// If the file system with specified is
 		/// not supported
 		/// </exception>
-		/// <exception cref="Sharpen.RuntimeException">
+		/// <exception cref="RuntimeException">
 		/// If the file system specified is supported but
 		/// could not be instantiated, or if login fails.
 		/// </exception>
@@ -465,7 +465,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <summary>Create a FileContext using the passed config.</summary>
 		/// <remarks>
 		/// Create a FileContext using the passed config. Generally it is better to use
-		/// <see cref="GetFileContext(Sharpen.URI, Configuration)"/>
+		/// <see cref="GetFileContext(URI, Configuration)"/>
 		/// instead of this one.
 		/// </remarks>
 		/// <param name="aConf"/>
@@ -855,7 +855,7 @@ namespace Org.Apache.Hadoop.FS
 			/// <exception cref="Org.Apache.Hadoop.FS.UnresolvedLinkException"/>
 			public override bool Next(AbstractFileSystem fs, Path p)
 			{
-				return Sharpen.Extensions.ValueOf(fs.Delete(p, recursive));
+				return Extensions.ValueOf(fs.Delete(p, recursive));
 			}
 
 			private readonly bool recursive;
@@ -1055,7 +1055,7 @@ namespace Org.Apache.Hadoop.FS
 			/// <exception cref="Org.Apache.Hadoop.FS.UnresolvedLinkException"/>
 			public override bool Next(AbstractFileSystem fs, Path p)
 			{
-				return Sharpen.Extensions.ValueOf(fs.SetReplication(p, replication));
+				return Extensions.ValueOf(fs.SetReplication(p, replication));
 			}
 
 			private readonly short replication;
@@ -2198,7 +2198,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				AList<FileStatus> results = new AList<FileStatus>();
 				this.ListStatus(results, f, filter);
-				return Sharpen.Collections.ToArray(results, new FileStatus[results.Count]);
+				return Collections.ToArray(results, new FileStatus[results.Count]);
 			}
 
 			/// <summary>
@@ -2236,7 +2236,7 @@ namespace Org.Apache.Hadoop.FS
 				{
 					this.ListStatus(results, files[i], filter);
 				}
-				return Sharpen.Collections.ToArray(results, new FileStatus[results.Count]);
+				return Collections.ToArray(results, new FileStatus[results.Count]);
 			}
 
 			/*
@@ -2956,7 +2956,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				IList<Org.Apache.Hadoop.Security.Token.Token<object>> afsTokens = afs.GetDelegationTokens
 					(renewer);
-				Sharpen.Collections.AddAll(tokenList, afsTokens);
+				Collections.AddAll(tokenList, afsTokens);
 			}
 			return tokenList;
 		}

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Metrics.Jvm
 {
@@ -139,38 +139,38 @@ namespace Org.Apache.Hadoop.Metrics.Jvm
 				{
 					continue;
 				}
-				Sharpen.Thread.State state = threadInfo.GetThreadState();
-				if (state == Sharpen.Thread.State.New)
+				Thread.State state = threadInfo.GetThreadState();
+				if (state == Thread.State.New)
 				{
 					threadsNew++;
 				}
 				else
 				{
-					if (state == Sharpen.Thread.State.Runnable)
+					if (state == Thread.State.Runnable)
 					{
 						threadsRunnable++;
 					}
 					else
 					{
-						if (state == Sharpen.Thread.State.Blocked)
+						if (state == Thread.State.Blocked)
 						{
 							threadsBlocked++;
 						}
 						else
 						{
-							if (state == Sharpen.Thread.State.Waiting)
+							if (state == Thread.State.Waiting)
 							{
 								threadsWaiting++;
 							}
 							else
 							{
-								if (state == Sharpen.Thread.State.TimedWaiting)
+								if (state == Thread.State.TimedWaiting)
 								{
 									threadsTimedWaiting++;
 								}
 								else
 								{
-									if (state == Sharpen.Thread.State.Terminated)
+									if (state == Thread.State.Terminated)
 									{
 										threadsTerminated++;
 									}

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -143,7 +143,7 @@ namespace Org.Apache.Hadoop.Net
 		{
 			foreach (string name in names)
 			{
-				Sharpen.Collections.Remove(cache, name);
+				Collections.Remove(cache, name);
 			}
 		}
 	}

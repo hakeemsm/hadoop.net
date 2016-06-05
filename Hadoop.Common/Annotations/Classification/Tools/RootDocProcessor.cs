@@ -20,8 +20,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using Com.Sun.Javadoc;
 using Org.Apache.Hadoop.Classification;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Classification.Tools
 {
@@ -314,7 +314,7 @@ namespace Org.Apache.Hadoop.Classification.Tools
 						list.AddItem(Process(entry, componentType));
 					}
 				}
-				return Sharpen.Collections.ToArray(list, (object[])System.Array.CreateInstance(componentType
+				return Collections.ToArray(list, (object[])System.Array.CreateInstance(componentType
 					, list.Count));
 			}
 

@@ -22,7 +22,7 @@ using Org.Apache.Hadoop.Security.Token.Delegation;
 using Org.Codehaus.Jackson.Map;
 using Org.Mortbay.Jetty;
 using Org.Mortbay.Jetty.Servlet;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 {
@@ -145,8 +145,8 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		{
 			try
 			{
-				IPAddress localhost = Sharpen.Runtime.GetLocalHost();
-				Socket ss = Sharpen.Extensions.CreateServerSocket(0, 50, localhost);
+				IPAddress localhost = Runtime.GetLocalHost();
+				Socket ss = Extensions.CreateServerSocket(0, 50, localhost);
 				int port = ss.GetLocalPort();
 				ss.Close();
 				jetty = new Org.Mortbay.Jetty.Server(0);

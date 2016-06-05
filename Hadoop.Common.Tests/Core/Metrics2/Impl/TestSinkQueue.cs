@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -56,12 +56,12 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			SinkQueue<int> q = new SinkQueue<int>(2);
 			Runnable trigger = Org.Mockito.Mockito.Mock<Runnable>();
 			// try consuming emtpy equeue and blocking
-			Sharpen.Thread t = new _Thread_75(q, trigger);
+			Thread t = new _Thread_75(q, trigger);
 			t.Start();
 			// Should work with or without sleep
 			if (awhile > 0)
 			{
-				Sharpen.Thread.Sleep(awhile);
+				Thread.Sleep(awhile);
 			}
 			q.Enqueue(1);
 			q.Enqueue(2);
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			Org.Mockito.Mockito.Verify(trigger).Run();
 		}
 
-		private sealed class _Thread_75 : Sharpen.Thread
+		private sealed class _Thread_75 : Thread
 		{
 			public _Thread_75(SinkQueue<int> q, Runnable trigger)
 			{
@@ -347,7 +347,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				q.Enqueue(i);
 			}
 			CountDownLatch barrier = new CountDownLatch(1);
-			Sharpen.Thread t = new _Thread_251(q, barrier);
+			Thread t = new _Thread_251(q, barrier);
 			// causes failure without barrier
 			// a long time
 			t.SetName("Sleeping consumer");
@@ -359,7 +359,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			return q;
 		}
 
-		private sealed class _Thread_251 : Sharpen.Thread
+		private sealed class _Thread_251 : Thread
 		{
 			public _Thread_251(SinkQueue<int> q, CountDownLatch barrier)
 			{
@@ -371,7 +371,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(10);
+					Thread.Sleep(10);
 					q.Consume(new _Consumer_255(barrier));
 				}
 				catch (Exception ex)
@@ -392,7 +392,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				{
 					TestSinkQueue.Log.Info("sleeping");
 					barrier.CountDown();
-					Sharpen.Thread.Sleep(1000 * 86400);
+					Thread.Sleep(1000 * 86400);
 				}
 
 				private readonly CountDownLatch barrier;

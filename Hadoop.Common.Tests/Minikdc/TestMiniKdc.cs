@@ -4,7 +4,7 @@ using Javax.Security.Auth.Kerberos;
 using Javax.Security.Auth.Login;
 using NUnit.Framework;
 using Org.Apache.Directory.Server.Kerberos.Shared.Keytab;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Minikdc
 {

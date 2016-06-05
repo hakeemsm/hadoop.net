@@ -5,7 +5,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {

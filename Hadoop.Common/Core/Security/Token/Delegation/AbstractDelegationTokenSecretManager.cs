@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation
 {
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		/// </remarks>
 		protected internal bool storeTokenTrackingId;
 
-		private Sharpen.Thread tokenRemoverThread;
+		private Thread tokenRemoverThread;
 
 		protected internal volatile bool running;
 
@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		{
 			lock (this)
 			{
-				return Sharpen.Collections.ToArray(allKeys.Values, new DelegationKey[0]);
+				return Collections.ToArray(allKeys.Values, new DelegationKey[0]);
 			}
 		}
 
@@ -481,7 +481,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		protected internal virtual AbstractDelegationTokenSecretManager.DelegationTokenInformation
 			 CheckToken(TokenIdent identifier)
 		{
-			System.Diagnostics.Debug.Assert(Sharpen.Thread.HoldsLock(this));
+			System.Diagnostics.Debug.Assert(Thread.HoldsLock(this));
 			AbstractDelegationTokenSecretManager.DelegationTokenInformation info = GetTokenInfo
 				(identifier);
 			if (info == null)
@@ -639,7 +639,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 					throw new AccessControlException(canceller + " is not authorized to cancel the token"
 						);
 				}
-				AbstractDelegationTokenSecretManager.DelegationTokenInformation info = Sharpen.Collections.Remove
+				AbstractDelegationTokenSecretManager.DelegationTokenInformation info = Collections.Remove
 					(currentTokens, id);
 				if (info == null)
 				{
@@ -763,7 +763,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			}
 		}
 
-		private class ExpiredTokenRemover : Sharpen.Thread
+		private class ExpiredTokenRemover : Thread
 		{
 			private long lastMasterKeyUpdate;
 
@@ -798,7 +798,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 						}
 						try
 						{
-							Sharpen.Thread.Sleep(Math.Min(5000, this._enclosing.keyUpdateInterval));
+							Thread.Sleep(Math.Min(5000, this._enclosing.keyUpdateInterval));
 						}
 						catch (Exception ie)
 						{

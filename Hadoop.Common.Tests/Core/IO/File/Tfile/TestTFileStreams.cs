@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -153,7 +153,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				return;
 			}
 			DataOutputStream dos = writer.PrepareAppendKey(-1);
-			dos.Write(Sharpen.Runtime.GetBytesForString("key0"));
+			dos.Write(Runtime.GetBytesForString("key0"));
 			try
 			{
 				CloseOutput();
@@ -176,7 +176,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			try
 			{
 				outValue = writer.PrepareAppendValue(6);
-				outValue.Write(Sharpen.Runtime.GetBytesForString("value0"));
+				outValue.Write(Runtime.GetBytesForString("value0"));
 				Fail("Cannot add a value without adding key first. ");
 			}
 			catch (Exception)
@@ -202,7 +202,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			DataOutputStream outKey = writer.PrepareAppendKey(2);
 			try
 			{
-				outKey.Write(Sharpen.Runtime.GetBytesForString("key0"));
+				outKey.Write(Runtime.GetBytesForString("key0"));
 				Fail("Specified key length mismatched the actual key length.");
 			}
 			catch (IOException)
@@ -213,7 +213,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			try
 			{
 				outValue = writer.PrepareAppendValue(6);
-				outValue.Write(Sharpen.Runtime.GetBytesForString("value0"));
+				outValue.Write(Runtime.GetBytesForString("value0"));
 			}
 			catch (Exception)
 			{
@@ -231,7 +231,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			DataOutputStream outKey = writer.PrepareAppendKey(2);
 			try
 			{
-				outKey.Write(Sharpen.Runtime.GetBytesForString("key0"));
+				outKey.Write(Runtime.GetBytesForString("key0"));
 				outKey.Close();
 				NUnit.Framework.Assert.Fail("Key is longer than requested.");
 			}
@@ -252,12 +252,12 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				return;
 			}
 			DataOutputStream outKey = writer.PrepareAppendKey(4);
-			outKey.Write(Sharpen.Runtime.GetBytesForString("key0"));
+			outKey.Write(Runtime.GetBytesForString("key0"));
 			outKey.Close();
 			DataOutputStream outValue = writer.PrepareAppendValue(15);
 			try
 			{
-				outValue.Write(Sharpen.Runtime.GetBytesForString("value0"));
+				outValue.Write(Runtime.GetBytesForString("value0"));
 				outValue.Close();
 				NUnit.Framework.Assert.Fail("Value is shorter than expected.");
 			}
@@ -278,12 +278,12 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				return;
 			}
 			DataOutputStream outKey = writer.PrepareAppendKey(4);
-			outKey.Write(Sharpen.Runtime.GetBytesForString("key0"));
+			outKey.Write(Runtime.GetBytesForString("key0"));
 			outKey.Close();
 			DataOutputStream outValue = writer.PrepareAppendValue(3);
 			try
 			{
-				outValue.Write(Sharpen.Runtime.GetBytesForString("value0"));
+				outValue.Write(Runtime.GetBytesForString("value0"));
 				outValue.Close();
 				NUnit.Framework.Assert.Fail("Value is longer than expected.");
 			}
@@ -312,7 +312,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			DataOutputStream outKey = writer.PrepareAppendKey(8);
 			try
 			{
-				outKey.Write(Sharpen.Runtime.GetBytesForString("key0"));
+				outKey.Write(Runtime.GetBytesForString("key0"));
 				outKey.Close();
 				NUnit.Framework.Assert.Fail("Key is shorter than expected.");
 			}
@@ -335,7 +335,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			DataOutputStream outKey = writer.PrepareAppendKey(4);
 			try
 			{
-				outKey.Write(Sharpen.Runtime.GetBytesForString("key0"));
+				outKey.Write(Runtime.GetBytesForString("key0"));
 				outKey.Close();
 			}
 			catch (Exception)
@@ -451,7 +451,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				return;
 			}
 			long rawDataSize = WriteRecords(10000, false, false, false);
-			if (!Sharpen.Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
+			if (!Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
 				()))
 			{
 				Assert.True(@out.GetPos() < rawDataSize);
@@ -467,7 +467,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				return;
 			}
 			long rawDataSize = WriteRecords(10000, true, true, false);
-			if (!Sharpen.Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
+			if (!Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
 				()))
 			{
 				Assert.True(@out.GetPos() < rawDataSize);
@@ -485,16 +485,16 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				string key = TestTFileByteArrays.ComposeSortedKey("key", nx);
 				DataOutputStream outKey = writer.PrepareAppendKey(knownKeyLength ? key.Length : -
 					1);
-				outKey.Write(Sharpen.Runtime.GetBytesForString(key));
+				outKey.Write(Runtime.GetBytesForString(key));
 				outKey.Close();
 				string value = "value" + nx;
 				DataOutputStream outValue = writer.PrepareAppendValue(knownValueLength ? value.Length
 					 : -1);
-				outValue.Write(Sharpen.Runtime.GetBytesForString(value));
+				outValue.Write(Runtime.GetBytesForString(value));
 				outValue.Close();
-				rawDataSize += WritableUtils.GetVIntSize(Sharpen.Runtime.GetBytesForString(key).Length
-					) + Sharpen.Runtime.GetBytesForString(key).Length + WritableUtils.GetVIntSize(Sharpen.Runtime.GetBytesForString
-					(value).Length) + Sharpen.Runtime.GetBytesForString(value).Length;
+				rawDataSize += WritableUtils.GetVIntSize(Runtime.GetBytesForString(key).Length
+					) + Runtime.GetBytesForString(key).Length + WritableUtils.GetVIntSize(Runtime.GetBytesForString
+					(value).Length) + Runtime.GetBytesForString(value).Length;
 			}
 			if (close)
 			{

@@ -20,8 +20,8 @@ using Org.Apache.Hadoop.Security.Token.Delegation.Web;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Http.Client.Utils;
 using Org.Codehaus.Jackson.Map;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms
 {
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 					);
 				IList<KeyProviderCryptoExtension.EncryptedKeyVersion> ekvs = KMSClientProvider.ParseJSONEncKeyVersion
 					(keyName, response);
-				Sharpen.Collections.AddAll(keyQueue, ekvs);
+				Collections.AddAll(keyQueue, ekvs);
 			}
 
 			internal EncryptedQueueRefiller(KMSClientProvider _enclosing)
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 				metadata = new KMSClientProvider.KMSMetadata((string)valueMap[KMSRESTConstants.CipherField
 					], (int)valueMap[KMSRESTConstants.LengthField], (string)valueMap[KMSRESTConstants
 					.DescriptionField], (IDictionary<string, string>)valueMap[KMSRESTConstants.AttributesField
-					], Sharpen.Extensions.CreateDate((long)valueMap[KMSRESTConstants.CreatedField]), 
+					], Extensions.CreateDate((long)valueMap[KMSRESTConstants.CreatedField]), 
 					(int)valueMap[KMSRESTConstants.VersionsField]);
 			}
 			return metadata;
@@ -314,7 +314,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			/// <summary>Calls the wrapped configure() method, then sets timeouts</summary>
 			/// <param name="conn">
 			/// the
-			/// <see cref="Sharpen.HttpURLConnection"/>
+			/// <see cref="HttpURLConnection"/>
 			/// instance to configure.
 			/// </param>
 			/// <returns>the connection</returns>
@@ -337,7 +337,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			: base(conf)
 		{
 			kmsUrl = CreateServiceURL(ExtractKMSPath(uri));
-			if (Sharpen.Runtime.EqualsIgnoreCase("https", new Uri(kmsUrl).Scheme))
+			if (Runtime.EqualsIgnoreCase("https", new Uri(kmsUrl).Scheme))
 			{
 				sslFactory = new SSLFactory(SSLFactory.Mode.Client, conf);
 				try
@@ -379,7 +379,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			string str = new Uri(path.ToString()).ToExternalForm();
 			if (str.EndsWith("/"))
 			{
-				str = Sharpen.Runtime.Substring(str, 0, str.Length - 1);
+				str = Runtime.Substring(str, 0, str.Length - 1);
 			}
 			return new Uri(str + KMSRESTConstants.ServiceVersion + "/").ToExternalForm();
 		}
@@ -568,7 +568,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			// extract and set the authToken.. (Workaround till we actually fix
 			// AuthenticatedURL properly to set authToken post initialization)
 			HttpExceptionUtils.ValidateResponse(conn, expectedResponse);
-			if (Sharpen.Runtime.EqualsIgnoreCase(ApplicationJsonMime, conn.GetContentType()) 
+			if (Runtime.EqualsIgnoreCase(ApplicationJsonMime, conn.GetContentType()) 
 				&& klass != null)
 			{
 				ObjectMapper mapper = new ObjectMapper();
@@ -657,7 +657,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 				// topping at 1500 to account for initial URL and encoded names
 				if (batchLen > 1500)
 				{
-					list.AddItem(Sharpen.Collections.ToArray(batch, new string[batch.Count]));
+					list.AddItem(Collections.ToArray(batch, new string[batch.Count]));
 					batch = new AList<string>();
 					batchLen = additionalLen;
 				}
@@ -665,7 +665,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			}
 			if (!batch.IsEmpty())
 			{
-				list.AddItem(Sharpen.Collections.ToArray(batch, new string[batch.Count]));
+				list.AddItem(Collections.ToArray(batch, new string[batch.Count]));
 			}
 			return list;
 		}
@@ -690,11 +690,11 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 					}
 				}
 			}
-			return Sharpen.Collections.ToArray(keysMetadata, new KeyProvider.Metadata[keysMetadata
+			return Collections.ToArray(keysMetadata, new KeyProvider.Metadata[keysMetadata
 				.Count]);
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		private KeyProvider.KeyVersion CreateKeyInternal(string name, byte[] material, KeyProvider.Options
 			 options)
@@ -725,7 +725,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			return ParseJSONKeyVersion(response);
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion CreateKey(string name, KeyProvider.Options
 			 options)
@@ -748,7 +748,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			}
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		private KeyProvider.KeyVersion RollNewVersionInternal(string name, byte[] material
 			)
@@ -770,7 +770,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			return keyVersion;
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion RollNewVersion(string name)
 		{
@@ -793,7 +793,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public virtual KeyProviderCryptoExtension.EncryptedKeyVersion GenerateEncryptedKey
 			(string encryptionKeyName)
 		{
@@ -812,7 +812,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public virtual KeyProvider.KeyVersion DecryptEncryptedKey(KeyProviderCryptoExtension.EncryptedKeyVersion
 			 encryptedKeyVersion)
 		{
@@ -960,7 +960,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 				}
 				catch (Exception)
 				{
-					Sharpen.Thread.CurrentThread().Interrupt();
+					Thread.CurrentThread().Interrupt();
 				}
 				catch (Exception e)
 				{

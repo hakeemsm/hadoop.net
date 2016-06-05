@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -79,15 +79,15 @@ namespace Org.Apache.Hadoop.IO
 				.HalfDigest());
 			Assert.True("hash collision", closeHash1.GetHashCode() != closeHash2
 				.GetHashCode());
-			Sharpen.Thread t1 = new _Thread_93(md5HashFF);
-			Sharpen.Thread t2 = new _Thread_103(md5Hash00);
+			Thread t1 = new _Thread_93(md5HashFF);
+			Thread t2 = new _Thread_103(md5Hash00);
 			t1.Start();
 			t2.Start();
 			t1.Join();
 			t2.Join();
 		}
 
-		private sealed class _Thread_93 : Sharpen.Thread
+		private sealed class _Thread_93 : Thread
 		{
 			public _Thread_93(MD5Hash md5HashFF)
 			{
@@ -106,7 +106,7 @@ namespace Org.Apache.Hadoop.IO
 			private readonly MD5Hash md5HashFF;
 		}
 
-		private sealed class _Thread_103 : Sharpen.Thread
+		private sealed class _Thread_103 : Thread
 		{
 			public _Thread_103(MD5Hash md5Hash00)
 			{
@@ -129,7 +129,7 @@ namespace Org.Apache.Hadoop.IO
 		public virtual void TestFactoryReturnsClearedHashes()
 		{
 			// A stream that will throw an IOE after reading some bytes
-			ByteArrayInputStream failingStream = new _ByteArrayInputStream_122(Sharpen.Runtime.GetBytesForString
+			ByteArrayInputStream failingStream = new _ByteArrayInputStream_122(Runtime.GetBytesForString
 				("xxxx"));
 			string TestString = "hello";
 			// Calculate the correct digest for the test string

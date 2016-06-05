@@ -4,7 +4,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -540,7 +540,7 @@ namespace Org.Apache.Hadoop.FS
 			Trash trash = new Trash(conf);
 			// Start Emptier in background
 			Runnable emptier = trash.GetEmptier();
-			Sharpen.Thread emptierThread = new Sharpen.Thread(emptier);
+			Thread emptierThread = new Thread(emptier);
 			emptierThread.Start();
 			FsShell shell = new FsShell();
 			shell.SetConf(conf);
@@ -586,7 +586,7 @@ namespace Org.Apache.Hadoop.FS
 					Assert.True(checkpoints.Count > files.Length);
 					break;
 				}
-				Sharpen.Thread.Sleep(5000);
+				Thread.Sleep(5000);
 			}
 			emptierThread.Interrupt();
 			emptierThread.Join();

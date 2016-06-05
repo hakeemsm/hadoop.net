@@ -7,7 +7,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -52,10 +52,10 @@ namespace Org.Apache.Hadoop.HA
 		private HealthMonitor.State state = HealthMonitor.State.Initializing;
 
 		/// <summary>Listeners for state changes</summary>
-		private IList<HealthMonitor.Callback> callbacks = Sharpen.Collections.SynchronizedList
+		private IList<HealthMonitor.Callback> callbacks = Collections.SynchronizedList
 			(new List<HealthMonitor.Callback>());
 
-		private IList<HealthMonitor.ServiceStateCallback> serviceStateCallbacks = Sharpen.Collections
+		private IList<HealthMonitor.ServiceStateCallback> serviceStateCallbacks = Collections
 			.SynchronizedList(new List<HealthMonitor.ServiceStateCallback>());
 
 		private HAServiceStatus lastServiceState = new HAServiceStatus(HAServiceProtocol.HAServiceState
@@ -139,7 +139,7 @@ namespace Org.Apache.Hadoop.HA
 			TryConnect();
 			while (proxy == null)
 			{
-				Sharpen.Thread.Sleep(connectRetryInterval);
+				Thread.Sleep(connectRetryInterval);
 				TryConnect();
 			}
 			System.Diagnostics.Debug.Assert(proxy != null);
@@ -199,7 +199,7 @@ namespace Org.Apache.Hadoop.HA
 						RPC.StopProxy(proxy);
 						proxy = null;
 						EnterState(HealthMonitor.State.ServiceNotResponding);
-						Sharpen.Thread.Sleep(sleepAfterDisconnectMillis);
+						Thread.Sleep(sleepAfterDisconnectMillis);
 						return;
 					}
 				}
@@ -211,7 +211,7 @@ namespace Org.Apache.Hadoop.HA
 				{
 					EnterState(HealthMonitor.State.ServiceHealthy);
 				}
-				Sharpen.Thread.Sleep(checkIntervalMillis);
+				Thread.Sleep(checkIntervalMillis);
 			}
 		}
 
@@ -295,14 +295,14 @@ namespace Org.Apache.Hadoop.HA
 				this.SetUncaughtExceptionHandler(new _UncaughtExceptionHandler_283(this));
 			}
 
-			private sealed class _UncaughtExceptionHandler_283 : Sharpen.Thread.UncaughtExceptionHandler
+			private sealed class _UncaughtExceptionHandler_283 : Thread.UncaughtExceptionHandler
 			{
 				public _UncaughtExceptionHandler_283(MonitorDaemon _enclosing)
 				{
 					this._enclosing = _enclosing;
 				}
 
-				public void UncaughtException(Sharpen.Thread t, Exception e)
+				public void UncaughtException(Thread t, Exception e)
 				{
 					HealthMonitor.Log.Fatal("Health monitor failed", e);
 					this._enclosing._enclosing.EnterState(HealthMonitor.State.HealthMonitorFailed);

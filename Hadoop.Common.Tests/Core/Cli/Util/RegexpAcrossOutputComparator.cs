@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Cli.Util
 {
@@ -18,7 +18,7 @@ namespace Org.Apache.Hadoop.Cli.Util
 	{
 		public override bool Compare(string actual, string expected)
 		{
-			return Sharpen.Pattern.Compile(expected).Matcher(actual).Find();
+			return Pattern.Compile(expected).Matcher(actual).Find();
 		}
 	}
 }

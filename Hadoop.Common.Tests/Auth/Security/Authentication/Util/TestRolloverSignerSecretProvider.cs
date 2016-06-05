@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -11,9 +11,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		{
 			long rolloverFrequency = 15 * 1000;
 			// rollover every 15 sec
-			byte[] secret1 = Sharpen.Runtime.GetBytesForString("doctor");
-			byte[] secret2 = Sharpen.Runtime.GetBytesForString("who");
-			byte[] secret3 = Sharpen.Runtime.GetBytesForString("tardis");
+			byte[] secret1 = Runtime.GetBytesForString("doctor");
+			byte[] secret2 = Runtime.GetBytesForString("who");
+			byte[] secret3 = Runtime.GetBytesForString("tardis");
 			TestRolloverSignerSecretProvider.TRolloverSignerSecretProvider secretProvider = new 
 				TestRolloverSignerSecretProvider.TRolloverSignerSecretProvider(this, new byte[][]
 				 { secret1, secret2, secret3 });
@@ -26,21 +26,21 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret1, allSecrets[0]);
 				NUnit.Framework.Assert.IsNull(allSecrets[1]);
-				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
+				Thread.Sleep(rolloverFrequency + 2000);
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret2, currentSecret);
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret2, allSecrets[0]);
 				Assert.AssertArrayEquals(secret1, allSecrets[1]);
-				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
+				Thread.Sleep(rolloverFrequency + 2000);
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret3, currentSecret);
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret3, allSecrets[0]);
 				Assert.AssertArrayEquals(secret2, allSecrets[1]);
-				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
+				Thread.Sleep(rolloverFrequency + 2000);
 			}
 			finally
 			{

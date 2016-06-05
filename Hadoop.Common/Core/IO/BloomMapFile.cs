@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Hadoop.Util.Bloom;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {

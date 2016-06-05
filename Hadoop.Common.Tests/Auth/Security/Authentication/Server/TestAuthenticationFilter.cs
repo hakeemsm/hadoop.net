@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Security.Authentication.Util;
 using Org.Hamcrest;
 using Org.Mockito.Invocation;
 using Org.Mockito.Stubbing;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Server
 {

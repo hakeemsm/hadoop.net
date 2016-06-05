@@ -7,7 +7,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -2263,11 +2263,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				{
 					if (comparator.StartsWith(ComparatorJclass))
 					{
-						string compClassName = Sharpen.Runtime.Substring(comparator, ComparatorJclass.Length
+						string compClassName = Runtime.Substring(comparator, ComparatorJclass.Length
 							).Trim();
 						try
 						{
-							Type compClass = Sharpen.Runtime.GetType(compClassName);
+							Type compClass = Runtime.GetType(compClassName);
 							// use its default ctor to create an instance
 							return new CompareUtils.BytesComparator((RawComparator<object>)System.Activator.CreateInstance
 								(compClass));
@@ -2588,7 +2588,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				}
 				catch (IOException e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e, System.Console.Error);
+					Runtime.PrintStackTrace(e, System.Console.Error);
 				}
 			}
 		}

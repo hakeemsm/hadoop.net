@@ -3,7 +3,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {

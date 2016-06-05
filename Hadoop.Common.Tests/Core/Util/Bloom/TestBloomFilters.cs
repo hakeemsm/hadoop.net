@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Com.Google.Common.Collect;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Bloom
 {
@@ -17,8 +17,8 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		{
 			public _AbstractCollection_45()
 			{
-				this.falsePositive = ImmutableList.Of<Key>(new Key(Sharpen.Runtime.GetBytesForString
-					("99")), new Key(Sharpen.Runtime.GetBytesForString("963")));
+				this.falsePositive = ImmutableList.Of<Key>(new Key(Runtime.GetBytesForString
+					("99")), new Key(Runtime.GetBytesForString("963")));
 			}
 
 			internal readonly ImmutableList<Key> falsePositive;
@@ -41,9 +41,9 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		{
 			public _AbstractCollection_58()
 			{
-				this.falsePositive = ImmutableList.Of<Key>(new Key(Sharpen.Runtime.GetBytesForString
-					("769")), new Key(Sharpen.Runtime.GetBytesForString("772")), new Key(Sharpen.Runtime.GetBytesForString
-					("810")), new Key(Sharpen.Runtime.GetBytesForString("874")));
+				this.falsePositive = ImmutableList.Of<Key>(new Key(Runtime.GetBytesForString
+					("769")), new Key(Runtime.GetBytesForString("772")), new Key(Runtime.GetBytesForString
+					("810")), new Key(Runtime.GetBytesForString("874")));
 			}
 
 			internal readonly ImmutableList<Key> falsePositive;
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 			filter.AddFalsePositive(falsePositives);
 			for (int i = digits.GetStart(); i < numInsertions; i += 2)
 			{
-				filter.Add(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(
+				filter.Add(new Key(Runtime.GetBytesForString(Extensions.ToString(
 					i))));
 			}
 			foreach (Key key in falsePositives)
@@ -189,7 +189,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 			for (int i_1 = 1 - digits.GetStart(); i_1 < numInsertions; i_1 += 2)
 			{
 				NUnit.Framework.Assert.IsFalse(" testRetouchedBloomFilterAddFalsePositive error "
-					 + i_1, filter.MembershipTest(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString
+					 + i_1, filter.MembershipTest(new Key(Runtime.GetBytesForString(Extensions.ToString
 					(i_1)))));
 			}
 		}

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -14,11 +14,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			// use the same seed so we can predict the RNG
 			long seed = Runtime.CurrentTimeMillis();
 			Random rand = new Random(seed);
-			byte[] secret1 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
+			byte[] secret1 = Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
 				()));
-			byte[] secret2 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
+			byte[] secret2 = Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
 				()));
-			byte[] secret3 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
+			byte[] secret3 = Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
 				()));
 			RandomSignerSecretProvider secretProvider = new RandomSignerSecretProvider(seed);
 			try
@@ -30,21 +30,21 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret1, allSecrets[0]);
 				NUnit.Framework.Assert.IsNull(allSecrets[1]);
-				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
+				Thread.Sleep(rolloverFrequency + 2000);
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret2, currentSecret);
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret2, allSecrets[0]);
 				Assert.AssertArrayEquals(secret1, allSecrets[1]);
-				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
+				Thread.Sleep(rolloverFrequency + 2000);
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret3, currentSecret);
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret3, allSecrets[0]);
 				Assert.AssertArrayEquals(secret2, allSecrets[1]);
-				Sharpen.Thread.Sleep(rolloverFrequency + 2000);
+				Thread.Sleep(rolloverFrequency + 2000);
 			}
 			finally
 			{

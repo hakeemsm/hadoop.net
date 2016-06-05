@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Htrace;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tracing
 {

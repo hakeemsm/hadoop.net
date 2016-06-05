@@ -9,7 +9,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -19,12 +19,12 @@ namespace Org.Apache.Hadoop.Net
 
 		private const int DestPort = 4040;
 
-		private static readonly string DestPortName = Sharpen.Extensions.ToString(DestPort
+		private static readonly string DestPortName = Extensions.ToString(DestPort
 			);
 
 		private const int LocalPort = 8080;
 
-		private static readonly string LocalPortName = Sharpen.Extensions.ToString(LocalPort
+		private static readonly string LocalPortName = Extensions.ToString(LocalPort
 			);
 
 		/// <summary>
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Net
 		{
 			// Binding a ServerSocket is enough to accept connections.
 			// Rely on the backlog to accept for us.
-			Socket ss = Sharpen.Extensions.CreateServerSocket(0);
+			Socket ss = Extensions.CreateServerSocket(0);
 			Socket s;
 			if (withChannel)
 			{
@@ -161,7 +161,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <summary>Test for {</summary>
-		/// <exception cref="Sharpen.UnknownHostException">@link NetUtils#getLocalInetAddress(String)
+		/// <exception cref="UnknownHostException">@link NetUtils#getLocalInetAddress(String)
 		/// 	</exception>
 		/// <exception cref="System.Net.Sockets.SocketException"></exception>
 		/// <exception cref="System.Exception"/>
@@ -174,7 +174,7 @@ namespace Org.Apache.Hadoop.Net
 			NUnit.Framework.Assert.IsNull(NetUtils.GetLocalInetAddress(null));
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public virtual void TestVerifyHostnamesException()
 		{
 			string[] names = new string[] { "valid.host.com", "1.com", "invalid host here" };
@@ -205,7 +205,7 @@ namespace Org.Apache.Hadoop.Net
 		public virtual void TestIsLocalAddress()
 		{
 			// Test - local host is local address
-			Assert.True(NetUtils.IsLocalAddress(Sharpen.Runtime.GetLocalHost
+			Assert.True(NetUtils.IsLocalAddress(Runtime.GetLocalHost
 				()));
 			// Test - all addresses bound network interface is local address
 			Enumeration<NetworkInterface> interfaces = NetworkInterface.GetNetworkInterfaces(
@@ -229,7 +229,7 @@ namespace Org.Apache.Hadoop.Net
 					}
 				}
 			}
-			NUnit.Framework.Assert.IsFalse(NetUtils.IsLocalAddress(Sharpen.Extensions.GetAddressByName
+			NUnit.Framework.Assert.IsFalse(NetUtils.IsLocalAddress(Extensions.GetAddressByName
 				("8.8.8.8")));
 		}
 
@@ -294,7 +294,7 @@ namespace Org.Apache.Hadoop.Net
 			Assert.Equal(addr.GetHostName(), connectAddr.GetHostName());
 			addr = new IPEndPoint(1);
 			connectAddr = NetUtils.GetConnectAddress(addr);
-			Assert.Equal(Sharpen.Runtime.GetLocalHost().GetHostName(), connectAddr
+			Assert.Equal(Runtime.GetLocalHost().GetHostName(), connectAddr
 				.GetHostName());
 		}
 
@@ -345,7 +345,7 @@ namespace Org.Apache.Hadoop.Net
 			string message = ExtractExceptionMessage(e);
 			if (!(message.Contains(text)))
 			{
-				throw Sharpen.Extensions.InitCause(new AssertionFailedError("Wrong text in message "
+				throw Extensions.InitCause(new AssertionFailedError("Wrong text in message "
 					 + "\"" + message + "\"" + " expected \"" + text + "\""), e);
 			}
 		}
@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.Net
 			string message = e.Message;
 			if (message == null)
 			{
-				throw Sharpen.Extensions.InitCause(new AssertionFailedError("Empty text in exception "
+				throw Extensions.InitCause(new AssertionFailedError("Empty text in exception "
 					 + e), e);
 			}
 			return message;
@@ -369,7 +369,7 @@ namespace Org.Apache.Hadoop.Net
 			string message = ExtractExceptionMessage(e);
 			if (message.Contains(text))
 			{
-				throw Sharpen.Extensions.InitCause(new AssertionFailedError("Wrong text in message "
+				throw Extensions.InitCause(new AssertionFailedError("Wrong text in message "
 					 + "\"" + message + "\"" + " did not expect \"" + text + "\""), e);
 			}
 		}
@@ -383,7 +383,7 @@ namespace Org.Apache.Hadoop.Net
 			Log.Info(wrapped.ToString(), wrapped);
 			if (!(wrapped.GetType().Equals(expectedClass)))
 			{
-				throw Sharpen.Extensions.InitCause(new AssertionFailedError("Wrong exception class; expected "
+				throw Extensions.InitCause(new AssertionFailedError("Wrong exception class; expected "
 					 + expectedClass + " got " + wrapped.GetType() + ": " + wrapped), wrapped);
 			}
 			return wrapped;

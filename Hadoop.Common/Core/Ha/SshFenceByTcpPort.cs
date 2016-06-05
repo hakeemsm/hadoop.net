@@ -5,7 +5,7 @@ using System.Net;
 using Com.Jcraft.Jsch;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -230,7 +230,7 @@ namespace Org.Apache.Hadoop.HA
 		/// <summary>Container for the parsed arg line for this fencing method.</summary>
 		internal class Args
 		{
-			private static readonly Sharpen.Pattern UserPortRe = Sharpen.Pattern.Compile("([^:]+?)?(?:\\:(\\d+))?"
+			private static readonly Pattern UserPortRe = Pattern.Compile("([^:]+?)?(?:\\:(\\d+))?"
 				);
 
 			private const int DefaultSshPort = 22;
@@ -269,7 +269,7 @@ namespace Org.Apache.Hadoop.HA
 			{
 				try
 				{
-					return Sharpen.Extensions.ValueOf(portStr);
+					return Extensions.ValueOf(portStr);
 				}
 				catch (FormatException)
 				{

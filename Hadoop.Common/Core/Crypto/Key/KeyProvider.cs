@@ -6,7 +6,7 @@ using Com.Google.Gson.Stream;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 						{
 							buf.Append('0');
 						}
-						buf.Append(Sharpen.Extensions.ToHexString(right));
+						buf.Append(Extensions.ToHexString(right));
 					}
 				}
 				return buf.ToString();
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 						metaSB.Append(attribute.Value);
 						metaSB.Append("], ");
 					}
-					Sharpen.Runtime.DeleteCharAt(metaSB, metaSB.Length - 2);
+					Runtime.DeleteCharAt(metaSB, metaSB.Length - 2);
 				}
 				else
 				{
@@ -173,7 +173,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 
 			public virtual IDictionary<string, string> GetAttributes()
 			{
-				return (attributes == null) ? Sharpen.Collections.EmptyMap : attributes;
+				return (attributes == null) ? Collections.EmptyMap : attributes;
 			}
 
 			/// <summary>Get the algorithm from the cipher.</summary>
@@ -187,7 +187,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 				}
 				else
 				{
-					return Sharpen.Runtime.Substring(cipher, 0, slash);
+					return Runtime.Substring(cipher, 0, slash);
 				}
 			}
 
@@ -285,7 +285,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 							{
 								if (CreatedField.Equals(field))
 								{
-									created = Sharpen.Extensions.CreateDate(reader.NextLong());
+									created = Extensions.CreateDate(reader.NextLong());
 								}
 								else
 								{
@@ -301,7 +301,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 										}
 										else
 										{
-											if (Sharpen.Runtime.EqualsIgnoreCase(AttributesField, field))
+											if (Runtime.EqualsIgnoreCase(AttributesField, field))
 											{
 												reader.BeginObject();
 												attributes = new Dictionary<string, string>();
@@ -398,7 +398,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 
 			public virtual IDictionary<string, string> GetAttributes()
 			{
-				return (attributes == null) ? Sharpen.Collections.EmptyMap : attributes;
+				return (attributes == null) ? Collections.EmptyMap : attributes;
 			}
 
 			public override string ToString()
@@ -527,7 +527,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 			else
 			{
-				return Sharpen.Runtime.Substring(cipher, 0, slash);
+				return Runtime.Substring(cipher, 0, slash);
 			}
 		}
 
@@ -535,7 +535,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// <param name="size">length of the key.</param>
 		/// <param name="algorithm">algorithm to use for generating the key.</param>
 		/// <returns>the generated key.</returns>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		protected internal virtual byte[] GenerateKey(int size, string algorithm)
 		{
 			algorithm = GetAlgorithm(algorithm);
@@ -558,7 +558,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// <param name="options">the options for the new key.</param>
 		/// <returns>the version name of the first version of the key.</returns>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		public virtual KeyProvider.KeyVersion CreateKey(string name, KeyProvider.Options 
 			options)
 		{
@@ -600,7 +600,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// <param name="name">the basename of the key</param>
 		/// <returns>the name of the new version of the key</returns>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		public virtual KeyProvider.KeyVersion RollNewVersion(string name)
 		{
 			KeyProvider.Metadata meta = GetMetadata(name);
@@ -627,7 +627,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			{
 				throw new IOException("No version in key path " + versionName);
 			}
-			return Sharpen.Runtime.Substring(versionName, 0, div);
+			return Runtime.Substring(versionName, 0, div);
 		}
 
 		/// <summary>Build a version string from a basename and version number.</summary>

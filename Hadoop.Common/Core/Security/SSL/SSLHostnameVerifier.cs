@@ -33,7 +33,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
@@ -72,16 +72,16 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		/// <exception cref="System.IO.IOException"/>
 		public abstract void Check(string host, SSLSocket ssl);
 
-		/// <exception cref="Sharpen.SSLException"/>
+		/// <exception cref="SSLException"/>
 		public abstract void Check(string host, X509Certificate cert);
 
-		/// <exception cref="Sharpen.SSLException"/>
+		/// <exception cref="SSLException"/>
 		public abstract void Check(string host, string[] cns, string[] subjectAlts);
 
 		/// <exception cref="System.IO.IOException"/>
 		public abstract void Check(string[] hosts, SSLSocket ssl);
 
-		/// <exception cref="Sharpen.SSLException"/>
+		/// <exception cref="SSLException"/>
 		public abstract void Check(string[] hosts, X509Certificate cert);
 
 		/// <summary>
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		/// from the X.509 certificate.
 		/// </param>
 		/// <param name="hosts">The array of hostnames to verify.</param>
-		/// <exception cref="Sharpen.SSLException">If verification failed.</exception>
+		/// <exception cref="SSLException">If verification failed.</exception>
 		public abstract void Check(string[] hosts, string[] cns, string[] subjectAlts);
 
 		private sealed class _AbstractVerifier_130 : SSLHostnameVerifier.AbstractVerifier
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			{
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public sealed override void Check(string[] hosts, string[] cns, string[] subjectAlts
 				)
 			{
@@ -145,7 +145,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			{
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public sealed override void Check(string[] hosts, string[] cns, string[] subjectAlts
 				)
 			{
@@ -177,7 +177,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			{
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public sealed override void Check(string[] host, string[] cns, string[] subjectAlts
 				)
 			{
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			{
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public sealed override void Check(string[] host, string[] cns, string[] subjectAlts
 				)
 			{
@@ -330,13 +330,13 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				Check(new string[] { host }, ssl);
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public override void Check(string host, X509Certificate cert)
 			{
 				Check(new string[] { host }, cert);
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public override void Check(string host, string[] cns, string[] subjectAlts)
 			{
 				Check(new string[] { host }, cns, subjectAlts);
@@ -402,7 +402,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				Check(host, x509);
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public override void Check(string[] host, X509Certificate cert)
 			{
 				string[] cns = SSLHostnameVerifier.Certificates.GetCNs(cert);
@@ -410,7 +410,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				Check(host, cns, subjectAlts);
 			}
 
-			/// <exception cref="Sharpen.SSLException"/>
+			/// <exception cref="SSLException"/>
 			public virtual void Check(string[] hosts, string[] cns, string[] subjectAlts, bool
 				 ie6, bool strictWithSubDomains)
 			{
@@ -486,7 +486,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 						string hostName = StringUtils.ToLowerCase(hosts[i_1].Trim());
 						if (doWildcard)
 						{
-							match = hostName.EndsWith(Sharpen.Runtime.Substring(cn, 1));
+							match = hostName.EndsWith(Runtime.Substring(cn, 1));
 							if (match && strictWithSubDomains)
 							{
 								// If we're in strict mode, then [*.foo.com] is not
@@ -522,7 +522,7 @@ out_break: ;
 				// in the name.
 				if (x >= 0 && x + 1 < cn.Length)
 				{
-					tld = Sharpen.Runtime.Substring(cn, x + 1);
+					tld = Runtime.Substring(cn, x + 1);
 				}
 				for (int i = 0; i < tld.Length; i++)
 				{
@@ -544,7 +544,7 @@ out_break: ;
 					if (cn[cnLen - 3] == '.')
 					{
 						// Trim off the [*.] and the [.XX].
-						string s = Sharpen.Runtime.Substring(cn, 2, cnLen - 3);
+						string s = Runtime.Substring(cn, 2, cnLen - 3);
 						// And test against the sorted array of bad 2lds:
 						int x = System.Array.BinarySearch(BadCountry2lds, s);
 						return x < 0;
@@ -561,7 +561,7 @@ out_break: ;
 					int x = host.LastIndexOf('%');
 					if (x >= 0)
 					{
-						host = Sharpen.Runtime.Substring(host, 0, x);
+						host = Runtime.Substring(host, 0, x);
 					}
 				}
 				int x_1 = System.Array.BinarySearch(Localhosts, host);
@@ -622,13 +622,13 @@ out_break: ;
 					int x = tok.IndexOf("CN=");
 					if (x >= 0)
 					{
-						cnList.AddItem(Sharpen.Runtime.Substring(tok, x + 3));
+						cnList.AddItem(Runtime.Substring(tok, x + 3));
 					}
 				}
 				if (!cnList.IsEmpty())
 				{
 					string[] cns = new string[cnList.Count];
-					Sharpen.Collections.ToArray(cnList, cns);
+					Collections.ToArray(cnList, cns);
 					return cns;
 				}
 				else
@@ -662,7 +662,7 @@ out_break: ;
 				catch (CertificateParsingException cpe)
 				{
 					// Should probably log.debug() this?
-					Sharpen.Runtime.PrintStackTrace(cpe);
+					Runtime.PrintStackTrace(cpe);
 				}
 				if (c != null)
 				{
@@ -682,7 +682,7 @@ out_break: ;
 				if (!subjectAltList.IsEmpty())
 				{
 					string[] subjectAlts = new string[subjectAltList.Count];
-					Sharpen.Collections.ToArray(subjectAltList, subjectAlts);
+					Collections.ToArray(subjectAltList, subjectAlts);
 					return subjectAlts;
 				}
 				else

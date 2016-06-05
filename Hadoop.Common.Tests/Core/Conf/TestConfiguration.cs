@@ -11,7 +11,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Util;
 using Org.Codehaus.Jackson.Map;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Conf
 {
@@ -86,12 +86,12 @@ namespace Org.Apache.Hadoop.Conf
 			StartConfig();
 			DeclareProperty("prop", "A", "A");
 			EndConfig();
-			InputStream in1 = new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString(writer
+			InputStream in1 = new ByteArrayInputStream(Runtime.GetBytesForString(writer
 				.ToString()));
 			Configuration conf = new Configuration(false);
 			conf.AddResource(in1);
 			Assert.Equal("A", conf.Get("prop"));
-			InputStream in2 = new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString(writer
+			InputStream in2 = new ByteArrayInputStream(Runtime.GetBytesForString(writer
 				.ToString()));
 			conf.AddResource(in2);
 			Assert.Equal("A", conf.Get("prop"));
@@ -756,7 +756,7 @@ namespace Org.Apache.Hadoop.Conf
 			c.Set("x", " a, b\n,\nc ");
 			ICollection<string> strs = c.GetTrimmedStringCollection("x");
 			Assert.Equal(3, strs.Count);
-			Assert.AssertArrayEquals(new string[] { "a", "b", "c" }, Sharpen.Collections.ToArray
+			Assert.AssertArrayEquals(new string[] { "a", "b", "c" }, Collections.ToArray
 				(strs, new string[0]));
 			// Check that the result is mutable
 			strs.AddItem("z");
@@ -773,7 +773,7 @@ namespace Org.Apache.Hadoop.Conf
 			c.Set("x", "a, b, c");
 			ICollection<string> strs = c.GetStringCollection("x");
 			Assert.Equal(3, strs.Count);
-			Assert.AssertArrayEquals(new string[] { "a", " b", " c" }, Sharpen.Collections.ToArray
+			Assert.AssertArrayEquals(new string[] { "a", " b", " c" }, Collections.ToArray
 				(strs, new string[0]));
 			// Check that the result is mutable
 			strs.AddItem("z");
@@ -903,7 +903,7 @@ namespace Org.Apache.Hadoop.Conf
 			EndConfig();
 			Path fileResource = new Path(Config);
 			conf.AddResource(fileResource);
-			Sharpen.Pattern defaultPattern = Sharpen.Pattern.Compile("x+");
+			Pattern defaultPattern = Pattern.Compile("x+");
 			// Return default if missing
 			Assert.Equal(defaultPattern.Pattern(), conf.GetPattern("xxxxx"
 				, defaultPattern).Pattern());
@@ -1015,7 +1015,7 @@ namespace Org.Apache.Hadoop.Conf
 			Assert.Equal(connectAddr.GetHostName(), addr.GetHostName());
 			addr = new IPEndPoint(1);
 			connectAddr = conf.UpdateConnectAddr("myAddress", addr);
-			Assert.Equal(connectAddr.GetHostName(), Sharpen.Runtime.GetLocalHost
+			Assert.Equal(connectAddr.GetHostName(), Runtime.GetLocalHost
 				().GetHostName());
 		}
 
@@ -1468,17 +1468,17 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				threads.AddItem(new _T560292964(this, conf, i.ToString()));
 			}
-			foreach (Sharpen.Thread t in threads)
+			foreach (Thread t in threads)
 			{
 				t.Start();
 			}
-			foreach (Sharpen.Thread t_1 in threads)
+			foreach (Thread t_1 in threads)
 			{
 				t_1.Join();
 			}
 		}
 
-		internal class _T560292964 : Sharpen.Thread
+		internal class _T560292964 : Thread
 		{
 			private readonly Configuration config;
 

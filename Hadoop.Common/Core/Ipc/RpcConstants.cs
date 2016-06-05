@@ -1,5 +1,5 @@
 using Org.Apache.Commons.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.Ipc
 		public const int InvalidRetryCount = -1;
 
 		/// <summary>The first four bytes of Hadoop RPC connections</summary>
-		public static readonly ByteBuffer Header = ByteBuffer.Wrap(Sharpen.Runtime.GetBytesForString
+		public static readonly ByteBuffer Header = ByteBuffer.Wrap(Runtime.GetBytesForString
 			("hrpc", Charsets.Utf8));
 
 		public const byte CurrentVersion = 9;

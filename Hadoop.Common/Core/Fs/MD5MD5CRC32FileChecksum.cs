@@ -4,7 +4,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
 using Org.Xml.Sax;
 using Org.Znerd.Xmlenc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {

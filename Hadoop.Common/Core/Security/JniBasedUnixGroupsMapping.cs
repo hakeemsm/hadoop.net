@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <summary>Set up our JNI resources.</summary>
-		/// <exception cref="Sharpen.RuntimeException">if setup fails.</exception>
+		/// <exception cref="RuntimeException">if setup fails.</exception>
 		internal static void AnchorNative()
 		{
 		}

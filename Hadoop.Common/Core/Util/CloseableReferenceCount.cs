@@ -1,5 +1,5 @@
 using Com.Google.Common.Base;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <summary>Increment the reference count.</summary>
-		/// <exception cref="Sharpen.ClosedChannelException">If the status is closed.</exception>
+		/// <exception cref="ClosedChannelException">If the status is closed.</exception>
 		public virtual void Reference()
 		{
 			int curBits = status.IncrementAndGet();
@@ -55,8 +55,8 @@ namespace Org.Apache.Hadoop.Util
 		/// Decrement the reference count, checking to make sure that the
 		/// CloseableReferenceCount is not closed.
 		/// </summary>
-		/// <exception cref="Sharpen.AsynchronousCloseException">If the status is closed.</exception>
-		/// <exception cref="Sharpen.ClosedChannelException"/>
+		/// <exception cref="AsynchronousCloseException">If the status is closed.</exception>
+		/// <exception cref="ClosedChannelException"/>
 		public virtual void UnreferenceCheckClosed()
 		{
 			int newVal = status.DecrementAndGet();
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.Util
 		/// Once the status is closed, it cannot be reopened.
 		/// </remarks>
 		/// <returns>The current reference count.</returns>
-		/// <exception cref="Sharpen.ClosedChannelException">
+		/// <exception cref="ClosedChannelException">
 		/// If someone else closes the object
 		/// before we do.
 		/// </exception>

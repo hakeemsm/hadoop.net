@@ -1,7 +1,7 @@
 using System;
 using Org.Mockito.Invocation;
 using Org.Mockito.Stubbing;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Test
 {
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Test
 			/// <exception cref="System.Exception"/>
 			public object Answer(InvocationOnMock invocation)
 			{
-				t.SetStackTrace(Sharpen.Thread.CurrentThread().GetStackTrace());
+				t.SetStackTrace(Thread.CurrentThread().GetStackTrace());
 				foreach (StackTraceElement elem in t.GetStackTrace())
 				{
 					if (elem.ToString().Matches(pattern))

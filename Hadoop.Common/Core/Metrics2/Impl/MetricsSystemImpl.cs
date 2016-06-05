@@ -14,8 +14,8 @@ using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Lib;
 using Org.Apache.Hadoop.Metrics2.Util;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -306,15 +306,15 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				if (sources.Contains(name))
 				{
 					sources[name].Stop();
-					Sharpen.Collections.Remove(sources, name);
+					Collections.Remove(sources, name);
 				}
 				if (allSources.Contains(name))
 				{
-					Sharpen.Collections.Remove(allSources, name);
+					Collections.Remove(allSources, name);
 				}
 				if (namedCallbacks.Contains(name))
 				{
-					Sharpen.Collections.Remove(namedCallbacks, name);
+					Collections.Remove(namedCallbacks, name);
 				}
 			}
 		}
@@ -747,7 +747,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		{
 			try
 			{
-				return Sharpen.Runtime.GetLocalHost().GetHostName();
+				return Runtime.GetLocalHost().GetHostName();
 			}
 			catch (Exception e)
 			{

@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security.Token;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -104,14 +104,14 @@ namespace Org.Apache.Hadoop.Security
 		/// <param name="alias">the alias for the key</param>
 		public virtual void RemoveSecretKey(Text alias)
 		{
-			Sharpen.Collections.Remove(secretKeysMap, alias);
+			Collections.Remove(secretKeysMap, alias);
 		}
 
 		/// <summary>Return all the secret key entries in the in-memory map</summary>
 		public virtual IList<Text> GetAllSecretKeys()
 		{
 			IList<Text> list = new AList<Text>();
-			Sharpen.Collections.AddAll(list, secretKeysMap.Keys);
+			Collections.AddAll(list, secretKeysMap.Keys);
 			return list;
 		}
 
@@ -195,7 +195,7 @@ namespace Org.Apache.Hadoop.Security
 			ReadFields(@in);
 		}
 
-		private static readonly byte[] TokenStorageMagic = Sharpen.Runtime.GetBytesForString
+		private static readonly byte[] TokenStorageMagic = Runtime.GetBytesForString
 			("HDTS", Charsets.Utf8);
 
 		private const byte TokenStorageVersion = 0;

@@ -1,5 +1,5 @@
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -29,7 +29,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		private int size;
 
-		private Sharpen.Thread currentConsumer = null;
+		private Thread currentConsumer = null;
 
 		internal SinkQueue(int capacity)
 		{
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				++size;
 				tail = (tail + 1) % data.Length;
 				data[tail] = e;
-				Sharpen.Runtime.Notify(this);
+				Runtime.Notify(this);
 				return true;
 			}
 		}
@@ -110,7 +110,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				CheckConsumer();
 				while (0 == size)
 				{
-					Sharpen.Runtime.Wait(this);
+					Runtime.Wait(this);
 				}
 				return _dequeue();
 			}
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				CheckConsumer();
 				while (0 == size)
 				{
-					Sharpen.Runtime.Wait(this);
+					Runtime.Wait(this);
 				}
 				SetConsumerLock();
 				return Front();
@@ -147,7 +147,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		{
 			lock (this)
 			{
-				currentConsumer = Sharpen.Thread.CurrentThread();
+				currentConsumer = Thread.CurrentThread();
 			}
 		}
 

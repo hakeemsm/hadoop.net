@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.Ipc
 					operationCount.IncrementAndGet();
 					if (methodTime > 0)
 					{
-						Sharpen.Thread.Sleep(methodTime);
+						Thread.Sleep(methodTime);
 					}
 				}
 				finally
@@ -193,7 +193,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.Exception"/>
-		/// <exception cref="Sharpen.ExecutionException"/>
+		/// <exception cref="ExecutionException"/>
 		public virtual void TestOperations(int input, int numberOfThreads, int pause, bool
 			 success, bool attemptedBefore, Server.Call call)
 		{

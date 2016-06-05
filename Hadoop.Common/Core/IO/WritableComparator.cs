@@ -5,7 +5,7 @@ using Hadoop.Common.Core.IO;
 using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			try
 			{
-				Sharpen.Runtime.GetType(cls.FullName, true, cls.GetClassLoader());
+				Runtime.GetType(cls.FullName, true, cls.GetClassLoader());
 			}
 			catch (TypeLoadException e)
 			{
@@ -258,7 +258,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>Parse a float from a byte array.</summary>
 		public static float ReadFloat(byte[] bytes, int start)
 		{
-			return Sharpen.Runtime.IntBitsToFloat(ReadInt(bytes, start));
+			return Runtime.IntBitsToFloat(ReadInt(bytes, start));
 		}
 
 		/// <summary>Parse a long from a byte array.</summary>

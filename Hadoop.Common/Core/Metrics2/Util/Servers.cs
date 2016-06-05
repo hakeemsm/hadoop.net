@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Net;
 using Com.Google.Common.Collect;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Util
 {

@@ -27,7 +27,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Metrics;
 using Org.Apache.Hadoop.Metrics.Spi;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Ganglia
 {
@@ -277,7 +277,7 @@ namespace Org.Apache.Hadoop.Metrics.Ganglia
 		/// </summary>
 		protected internal virtual void Xdr_string(string s)
 		{
-			byte[] bytes = Sharpen.Runtime.GetBytesForString(s, Charsets.Utf8);
+			byte[] bytes = Runtime.GetBytesForString(s, Charsets.Utf8);
 			int len = bytes.Length;
 			Xdr_int(len);
 			System.Array.Copy(bytes, 0, buffer, offset, len);

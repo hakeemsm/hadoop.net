@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -543,7 +543,7 @@ namespace Org.Apache.Hadoop.IO
 						positions[count] = position.Get();
 						count++;
 					}
-					this.keys = Sharpen.Collections.ToArray(keyBuilder, new IWritableComparable<>[count]
+					this.keys = Collections.ToArray(keyBuilder, new IWritableComparable<>[count]
 						);
 					positions = Arrays.CopyOf(positions, count);
 				}

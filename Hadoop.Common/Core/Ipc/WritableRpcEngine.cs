@@ -15,8 +15,8 @@ using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Htrace;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -90,7 +90,7 @@ namespace Org.Apache.Hadoop.Ipc
 				//at server, if client is using a different version.
 				// called when deserializing an invocation
 				this.methodName = method.Name;
-				this.parameterClasses = Sharpen.Runtime.GetParameterTypes(method);
+				this.parameterClasses = Runtime.GetParameterTypes(method);
 				this.parameters = parameters;
 				rpcVersion = writableRpcVersion;
 				if (method.DeclaringType.Equals(typeof(VersionedProtocol)))
@@ -447,7 +447,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				if (value != null && value.Length > 55)
 				{
-					value = Sharpen.Runtime.Substring(value, 0, 55) + "...";
+					value = Runtime.Substring(value, 0, 55) + "...";
 				}
 				Log.Info(value);
 			}

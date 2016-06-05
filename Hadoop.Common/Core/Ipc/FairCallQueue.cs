@@ -6,7 +6,7 @@ using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Metrics2.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {

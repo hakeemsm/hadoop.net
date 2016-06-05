@@ -20,7 +20,7 @@
 * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
 * great code.
 */
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress.Bzip2
 {

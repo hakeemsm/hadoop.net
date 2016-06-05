@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -29,10 +29,10 @@ namespace Org.Apache.Hadoop.Ipc
 				Count);
 			Assert.Equal("Equals of both socket factory shouldn't be same"
 				, defaultSocketFactory.Equals(dummySocketFactory), false);
-			NUnit.Framework.Assert.AreSame(toBeCached2, Sharpen.Collections.Remove(dummyCache
+			NUnit.Framework.Assert.AreSame(toBeCached2, Collections.Remove(dummyCache
 				, defaultSocketFactory));
 			dummyCache[defaultSocketFactory] = toBeCached2;
-			NUnit.Framework.Assert.AreSame(toBeCached1, Sharpen.Collections.Remove(dummyCache
+			NUnit.Framework.Assert.AreSame(toBeCached1, Collections.Remove(dummyCache
 				, dummySocketFactory));
 		}
 

@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -819,11 +819,11 @@ namespace Org.Apache.Hadoop.HA
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(sleepMs);
+					Thread.Sleep(sleepMs);
 				}
 				catch (Exception)
 				{
-					Sharpen.Thread.CurrentThread().Interrupt();
+					Thread.CurrentThread().Interrupt();
 				}
 			}
 		}
@@ -1376,7 +1376,7 @@ namespace Org.Apache.Hadoop.HA
 				}
 				catch (Exception e)
 				{
-					Sharpen.Thread.CurrentThread().Interrupt();
+					Thread.CurrentThread().Interrupt();
 					throw new IOException("Interrupted when connecting to zookeeper server", e);
 				}
 			}

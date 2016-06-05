@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Crypto.Key.Kms;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			Assert.Equal(mockKey, cache.GetCurrentKey("k1"));
 			Org.Mockito.Mockito.Verify(mockProv, Org.Mockito.Mockito.Times(1)).GetCurrentKey(
 				Org.Mockito.Mockito.Eq("k1"));
-			Sharpen.Thread.Sleep(1200);
+			Thread.Sleep(1200);
 			Assert.Equal(mockKey, cache.GetCurrentKey("k1"));
 			Org.Mockito.Mockito.Verify(mockProv, Org.Mockito.Mockito.Times(2)).GetCurrentKey(
 				Org.Mockito.Mockito.Eq("k1"));
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			Assert.Equal(mockKey, cache.GetKeyVersion("k1@0"));
 			Org.Mockito.Mockito.Verify(mockProv, Org.Mockito.Mockito.Times(1)).GetKeyVersion(
 				Org.Mockito.Mockito.Eq("k1@0"));
-			Sharpen.Thread.Sleep(200);
+			Thread.Sleep(200);
 			Assert.Equal(mockKey, cache.GetKeyVersion("k1@0"));
 			Org.Mockito.Mockito.Verify(mockProv, Org.Mockito.Mockito.Times(2)).GetKeyVersion(
 				Org.Mockito.Mockito.Eq("k1@0"));
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			Assert.Equal(mockMeta, cache.GetMetadata("k1"));
 			Org.Mockito.Mockito.Verify(mockProv, Org.Mockito.Mockito.Times(1)).GetMetadata(Org.Mockito.Mockito
 				.Eq("k1"));
-			Sharpen.Thread.Sleep(200);
+			Thread.Sleep(200);
 			Assert.Equal(mockMeta, cache.GetMetadata("k1"));
 			Org.Mockito.Mockito.Verify(mockProv, Org.Mockito.Mockito.Times(2)).GetMetadata(Org.Mockito.Mockito
 				.Eq("k1"));

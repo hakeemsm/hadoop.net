@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -32,7 +32,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <exception cref="System.Exception"/>
 		public virtual void TestFilterFileSystem()
 		{
-			foreach (MethodInfo m in Sharpen.Runtime.GetDeclaredMethods(typeof(AbstractFileSystem
+			foreach (MethodInfo m in Runtime.GetDeclaredMethods(typeof(AbstractFileSystem
 				)))
 			{
 				if (Modifier.IsStatic(m.GetModifiers()))
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				try
 				{
-					typeof(TestFilterFs.DontCheck).GetMethod(m.Name, Sharpen.Runtime.GetParameterTypes
+					typeof(TestFilterFs.DontCheck).GetMethod(m.Name, Runtime.GetParameterTypes
 						(m));
 					Log.Info("Skipping " + m);
 				}
@@ -58,7 +58,7 @@ namespace Org.Apache.Hadoop.FS
 					Log.Info("Testing " + m);
 					try
 					{
-						Sharpen.Runtime.GetDeclaredMethod(typeof(FilterFs), m.Name, Sharpen.Runtime.GetParameterTypes
+						Runtime.GetDeclaredMethod(typeof(FilterFs), m.Name, Runtime.GetParameterTypes
 							(m));
 					}
 					catch (MissingMethodException exc2)

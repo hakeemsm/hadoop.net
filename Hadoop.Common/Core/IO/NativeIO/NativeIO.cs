@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 using Sun.Misc;
 using Sun.Nio.CH;
 
@@ -797,7 +797,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			/// </remarks>
 			/// <param name="delta">amount to increment minimum and maximum working set size</param>
 			/// <exception cref="System.IO.IOException">for any error</exception>
-			/// <seealso cref="POSIX.Mlock(Sharpen.ByteBuffer, long)"/>
+			/// <seealso cref="POSIX.Mlock(ByteBuffer, long)"/>
 			public static void ExtendWorkingSetSize(long delta)
 			{
 			}
@@ -879,7 +879,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 		{
 			try
 			{
-				FieldInfo f = Sharpen.Runtime.GetDeclaredField(typeof(Unsafe), "theUnsafe");
+				FieldInfo f = Runtime.GetDeclaredField(typeof(Unsafe), "theUnsafe");
 				Unsafe @unsafe = (Unsafe)f.GetValue(null);
 				return @unsafe.PageSize();
 			}
@@ -926,7 +926,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			int i = name.IndexOf('\\');
 			if (i != -1)
 			{
-				name = Sharpen.Runtime.Substring(name, i + 1);
+				name = Runtime.Substring(name, i + 1);
 			}
 			return name;
 		}

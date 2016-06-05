@@ -6,8 +6,8 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Tools.Tar;
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -410,9 +410,9 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Extend
-		/// <see cref="Sharpen.FilePath"/>
+		/// <see cref="FilePath"/>
 		/// . Same as
-		/// <see cref="Sharpen.FilePath"/>
+		/// <see cref="FilePath"/>
 		/// except for two things: (1) This
 		/// treats file1Name as a very special file which is not delete-able
 		/// irrespective of it's parent-dir's permissions, a peculiar file instance for
@@ -436,7 +436,7 @@ namespace Org.Apache.Hadoop.FS
 
 			/// <summary>
 			/// Same as
-			/// <see cref="Sharpen.FilePath.Delete()"/>
+			/// <see cref="FilePath.Delete()"/>
 			/// except for file1Name which will never be
 			/// deleted (hard-coded)
 			/// </summary>
@@ -638,7 +638,7 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				TarEntry te = new TarEntry("/bar/foo");
-				byte[] data = Sharpen.Runtime.GetBytesForString("some-content", "UTF-8");
+				byte[] data = Runtime.GetBytesForString("some-content", "UTF-8");
 				te.SetSize(data.Length);
 				tos.PutNextEntry(te);
 				tos.Write(data);
@@ -743,7 +743,7 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				ZipEntry ze = new ZipEntry("foo");
-				byte[] data = Sharpen.Runtime.GetBytesForString("some-content", "UTF-8");
+				byte[] data = Runtime.GetBytesForString("some-content", "UTF-8");
 				ze.SetSize(data.Length);
 				tos.PutNextEntry(ze);
 				tos.Write(data);
@@ -792,8 +792,8 @@ namespace Org.Apache.Hadoop.FS
 			bool result = FileUtil.Copy(fs, srcPath, dest, false, conf);
 			Assert.True(result);
 			Assert.True(dest.Exists());
-			Assert.Equal(Sharpen.Runtime.GetBytesForString(content).Length
-				 + Sharpen.Runtime.GetBytesForString(Runtime.GetProperty("line.separator")).Length
+			Assert.Equal(Runtime.GetBytesForString(content).Length
+				 + Runtime.GetBytesForString(Runtime.GetProperty("line.separator")).Length
 				, dest.Length());
 			Assert.True(srcFile.Exists());
 			// should not be deleted
@@ -803,8 +803,8 @@ namespace Org.Apache.Hadoop.FS
 			result = FileUtil.Copy(fs, srcPath, dest, true, conf);
 			Assert.True(result);
 			Assert.True(dest.Exists());
-			Assert.Equal(Sharpen.Runtime.GetBytesForString(content).Length
-				 + Sharpen.Runtime.GetBytesForString(Runtime.GetProperty("line.separator")).Length
+			Assert.Equal(Runtime.GetBytesForString(content).Length
+				 + Runtime.GetBytesForString(Runtime.GetProperty("line.separator")).Length
 				, dest.Length());
 			Assert.True(!srcFile.Exists());
 			// should be deleted
@@ -820,7 +820,7 @@ namespace Org.Apache.Hadoop.FS
 			Assert.Equal(2, files.Length);
 			foreach (FilePath f in files)
 			{
-				Assert.Equal(3 + Sharpen.Runtime.GetBytesForString(Runtime.GetProperty
+				Assert.Equal(3 + Runtime.GetBytesForString(Runtime.GetProperty
 					("line.separator")).Length, f.Length());
 			}
 			Assert.True(!partitioned.Exists());
@@ -868,7 +868,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			NUnit.Framework.Assert.IsFalse(del.Exists());
 			del.Mkdirs();
-			byte[] data = Sharpen.Runtime.GetBytesForString("testSymLink");
+			byte[] data = Runtime.GetBytesForString("testSymLink");
 			FilePath file = new FilePath(del, File);
 			FilePath link = new FilePath(del, "_link");
 			//write some data to the file
@@ -940,7 +940,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			NUnit.Framework.Assert.IsFalse(del.Exists());
 			del.Mkdirs();
-			byte[] data = Sharpen.Runtime.GetBytesForString("testSymLinkData");
+			byte[] data = Runtime.GetBytesForString("testSymLinkData");
 			FilePath file = new FilePath(del, File);
 			FilePath link = new FilePath(del, "_link");
 			// write some data to the file
@@ -1038,7 +1038,7 @@ namespace Org.Apache.Hadoop.FS
 				, "cp3.jar", nonExistentSubdir);
 			string inputClassPath = StringUtils.Join(FilePath.pathSeparator, classPaths);
 			string[] jarCp = FileUtil.CreateJarWithClassPath(inputClassPath + FilePath.pathSeparator
-				 + "unexpandedwildcard/*", new Path(tmp.GetCanonicalPath()), Sharpen.Runtime.GetEnv
+				 + "unexpandedwildcard/*", new Path(tmp.GetCanonicalPath()), Runtime.GetEnv
 				());
 			string classPathJar = jarCp[0];
 			Assert.AssertNotEquals("Unexpanded wildcard was not placed in extra classpath", jarCp

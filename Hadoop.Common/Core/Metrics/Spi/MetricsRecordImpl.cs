@@ -19,7 +19,7 @@
 */
 using System.Collections.Generic;
 using Org.Apache.Hadoop.Metrics;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Spi
 {
@@ -77,7 +77,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// 	</exception>
 		public virtual void SetTag(string tagName, int tagValue)
 		{
-			tagTable[tagName] = Sharpen.Extensions.ValueOf(tagValue);
+			tagTable[tagName] = Extensions.ValueOf(tagValue);
 		}
 
 		/// <summary>Sets the named tag to the specified value.</summary>
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// 	</exception>
 		public virtual void SetTag(string tagName, long tagValue)
 		{
-			tagTable[tagName] = Sharpen.Extensions.ValueOf(tagValue);
+			tagTable[tagName] = Extensions.ValueOf(tagValue);
 		}
 
 		/// <summary>Sets the named tag to the specified value.</summary>
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// <summary>Removes any tag of the specified name.</summary>
 		public virtual void RemoveTag(string tagName)
 		{
-			Sharpen.Collections.Remove(tagTable, tagName);
+			Collections.Remove(tagTable, tagName);
 		}
 
 		/// <summary>Sets the named metric to the specified value.</summary>
@@ -125,7 +125,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// </exception>
 		public virtual void SetMetric(string metricName, int metricValue)
 		{
-			SetAbsolute(metricName, Sharpen.Extensions.ValueOf(metricValue));
+			SetAbsolute(metricName, Extensions.ValueOf(metricValue));
 		}
 
 		/// <summary>Sets the named metric to the specified value.</summary>
@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// </exception>
 		public virtual void SetMetric(string metricName, long metricValue)
 		{
-			SetAbsolute(metricName, Sharpen.Extensions.ValueOf(metricValue));
+			SetAbsolute(metricName, Extensions.ValueOf(metricValue));
 		}
 
 		/// <summary>Sets the named metric to the specified value.</summary>
@@ -185,7 +185,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// </exception>
 		public virtual void IncrMetric(string metricName, int metricValue)
 		{
-			SetIncrement(metricName, Sharpen.Extensions.ValueOf(metricValue));
+			SetIncrement(metricName, Extensions.ValueOf(metricValue));
 		}
 
 		/// <summary>Increments the named metric by the specified value.</summary>
@@ -197,7 +197,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// </exception>
 		public virtual void IncrMetric(string metricName, long metricValue)
 		{
-			SetIncrement(metricName, Sharpen.Extensions.ValueOf(metricValue));
+			SetIncrement(metricName, Extensions.ValueOf(metricValue));
 		}
 
 		/// <summary>Increments the named metric by the specified value.</summary>

@@ -1,7 +1,7 @@
 using System.Net;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Oncrpc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Oncrpc.Security
 {
@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.Oncrpc.Security
 		{
 			try
 			{
-				string s = Sharpen.Runtime.GetLocalHost().GetHostName();
+				string s = Runtime.GetLocalHost().GetHostName();
 				Hostname = s;
 				if (Log.IsDebugEnabled())
 				{
@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.Oncrpc.Security
 		public override void Write(XDR xdr)
 		{
 			// mStamp + mHostName.length + mHostName + mUID + mGID + mAuxGIDs.count
-			mCredentialsLength = 20 + Sharpen.Runtime.GetBytesForString(mHostName, Charsets.Utf8
+			mCredentialsLength = 20 + Runtime.GetBytesForString(mHostName, Charsets.Utf8
 				).Length;
 			// mAuxGIDs
 			if (mAuxGIDs != null && mAuxGIDs.Length > 0)

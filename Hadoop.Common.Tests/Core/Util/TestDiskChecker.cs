@@ -2,7 +2,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -178,7 +178,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (DiskChecker.DiskErrorException e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				NUnit.Framework.Assert.IsFalse("checkDir success", success);
 			}
 			localDir.Delete();

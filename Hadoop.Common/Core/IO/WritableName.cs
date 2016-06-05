@@ -4,7 +4,7 @@ using System.IO;
 using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>Return the class for a name.</summary>
 		/// <remarks>
 		/// Return the class for a name.  Default is
-		/// <see cref="Sharpen.Runtime.GetType(string)"/>
+		/// <see cref="Runtime.GetType(string)"/>
 		/// .
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.IO
 				catch (TypeLoadException e)
 				{
 					IOException newE = new IOException("WritableName can't load class: " + name);
-					Sharpen.Extensions.InitCause(newE, e);
+					Extensions.InitCause(newE, e);
 					throw newE;
 				}
 			}

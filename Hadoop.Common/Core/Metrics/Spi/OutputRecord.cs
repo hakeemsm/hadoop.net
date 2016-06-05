@@ -18,7 +18,7 @@
 * limitations under the License.
 */
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Spi
 {
@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// <summary>Returns the set of tag names</summary>
 		public virtual ICollection<string> GetTagNames()
 		{
-			return Sharpen.Collections.UnmodifiableSet(tagMap.Keys);
+			return Collections.UnmodifiableSet(tagMap.Keys);
 		}
 
 		/// <summary>Returns a tag object which is can be a String, Integer, Short or Byte.</summary>
@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		/// <summary>Returns the set of metric names.</summary>
 		public virtual ICollection<string> GetMetricNames()
 		{
-			return Sharpen.Collections.UnmodifiableSet(metricMap.Keys);
+			return Collections.UnmodifiableSet(metricMap.Keys);
 		}
 
 		/// <summary>Returns the metric object which can be a Float, Integer, Short or Byte.</summary>

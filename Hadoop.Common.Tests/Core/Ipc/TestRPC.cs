@@ -18,9 +18,9 @@ using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
-using Sharpen.Management;
-using Sharpen.Reflect;
+
+using Management;
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -121,7 +121,7 @@ namespace Org.Apache.Hadoop.Ipc
 						{
 							try
 							{
-								Sharpen.Runtime.Wait(this);
+								Runtime.Wait(this);
 							}
 							catch (Exception)
 							{
@@ -133,7 +133,7 @@ namespace Org.Apache.Hadoop.Ipc
 					else
 					{
 						fastPingCounter++;
-						Sharpen.Runtime.Notify(this);
+						Runtime.Notify(this);
 					}
 				}
 			}
@@ -141,7 +141,7 @@ namespace Org.Apache.Hadoop.Ipc
 			/// <exception cref="System.Exception"/>
 			public override void Sleep(long delay)
 			{
-				Sharpen.Thread.Sleep(delay);
+				Thread.Sleep(delay);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
@@ -427,7 +427,7 @@ namespace Org.Apache.Hadoop.Ipc
 				proxy = RPC.GetProxy<TestRPC.TestProtocol>(TestRPC.TestProtocol.versionID, addr, 
 					conf);
 				TestRPC.SlowRPC slowrpc = new TestRPC.SlowRPC(proxy);
-				Sharpen.Thread thread = new Sharpen.Thread(slowrpc, "SlowRPC");
+				Thread thread = new Thread(slowrpc, "SlowRPC");
 				thread.Start();
 				// send a slow RPC, which won't return until two fast pings
 				Assert.True("Slow RPC should not have finished1.", !slowrpc.IsDone
@@ -445,7 +445,7 @@ namespace Org.Apache.Hadoop.Ipc
 					System.Console.Out.WriteLine("Waiting for slow RPC to get done.");
 					try
 					{
-						Sharpen.Thread.Sleep(1000);
+						Thread.Sleep(1000);
 					}
 					catch (Exception)
 					{
@@ -536,11 +536,11 @@ namespace Org.Apache.Hadoop.Ipc
 				// create multiple threads and make them do large data transfers
 				System.Console.Out.WriteLine("Starting multi-threaded RPC test...");
 				server.SetSocketSendBufSize(1024);
-				Sharpen.Thread[] threadId = new Sharpen.Thread[numThreads];
+				Thread[] threadId = new Thread[numThreads];
 				for (int i = 0; i < numThreads; i++)
 				{
 					TestRPC.Transactions trans = new TestRPC.Transactions(proxy, datasize);
-					threadId[i] = new Sharpen.Thread(trans, "TransactionThread-" + i);
+					threadId[i] = new Thread(trans, "TransactionThread-" + i);
 					threadId[i].Start();
 				}
 				// wait for all transactions to get over
@@ -667,7 +667,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				server.Stop();
 			}
-			Assert.Equal(Sharpen.Runtime.GetLocalHost(), bindAddr.Address);
+			Assert.Equal(Runtime.GetLocalHost(), bindAddr.Address);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -872,7 +872,7 @@ namespace Org.Apache.Hadoop.Ipc
 				do
 				{
 					totalSleepTime += 10;
-					Sharpen.Thread.Sleep(10);
+					Thread.Sleep(10);
 					threadsRunning = CountThreads("Server$Listener$Reader");
 				}
 				while (threadsRunning == 0 && totalSleepTime < 5000);
@@ -955,7 +955,7 @@ namespace Org.Apache.Hadoop.Ipc
 			// Connect to the server
 			proxy.Ping();
 			// Interrupt self, try another call
-			Sharpen.Thread.CurrentThread().Interrupt();
+			Thread.CurrentThread().Interrupt();
 			try
 			{
 				proxy.Ping();
@@ -968,7 +968,7 @@ namespace Org.Apache.Hadoop.Ipc
 					throw;
 				}
 				// clear interrupt status for future tests
-				Sharpen.Thread.Interrupted();
+				Thread.Interrupted();
 			}
 			finally
 			{
@@ -991,13 +991,13 @@ namespace Org.Apache.Hadoop.Ipc
 			CountDownLatch latch = new CountDownLatch(numConcurrentRPC);
 			AtomicBoolean leaderRunning = new AtomicBoolean(true);
 			AtomicReference<Exception> error = new AtomicReference<Exception>();
-			Sharpen.Thread leaderThread = null;
+			Thread leaderThread = null;
 			for (int i = 0; i < numConcurrentRPC; i++)
 			{
 				int num = i;
 				TestRPC.TestProtocol proxy = RPC.GetProxy<TestRPC.TestProtocol>(TestRPC.TestProtocol
 					.versionID, addr, conf);
-				Sharpen.Thread rpcThread = new Sharpen.Thread(new _Runnable_915(barrier, num, leaderRunning
+				Thread rpcThread = new Thread(new _Runnable_915(barrier, num, leaderRunning
 					, proxy, error, latch));
 				rpcThread.Start();
 				if (leaderThread == null)
@@ -1006,7 +1006,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 			}
 			// let threads get past the barrier
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			// stop a single thread
 			while (leaderRunning.Get())
 			{
@@ -1173,7 +1173,7 @@ namespace Org.Apache.Hadoop.Ipc
 				while (server.GetCallQueueLen() != 1 && CountThreads(typeof(CallQueueManager).FullName
 					) != 1 && CountThreads(typeof(TestRPC.TestProtocol).FullName) != 1)
 				{
-					Sharpen.Thread.Sleep(100);
+					Thread.Sleep(100);
 				}
 			}
 			finally

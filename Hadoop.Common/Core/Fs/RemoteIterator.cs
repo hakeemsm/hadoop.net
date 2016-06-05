@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>Returns the next element in the iteration.</summary>
 		/// <returns>the next element in the iteration.</returns>
-		/// <exception cref="Sharpen.NoSuchElementException">iteration has no more elements.</exception>
+		/// <exception cref="NoSuchElementException">iteration has no more elements.</exception>
 		/// <exception cref="System.IO.IOException">if any IO error occurs</exception>
 		E Next();
 	}

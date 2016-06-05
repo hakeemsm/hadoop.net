@@ -3,7 +3,7 @@ using System.IO;
 using Com.Google.Protobuf;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Ipc.Proto;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc.ProtocolPB
 {
@@ -24,7 +24,7 @@ namespace Org.Apache.Hadoop.Ipc.ProtocolPB
 			try
 			{
 				IList<string> argList = request.GetArgsList();
-				string[] args = Sharpen.Collections.ToArray(argList, new string[argList.Count]);
+				string[] args = Collections.ToArray(argList, new string[argList.Count]);
 				if (!request.HasIdentifier())
 				{
 					throw new ServiceException("Request must contain identifier");

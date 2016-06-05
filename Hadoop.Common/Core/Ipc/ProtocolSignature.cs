@@ -5,7 +5,7 @@ using System.Reflection;
 using Com.Google.Common.Annotations;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			int hashcode = method.Name.GetHashCode();
 			hashcode = hashcode + 31 * method.ReturnType.FullName.GetHashCode();
-			foreach (Type type in Sharpen.Runtime.GetParameterTypes(method))
+			foreach (Type type in Runtime.GetParameterTypes(method))
 			{
 				hashcode = 31 * hashcode ^ type.FullName.GetHashCode();
 			}
@@ -232,7 +232,7 @@ namespace Org.Apache.Hadoop.Ipc
 		public static ProtocolSignature GetProtocolSignature(string protocolName, long version
 			)
 		{
-			Type protocol = Sharpen.Runtime.GetType(protocolName);
+			Type protocol = Runtime.GetType(protocolName);
 			return GetSigFingerprint(protocol, version).signature;
 		}
 
@@ -249,7 +249,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Type inter;
 			try
 			{
-				inter = (Type)Sharpen.Runtime.GetType(protocol);
+				inter = (Type)Runtime.GetType(protocol);
 			}
 			catch (Exception e)
 			{

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -69,7 +69,7 @@ namespace Org.Apache.Hadoop.FS
 				return null;
 			}
 			int curlyOpen = 0;
-			StringBuilder prefix = new StringBuilder(Sharpen.Runtime.Substring(filePattern, 0
+			StringBuilder prefix = new StringBuilder(Runtime.Substring(filePattern, 0
 				, leftmost));
 			StringBuilder suffix = new StringBuilder();
 			IList<string> alts = new AList<string>();

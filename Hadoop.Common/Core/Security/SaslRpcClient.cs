@@ -17,7 +17,7 @@ using Org.Apache.Hadoop.Ipc.Protobuf;
 using Org.Apache.Hadoop.Security.Authentication.Util;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -306,7 +306,7 @@ namespace Org.Apache.Hadoop.Security
 			string serverKeyPattern = conf.Get(serverKey + ".pattern");
 			if (serverKeyPattern != null && !serverKeyPattern.IsEmpty())
 			{
-				Sharpen.Pattern pattern = GlobPattern.Compile(serverKeyPattern);
+				Pattern pattern = GlobPattern.Compile(serverKeyPattern);
 				isPrincipalValid = pattern.Matcher(serverPrincipal).Matches();
 			}
 			else
@@ -564,7 +564,7 @@ namespace Org.Apache.Hadoop.Security
 				);
 			// SASL wrapping is only used if the connection has a QOP, and
 			// the value is not auth.  ex. auth-int & auth-priv
-			return qop != null && !Sharpen.Runtime.EqualsIgnoreCase("auth", qop);
+			return qop != null && !Runtime.EqualsIgnoreCase("auth", qop);
 		}
 
 		/// <summary>

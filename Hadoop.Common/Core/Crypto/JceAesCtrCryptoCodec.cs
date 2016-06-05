@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {
@@ -49,17 +49,17 @@ namespace Org.Apache.Hadoop.Crypto
 			}
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public override Encryptor CreateEncryptor()
 		{
-			return new JceAesCtrCryptoCodec.JceAesCtrCipher(Sharpen.Cipher.EncryptMode, provider
+			return new JceAesCtrCryptoCodec.JceAesCtrCipher(Cipher.EncryptMode, provider
 				);
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public override Decryptor CreateDecryptor()
 		{
-			return new JceAesCtrCryptoCodec.JceAesCtrCipher(Sharpen.Cipher.DecryptMode, provider
+			return new JceAesCtrCryptoCodec.JceAesCtrCipher(Cipher.DecryptMode, provider
 				);
 		}
 
@@ -70,23 +70,23 @@ namespace Org.Apache.Hadoop.Crypto
 
 		private class JceAesCtrCipher : Encryptor, Decryptor
 		{
-			private readonly Sharpen.Cipher cipher;
+			private readonly Cipher cipher;
 
 			private readonly int mode;
 
 			private bool contextReset = false;
 
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public JceAesCtrCipher(int mode, string provider)
 			{
 				this.mode = mode;
 				if (provider == null || provider.IsEmpty())
 				{
-					cipher = Sharpen.Cipher.GetInstance(Suite.GetName());
+					cipher = Cipher.GetInstance(Suite.GetName());
 				}
 				else
 				{
-					cipher = Sharpen.Cipher.GetInstance(Suite.GetName(), provider);
+					cipher = Cipher.GetInstance(Suite.GetName(), provider);
 				}
 			}
 

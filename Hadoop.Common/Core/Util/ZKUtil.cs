@@ -5,7 +5,7 @@ using Com.Google.Common.IO;
 using Org.Apache.Hadoop;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -117,9 +117,9 @@ namespace Org.Apache.Hadoop.Util
 						);
 				}
 				ACL newAcl = new ACL();
-				newAcl.SetId(new ID(Sharpen.Runtime.Substring(a, 0, firstColon), Sharpen.Runtime.Substring
+				newAcl.SetId(new ID(Runtime.Substring(a, 0, firstColon), Runtime.Substring
 					(a, firstColon + 1, lastColon)));
-				newAcl.SetPerms(GetPermFromString(Sharpen.Runtime.Substring(a, lastColon + 1)));
+				newAcl.SetPerms(GetPermFromString(Runtime.Substring(a, lastColon + 1)));
 				acl.AddItem(newAcl);
 			}
 			return acl;
@@ -152,7 +152,7 @@ namespace Org.Apache.Hadoop.Util
 					throw new ZKUtil.BadAuthFormatException("Auth '" + comp + "' not of expected form scheme:auth"
 						);
 				}
-				ret.AddItem(new ZKUtil.ZKAuthInfo(parts[0], Sharpen.Runtime.GetBytesForString(parts
+				ret.AddItem(new ZKUtil.ZKAuthInfo(parts[0], Runtime.GetBytesForString(parts
 					[1], Charsets.Utf8)));
 			}
 			return ret;
@@ -186,7 +186,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				return valInConf;
 			}
-			string path = Sharpen.Runtime.Substring(valInConf, 1).Trim();
+			string path = Runtime.Substring(valInConf, 1).Trim();
 			return Files.ToString(new FilePath(path), Charsets.Utf8).Trim();
 		}
 

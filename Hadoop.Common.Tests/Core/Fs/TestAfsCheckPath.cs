@@ -1,6 +1,6 @@
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -10,7 +10,7 @@ namespace Org.Apache.Hadoop.FS
 
 		private static int OtherPort = 4321;
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		[Fact]
 		public virtual void TestCheckPathWithNoPorts()
 		{
@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.FS
 			afs.CheckPath(new Path("dummy://dummy-host"));
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		[Fact]
 		public virtual void TestCheckPathWithDefaultPort()
 		{
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.FS
 			afs.CheckPath(new Path("dummy://dummy-host:" + DefaultPort));
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		[Fact]
 		public virtual void TestCheckPathWithTheSameNonDefaultPort()
 		{
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.FS
 			afs.CheckPath(new Path("dummy://dummy-host:" + OtherPort));
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		public virtual void TestCheckPathWithDifferentPorts()
 		{
 			URI uri = new URI("dummy://dummy-host:" + DefaultPort);
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.FS
 
 		private class DummyFileSystem : AbstractFileSystem
 		{
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			public DummyFileSystem(URI uri)
 				: base(uri, "dummy", true, DefaultPort)
 			{

@@ -4,7 +4,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -506,7 +506,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				{
 					tmp.AddItem(statIter.Next());
 				}
-				dirPaths = Sharpen.Collections.ToArray(tmp, dirPaths);
+				dirPaths = Collections.ToArray(tmp, dirPaths);
 			}
 			else
 			{

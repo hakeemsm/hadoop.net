@@ -1,7 +1,7 @@
 using System.Collections;
 using System.IO;
 using System.Text;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record
 {
@@ -195,7 +195,7 @@ namespace Org.Apache.Hadoop.Record
 		{
 			PrintBeginEnvelope(tag);
 			stream.Write("<i4>");
-			stream.Write(Sharpen.Extensions.ToString(i));
+			stream.Write(Extensions.ToString(i));
 			stream.Write("</i4>");
 			PrintEndEnvelope(tag);
 		}

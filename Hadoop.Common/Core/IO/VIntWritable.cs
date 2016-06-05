@@ -1,6 +1,6 @@
 using System.IO;
 using Hadoop.Common.Core.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.IO
 
 		public override string ToString()
 		{
-			return Sharpen.Extensions.ToString(value);
+			return Extensions.ToString(value);
 		}
 	}
 }

@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
 using Org.Slf4j;
 using Org.Slf4j.Bridge;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				}
 				else
 				{
-					ClassLoader cl = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+					ClassLoader cl = Thread.CurrentThread().GetContextClassLoader();
 					Uri log4jUrl = cl.GetResource(Log4jProperties);
 					if (log4jUrl != null)
 					{
@@ -187,7 +187,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				System.Console.Out.WriteLine("Stacktrace:");
 				System.Console.Out.WriteLine("---------------------------------------------------"
 					);
-				Sharpen.Runtime.PrintStackTrace(ex, System.Console.Out);
+				Runtime.PrintStackTrace(ex, System.Console.Out);
 				System.Console.Out.WriteLine("---------------------------------------------------"
 					);
 				System.Console.Out.WriteLine();

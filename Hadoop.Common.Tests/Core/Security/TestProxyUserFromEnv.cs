@@ -1,5 +1,5 @@
 using System.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Security
 			int backslashIndex = realUser.IndexOf('\\');
 			if (backslashIndex != -1)
 			{
-				realUser = Sharpen.Runtime.Substring(realUser, backslashIndex + 1);
+				realUser = Runtime.Substring(realUser, backslashIndex + 1);
 			}
 			Assert.Equal(realUser, realUgi.GetUserName());
 		}

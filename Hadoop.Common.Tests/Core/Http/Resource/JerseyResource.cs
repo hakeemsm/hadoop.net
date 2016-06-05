@@ -3,7 +3,7 @@ using Javax.WS.RS;
 using Javax.WS.RS.Core;
 using Org.Apache.Commons.Logging;
 using Org.Mortbay.Util.Ajax;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http.Resource
 {

@@ -4,7 +4,7 @@ using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Sink;
 using Org.Mockito;
 using Org.Mockito.Internal.Util.Reflection;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			catch (IOException e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			string result = argument.GetValue();
 			Assert.Equal(true, result.Equals("null.all.Context.Context=all.Hostname=host.foo1 1.25 10\n"
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			catch (IOException e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			string result = argument.GetValue();
 			Assert.Equal(true, result.Equals("null.all.Context.Context=all.foo1 1 10\n"
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			GraphiteSink.Graphite mockGraphite = MakeGraphite();
 			Whitebox.SetInternalState(sink, "graphite", mockGraphite);
 			// given two metrics records with timestamps 1000 milliseconds apart.
-			IList<MetricsTag> tags = Sharpen.Collections.EmptyList();
+			IList<MetricsTag> tags = Collections.EmptyList();
 			ICollection<AbstractMetric> metrics = new HashSet<AbstractMetric>();
 			metrics.AddItem(MakeMetric("foo1", 1));
 			MetricsRecord record1 = new MetricsRecordImpl(MsInfo.Context, 1000000000000L, tags
@@ -112,7 +112,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			catch (IOException e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			// then the timestamps in the graphite stream should differ by one second.
 			try
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			catch (IOException e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 		}
 
@@ -174,7 +174,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			catch (IOException ioe)
 			{
-				Sharpen.Runtime.PrintStackTrace(ioe);
+				Runtime.PrintStackTrace(ioe);
 			}
 			try
 			{
@@ -182,7 +182,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			catch (IOException ioe)
 			{
-				Sharpen.Runtime.PrintStackTrace(ioe);
+				Runtime.PrintStackTrace(ioe);
 			}
 		}
 	}

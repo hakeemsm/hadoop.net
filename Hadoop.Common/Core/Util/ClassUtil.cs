@@ -17,7 +17,7 @@
 */
 using System;
 using System.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.Util
 						string toReturn = url.AbsolutePath;
 						if (toReturn.StartsWith("file:"))
 						{
-							toReturn = Sharpen.Runtime.Substring(toReturn, "file:".Length);
+							toReturn = Runtime.Substring(toReturn, "file:".Length);
 						}
 						toReturn = URLDecoder.Decode(toReturn, "UTF-8");
 						return toReturn.ReplaceAll("!.*$", string.Empty);

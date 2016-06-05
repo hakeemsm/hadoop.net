@@ -6,7 +6,7 @@ using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -116,7 +116,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 					credentials.RemoveSecretKey(new Text(BuildVersionName(name, v)));
 				}
 				credentials.RemoveSecretKey(new Text(name));
-				Sharpen.Collections.Remove(cache, name);
+				Collections.Remove(cache, name);
 			}
 		}
 

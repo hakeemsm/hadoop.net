@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Crypto.Key;
 using Org.Apache.Hadoop.Crypto.Key.Kms;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token.Delegation.Web;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				(), null);
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		private static URI GetKeyURI(string name)
 		{
 			return new URI(KMSRESTConstants.ServiceVersion + "/" + KMSRESTConstants.KeyResource
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			IDictionary json = KMSServerJSONUtils.ToJSON(keyVersion);
 			string requestURL = KMSMDCFilter.GetURL();
 			int idx = requestURL.LastIndexOf(KMSRESTConstants.KeysResource);
-			requestURL = Sharpen.Runtime.Substring(requestURL, 0, idx);
+			requestURL = Runtime.Substring(requestURL, 0, idx);
 			string keyURL = requestURL + KMSRESTConstants.KeyResource + "/" + name;
 			return Response.Created(GetKeyURI(name)).Type(MediaType.ApplicationJson).Header("Location"
 				, keyURL).Entity(json).Build();
@@ -244,7 +244,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		{
 			KMSWebApp.GetAdminCallsMeter().Mark();
 			UserGroupInformation user = HttpUserGroupInformation.Get();
-			string[] keyNames = Sharpen.Collections.ToArray(keyNamesList, new string[keyNamesList
+			string[] keyNames = Collections.ToArray(keyNamesList, new string[keyNamesList
 				.Count]);
 			AssertAccess(KMSACLs.Type.GetMetadata, user, KMS.KMSOp.GetKeysMetadata);
 			KeyProvider.Metadata[] keysMeta = user.DoAs(new _PrivilegedExceptionAction_234(this

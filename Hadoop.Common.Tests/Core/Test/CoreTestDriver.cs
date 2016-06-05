@@ -2,7 +2,7 @@ using System;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Test
 {
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Test
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 		}
 
@@ -43,7 +43,7 @@ namespace Org.Apache.Hadoop.Test
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			System.Environment.Exit(exitCode);
 		}

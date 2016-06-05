@@ -1,5 +1,5 @@
 using System.Text;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -8,7 +8,7 @@ namespace Org.Apache.Hadoop.FS
 	{
 		private const char Backslash = '\\';
 
-		private Sharpen.Pattern compiled;
+		private Pattern compiled;
 
 		private bool hasWildcard = false;
 
@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <returns>the compiled pattern</returns>
-		public virtual Sharpen.Pattern Compiled()
+		public virtual Pattern Compiled()
 		{
 			return compiled;
 		}
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <summary>Compile glob pattern string</summary>
 		/// <param name="globPattern">the glob pattern</param>
 		/// <returns>the pattern object</returns>
-		public static Sharpen.Pattern Compile(string globPattern)
+		public static Pattern Compile(string globPattern)
 		{
 			return new Org.Apache.Hadoop.FS.GlobPattern(globPattern).Compiled();
 		}
@@ -171,7 +171,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				Error("Unclosed group", glob, len);
 			}
-			compiled = Sharpen.Pattern.Compile(regex.ToString());
+			compiled = Pattern.Compile(regex.ToString());
 		}
 
 		/// <returns>true if this is a wildcard pattern (with special chars)</returns>

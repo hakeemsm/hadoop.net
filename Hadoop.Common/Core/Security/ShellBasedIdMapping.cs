@@ -9,7 +9,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -61,13 +61,13 @@ namespace Org.Apache.Hadoop.Security
 
 		private bool constructFullMapAtInit = false;
 
-		private static readonly Sharpen.Pattern EmptyLine = Sharpen.Pattern.Compile("^\\s*$"
+		private static readonly Pattern EmptyLine = Pattern.Compile("^\\s*$"
 			);
 
-		private static readonly Sharpen.Pattern CommentLine = Sharpen.Pattern.Compile("^\\s*#.*$"
+		private static readonly Pattern CommentLine = Pattern.Compile("^\\s*#.*$"
 			);
 
-		private static readonly Sharpen.Pattern MappingLine = Sharpen.Pattern.Compile("^(uid|gid)\\s+(\\d+)\\s+(\\d+)\\s*(#.*)?$"
+		private static readonly Pattern MappingLine = Pattern.Compile("^(uid|gid)\\s+(\\d+)\\s+(\\d+)\\s*(#.*)?$"
 			);
 
 		private readonly long timeout;
@@ -212,7 +212,7 @@ namespace Org.Apache.Hadoop.Security
 		{
 			long longVal = long.Parse(idStr);
 			int intVal = longVal;
-			return Sharpen.Extensions.ValueOf(intVal);
+			return Extensions.ValueOf(intVal);
 		}
 
 		/// <summary>

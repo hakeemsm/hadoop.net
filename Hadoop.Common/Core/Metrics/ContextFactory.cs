@@ -22,7 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Org.Apache.Hadoop.Metrics.Spi;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics
 {
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Metrics
 		/// <param name="attributeName">the attribute name</param>
 		public virtual void RemoveAttribute(string attributeName)
 		{
-			Sharpen.Collections.Remove(attributeMap, attributeName);
+			Collections.Remove(attributeMap, attributeName);
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.Metrics
 		/// <returns>the named MetricsContext</returns>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		public virtual MetricsContext GetContext(string refName, string contextName)
 		{
@@ -139,7 +139,7 @@ namespace Org.Apache.Hadoop.Metrics
 					{
 						className = DefaultContextClassname;
 					}
-					Type contextClass = Sharpen.Runtime.GetType(className);
+					Type contextClass = Runtime.GetType(className);
 					metricsContext = (MetricsContext)System.Activator.CreateInstance(contextClass);
 					metricsContext.Init(contextName, this);
 					contextMap[contextName] = metricsContext;
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.Metrics
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		public virtual MetricsContext GetContext(string contextName)
 		{

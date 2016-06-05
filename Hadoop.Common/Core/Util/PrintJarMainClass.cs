@@ -1,5 +1,5 @@
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.Util
 {

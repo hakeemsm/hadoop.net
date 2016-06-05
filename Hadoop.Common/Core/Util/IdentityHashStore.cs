@@ -1,6 +1,6 @@
 using System;
 using Com.Google.Common.Base;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Util
 	/// Neither inserting nor removing an element ever leads to any garbage
 	/// getting created (assuming the array doesn't need to be enlarged).
 	/// Unlike HashTable, it compares keys using
-	/// <see cref="Sharpen.Runtime.IdentityHashCode(object)"/>
+	/// <see cref="Runtime.IdentityHashCode(object)"/>
 	/// and the identity operator.
 	/// This is useful for types like ByteBuffer which have expensive hashCode
 	/// and equals operators.

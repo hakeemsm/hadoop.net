@@ -1,5 +1,5 @@
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Permission
 {
@@ -9,10 +9,10 @@ namespace Org.Apache.Hadoop.FS.Permission
 	/// </summary>
 	public class ChmodParser : PermissionParser
 	{
-		private static Sharpen.Pattern chmodOctalPattern = Sharpen.Pattern.Compile("^\\s*[+]?([01]?)([0-7]{3})\\s*$"
+		private static Pattern chmodOctalPattern = Pattern.Compile("^\\s*[+]?([01]?)([0-7]{3})\\s*$"
 			);
 
-		private static Sharpen.Pattern chmodNormalPattern = Sharpen.Pattern.Compile("\\G\\s*([ugoa]*)([+=-]+)([rwxXt]+)([,\\s]*)\\s*"
+		private static Pattern chmodNormalPattern = Pattern.Compile("\\G\\s*([ugoa]*)([+=-]+)([rwxXt]+)([,\\s]*)\\s*"
 			);
 
 		/// <exception cref="System.ArgumentException"/>

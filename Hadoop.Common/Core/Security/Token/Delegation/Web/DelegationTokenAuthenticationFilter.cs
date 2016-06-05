@@ -14,7 +14,7 @@ using Org.Apache.Hadoop.Security.Token.Delegation;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Http;
 using Org.Apache.Http.Client.Utils;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 {
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		/// </remarks>
 		public const string DelegationTokenSecretManagerAttr = "hadoop.http.delegation-token-secret-manager";
 
-		private static readonly Encoding Utf8Charset = Sharpen.Extensions.GetEncoding("UTF-8"
+		private static readonly Encoding Utf8Charset = Extensions.GetEncoding("UTF-8"
 			);
 
 		private static readonly ThreadLocal<UserGroupInformation> UgiTl = new ThreadLocal
@@ -210,7 +210,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 			{
 				foreach (NameValuePair nv in list)
 				{
-					if (Sharpen.Runtime.EqualsIgnoreCase(DelegationTokenAuthenticatedURL.DoAs, nv.GetName
+					if (Runtime.EqualsIgnoreCase(DelegationTokenAuthenticatedURL.DoAs, nv.GetName
 						()))
 					{
 						return nv.GetValue();

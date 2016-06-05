@@ -16,7 +16,7 @@
 *  limitations under the License.
 */
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Service
 {
@@ -43,10 +43,10 @@ namespace Org.Apache.Hadoop.Service
 
 		/// <summary>
 		/// Convert any exception into a
-		/// <see cref="Sharpen.RuntimeException"/>
+		/// <see cref="RuntimeException"/>
 		/// .
 		/// If the caught exception is already of that type, it is typecast to a
-		/// <see cref="Sharpen.RuntimeException"/>
+		/// <see cref="RuntimeException"/>
 		/// and returned.
 		/// All other exception types are wrapped in a new instance of
 		/// ServiceStateException
@@ -67,10 +67,10 @@ namespace Org.Apache.Hadoop.Service
 
 		/// <summary>
 		/// Convert any exception into a
-		/// <see cref="Sharpen.RuntimeException"/>
+		/// <see cref="RuntimeException"/>
 		/// .
 		/// If the caught exception is already of that type, it is typecast to a
-		/// <see cref="Sharpen.RuntimeException"/>
+		/// <see cref="RuntimeException"/>
 		/// and returned.
 		/// All other exception types are wrapped in a new instance of
 		/// ServiceStateException

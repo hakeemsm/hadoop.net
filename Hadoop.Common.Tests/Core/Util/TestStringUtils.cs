@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -393,7 +393,7 @@ namespace Org.Apache.Hadoop.Util
 
 		public virtual void TestReplaceTokensShellEnvVars()
 		{
-			Sharpen.Pattern pattern = StringUtils.ShellEnvVarPattern;
+			Pattern pattern = StringUtils.ShellEnvVarPattern;
 			IDictionary<string, string> replacements = new Dictionary<string, string>();
 			replacements["FOO"] = "one";
 			replacements["BAZ"] = "two";
@@ -417,7 +417,7 @@ namespace Org.Apache.Hadoop.Util
 
 		public virtual void TestReplaceTokensWinEnvVars()
 		{
-			Sharpen.Pattern pattern = StringUtils.WinEnvVarPattern;
+			Pattern pattern = StringUtils.WinEnvVarPattern;
 			IDictionary<string, string> replacements = new Dictionary<string, string>();
 			replacements["foo"] = "zoo";
 			replacements["baz"] = "zaz";

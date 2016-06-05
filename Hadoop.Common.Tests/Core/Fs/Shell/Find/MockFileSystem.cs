@@ -1,6 +1,6 @@
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell.Find
 {
@@ -15,7 +15,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 	/// <see cref="Org.Apache.Hadoop.Conf.Configuration"/>
 	/// can be accessed by
 	/// mockFs.getConf(); The following methods are fixed within the class: -
-	/// <see cref="Org.Apache.Hadoop.FS.FileSystem.Initialize(Sharpen.URI, Org.Apache.Hadoop.Conf.Configuration)
+	/// <see cref="Org.Apache.Hadoop.FS.FileSystem.Initialize(URI, Org.Apache.Hadoop.Conf.Configuration)
 	/// 	"/>
 	/// blank stub -
 	/// <see cref="Org.Apache.Hadoop.FS.FileSystem.MakeQualified(Org.Apache.Hadoop.FS.Path)

@@ -5,7 +5,7 @@ using Com.Google.Common.Collect;
 using Org.Apache.Hadoop.Crypto.Key;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authorize;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -151,7 +151,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion CreateKey(string name, KeyProvider.Options
 			 options)
@@ -184,7 +184,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion RollNewVersion(string name)
 		{
@@ -250,7 +250,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public override KeyProviderCryptoExtension.EncryptedKeyVersion GenerateEncryptedKey
 			(string encryptionKeyName)
 		{
@@ -286,7 +286,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public override KeyProvider.KeyVersion DecryptEncryptedKey(KeyProviderCryptoExtension.EncryptedKeyVersion
 			 encryptedKeyVersion)
 		{

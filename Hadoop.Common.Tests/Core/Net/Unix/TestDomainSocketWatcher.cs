@@ -2,7 +2,7 @@ using System;
 using Com.Google.Common.Util.Concurrent;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net.Unix
 {
@@ -108,9 +108,9 @@ namespace Org.Apache.Hadoop.Net.Unix
 			DomainSocketWatcher watcher = NewDomainSocketWatcher(10000000);
 			AList<DomainSocket[]> pairs = new AList<DomainSocket[]>();
 			AtomicInteger handled = new AtomicInteger(0);
-			Sharpen.Thread adderThread = new Sharpen.Thread(new _Runnable_122(SocketNum, watcher
+			Thread adderThread = new Thread(new _Runnable_122(SocketNum, watcher
 				, Lock, pairs, handled));
-			Sharpen.Thread removerThread = new Sharpen.Thread(new _Runnable_149(handled, SocketNum
+			Thread removerThread = new Thread(new _Runnable_149(handled, SocketNum
 				, Lock, pairs, watcher));
 			adderThread.Start();
 			removerThread.Start();
@@ -269,14 +269,14 @@ namespace Org.Apache.Hadoop.Net.Unix
 			return watcher;
 		}
 
-		private sealed class _UncaughtExceptionHandler_200 : Sharpen.Thread.UncaughtExceptionHandler
+		private sealed class _UncaughtExceptionHandler_200 : Thread.UncaughtExceptionHandler
 		{
 			public _UncaughtExceptionHandler_200(TestDomainSocketWatcher _enclosing)
 			{
 				this._enclosing = _enclosing;
 			}
 
-			public void UncaughtException(Sharpen.Thread thread, Exception t)
+			public void UncaughtException(Thread thread, Exception t)
 			{
 				this._enclosing.trappedException = t;
 			}

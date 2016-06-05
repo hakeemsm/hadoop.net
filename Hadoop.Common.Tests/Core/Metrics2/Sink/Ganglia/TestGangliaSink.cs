@@ -1,6 +1,6 @@
 using Org.Apache.Commons.Configuration;
 using Org.Apache.Hadoop.Metrics2.Impl;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Sink.Ganglia
 {

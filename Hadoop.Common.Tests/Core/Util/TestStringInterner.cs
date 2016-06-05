@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestNoIntern()
 		{
 			string literalABC = "ABC";
-			string substringABC = Sharpen.Runtime.Substring("ABCDE", 0, 3);
+			string substringABC = Runtime.Substring("ABCDE", 0, 3);
 			string heapABC = new string("ABC");
 			NUnit.Framework.Assert.AreNotSame(literalABC, substringABC);
 			NUnit.Framework.Assert.AreNotSame(literalABC, heapABC);
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestStrongIntern()
 		{
 			string strongInternLiteralABC = StringInterner.StrongIntern("ABC");
-			string strongInternSubstringABC = StringInterner.StrongIntern(Sharpen.Runtime.Substring
+			string strongInternSubstringABC = StringInterner.StrongIntern(Runtime.Substring
 				("ABCDE", 0, 3));
 			string strongInternHeapABC = StringInterner.StrongIntern(new string("ABC"));
 			NUnit.Framework.Assert.AreSame(strongInternLiteralABC, strongInternSubstringABC);
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestWeakIntern()
 		{
 			string weakInternLiteralABC = StringInterner.WeakIntern("ABC");
-			string weakInternSubstringABC = StringInterner.WeakIntern(Sharpen.Runtime.Substring
+			string weakInternSubstringABC = StringInterner.WeakIntern(Runtime.Substring
 				("ABCDE", 0, 3));
 			string weakInternHeapABC = StringInterner.WeakIntern(new string("ABC"));
 			NUnit.Framework.Assert.AreSame(weakInternLiteralABC, weakInternSubstringABC);

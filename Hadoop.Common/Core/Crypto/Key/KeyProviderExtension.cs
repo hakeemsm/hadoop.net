@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -58,7 +58,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			return keyProvider.GetCurrentKey(name);
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion CreateKey(string name, KeyProvider.Options
 			 options)
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			return keyProvider.CreateKey(name, options);
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion RollNewVersion(string name)
 		{

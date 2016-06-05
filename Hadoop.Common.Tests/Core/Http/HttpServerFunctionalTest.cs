@@ -6,7 +6,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security.Authorize;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {
@@ -233,7 +233,7 @@ namespace Org.Apache.Hadoop.Http
 			int len = @in.Read(buffer);
 			while (len > 0)
 			{
-				@out.Append(Sharpen.Runtime.GetStringForBytes(buffer, 0, len));
+				@out.Append(Runtime.GetStringForBytes(buffer, 0, len));
 				len = @in.Read(buffer);
 			}
 			return @out.ToString();

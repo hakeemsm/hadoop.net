@@ -4,7 +4,7 @@ using System.IO;
 using Com.Google.Common.Base;
 using Com.Google.Common.Cache;
 using Com.Google.Common.Util.Concurrent;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms
 {
@@ -220,7 +220,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		/// fill Method with "numInitValues" values
 		/// </summary>
 		/// <param name="keyNames">Array of key Names</param>
-		/// <exception cref="Sharpen.ExecutionException"/>
+		/// <exception cref="ExecutionException"/>
 		public virtual void InitializeQueuesForKeys(params string[] keyNames)
 		{
 			foreach (string keyName in keyNames)
@@ -243,7 +243,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		/// <param name="keyName">String key name</param>
 		/// <returns>E the next value in the Queue</returns>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.ExecutionException"/>
+		/// <exception cref="ExecutionException"/>
 		public virtual E GetNext(string keyName)
 		{
 			return GetAtMost(keyName, 1)[0];
@@ -266,7 +266,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		/// <summary>Get size of the Queue for keyName</summary>
 		/// <param name="keyName">the key name</param>
 		/// <returns>int queue size</returns>
-		/// <exception cref="Sharpen.ExecutionException"/>
+		/// <exception cref="ExecutionException"/>
 		public virtual int GetSize(string keyName)
 		{
 			return keyQueues.Get(keyName).Count;
@@ -287,7 +287,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		/// <param name="num">Minimum number of values to return.</param>
 		/// <returns>List<E> values returned</returns>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.ExecutionException"/>
+		/// <exception cref="ExecutionException"/>
 		public virtual IList<E> GetAtMost(string keyName, int num)
 		{
 			LinkedBlockingQueue<E> keyQueue = keyQueues.Get(keyName);

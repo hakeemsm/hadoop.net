@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 
 						case 'y':
 						{
-							buf.Append(timeFmt.Format(Sharpen.Extensions.CreateDate(stat.GetModificationTime(
+							buf.Append(timeFmt.Format(Extensions.CreateDate(stat.GetModificationTime(
 								))));
 							break;
 						}
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		{
 			{
 				timeFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				timeFmt.SetTimeZone(Sharpen.Extensions.GetTimeZone("UTC"));
+				timeFmt.SetTimeZone(Extensions.GetTimeZone("UTC"));
 			}
 		}
 	}

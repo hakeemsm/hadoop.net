@@ -1,5 +1,5 @@
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authorize
 {
@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 	/// An abstract definition of <em>service</em> as related to
 	/// Service Level Authorization for Hadoop.
 	/// Each service defines it's configuration key and also the necessary
-	/// <see cref="Sharpen.Permission"/>
+	/// <see cref="Permission"/>
 	/// required to access the service.
 	/// </remarks>
 	public class Service

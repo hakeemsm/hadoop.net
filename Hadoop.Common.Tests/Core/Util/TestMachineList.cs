@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -57,13 +57,13 @@ namespace Org.Apache.Hadoop.Util
 			NUnit.Framework.Assert.IsFalse(ml.Includes("10.119.103.111"));
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestStaticIPHostNameList()
 		{
 			//create MachineList with a list of of Hostnames
-			IPAddress addressHost1 = Sharpen.Extensions.GetAddressByName("1.2.3.1");
-			IPAddress addressHost4 = Sharpen.Extensions.GetAddressByName("1.2.3.4");
+			IPAddress addressHost1 = Extensions.GetAddressByName("1.2.3.1");
+			IPAddress addressHost4 = Extensions.GetAddressByName("1.2.3.4");
 			MachineList.InetAddressFactory addressFactory = Org.Mockito.Mockito.Mock<MachineList.InetAddressFactory
 				>();
 			Org.Mockito.Mockito.When(addressFactory.GetByName("host1")).ThenReturn(addressHost1
@@ -78,13 +78,13 @@ namespace Org.Apache.Hadoop.Util
 			NUnit.Framework.Assert.IsFalse(ml.Includes("1.2.3.5"));
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestHostNames()
 		{
 			//create MachineList with a list of of Hostnames
-			IPAddress addressHost1 = Sharpen.Extensions.GetAddressByName("1.2.3.1");
-			IPAddress addressHost4 = Sharpen.Extensions.GetAddressByName("1.2.3.4");
+			IPAddress addressHost1 = Extensions.GetAddressByName("1.2.3.1");
+			IPAddress addressHost4 = Extensions.GetAddressByName("1.2.3.4");
 			IPAddress addressMockHost4 = Org.Mockito.Mockito.Mock<IPAddress>();
 			Org.Mockito.Mockito.When(addressMockHost4.ToString()).ThenReturn("differentName");
 			IPAddress addressMockHost5 = Org.Mockito.Mockito.Mock<IPAddress>();
@@ -107,13 +107,13 @@ namespace Org.Apache.Hadoop.Util
 			NUnit.Framework.Assert.IsFalse(ml.Includes("1.2.3.5"));
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestHostNamesReverserIpMatch()
 		{
 			//create MachineList with a list of of Hostnames
-			IPAddress addressHost1 = Sharpen.Extensions.GetAddressByName("1.2.3.1");
-			IPAddress addressHost4 = Sharpen.Extensions.GetAddressByName("1.2.3.4");
+			IPAddress addressHost1 = Extensions.GetAddressByName("1.2.3.1");
+			IPAddress addressHost4 = Extensions.GetAddressByName("1.2.3.4");
 			IPAddress addressMockHost4 = Org.Mockito.Mockito.Mock<IPAddress>();
 			Org.Mockito.Mockito.When(addressMockHost4.ToString()).ThenReturn("host4");
 			IPAddress addressMockHost5 = Org.Mockito.Mockito.Mock<IPAddress>();

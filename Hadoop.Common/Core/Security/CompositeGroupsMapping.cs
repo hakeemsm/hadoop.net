@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Util;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -58,7 +58,7 @@ namespace Org.Apache.Hadoop.Security
 					//LOG.warn("Exception trying to get groups for user " + user, e);      
 					if (groups != null && !groups.IsEmpty())
 					{
-						Sharpen.Collections.AddAll(groupSet, groups);
+						Collections.AddAll(groupSet, groups);
 						if (!combined)
 						{
 							break;
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Security
 					}
 				}
 				IList<string> results = new AList<string>(groupSet.Count);
-				Sharpen.Collections.AddAll(results, groupSet);
+				Collections.AddAll(results, groupSet);
 				return results;
 			}
 		}

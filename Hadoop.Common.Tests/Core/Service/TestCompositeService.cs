@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Service
 {
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.Service
 					(i);
 				serviceManager.AddTestService(service);
 			}
-			TestCompositeService.CompositeServiceImpl[] services = Sharpen.Collections.ToArray
+			TestCompositeService.CompositeServiceImpl[] services = Collections.ToArray
 				(serviceManager.GetServices(), new TestCompositeService.CompositeServiceImpl[0]);
 			Assert.Equal("Number of registered services ", NumOfServices, 
 				services.Length);
@@ -110,7 +110,7 @@ namespace Org.Apache.Hadoop.Service
 				}
 				serviceManager.AddTestService(service);
 			}
-			TestCompositeService.CompositeServiceImpl[] services = Sharpen.Collections.ToArray
+			TestCompositeService.CompositeServiceImpl[] services = Collections.ToArray
 				(serviceManager.GetServices(), new TestCompositeService.CompositeServiceImpl[0]);
 			Configuration conf = new Configuration();
 			// Initialise the composite service
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Service
 				}
 				serviceManager.AddTestService(service);
 			}
-			TestCompositeService.CompositeServiceImpl[] services = Sharpen.Collections.ToArray
+			TestCompositeService.CompositeServiceImpl[] services = Collections.ToArray
 				(serviceManager.GetServices(), new TestCompositeService.CompositeServiceImpl[0]);
 			Configuration conf = new Configuration();
 			// Initialise the composite service
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.Service
 					(i);
 				serviceManager.AddTestService(service);
 			}
-			TestCompositeService.CompositeServiceImpl[] services = Sharpen.Collections.ToArray
+			TestCompositeService.CompositeServiceImpl[] services = Collections.ToArray
 				(serviceManager.GetServices(), new TestCompositeService.CompositeServiceImpl[0]);
 			serviceManager.Stop();
 			AssertInState(Service.STATE.Notinited, services);
@@ -237,7 +237,7 @@ namespace Org.Apache.Hadoop.Service
 					(i);
 				serviceManager.AddTestService(service);
 			}
-			TestCompositeService.CompositeServiceImpl[] services = Sharpen.Collections.ToArray
+			TestCompositeService.CompositeServiceImpl[] services = Collections.ToArray
 				(serviceManager.GetServices(), new TestCompositeService.CompositeServiceImpl[0]);
 			serviceManager.Init(new Configuration());
 			serviceManager.Stop();
@@ -583,7 +583,7 @@ namespace Org.Apache.Hadoop.Service
 			private bool throwExceptionOnStop;
 
 			public CompositeServiceImpl(int sequenceNumber)
-				: base(Sharpen.Extensions.ToString(sequenceNumber))
+				: base(Extensions.ToString(sequenceNumber))
 			{
 			}
 

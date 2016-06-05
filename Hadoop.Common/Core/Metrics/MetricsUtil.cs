@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics
 {
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Metrics
 			string hostName = null;
 			try
 			{
-				hostName = Sharpen.Runtime.GetLocalHost().GetHostName();
+				hostName = Runtime.GetLocalHost().GetHostName();
 			}
 			catch (UnknownHostException ex)
 			{

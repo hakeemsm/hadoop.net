@@ -6,7 +6,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.FS;
 using Org.Hamcrest;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <exception cref="System.IO.IOException"/>
 		private void WriteFile(FilePath file, string content)
 		{
-			byte[] data = Sharpen.Runtime.GetBytesForString(content);
+			byte[] data = Runtime.GetBytesForString(content);
 			FileOutputStream os = new FileOutputStream(file);
 			os.Write(data);
 			os.Close();

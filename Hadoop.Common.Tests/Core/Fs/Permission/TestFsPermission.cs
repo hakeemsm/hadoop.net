@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Permission
 {
@@ -121,21 +121,21 @@ namespace Org.Apache.Hadoop.FS.Permission
 			{
 				StringBuilder b = new StringBuilder("----------");
 				string binary = string.Format("%11s", int.ToBinaryString(i));
-				string permBinary = Sharpen.Runtime.Substring(binary, 2, binary.Length);
+				string permBinary = Runtime.Substring(binary, 2, binary.Length);
 				int len = permBinary.Length;
 				for (int j = 0; j < len; j++)
 				{
 					if (permBinary[j] == '1')
 					{
 						int k = 9 - (len - 1 - j);
-						Sharpen.Runtime.SetCharAt(b, k, symbolic[k]);
+						Runtime.SetCharAt(b, k, symbolic[k]);
 					}
 				}
 				// Check for sticky bit.
 				if (binary[1] == '1')
 				{
 					char replacement = b[9] == 'x' ? 't' : 'T';
-					Sharpen.Runtime.SetCharAt(b, 9, replacement);
+					Runtime.SetCharAt(b, 9, replacement);
 				}
 				Assert.Equal(i, FsPermission.ValueOf(b.ToString()).ToShort());
 			}

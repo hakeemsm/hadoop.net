@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Compress.Bzip2;
 using Org.Apache.Hadoop.IO.Compress.Zlib;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress
 {
@@ -487,7 +487,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		[Fact]
 		public virtual void TestSequenceFileDefaultCodec()
@@ -500,7 +500,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		public virtual void TestSequenceFileBZip2Codec()
 		{
@@ -514,7 +514,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		public virtual void TestSequenceFileBZip2NativeCodec()
 		{
@@ -538,7 +538,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		[Fact]
 		public virtual void TestSequenceFileDeflateCodec()
@@ -551,7 +551,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		private static void SequenceFileCodecTest(Configuration conf, int lines, string codecClass
 			, int blockSize)
@@ -564,7 +564,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			Log.Info("Creating SequenceFile with codec \"" + codecClass + "\"");
 			SequenceFile.Writer writer = SequenceFile.CreateWriter(fs, conf, filePath, typeof(
 				Text), typeof(Text), SequenceFile.CompressionType.Block, (CompressionCodec)System.Activator.CreateInstance
-				(Sharpen.Runtime.GetType(codecClass)));
+				(Runtime.GetType(codecClass)));
 			// Write some data
 			Log.Info("Writing to SequenceFile...");
 			for (int i = 0; i < lines; i++)

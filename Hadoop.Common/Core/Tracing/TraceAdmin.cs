@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Tools;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tracing
 {
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.Tracing
 					System.Console.Error.WriteLine("Can't understand argument: " + str);
 					return 1;
 				}
-				str = Sharpen.Runtime.Substring(str, ConfigPrefix.Length);
+				str = Runtime.Substring(str, ConfigPrefix.Length);
 				int equalsIndex = str.IndexOf("=");
 				if (equalsIndex < 0)
 				{
@@ -82,8 +82,8 @@ namespace Org.Apache.Hadoop.Tracing
 					System.Console.Error.WriteLine("Arguments must be in the form key=value");
 					return 1;
 				}
-				string key = Sharpen.Runtime.Substring(str, 0, equalsIndex);
-				string value = Sharpen.Runtime.Substring(str, equalsIndex + 1);
+				string key = Runtime.Substring(str, 0, equalsIndex);
+				string value = Runtime.Substring(str, equalsIndex + 1);
 				factory.AddConfigurationPair(key, value);
 				configsOut.Write(prefix + key + " = " + value);
 				prefix = ", ";

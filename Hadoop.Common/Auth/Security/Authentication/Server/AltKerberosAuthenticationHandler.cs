@@ -1,5 +1,5 @@
 using Javax.Servlet.Http;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Server
 {
@@ -52,7 +52,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				).Split("\\W*,\\W*");
 			for (int i = 0; i < nonBrowserUserAgents.Length; i++)
 			{
-				nonBrowserUserAgents[i] = nonBrowserUserAgents[i].ToLower(Sharpen.Extensions.GetEnglishCulture()
+				nonBrowserUserAgents[i] = nonBrowserUserAgents[i].ToLower(Extensions.GetEnglishCulture()
 					);
 			}
 		}
@@ -110,7 +110,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			{
 				return false;
 			}
-			userAgent = userAgent.ToLower(Sharpen.Extensions.GetEnglishCulture());
+			userAgent = userAgent.ToLower(Extensions.GetEnglishCulture());
 			bool isBrowser = true;
 			foreach (string nonBrowserUserAgent in nonBrowserUserAgents)
 			{

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Util
 			Runtime.GetRuntime().AddShutdownHook(new _Thread_48());
 		}
 
-		private sealed class _Thread_48 : Sharpen.Thread
+		private sealed class _Thread_48 : Thread
 		{
 			public _Thread_48()
 			{
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 		}
 
-		private ICollection<ShutdownHookManager.HookEntry> hooks = Sharpen.Collections.SynchronizedSet
+		private ICollection<ShutdownHookManager.HookEntry> hooks = Collections.SynchronizedSet
 			(new HashSet<ShutdownHookManager.HookEntry>());
 
 		private AtomicBoolean shutdownInProgress = new AtomicBoolean(false);

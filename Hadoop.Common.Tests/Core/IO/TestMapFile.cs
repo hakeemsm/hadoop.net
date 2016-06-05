@@ -6,7 +6,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -140,7 +140,7 @@ namespace Org.Apache.Hadoop.IO
 				// Test keys: 11,21,31,...,91
 				for (int i = FirstKey; i < 100; i += 10)
 				{
-					Text t = new Text(Sharpen.Extensions.ToString(i));
+					Text t = new Text(Extensions.ToString(i));
 					writer.Append(t, t);
 				}
 				writer.Close();
@@ -765,8 +765,8 @@ namespace Org.Apache.Hadoop.IO
 				int FirstKey = 10;
 				for (int i = FirstKey; i < 100; i += 10)
 				{
-					string iStr = Sharpen.Extensions.ToString(i);
-					Text t = new Text(Sharpen.Runtime.Substring("00", iStr.Length) + iStr);
+					string iStr = Extensions.ToString(i);
+					Text t = new Text(Runtime.Substring("00", iStr.Length) + iStr);
 					writer.Append(t, t);
 				}
 				writer.Close();

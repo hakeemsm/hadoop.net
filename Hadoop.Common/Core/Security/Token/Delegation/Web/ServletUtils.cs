@@ -3,14 +3,14 @@ using System.Text;
 using Javax.Servlet.Http;
 using Org.Apache.Http;
 using Org.Apache.Http.Client.Utils;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 {
 	/// <summary>Servlet utility methods.</summary>
 	internal class ServletUtils
 	{
-		private static readonly Encoding Utf8Charset = Sharpen.Extensions.GetEncoding("UTF-8"
+		private static readonly Encoding Utf8Charset = Extensions.GetEncoding("UTF-8"
 			);
 
 		/// <summary>

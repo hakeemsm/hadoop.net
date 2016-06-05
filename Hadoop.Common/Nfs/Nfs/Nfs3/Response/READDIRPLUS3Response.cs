@@ -3,7 +3,7 @@ using Com.Google.Common.Annotations;
 using Org.Apache.Hadoop.Nfs.Nfs3;
 using Org.Apache.Hadoop.Oncrpc;
 using Org.Apache.Hadoop.Oncrpc.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Nfs.Nfs3.Response
 {
@@ -77,7 +77,7 @@ namespace Org.Apache.Hadoop.Nfs.Nfs3.Response
 
 			public DirListPlus3(READDIRPLUS3Response.EntryPlus3[] entries, bool eof)
 			{
-				this.entries = Sharpen.Collections.UnmodifiableList(Arrays.AsList(entries));
+				this.entries = Collections.UnmodifiableList(Arrays.AsList(entries));
 				this.eof = eof;
 			}
 
@@ -134,7 +134,7 @@ namespace Org.Apache.Hadoop.Nfs.Nfs3.Response
 				bool eof = xdr.ReadBoolean();
 				READDIRPLUS3Response.EntryPlus3[] allEntries = new READDIRPLUS3Response.EntryPlus3
 					[entries.Count];
-				Sharpen.Collections.ToArray(entries, allEntries);
+				Collections.ToArray(entries, allEntries);
 				dirList = new READDIRPLUS3Response.DirListPlus3(allEntries, eof);
 			}
 			return new READDIRPLUS3Response(status, postOpDirAttr, cookieVerf, dirList);

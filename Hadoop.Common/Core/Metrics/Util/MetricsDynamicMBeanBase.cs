@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Javax.Management;
 using Org.Apache.Hadoop.Metrics;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Util
 {
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.Metrics.Util
 				}
 			}
 			MBeanAttributeInfo[] attrArray = new MBeanAttributeInfo[attributesInfo.Count];
-			mbeanInfo = new MBeanInfo(this.GetType().FullName, mbeanDescription, Sharpen.Collections.ToArray
+			mbeanInfo = new MBeanInfo(this.GetType().FullName, mbeanDescription, Collections.ToArray
 				(attributesInfo, attrArray), null, operationsInfo, null);
 		}
 

@@ -1,14 +1,14 @@
 using System;
 using System.Text;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {
 	/// <summary>Defines properties of a CipherSuite.</summary>
 	/// <remarks>
 	/// Defines properties of a CipherSuite. Modeled after the ciphers in
-	/// <see cref="Sharpen.Cipher"/>
+	/// <see cref="Cipher"/>
 	/// .
 	/// </remarks>
 	[System.Serializable]
@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.Crypto
 
 		/// <returns>
 		/// name of cipher suite, as in
-		/// <see cref="Sharpen.Cipher"/>
+		/// <see cref="Cipher"/>
 		/// </returns>
 		public string GetName()
 		{

@@ -5,7 +5,7 @@ using Com.Google.Common.Collect;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -18,7 +18,7 @@ namespace Org.Apache.Hadoop.Security
 		private void CreateStaticMapFile(FilePath smapFile, string smapStr)
 		{
 			OutputStream @out = new FileOutputStream(smapFile);
-			@out.Write(Sharpen.Runtime.GetBytesForString(smapStr));
+			@out.Write(Runtime.GetBytesForString(smapStr));
 			@out.Close();
 		}
 
@@ -140,7 +140,7 @@ namespace Org.Apache.Hadoop.Security
 				// Sleep a bit to avoid that two changes have the same modification time
 				try
 				{
-					Sharpen.Thread.Sleep(1000);
+					Thread.Sleep(1000);
 				}
 				catch (Exception)
 				{

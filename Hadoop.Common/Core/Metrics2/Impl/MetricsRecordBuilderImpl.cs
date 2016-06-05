@@ -3,7 +3,7 @@ using Com.Google.Common.Collect;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Lib;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -135,12 +135,12 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		internal virtual IList<MetricsTag> Tags()
 		{
-			return Sharpen.Collections.UnmodifiableList(tags);
+			return Collections.UnmodifiableList(tags);
 		}
 
 		internal virtual IList<AbstractMetric> Metrics()
 		{
-			return Sharpen.Collections.UnmodifiableList(metrics);
+			return Collections.UnmodifiableList(metrics);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {
@@ -44,13 +44,13 @@ namespace Org.Apache.Hadoop.Crypto
 		/// </remarks>
 		/// <param name="inBuffer">
 		/// a direct
-		/// <see cref="Sharpen.ByteBuffer"/>
+		/// <see cref="ByteBuffer"/>
 		/// to read from. inBuffer may
 		/// not be null and inBuffer.remaining() must be &gt; 0
 		/// </param>
 		/// <param name="outBuffer">
 		/// a direct
-		/// <see cref="Sharpen.ByteBuffer"/>
+		/// <see cref="ByteBuffer"/>
 		/// to write to. outBuffer may
 		/// not be null and outBuffer.remaining() must be &gt; 0
 		/// </param>

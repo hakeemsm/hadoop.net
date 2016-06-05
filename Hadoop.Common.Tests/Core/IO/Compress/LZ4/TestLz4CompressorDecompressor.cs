@@ -3,7 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Compress;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress.Lz4
 {

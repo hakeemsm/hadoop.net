@@ -7,7 +7,7 @@ using Org.Apache.Log4j;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
 using Org.Apache.Zookeeper.Server.Auth;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -291,7 +291,7 @@ namespace Org.Apache.Hadoop.HA
 					cluster.ExpireActiveLockHolder(0);
 					Log.Info("Expired svc0's ZK session. Waiting a second to give svc1" + " a chance to take the lock, if it is ever going to."
 						);
-					Sharpen.Thread.Sleep(1000);
+					Thread.Sleep(1000);
 					// Ensure that no one holds the lock.
 					cluster.WaitForActiveLockHolder(null);
 				}
@@ -446,7 +446,7 @@ namespace Org.Apache.Hadoop.HA
 				cluster.WaitForActiveLockHolder(1);
 				cluster.GetService(0).GetZKFCProxy(conf, 5000).GracefulFailover();
 				cluster.WaitForActiveLockHolder(0);
-				Sharpen.Thread.Sleep(10000);
+				Thread.Sleep(10000);
 				// allow to quiesce
 				Assert.Equal(0, cluster.GetService(0).fenceCount);
 				Assert.Equal(0, cluster.GetService(1).fenceCount);

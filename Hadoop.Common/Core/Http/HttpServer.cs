@@ -30,7 +30,7 @@ using Org.Mortbay.Jetty.Servlet;
 using Org.Mortbay.Jetty.Webapp;
 using Org.Mortbay.Thread;
 using Org.Mortbay.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {
@@ -303,7 +303,7 @@ namespace Org.Apache.Hadoop.Http
 
 		private void AddNoCacheFilter(WebAppContext ctxt)
 		{
-			DefineFilter(ctxt, NoCacheFilter, typeof(NoCacheFilter).FullName, Sharpen.Collections
+			DefineFilter(ctxt, NoCacheFilter, typeof(NoCacheFilter).FullName, Collections
 				.EmptyMap, new string[] { "/*" });
 		}
 
@@ -345,13 +345,13 @@ namespace Org.Apache.Hadoop.Http
 				Log.Warn("HttpServer Acceptor: isRunning is false. Rechecking.");
 				try
 				{
-					Sharpen.Thread.Sleep(10);
+					Thread.Sleep(10);
 				}
 				catch (Exception)
 				{
 					// Mark this thread as interrupted. Someone up in the call chain
 					// might care.
-					Sharpen.Thread.CurrentThread().Interrupt();
+					Thread.CurrentThread().Interrupt();
 				}
 				bool runState = base.IsRunning();
 				Log.Warn("HttpServer Acceptor: isRunning is " + runState);
@@ -657,7 +657,7 @@ namespace Org.Apache.Hadoop.Http
 				throw new FileNotFoundException("webapps/" + appName + " not found in CLASSPATH");
 			}
 			string urlString = url.ToString();
-			return Sharpen.Runtime.Substring(urlString, 0, urlString.LastIndexOf('/'));
+			return Runtime.Substring(urlString, 0, urlString.LastIndexOf('/'));
 		}
 
 		/// <summary>Get the port that the server is on</summary>
@@ -839,13 +839,13 @@ namespace Org.Apache.Hadoop.Http
 					{
 						BindException be = new BindException("Port in use: " + listener.GetHost() + ":" +
 							 listener.GetPort());
-						Sharpen.Extensions.InitCause(be, ex);
+						Extensions.InitCause(be, ex);
 						throw be;
 					}
 				}
 				// try the next port number
 				listener.SetPort(++port);
-				Sharpen.Thread.Sleep(100);
+				Thread.Sleep(100);
 			}
 		}
 

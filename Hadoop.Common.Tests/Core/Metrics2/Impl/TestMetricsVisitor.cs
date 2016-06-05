@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Lib;
 using Org.Mockito;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {

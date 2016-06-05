@@ -6,7 +6,7 @@ using Org.Apache.Commons.Lang.Exception;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net.Unix
 {
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			Callable<Void> callable = new _Callable_109(serv);
 			Future<Void> future = exeServ.Submit(callable);
 			DomainSocket conn = DomainSocket.Connect(serv.GetPath());
-			Sharpen.Thread.Sleep(50);
+			Thread.Sleep(50);
 			conn.Close();
 			serv.Close();
 			future.Get(2, TimeUnit.Minutes);
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			ExecutorService exeServ = Executors.NewSingleThreadExecutor();
 			Callable<Void> callable = new _Callable_149(serv);
 			Future<Void> future = exeServ.Submit(callable);
-			Sharpen.Thread.Sleep(500);
+			Thread.Sleep(500);
 			serv.Close();
 			future.Get(2, TimeUnit.Minutes);
 		}
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			// get ClosedChannelException, or possibly its subclass
 			// AsynchronousCloseException.
 			Future<Void> clientFuture = exeServ.Submit(clientCallable);
-			Sharpen.Thread.Sleep(500);
+			Thread.Sleep(500);
 			clientConn.Close();
 			serv.Close();
 			clientFuture.Get(2, TimeUnit.Minutes);
@@ -507,11 +507,11 @@ namespace Org.Apache.Hadoop.Net.Unix
 				);
 			DomainSocket serv = (preConnectedSockets != null) ? null : DomainSocket.BindAndListen
 				(TestPath);
-			Sharpen.Thread serverThread = new _Thread_435(preConnectedSockets, serv, clientMsg1
+			Thread serverThread = new _Thread_435(preConnectedSockets, serv, clientMsg1
 				, readStrategyClass, writeStrategyClass, serverMsg1, clientMsg2, threadResults);
 			// Run server
 			serverThread.Start();
-			Sharpen.Thread clientThread = new _Thread_463(preConnectedSockets, TestPath, writeStrategyClass
+			Thread clientThread = new _Thread_463(preConnectedSockets, TestPath, writeStrategyClass
 				, clientMsg1, readStrategyClass, serverMsg1, clientMsg2, threadResults);
 			clientThread.Start();
 			for (int i = 0; i < 2; i++)
@@ -530,7 +530,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			}
 		}
 
-		private sealed class _Thread_435 : Sharpen.Thread
+		private sealed class _Thread_435 : Thread
 		{
 			public _Thread_435(DomainSocket[] preConnectedSockets, DomainSocket serv, byte[] 
 				clientMsg1, Type readStrategyClass, Type writeStrategyClass, byte[] serverMsg1, 
@@ -592,7 +592,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			private readonly ArrayBlockingQueue<Exception> threadResults;
 		}
 
-		private sealed class _Thread_463 : Sharpen.Thread
+		private sealed class _Thread_463 : Thread
 		{
 			public _Thread_463(DomainSocket[] preConnectedSockets, string TestPath, Type writeStrategyClass
 				, byte[] clientMsg1, Type readStrategyClass, byte[] serverMsg1, byte clientMsg2, 
@@ -773,11 +773,11 @@ namespace Org.Apache.Hadoop.Net.Unix
 			{
 				passedFds[i] = passedFiles[i].GetInputStream().GetFD();
 			}
-			Sharpen.Thread serverThread = new _Thread_597(serv, clientMsg1, passedFds, serverMsg1
+			Thread serverThread = new _Thread_597(serv, clientMsg1, passedFds, serverMsg1
 				, threadResults);
 			// Run server
 			serverThread.Start();
-			Sharpen.Thread clientThread = new _Thread_620(TestPath, clientMsg1, serverMsg1, passedFds
+			Thread clientThread = new _Thread_620(TestPath, clientMsg1, serverMsg1, passedFds
 				, passedFiles, threadResults);
 			clientThread.Start();
 			for (int i_1 = 0; i_1 < 2; i_1++)
@@ -797,7 +797,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			}
 		}
 
-		private sealed class _Thread_597 : Sharpen.Thread
+		private sealed class _Thread_597 : Thread
 		{
 			public _Thread_597(DomainSocket serv, byte[] clientMsg1, FileDescriptor[] passedFds
 				, byte[] serverMsg1, ArrayBlockingQueue<System.Exception> threadResults)
@@ -842,7 +842,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			private readonly ArrayBlockingQueue<System.Exception> threadResults;
 		}
 
-		private sealed class _Thread_620 : Sharpen.Thread
+		private sealed class _Thread_620 : Thread
 		{
 			public _Thread_620(string TestPath, byte[] clientMsg1, byte[] serverMsg1, FileDescriptor
 				[] passedFds, TestDomainSocket.PassedFile[] passedFiles, ArrayBlockingQueue<System.Exception
@@ -973,7 +973,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			AtomicBoolean failed = new AtomicBoolean(false);
 			DomainSocket[] socks = DomainSocket.Socketpair();
 			Runnable reader = new _Runnable_737(socks, bytesRead, failed);
-			Sharpen.Thread readerThread = new Sharpen.Thread(reader);
+			Thread readerThread = new Thread(reader);
 			readerThread.Start();
 			socks[0].GetOutputStream().Write(1);
 			socks[0].GetOutputStream().Write(2);

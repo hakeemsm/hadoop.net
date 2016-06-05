@@ -8,7 +8,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -207,7 +207,7 @@ namespace Org.Apache.Hadoop.Util
 			if (line.HasOption("jt"))
 			{
 				string optionValue = line.GetOptionValue("jt");
-				if (Sharpen.Runtime.EqualsIgnoreCase(optionValue, "local"))
+				if (Runtime.EqualsIgnoreCase(optionValue, "local"))
 				{
 					conf.Set("mapreduce.framework.name", optionValue);
 				}
@@ -243,8 +243,8 @@ namespace Org.Apache.Hadoop.Util
 				if (libjars != null && libjars.Length > 0)
 				{
 					conf.SetClassLoader(new URLClassLoader(libjars, conf.GetClassLoader()));
-					Sharpen.Thread.CurrentThread().SetContextClassLoader(new URLClassLoader(libjars, 
-						Sharpen.Thread.CurrentThread().GetContextClassLoader()));
+					Thread.CurrentThread().SetContextClassLoader(new URLClassLoader(libjars, 
+						Thread.CurrentThread().GetContextClassLoader()));
 				}
 			}
 			if (line.HasOption("files"))
@@ -306,7 +306,7 @@ namespace Org.Apache.Hadoop.Util
 						);
 				}
 			}
-			return Sharpen.Collections.ToArray(cp, new Uri[0]);
+			return Collections.ToArray(cp, new Uri[0]);
 		}
 
 		/// <summary>
@@ -448,7 +448,7 @@ namespace Org.Apache.Hadoop.Util
 					newArgs.AddItem(prop);
 				}
 			}
-			return Sharpen.Collections.ToArray(newArgs, new string[newArgs.Count]);
+			return Collections.ToArray(newArgs, new string[newArgs.Count]);
 		}
 
 		/// <summary>

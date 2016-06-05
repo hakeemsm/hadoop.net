@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 	/// keystore files.
 	/// <p/>
 	/// if the trust certificates keystore file changes, the
-	/// <see cref="Sharpen.TrustManager"/>
+	/// <see cref="TrustManager"/>
 	/// is refreshed with the new trust certificate entries (using a
 	/// <see cref="ReloadingX509TrustManager"/>
 	/// trustmanager).
@@ -89,7 +89,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		/// thrown if the keystores could not be initialized due
 		/// to an IO error.
 		/// </exception>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the keystores could not be
 		/// initialized due to a security error.
 		/// </exception>

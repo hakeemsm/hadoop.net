@@ -59,7 +59,7 @@ namespace Hadoop.Common.Core.Conf
 	/// <li>Other properties defined in this Configuration; and, if a name is
 	/// undefined here,</li>
 	/// <li>Properties in
-	/// <see cref="Sharpen.Runtime.GetProperties()"/>
+	/// <see cref="Runtime.GetProperties()"/>
 	/// .</li>
 	/// </ol>
 	/// <p>For example, if a configuration resource contains the following property
@@ -140,7 +140,7 @@ namespace Hadoop.Common.Core.Conf
 		internal const string UnknownResource = "Unknown";
 
 		/// <summary>List of configuration parameters marked <b>final</b>.</summary>
-		private ICollection<string> finalParameters = Sharpen.Collections.NewSetFromMap(new 
+		private ICollection<string> finalParameters = Collections.NewSetFromMap(new 
 			ConcurrentHashMap<string, bool>());
 
 		private bool loadDefaults = true;
@@ -591,7 +591,7 @@ namespace Hadoop.Common.Core.Conf
 					GetOverlay().SetProperty(n, GetOverlay().GetProperty(deprecatedKey));
 				}
 			}
-			return Sharpen.Collections.ToArray(names, new string[names.Count]);
+			return Collections.ToArray(names, new string[names.Count]);
 		}
 
 		private void HandleDeprecation()
@@ -599,7 +599,7 @@ namespace Hadoop.Common.Core.Conf
 			Log.Debug("Handling deprecation for all properties in config...");
 			Configuration.DeprecationContext deprecations = deprecationContext.Get();
 			ICollection<object> keys = new HashSet<object>();
-			Sharpen.Collections.AddAll(keys, GetProps().Keys);
+			Collections.AddAll(keys, GetProps().Keys);
 			foreach (object item in keys)
 			{
 				Log.Debug("Handling deprecation for " + (string)item);
@@ -610,7 +610,7 @@ namespace Hadoop.Common.Core.Conf
 		static Configuration()
 		{
 			//print deprecation warning if hadoop-site.xml is found in classpath
-			ClassLoader cL = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+			ClassLoader cL = Thread.CurrentThread().GetContextClassLoader();
 			if (cL == null)
 			{
 				cL = typeof(Configuration).GetClassLoader();
@@ -653,7 +653,7 @@ namespace Hadoop.Common.Core.Conf
 		public Configuration(bool loadDefaults)
 		{
 			{
-				classLoader = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+				classLoader = Thread.CurrentThread().GetContextClassLoader();
 				if (classLoader == null)
 				{
 					classLoader = typeof(Configuration).GetClassLoader();
@@ -672,7 +672,7 @@ namespace Hadoop.Common.Core.Conf
 		public Configuration(Configuration other)
 		{
 			{
-				classLoader = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+				classLoader = Thread.CurrentThread().GetContextClassLoader();
 				if (classLoader == null)
 				{
 					classLoader = typeof(Configuration).GetClassLoader();
@@ -691,9 +691,9 @@ namespace Hadoop.Common.Core.Conf
 				}
 				this.updatingResource = new ConcurrentHashMap<string, string[]>(other.updatingResource
 					);
-				this.finalParameters = Sharpen.Collections.NewSetFromMap(new ConcurrentHashMap<string
+				this.finalParameters = Collections.NewSetFromMap(new ConcurrentHashMap<string
 					, bool>());
-				Sharpen.Collections.AddAll(this.finalParameters, other.finalParameters);
+				Collections.AddAll(this.finalParameters, other.finalParameters);
 			}
 			lock (typeof(Configuration))
 			{
@@ -974,7 +974,7 @@ match_loop_break: ;
 				{
 					return eval;
 				}
-				string var = Sharpen.Runtime.Substring(eval, varBounds[SubStartIdx], varBounds[SubEndIdx
+				string var = Runtime.Substring(eval, varBounds[SubStartIdx], varBounds[SubEndIdx
 					]);
 				string val = null;
 				try
@@ -997,7 +997,7 @@ match_loop_break: ;
 				int dollar = varBounds[SubStartIdx] - "${".Length;
 				int afterRightBrace = varBounds[SubEndIdx] + "}".Length;
 				// substitute
-				eval = Sharpen.Runtime.Substring(eval, 0, dollar) + val + Sharpen.Runtime.Substring
+				eval = Runtime.Substring(eval, 0, dollar) + val + Runtime.Substring
 					(eval, afterRightBrace);
 			}
 			throw new InvalidOperationException("Variable substitution depth too large: " + MaxSubst
@@ -1163,9 +1163,9 @@ match_loop_break: ;
 					{
 						//if deprecated key is previously set explicitly
 						IList<string> list = new AList<string>();
-						Sharpen.Collections.AddAll(list, Arrays.AsList(keyInfo.newKeys));
+						Collections.AddAll(list, Arrays.AsList(keyInfo.newKeys));
 						list.AddItem(depKey);
-						altNames = Sharpen.Collections.ToArray(list, new string[list.Count]);
+						altNames = Collections.ToArray(list, new string[list.Count]);
 					}
 					else
 					{
@@ -1395,7 +1395,7 @@ match_loop_break: ;
 		/// <param name="value"><code>int</code> value of the property.</param>
 		public virtual void SetInt(string name, int value)
 		{
-			Set(name, Sharpen.Extensions.ToString(value));
+			Set(name, Extensions.ToString(value));
 		}
 
 		/// <summary>Get the value of the <code>name</code> property as a <code>long</code>.</summary>
@@ -1464,11 +1464,11 @@ match_loop_break: ;
 			if (value.StartsWith("-"))
 			{
 				negative = true;
-				str = Sharpen.Runtime.Substring(value, 1);
+				str = Runtime.Substring(value, 1);
 			}
 			if (str.StartsWith("0x") || str.StartsWith("0X"))
 			{
-				hexString = Sharpen.Runtime.Substring(str, 2);
+				hexString = Runtime.Substring(str, 2);
 				if (negative)
 				{
 					hexString = "-" + hexString;
@@ -1738,7 +1738,7 @@ match_loop_break: ;
 			}
 			else
 			{
-				vStr = Sharpen.Runtime.Substring(vStr, 0, vStr.LastIndexOf(vUnit.Suffix()));
+				vStr = Runtime.Substring(vStr, 0, vStr.LastIndexOf(vUnit.Suffix()));
 			}
 			return unit.Convert(long.Parse(vStr), vUnit.Unit());
 		}
@@ -1754,7 +1754,7 @@ match_loop_break: ;
 		/// <param name="name">property name</param>
 		/// <param name="defaultValue">default value</param>
 		/// <returns>property value as a compiled Pattern, or defaultValue</returns>
-		public virtual Sharpen.Pattern GetPattern(string name, Sharpen.Pattern defaultValue
+		public virtual Pattern GetPattern(string name, Pattern defaultValue
 			)
 		{
 			string valString = Get(name);
@@ -1764,7 +1764,7 @@ match_loop_break: ;
 			}
 			try
 			{
-				return Sharpen.Pattern.Compile(valString);
+				return Pattern.Compile(valString);
 			}
 			catch (PatternSyntaxException pse)
 			{
@@ -1782,7 +1782,7 @@ match_loop_break: ;
 		/// </remarks>
 		/// <param name="name">property name</param>
 		/// <param name="pattern">new value</param>
-		public virtual void SetPattern(string name, Sharpen.Pattern pattern)
+		public virtual void SetPattern(string name, Pattern pattern)
 		{
 			System.Diagnostics.Debug.Assert(pattern != null, "Pattern cannot be null");
 			Set(name, pattern.Pattern());
@@ -2401,7 +2401,7 @@ match_loop_break: ;
 				map = CacheClasses[classLoader];
 				if (map == null)
 				{
-					map = Sharpen.Collections.SynchronizedMap(new WeakHashMap<string, WeakReference<Type
+					map = Collections.SynchronizedMap(new WeakHashMap<string, WeakReference<Type
 						>>());
 					CacheClasses[classLoader] = map;
 				}
@@ -2416,7 +2416,7 @@ match_loop_break: ;
 			{
 				try
 				{
-					clazz = Sharpen.Runtime.GetType(name, true, classLoader);
+					clazz = Runtime.GetType(name, true, classLoader);
 				}
 				catch (TypeLoadException)
 				{
@@ -2758,9 +2758,9 @@ match_loop_break: ;
 		/// <returns>final parameter set.</returns>
 		public virtual ICollection<string> GetFinalParameters()
 		{
-			ICollection<string> setFinalParams = Sharpen.Collections.NewSetFromMap(new ConcurrentHashMap
+			ICollection<string> setFinalParams = Collections.NewSetFromMap(new ConcurrentHashMap
 				<string, bool>());
-			Sharpen.Collections.AddAll(setFinalParams, finalParameters);
+			Collections.AddAll(setFinalParams, finalParameters);
 			return setFinalParams;
 		}
 
@@ -3060,13 +3060,13 @@ match_loop_break: ;
 							foreach (string key in keyInfo.newKeys)
 							{
 								// update new keys with deprecated key's value 
-								LoadProperty(toAddTo, name, key, value, finalParameter, Sharpen.Collections.ToArray
+								LoadProperty(toAddTo, name, key, value, finalParameter, Collections.ToArray
 									(source, new string[source.Count]));
 							}
 						}
 						else
 						{
-							LoadProperty(toAddTo, name, attr, value, finalParameter, Sharpen.Collections.ToArray
+							LoadProperty(toAddTo, name, attr, value, finalParameter, Collections.ToArray
 								(source, new string[source.Count]));
 						}
 					}
@@ -3285,7 +3285,7 @@ match_loop_break: ;
 
 		/// <summary>
 		/// Get the
-		/// <see cref="Sharpen.ClassLoader"/>
+		/// <see cref="ClassLoader"/>
 		/// for this job.
 		/// </summary>
 		/// <returns>the correct class loader.</returns>
@@ -3400,7 +3400,7 @@ match_loop_break: ;
 		/// <returns>Map<String,String> with matching keys</returns>
 		public virtual IDictionary<string, string> GetValByRegex(string regex)
 		{
-			Sharpen.Pattern p = Sharpen.Pattern.Compile(regex);
+			Pattern p = Pattern.Compile(regex);
 			IDictionary<string, string> result = new Dictionary<string, string>();
 			Matcher m;
 			foreach (KeyValuePair<object, object> item in GetProps())

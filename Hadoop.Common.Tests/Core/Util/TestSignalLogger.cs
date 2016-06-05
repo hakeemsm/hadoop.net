@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {

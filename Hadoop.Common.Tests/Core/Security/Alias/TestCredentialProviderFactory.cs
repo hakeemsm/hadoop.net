@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Alias
 {
@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				throw;
 			}
 			// make sure we get back the right key
@@ -241,7 +241,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				throw;
 			}
 			provider.Flush();

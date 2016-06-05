@@ -8,7 +8,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Util;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Sink.Ganglia
 {
@@ -260,7 +260,7 @@ namespace Org.Apache.Hadoop.Metrics2.Sink.Ganglia
 		/// <param name="s">the string to be written to buffer at offset location</param>
 		protected internal virtual void Xdr_string(string s)
 		{
-			byte[] bytes = Sharpen.Runtime.GetBytesForString(s, Charsets.Utf8);
+			byte[] bytes = Runtime.GetBytesForString(s, Charsets.Utf8);
 			int len = bytes.Length;
 			Xdr_int(len);
 			System.Array.Copy(bytes, 0, buffer, offset, len);

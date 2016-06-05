@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.IO
 
 			internal virtual ByteBuffer[] GetData()
 			{
-				ByteBuffer[] ret = Sharpen.Collections.ToArray(active, new ByteBuffer[active.Count
+				ByteBuffer[] ret = Collections.ToArray(active, new ByteBuffer[active.Count
 					 + 1]);
 				ByteBuffer tmp = current.Duplicate();
 				tmp.Flip();

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Org.Apache.Commons.Lang;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tools
 {
@@ -195,7 +195,7 @@ namespace Org.Apache.Hadoop.Tools
 			/// <summary>Create a new TableListing.</summary>
 			public virtual TableListing Build()
 			{
-				return new TableListing(Sharpen.Collections.ToArray(columns, new TableListing.Column
+				return new TableListing(Collections.ToArray(columns, new TableListing.Column
 					[0]), showHeader, wrapWidth);
 			}
 		}

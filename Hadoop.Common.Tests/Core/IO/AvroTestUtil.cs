@@ -2,8 +2,8 @@ using System.IO;
 using Org.Apache.Avro;
 using Org.Apache.Avro.IO;
 using Org.Apache.Avro.Reflect;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.IO
 {

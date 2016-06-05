@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Shell;
 using Org.Apache.Hadoop.Tools;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -346,7 +346,7 @@ namespace Org.Apache.Hadoop.FS
 					// instance.run catches IOE, so something is REALLY wrong if here
 					Log.Debug("Error", e);
 					DisplayError(cmd, "Fatal internal error");
-					Sharpen.Runtime.PrintStackTrace(e, System.Console.Error);
+					Runtime.PrintStackTrace(e, System.Console.Error);
 				}
 			}
 			return exitCode;

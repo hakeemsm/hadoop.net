@@ -3,7 +3,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Nfs;
 using Org.Apache.Hadoop.Oncrpc;
 using Org.Apache.Hadoop.Oncrpc.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Mount
 {
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.Mount
 					{
 						xdr.WriteBoolean(true);
 						// Value follows - yes
-						xdr.WriteVariableOpaque(Sharpen.Runtime.GetBytesForString(hostGroups[j], Charsets
+						xdr.WriteVariableOpaque(Runtime.GetBytesForString(hostGroups[j], Charsets
 							.Utf8));
 					}
 				}

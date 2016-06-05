@@ -1,5 +1,5 @@
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.Net
 			}
 			else
 			{
-				Set(Sharpen.Runtime.Substring(path, index + 1), Sharpen.Runtime.Substring(path, 0
+				Set(Runtime.Substring(path, index + 1), Runtime.Substring(path, 0
 					, index));
 			}
 		}
@@ -171,7 +171,7 @@ namespace Org.Apache.Hadoop.Net
 			int len = path.Length;
 			if (path[len - 1] == PathSeparator)
 			{
-				return Sharpen.Runtime.Substring(path, 0, len - 1);
+				return Runtime.Substring(path, 0, len - 1);
 			}
 			return path;
 		}

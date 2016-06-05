@@ -5,7 +5,7 @@ using Hadoop.Common.Core.IO;
 using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -87,13 +87,13 @@ namespace Org.Apache.Hadoop.IO
 			{
 				return null;
 			}
-			return Sharpen.Runtime.GetStringForBytes(bytes, "UTF-8");
+			return Runtime.GetStringForBytes(bytes, "UTF-8");
 		}
 
 		/// <exception cref="System.IO.IOException"/>
 		public static int WriteCompressedString(BinaryWriter @out, string s)
 		{
-			return WriteCompressedByteArray(@out, (s != null) ? Sharpen.Runtime.GetBytesForString
+			return WriteCompressedByteArray(@out, (s != null) ? Runtime.GetBytesForString
 				(s, "UTF-8") : null);
 		}
 
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			if (s != null)
 			{
-				byte[] buffer = Sharpen.Runtime.GetBytesForString(s, "UTF-8");
+				byte[] buffer = Runtime.GetBytesForString(s, "UTF-8");
 				int len = buffer.Length;
 				@out.WriteInt(len);
 				@out.Write(buffer, 0, len);
@@ -137,7 +137,7 @@ namespace Org.Apache.Hadoop.IO
 			byte[] buffer = new byte[length];
 			@in.ReadFully(buffer);
 			// could/should use readFully(buffer,0,length)?
-			return Sharpen.Runtime.GetStringForBytes(buffer, "UTF-8");
+			return Runtime.GetStringForBytes(buffer, "UTF-8");
 		}
 
 		/*
@@ -232,15 +232,15 @@ namespace Org.Apache.Hadoop.IO
 				{
 					System.Console.Out.WriteLine();
 				}
-				System.Console.Out.Write(Sharpen.Extensions.ToHexString(record[i] >> 4 & unchecked(
+				System.Console.Out.Write(Extensions.ToHexString(record[i] >> 4 & unchecked(
 					(int)(0x0F))));
-				System.Console.Out.Write(Sharpen.Extensions.ToHexString(record[i] & unchecked((int
+				System.Console.Out.Write(Extensions.ToHexString(record[i] & unchecked((int
 					)(0x0F))));
 				System.Console.Out.Write(",");
 			}
-			System.Console.Out.Write(Sharpen.Extensions.ToHexString(record[i] >> 4 & unchecked(
+			System.Console.Out.Write(Extensions.ToHexString(record[i] >> 4 & unchecked(
 				(int)(0x0F))));
-			System.Console.Out.Write(Sharpen.Extensions.ToHexString(record[i] & unchecked((int
+			System.Console.Out.Write(Extensions.ToHexString(record[i] & unchecked((int
 				)(0x0F))));
 			System.Console.Out.WriteLine();
 		}

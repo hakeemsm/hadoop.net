@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -24,7 +24,7 @@ namespace Org.Apache.Hadoop.Security
 			//So null value check can be used to check if the key exists
 			if (userGroups != null)
 			{
-				Sharpen.Collections.AddAll(groups, userGroups);
+				Collections.AddAll(groups, userGroups);
 			}
 		}
 
@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.Security
 			ICollection<string> allGroups = new HashSet<string>();
 			foreach (ICollection<string> userGroups in userToNetgroupsMap.Values)
 			{
-				Sharpen.Collections.AddAll(allGroups, userGroups);
+				Collections.AddAll(allGroups, userGroups);
 			}
 			return allGroups;
 		}
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Security
 				if (userGroups == null)
 				{
 					//Generate a ConcurrentHashSet (backed by the keyset of the ConcurrentHashMap)
-					userGroups = Sharpen.Collections.NewSetFromMap(new ConcurrentHashMap<string, bool
+					userGroups = Collections.NewSetFromMap(new ConcurrentHashMap<string, bool
 						>());
 					ICollection<string> currentSet = userToNetgroupsMap.PutIfAbsent(user, userGroups);
 					if (currentSet != null)

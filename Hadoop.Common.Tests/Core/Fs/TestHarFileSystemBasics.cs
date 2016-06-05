@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.FS
 			// cause tests to fail.
 			if (Shell.Windows)
 			{
-				root = Sharpen.Runtime.Substring(root, root.IndexOf(':') + 1);
+				root = Runtime.Substring(root, root.IndexOf(':') + 1);
 			}
 			rootPath = new Path(root);
 		}
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				string versionString = version + "\n";
-				fsdos.Write(Sharpen.Runtime.GetBytesForString(versionString, "UTF-8"));
+				fsdos.Write(Runtime.GetBytesForString(versionString, "UTF-8"));
 				fsdos.Flush();
 			}
 			finally
@@ -324,7 +324,7 @@ namespace Org.Apache.Hadoop.FS
 			// index will change upon the writing, because Linux seems to update the
 			// file modification
 			// time with 1 second accuracy:
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			// write an unsupported version:
 			WriteVersionToMasterIndexImpl(7777, new Path(harPath, "_masterindex"));
 			// init the Har:

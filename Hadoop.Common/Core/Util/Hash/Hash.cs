@@ -1,6 +1,6 @@
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Hash
 {
@@ -37,13 +37,13 @@ namespace Org.Apache.Hadoop.Util.Hash
 		/// <returns>one of the predefined constants</returns>
 		public static int ParseHashType(string name)
 		{
-			if (Sharpen.Runtime.EqualsIgnoreCase("jenkins", name))
+			if (Runtime.EqualsIgnoreCase("jenkins", name))
 			{
 				return JenkinsHash;
 			}
 			else
 			{
-				if (Sharpen.Runtime.EqualsIgnoreCase("murmur", name))
+				if (Runtime.EqualsIgnoreCase("murmur", name))
 				{
 					return MurmurHash;
 				}

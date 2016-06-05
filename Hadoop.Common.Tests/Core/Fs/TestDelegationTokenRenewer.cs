@@ -5,7 +5,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
 using Org.Mockito.Invocation;
 using Org.Mockito.Stubbing;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.FS
 			renewer.AddRenewAction(fs);
 			Assert.Equal("FileSystem not added to DelegationTokenRenewer", 
 				1, renewer.GetRenewQueueLength());
-			Sharpen.Thread.Sleep(RenewCycle * 2);
+			Thread.Sleep(RenewCycle * 2);
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtLeast(2)).Renew(Eq(conf));
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtMost(3)).Renew(Eq(conf));
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.Never()).Cancel(Any<Configuration
@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.FS
 				(null, null);
 			renewer.AddRenewAction(fs);
 			Assert.Equal(1, renewer.GetRenewQueueLength());
-			Sharpen.Thread.Sleep(RenewCycle);
+			Thread.Sleep(RenewCycle);
 			Org.Mockito.Mockito.Verify(fs).GetRenewToken();
 			Org.Mockito.Mockito.Verify(token1, Org.Mockito.Mockito.AtLeast(1)).Renew(Eq(conf)
 				);
@@ -186,7 +186,7 @@ namespace Org.Apache.Hadoop.FS
 			Org.Mockito.Mockito.DoReturn(token).When(fs).GetRenewToken();
 			renewer.AddRenewAction(fs);
 			Assert.Equal(1, renewer.GetRenewQueueLength());
-			Sharpen.Thread.Sleep(RenewCycle);
+			Thread.Sleep(RenewCycle);
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtLeast(1)).Renew(Eq(conf));
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtMost(2)).Renew(Eq(conf));
 			// drop weak ref
@@ -195,7 +195,7 @@ namespace Org.Apache.Hadoop.FS
 			System.GC.Collect();
 			System.GC.Collect();
 			// next renew should detect the fs as gone
-			Sharpen.Thread.Sleep(RenewCycle);
+			Thread.Sleep(RenewCycle);
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtLeast(1)).Renew(Eq(conf));
 			Org.Mockito.Mockito.Verify(token, Org.Mockito.Mockito.AtMost(2)).Renew(Eq(conf));
 			Assert.Equal(0, renewer.GetRenewQueueLength());

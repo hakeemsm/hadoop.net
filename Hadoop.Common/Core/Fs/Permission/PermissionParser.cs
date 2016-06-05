@@ -1,5 +1,5 @@
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Permission
 {
@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		/// <param name="modeStr">Permission mode, either octal or symbolic</param>
 		/// <param name="symbolic">Use-case specific symbolic pattern to match against</param>
 		/// <exception cref="System.ArgumentException">if unable to parse modeStr</exception>
-		public PermissionParser(string modeStr, Sharpen.Pattern symbolic, Sharpen.Pattern
+		public PermissionParser(string modeStr, Pattern symbolic, Pattern
 			 octal)
 		{
 			Matcher matcher = null;
@@ -182,13 +182,13 @@ namespace Org.Apache.Hadoop.FS.Permission
 			string sb = matcher.Group(1);
 			if (!sb.IsEmpty())
 			{
-				stickyMode = short.ValueOf(Sharpen.Runtime.Substring(sb, 0, 1));
+				stickyMode = short.ValueOf(Runtime.Substring(sb, 0, 1));
 				stickyBitType = '=';
 			}
 			string str = matcher.Group(2);
-			userMode = short.ValueOf(Sharpen.Runtime.Substring(str, 0, 1));
-			groupMode = short.ValueOf(Sharpen.Runtime.Substring(str, 1, 2));
-			othersMode = short.ValueOf(Sharpen.Runtime.Substring(str, 2, 3));
+			userMode = short.ValueOf(Runtime.Substring(str, 0, 1));
+			groupMode = short.ValueOf(Runtime.Substring(str, 1, 2));
+			othersMode = short.ValueOf(Runtime.Substring(str, 2, 3));
 		}
 
 		protected internal virtual int CombineModes(int existing, bool exeOk)

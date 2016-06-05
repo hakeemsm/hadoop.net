@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record
 {
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Record
 				ByteArrayOutputStream s = new ByteArrayOutputStream();
 				CsvRecordOutput a = new CsvRecordOutput(s);
 				this.Serialize(a);
-				return Sharpen.Runtime.GetStringForBytes(s.ToByteArray(), "UTF-8");
+				return Runtime.GetStringForBytes(s.ToByteArray(), "UTF-8");
 			}
 			catch (Exception ex)
 			{

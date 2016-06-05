@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Oncrpc;
 using Org.Apache.Hadoop.Oncrpc.Security;
 using Org.Mockito.Internal.Util.Reflection;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Portmap
 {
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Portmap
 				while (!s.Connected && i < RetryTimes)
 				{
 					++i;
-					Sharpen.Thread.Sleep(ShortTimeoutMilliseconds);
+					Thread.Sleep(ShortTimeoutMilliseconds);
 				}
 				Assert.True("Failed to connect to the server", s.Connected && i
 					 < RetryTimes);
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Portmap
 				s.Close();
 			}
 			// Give the server a chance to process the request
-			Sharpen.Thread.Sleep(100);
+			Thread.Sleep(100);
 			bool found = false;
 			IDictionary<string, PortmapMapping> map = (IDictionary<string, PortmapMapping>)Whitebox
 				.GetInternalState(pm.GetHandler(), "map");

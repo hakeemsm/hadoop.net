@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Bloom
 {
@@ -270,7 +270,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		{
 			if (index < 0 || index >= vectorSize)
 			{
-				throw Sharpen.Extensions.CreateIndexOutOfRangeException(index);
+				throw Extensions.CreateIndexOutOfRangeException(index);
 			}
 			IList<Key> kl = keyVector[index];
 			IList<Key> fpl = fpVector[index];
@@ -349,8 +349,8 @@ namespace Org.Apache.Hadoop.Util.Bloom
 			ratio = new double[vectorSize];
 			for (int i = 0; i < vectorSize; i++)
 			{
-				fpVector[i] = Sharpen.Collections.SynchronizedList(new AList<Key>());
-				keyVector[i] = Sharpen.Collections.SynchronizedList(new AList<Key>());
+				fpVector[i] = Collections.SynchronizedList(new AList<Key>());
+				keyVector[i] = Collections.SynchronizedList(new AList<Key>());
 				ratio[i] = 0.0;
 			}
 		}

@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Lib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Util
 {

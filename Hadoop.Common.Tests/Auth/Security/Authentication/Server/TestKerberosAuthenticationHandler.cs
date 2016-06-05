@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Minikdc;
 using Org.Apache.Hadoop.Security.Authentication;
 using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Security.Authentication.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Server
 {
@@ -48,9 +48,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			FilePath keytabFile = new FilePath(KerberosTestUtils.GetKeytabFile());
 			string clientPrincipal = KerberosTestUtils.GetClientPrincipal();
 			string serverPrincipal = KerberosTestUtils.GetServerPrincipal();
-			clientPrincipal = Sharpen.Runtime.Substring(clientPrincipal, 0, clientPrincipal.LastIndexOf
+			clientPrincipal = Runtime.Substring(clientPrincipal, 0, clientPrincipal.LastIndexOf
 				("@"));
-			serverPrincipal = Sharpen.Runtime.Substring(serverPrincipal, 0, serverPrincipal.LastIndexOf
+			serverPrincipal = Runtime.Substring(serverPrincipal, 0, serverPrincipal.LastIndexOf
 				("@"));
 			GetKdc().CreatePrincipal(keytabFile, clientPrincipal, serverPrincipal);
 			// handler
@@ -264,14 +264,14 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			public string Call()
 			{
 				GSSManager gssManager = GSSManager.GetInstance();
-				Sharpen.GSSContext gssContext = null;
+				GSSContext gssContext = null;
 				try
 				{
 					string servicePrincipal = KerberosTestUtils.GetServerPrincipal();
 					Oid oid = KerberosUtil.GetOidInstance("NT_GSS_KRB5_PRINCIPAL");
 					GSSName serviceName = gssManager.CreateName(servicePrincipal, oid);
 					oid = KerberosUtil.GetOidInstance("GSS_KRB5_MECH_OID");
-					gssContext = gssManager.CreateContext(serviceName, oid, null, Sharpen.GSSContext.
+					gssContext = gssManager.CreateContext(serviceName, oid, null, GSSContext.
 						DefaultLifetime);
 					gssContext.RequestCredDeleg(true);
 					gssContext.RequestMutualAuth(true);

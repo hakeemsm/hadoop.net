@@ -1,6 +1,6 @@
 using System.IO;
 using System.Net.Sockets;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.Net
 		/// <param name="channel">
 		/// 
 		/// Channel for reading, should also be a
-		/// <see cref="Sharpen.SelectableChannel"/>
+		/// <see cref="SelectableChannel"/>
 		/// .
 		/// The channel will be configured to be non-blocking.
 		/// </param>
@@ -71,7 +71,7 @@ namespace Org.Apache.Hadoop.Net
 		/// is zero, it will be treated as infinite timeout. The socket's
 		/// channel will be configured to be non-blocking.
 		/// </remarks>
-		/// <seealso cref="SocketInputStream(Sharpen.ReadableByteChannel, long)"/>
+		/// <seealso cref="SocketInputStream(ReadableByteChannel, long)"/>
 		/// <param name="socket">should have a channel associated with it.</param>
 		/// <param name="timeout">timeout timeout in milliseconds. must not be negative.</param>
 		/// <exception cref="System.IO.IOException"/>
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.Net
 		/// is zero, it will be treated as infinite timeout. The socket's
 		/// channel will be configured to be non-blocking.
 		/// </remarks>
-		/// <seealso cref="SocketInputStream(Sharpen.ReadableByteChannel, long)"/>
+		/// <seealso cref="SocketInputStream(ReadableByteChannel, long)"/>
 		/// <param name="socket">should have a channel associated with it.</param>
 		/// <exception cref="System.IO.IOException"/>
 		public SocketInputStream(Socket socket)
@@ -143,7 +143,7 @@ namespace Org.Apache.Hadoop.Net
 		/// <remarks>
 		/// Returns underlying channel used by inputstream.
 		/// This is useful in certain cases like channel for
-		/// <see cref="Sharpen.FileChannel.TransferFrom(Sharpen.ReadableByteChannel, long, long)
+		/// <see cref="FileChannel.TransferFrom(ReadableByteChannel, long, long)
 		/// 	"/>
 		/// .
 		/// </remarks>
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.Net
 		/// waits for the underlying channel to be ready for reading.
 		/// The timeout specified for this stream applies to this wait.
 		/// </remarks>
-		/// <exception cref="Sharpen.SocketTimeoutException">
+		/// <exception cref="SocketTimeoutException">
 		/// 
 		/// if select on the channel times out.
 		/// </exception>

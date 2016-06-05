@@ -7,7 +7,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -248,7 +248,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			{
 				try
 				{
-					Sharpen.Collections.AddAll(expandedArgs, ExpandArgument(arg));
+					Collections.AddAll(expandedArgs, ExpandArgument(arg));
 				}
 				catch (IOException e)
 				{
@@ -451,7 +451,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// <see cref="PathData"/>
 		/// object
 		/// </param>
-		/// <exception cref="Sharpen.RuntimeException">if invoked but not implemented</exception>
+		/// <exception cref="RuntimeException">if invoked but not implemented</exception>
 		/// <exception cref="System.IO.IOException">if anything else goes wrong in the user-implementation
 		/// 	</exception>
 		protected internal virtual void ProcessPath(PathData item)
@@ -551,7 +551,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// <returns>name of the command</returns>
 		public virtual string GetName()
 		{
-			return (name == null) ? GetCommandField("NAME") : name.StartsWith("-") ? Sharpen.Runtime.Substring
+			return (name == null) ? GetCommandField("NAME") : name.StartsWith("-") ? Runtime.Substring
 				(name, 1) : name;
 		}
 
@@ -601,7 +601,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			string value;
 			try
 			{
-				FieldInfo f = Sharpen.Runtime.GetDeclaredField(this.GetType(), field);
+				FieldInfo f = Runtime.GetDeclaredField(this.GetType(), field);
 				value = f.GetValue(this).ToString();
 			}
 			catch (Exception e)

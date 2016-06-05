@@ -15,8 +15,8 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -398,7 +398,7 @@ namespace Org.Apache.Hadoop.Net
 			{
 				try
 				{
-					addr = new IPEndPoint(Sharpen.Runtime.GetLocalHost(), addr.Port);
+					addr = new IPEndPoint(Runtime.GetLocalHost(), addr.Port);
 				}
 				catch (UnknownHostException)
 				{
@@ -615,7 +615,7 @@ namespace Org.Apache.Hadoop.Net
 		{
 			try
 			{
-				return Sharpen.Extensions.GetAddressByName(name).GetHostAddress();
+				return Extensions.GetAddressByName(name).GetHostAddress();
 			}
 			catch (UnknownHostException)
 			{
@@ -645,7 +645,7 @@ namespace Org.Apache.Hadoop.Net
 		/// appear to be valid.
 		/// </summary>
 		/// <param name="names">- List of hostnames/IPs</param>
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public static void VerifyHostnames(string[] names)
 		{
 			foreach (string name in names)
@@ -677,7 +677,7 @@ namespace Org.Apache.Hadoop.Net
 			}
 		}
 
-		private static readonly Sharpen.Pattern ipPortPattern = Sharpen.Pattern.Compile("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(:\\d+)?"
+		private static readonly Pattern ipPortPattern = Pattern.Compile("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(:\\d+)?"
 			);
 
 		// Pattern for matching ip[:port]
@@ -696,9 +696,9 @@ namespace Org.Apache.Hadoop.Net
 			try
 			{
 				int colonIdx = ipPort.IndexOf(':');
-				string ip = (-1 == colonIdx) ? ipPort : Sharpen.Runtime.Substring(ipPort, 0, ipPort
+				string ip = (-1 == colonIdx) ? ipPort : Runtime.Substring(ipPort, 0, ipPort
 					.IndexOf(':'));
-				return Sharpen.Extensions.GetAddressByName(ip).GetHostName();
+				return Extensions.GetAddressByName(ip).GetHostName();
 			}
 			catch (UnknownHostException)
 			{
@@ -712,7 +712,7 @@ namespace Org.Apache.Hadoop.Net
 		{
 			try
 			{
-				return string.Empty + Sharpen.Runtime.GetLocalHost();
+				return string.Empty + Runtime.GetLocalHost();
 			}
 			catch (UnknownHostException uhe)
 			{
@@ -856,7 +856,7 @@ namespace Org.Apache.Hadoop.Net
 								}
 								else
 								{
-									return (IOException)Sharpen.Extensions.InitCause(new IOException("Failed on local exception: "
+									return (IOException)Extensions.InitCause(new IOException("Failed on local exception: "
 										 + exception + "; Host Details : " + GetHostDetailsAsString(destHost, destPort, 
 										localHost)), exception);
 								}
@@ -880,7 +880,7 @@ namespace Org.Apache.Hadoop.Net
 			{
 				Constructor<Exception> ctor = clazz.GetConstructor(typeof(string));
 				Exception t = ctor.NewInstance(msg);
-				return (T)(Sharpen.Extensions.InitCause(t, exception));
+				return (T)(Extensions.InitCause(t, exception));
 			}
 			catch (Exception e)
 			{
@@ -1003,7 +1003,7 @@ namespace Org.Apache.Hadoop.Net
 			int port = 0;
 			try
 			{
-				Socket s = Sharpen.Extensions.CreateServerSocket(0);
+				Socket s = Extensions.CreateServerSocket(0);
 				port = s.GetLocalPort();
 				s.Close();
 				return port;

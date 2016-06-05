@@ -1,6 +1,6 @@
 using System;
 using Org.Apache.Commons.Configuration;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 		/// <summary>Save the config to a file</summary>
 		/// <param name="filename">to save</param>
 		/// <returns>self</returns>
-		/// <exception cref="Sharpen.RuntimeException"/>
+		/// <exception cref="RuntimeException"/>
 		public virtual Org.Apache.Hadoop.Metrics2.Impl.ConfigBuilder Save(string filename
 			)
 		{

@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Org.Apache.Hadoop.Metrics;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Spi
 {
@@ -145,7 +145,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 			{
 				if (attributeName.StartsWith(prefix))
 				{
-					string name = Sharpen.Runtime.Substring(attributeName, prefix.Length);
+					string name = Runtime.Substring(attributeName, prefix.Length);
 					string value = (string)factory.GetAttribute(attributeName);
 					result[name] = value;
 				}
@@ -310,7 +310,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 				}
 				catch (IOException ioe)
 				{
-					Sharpen.Runtime.PrintStackTrace(ioe);
+					Runtime.PrintStackTrace(ioe);
 				}
 			}
 
@@ -351,7 +351,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 					}
 					catch (Exception throwable)
 					{
-						Sharpen.Runtime.PrintStackTrace(throwable);
+						Runtime.PrintStackTrace(throwable);
 					}
 				}
 				EmitRecords();
@@ -487,7 +487,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 		{
 			if (a is int)
 			{
-				return Sharpen.Extensions.ValueOf(a + b);
+				return Extensions.ValueOf(a + b);
 			}
 			else
 			{
@@ -511,7 +511,7 @@ namespace Org.Apache.Hadoop.Metrics.Spi
 						{
 							if (a is long)
 							{
-								return Sharpen.Extensions.ValueOf((a + b));
+								return Extensions.ValueOf((a + b));
 							}
 							else
 							{

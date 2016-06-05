@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					 + myUri);
 			}
 			string pathPart = p.ToUri().GetPath();
-			return (pathPart.Length == chRootPathPartString.Length) ? string.Empty : Sharpen.Runtime.Substring
+			return (pathPart.Length == chRootPathPartString.Length) ? string.Empty : Runtime.Substring
 				(pathPart, chRootPathPartString.Length + (chRootPathPart.IsRoot() ? 0 : 1));
 		}
 

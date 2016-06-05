@@ -3,7 +3,7 @@ using Com.Google.Common.Collect;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Lib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {

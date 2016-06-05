@@ -6,7 +6,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -153,7 +153,7 @@ namespace Org.Apache.Hadoop.FS
 					cause = e;
 				}
 			}
-			throw (IOException)Sharpen.Extensions.InitCause(new IOException("Failed to move to trash: "
+			throw (IOException)Extensions.InitCause(new IOException("Failed to move to trash: "
 				 + path), cause);
 		}
 
@@ -288,7 +288,7 @@ namespace Org.Apache.Hadoop.FS
 					try
 					{
 						// sleep for interval
-						Sharpen.Thread.Sleep(end - now);
+						Thread.Sleep(end - now);
 					}
 					catch (Exception)
 					{
@@ -361,7 +361,7 @@ namespace Org.Apache.Hadoop.FS
 			private readonly TrashPolicyDefault _enclosing;
 		}
 
-		/// <exception cref="Sharpen.ParseException"/>
+		/// <exception cref="ParseException"/>
 		private long GetTimeFromCheckpoint(string name)
 		{
 			long time;

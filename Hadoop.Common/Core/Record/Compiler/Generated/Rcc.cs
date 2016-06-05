@@ -2,7 +2,7 @@
 using System.IO;
 using Org.Apache.Hadoop.Record.Compiler;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Compiler.Generated
 {
@@ -42,7 +42,7 @@ namespace Org.Apache.Hadoop.Record.Compiler.Generated
 		{
 			for (int i = 0; i < args.Length; i++)
 			{
-				if (Sharpen.Runtime.EqualsIgnoreCase("-l", args[i]) || Sharpen.Runtime.EqualsIgnoreCase
+				if (Runtime.EqualsIgnoreCase("-l", args[i]) || Runtime.EqualsIgnoreCase
 					("--language", args[i]))
 				{
 					language = StringUtils.ToLowerCase(args[i + 1]);
@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.Record.Compiler.Generated
 				}
 				else
 				{
-					if (Sharpen.Runtime.EqualsIgnoreCase("-d", args[i]) || Sharpen.Runtime.EqualsIgnoreCase
+					if (Runtime.EqualsIgnoreCase("-d", args[i]) || Runtime.EqualsIgnoreCase
 						("--destdir", args[i]))
 					{
 						destDir = args[i + 1];
@@ -60,10 +60,10 @@ namespace Org.Apache.Hadoop.Record.Compiler.Generated
 					{
 						if (args[i].StartsWith("-"))
 						{
-							string arg = Sharpen.Runtime.Substring(args[i], 1);
+							string arg = Runtime.Substring(args[i], 1);
 							if (arg.StartsWith("-"))
 							{
-								arg = Sharpen.Runtime.Substring(arg, 1);
+								arg = Runtime.Substring(arg, 1);
 							}
 							cmdargs.AddItem(StringUtils.ToLowerCase(arg));
 						}
@@ -149,7 +149,7 @@ namespace Org.Apache.Hadoop.Record.Compiler.Generated
 					case ModuleTkn:
 					{
 						l = Module();
-						Sharpen.Collections.AddAll(rlist, l);
+						Collections.AddAll(rlist, l);
 						break;
 					}
 
@@ -781,7 +781,7 @@ label_4_break: ;
 			}
 		}
 
-		private Sharpen.Vector<int[]> jj_expentries = new Sharpen.Vector<int[]>();
+		private Vector<int[]> jj_expentries = new Vector<int[]>();
 
 		private int[] jj_expentry;
 

@@ -2,7 +2,7 @@ using System;
 using Javax.Servlet;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Security.Authentication.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -184,12 +184,12 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 			public virtual void SetCurrentSecret(string secretStr)
 			{
-				this.currentSecret = Sharpen.Runtime.GetBytesForString(secretStr);
+				this.currentSecret = Runtime.GetBytesForString(secretStr);
 			}
 
 			public virtual void SetPreviousSecret(string previousSecretStr)
 			{
-				this.previousSecret = Sharpen.Runtime.GetBytesForString(previousSecretStr);
+				this.previousSecret = Runtime.GetBytesForString(previousSecretStr);
 			}
 
 			internal TestSignerSecretProvider(TestSigner _enclosing)

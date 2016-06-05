@@ -4,7 +4,7 @@ using Com.Google.Common.Annotations;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Service
 {
@@ -228,7 +228,7 @@ namespace Org.Apache.Hadoop.Service
 						terminationNotification.Set(true);
 						lock (terminationNotification)
 						{
-							Sharpen.Runtime.NotifyAll(terminationNotification);
+							Runtime.NotifyAll(terminationNotification);
 						}
 						//notify anything listening for events
 						NotifyListeners();
@@ -298,7 +298,7 @@ namespace Org.Apache.Hadoop.Service
 				{
 					lock (terminationNotification)
 					{
-						Sharpen.Runtime.Wait(terminationNotification, timeout);
+						Runtime.Wait(terminationNotification, timeout);
 					}
 					// here there has been a timeout, the object has terminated,
 					// or there has been a spurious wakeup (which we ignore)
@@ -525,7 +525,7 @@ namespace Org.Apache.Hadoop.Service
 		{
 			lock (blockerMap)
 			{
-				Sharpen.Collections.Remove(blockerMap, name);
+				Collections.Remove(blockerMap, name);
 			}
 		}
 

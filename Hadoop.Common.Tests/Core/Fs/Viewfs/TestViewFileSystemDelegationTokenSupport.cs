@@ -6,7 +6,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <summary>Regression test for HADOOP-8408.</summary>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[Fact]
 		public virtual void TestGetCanonicalServiceNameWithNonDefaultMountTable()
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			NUnit.Framework.Assert.IsNull(serviceName);
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		[Fact]
 		public virtual void TestGetCanonicalServiceNameWithDefaultMountTable()

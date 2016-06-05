@@ -1,6 +1,6 @@
 using System;
 using Com.Google.Common.Annotations;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <exception cref="Org.Apache.Hadoop.FS.ChecksumException">if there is an invalid checksum
 		/// 	</exception>
 		[VisibleForTesting]
-		[System.ObsoleteAttribute(@"use NativeComputeChunkedSums(int, int, Sharpen.ByteBuffer, int, Sharpen.ByteBuffer, int, int, string, long, bool) instead"
+		[System.ObsoleteAttribute(@"use NativeComputeChunkedSums(int, int, ByteBuffer, int, ByteBuffer, int, int, string, long, bool) instead"
 			)]
 		internal static void NativeVerifyChunkedSums(int bytesPerSum, int checksumType, ByteBuffer
 			 sums, int sumsOffset, ByteBuffer data, int dataOffset, int dataLength, string fileName

@@ -10,7 +10,7 @@ using Org.Mockito;
 using Org.Mockito.Internal.Matchers;
 using Org.Mockito.Invocation;
 using Org.Mockito.Stubbing;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Test
 {

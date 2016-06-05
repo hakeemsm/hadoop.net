@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.Crypto
 		/// .
 		/// </summary>
 		/// <returns>Encryptor the encryptor</returns>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public abstract Encryptor CreateEncryptor();
 
 		/// <summary>
@@ -128,7 +128,7 @@ namespace Org.Apache.Hadoop.Crypto
 		/// .
 		/// </summary>
 		/// <returns>Decryptor the decryptor</returns>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public abstract Decryptor CreateDecryptor();
 
 		/// <summary>This interface is only for Counter (CTR) mode.</summary>
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.Crypto
 		/// This interface is only for Counter (CTR) mode. Generally the Encryptor
 		/// or Decryptor calculates the IV and maintain encryption context internally.
 		/// For example a
-		/// <see cref="Sharpen.Cipher"/>
+		/// <see cref="Cipher"/>
 		/// will maintain its encryption
 		/// context internally when we do encryption/decryption using the
 		/// Cipher#update interface.

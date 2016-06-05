@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Compress;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -825,7 +825,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				string fullMetaName = Utils.ReadString(@in);
 				if (fullMetaName.StartsWith(defaultPrefix))
 				{
-					metaName = Sharpen.Runtime.Substring(fullMetaName, defaultPrefix.Length, fullMetaName
+					metaName = Runtime.Substring(fullMetaName, defaultPrefix.Length, fullMetaName
 						.Length);
 				}
 				else

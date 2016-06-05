@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -25,7 +25,7 @@ namespace Org.Apache.Hadoop.HA
 
 		private readonly Log log;
 
-		internal readonly Sharpen.Thread thread;
+		internal readonly Thread thread;
 
 		internal readonly string logPrefix;
 
@@ -42,7 +42,7 @@ namespace Org.Apache.Hadoop.HA
 			this.logPrefix = logPrefix;
 			this.stream = stream;
 			this.type = type;
-			thread = new Sharpen.Thread(new _Runnable_53(this, logPrefix, type), logPrefix + 
+			thread = new Thread(new _Runnable_53(this, logPrefix, type), logPrefix + 
 				": StreamPumper for " + type);
 			thread.SetDaemon(true);
 		}

@@ -2,7 +2,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -41,8 +41,8 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			int nx;
 			for (nx = 0; nx < count; nx++)
 			{
-				byte[] key = Sharpen.Runtime.GetBytesForString(ComposeSortedKey(Key, count, nx));
-				byte[] value = Sharpen.Runtime.GetBytesForString((Value + nx));
+				byte[] key = Runtime.GetBytesForString(ComposeSortedKey(Key, count, nx));
+				byte[] value = Runtime.GetBytesForString((Value + nx));
 				writer.Append(key, value);
 			}
 			writer.Close();

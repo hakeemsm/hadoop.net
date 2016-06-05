@@ -3,7 +3,7 @@ using Hadoop.Common.Core.Fs.Ftp;
 using Org.Apache.Commons.Net.Ftp;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Ftp
 {
@@ -16,14 +16,14 @@ namespace Org.Apache.Hadoop.FS.Ftp
 	{
 		/// <summary>
 		/// This constructor has the signature needed by
-		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(Sharpen.URI, Configuration)
+		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(URI, Configuration)
 		/// 	"/>
 		/// .
 		/// </summary>
 		/// <param name="theUri">which must be that of localFs</param>
 		/// <param name="conf"/>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"></exception>
+		/// <exception cref="URISyntaxException"></exception>
 		internal FtpFs(URI theUri, Configuration conf)
 			: base(theUri, new FTPFileSystem(), conf, FsConstants.FtpScheme, true)
 		{

@@ -2,7 +2,7 @@ using System.Text;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Oncrpc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Nfs.Nfs3
 {
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.Nfs.Nfs3
 				handle = null;
 				return;
 			}
-			byte[] @in = Sharpen.Runtime.GetBytesForString(s, Charsets.Utf8);
+			byte[] @in = Runtime.GetBytesForString(s, Charsets.Utf8);
 			digest.Update(@in);
 			byte[] digestbytes = digest.Digest();
 			for (int i = 0; i < 16; i++)

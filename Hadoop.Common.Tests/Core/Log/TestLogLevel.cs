@@ -6,7 +6,7 @@ using Org.Apache.Commons.Logging.Impl;
 using Org.Apache.Hadoop.Http;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Log
 {

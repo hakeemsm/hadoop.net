@@ -12,7 +12,7 @@ using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token
 {
@@ -306,7 +306,7 @@ namespace Org.Apache.Hadoop.Security.Token
 				{
 					buffer.Append(' ');
 				}
-				string num = Sharpen.Extensions.ToHexString(unchecked((int)(0xff)) & bytes[idx]);
+				string num = Extensions.ToHexString(unchecked((int)(0xff)) & bytes[idx]);
 				// if it is only one digit, add a leading 0.
 				if (num.Length < 2)
 				{

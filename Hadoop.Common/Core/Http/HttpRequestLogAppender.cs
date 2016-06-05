@@ -1,6 +1,6 @@
 using Org.Apache.Log4j;
 using Org.Apache.Log4j.Spi;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {

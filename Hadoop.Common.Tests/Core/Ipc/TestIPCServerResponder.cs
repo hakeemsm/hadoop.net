@@ -6,7 +6,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -64,7 +64,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					try
 					{
-						Sharpen.Thread.Sleep(Random.Next(20));
+						Thread.Sleep(Random.Next(20));
 					}
 					catch (Exception)
 					{
@@ -75,7 +75,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 		}
 
-		private class Caller : Sharpen.Thread
+		private class Caller : Thread
 		{
 			private Client client;
 
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Ipc
 						System.Array.Copy(Bytes, 0, bytes, 0, byteSize);
 						Writable param = new BytesWritable(bytes);
 						client.Call(param, address);
-						Sharpen.Thread.Sleep(Random.Next(20));
+						Thread.Sleep(Random.Next(20));
 					}
 					catch (Exception e)
 					{

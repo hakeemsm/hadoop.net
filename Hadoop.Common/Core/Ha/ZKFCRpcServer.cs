@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.HA.Proto;
 using Org.Apache.Hadoop.HA.ProtocolPB;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Security.Authorize;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {

@@ -11,7 +11,7 @@ using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Security
 				Com.Google.Common.Cache.Cache<string, bool> tempMap = CacheBuilder.NewBuilder().ExpireAfterWrite
 					(negativeCacheTimeout, TimeUnit.Milliseconds).Ticker(new Groups.TimerToTickerAdapter
 					(timer)).Build();
-				negativeCache = Sharpen.Collections.NewSetFromMap(tempMap.AsMap());
+				negativeCache = Collections.NewSetFromMap(tempMap.AsMap());
 			}
 			if (Log.IsDebugEnabled())
 			{
@@ -106,10 +106,10 @@ namespace Org.Apache.Hadoop.Security
 					throw new HadoopIllegalArgumentException("Configuration " + CommonConfigurationKeys
 						.HadoopUserGroupStaticOverrides + " is invalid");
 				}
-				string[] userToGroupsArray = Sharpen.Collections.ToArray(userToGroups, new string
+				string[] userToGroupsArray = Collections.ToArray(userToGroups, new string
 					[userToGroups.Count]);
 				string user = userToGroupsArray[0];
-				IList<string> groups = Sharpen.Collections.EmptyList();
+				IList<string> groups = Collections.EmptyList();
 				if (userToGroupsArray.Length == 2)
 				{
 					groups = (IList<string>)StringUtils.GetStringCollection(userToGroupsArray[1]);

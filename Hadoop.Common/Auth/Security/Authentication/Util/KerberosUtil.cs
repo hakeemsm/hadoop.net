@@ -4,7 +4,7 @@ using System.Net;
 using System.Reflection;
 using Org.Apache.Directory.Server.Kerberos.Shared.Keytab;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -18,8 +18,8 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		}
 
 		/// <exception cref="System.TypeLoadException"/>
-		/// <exception cref="Sharpen.GSSException"/>
-		/// <exception cref="Sharpen.NoSuchFieldException"/>
+		/// <exception cref="GSSException"/>
+		/// <exception cref="NoSuchFieldException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		public static Oid GetOidInstance(string oidName)
 		{
@@ -31,13 +31,13 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 					// IBM JDK GSSUtil class does not have field for krb5 principal oid
 					return new Oid("1.2.840.113554.1.2.2.1");
 				}
-				oidClass = Sharpen.Runtime.GetType("com.ibm.security.jgss.GSSUtil");
+				oidClass = Runtime.GetType("com.ibm.security.jgss.GSSUtil");
 			}
 			else
 			{
-				oidClass = Sharpen.Runtime.GetType("sun.security.jgss.GSSUtil");
+				oidClass = Runtime.GetType("sun.security.jgss.GSSUtil");
 			}
-			FieldInfo oidField = Sharpen.Runtime.GetDeclaredField(oidClass, oidName);
+			FieldInfo oidField = Runtime.GetDeclaredField(oidClass, oidName);
 			return (Oid)oidField.GetValue(oidClass);
 		}
 
@@ -54,24 +54,24 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			MethodInfo getDefaultRealmMethod;
 			if (Runtime.GetProperty("java.vendor").Contains("IBM"))
 			{
-				classRef = Sharpen.Runtime.GetType("com.ibm.security.krb5.internal.Config");
+				classRef = Runtime.GetType("com.ibm.security.krb5.internal.Config");
 			}
 			else
 			{
-				classRef = Sharpen.Runtime.GetType("sun.security.krb5.Config");
+				classRef = Runtime.GetType("sun.security.krb5.Config");
 			}
 			getInstanceMethod = classRef.GetMethod("getInstance", new Type[0]);
 			kerbConf = getInstanceMethod.Invoke(classRef, new object[0]);
-			getDefaultRealmMethod = Sharpen.Runtime.GetDeclaredMethod(classRef, "getDefaultRealm"
+			getDefaultRealmMethod = Runtime.GetDeclaredMethod(classRef, "getDefaultRealm"
 				, new Type[0]);
 			return (string)getDefaultRealmMethod.Invoke(kerbConf, new object[0]);
 		}
 
 		/* Return fqdn of the current host */
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		internal static string GetLocalHostName()
 		{
-			return Sharpen.Runtime.GetLocalHost().ToString();
+			return Runtime.GetLocalHost().ToString();
 		}
 
 		/// <summary>Create Kerberos principal for a given service and hostname.</summary>
@@ -83,7 +83,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		/// <param name="service">Service for which you want to generate the principal.</param>
 		/// <param name="hostname">Fully-qualified domain name.</param>
 		/// <returns>Converted Kerberos principal name.</returns>
-		/// <exception cref="Sharpen.UnknownHostException">If no IP address for the local host could be found.
+		/// <exception cref="UnknownHostException">If no IP address for the local host could be found.
 		/// 	</exception>
 		public static string GetServicePrincipal(string service, string hostname)
 		{
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			}
 			// convert hostname to lowercase as kerberos does not work with hostnames
 			// with uppercase characters.
-			return service + "/" + fqdn.ToLower(Sharpen.Extensions.GetEnglishCulture());
+			return service + "/" + fqdn.ToLower(Extensions.GetEnglishCulture());
 		}
 
 		/// <summary>Get all the unique principals present in the keytabfile.</summary>
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			{
 				principals.AddItem(entry.GetPrincipalName().Replace("\\", "/"));
 			}
-			return Sharpen.Collections.ToArray(principals, new string[0]);
+			return Collections.ToArray(principals, new string[0]);
 		}
 
 		/// <summary>Get all the unique principals from keytabfile which matches a pattern.</summary>
@@ -125,7 +125,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		/// <param name="pattern">pattern to be matched.</param>
 		/// <returns>list of unique principals which matches the pattern.</returns>
 		/// <exception cref="System.IO.IOException">if cannot get the principal name</exception>
-		public static string[] GetPrincipalNames(string keytab, Sharpen.Pattern pattern)
+		public static string[] GetPrincipalNames(string keytab, Pattern pattern)
 		{
 			string[] principals = GetPrincipalNames(keytab);
 			if (principals.Length != 0)
@@ -138,7 +138,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 						matchingPrincipals.AddItem(principal);
 					}
 				}
-				principals = Sharpen.Collections.ToArray(matchingPrincipals, new string[0]);
+				principals = Collections.ToArray(matchingPrincipals, new string[0]);
 			}
 			return principals;
 		}

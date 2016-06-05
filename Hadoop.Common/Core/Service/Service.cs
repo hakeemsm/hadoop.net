@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Service
 {
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Service
 			/// <remarks>
 			/// An integer value for use in array lookup and JMX interfaces.
 			/// Although
-			/// <see cref="Sharpen.Enum{E}.Ordinal()"/>
+			/// <see cref="Enum{E}.Ordinal()"/>
 			/// could do this, explicitly
 			/// identify the numbers gives more stability guarantees over time.
 			/// </remarks>
@@ -75,7 +75,7 @@ namespace Org.Apache.Hadoop.Service
 		/// .
 		/// </remarks>
 		/// <param name="config">the configuration of the service</param>
-		/// <exception cref="Sharpen.RuntimeException">on any failure during the operation</exception>
+		/// <exception cref="RuntimeException">on any failure during the operation</exception>
 		public abstract void Init(Configuration config);
 
 		/// <summary>Start the service.</summary>
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Service
 		/// <see cref="STATE.Stopped"/>
 		/// .
 		/// </remarks>
-		/// <exception cref="Sharpen.RuntimeException">on any failure during the operation</exception>
+		/// <exception cref="RuntimeException">on any failure during the operation</exception>
 		public abstract void Start();
 
 		/// <summary>Stop the service.</summary>
@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.Service
 		/// state, including the initialized/uninitialized state of all its internal
 		/// fields.
 		/// </remarks>
-		/// <exception cref="Sharpen.RuntimeException">on any failure during the stop operation
+		/// <exception cref="RuntimeException">on any failure during the stop operation
 		/// 	</exception>
 		public abstract void Stop();
 
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.Service
 		/// <see cref="Stop()"/>
 		/// </remarks>
 		/// <exception cref="System.IO.IOException">never</exception>
-		/// <exception cref="Sharpen.RuntimeException">on any failure during the stop operation
+		/// <exception cref="RuntimeException">on any failure during the stop operation
 		/// 	</exception>
 		public abstract void Close();
 

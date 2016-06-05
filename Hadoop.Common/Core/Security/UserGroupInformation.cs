@@ -19,8 +19,8 @@ using Org.Apache.Hadoop.Metrics2.Lib;
 using Org.Apache.Hadoop.Security.Authentication.Util;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -179,7 +179,7 @@ namespace Org.Apache.Hadoop.Security
 					}
 					catch (Exception e)
 					{
-						throw (LoginException)(Sharpen.Extensions.InitCause(new LoginException(e.ToString
+						throw (LoginException)(Extensions.InitCause(new LoginException(e.ToString
 							()), e));
 					}
 					if (Log.IsDebugEnabled())
@@ -521,7 +521,7 @@ namespace Org.Apache.Hadoop.Security
 			static HadoopConfiguration()
 			{
 				string jaasEnvVar = Runtime.Getenv("HADOOP_JAAS_DEBUG");
-				if (jaasEnvVar != null && Sharpen.Runtime.EqualsIgnoreCase("true", jaasEnvVar))
+				if (jaasEnvVar != null && Runtime.EqualsIgnoreCase("true", jaasEnvVar))
 				{
 					BasicJaasOptions["debug"] = "true";
 				}
@@ -663,7 +663,7 @@ namespace Org.Apache.Hadoop.Security
 			// Temporarily switch the thread's ContextClassLoader to match this
 			// class's classloader, so that we can properly load HadoopLoginModule
 			// from the JAAS libraries.
-			Sharpen.Thread t = Sharpen.Thread.CurrentThread();
+			Thread t = Thread.CurrentThread();
 			ClassLoader oldCCL = t.GetContextClassLoader();
 			t.SetContextClassLoader(typeof(UserGroupInformation.HadoopLoginModule).GetClassLoader
 				());
@@ -881,7 +881,7 @@ namespace Org.Apache.Hadoop.Security
 			int spaceIndex = userName.IndexOf(' ');
 			if (spaceIndex >= 0)
 			{
-				userName = Sharpen.Runtime.Substring(userName, 0, spaceIndex);
+				userName = Runtime.Substring(userName, 0, spaceIndex);
 			}
 			return userName;
 		}
@@ -1003,7 +1003,7 @@ namespace Org.Apache.Hadoop.Security
 				if (user.GetAuthenticationMethod() == UserGroupInformation.AuthenticationMethod.Kerberos
 					 && !isKeytab)
 				{
-					Sharpen.Thread t = new Sharpen.Thread(new _Runnable_877(this));
+					Thread t = new Thread(new _Runnable_877(this));
 					t.SetDaemon(true);
 					t.SetName("TGT Renewer for " + GetUserName());
 					t.Start();
@@ -1040,7 +1040,7 @@ namespace Org.Apache.Hadoop.Security
 						}
 						if (now < nextRefresh)
 						{
-							Sharpen.Thread.Sleep(nextRefresh - now);
+							Thread.Sleep(nextRefresh - now);
 						}
 						Shell.ExecCommand(cmd, "-R");
 						if (UserGroupInformation.Log.IsDebugEnabled())
@@ -1695,7 +1695,7 @@ namespace Org.Apache.Hadoop.Security
 		{
 			lock (subject)
 			{
-				return Sharpen.Collections.UnmodifiableCollection(new AList<Org.Apache.Hadoop.Security.Token.Token
+				return Collections.UnmodifiableCollection(new AList<Org.Apache.Hadoop.Security.Token.Token
 					<object>>(GetCredentialsInternal().GetAllTokens()));
 			}
 		}
@@ -1764,7 +1764,7 @@ namespace Org.Apache.Hadoop.Security
 				{
 					ICollection<string> result = new LinkedHashSet<string>(groups.GetGroups(GetShortUserName
 						()));
-					return Sharpen.Collections.ToArray(result, new string[result.Count]);
+					return Collections.ToArray(result, new string[result.Count]);
 				}
 				catch (IOException)
 				{
@@ -1905,11 +1905,11 @@ namespace Org.Apache.Hadoop.Security
 		/// <param name="action">the method to execute</param>
 		/// <returns>the value from the run method</returns>
 		/// <exception cref="System.IO.IOException">if the action throws an IOException</exception>
-		/// <exception cref="Sharpen.Error">if the action throws an Error</exception>
-		/// <exception cref="Sharpen.RuntimeException">if the action throws a RuntimeException
+		/// <exception cref="Error">if the action throws an Error</exception>
+		/// <exception cref="RuntimeException">if the action throws a RuntimeException
 		/// 	</exception>
 		/// <exception cref="System.Exception">if the action throws an InterruptedException</exception>
-		/// <exception cref="Sharpen.Reflect.UndeclaredThrowableException">if the action throws something else
+		/// <exception cref="Reflect.UndeclaredThrowableException">if the action throws something else
 		/// 	</exception>
 		[InterfaceAudience.Public]
 		[InterfaceStability.Evolving]

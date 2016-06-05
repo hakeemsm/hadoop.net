@@ -5,7 +5,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO.Compress.Bzip2;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress
 {
@@ -276,7 +276,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 					// The compressed bzip2 stream should start with the
 					// identifying characters BZ. Caller of CBZip2OutputStream
 					// i.e. this class must write these characters.
-					@out.Write(Sharpen.Runtime.GetBytesForString(Header, Charsets.Utf8));
+					@out.Write(Runtime.GetBytesForString(Header, Charsets.Utf8));
 				}
 			}
 

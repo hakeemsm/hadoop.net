@@ -6,7 +6,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO.Nativeio;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.Net
 			{
 				InputStream @in = new SocketInputStream(source, Timeout);
 				OutputStream @out = new SocketOutputStream(sink, Timeout);
-				byte[] writeBytes = Sharpen.Runtime.GetBytesForString(TestString);
+				byte[] writeBytes = Runtime.GetBytesForString(TestString);
 				byte[] readBytes = new byte[writeBytes.Length];
 				byte byteWithHighBit = unchecked((byte)unchecked((int)(0x80)));
 				@out.Write(writeBytes);
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.Net
 				// some Java quirk. Waiting for it to call read()
 				// gets it into select(), so we get the expected
 				// InterruptedIOException.
-				Sharpen.Thread.Sleep(1000);
+				Thread.Sleep(1000);
 				thread.Interrupt();
 				ctx.Stop();
 				//make sure the channels are still open

@@ -23,7 +23,7 @@ using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Htrace;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -155,7 +155,7 @@ namespace Org.Apache.Hadoop.Ipc
 						{
 							Log.Warn("Interrupted while waiting for clientExecutor" + " to stop");
 							clientExecutor.ShutdownNow();
-							Sharpen.Thread.CurrentThread().Interrupt();
+							Thread.CurrentThread().Interrupt();
 						}
 						clientExecutor = null;
 					}
@@ -337,7 +337,7 @@ namespace Org.Apache.Hadoop.Ipc
 				lock (this)
 				{
 					this.done = true;
-					Sharpen.Runtime.Notify(this);
+					Runtime.Notify(this);
 				}
 			}
 
@@ -387,7 +387,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// socket connected to a remote address.  Calls are multiplexed through this
 		/// socket: responses may be delivered out of order.
 		/// </remarks>
-		private class Connection : Sharpen.Thread
+		private class Connection : Thread
 		{
 			private IPEndPoint server;
 
@@ -522,7 +522,7 @@ namespace Org.Apache.Hadoop.Ipc
 						return false;
 					}
 					this.calls[call.id] = call;
-					Sharpen.Runtime.Notify(this);
+					Runtime.Notify(this);
 					return true;
 				}
 			}
@@ -835,7 +835,7 @@ namespace Org.Apache.Hadoop.Ipc
 							//we are sleeping with the Connection lock held but since this
 							//connection instance is being used for connecting to the server
 							//in question, it is okay
-							Sharpen.Thread.Sleep((rand.Next(MaxBackoff) + 1));
+							Thread.Sleep((rand.Next(MaxBackoff) + 1));
 							return null;
 						}
 						else
@@ -843,7 +843,7 @@ namespace Org.Apache.Hadoop.Ipc
 							string msg = "Couldn't setup connection for " + UserGroupInformation.GetLoginUser
 								().GetUserName() + " to " + this._enclosing.remoteId;
 							Client.Log.Warn(msg, ex);
-							throw (IOException)Sharpen.Extensions.InitCause(new IOException(msg), ex);
+							throw (IOException)Extensions.InitCause(new IOException(msg), ex);
 						}
 					}
 					else
@@ -1091,18 +1091,18 @@ namespace Org.Apache.Hadoop.Ipc
 					throw ioe;
 				}
 				// Throw the exception if the thread is interrupted
-				if (Sharpen.Thread.CurrentThread().IsInterrupted())
+				if (Thread.CurrentThread().IsInterrupted())
 				{
 					Client.Log.Warn("Interrupted while trying for connection");
 					throw ioe;
 				}
 				try
 				{
-					Sharpen.Thread.Sleep(action.delayMillis);
+					Thread.Sleep(action.delayMillis);
 				}
 				catch (Exception e)
 				{
-					throw (IOException)Sharpen.Extensions.InitCause(new ThreadInterruptedException("Interrupted: action="
+					throw (IOException)Extensions.InitCause(new ThreadInterruptedException("Interrupted: action="
 						 + action + ", retry policy=" + this.connectionRetryPolicy), e);
 				}
 				Client.Log.Info("Retrying connect to server: " + this.server + ". Already tried "
@@ -1172,7 +1172,7 @@ namespace Org.Apache.Hadoop.Ipc
 						{
 							try
 							{
-								Sharpen.Runtime.Wait(this, timeout);
+								Runtime.Wait(this, timeout);
 							}
 							catch (Exception)
 							{
@@ -1201,7 +1201,7 @@ namespace Org.Apache.Hadoop.Ipc
 							else
 							{
 								// get stopped but there are still pending requests 
-								this.MarkClosed((IOException)Sharpen.Extensions.InitCause(new IOException(), new 
+								this.MarkClosed((IOException)Extensions.InitCause(new IOException(), new 
 									Exception()));
 								return false;
 							}
@@ -1472,7 +1472,7 @@ namespace Org.Apache.Hadoop.Ipc
 					if (this.shouldCloseConnection.CompareAndSet(false, true))
 					{
 						this.closeException = e;
-						Sharpen.Runtime.NotifyAll(this);
+						Runtime.NotifyAll(this);
 					}
 				}
 			}
@@ -1607,7 +1607,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(100);
+					Thread.Sleep(100);
 				}
 				catch (Exception)
 				{
@@ -1857,7 +1857,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 			catch (Exception e)
 			{
-				Sharpen.Thread.CurrentThread().Interrupt();
+				Thread.CurrentThread().Interrupt();
 				Log.Warn("interrupted waiting to send rpc request to server", e);
 				throw new IOException(e);
 			}
@@ -1867,12 +1867,12 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					try
 					{
-						Sharpen.Runtime.Wait(call);
+						Runtime.Wait(call);
 					}
 					catch (Exception)
 					{
 						// wait for the result
-						Sharpen.Thread.CurrentThread().Interrupt();
+						Thread.CurrentThread().Interrupt();
 						throw new ThreadInterruptedException("Call interrupted");
 					}
 				}

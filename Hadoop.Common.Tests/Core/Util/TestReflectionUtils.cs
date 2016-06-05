@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.Util
 		[Fact]
 		public virtual void TestThreadSafe()
 		{
-			Sharpen.Thread[] th = new Sharpen.Thread[32];
+			Thread[] th = new Thread[32];
 			for (int i = 0; i < th.Length; i++)
 			{
 				th[i] = new _Thread_67(this);
@@ -58,12 +58,12 @@ namespace Org.Apache.Hadoop.Util
 			}
 			if (failure != null)
 			{
-				Sharpen.Runtime.PrintStackTrace(failure);
+				Runtime.PrintStackTrace(failure);
 				NUnit.Framework.Assert.Fail(failure.Message);
 			}
 		}
 
-		private sealed class _Thread_67 : Sharpen.Thread
+		private sealed class _Thread_67 : Thread
 		{
 			public _Thread_67(TestReflectionUtils _enclosing)
 			{
@@ -116,7 +116,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				URLClassLoader loader = new URLClassLoader(new Uri[0], GetType().GetClassLoader()
 					);
-				Type cl = Sharpen.Runtime.GetType("org.apache.hadoop.util.TestReflectionUtils$LoadedInChild"
+				Type cl = Runtime.GetType("org.apache.hadoop.util.TestReflectionUtils$LoadedInChild"
 					, false, loader);
 				object o = ReflectionUtils.NewInstance(cl, null);
 				Assert.Equal(cl, o.GetType());

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Util
 			store.VisitAll(new _Visitor_137(keys));
 			for (int i_2 = 0; i_2 < NumKeys; i_2++)
 			{
-				Assert.Equal(Sharpen.Extensions.ValueOf(i_2), store.Remove(keys
+				Assert.Equal(Extensions.ValueOf(i_2), store.Remove(keys
 					[i_2]));
 			}
 			store.VisitAll(new _Visitor_147());

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -34,10 +34,10 @@ namespace Org.Apache.Hadoop.Security
 			IList<string> shellBasedGroups = g.GetGroups(user);
 			g = new JniBasedUnixGroupsMapping();
 			IList<string> jniBasedGroups = g.GetGroups(user);
-			string[] shellBasedGroupsArray = Sharpen.Collections.ToArray(shellBasedGroups, new 
+			string[] shellBasedGroupsArray = Collections.ToArray(shellBasedGroups, new 
 				string[0]);
 			Arrays.Sort(shellBasedGroupsArray);
-			string[] jniBasedGroupsArray = Sharpen.Collections.ToArray(jniBasedGroups, new string
+			string[] jniBasedGroupsArray = Collections.ToArray(jniBasedGroups, new string
 				[0]);
 			Arrays.Sort(jniBasedGroupsArray);
 			if (!Arrays.Equals(shellBasedGroupsArray, jniBasedGroupsArray))

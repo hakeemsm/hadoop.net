@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Bloom
 {

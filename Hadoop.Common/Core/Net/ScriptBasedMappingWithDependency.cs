@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -84,7 +84,7 @@ namespace Org.Apache.Hadoop.Net
 			name = NetUtils.NormalizeHostName(name);
 			if (name == null)
 			{
-				return Sharpen.Collections.EmptyList();
+				return Collections.EmptyList();
 			}
 			IList<string> dependencies = dependencyCache[name];
 			if (dependencies == null)
@@ -140,7 +140,7 @@ namespace Org.Apache.Hadoop.Net
 			{
 				if (name == null || dependencyScriptName == null)
 				{
-					return Sharpen.Collections.EmptyList();
+					return Collections.EmptyList();
 				}
 				IList<string> m = new List<string>();
 				IList<string> args = new AList<string>(1);

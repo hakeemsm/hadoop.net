@@ -223,11 +223,11 @@ namespace Hadoop.Common.Core.Fs.Shell
 					{
 						return -1;
 					}
-					byte[] tmp = Sharpen.Runtime.GetBytesForString(this.key.ToString(), Charsets.Utf8
+					byte[] tmp = Runtime.GetBytesForString(this.key.ToString(), Charsets.Utf8
 						);
 					this.outbuf.Write(tmp, 0, tmp.Length);
 					this.outbuf.Write('\t');
-					tmp = Sharpen.Runtime.GetBytesForString(this.val.ToString(), Charsets.Utf8);
+					tmp = Runtime.GetBytesForString(this.val.ToString(), Charsets.Utf8);
 					this.outbuf.Write(tmp, 0, tmp.Length);
 					this.outbuf.Write('\n');
 					this.inbuf.Reset(this.outbuf.GetData(), this.outbuf.GetLength());
@@ -302,7 +302,7 @@ namespace Hadoop.Common.Core.Fs.Shell
 				if (!fileReader.HasNext())
 				{
 					// Write a new line after the last Avro record.
-					output.Write(Sharpen.Runtime.GetBytesForString(Runtime.GetProperty("line.separator"
+					output.Write(Runtime.GetBytesForString(Runtime.GetProperty("line.separator"
 						), Charsets.Utf8));
 					output.Flush();
 				}

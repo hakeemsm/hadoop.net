@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Security.Token.Delegation;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 {
@@ -215,7 +215,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 
 		/// <summary>
 		/// Returns an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// , it uses a Delegation
 		/// Token only if the given auth token is an instance of
 		/// <see cref="Token"/>
@@ -228,7 +228,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		/// <param name="token">the authentication token being used for the user.</param>
 		/// <returns>
 		/// an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// .
 		/// </returns>
 		/// <exception cref="System.IO.IOException">if an IO error occurred.</exception>
@@ -243,7 +243,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 
 		/// <summary>
 		/// Returns an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// . If the Delegation
 		/// Token is present, it will be used taking precedence over the configured
 		/// <code>Authenticator</code>.
@@ -252,7 +252,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		/// <param name="token">the authentication token being used for the user.</param>
 		/// <returns>
 		/// an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// .
 		/// </returns>
 		/// <exception cref="System.IO.IOException">if an IO error occurred.</exception>
@@ -284,7 +284,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 
 		/// <summary>
 		/// Returns an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// . If the Delegation
 		/// Token is present, it will be used taking precedence over the configured
 		/// <code>Authenticator</code>. If the <code>doAs</code> parameter is not NULL,
@@ -298,7 +298,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation.Web
 		/// </param>
 		/// <returns>
 		/// an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// .
 		/// </returns>
 		/// <exception cref="System.IO.IOException">if an IO error occurred.</exception>

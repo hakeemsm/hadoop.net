@@ -4,7 +4,7 @@ using System.IO;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Alias
 {
@@ -58,7 +58,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e, err);
+				Runtime.PrintStackTrace(e, err);
 				return 1;
 			}
 			return exitCode;
@@ -230,7 +230,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 				}
 				catch (IOException e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e, this._enclosing.err);
+					Runtime.PrintStackTrace(e, this._enclosing.err);
 				}
 				return provider;
 			}
@@ -371,7 +371,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 					catch (IOException e)
 					{
 						this._enclosing.@out.WriteLine(this.alias + " will not be deleted.");
-						Sharpen.Runtime.PrintStackTrace(e, this._enclosing.err);
+						Runtime.PrintStackTrace(e, this._enclosing.err);
 					}
 				}
 				return true;
@@ -446,7 +446,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+			/// <exception cref="NoSuchAlgorithmException"/>
 			public override void Execute()
 			{
 				this.WarnIfTransientProvider();

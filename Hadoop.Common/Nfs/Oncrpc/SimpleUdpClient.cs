@@ -1,6 +1,6 @@
 using System.IO;
 using System.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Oncrpc
 {
@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void Run()
 		{
-			IPAddress IPAddress = Sharpen.Extensions.GetAddressByName(host);
+			IPAddress IPAddress = Extensions.GetAddressByName(host);
 			byte[] sendData = request.GetBytes();
 			byte[] receiveData = new byte[65535];
 			// Use the provided socket if there is one, else just make a new one.

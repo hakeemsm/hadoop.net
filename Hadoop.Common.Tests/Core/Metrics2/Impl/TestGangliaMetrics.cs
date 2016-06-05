@@ -5,7 +5,7 @@ using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Annotation;
 using Org.Apache.Hadoop.Metrics2.Lib;
 using Org.Apache.Hadoop.Metrics2.Sink.Ganglia;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			bool[] foundMetrics = new bool[expectedMetrics.Length];
 			foreach (byte[] bytes in bytearrlist)
 			{
-				string binaryStr = Sharpen.Runtime.GetStringForBytes(bytes);
+				string binaryStr = Runtime.GetStringForBytes(bytes);
 				for (int index = 0; index < expectedMetrics.Length; index++)
 				{
 					if (binaryStr.IndexOf(expectedMetrics[index]) >= 0)

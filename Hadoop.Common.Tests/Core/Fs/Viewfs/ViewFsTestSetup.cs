@@ -1,7 +1,7 @@
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -99,7 +99,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			{
 				indexOfEnd = path.IndexOf('/', indexOfEnd + 1);
 			}
-			string firstComponent = Sharpen.Runtime.Substring(path, 0, indexOfEnd);
+			string firstComponent = Runtime.Substring(path, 0, indexOfEnd);
 			URI linkTarget = fsTarget.MakeQualified(new Path(firstComponent)).ToUri();
 			ConfigUtil.AddLink(conf, firstComponent, linkTarget);
 			Org.Mortbay.Log.Log.Info("Added link for " + info + " " + firstComponent + "->" +

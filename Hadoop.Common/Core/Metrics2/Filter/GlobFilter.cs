@@ -1,5 +1,5 @@
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Filter
 {
@@ -10,7 +10,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 	/// </remarks>
 	public class GlobFilter : AbstractPatternFilter
 	{
-		protected internal override Sharpen.Pattern Compile(string s)
+		protected internal override Pattern Compile(string s)
 		{
 			return GlobPattern.Compile(s);
 		}

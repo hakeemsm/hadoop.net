@@ -6,7 +6,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.IO
 				writer.Close();
 				// will check for membership in opposite order of how keys were inserted
 				reader = new BloomMapFile.Reader(fs, qualifiedDirName.ToString(), conf);
-				Sharpen.Collections.Reverse(keys);
+				Collections.Reverse(keys);
 				foreach (Text key_1 in keys)
 				{
 					Assert.True("False negative for existing key " + key_1, reader.

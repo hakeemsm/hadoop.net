@@ -8,8 +8,8 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -373,7 +373,7 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestInheritedMethodsImplemented()
 		{
 			int errors = 0;
-			foreach (MethodInfo m in Sharpen.Runtime.GetDeclaredMethods(typeof(FileSystem)))
+			foreach (MethodInfo m in Runtime.GetDeclaredMethods(typeof(FileSystem)))
 			{
 				if (Modifier.IsStatic(m.GetModifiers()) || Modifier.IsPrivate(m.GetModifiers()) ||
 					 Modifier.IsFinal(m.GetModifiers()))
@@ -382,11 +382,11 @@ namespace Org.Apache.Hadoop.FS
 				}
 				try
 				{
-					typeof(TestHarFileSystem.MustNotImplement).GetMethod(m.Name, Sharpen.Runtime.GetParameterTypes
+					typeof(TestHarFileSystem.MustNotImplement).GetMethod(m.Name, Runtime.GetParameterTypes
 						(m));
 					try
 					{
-						Sharpen.Runtime.GetDeclaredMethod(typeof(HarFileSystem), m.Name, Sharpen.Runtime.GetParameterTypes
+						Runtime.GetDeclaredMethod(typeof(HarFileSystem), m.Name, Runtime.GetParameterTypes
 							(m));
 						Log.Error("HarFileSystem MUST not implement " + m);
 						errors++;
@@ -400,7 +400,7 @@ namespace Org.Apache.Hadoop.FS
 					// Expected
 					try
 					{
-						Sharpen.Runtime.GetDeclaredMethod(typeof(HarFileSystem), m.Name, Sharpen.Runtime.GetParameterTypes
+						Runtime.GetDeclaredMethod(typeof(HarFileSystem), m.Name, Runtime.GetParameterTypes
 							(m));
 					}
 					catch (MissingMethodException)

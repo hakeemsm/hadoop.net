@@ -13,7 +13,7 @@ using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Client;
 using Org.Apache.Zookeeper.Data;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -391,8 +391,8 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 		private byte[] GenerateRandomSecret()
 		{
-			return Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong())
-				, Sharpen.Extensions.GetEncoding("UTF-8"));
+			return Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong())
+				, Extensions.GetEncoding("UTF-8"));
 		}
 
 		/// <summary>This method creates the Curator client and connects to ZooKeeper.</summary>
@@ -462,7 +462,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 			private SASLOwnerACLProvider(string principal)
 			{
-				this.saslACL = Sharpen.Collections.SingletonList(new ACL(ZooDefs.Perms.All, new ID
+				this.saslACL = Collections.SingletonList(new ACL(ZooDefs.Perms.All, new ID
 					("sasl", principal)));
 			}
 
@@ -512,7 +512,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				options["useTicketCache"] = "false";
 				options["refreshKrb5Config"] = "true";
 				string jaasEnvVar = Runtime.Getenv("HADOOP_JAAS_DEBUG");
-				if (jaasEnvVar != null && Sharpen.Runtime.EqualsIgnoreCase("true", jaasEnvVar))
+				if (jaasEnvVar != null && Runtime.EqualsIgnoreCase("true", jaasEnvVar))
 				{
 					options["debug"] = "true";
 				}

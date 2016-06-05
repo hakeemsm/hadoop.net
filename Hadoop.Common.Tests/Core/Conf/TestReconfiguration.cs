@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
 using Org.Hamcrest;
 using Org.Mockito;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Conf
 {
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.Conf
 				{
 					try
 					{
-						Sharpen.Thread.Sleep(1);
+						Thread.Sleep(1);
 					}
 					catch (Exception)
 					{
@@ -297,11 +297,11 @@ namespace Org.Apache.Hadoop.Conf
 			TestReconfiguration.ReconfigurableDummy dummy = new TestReconfiguration.ReconfigurableDummy
 				(conf1);
 			Assert.True(dummy.GetConf().Get(Prop1).Equals(Val1));
-			Sharpen.Thread dummyThread = new Sharpen.Thread(dummy);
+			Thread dummyThread = new Thread(dummy);
 			dummyThread.Start();
 			try
 			{
-				Sharpen.Thread.Sleep(500);
+				Thread.Sleep(500);
 			}
 			catch (Exception)
 			{
@@ -313,7 +313,7 @@ namespace Org.Apache.Hadoop.Conf
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(50);
+					Thread.Sleep(50);
 				}
 				catch (Exception)
 				{
@@ -380,7 +380,7 @@ namespace Org.Apache.Hadoop.Conf
 					break;
 				}
 				count--;
-				Sharpen.Thread.Sleep(500);
+				Thread.Sleep(500);
 			}
 			System.Diagnostics.Debug.Assert((status.Stopped()));
 		}

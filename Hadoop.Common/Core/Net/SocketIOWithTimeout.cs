@@ -5,8 +5,8 @@ using System.Net;
 using System.Threading;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Spi;
+
+using Spi;
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -168,14 +168,14 @@ namespace Org.Apache.Hadoop.Net
 		// does not reach here.
 		/// <summary>
 		/// The contract is similar to
-		/// <see cref="Sharpen.SocketChannel.Connect(System.Net.EndPoint)"/>
+		/// <see cref="SocketChannel.Connect(System.Net.EndPoint)"/>
 		/// 
 		/// with a timeout.
 		/// </summary>
-		/// <seealso cref="Sharpen.SocketChannel.Connect(System.Net.EndPoint)"/>
+		/// <seealso cref="SocketChannel.Connect(System.Net.EndPoint)"/>
 		/// <param name="channel">
 		/// - this should be a
-		/// <see cref="Sharpen.SelectableChannel"/>
+		/// <see cref="SelectableChannel"/>
 		/// </param>
 		/// <param name="endpoint"/>
 		/// <exception cref="System.IO.IOException"/>
@@ -235,13 +235,13 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>
 		/// This is similar to
-		/// <see cref="DoIO(Sharpen.ByteBuffer, int)"/>
+		/// <see cref="DoIO(ByteBuffer, int)"/>
 		/// except that it
 		/// does not perform any I/O. It just waits for the channel to be ready
 		/// for I/O as specified in ops.
 		/// </summary>
 		/// <param name="ops">Selection Ops used for waiting</param>
-		/// <exception cref="Sharpen.SocketTimeoutException">
+		/// <exception cref="SocketTimeoutException">
 		/// 
 		/// if select on the channel times out.
 		/// </exception>
@@ -369,7 +369,7 @@ namespace Org.Apache.Hadoop.Net
 						{
 							return ret;
 						}
-						if (Sharpen.Thread.CurrentThread().IsInterrupted())
+						if (Thread.CurrentThread().IsInterrupted())
 						{
 							throw new ThreadInterruptedException("Interrupted while waiting for " + "IO on channel "
 								 + channel + ". " + timeout + " millis timeout left.");

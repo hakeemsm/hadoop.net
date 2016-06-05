@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Com.Google.Common.Util.Concurrent;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -36,7 +36,7 @@ namespace Org.Apache.Hadoop.FS
 			Assert.Equal(0, stats.GetWriteOps());
 			stats.IncrementWriteOps(123);
 			Assert.Equal(123, stats.GetWriteOps());
-			Sharpen.Thread thread = new _Thread_61(stats);
+			Thread thread = new _Thread_61(stats);
 			thread.Start();
 			Uninterruptibles.JoinUninterruptibly(thread);
 			Assert.Equal(124, stats.GetWriteOps());
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.FS
 			Assert.Equal(0L, stats2.GetBytesRead());
 		}
 
-		private sealed class _Thread_61 : Sharpen.Thread
+		private sealed class _Thread_61 : Thread
 		{
 			public _Thread_61(FileSystem.Statistics stats)
 			{
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		[Fact]
 		public virtual void TestStatistics()
 		{

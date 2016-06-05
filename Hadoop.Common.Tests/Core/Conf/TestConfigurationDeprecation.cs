@@ -3,7 +3,7 @@ using System.IO;
 using Com.Google.Common.Util.Concurrent;
 using NUnit.Framework;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Conf
 {

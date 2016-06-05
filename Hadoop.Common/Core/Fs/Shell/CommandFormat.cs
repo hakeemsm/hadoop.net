@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -89,7 +89,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 						break;
 					}
 				}
-				string opt = Sharpen.Runtime.Substring(arg, 1);
+				string opt = Runtime.Substring(arg, 1);
 				if (options.Contains(opt))
 				{
 					args.Remove(pos);

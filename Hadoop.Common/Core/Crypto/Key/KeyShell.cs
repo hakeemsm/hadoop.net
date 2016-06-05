@@ -4,7 +4,7 @@ using System.IO;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e, err);
+				Runtime.PrintStackTrace(e, err);
 				return 1;
 			}
 			return exitCode;
@@ -298,7 +298,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 				}
 				catch (IOException e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e, this._enclosing.err);
+					Runtime.PrintStackTrace(e, this._enclosing.err);
 				}
 				return provider;
 			}
@@ -365,7 +365,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 					this._enclosing.@out.WriteLine("Listing keys for KeyProvider: " + this.provider);
 					if (this.metadata)
 					{
-						KeyProvider.Metadata[] meta = this.provider.GetKeysMetadata(Sharpen.Collections.ToArray
+						KeyProvider.Metadata[] meta = this.provider.GetKeysMetadata(Collections.ToArray
 							(keys, new string[keys.Count]));
 						for (int i = 0; i < meta.Length; ++i)
 						{
@@ -437,7 +437,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 				return rc;
 			}
 
-			/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+			/// <exception cref="NoSuchAlgorithmException"/>
 			/// <exception cref="System.IO.IOException"/>
 			public override void Execute()
 			{
@@ -525,7 +525,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 					catch (IOException e)
 					{
 						this._enclosing.@out.WriteLine(this.keyName + " will not be deleted.");
-						Sharpen.Runtime.PrintStackTrace(e, this._enclosing.err);
+						Runtime.PrintStackTrace(e, this._enclosing.err);
 					}
 				}
 				return true;
@@ -609,7 +609,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+			/// <exception cref="NoSuchAlgorithmException"/>
 			public override void Execute()
 			{
 				this.WarnIfTransientProvider();

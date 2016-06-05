@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Nativeio;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -775,7 +775,7 @@ namespace Org.Apache.Hadoop.FS
 					if (permission.Length > FsPermission.MaxPermissionLength)
 					{
 						//files with ACLs might have a '+'
-						permission = Sharpen.Runtime.Substring(permission, 0, FsPermission.MaxPermissionLength
+						permission = Runtime.Substring(permission, 0, FsPermission.MaxPermissionLength
 							);
 					}
 					SetPermission(FsPermission.ValueOf(permission));
@@ -788,7 +788,7 @@ namespace Org.Apache.Hadoop.FS
 						int i = owner.IndexOf('\\');
 						if (i != -1)
 						{
-							owner = Sharpen.Runtime.Substring(owner, i + 1);
+							owner = Runtime.Substring(owner, i + 1);
 						}
 					}
 					SetOwner(owner);

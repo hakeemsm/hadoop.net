@@ -1,7 +1,7 @@
 using System;
 using Javax.Management;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Metrics.Util
 {
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Metrics.Util
 			catch (Exception e)
 			{
 				// Ignore if instance already exists 
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			return null;
 		}
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.Metrics.Util
 			catch (Exception e)
 			{
 				// ignore
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 		}
 
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Metrics.Util
 			}
 			catch (MalformedObjectNameException e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			return name;
 		}

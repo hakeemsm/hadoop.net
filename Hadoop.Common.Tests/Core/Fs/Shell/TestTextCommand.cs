@@ -51,7 +51,7 @@ namespace Hadoop.Common.Tests.Core.Fs.Shell
 		{
 			byte[] oneByteContents = { (byte)('x') };
 			string output = ReadUsingTextCommand(TextFilename, oneByteContents);
-			Assert.True(Sharpen.Runtime.GetStringForBytes(oneByteContents).
+			Assert.True(Runtime.GetStringForBytes(oneByteContents).
 				Equals(output));
 		}
 
@@ -61,7 +61,7 @@ namespace Hadoop.Common.Tests.Core.Fs.Shell
 		{
 			byte[] twoByteContents = { (byte)('x'), (byte)('y') };
 			string output = ReadUsingTextCommand(TextFilename, twoByteContents);
-			Assert.True(Sharpen.Runtime.GetStringForBytes(twoByteContents).
+			Assert.True(Runtime.GetStringForBytes(twoByteContents).
 				Equals(output));
 		}
 

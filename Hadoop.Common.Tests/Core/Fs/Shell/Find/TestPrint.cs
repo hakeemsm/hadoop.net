@@ -2,7 +2,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Shell;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell.Find
 {

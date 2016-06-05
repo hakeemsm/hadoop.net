@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -145,7 +145,7 @@ namespace Org.Apache.Hadoop.IO
 			CheckDeclaredComponentType(componentType);
 			this.componentType = componentType;
 			this.value = value;
-			this.length = Sharpen.Runtime.GetArrayLength(value);
+			this.length = Runtime.GetArrayLength(value);
 		}
 
 		/// <summary>Do not use this class.</summary>

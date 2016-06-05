@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Com.Google.Common.Collect;
 using Org.Apache.Commons.Configuration;
 using Org.Apache.Hadoop.Metrics2;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Filter
 {
@@ -17,15 +17,15 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 
 		protected internal const string ExcludeTagsKey = "exclude.tags";
 
-		private Sharpen.Pattern includePattern;
+		private Pattern includePattern;
 
-		private Sharpen.Pattern excludePattern;
+		private Pattern excludePattern;
 
-		private readonly IDictionary<string, Sharpen.Pattern> includeTagPatterns;
+		private readonly IDictionary<string, Pattern> includeTagPatterns;
 
-		private readonly IDictionary<string, Sharpen.Pattern> excludeTagPatterns;
+		private readonly IDictionary<string, Pattern> excludeTagPatterns;
 
-		private readonly Sharpen.Pattern tagPattern = Sharpen.Pattern.Compile("^(\\w+):(.*)"
+		private readonly Pattern tagPattern = Pattern.Compile("^(\\w+):(.*)"
 			);
 
 		internal AbstractPatternFilter()
@@ -74,22 +74,22 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 			}
 		}
 
-		internal virtual void SetIncludePattern(Sharpen.Pattern includePattern)
+		internal virtual void SetIncludePattern(Pattern includePattern)
 		{
 			this.includePattern = includePattern;
 		}
 
-		internal virtual void SetExcludePattern(Sharpen.Pattern excludePattern)
+		internal virtual void SetExcludePattern(Pattern excludePattern)
 		{
 			this.excludePattern = excludePattern;
 		}
 
-		internal virtual void SetIncludeTagPattern(string name, Sharpen.Pattern pattern)
+		internal virtual void SetIncludeTagPattern(string name, Pattern pattern)
 		{
 			includeTagPatterns[name] = pattern;
 		}
 
-		internal virtual void SetExcludeTagPattern(string name, Sharpen.Pattern pattern)
+		internal virtual void SetExcludeTagPattern(string name, Pattern pattern)
 		{
 			excludeTagPatterns[name] = pattern;
 		}
@@ -97,13 +97,13 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		public override bool Accepts(MetricsTag tag)
 		{
 			// Accept if whitelisted
-			Sharpen.Pattern ipat = includeTagPatterns[tag.Name()];
+			Pattern ipat = includeTagPatterns[tag.Name()];
 			if (ipat != null && ipat.Matcher(tag.Value()).Matches())
 			{
 				return true;
 			}
 			// Reject if blacklisted
-			Sharpen.Pattern epat = excludeTagPatterns[tag.Name()];
+			Pattern epat = excludeTagPatterns[tag.Name()];
 			if (epat != null && epat.Matcher(tag.Value()).Matches())
 			{
 				return false;
@@ -121,7 +121,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 			// Accept if any include tag pattern matches
 			foreach (MetricsTag t in tags)
 			{
-				Sharpen.Pattern pat = includeTagPatterns[t.Name()];
+				Pattern pat = includeTagPatterns[t.Name()];
 				if (pat != null && pat.Matcher(t.Value()).Matches())
 				{
 					return true;
@@ -130,7 +130,7 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 			// Reject if any exclude tag pattern matches
 			foreach (MetricsTag t_1 in tags)
 			{
-				Sharpen.Pattern pat = excludeTagPatterns[t_1.Name()];
+				Pattern pat = excludeTagPatterns[t_1.Name()];
 				if (pat != null && pat.Matcher(t_1.Value()).Matches())
 				{
 					return false;
@@ -167,6 +167,6 @@ namespace Org.Apache.Hadoop.Metrics2.Filter
 		/// <summary>Compile a string pattern in to a pattern object</summary>
 		/// <param name="s">the string pattern to compile</param>
 		/// <returns>the compiled pattern object</returns>
-		protected internal abstract Sharpen.Pattern Compile(string s);
+		protected internal abstract Pattern Compile(string s);
 	}
 }

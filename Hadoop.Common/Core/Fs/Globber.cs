@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -329,7 +329,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				return null;
 			}
-			return Sharpen.Collections.ToArray(results, new FileStatus[0]);
+			return Collections.ToArray(results, new FileStatus[0]);
 		}
 	}
 }

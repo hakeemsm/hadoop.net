@@ -1,5 +1,5 @@
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -15,7 +15,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(2 * ShutdownThreadsHelper.ShutdownWaitMs);
+					Thread.Sleep(2 * ShutdownThreadsHelper.ShutdownWaitMs);
 				}
 				catch (Exception)
 				{
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Util
 
 		public virtual void TestShutdownThread()
 		{
-			Sharpen.Thread thread = new Sharpen.Thread(sampleRunnable);
+			Thread thread = new Thread(sampleRunnable);
 			thread.Start();
 			bool ret = ShutdownThreadsHelper.ShutdownThread(thread);
 			bool isTerminated = !thread.IsAlive();

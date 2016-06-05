@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
 using Org.Mockito.Internal.Util.Reflection;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -90,7 +90,7 @@ namespace Org.Apache.Hadoop.FS
 				InputStream stm = fileSys.Open(file1);
 				byte[] buffer = new byte[3];
 				int bytesRead = stm.Read(buffer, 0, 3);
-				Assert.Equal(contents, Sharpen.Runtime.GetStringForBytes(buffer
+				Assert.Equal(contents, Runtime.GetStringForBytes(buffer
 					, 0, bytesRead));
 				stm.Close();
 			}
@@ -298,7 +298,7 @@ namespace Org.Apache.Hadoop.FS
 			string dirNoDriveSpec = TestRootDir;
 			if (dirNoDriveSpec[1] == ':')
 			{
-				dirNoDriveSpec = Sharpen.Runtime.Substring(dirNoDriveSpec, 2);
+				dirNoDriveSpec = Runtime.Substring(dirNoDriveSpec, 2);
 			}
 			FilePath file = new FilePath(dirNoDriveSpec, "foo");
 			file.Mkdirs();

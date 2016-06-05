@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Org.Apache.Hadoop.Security.Authentication.Client;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -116,7 +116,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 		/// <summary>
 		/// Returns the principal name (this method name comes from the JDK
-		/// <see cref="Sharpen.Principal"/>
+		/// <see cref="Principal"/>
 		/// interface).
 		/// </summary>
 		/// <returns>the principal name.</returns>
@@ -163,12 +163,12 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				// strip the \" at the two ends of the tokenStr
 				if (tokenStr[0] == '\"' && tokenStr[tokenStr.Length - 1] == '\"')
 				{
-					tokenStr = Sharpen.Runtime.Substring(tokenStr, 1, tokenStr.Length - 1);
+					tokenStr = Runtime.Substring(tokenStr, 1, tokenStr.Length - 1);
 				}
 			}
 			IDictionary<string, string> map = Split(tokenStr);
 			// remove the signature part, since client doesn't care about it
-			Sharpen.Collections.Remove(map, "s");
+			Collections.Remove(map, "s");
 			if (!map.Keys.Equals(Attributes))
 			{
 				throw new AuthenticationException("Invalid token string, missing attributes");
@@ -200,8 +200,8 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				{
 					throw new AuthenticationException("Invalid authentication token");
 				}
-				string key = Sharpen.Runtime.Substring(part, 0, separator);
-				string value = Sharpen.Runtime.Substring(part, separator + 1);
+				string key = Runtime.Substring(part, 0, separator);
+				string value = Runtime.Substring(part, separator + 1);
 				map[key] = value;
 			}
 			return map;

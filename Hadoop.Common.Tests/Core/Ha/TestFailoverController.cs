@@ -5,7 +5,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security;
 using Org.Mockito.Internal.Stubbing.Answers;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {

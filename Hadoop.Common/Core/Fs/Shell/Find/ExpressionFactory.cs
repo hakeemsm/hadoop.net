@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell.Find
 {
@@ -152,7 +152,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		{
 			try
 			{
-				Type expressionClass = Sharpen.Runtime.GetType(expressionClassname).AsSubclass<Expression
+				Type expressionClass = Runtime.GetType(expressionClassname).AsSubclass<Expression
 					>();
 				return CreateExpression(expressionClass, conf);
 			}

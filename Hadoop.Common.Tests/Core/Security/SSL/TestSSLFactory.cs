@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security.Alias;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
@@ -300,7 +300,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				);
 			string trustPassword = "trustP";
 			// Create keys, certs, keystore, and truststore.
-			Sharpen.KeyPair keyPair = KeyStoreTestUtil.GenerateKeyPair("RSA");
+			KeyPair keyPair = KeyStoreTestUtil.GenerateKeyPair("RSA");
 			X509Certificate cert = KeyStoreTestUtil.GenerateCertificate("CN=Test", keyPair, 30
 				, "SHA1withRSA");
 			KeyStoreTestUtil.CreateKeyStore(keystore, password, keyPassword, "Test", keyPair.

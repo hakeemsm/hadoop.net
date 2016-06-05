@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.FS
 			return myFs;
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		protected internal FilterFs(AbstractFileSystem fs)
 			: base(fs.GetUri(), fs.GetUri().GetScheme(), fs.GetUri().GetAuthority() != null, 
 				fs.GetUriDefaultPort())

@@ -5,7 +5,7 @@ using Javax.Servlet.Http;
 using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Security.Authentication.Util;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Server
 {
@@ -200,14 +200,14 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				throw new ServletException("Authentication type must be specified: " + PseudoAuthenticationHandler
 					.Type + "|" + KerberosAuthenticationHandler.Type + "|<class>");
 			}
-			if (authHandlerName.ToLower(Sharpen.Extensions.GetEnglishCulture()).Equals(PseudoAuthenticationHandler
+			if (authHandlerName.ToLower(Extensions.GetEnglishCulture()).Equals(PseudoAuthenticationHandler
 				.Type))
 			{
 				authHandlerClassName = typeof(PseudoAuthenticationHandler).FullName;
 			}
 			else
 			{
-				if (authHandlerName.ToLower(Sharpen.Extensions.GetEnglishCulture()).Equals(KerberosAuthenticationHandler
+				if (authHandlerName.ToLower(Extensions.GetEnglishCulture()).Equals(KerberosAuthenticationHandler
 					.Type))
 				{
 					authHandlerClassName = typeof(KerberosAuthenticationHandler).FullName;
@@ -231,7 +231,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		{
 			try
 			{
-				Type klass = Sharpen.Thread.CurrentThread().GetContextClassLoader().LoadClass(authHandlerClassName
+				Type klass = Thread.CurrentThread().GetContextClassLoader().LoadClass(authHandlerClassName
 					);
 				authHandler = (AuthenticationHandler)System.Activator.CreateInstance(klass);
 				authHandler.Init(config);
@@ -316,7 +316,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 					}
 					else
 					{
-						provider = (SignerSecretProvider)System.Activator.CreateInstance(Sharpen.Thread.CurrentThread
+						provider = (SignerSecretProvider)System.Activator.CreateInstance(Thread.CurrentThread
 							().GetContextClassLoader().LoadClass(name));
 						provider.Init(config, ctx, validity);
 					}
@@ -410,7 +410,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 		/// <remarks>
 		/// Returns the filtered configuration (only properties starting with the specified prefix). The property keys
 		/// are also trimmed from the prefix. The returned
-		/// <see cref="Sharpen.Properties"/>
+		/// <see cref="Properties"/>
 		/// object is used to initialized the
 		/// <see cref="AuthenticationHandler"/>
 		/// .
@@ -439,7 +439,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				if (name.StartsWith(configPrefix))
 				{
 					string value = filterConfig.GetInitParameter(name);
-					props[Sharpen.Runtime.Substring(name, configPrefix.Length)] = value;
+					props[Runtime.Substring(name, configPrefix.Length)] = value;
 				}
 			}
 			return props;
@@ -707,9 +707,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			}
 			if (expires >= 0)
 			{
-				DateTime date = Sharpen.Extensions.CreateDate(expires);
+				DateTime date = Extensions.CreateDate(expires);
 				SimpleDateFormat df = new SimpleDateFormat("EEE, " + "dd-MMM-yyyy HH:mm:ss zzz");
-				df.SetTimeZone(Sharpen.Extensions.GetTimeZone("GMT"));
+				df.SetTimeZone(Extensions.GetTimeZone("GMT"));
 				sb.Append("; Expires=").Append(df.Format(date));
 			}
 			if (isSecure)

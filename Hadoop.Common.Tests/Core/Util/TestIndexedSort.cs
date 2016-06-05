@@ -1,7 +1,7 @@
 using System.Text;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -355,7 +355,7 @@ namespace Org.Apache.Hadoop.Util
 				sb.Length = 0;
 				for (int i = 0; i < len; ++i)
 				{
-					sb.Append(Sharpen.Extensions.ToString(r.Next(26) + 10, 36));
+					sb.Append(Extensions.ToString(r.Next(26) + 10, 36));
 				}
 				t.Set(sb.ToString());
 			}

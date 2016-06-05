@@ -21,7 +21,7 @@ using ICSharpCode.SharpZipLib;
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress.Zlib
 {

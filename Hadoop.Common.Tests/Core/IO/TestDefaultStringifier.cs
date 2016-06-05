@@ -2,7 +2,7 @@ using System.Text;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.IO
 				);
 			Log.Info("Testing DefaultStringifier with Serializable Integer");
 			//Integer implements Serializable
-			int testInt = Sharpen.Extensions.ValueOf(42);
+			int testInt = Extensions.ValueOf(42);
 			DefaultStringifier<int> stringifier = new DefaultStringifier<int>(conf, typeof(int
 				));
 			string str = stringifier.ToString(testInt);

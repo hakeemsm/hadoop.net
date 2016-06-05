@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -32,7 +32,7 @@ namespace Org.Apache.Hadoop.Security
 			IPAddress addr;
 			try
 			{
-				addr = Sharpen.Extensions.GetAddressByName(ip);
+				addr = Extensions.GetAddressByName(ip);
 				addr = IPAddress.GetByAddress(host, addr.GetAddressBytes());
 			}
 			catch (UnknownHostException)
@@ -42,7 +42,7 @@ namespace Org.Apache.Hadoop.Security
 			resolvedHosts[host] = addr;
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		internal override IPAddress GetInetAddressByName(string host)
 		{
 			hostSearches.AddItem(host);
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.Security
 
 		public virtual string[] GetHostSearches()
 		{
-			return Sharpen.Collections.ToArray(hostSearches, new string[0]);
+			return Collections.ToArray(hostSearches, new string[0]);
 		}
 
 		public virtual void Reset()

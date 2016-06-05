@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {

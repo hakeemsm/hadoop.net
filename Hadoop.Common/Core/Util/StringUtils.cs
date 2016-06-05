@@ -9,7 +9,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Net;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Util
 		/// multiple letters, numbers, or underscores.  The group captures the
 		/// environment variable name without the leading $.
 		/// </remarks>
-		public static readonly Sharpen.Pattern ShellEnvVarPattern = Sharpen.Pattern.Compile
+		public static readonly Pattern ShellEnvVarPattern = Pattern.Compile
 			("\\$([A-Za-z_]{1}[A-Za-z0-9_]*)");
 
 		/// <summary>Windows environment variables: surrounded by %.</summary>
@@ -36,14 +36,14 @@ namespace Org.Apache.Hadoop.Util
 		/// Windows environment variables: surrounded by %.  The group captures the
 		/// environment variable name without the leading and trailing %.
 		/// </remarks>
-		public static readonly Sharpen.Pattern WinEnvVarPattern = Sharpen.Pattern.Compile
+		public static readonly Pattern WinEnvVarPattern = Pattern.Compile
 			("%(.*?)%");
 
 		/// <summary>
 		/// Regular expression that matches and captures environment variable names
 		/// according to platform-specific rules.
 		/// </summary>
-		public static readonly Sharpen.Pattern EnvVarPattern = Shell.Windows ? WinEnvVarPattern
+		public static readonly Pattern EnvVarPattern = Shell.Windows ? WinEnvVarPattern
 			 : ShellEnvVarPattern;
 
 		/// <summary>Make a string representation of the exception.</summary>
@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.Util
 		{
 			StringWriter stm = new StringWriter();
 			PrintWriter wrt = new PrintWriter(stm);
-			Sharpen.Runtime.PrintStackTrace(e, wrt);
+			Runtime.PrintStackTrace(e, wrt);
 			wrt.Close();
 			return stm.ToString();
 		}
@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.Util
 			int offset = fullHostname.IndexOf('.');
 			if (offset != -1)
 			{
-				return Sharpen.Runtime.Substring(fullHostname, 0, offset);
+				return Runtime.Substring(fullHostname, 0, offset);
 			}
 			return fullHostname;
 		}
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <summary>The same as String.format(Locale.ENGLISH, format, objects).</summary>
 		public static string Format(string format, params object[] objects)
 		{
-			return string.Format(Sharpen.Extensions.GetEnglishCulture(), format, objects);
+			return string.Format(Extensions.GetEnglishCulture(), format, objects);
 		}
 
 		/// <summary>Format a percentage for presentation to the user.</summary>
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Util
 			byte[] bts = new byte[hex.Length / 2];
 			for (int i = 0; i < bts.Length; i++)
 			{
-				bts[i] = unchecked((byte)System.Convert.ToInt32(Sharpen.Runtime.Substring(hex, 2 
+				bts[i] = unchecked((byte)System.Convert.ToInt32(Runtime.Substring(hex, 2 
 					* i, 2 * i + 2), 16));
 			}
 			return bts;
@@ -299,7 +299,7 @@ namespace Org.Apache.Hadoop.Util
 			StringBuilder buf = new StringBuilder();
 			if (0 != finishTime)
 			{
-				buf.Append(dateFormat.Format(Sharpen.Extensions.CreateDate(finishTime)));
+				buf.Append(dateFormat.Format(Extensions.CreateDate(finishTime)));
 				if (0 != startTime)
 				{
 					buf.Append(" (" + FormatTimeDiff(finishTime, startTime) + ")");
@@ -318,7 +318,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				return null;
 			}
-			return Sharpen.Collections.ToArray(values, new string[values.Count]);
+			return Collections.ToArray(values, new string[values.Count]);
 		}
 
 		/// <summary>Returns a collection of strings.</summary>
@@ -438,7 +438,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				strList.Remove(last);
 			}
-			return Sharpen.Collections.ToArray(strList, new string[strList.Count]);
+			return Collections.ToArray(strList, new string[strList.Count]);
 		}
 
 		/// <summary>Split a string using the given separator, with no escaping performed.</summary>
@@ -458,10 +458,10 @@ namespace Org.Apache.Hadoop.Util
 			int nextIndex = 0;
 			while ((nextIndex = str.IndexOf(separator, startIndex)) != -1)
 			{
-				strList.AddItem(Sharpen.Runtime.Substring(str, startIndex, nextIndex));
+				strList.AddItem(Runtime.Substring(str, startIndex, nextIndex));
 				startIndex = nextIndex + 1;
 			}
-			strList.AddItem(Sharpen.Runtime.Substring(str, startIndex));
+			strList.AddItem(Runtime.Substring(str, startIndex));
 			// remove trailing empty split(s)
 			int last = strList.Count;
 			// last split
@@ -469,7 +469,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				strList.Remove(last);
 			}
-			return Sharpen.Collections.ToArray(strList, new string[strList.Count]);
+			return Collections.ToArray(strList, new string[strList.Count]);
 		}
 
 		/// <summary>
@@ -813,7 +813,7 @@ namespace Org.Apache.Hadoop.Util
 						throw new ArgumentException("Invalid size prefix '" + lastchar + "' in '" + s + "'. Allowed prefixes are k, m, g, t, p, e(case insensitive)"
 							);
 					}
-					long num = long.Parse(Sharpen.Runtime.Substring(s, 0, lastpos));
+					long num = long.Parse(Runtime.Substring(s, 0, lastpos));
 					if (num > (long.MaxValue / prefix) || num < (long.MinValue / prefix))
 					{
 						throw new ArgumentException(s + " does not fit in a Long");
@@ -1041,7 +1041,7 @@ namespace Org.Apache.Hadoop.Util
 		/// capturing group to their replacement values
 		/// </param>
 		/// <returns>String template with replacements</returns>
-		public static string ReplaceTokens(string template, Sharpen.Pattern pattern, IDictionary
+		public static string ReplaceTokens(string template, Pattern pattern, IDictionary
 			<string, string> replacements)
 		{
 			StringBuilder sb = new StringBuilder();
@@ -1060,7 +1060,7 @@ namespace Org.Apache.Hadoop.Util
 		}
 
 		/// <summary>Get stack trace for a given thread.</summary>
-		public static string GetStackTrace(Sharpen.Thread t)
+		public static string GetStackTrace(Thread t)
 		{
 			StackTraceElement[] stackTrace = t.GetStackTrace();
 			StringBuilder str = new StringBuilder();
@@ -1184,7 +1184,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <returns>the str, converted to lowercase.</returns>
 		public static string ToLowerCase(string str)
 		{
-			return str.ToLower(Sharpen.Extensions.GetEnglishCulture());
+			return str.ToLower(Extensions.GetEnglishCulture());
 		}
 
 		/// <summary>
@@ -1195,7 +1195,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <returns>the str, converted to uppercase.</returns>
 		public static string ToUpperCase(string str)
 		{
-			return str.ToUpper(Sharpen.Extensions.GetEnglishCulture());
+			return str.ToUpper(Extensions.GetEnglishCulture());
 		}
 
 		/// <summary>Compare strings locale-freely by using String#equalsIgnoreCase.</summary>
@@ -1207,7 +1207,7 @@ namespace Org.Apache.Hadoop.Util
 			Preconditions.CheckNotNull(s1);
 			// don't check non-null against s2 to make the semantics same as
 			// s1.equals(s2)
-			return Sharpen.Runtime.EqualsIgnoreCase(s1, s2);
+			return Runtime.EqualsIgnoreCase(s1, s2);
 		}
 	}
 }

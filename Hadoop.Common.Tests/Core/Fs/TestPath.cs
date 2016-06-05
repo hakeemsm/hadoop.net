@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.FS
 			Assert.Equal(pathString, new Path(pathString).ToString());
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		public virtual void TestNormalize()
 		{
 			Assert.Equal(string.Empty, new Path(".").ToString());
@@ -250,7 +250,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Test that Windows paths are correctly handled</summary>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestWindowsPaths()
 		{
@@ -267,7 +267,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Test invalid paths on Windows are correctly rejected</summary>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestInvalidWindowsPaths()
 		{
@@ -290,7 +290,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Test Path objects created from other Path objects</summary>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestChildParentResolution()
 		{
@@ -307,7 +307,7 @@ namespace Org.Apache.Hadoop.FS
 				());
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestURI()
 		{
@@ -331,7 +331,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Test URIs created from Path objects</summary>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestPathToUriConversion()
 		{
@@ -364,7 +364,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <summary>Test reserved characters in URIs (and therefore Paths)</summary>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestReservedCharacters()
 		{
@@ -395,7 +395,7 @@ namespace Org.Apache.Hadoop.FS
 				, null, null).ToURL().AbsolutePath);
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		public virtual void TestMakeQualified()
 		{
 			URI defaultUri = new URI("hdfs://host1/dir1");

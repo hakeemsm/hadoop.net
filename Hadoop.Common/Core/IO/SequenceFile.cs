@@ -16,7 +16,7 @@ using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.IO.Compress.Zlib;
 using Org.Apache.Hadoop.IO.Serializer;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -1076,7 +1076,7 @@ namespace Org.Apache.Hadoop.IO
 					{
 						MessageDigest digester = MessageDigest.GetInstance("MD5");
 						long time = Time.Now();
-						digester.Update(Sharpen.Runtime.GetBytesForString((new UID() + "@" + time), Charsets
+						digester.Update(Runtime.GetBytesForString((new UID() + "@" + time), Charsets
 							.Utf8));
 						sync = digester.Digest();
 					}
@@ -1219,7 +1219,7 @@ namespace Org.Apache.Hadoop.IO
 					{
 						MessageDigest digester = MessageDigest.GetInstance("MD5");
 						long time = Time.Now();
-						digester.Update(Sharpen.Runtime.GetBytesForString((new UID() + "@" + time), Charsets
+						digester.Update(Runtime.GetBytesForString((new UID() + "@" + time), Charsets
 							.Utf8));
 						sync = digester.Digest();
 					}
@@ -1245,7 +1245,7 @@ namespace Org.Apache.Hadoop.IO
 					{
 						MessageDigest digester = MessageDigest.GetInstance("MD5");
 						long time = Time.Now();
-						digester.Update(Sharpen.Runtime.GetBytesForString((new UID() + "@" + time), Charsets
+						digester.Update(Runtime.GetBytesForString((new UID() + "@" + time), Charsets
 							.Utf8));
 						sync = digester.Digest();
 					}
@@ -1271,7 +1271,7 @@ namespace Org.Apache.Hadoop.IO
 					{
 						MessageDigest digester = MessageDigest.GetInstance("MD5");
 						long time = Time.Now();
-						digester.Update(Sharpen.Runtime.GetBytesForString((new UID() + "@" + time), Charsets
+						digester.Update(Runtime.GetBytesForString((new UID() + "@" + time), Charsets
 							.Utf8));
 						sync = digester.Digest();
 					}

@@ -7,7 +7,7 @@ using Com.Google.Common.Annotations;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -121,7 +121,7 @@ namespace Org.Apache.Hadoop.HA
 			{
 				int firstHalf = (len - 3) / 2;
 				int rem = len - firstHalf - 3;
-				return Sharpen.Runtime.Substring(cmd, 0, firstHalf) + "..." + Sharpen.Runtime.Substring
+				return Runtime.Substring(cmd, 0, firstHalf) + "..." + Runtime.Substring
 					(cmd, cmd.Length - rem);
 			}
 			else
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.HA
 				Type clazz = p.GetType();
 				if (clazz.FullName.Equals("java.lang.UNIXProcess"))
 				{
-					FieldInfo f = Sharpen.Runtime.GetDeclaredField(clazz, "pid");
+					FieldInfo f = Runtime.GetDeclaredField(clazz, "pid");
 					return f.GetInt(p).ToString();
 				}
 				else

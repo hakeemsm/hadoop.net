@@ -1,5 +1,5 @@
 using Org.Apache.Hadoop.Security.Authentication.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Server
 {
@@ -8,7 +8,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 	/// <see cref="AuthenticationToken"/>
 	/// contains information about an authenticated
 	/// HTTP client and doubles as the
-	/// <see cref="Sharpen.Principal"/>
+	/// <see cref="Principal"/>
 	/// to be returned by
 	/// authenticated
 	/// <see cref="Javax.Servlet.Http.HttpServletRequest"/>

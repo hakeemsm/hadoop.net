@@ -11,7 +11,7 @@ using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Security.Authentication.Util;
 using Org.Apache.Hadoop.Util;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Server
 {
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 				string[] spnegoPrincipals;
 				if (principal.Equals("*"))
 				{
-					spnegoPrincipals = KerberosUtil.GetPrincipalNames(keytab, Sharpen.Pattern.Compile
+					spnegoPrincipals = KerberosUtil.GetPrincipalNames(keytab, Pattern.Compile
 						("HTTP/.*"));
 					if (spnegoPrincipals.Length == 0)
 					{
@@ -345,7 +345,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			}
 			else
 			{
-				authorization = Sharpen.Runtime.Substring(authorization, KerberosAuthenticator.Negotiate
+				authorization = Runtime.Substring(authorization, KerberosAuthenticator.Negotiate
 					.Length).Trim();
 				Base64 base64 = new Base64(0);
 				byte[] clientToken = base64.Decode(authorization);
@@ -387,7 +387,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Server
 			public AuthenticationToken Run()
 			{
 				AuthenticationToken token = null;
-				Sharpen.GSSContext gssContext = null;
+				GSSContext gssContext = null;
 				GSSCredential gssCreds = null;
 				try
 				{

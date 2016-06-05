@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
 using Org.Mockito.Stubbing;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {

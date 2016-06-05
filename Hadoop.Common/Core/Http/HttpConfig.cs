@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {
@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.Http
 			{
 				foreach (HttpConfig.Policy p in HttpConfig.Policy.Values)
 				{
-					if (Sharpen.Runtime.EqualsIgnoreCase(p.ToString(), value))
+					if (Runtime.EqualsIgnoreCase(p.ToString(), value))
 					{
 						return p;
 					}

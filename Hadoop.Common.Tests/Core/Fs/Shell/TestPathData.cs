@@ -3,7 +3,7 @@ using System.Text;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 				// c:/some/path
 				// and for the test we want something like the following
 				// /some/path
-				absolutePathNoDriveLetter = Sharpen.Runtime.Substring(absolutePathNoDriveLetter, 
+				absolutePathNoDriveLetter = Runtime.Substring(absolutePathNoDriveLetter, 
 					2);
 			}
 			items = PathData.ExpandAsGlob(absolutePathNoDriveLetter, conf);

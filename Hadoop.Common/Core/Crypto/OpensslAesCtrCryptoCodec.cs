@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Crypto.Random;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {
@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.Crypto
 		public override void SetConf(Configuration conf)
 		{
 			this.conf = conf;
-			Type klass = conf.GetClass<Sharpen.Random>(CommonConfigurationKeysPublic.HadoopSecuritySecureRandomImplKey
+			Type klass = conf.GetClass<Random>(CommonConfigurationKeysPublic.HadoopSecuritySecureRandomImplKey
 				, typeof(OsSecureRandom));
 			try
 			{
@@ -66,14 +66,14 @@ namespace Org.Apache.Hadoop.Crypto
 			return conf;
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public override Encryptor CreateEncryptor()
 		{
 			return new OpensslAesCtrCryptoCodec.OpensslAesCtrCipher(OpensslCipher.EncryptMode
 				);
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public override Decryptor CreateDecryptor()
 		{
 			return new OpensslAesCtrCryptoCodec.OpensslAesCtrCipher(OpensslCipher.DecryptMode
@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.Crypto
 
 			private bool contextReset = false;
 
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public OpensslAesCtrCipher(int mode)
 			{
 				this.mode = mode;

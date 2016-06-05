@@ -1,7 +1,7 @@
 using System;
 using Com.Google.Protobuf;
 using Org.Apache.Hadoop.Ipc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tracing
 {
@@ -40,7 +40,7 @@ namespace Org.Apache.Hadoop.Tracing
 			{
 				throw ProtobufHelper.GetRemoteException(e);
 			}
-			return Sharpen.Collections.ToArray(infos, new SpanReceiverInfo[infos.Count]);
+			return Collections.ToArray(infos, new SpanReceiverInfo[infos.Count]);
 		}
 
 		/// <exception cref="System.IO.IOException"/>

@@ -3,7 +3,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Commons.Logging.Impl;
 using Org.Apache.Log4j;
 using Org.Mortbay.Jetty;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {

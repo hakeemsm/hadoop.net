@@ -2,7 +2,7 @@ using System;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2.Annotation;
 using Org.Apache.Hadoop.Metrics2.Lib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc.Metrics
 {

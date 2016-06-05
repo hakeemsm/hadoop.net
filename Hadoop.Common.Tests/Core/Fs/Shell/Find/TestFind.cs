@@ -5,7 +5,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Shell;
 using Org.Mockito;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell.Find
 {
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 			string args = "-print";
 			List<string> argsList = GetArgs(args);
 			find.ProcessOptions(argsList);
-			Assert.Equal(Sharpen.Collections.SingletonList(Path.CurDir), argsList
+			Assert.Equal(Collections.SingletonList(Path.CurDir), argsList
 				);
 		}
 

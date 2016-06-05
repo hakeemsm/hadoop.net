@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -133,7 +133,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			TestCallQueueManager.Taker taker = new TestCallQueueManager.Taker(this, cq, takeAttempts
 				, -1);
-			Sharpen.Thread t = new Sharpen.Thread(taker);
+			Thread t = new Thread(taker);
 			t.Start();
 			t.Join(100);
 			Assert.Equal(taker.callsTaken, numberOfTakes);
@@ -147,7 +147,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			TestCallQueueManager.Putter putter = new TestCallQueueManager.Putter(this, cq, putAttempts
 				, -1);
-			Sharpen.Thread t = new Sharpen.Thread(putter);
+			Thread t = new Thread(putter);
 			t.Start();
 			t.Join(100);
 			Assert.Equal(putter.callsAdded, numberOfPuts);
@@ -186,14 +186,14 @@ namespace Org.Apache.Hadoop.Ipc
 				>();
 			AList<TestCallQueueManager.Taker> consumers = new AList<TestCallQueueManager.Taker
 				>();
-			Dictionary<Runnable, Sharpen.Thread> threads = new Dictionary<Runnable, Sharpen.Thread
+			Dictionary<Runnable, Thread> threads = new Dictionary<Runnable, Thread
 				>();
 			// Create putters and takers
 			for (int i = 0; i < 50; i++)
 			{
 				TestCallQueueManager.Putter p = new TestCallQueueManager.Putter(this, manager, -1
 					, -1);
-				Sharpen.Thread pt = new Sharpen.Thread(p);
+				Thread pt = new Thread(p);
 				producers.AddItem(p);
 				threads[p] = pt;
 				pt.Start();
@@ -202,12 +202,12 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				TestCallQueueManager.Taker t = new TestCallQueueManager.Taker(this, manager, -1, 
 					-1);
-				Sharpen.Thread tt = new Sharpen.Thread(t);
+				Thread tt = new Thread(t);
 				consumers.AddItem(t);
 				threads[t] = tt;
 				tt.Start();
 			}
-			Sharpen.Thread.Sleep(10);
+			Thread.Sleep(10);
 			for (int i_2 = 0; i_2 < 5; i_2++)
 			{
 				manager.SwapQueue(queueClass, 5000, string.Empty, null);
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.Ipc
 				p_1.Stop();
 			}
 			// Wait for consumers to wake up, then consume
-			Sharpen.Thread.Sleep(2000);
+			Thread.Sleep(2000);
 			Assert.Equal(0, manager.Size());
 			// Ensure no calls were dropped
 			long totalCallsCreated = 0;

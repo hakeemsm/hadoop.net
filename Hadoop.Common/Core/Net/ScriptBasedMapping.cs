@@ -6,7 +6,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -196,8 +196,8 @@ namespace Org.Apache.Hadoop.Net
 					if (m.Count != names.Count)
 					{
 						// invalid number of entries returned by the script
-						Log.Error("Script " + scriptName + " returned " + Sharpen.Extensions.ToString(m.Count
-							) + " values when " + Sharpen.Extensions.ToString(names.Count) + " were expected."
+						Log.Error("Script " + scriptName + " returned " + Extensions.ToString(m.Count
+							) + " values when " + Extensions.ToString(names.Count) + " were expected."
 							);
 						return null;
 					}
@@ -234,8 +234,8 @@ namespace Org.Apache.Hadoop.Net
 				int numProcessed = 0;
 				if (maxArgs < MinAllowableArgs)
 				{
-					Log.Warn("Invalid value " + Sharpen.Extensions.ToString(maxArgs) + " for " + ScriptArgCountKey
-						 + "; must be >= " + Sharpen.Extensions.ToString(MinAllowableArgs));
+					Log.Warn("Invalid value " + Extensions.ToString(maxArgs) + " for " + ScriptArgCountKey
+						 + "; must be >= " + Extensions.ToString(MinAllowableArgs));
 					return null;
 				}
 				while (numProcessed != args.Count)
@@ -254,7 +254,7 @@ namespace Org.Apache.Hadoop.Net
 					{
 						dir = new FilePath(userDir);
 					}
-					Shell.ShellCommandExecutor s = new Shell.ShellCommandExecutor(Sharpen.Collections.ToArray
+					Shell.ShellCommandExecutor s = new Shell.ShellCommandExecutor(Collections.ToArray
 						(cmdList, new string[cmdList.Count]), dir);
 					try
 					{

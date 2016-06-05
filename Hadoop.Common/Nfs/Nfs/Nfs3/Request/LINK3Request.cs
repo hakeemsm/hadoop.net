@@ -1,7 +1,7 @@
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Nfs.Nfs3;
 using Org.Apache.Hadoop.Oncrpc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Nfs.Nfs3.Request
 {
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Nfs.Nfs3.Request
 			handle.Serialize(xdr);
 			fromDirHandle.Serialize(xdr);
 			xdr.WriteInt(fromName.Length);
-			xdr.WriteFixedOpaque(Sharpen.Runtime.GetBytesForString(fromName, Charsets.Utf8), 
+			xdr.WriteFixedOpaque(Runtime.GetBytesForString(fromName, Charsets.Utf8), 
 				fromName.Length);
 		}
 	}

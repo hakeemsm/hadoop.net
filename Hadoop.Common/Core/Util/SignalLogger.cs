@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 using Sun.Misc;
 
 namespace Org.Apache.Hadoop.Util

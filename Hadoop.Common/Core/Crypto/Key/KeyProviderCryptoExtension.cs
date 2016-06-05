@@ -1,6 +1,6 @@
 using Com.Google.Common.Base;
 using Org.Apache.Hadoop.Crypto;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -195,7 +195,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			/// </returns>
 			/// <exception cref="System.IO.IOException">thrown if the key material could not be generated
 			/// 	</exception>
-			/// <exception cref="Sharpen.GeneralSecurityException">
+			/// <exception cref="GeneralSecurityException">
 			/// thrown if the key material could not be encrypted because of a
 			/// cryptographic issue.
 			/// </exception>
@@ -216,7 +216,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			/// </returns>
 			/// <exception cref="System.IO.IOException">thrown if the key material could not be decrypted
 			/// 	</exception>
-			/// <exception cref="Sharpen.GeneralSecurityException">
+			/// <exception cref="GeneralSecurityException">
 			/// thrown if the key material could not be decrypted because of a
 			/// cryptographic issue.
 			/// </exception>
@@ -248,7 +248,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public virtual KeyProviderCryptoExtension.EncryptedKeyVersion GenerateEncryptedKey
 				(string encryptionKeyName)
 			{
@@ -282,7 +282,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public virtual KeyProvider.KeyVersion DecryptEncryptedKey(KeyProviderCryptoExtension.EncryptedKeyVersion
 				 encryptedKeyVersion)
 			{
@@ -374,7 +374,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// </returns>
 		/// <exception cref="System.IO.IOException">thrown if the key material could not be generated
 		/// 	</exception>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the key material could not be
 		/// encrypted because of a cryptographic issue.
 		/// </exception>
@@ -398,7 +398,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// </returns>
 		/// <exception cref="System.IO.IOException">thrown if the key material could not be decrypted
 		/// 	</exception>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the key material could not be
 		/// decrypted because of a cryptographic issue.
 		/// </exception>

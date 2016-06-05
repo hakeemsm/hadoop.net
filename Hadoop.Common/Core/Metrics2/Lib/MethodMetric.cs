@@ -23,7 +23,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Annotation;
 using Org.Apache.Hadoop.Metrics2.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			 type)
 		{
 			this.obj = Preconditions.CheckNotNull(obj, "object");
-			this.method = Contracts.CheckArg(method, Sharpen.Runtime.GetParameterTypes(method
+			this.method = Contracts.CheckArg(method, Runtime.GetParameterTypes(method
 				).Length == 0, "Metric method should have no arguments");
 			this.info = Preconditions.CheckNotNull(info, "info");
 			impl = NewImpl(Preconditions.CheckNotNull(type, "metric type"));
@@ -253,7 +253,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			string methodName = method.Name;
 			if (methodName.StartsWith("get"))
 			{
-				return StringUtils.Capitalize(Sharpen.Runtime.Substring(methodName, 3));
+				return StringUtils.Capitalize(Runtime.Substring(methodName, 3));
 			}
 			return StringUtils.Capitalize(methodName);
 		}

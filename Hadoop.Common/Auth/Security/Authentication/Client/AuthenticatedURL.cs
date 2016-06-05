@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Client
 {
@@ -201,14 +201,14 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 
 		/// <summary>
 		/// Returns an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// .
 		/// </summary>
 		/// <param name="url">the URL to connect to. Only HTTP/S URLs are supported.</param>
 		/// <param name="token">the authentication token being used for the user.</param>
 		/// <returns>
 		/// an authenticated
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// .
 		/// </returns>
 		/// <exception cref="System.IO.IOException">if an IO error occurred.</exception>
@@ -223,7 +223,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 			{
 				throw new ArgumentException("url cannot be NULL");
 			}
-			if (!Sharpen.Runtime.EqualsIgnoreCase(url.Scheme, "http") && !Sharpen.Runtime.EqualsIgnoreCase
+			if (!Runtime.EqualsIgnoreCase(url.Scheme, "http") && !Runtime.EqualsIgnoreCase
 				(url.Scheme, "https"))
 			{
 				throw new ArgumentException("url must be for a HTTP or HTTPS resource");
@@ -291,11 +291,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 					{
 						if (cookie.StartsWith(AuthCookieEq))
 						{
-							string value = Sharpen.Runtime.Substring(cookie, AuthCookieEq.Length);
+							string value = Runtime.Substring(cookie, AuthCookieEq.Length);
 							int separator = value.IndexOf(";");
 							if (separator > -1)
 							{
-								value = Sharpen.Runtime.Substring(value, 0, separator);
+								value = Runtime.Substring(value, 0, separator);
 							}
 							if (value.Length > 0)
 							{

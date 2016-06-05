@@ -6,7 +6,7 @@ using Org.Apache.Commons.Configuration;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Sink
 {
@@ -143,7 +143,7 @@ namespace Org.Apache.Hadoop.Metrics2.Sink
 				try
 				{
 					// Open a connection to Graphite server.
-					socket = Sharpen.Extensions.CreateSocket(serverHost, serverPort);
+					socket = Extensions.CreateSocket(serverHost, serverPort);
 					writer = new OutputStreamWriter(socket.GetOutputStream(), Charsets.Utf8);
 				}
 				catch (Exception e)

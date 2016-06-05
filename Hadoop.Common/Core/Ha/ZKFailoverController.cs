@@ -16,7 +16,7 @@ using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -386,7 +386,7 @@ namespace Org.Apache.Hadoop.HA
 			}
 			else
 			{
-				zkAuths = Sharpen.Collections.EmptyList();
+				zkAuths = Collections.EmptyList();
 			}
 			// Sanity check configuration.
 			Preconditions.CheckArgument(zkQuorum != null, "Missing required configuration '%s' for ZooKeeper quorum"
@@ -416,7 +416,7 @@ namespace Org.Apache.Hadoop.HA
 			{
 				while (fatalError == null)
 				{
-					Sharpen.Runtime.Wait(this);
+					Runtime.Wait(this);
 				}
 				System.Diagnostics.Debug.Assert(fatalError != null);
 				// only get here on fatal
@@ -430,7 +430,7 @@ namespace Org.Apache.Hadoop.HA
 			{
 				Log.Fatal("Fatal error occurred:" + err);
 				fatalError = err;
-				Sharpen.Runtime.NotifyAll(this);
+				Runtime.NotifyAll(this);
 			}
 		}
 
@@ -487,7 +487,7 @@ namespace Org.Apache.Hadoop.HA
 			lock (activeAttemptRecordLock)
 			{
 				lastActiveAttemptRecord = record;
-				Sharpen.Runtime.NotifyAll(activeAttemptRecordLock);
+				Runtime.NotifyAll(activeAttemptRecordLock);
 			}
 		}
 
@@ -536,7 +536,7 @@ namespace Org.Apache.Hadoop.HA
 					}
 					// Only wait 1sec so that we periodically recheck the health state
 					// above.
-					Sharpen.Runtime.Wait(activeAttemptRecordLock, 1000);
+					Runtime.Wait(activeAttemptRecordLock, 1000);
 				}
 			}
 			while (Runtime.NanoTime() < waitUntil);

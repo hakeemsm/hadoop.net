@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Util
 {

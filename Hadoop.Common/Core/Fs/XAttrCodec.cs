@@ -2,7 +2,7 @@ using System.IO;
 using Com.Google.Common.Base;
 using Org.Apache.Commons.Codec;
 using Org.Apache.Commons.Codec.Binary;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -66,17 +66,17 @@ namespace Org.Apache.Hadoop.FS
 			{
 				if (value.Length >= 2)
 				{
-					string en = Sharpen.Runtime.Substring(value, 0, 2);
+					string en = Runtime.Substring(value, 0, 2);
 					if (value.StartsWith("\"") && value.EndsWith("\""))
 					{
-						value = Sharpen.Runtime.Substring(value, 1, value.Length - 1);
-						result = Sharpen.Runtime.GetBytesForString(value, "utf-8");
+						value = Runtime.Substring(value, 1, value.Length - 1);
+						result = Runtime.GetBytesForString(value, "utf-8");
 					}
 					else
 					{
-						if (Sharpen.Runtime.EqualsIgnoreCase(en, XAttrCodec.HexPrefix))
+						if (Runtime.EqualsIgnoreCase(en, XAttrCodec.HexPrefix))
 						{
-							value = Sharpen.Runtime.Substring(value, 2, value.Length);
+							value = Runtime.Substring(value, 2, value.Length);
 							try
 							{
 								result = Hex.DecodeHex(value.ToCharArray());
@@ -88,9 +88,9 @@ namespace Org.Apache.Hadoop.FS
 						}
 						else
 						{
-							if (Sharpen.Runtime.EqualsIgnoreCase(en, XAttrCodec.Base64Prefix))
+							if (Runtime.EqualsIgnoreCase(en, XAttrCodec.Base64Prefix))
 							{
-								value = Sharpen.Runtime.Substring(value, 2, value.Length);
+								value = Runtime.Substring(value, 2, value.Length);
 								result = XAttrCodec.base64.Decode(value);
 							}
 						}
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				if (result == null)
 				{
-					result = Sharpen.Runtime.GetBytesForString(value, "utf-8");
+					result = Runtime.GetBytesForString(value, "utf-8");
 				}
 			}
 			return result;
@@ -130,7 +130,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				else
 				{
-					return "\"" + Sharpen.Runtime.GetStringForBytes(value, "utf-8") + "\"";
+					return "\"" + Runtime.GetStringForBytes(value, "utf-8") + "\"";
 				}
 			}
 		}

@@ -5,7 +5,7 @@ using Javax.Servlet;
 using Javax.Servlet.Http;
 using Org.Apache.Commons.Httpclient;
 using Org.Apache.Commons.Httpclient.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.Util
 		{
 			Preconditions.CheckArgument(request.GetRequestURI().StartsWith(servletName + "/")
 				);
-			return Sharpen.Runtime.Substring(request.GetRequestURI(), servletName.Length);
+			return Runtime.Substring(request.GetRequestURI(), servletName.Length);
 		}
 	}
 }

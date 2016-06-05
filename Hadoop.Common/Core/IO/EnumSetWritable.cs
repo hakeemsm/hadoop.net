@@ -4,7 +4,7 @@ using System.IO;
 using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -152,7 +152,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			else
 			{
-				object[] array = Sharpen.Collections.ToArray(this.value);
+				object[] array = Collections.ToArray(this.value);
 				int length = array.Length;
 				@out.WriteInt(length);
 				if (length == 0)

@@ -14,7 +14,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 using Sun.Net.Dns;
 using Sun.Net.Util;
 
@@ -171,10 +171,10 @@ namespace Org.Apache.Hadoop.Security
 			return components[0] + "/" + StringUtils.ToLowerCase(fqdn) + "@" + components[2];
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		internal static string GetLocalHostName()
 		{
-			return Sharpen.Runtime.GetLocalHost().ToString();
+			return Runtime.GetLocalHost().ToString();
 		}
 
 		/// <summary>Login as a principal specified in config.</summary>
@@ -416,7 +416,7 @@ namespace Org.Apache.Hadoop.Security
 				catch (IOException e)
 				{
 					Log.Fatal("Exception while getting login user", e);
-					Sharpen.Runtime.PrintStackTrace(e);
+					Runtime.PrintStackTrace(e);
 					Runtime.GetRuntime().Exit(-1);
 				}
 				return ugi.DoAs(action);
@@ -473,7 +473,7 @@ namespace Org.Apache.Hadoop.Security
 		/// </summary>
 		/// <param name="hostname">host or ip to resolve</param>
 		/// <returns>a resolved host</returns>
-		/// <exception cref="Sharpen.UnknownHostException">if the host doesn't exist</exception>
+		/// <exception cref="UnknownHostException">if the host doesn't exist</exception>
 		[InterfaceAudience.Private]
 		public static IPAddress GetByName(string hostname)
 		{
@@ -482,17 +482,17 @@ namespace Org.Apache.Hadoop.Security
 
 		internal interface HostResolver
 		{
-			/// <exception cref="Sharpen.UnknownHostException"/>
+			/// <exception cref="UnknownHostException"/>
 			IPAddress GetByName(string host);
 		}
 
 		/// <summary>Uses standard java host resolution</summary>
 		internal class StandardHostResolver : SecurityUtil.HostResolver
 		{
-			/// <exception cref="Sharpen.UnknownHostException"/>
+			/// <exception cref="UnknownHostException"/>
 			public virtual IPAddress GetByName(string host)
 			{
-				return Sharpen.Extensions.GetAddressByName(host);
+				return Extensions.GetAddressByName(host);
 			}
 		}
 
@@ -541,7 +541,7 @@ namespace Org.Apache.Hadoop.Security
 			/// </remarks>
 			/// <param name="host">a hostname or ip address</param>
 			/// <returns>InetAddress with the fully qualified hostname or ip</returns>
-			/// <exception cref="Sharpen.UnknownHostException">if host does not exist</exception>
+			/// <exception cref="UnknownHostException">if host does not exist</exception>
 			public virtual IPAddress GetByName(string host)
 			{
 				IPAddress addr = null;
@@ -583,8 +583,8 @@ namespace Org.Apache.Hadoop.Security
 							{
 								// it's a simple host with no dots, ex. "host"
 								// try the search list, then fallback to exact host
-								IPAddress loopback = Sharpen.Extensions.GetAddressByName(null);
-								if (Sharpen.Runtime.EqualsIgnoreCase(host, loopback.GetHostName()))
+								IPAddress loopback = Extensions.GetAddressByName(null);
+								if (Runtime.EqualsIgnoreCase(host, loopback.GetHostName()))
 								{
 									addr = IPAddress.GetByAddress(host, loopback.GetAddressBytes());
 								}
@@ -658,10 +658,10 @@ namespace Org.Apache.Hadoop.Security
 			}
 
 			// implemented as a separate method to facilitate unit testing
-			/// <exception cref="Sharpen.UnknownHostException"/>
+			/// <exception cref="UnknownHostException"/>
 			internal virtual IPAddress GetInetAddressByName(string host)
 			{
-				return Sharpen.Extensions.GetAddressByName(host);
+				return Extensions.GetAddressByName(host);
 			}
 
 			internal virtual void SetSearchDomains(params string[] domains)

@@ -1,14 +1,14 @@
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
 	/// <summary>
 	/// Interface that gives access to
-	/// <see cref="Sharpen.KeyManager"/>
+	/// <see cref="KeyManager"/>
 	/// and
-	/// <see cref="Sharpen.TrustManager"/>
+	/// <see cref="TrustManager"/>
 	/// implementations.
 	/// </summary>
 	public interface KeyStoresFactory : Configurable
@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		/// thrown if the keystores could not be initialized due
 		/// to an IO error.
 		/// </exception>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the keystores could not be
 		/// initialized due to an security error.
 		/// </exception>

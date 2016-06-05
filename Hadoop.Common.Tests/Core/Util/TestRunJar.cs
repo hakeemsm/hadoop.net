@@ -1,8 +1,8 @@
 using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Util
 			NUnit.Framework.Assert.IsFalse("unjar dir shouldn't exist at test start", new FilePath
 				(unjarDir, "foobar.txt").Exists());
 			// Unjar only a regex
-			RunJar.UnJar(new FilePath(TestRootDir, TestJarName), unjarDir, Sharpen.Pattern.Compile
+			RunJar.UnJar(new FilePath(TestRootDir, TestJarName), unjarDir, Pattern.Compile
 				(".*baz.*"));
 			NUnit.Framework.Assert.IsFalse("foobar not unpacked", new FilePath(unjarDir, "foobar.txt"
 				).Exists());

@@ -3,7 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {

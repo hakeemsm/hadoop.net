@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Com.Google.Common.Annotations;
 using Org.Apache.Hadoop;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.Util
 		private int size = 0;
 
 		/// <summary>Modification version for fail-fast.</summary>
-		/// <seealso cref="Sharpen.ConcurrentModificationException"/>
+		/// <seealso cref="ConcurrentModificationException"/>
 		private int modification = 0;
 
 		/// <param name="recommended_length">Recommended size of the internal array.</param>

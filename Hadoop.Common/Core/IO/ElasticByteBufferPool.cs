@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Com.Google.Common.Collect;
 using Org.Apache.Commons.Lang.Builder;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.IO
 				{
 					return direct ? ByteBuffer.AllocateDirect(length) : ByteBuffer.Allocate(length);
 				}
-				Sharpen.Collections.Remove(tree, entry.Key);
+				Collections.Remove(tree, entry.Key);
 				return entry.Value;
 			}
 		}

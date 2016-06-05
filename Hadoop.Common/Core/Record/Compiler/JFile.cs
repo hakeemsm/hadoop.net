@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Compiler
 {
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.Record.Compiler
 		internal virtual string GetName()
 		{
 			int idx = mName.LastIndexOf('/');
-			return (idx > 0) ? Sharpen.Runtime.Substring(mName, idx) : mName;
+			return (idx > 0) ? Runtime.Substring(mName, idx) : mName;
 		}
 
 		/// <summary>Generate record code in given language.</summary>

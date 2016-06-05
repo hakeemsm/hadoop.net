@@ -4,7 +4,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Http;
 using Org.Apache.Hadoop.Security.Http;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				string name = entry.Key;
 				string value = entry.Value;
-				name = Sharpen.Runtime.Substring(name, prefix.Length);
+				name = Runtime.Substring(name, prefix.Length);
 				filterParams[name] = value;
 			}
 			return filterParams;

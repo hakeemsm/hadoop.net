@@ -6,7 +6,7 @@ using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -225,7 +225,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			lock (contexts)
 			{
-				Sharpen.Collections.Remove(contexts, contextCfgItemName);
+				Collections.Remove(contexts, contextCfgItemName);
 			}
 		}
 
@@ -324,8 +324,8 @@ namespace Org.Apache.Hadoop.FS
 							}
 						}
 						//ignore
-						localDirs = Sharpen.Collections.ToArray(dirs, new string[dirs.Count]);
-						dirDF = Sharpen.Collections.ToArray(dfList, new DF[dirs.Count]);
+						localDirs = Collections.ToArray(dirs, new string[dirs.Count]);
+						dirDF = Collections.ToArray(dfList, new DF[dirs.Count]);
 						savedLocalDirs = newLocalDirs;
 						// randomize the first disk picked in the round-robin selection 
 						dirNumLastAccessed = dirIndexRandomizer.Next(dirs.Count);
@@ -383,7 +383,7 @@ namespace Org.Apache.Hadoop.FS
 					//resolution results in a valid path on the dir being checked)
 					if (pathStr.StartsWith("/"))
 					{
-						pathStr = Sharpen.Runtime.Substring(pathStr, 1);
+						pathStr = Runtime.Substring(pathStr, 1);
 					}
 					Path returnPath = null;
 					if (size == SizeUnknown)
@@ -490,7 +490,7 @@ namespace Org.Apache.Hadoop.FS
 					//resolution results in a valid path on the dir being checked)
 					if (pathStr.StartsWith("/"))
 					{
-						pathStr = Sharpen.Runtime.Substring(pathStr, 1);
+						pathStr = Runtime.Substring(pathStr, 1);
 					}
 					while (numDirsSearched < numDirs)
 					{
@@ -589,7 +589,7 @@ namespace Org.Apache.Hadoop.FS
 					ConfChanged(conf);
 					if (pathStr.StartsWith("/"))
 					{
-						pathStr = Sharpen.Runtime.Substring(pathStr, 1);
+						pathStr = Runtime.Substring(pathStr, 1);
 					}
 					return new LocalDirAllocator.AllocatorPerContext.PathIterator(localFS, pathStr, localDirs
 						);
@@ -612,7 +612,7 @@ namespace Org.Apache.Hadoop.FS
 						//resolution results in a valid path on the dir being checked)
 						if (pathStr.StartsWith("/"))
 						{
-							pathStr = Sharpen.Runtime.Substring(pathStr, 1);
+							pathStr = Runtime.Substring(pathStr, 1);
 						}
 						while (numDirsSearched < numDirs)
 						{

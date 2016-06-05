@@ -17,7 +17,7 @@
 */
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Metrics;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Spi
 {

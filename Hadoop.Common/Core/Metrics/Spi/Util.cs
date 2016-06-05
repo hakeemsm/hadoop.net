@@ -20,7 +20,7 @@
 using System.Collections.Generic;
 using System.Net;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Spi
 {

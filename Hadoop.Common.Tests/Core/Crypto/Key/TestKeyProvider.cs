@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -206,7 +206,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			{
 			}
 
-			/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+			/// <exception cref="NoSuchAlgorithmException"/>
 			protected internal override byte[] GenerateKey(int size, string algorithm)
 			{
 				this.size = size;

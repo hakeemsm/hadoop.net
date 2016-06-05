@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using NUnit.Framework;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Util
 			ours.Update(104);
 			CheckSame();
 			CheckOnBytes(new byte[] { 40, 60, 97, unchecked((byte)(-70)) }, false);
-			CheckOnBytes(Sharpen.Runtime.GetBytesForString("hello world!", "UTF-8"), false);
+			CheckOnBytes(Runtime.GetBytesForString("hello world!", "UTF-8"), false);
 			for (int i = 0; i < 10000; i++)
 			{
 				byte[] randomBytes = new byte[new Random().Next(2048)];
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.Util
 			public override string ToString()
 			{
 				StringBuilder b = new StringBuilder();
-				string tableFormat = string.Format("T%d_", Sharpen.Extensions.NumberOfTrailingZeros
+				string tableFormat = string.Format("T%d_", Extensions.NumberOfTrailingZeros
 					(tables[0].Length)) + "%d";
 				string startFormat = "  private static final int " + tableFormat + "_start = %d*256;";
 				for (int j = 0; j < tables.Length; j++)
@@ -162,7 +162,7 @@ namespace Org.Apache.Hadoop.Util
 					b.Append("\n");
 					b.Append(s);
 				}
-				Sharpen.Runtime.SetCharAt(b, b.Length - 2, '\n');
+				Runtime.SetCharAt(b, b.Length - 2, '\n');
 				b.Append(" };\n");
 				return b.ToString();
 			}
@@ -329,7 +329,7 @@ namespace Org.Apache.Hadoop.Util
 			private static TestPureJavaCrc32.PerformanceTest.BenchResult DoBench(Type clazz, 
 				int numThreads, byte[] bytes, int size)
 			{
-				Sharpen.Thread[] threads = new Sharpen.Thread[numThreads];
+				Thread[] threads = new Thread[numThreads];
 				TestPureJavaCrc32.PerformanceTest.BenchResult[] results = new TestPureJavaCrc32.PerformanceTest.BenchResult
 					[threads.Length];
 				{
@@ -365,7 +365,7 @@ namespace Org.Apache.Hadoop.Util
 					Length);
 			}
 
-			private sealed class _Thread_327 : Sharpen.Thread
+			private sealed class _Thread_327 : Thread
 			{
 				public _Thread_327(Constructor<Checksum> ctor, int trials, byte[] bytes, int size
 					, TestPureJavaCrc32.PerformanceTest.BenchResult[] results, int index, double mbProcessed

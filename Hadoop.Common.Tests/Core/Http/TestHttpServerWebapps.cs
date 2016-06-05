@@ -1,6 +1,6 @@
 using System.IO;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Oncrpc
 {
@@ -28,12 +28,12 @@ namespace Org.Apache.Hadoop.Oncrpc
 			Assert.Equal("test", cache.GetProgram());
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestAddRemoveEntries()
 		{
 			RpcCallCache cache = new RpcCallCache("test", 100);
-			IPAddress clientIp = Sharpen.Extensions.GetAddressByName("1.1.1.1");
+			IPAddress clientIp = Extensions.GetAddressByName("1.1.1.1");
 			int xid = 100;
 			// Ensure null is returned when there is no entry in the cache
 			// An entry is added to indicate the request is in progress
@@ -76,7 +76,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			ValidateCompletedCacheEntry(c, response);
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestCacheFunctionality()
 		{
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 			int size = 0;
 			for (int clientId = 0; clientId < 20; clientId++)
 			{
-				IPAddress clientIp = Sharpen.Extensions.GetAddressByName("1.1.1." + clientId);
+				IPAddress clientIp = Extensions.GetAddressByName("1.1.1." + clientId);
 				System.Console.Out.WriteLine("Adding " + clientIp);
 				cache.CheckOrAddToCache(clientIp, 0);
 				size = Math.Min(++size, 10);
@@ -100,13 +100,13 @@ namespace Org.Apache.Hadoop.Oncrpc
 				{
 					RpcCallCache.ClientRequest key = iterator.Next().Key;
 					System.Console.Out.WriteLine("Entry " + key.GetClientId());
-					Assert.Equal(Sharpen.Extensions.GetAddressByName("1.1.1." + (startEntry
+					Assert.Equal(Extensions.GetAddressByName("1.1.1." + (startEntry
 						 + i)), key.GetClientId());
 				}
 				// Ensure cache entries are returned as in progress.
 				for (int i_1 = 0; i_1 < size; i_1++)
 				{
-					RpcCallCache.CacheEntry e = cache.CheckOrAddToCache(Sharpen.Extensions.GetAddressByName
+					RpcCallCache.CacheEntry e = cache.CheckOrAddToCache(Extensions.GetAddressByName
 						("1.1.1." + (startEntry + i_1)), 0);
 					NUnit.Framework.Assert.IsNotNull(e);
 					Assert.True(e.IsInProgress());

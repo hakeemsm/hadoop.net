@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Security.Authentication.Client;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			Assert.Equal("t", token.GetType());
 			Assert.Equal(expires, token.GetExpires());
 			NUnit.Framework.Assert.IsFalse(token.IsExpired());
-			Sharpen.Thread.Sleep(70);
+			Thread.Sleep(70);
 			// +20 msec fuzz for timer granularity.
 			Assert.True(token.IsExpired());
 		}
@@ -122,7 +122,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			Assert.Equal("t", token.GetType());
 			Assert.Equal(expires, token.GetExpires());
 			NUnit.Framework.Assert.IsFalse(token.IsExpired());
-			Sharpen.Thread.Sleep(70);
+			Thread.Sleep(70);
 			// +20 msec fuzz for timer granularity.
 			Assert.True(token.IsExpired());
 		}
@@ -139,7 +139,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			AuthToken.Parse(str1);
 			string str2 = ostr + "&s=1234";
 			AuthToken.Parse(str2);
-			string str = Sharpen.Runtime.Substring(ostr, 0, ostr.IndexOf("e="));
+			string str = Runtime.Substring(ostr, 0, ostr.IndexOf("e="));
 			try
 			{
 				AuthToken.Parse(str);

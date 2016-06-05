@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				throw;
 			}
 			// check the metadata for key3
@@ -390,7 +390,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				throw;
 			}
 			provider.Flush();

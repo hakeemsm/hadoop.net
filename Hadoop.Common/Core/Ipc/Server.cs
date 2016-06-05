@@ -23,8 +23,8 @@ using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Htrace;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.Ipc
 					newSet.AddItem(name.ToString());
 				}
 				// Replace terseException set
-				terseExceptions = Sharpen.Collections.UnmodifiableSet(newSet);
+				terseExceptions = Collections.UnmodifiableSet(newSet);
 			}
 
 			internal virtual bool IsTerse(Type t)
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// If the user accidentally sends an HTTP GET to an IPC port, we detect this
 		/// and send back a nicer response.
 		/// </summary>
-		private static readonly ByteBuffer HttpGetBytes = ByteBuffer.Wrap(Sharpen.Runtime.GetBytesForString
+		private static readonly ByteBuffer HttpGetBytes = ByteBuffer.Wrap(Runtime.GetBytesForString
 			("GET ", Charsets.Utf8));
 
 		/// <summary>
@@ -350,8 +350,8 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <param name="socket">the socket to bind</param>
 		/// <param name="address">the address to bind to</param>
 		/// <param name="backlog">the number of connections allowed in the queue</param>
-		/// <exception cref="Sharpen.BindException">if the address can't be bound</exception>
-		/// <exception cref="Sharpen.UnknownHostException">if the address isn't a valid host name
+		/// <exception cref="BindException">if the address can't be bound</exception>
+		/// <exception cref="UnknownHostException">if the address isn't a valid host name
 		/// 	</exception>
 		/// <exception cref="System.IO.IOException">other random errors from bind</exception>
 		public static void Bind(Socket socket, IPEndPoint address, int backlog)
@@ -419,7 +419,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		[VisibleForTesting]
-		internal virtual IEnumerable<Sharpen.Thread> GetHandlers()
+		internal virtual IEnumerable<Thread> GetHandlers()
 		{
 			return Arrays.AsList(handlers);
 		}
@@ -555,7 +555,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>Listens on the socket.</summary>
 		/// <remarks>Listens on the socket. Creates jobs for the handler threads</remarks>
-		private class Listener : Sharpen.Thread
+		private class Listener : Thread
 		{
 			private ServerSocketChannel acceptChannel = null;
 
@@ -603,7 +603,7 @@ namespace Org.Apache.Hadoop.Ipc
 				this.SetDaemon(true);
 			}
 
-			private class Reader : Sharpen.Thread
+			private class Reader : Thread
 			{
 				private readonly BlockingQueue<Server.Connection> pendingConnections;
 
@@ -621,7 +621,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 				public override void Run()
 				{
-					Server.Log.Info("Starting " + Sharpen.Thread.CurrentThread().GetName());
+					Server.Log.Info("Starting " + Thread.CurrentThread().GetName());
 					try
 					{
 						this.DoRunLoop();
@@ -634,7 +634,7 @@ namespace Org.Apache.Hadoop.Ipc
 						}
 						catch (IOException ioe)
 						{
-							Server.Log.Error("Error closing read selector in " + Sharpen.Thread.CurrentThread
+							Server.Log.Error("Error closing read selector in " + Thread.CurrentThread
 								().GetName(), ioe);
 						}
 					}
@@ -678,7 +678,7 @@ namespace Org.Apache.Hadoop.Ipc
 								if (this._enclosing._enclosing.running)
 								{
 									// unexpected -- log it
-									Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + " unexpectedly interrupted"
+									Server.Log.Info(Thread.CurrentThread().GetName() + " unexpectedly interrupted"
 										, e);
 								}
 							}
@@ -717,7 +717,7 @@ namespace Org.Apache.Hadoop.Ipc
 					}
 					catch (Exception)
 					{
-						Sharpen.Thread.CurrentThread().Interrupt();
+						Thread.CurrentThread().Interrupt();
 					}
 				}
 
@@ -726,7 +726,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			public override void Run()
 			{
-				Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + ": starting");
+				Server.Log.Info(Thread.CurrentThread().GetName() + ": starting");
 				Server.Server.Set(this._enclosing);
 				this._enclosing.connectionManager.StartIdleScan();
 				while (this._enclosing.running)
@@ -767,7 +767,7 @@ namespace Org.Apache.Hadoop.Ipc
 						this._enclosing.connectionManager.CloseIdle(true);
 						try
 						{
-							Sharpen.Thread.Sleep(60000);
+							Thread.Sleep(60000);
 						}
 						catch (Exception)
 						{
@@ -778,7 +778,7 @@ namespace Org.Apache.Hadoop.Ipc
 						this.CloseCurrentConnection(key, e);
 					}
 				}
-				Server.Log.Info("Stopping " + Sharpen.Thread.CurrentThread().GetName());
+				Server.Log.Info("Stopping " + Thread.CurrentThread().GetName());
 				lock (this)
 				{
 					try
@@ -860,7 +860,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 				catch (Exception ieo)
 				{
-					Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + ": readAndProcess caught InterruptedException"
+					Server.Log.Info(Thread.CurrentThread().GetName() + ": readAndProcess caught InterruptedException"
 						, ieo);
 					throw;
 				}
@@ -870,7 +870,7 @@ namespace Org.Apache.Hadoop.Ipc
 					// to the client, so the stacktrace is unnecessary; any other
 					// exceptions are unexpected internal server errors and thus the
 					// stacktrace should be logged
-					Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + ": readAndProcess from client "
+					Server.Log.Info(Thread.CurrentThread().GetName() + ": readAndProcess from client "
 						 + c.GetHostAddress() + " threw exception [" + e + "]", (e is Server.WrappedRpcServerException
 						) ? null : e);
 					count = -1;
@@ -894,7 +894,7 @@ namespace Org.Apache.Hadoop.Ipc
 					if (this.selector != null)
 					{
 						this.selector.Wakeup();
-						Sharpen.Thread.Yield();
+						Thread.Yield();
 					}
 					if (this.acceptChannel != null)
 					{
@@ -904,7 +904,7 @@ namespace Org.Apache.Hadoop.Ipc
 						}
 						catch (IOException e)
 						{
-							Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + ":Exception in closing listener socket. "
+							Server.Log.Info(Thread.CurrentThread().GetName() + ":Exception in closing listener socket. "
 								 + e);
 						}
 					}
@@ -934,7 +934,7 @@ namespace Org.Apache.Hadoop.Ipc
 			private readonly Server _enclosing;
 		}
 
-		private class Responder : Sharpen.Thread
+		private class Responder : Thread
 		{
 			private readonly Selector writeSelector;
 
@@ -958,7 +958,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			public override void Run()
 			{
-				Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + ": starting");
+				Server.Log.Info(Thread.CurrentThread().GetName() + ": starting");
 				Server.Server.Set(this._enclosing);
 				try
 				{
@@ -966,14 +966,14 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 				finally
 				{
-					Server.Log.Info("Stopping " + Sharpen.Thread.CurrentThread().GetName());
+					Server.Log.Info("Stopping " + Thread.CurrentThread().GetName());
 					try
 					{
 						this.writeSelector.Close();
 					}
 					catch (IOException ioe)
 					{
-						Server.Log.Error("Couldn't close write selector in " + Sharpen.Thread.CurrentThread
+						Server.Log.Error("Couldn't close write selector in " + Thread.CurrentThread
 							().GetName(), ioe);
 					}
 				}
@@ -1005,7 +1005,7 @@ namespace Org.Apache.Hadoop.Ipc
 							}
 							catch (IOException e)
 							{
-								Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + ": doAsyncWrite threw exception "
+								Server.Log.Info(Thread.CurrentThread().GetName() + ": doAsyncWrite threw exception "
 									 + e);
 							}
 						}
@@ -1054,7 +1054,7 @@ namespace Org.Apache.Hadoop.Ipc
 						Server.Log.Warn("Out of Memory in server select", e);
 						try
 						{
-							Sharpen.Thread.Sleep(60000);
+							Thread.Sleep(60000);
 						}
 						catch (Exception)
 						{
@@ -1154,7 +1154,7 @@ namespace Org.Apache.Hadoop.Ipc
 						SocketChannel channel = call.connection.channel;
 						if (Server.Log.IsDebugEnabled())
 						{
-							Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": responding to " + 
+							Server.Log.Debug(Thread.CurrentThread().GetName() + ": responding to " + 
 								call);
 						}
 						//
@@ -1183,7 +1183,7 @@ namespace Org.Apache.Hadoop.Ipc
 							// more calls pending to be sent.
 							if (Server.Log.IsDebugEnabled())
 							{
-								Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": responding to " + 
+								Server.Log.Debug(Thread.CurrentThread().GetName() + ": responding to " + 
 									call + " Wrote " + numBytes + " bytes.");
 							}
 						}
@@ -1218,7 +1218,7 @@ namespace Org.Apache.Hadoop.Ipc
 							}
 							if (Server.Log.IsDebugEnabled())
 							{
-								Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": responding to " + 
+								Server.Log.Debug(Thread.CurrentThread().GetName() + ": responding to " + 
 									call + " Wrote partial " + numBytes + " bytes.");
 							}
 						}
@@ -1230,7 +1230,7 @@ namespace Org.Apache.Hadoop.Ipc
 					// everything went off well
 					if (error && call != null)
 					{
-						Server.Log.Warn(Sharpen.Thread.CurrentThread().GetName() + ", call " + call + ": output error"
+						Server.Log.Warn(Thread.CurrentThread().GetName() + ", call " + call + ": output error"
 							);
 						done = true;
 						// error. no more data for this channel.
@@ -1271,7 +1271,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					// call done enqueueing.
 					this.pending--;
-					Sharpen.Runtime.Notify(this);
+					Runtime.Notify(this);
 				}
 			}
 
@@ -1282,7 +1282,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					while (this.pending > 0)
 					{
-						Sharpen.Runtime.Wait(this);
+						Runtime.Wait(this);
 					}
 				}
 			}
@@ -1661,7 +1661,7 @@ namespace Org.Apache.Hadoop.Ipc
 						.Qop);
 					// SASL wrapping is only used if the connection has a QOP, and
 					// the value is not auth.  ex. auth-int & auth-priv
-					this.useWrap = (qop != null && !Sharpen.Runtime.EqualsIgnoreCase("auth", qop));
+					this.useWrap = (qop != null && !Runtime.EqualsIgnoreCase("auth", qop));
 				}
 			}
 
@@ -2056,7 +2056,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				Server.Call fakeCall = new Server.Call(0, RpcConstants.InvalidRetryCount, null, this
 					);
-				fakeCall.SetResponse(ByteBuffer.Wrap(Sharpen.Runtime.GetBytesForString(Server.ReceivedHttpReqResponse
+				fakeCall.SetResponse(ByteBuffer.Wrap(Runtime.GetBytesForString(Server.ReceivedHttpReqResponse
 					, Charsets.Utf8)));
 				this._enclosing.responder.DoRespond(fakeCall);
 			}
@@ -2478,7 +2478,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <summary>Handles queued calls .</summary>
-		private class Handler : Sharpen.Thread
+		private class Handler : Thread
 		{
 			public Handler(Server _enclosing, int instanceNumber)
 			{
@@ -2490,7 +2490,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			public override void Run()
 			{
-				Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": starting");
+				Server.Log.Debug(Thread.CurrentThread().GetName() + ": starting");
 				Server.Server.Set(this._enclosing);
 				ByteArrayOutputStream buf = new ByteArrayOutputStream(Server.InitialRespBufSize);
 				while (this._enclosing.running)
@@ -2502,12 +2502,12 @@ namespace Org.Apache.Hadoop.Ipc
 						// pop the queue; maybe blocked here
 						if (Server.Log.IsDebugEnabled())
 						{
-							Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": " + call + " for RpcKind "
+							Server.Log.Debug(Thread.CurrentThread().GetName() + ": " + call + " for RpcKind "
 								 + call.rpcKind);
 						}
 						if (!call.connection.channel.IsOpen())
 						{
-							Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + ": skipped " + call);
+							Server.Log.Info(Thread.CurrentThread().GetName() + ": skipped " + call);
 							continue;
 						}
 						string errorClass = null;
@@ -2543,7 +2543,7 @@ namespace Org.Apache.Hadoop.Ipc
 							{
 								e = e.InnerException;
 							}
-							string logMsg = Sharpen.Thread.CurrentThread().GetName() + ", call " + call;
+							string logMsg = Thread.CurrentThread().GetName() + ", call " + call;
 							if (this._enclosing.exceptionsHandler.IsTerse(e.GetType()))
 							{
 								// Don't log the whole stack trace. Way too noisy!
@@ -2580,7 +2580,7 @@ namespace Org.Apache.Hadoop.Ipc
 							string exceptionHdr = errorClass + ": ";
 							if (error.StartsWith(exceptionHdr))
 							{
-								error = Sharpen.Runtime.Substring(error, exceptionHdr.Length);
+								error = Runtime.Substring(error, exceptionHdr.Length);
 							}
 						}
 						Server.CurCall.Set(null);
@@ -2608,7 +2608,7 @@ namespace Org.Apache.Hadoop.Ipc
 						if (this._enclosing.running)
 						{
 							// unexpected -- log it
-							Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + " unexpectedly interrupted"
+							Server.Log.Info(Thread.CurrentThread().GetName() + " unexpectedly interrupted"
 								, e);
 							if (Trace.IsTracing())
 							{
@@ -2619,7 +2619,7 @@ namespace Org.Apache.Hadoop.Ipc
 					}
 					catch (Exception e)
 					{
-						Server.Log.Info(Sharpen.Thread.CurrentThread().GetName() + " caught an exception"
+						Server.Log.Info(Thread.CurrentThread().GetName() + " caught an exception"
 							, e);
 						if (Trace.IsTracing())
 						{
@@ -2636,7 +2636,7 @@ namespace Org.Apache.Hadoop.Ipc
 						IOUtils.Cleanup(Server.Log, traceScope);
 					}
 				}
-				Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": exiting");
+				Server.Log.Debug(Thread.CurrentThread().GetName() + ": exiting");
 			}
 
 			private sealed class _PrivilegedExceptionAction_2045 : PrivilegedExceptionAction<
@@ -2666,7 +2666,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <exception cref="System.IO.IOException"/>
 		protected internal Server(string bindAddress, int port, Type paramClass, int handlerCount
 			, Configuration conf)
-			: this(bindAddress, port, paramClass, handlerCount, -1, -1, conf, Sharpen.Extensions.ToString
+			: this(bindAddress, port, paramClass, handlerCount, -1, -1, conf, Extensions.ToString
 				(port), null, null)
 		{
 		}
@@ -3039,7 +3039,7 @@ namespace Org.Apache.Hadoop.Ipc
 				listener.Interrupt();
 				listener.DoStop();
 				responder.Interrupt();
-				Sharpen.Runtime.NotifyAll(this);
+				Runtime.NotifyAll(this);
 				this.rpcMetrics.Shutdown();
 				this.rpcDetailedMetrics.Shutdown();
 			}
@@ -3060,7 +3060,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				while (running)
 				{
-					Sharpen.Runtime.Wait(this);
+					Runtime.Wait(this);
 				}
 			}
 		}
@@ -3172,7 +3172,7 @@ namespace Org.Apache.Hadoop.Ipc
 		//should not be more than 64KB.
 		/// <summary>
 		/// This is a wrapper around
-		/// <see cref="Sharpen.WritableByteChannel.Write(Sharpen.ByteBuffer)"/>
+		/// <see cref="WritableByteChannel.Write(ByteBuffer)"/>
 		/// .
 		/// If the amount of data is large, it writes to channel in smaller chunks.
 		/// This is to avoid jdk from creating many direct buffers as the size of
@@ -3180,7 +3180,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// as a result of multiple write operations required to write a large
 		/// buffer.
 		/// </summary>
-		/// <seealso cref="Sharpen.WritableByteChannel.Write(Sharpen.ByteBuffer)"/>
+		/// <seealso cref="WritableByteChannel.Write(ByteBuffer)"/>
 		/// <exception cref="System.IO.IOException"/>
 		private int ChannelWrite(WritableByteChannel channel, ByteBuffer buffer)
 		{
@@ -3195,13 +3195,13 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// This is a wrapper around
-		/// <see cref="Sharpen.ReadableByteChannel.Read(Sharpen.ByteBuffer)"/>
+		/// <see cref="ReadableByteChannel.Read(ByteBuffer)"/>
 		/// .
 		/// If the amount of data is large, it writes to channel in smaller chunks.
 		/// This is to avoid jdk from creating many direct buffers as the size of
 		/// ByteBuffer increases. There should not be any performance degredation.
 		/// </summary>
-		/// <seealso cref="Sharpen.ReadableByteChannel.Read(Sharpen.ByteBuffer)"/>
+		/// <seealso cref="ReadableByteChannel.Read(ByteBuffer)"/>
 		/// <exception cref="System.IO.IOException"/>
 		private int ChannelRead(ReadableByteChannel channel, ByteBuffer buffer)
 		{
@@ -3216,14 +3216,14 @@ namespace Org.Apache.Hadoop.Ipc
 
 		/// <summary>
 		/// Helper for
-		/// <see cref="ChannelRead(Sharpen.ReadableByteChannel, Sharpen.ByteBuffer)"/>
+		/// <see cref="ChannelRead(ReadableByteChannel, ByteBuffer)"/>
 		/// and
-		/// <see cref="ChannelWrite(Sharpen.WritableByteChannel, Sharpen.ByteBuffer)"/>
+		/// <see cref="ChannelWrite(WritableByteChannel, ByteBuffer)"/>
 		/// . Only
 		/// one of readCh or writeCh should be non-null.
 		/// </summary>
-		/// <seealso cref="ChannelRead(Sharpen.ReadableByteChannel, Sharpen.ByteBuffer)"/>
-		/// <seealso cref="ChannelWrite(Sharpen.WritableByteChannel, Sharpen.ByteBuffer)"/>
+		/// <seealso cref="ChannelRead(ReadableByteChannel, ByteBuffer)"/>
+		/// <seealso cref="ChannelWrite(WritableByteChannel, ByteBuffer)"/>
 		/// <exception cref="System.IO.IOException"/>
 		private static int ChannelIO(ReadableByteChannel readCh, WritableByteChannel writeCh
 			, ByteBuffer buf)
@@ -3289,7 +3289,7 @@ namespace Org.Apache.Hadoop.Ipc
 					, CommonConfigurationKeysPublic.IpcServerMaxConnectionsDefault);
 				// create a set with concurrency -and- a thread-safe iterator, add 2
 				// for listener and idle closer threads
-				this.connections = Sharpen.Collections.NewSetFromMap(new ConcurrentHashMap<Server.Connection
+				this.connections = Collections.NewSetFromMap(new ConcurrentHashMap<Server.Connection
 					, bool>(this._enclosing.maxQueueSize, 0.75f, this._enclosing.readThreads + 2));
 			}
 
@@ -3326,7 +3326,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 			internal virtual Server.Connection[] ToArray()
 			{
-				return Sharpen.Collections.ToArray(this.connections, new Server.Connection[0]);
+				return Collections.ToArray(this.connections, new Server.Connection[0]);
 			}
 
 			internal virtual Server.Connection Register(SocketChannel channel)
@@ -3352,7 +3352,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					if (Server.Log.IsDebugEnabled())
 					{
-						Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": disconnecting client "
+						Server.Log.Debug(Thread.CurrentThread().GetName() + ": disconnecting client "
 							 + connection + ". Number of active connections: " + this.Size());
 					}
 					// only close if actually removed to avoid double-closing due
@@ -3437,7 +3437,7 @@ namespace Org.Apache.Hadoop.Ipc
 					}
 					if (Server.Log.IsDebugEnabled())
 					{
-						Server.Log.Debug(Sharpen.Thread.CurrentThread().GetName() + ": task running");
+						Server.Log.Debug(Thread.CurrentThread().GetName() + ": task running");
 					}
 					try
 					{

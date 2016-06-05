@@ -17,7 +17,7 @@
 */
 using NUnit.Framework;
 using Org.Apache.Commons.Net.Ftp;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Ftp
 {

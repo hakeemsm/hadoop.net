@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -48,10 +48,10 @@ namespace Org.Apache.Hadoop.FS
 			Path testPath = new Path(TestRootDir, "testPath");
 			Path testPath11 = new Path(TestRootDir, "testPath11");
 			FSDataOutputStream fout = localFs.Create(testPath);
-			fout.Write(Sharpen.Runtime.GetBytesForString("testing"));
+			fout.Write(Runtime.GetBytesForString("testing"));
 			fout.Close();
 			fout = localFs.Create(testPath11);
-			fout.Write(Sharpen.Runtime.GetBytesForString("testing you"));
+			fout.Write(Runtime.GetBytesForString("testing you"));
 			fout.Close();
 			// Exercise some boundary cases - a divisor of the chunk size
 			// the chunk size, 2x chunk size, and +/-1 around these.
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.FS
 			FSDataOutputStream fout = localFs.Create(testPath);
 			for (int i = 0; i < 1000; i++)
 			{
-				fout.Write(Sharpen.Runtime.GetBytesForString(("testing" + i)));
+				fout.Write(Runtime.GetBytesForString(("testing" + i)));
 			}
 			fout.Close();
 			// Exercise some boundary cases - a divisor of the chunk size
@@ -118,7 +118,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			Path testPath = new Path(TestRootDir, "testtruncatedcrc");
 			FSDataOutputStream fout = localFs.Create(testPath);
-			fout.Write(Sharpen.Runtime.GetBytesForString("testing truncation"));
+			fout.Write(Runtime.GetBytesForString("testing truncation"));
 			fout.Close();
 			// Read in the checksum
 			Path checksumFile = localFs.GetChecksumFile(testPath);
@@ -172,13 +172,13 @@ namespace Org.Apache.Hadoop.FS
 			Path checksumPath = localFs.GetChecksumFile(testPath);
 			// write a file to generate checksum
 			FSDataOutputStream @out = localFs.Create(testPath, true);
-			@out.Write(Sharpen.Runtime.GetBytesForString("testing 1 2 3"));
+			@out.Write(Runtime.GetBytesForString("testing 1 2 3"));
 			@out.Close();
 			Assert.True(localFs.Exists(checksumPath));
 			FileStatus stat = localFs.GetFileStatus(checksumPath);
 			// alter file directly so checksum is invalid
 			@out = localFs.GetRawFileSystem().Create(testPath, true);
-			@out.Write(Sharpen.Runtime.GetBytesForString("testing stale checksum"));
+			@out.Write(Runtime.GetBytesForString("testing stale checksum"));
 			@out.Close();
 			Assert.True(localFs.Exists(checksumPath));
 			// checksum didn't change on disk

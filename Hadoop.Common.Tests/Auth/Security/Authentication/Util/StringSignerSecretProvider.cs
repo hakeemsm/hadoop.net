@@ -1,7 +1,7 @@
 using System.Text;
 using Javax.Servlet;
 using Org.Apache.Hadoop.Security.Authentication.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -23,7 +23,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		{
 			string signatureSecret = config.GetProperty(AuthenticationFilter.SignatureSecret, 
 				null);
-			secret = Sharpen.Runtime.GetBytesForString(signatureSecret, Sharpen.Extensions.GetEncoding
+			secret = Runtime.GetBytesForString(signatureSecret, Extensions.GetEncoding
 				("UTF-8"));
 			secrets = new byte[][] { secret };
 		}

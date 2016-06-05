@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Javax.Security.Auth.Callback;
 using Javax.Security.Sasl;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.Security
 				string payload;
 				try
 				{
-					payload = Sharpen.Runtime.GetStringForBytes(response, "UTF-8");
+					payload = Runtime.GetStringForBytes(response, "UTF-8");
 				}
 				catch (Exception e)
 				{

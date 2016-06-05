@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 
 		/// <summary>
 		/// This is the  constructor with the signature needed by
-		/// <see cref="FileSystem.CreateFileSystem(Sharpen.URI, Configuration)
+		/// <see cref="FileSystem.CreateFileSystem(URI, Configuration)
 		/// 	"/>
 		/// After this constructor is called initialize() is called.
 		/// </summary>
@@ -160,14 +160,14 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				this._enclosing = _enclosing;
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			/// <exception cref="System.IO.IOException"/>
 			protected internal override FileSystem GetTargetFileSystem(URI uri)
 			{
 				return new ChRootedFileSystem(uri, this._enclosing.config);
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			protected internal override FileSystem GetTargetFileSystem(InodeTree.INodeDir<FileSystem
 				> dir)
 			{
@@ -175,7 +175,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					this._enclosing.ugi, this._enclosing.myUri);
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
 			protected internal override FileSystem GetTargetFileSystem(URI[] mergeFsURIList)
 			{
@@ -717,10 +717,10 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			foreach (InodeTree.MountPoint<FileSystem> mountPoint in mountPoints)
 			{
 				FileSystem targetFs = mountPoint.target.targetFileSystem;
-				Sharpen.Collections.AddAll(children, Arrays.AsList(targetFs.GetChildFileSystems()
+				Collections.AddAll(children, Arrays.AsList(targetFs.GetChildFileSystems()
 					));
 			}
-			return Sharpen.Collections.ToArray(children, new FileSystem[] {  });
+			return Collections.ToArray(children, new FileSystem[] {  });
 		}
 
 		public virtual ViewFileSystem.MountPoint[] GetMountPoints()
@@ -746,7 +746,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 
 			internal readonly URI myUri;
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			public InternalDirOfViewFs(InodeTree.INodeDir<FileSystem> dir, long cTime, UserGroupInformation
 				 ugi, URI uri)
 			{
@@ -897,7 +897,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					throw new FileAlreadyExistsException("/ already exits");
 				}
 				// Note dir starts with /
-				if (theInternalDir.children.Contains(Sharpen.Runtime.Substring(dir.ToString(), 1)
+				if (theInternalDir.children.Contains(Runtime.Substring(dir.ToString(), 1)
 					))
 				{
 					return true;

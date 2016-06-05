@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.Security
 				try
 				{
 					// JNI code does not expect '@' at the begining of the group name
-					users = GetUsersForNetgroupJNI(Sharpen.Runtime.Substring(netgroup, 1));
+					users = GetUsersForNetgroupJNI(Runtime.Substring(netgroup, 1));
 				}
 				catch (Exception e)
 				{

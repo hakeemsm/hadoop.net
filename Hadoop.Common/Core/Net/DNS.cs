@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using Javax.Naming;
 using Javax.Naming.Directory;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Net
 			int hostnameLength = hostname.Length;
 			if (hostname[hostnameLength - 1] == '.')
 			{
-				hostname = Sharpen.Runtime.Substring(hostname, 0, hostnameLength - 1);
+				hostname = Runtime.Substring(hostname, 0, hostnameLength - 1);
 			}
 			return hostname;
 		}
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Net
 			while (subNifs.MoveNext())
 			{
 				NetworkInterface subNif = subNifs.Current;
-				Sharpen.Collections.AddAll(addrs, Collections.List(subNif.GetInetAddresses()));
+				Collections.AddAll(addrs, Collections.List(subNif.GetInetAddresses()));
 			}
 			return addrs;
 		}
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.Net
 		/// IPs associated with the given interface and its subinterfaces.
 		/// </see>
 		/// </summary>
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public static string[] GetIPs(string strInterface)
 		{
 			return GetIPs(strInterface, true);
@@ -139,7 +139,7 @@ namespace Org.Apache.Hadoop.Net
 		/// name "default" is specified or there is an I/O error looking
 		/// for the given interface.
 		/// </returns>
-		/// <exception cref="Sharpen.UnknownHostException">If the given interface is invalid</exception>
+		/// <exception cref="UnknownHostException">If the given interface is invalid</exception>
 		public static string[] GetIPs(string strInterface, bool returnSubinterfaces)
 		{
 			if ("default".Equals(strInterface))
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Net
 			// that depend on a particular element being 1st in the array.
 			// For example, getDefaultIP always returns the first element.
 			LinkedHashSet<IPAddress> allAddrs = new LinkedHashSet<IPAddress>();
-			Sharpen.Collections.AddAll(allAddrs, Collections.List(netIf.GetInetAddresses()));
+			Collections.AddAll(allAddrs, Collections.List(netIf.GetInetAddresses()));
 			if (!returnSubinterfaces)
 			{
 				allAddrs.RemoveAll(GetSubinterfaceInetAddrs(netIf));
@@ -194,7 +194,7 @@ namespace Org.Apache.Hadoop.Net
 		/// The IP address in text form, the local host IP is returned
 		/// if the interface name "default" is specified
 		/// </returns>
-		/// <exception cref="Sharpen.UnknownHostException">If the given interface is invalid</exception>
+		/// <exception cref="UnknownHostException">If the given interface is invalid</exception>
 		public static string GetDefaultIP(string strInterface)
 		{
 			string[] ips = GetIPs(strInterface);
@@ -214,7 +214,7 @@ namespace Org.Apache.Hadoop.Net
 		/// A string vector of all host names associated with the IPs tied to
 		/// the specified interface
 		/// </returns>
-		/// <exception cref="Sharpen.UnknownHostException">if the given interface is invalid</exception>
+		/// <exception cref="UnknownHostException">if the given interface is invalid</exception>
 		public static string[] GetHosts(string strInterface, string nameserver)
 		{
 			string[] ips = GetIPs(strInterface);
@@ -223,7 +223,7 @@ namespace Org.Apache.Hadoop.Net
 			{
 				try
 				{
-					hosts.AddItem(ReverseDns(Sharpen.Extensions.GetAddressByName(ips[ctr]), nameserver
+					hosts.AddItem(ReverseDns(Extensions.GetAddressByName(ips[ctr]), nameserver
 						));
 				}
 				catch (UnknownHostException)
@@ -240,7 +240,7 @@ namespace Org.Apache.Hadoop.Net
 			}
 			else
 			{
-				return Sharpen.Collections.ToArray(hosts, new string[hosts.Count]);
+				return Collections.ToArray(hosts, new string[hosts.Count]);
 			}
 		}
 
@@ -254,7 +254,7 @@ namespace Org.Apache.Hadoop.Net
 			string localhost;
 			try
 			{
-				localhost = Sharpen.Runtime.GetLocalHost().ToString();
+				localhost = Runtime.GetLocalHost().ToString();
 			}
 			catch (UnknownHostException e)
 			{
@@ -281,7 +281,7 @@ namespace Org.Apache.Hadoop.Net
 			string address;
 			try
 			{
-				address = Sharpen.Runtime.GetLocalHost().GetHostAddress();
+				address = Runtime.GetLocalHost().GetHostAddress();
 			}
 			catch (UnknownHostException e)
 			{
@@ -289,7 +289,7 @@ namespace Org.Apache.Hadoop.Net
 					 + "\" address", e);
 				try
 				{
-					address = Sharpen.Extensions.GetAddressByName(Localhost).GetHostAddress();
+					address = Extensions.GetAddressByName(Localhost).GetHostAddress();
 				}
 				catch (UnknownHostException)
 				{
@@ -312,7 +312,7 @@ namespace Org.Apache.Hadoop.Net
 		/// The list of host names associated with IPs bound to the network
 		/// interface
 		/// </returns>
-		/// <exception cref="Sharpen.UnknownHostException">If one is encountered while querying the default interface
+		/// <exception cref="UnknownHostException">If one is encountered while querying the default interface
 		/// 	</exception>
 		public static string[] GetHosts(string strInterface)
 		{
@@ -330,7 +330,7 @@ namespace Org.Apache.Hadoop.Net
 		/// The default host names associated with IPs bound to the network
 		/// interface
 		/// </returns>
-		/// <exception cref="Sharpen.UnknownHostException">If one is encountered while querying the default interface
+		/// <exception cref="UnknownHostException">If one is encountered while querying the default interface
 		/// 	</exception>
 		public static string GetDefaultHost(string strInterface, string nameserver)
 		{
@@ -358,7 +358,7 @@ namespace Org.Apache.Hadoop.Net
 		/// The default host name associated with IPs bound to the network
 		/// interface
 		/// </returns>
-		/// <exception cref="Sharpen.UnknownHostException">If one is encountered while querying the default interface
+		/// <exception cref="UnknownHostException">If one is encountered while querying the default interface
 		/// 	</exception>
 		public static string GetDefaultHost(string strInterface)
 		{

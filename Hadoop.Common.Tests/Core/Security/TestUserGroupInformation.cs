@@ -14,7 +14,7 @@ using Org.Apache.Hadoop.Security.Authentication.Util;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -224,7 +224,7 @@ namespace Org.Apache.Hadoop.Security
 				int sp = userName.LastIndexOf('\\');
 				if (sp != -1)
 				{
-					userName = Sharpen.Runtime.Substring(userName, sp + 1);
+					userName = Runtime.Substring(userName, sp + 1);
 				}
 				// user names are case insensitive on Windows. Make consistent
 				userName = StringUtils.ToLowerCase(userName);
@@ -846,7 +846,7 @@ namespace Org.Apache.Hadoop.Security
 				double avg = MetricsAsserts.GetDoubleGauge("GetGroupsAvgTime", rb);
 				Assert.True(avg >= 0.0);
 				// Sleep for an interval+slop to let the percentiles rollover
-				Sharpen.Thread.Sleep((PercentilesInterval + 1) * 1000);
+				Thread.Sleep((PercentilesInterval + 1) * 1000);
 				// Check that the percentiles were updated
 				MetricsAsserts.AssertQuantileGauges("GetGroups1s", rb);
 			}
@@ -920,7 +920,7 @@ namespace Org.Apache.Hadoop.Security
 			TestSaslRPC.TestTokenIdentifier tokenId = new TestSaslRPC.TestTokenIdentifier();
 			Org.Apache.Hadoop.Security.Token.Token<TestSaslRPC.TestTokenIdentifier> token = new 
 				Org.Apache.Hadoop.Security.Token.Token<TestSaslRPC.TestTokenIdentifier>(tokenId.
-				GetBytes(), Sharpen.Runtime.GetBytesForString("password"), tokenId.GetKind(), null
+				GetBytes(), Runtime.GetBytesForString("password"), tokenId.GetKind(), null
 				);
 			ugi.AddToken(new Text("regular-token"), token);
 			// Now add cloned private token
@@ -989,7 +989,7 @@ namespace Org.Apache.Hadoop.Security
 				}
 				catch (ConcurrentModificationException cme)
 				{
-					Sharpen.Runtime.PrintStackTrace(cme);
+					Runtime.PrintStackTrace(cme);
 					NUnit.Framework.Assert.Fail("ConcurrentModificationException encountered");
 				}
 				finally
@@ -1001,7 +1001,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 		}
 
-		internal class GetTokenThread : Sharpen.Thread
+		internal class GetTokenThread : Thread
 		{
 			internal bool runThread = true;
 
@@ -1018,12 +1018,12 @@ namespace Org.Apache.Hadoop.Security
 					catch (ConcurrentModificationException cme)
 					{
 						this.cme = cme;
-						Sharpen.Runtime.PrintStackTrace(cme);
+						Runtime.PrintStackTrace(cme);
 						runThread = false;
 					}
 					catch (IOException ex)
 					{
-						Sharpen.Runtime.PrintStackTrace(ex);
+						Runtime.PrintStackTrace(ex);
 					}
 				}
 			}

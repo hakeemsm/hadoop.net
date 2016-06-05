@@ -12,8 +12,8 @@ using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
 using Org.Mockito.Invocation;
 using Org.Slf4j;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Test
 {
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.Test
 		/// <returns>String name of the invoking method</returns>
 		public static string GetMethodName()
 		{
-			return Sharpen.Thread.CurrentThread().GetStackTrace()[2].GetMethodName();
+			return Thread.CurrentThread().GetStackTrace()[2].GetMethodName();
 		}
 
 		/// <summary>Generates a process-wide unique sequence number.</summary>
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.Test
 				 + StringUtils.StringifyException(t), msg.Contains(@string));
 		}
 
-		/// <exception cref="Sharpen.TimeoutException"/>
+		/// <exception cref="TimeoutException"/>
 		/// <exception cref="System.Exception"/>
 		public static void WaitFor(Supplier<bool> check, int checkEveryMillis, int waitForMillis
 			)
@@ -132,7 +132,7 @@ namespace Org.Apache.Hadoop.Test
 				{
 					return;
 				}
-				Sharpen.Thread.Sleep(checkEveryMillis);
+				Thread.Sleep(checkEveryMillis);
 			}
 			while (Time.Now() - st < waitForMillis);
 			throw new TimeoutException("Timed out waiting for condition. " + "Thread diagnostics:\n"
@@ -377,7 +377,7 @@ namespace Org.Apache.Hadoop.Test
 				bool interrupted = false;
 				try
 				{
-					Sharpen.Thread.Sleep(r.Next(maxSleepTime));
+					Thread.Sleep(r.Next(maxSleepTime));
 				}
 				catch (Exception)
 				{
@@ -391,7 +391,7 @@ namespace Org.Apache.Hadoop.Test
 				{
 					if (interrupted)
 					{
-						Sharpen.Thread.CurrentThread().Interrupt();
+						Thread.CurrentThread().Interrupt();
 					}
 				}
 			}
@@ -400,13 +400,13 @@ namespace Org.Apache.Hadoop.Test
 		public static void AssertDoesNotMatch(string output, string pattern)
 		{
 			NUnit.Framework.Assert.IsFalse("Expected output to match /" + pattern + "/" + " but got:\n"
-				 + output, Sharpen.Pattern.Compile(pattern).Matcher(output).Find());
+				 + output, Pattern.Compile(pattern).Matcher(output).Find());
 		}
 
 		public static void AssertMatches(string output, string pattern)
 		{
 			Assert.True("Expected output to match /" + pattern + "/" + " but got:\n"
-				 + output, Sharpen.Pattern.Compile(pattern).Matcher(output).Find());
+				 + output, Pattern.Compile(pattern).Matcher(output).Find());
 		}
 
 		public static void AssertValueNear(long expected, long actual, long allowedError)
@@ -428,7 +428,7 @@ namespace Org.Apache.Hadoop.Test
 		/// <param name="regex">the regex to match against</param>
 		public static void AssertNoThreadsMatching(string regex)
 		{
-			Sharpen.Pattern pattern = Sharpen.Pattern.Compile(regex);
+			Pattern pattern = Pattern.Compile(regex);
 			ThreadMXBean threadBean = ManagementFactory.GetThreadMXBean();
 			ThreadInfo[] infos = threadBean.GetThreadInfo(threadBean.GetAllThreadIds(), 20);
 			foreach (ThreadInfo info in infos)
@@ -453,7 +453,7 @@ namespace Org.Apache.Hadoop.Test
 		/// </remarks>
 		public static void AssumeInNativeProfile()
 		{
-			Assume.AssumeTrue(Sharpen.Extensions.ValueOf(Runtime.GetProperty("runningWithNative"
+			Assume.AssumeTrue(Extensions.ValueOf(Runtime.GetProperty("runningWithNative"
 				, "false")));
 		}
 	}

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Security.Authentication;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {

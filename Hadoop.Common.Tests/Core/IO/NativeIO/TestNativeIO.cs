@@ -11,7 +11,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Nativeio
 {
@@ -74,14 +74,14 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			}
 			FileOutputStream fos = new FileOutputStream(new FilePath(TestDir, "testfstat"));
 			AtomicReference<Exception> thrown = new AtomicReference<Exception>();
-			IList<Sharpen.Thread> statters = new AList<Sharpen.Thread>();
+			IList<Thread> statters = new AList<Thread>();
 			for (int i = 0; i < 10; i++)
 			{
-				Sharpen.Thread statter = new _Thread_120(fos, thrown);
+				Thread statter = new _Thread_120(fos, thrown);
 				statters.AddItem(statter);
 				statter.Start();
 			}
-			foreach (Sharpen.Thread t in statters)
+			foreach (Thread t in statters)
 			{
 				t.Join();
 			}
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			}
 		}
 
-		private sealed class _Thread_120 : Sharpen.Thread
+		private sealed class _Thread_120 : Thread
 		{
 			public _Thread_120(FileOutputStream fos, AtomicReference<Exception> thrown)
 			{
@@ -346,7 +346,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 			NUnit.Framework.Assert.IsNotNull(true);
 			Assert.True(fd.Valid());
 			FileOutputStream fos = new FileOutputStream(fd);
-			fos.Write(Sharpen.Runtime.GetBytesForString("foo"));
+			fos.Write(Runtime.GetBytesForString("foo"));
 			fos.Close();
 			NUnit.Framework.Assert.IsFalse(fd.Valid());
 			Log.Info("Test exclusive create");
@@ -382,7 +382,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 				NUnit.Framework.Assert.IsNotNull(true);
 				Assert.True(fd.Valid());
 				FileOutputStream fos = new FileOutputStream(fd);
-				fos.Write(Sharpen.Runtime.GetBytesForString("foo"));
+				fos.Write(Runtime.GetBytesForString("foo"));
 				fos.Close();
 			}
 		}
@@ -470,7 +470,7 @@ namespace Org.Apache.Hadoop.IO.Nativeio
 				));
 			try
 			{
-				fos.Write(Sharpen.Runtime.GetBytesForString("foo"));
+				fos.Write(Runtime.GetBytesForString("foo"));
 				NativeIO.POSIX.Sync_file_range(fos.GetFD(), 0, 1024, NativeIO.POSIX.SyncFileRangeWrite
 					);
 			}

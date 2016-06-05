@@ -3,7 +3,7 @@ using NUnit.Framework.Rules;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Ipc;
 using Org.Hamcrest.Core;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Retry
 {

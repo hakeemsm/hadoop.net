@@ -3,7 +3,7 @@ using System.Net;
 using Javax.Naming;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -52,11 +52,11 @@ namespace Org.Apache.Hadoop.Net
 			NUnit.Framework.Assert.IsNotNull(GetLocalIPAddr());
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		private IPAddress GetLocalIPAddr()
 		{
 			string hostname = DNS.GetDefaultHost(Default);
-			IPAddress localhost = Sharpen.Extensions.GetAddressByName(hostname);
+			IPAddress localhost = Extensions.GetAddressByName(hostname);
 			return localhost;
 		}
 
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.Net
 		[Fact]
 		public virtual void TestLocalhostResolves()
 		{
-			IPAddress localhost = Sharpen.Extensions.GetAddressByName("localhost");
+			IPAddress localhost = Extensions.GetAddressByName("localhost");
 			NUnit.Framework.Assert.IsNotNull("localhost is null", localhost);
 			Log.Info("Localhost IPAddr is " + localhost.ToString());
 		}

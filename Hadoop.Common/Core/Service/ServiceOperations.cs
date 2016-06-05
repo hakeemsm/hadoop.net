@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Service
 {
@@ -142,7 +142,7 @@ namespace Org.Apache.Hadoop.Service
 				ServiceStateChangeListener[] callbacks;
 				lock (this)
 				{
-					callbacks = Sharpen.Collections.ToArray(listeners, new ServiceStateChangeListener
+					callbacks = Collections.ToArray(listeners, new ServiceStateChangeListener
 						[listeners.Count]);
 				}
 				//iterate through the listeners outside the synchronized method,

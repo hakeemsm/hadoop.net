@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.Util
 {

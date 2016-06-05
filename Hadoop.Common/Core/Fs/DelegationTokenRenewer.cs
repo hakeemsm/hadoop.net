@@ -6,12 +6,12 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
 	/// <summary>A daemon thread that waits for the next file system to renew.</summary>
-	public class DelegationTokenRenewer : Sharpen.Thread
+	public class DelegationTokenRenewer : Thread
 	{
 		private static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.FS.DelegationTokenRenewer
 			));

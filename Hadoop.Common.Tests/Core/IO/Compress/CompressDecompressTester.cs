@@ -27,7 +27,7 @@ using Org.Apache.Hadoop.IO.Compress.Snappy;
 using Org.Apache.Hadoop.IO.Compress.Zlib;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress
 {
@@ -138,7 +138,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 				));
 		}
 
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		public virtual void Test()
 		{

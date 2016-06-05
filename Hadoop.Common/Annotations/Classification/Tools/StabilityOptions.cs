@@ -17,7 +17,7 @@
 */
 using System.Collections.Generic;
 using Com.Sun.Javadoc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Classification.Tools
 {
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Classification.Tools
 
 		public static int OptionLength(string option)
 		{
-			string opt = option.ToLower(Sharpen.Extensions.GetEnglishCulture());
+			string opt = option.ToLower(Extensions.GetEnglishCulture());
 			if (opt.Equals(UnstableOption))
 			{
 				return 1;
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Classification.Tools
 		{
 			for (int i = 0; i < options.Length; i++)
 			{
-				string opt = options[i][0].ToLower(Sharpen.Extensions.GetEnglishCulture());
+				string opt = options[i][0].ToLower(Extensions.GetEnglishCulture());
 				if (opt.Equals(UnstableOption))
 				{
 					RootDocProcessor.stability = UnstableOption;
@@ -78,8 +78,8 @@ namespace Org.Apache.Hadoop.Classification.Tools
 			IList<string[]> optionsList = new AList<string[]>();
 			for (int i = 0; i < options.Length; i++)
 			{
-				if (!Sharpen.Runtime.EqualsIgnoreCase(options[i][0], UnstableOption) && !Sharpen.Runtime.EqualsIgnoreCase
-					(options[i][0], EvolvingOption) && !Sharpen.Runtime.EqualsIgnoreCase(options[i][
+				if (!Runtime.EqualsIgnoreCase(options[i][0], UnstableOption) && !Runtime.EqualsIgnoreCase
+					(options[i][0], EvolvingOption) && !Runtime.EqualsIgnoreCase(options[i][
 					0], StableOption))
 				{
 					optionsList.AddItem(options[i]);

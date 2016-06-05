@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Nfs.Nfs3;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Nfs
 {
@@ -57,15 +57,15 @@ namespace Org.Apache.Hadoop.Nfs
 
 		private const string SlashFormatLong = IpAddress + "/" + IpAddress;
 
-		private static readonly Sharpen.Pattern CidrFormatShort = Sharpen.Pattern.Compile
+		private static readonly Pattern CidrFormatShort = Pattern.Compile
 			(SlashFormatShort);
 
-		private static readonly Sharpen.Pattern CidrFormatLong = Sharpen.Pattern.Compile(
+		private static readonly Pattern CidrFormatLong = Pattern.Compile(
 			SlashFormatLong);
 
 		private const string LabelFormat = "[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?";
 
-		private static readonly Sharpen.Pattern HostnameFormat = Sharpen.Pattern.Compile(
+		private static readonly Pattern HostnameFormat = Pattern.Compile(
 			"^(" + LabelFormat + "\\.)*" + LabelFormat + "$");
 
 		internal class AccessCacheEntry : LightWeightCache.Entry
@@ -304,7 +304,7 @@ namespace Org.Apache.Hadoop.Nfs
 
 			public override bool IsIncluded(string address, string hostname)
 			{
-				if (Sharpen.Runtime.EqualsIgnoreCase(ipOrHost, address) || Sharpen.Runtime.EqualsIgnoreCase
+				if (Runtime.EqualsIgnoreCase(ipOrHost, address) || Runtime.EqualsIgnoreCase
 					(ipOrHost, hostname))
 				{
 					if (Log.IsDebugEnabled())
@@ -331,12 +331,12 @@ namespace Org.Apache.Hadoop.Nfs
 		/// <summary>Matcher where client hosts are specified by regular expression</summary>
 		private class RegexMatch : NfsExports.Match
 		{
-			private readonly Sharpen.Pattern pattern;
+			private readonly Pattern pattern;
 
 			private RegexMatch(AccessPrivilege accessPrivilege, string wildcard)
 				: base(accessPrivilege)
 			{
-				this.pattern = Sharpen.Pattern.Compile(wildcard, Sharpen.Pattern.CaseInsensitive);
+				this.pattern = Pattern.Compile(wildcard, Pattern.CaseInsensitive);
 			}
 
 			public override bool IsIncluded(string address, string hostname)
@@ -389,7 +389,7 @@ namespace Org.Apache.Hadoop.Nfs
 				{
 					host = StringUtils.ToLowerCase(parts[0]).Trim();
 					string option = parts[1].Trim();
-					if (Sharpen.Runtime.EqualsIgnoreCase("rw", option))
+					if (Runtime.EqualsIgnoreCase("rw", option))
 					{
 						privilege = AccessPrivilege.ReadWrite;
 					}

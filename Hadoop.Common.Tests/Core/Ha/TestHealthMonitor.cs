@@ -5,7 +5,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.HA
 			// Should retry several times
 			while (createProxyCount.Get() < countBefore + 3)
 			{
-				Sharpen.Thread.Sleep(10);
+				Thread.Sleep(10);
 			}
 			Log.Info("Returning to healthy state, waiting for HEALTHY");
 			svc.actUnreachable = false;
@@ -142,7 +142,7 @@ namespace Org.Apache.Hadoop.HA
 				{
 					return;
 				}
-				Sharpen.Thread.Sleep(50);
+				Thread.Sleep(50);
 			}
 			Assert.Equal(state, hm.GetHealthState());
 		}

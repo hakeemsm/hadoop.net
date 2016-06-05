@@ -3,7 +3,7 @@ using System.IO;
 using Com.Google.Common.Base;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {

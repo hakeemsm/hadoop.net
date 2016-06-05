@@ -19,7 +19,7 @@
 */
 using Org.Apache.Hadoop.Metrics;
 using Org.Apache.Hadoop.Metrics.Spi;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Ganglia
 {

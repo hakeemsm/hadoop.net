@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record
 {
@@ -325,7 +325,7 @@ namespace Org.Apache.Hadoop.Record
 			{
 				return 4;
 			}
-			throw new IOException("Illegal Unicode Codepoint " + Sharpen.Extensions.ToHexString
+			throw new IOException("Illegal Unicode Codepoint " + Extensions.ToHexString
 				(cpt) + " in string.");
 		}
 
@@ -381,7 +381,7 @@ namespace Org.Apache.Hadoop.Record
 				bytes[offset] = unchecked((byte)(B11110 | (cpt & unchecked((int)(0x07)))));
 				return 4;
 			}
-			throw new IOException("Illegal Unicode Codepoint " + Sharpen.Extensions.ToHexString
+			throw new IOException("Illegal Unicode Codepoint " + Extensions.ToHexString
 				(cpt) + " in string.");
 		}
 
@@ -490,7 +490,7 @@ namespace Org.Apache.Hadoop.Record
 							}
 							else
 							{
-								throw new IOException("Invalid UTF-8 byte " + Sharpen.Extensions.ToHexString(b1) 
+								throw new IOException("Invalid UTF-8 byte " + Extensions.ToHexString(b1) 
 									+ " at offset " + (len - 1) + " in length of " + utf8Len);
 							}
 						}
@@ -498,7 +498,7 @@ namespace Org.Apache.Hadoop.Record
 				}
 				if (!IsValidCodePoint(cpt))
 				{
-					throw new IOException("Illegal Unicode Codepoint " + Sharpen.Extensions.ToHexString
+					throw new IOException("Illegal Unicode Codepoint " + Extensions.ToHexString
 						(cpt) + " in stream.");
 				}
 				sb.AppendCodePoint(cpt);

@@ -5,7 +5,7 @@ using NUnit.Framework;
 using NUnit.Framework.Runners;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -70,7 +70,7 @@ namespace Org.Apache.Hadoop.FS
 			catch (IOException e)
 			{
 				System.Console.Out.WriteLine(e.Message);
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				System.Environment.Exit(-1);
 			}
 			// absolute path in test environment

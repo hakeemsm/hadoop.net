@@ -3,7 +3,7 @@ using NUnit.Framework.Rules;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Minikdc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {

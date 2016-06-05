@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
 	/// <summary>
 	/// A
-	/// <see cref="Sharpen.URLClassLoader"/>
+	/// <see cref="URLClassLoader"/>
 	/// for application isolation. Classes from the
 	/// application JARs are loaded in preference to the parent loader.
 	/// </summary>
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				if (element.EndsWith("/*"))
 				{
-					string dir = Sharpen.Runtime.Substring(element, 0, element.Length - 1);
+					string dir = Runtime.Substring(element, 0, element.Length - 1);
 					FilePath[] files = new FilePath(dir).ListFiles(JarFilenameFilter);
 					if (files != null)
 					{
@@ -133,7 +133,7 @@ namespace Org.Apache.Hadoop.Util
 					}
 				}
 			}
-			return Sharpen.Collections.ToArray(urls, new Uri[urls.Count]);
+			return Collections.ToArray(urls, new Uri[urls.Count]);
 		}
 
 		public override Uri GetResource(string name)
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.Util
 					{
 						Log.Debug("Remove leading / off " + name);
 					}
-					url = FindResource(Sharpen.Runtime.Substring(name, 1));
+					url = FindResource(Runtime.Substring(name, 1));
 				}
 			}
 			if (url == null)
@@ -242,14 +242,14 @@ namespace Org.Apache.Hadoop.Util
 				string canonicalName = name.Replace('/', '.');
 				while (canonicalName.StartsWith("."))
 				{
-					canonicalName = Sharpen.Runtime.Substring(canonicalName, 1);
+					canonicalName = Runtime.Substring(canonicalName, 1);
 				}
 				foreach (string c in systemClasses)
 				{
 					bool shouldInclude = true;
 					if (c.StartsWith("-"))
 					{
-						c = Sharpen.Runtime.Substring(c, 1);
+						c = Runtime.Substring(c, 1);
 						shouldInclude = false;
 					}
 					if (canonicalName.StartsWith(c))

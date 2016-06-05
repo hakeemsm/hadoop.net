@@ -1,6 +1,6 @@
 using System.Text;
 using Com.Google.Common.Annotations;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -33,8 +33,8 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 		protected internal override byte[] GenerateNewSecret()
 		{
-			return Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong())
-				, Sharpen.Extensions.GetEncoding("UTF-8"));
+			return Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong())
+				, Extensions.GetEncoding("UTF-8"));
 		}
 	}
 }

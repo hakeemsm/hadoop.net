@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		/// <returns>a sorted list of command names</returns>
 		public virtual string[] GetNames()
 		{
-			string[] names = Sharpen.Collections.ToArray(classMap.Keys, new string[0]);
+			string[] names = Collections.ToArray(classMap.Keys, new string[0]);
 			Arrays.Sort(names);
 			return names;
 		}

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Javax.Servlet;
 using Javax.Servlet.Http;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Http
 {
@@ -267,7 +267,7 @@ namespace Org.Apache.Hadoop.Security.Http
 
 			public virtual Enumeration<string> GetInitParameterNames()
 			{
-				return Sharpen.Collections.Enumeration(map.Keys);
+				return Collections.Enumeration(map.Keys);
 			}
 
 			public virtual ServletContext GetServletContext()

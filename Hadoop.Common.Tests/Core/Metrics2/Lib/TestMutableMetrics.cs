@@ -3,7 +3,7 @@ using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Util;
 using Org.Apache.Hadoop.Test;
 using Org.Mockito;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 				quantiles.Add(1001 - i);
 			}
 			long end = Runtime.NanoTime() / 1000000;
-			Sharpen.Thread.Sleep(6000 - (end - start));
+			Thread.Sleep(6000 - (end - start));
 			registry.Snapshot(mb, false);
 			// Print out the snapshot
 			IDictionary<Quantile, long> previousSnapshot = quantiles.previousSnapshot;
@@ -161,7 +161,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 				// Sleep until 1s after the next 5s interval, to let the metrics
 				// roll over
 				long sleep = (start + (5000 * i) + 1000) - (Runtime.NanoTime() / 1000000);
-				Sharpen.Thread.Sleep(sleep);
+				Thread.Sleep(sleep);
 				// Verify that the window reset, check it has the values we pushed in
 				registry.Snapshot(mb, false);
 				foreach (Quantile q in quants)
@@ -203,7 +203,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 			quantiles.Snapshot(mb, true);
 			Org.Mockito.Mockito.Verify(mb).AddGauge(Interns.Info("FooNumOps", "Number of ops for stat with 5s interval"
 				), (long)0);
-			Sharpen.Thread.Sleep(6000);
+			Thread.Sleep(6000);
 			quantiles.Snapshot(mb, false);
 			Org.Mockito.Mockito.Verify(mb, Org.Mockito.Mockito.Times(2)).AddGauge(Interns.Info
 				("FooNumOps", "Number of ops for stat with 5s interval"), (long)0);

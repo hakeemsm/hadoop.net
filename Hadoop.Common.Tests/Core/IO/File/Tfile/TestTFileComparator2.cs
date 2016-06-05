@@ -2,7 +2,7 @@ using System.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 						dos = writer.PrepareAppendValue(-1);
 						try
 						{
-							dos.Write(Sharpen.Runtime.GetBytesForString(BuildValue(i)));
+							dos.Write(Runtime.GetBytesForString(BuildValue(i)));
 						}
 						finally
 						{
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					for (; !scanner.AtEnd(); scanner.Advance())
 					{
 						scanner.Entry().GetValue(value);
-						Assert.Equal(BuildValue(i), Sharpen.Runtime.GetStringForBytes(
+						Assert.Equal(BuildValue(i), Runtime.GetStringForBytes(
 							value.GetBytes(), 0, value.GetLength()));
 						++i;
 					}

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Test
 {
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.Test
 							break;
 						}
 						CheckException();
-						Sharpen.Runtime.Wait(this, left);
+						Runtime.Wait(this, left);
 					}
 					CheckException();
 				}
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Test
 						err = t;
 					}
 					Log.Error("Failed!", err);
-					Sharpen.Runtime.Notify(this);
+					Runtime.Notify(this);
 				}
 			}
 
@@ -174,7 +174,7 @@ namespace Org.Apache.Hadoop.Test
 				lock (this)
 				{
 					finishedThreads.AddItem(t);
-					Sharpen.Runtime.Notify(this);
+					Runtime.Notify(this);
 				}
 			}
 
@@ -193,7 +193,7 @@ namespace Org.Apache.Hadoop.Test
 				CheckException();
 			}
 
-			public virtual IEnumerable<Sharpen.Thread> GetTestThreads()
+			public virtual IEnumerable<Thread> GetTestThreads()
 			{
 				return testThreads;
 			}
@@ -203,7 +203,7 @@ namespace Org.Apache.Hadoop.Test
 		/// A thread that can be added to a test context, and properly
 		/// passes exceptions through.
 		/// </summary>
-		public abstract class TestingThread : Sharpen.Thread
+		public abstract class TestingThread : Thread
 		{
 			protected internal readonly MultithreadedTestUtil.TestContext ctx;
 

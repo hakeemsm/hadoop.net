@@ -20,7 +20,7 @@ using System.IO;
 using NUnit.Framework.Internal;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Contract
 {
@@ -142,7 +142,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 				if (IsSupported(IsBlobstore))
 				{
 					// file/directory hack surfaces here
-					throw Sharpen.Extensions.InitCause(new AssumptionViolatedException(failure.ToString
+					throw Extensions.InitCause(new AssumptionViolatedException(failure.ToString
 						()), failure);
 				}
 				// else: rethrow

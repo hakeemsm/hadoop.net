@@ -1,6 +1,6 @@
 using System;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {

@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Mockito;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		internal static FileSystem mockFs;
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		[BeforeClass]
 		public static void Setup()
 		{

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security.Token;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Security
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		[Fact]
 		public virtual void TestReadWriteStorage<T>()
 			where T : TokenIdentifier

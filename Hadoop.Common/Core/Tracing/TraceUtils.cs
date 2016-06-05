@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Htrace;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tracing
 {
 	/// <summary>This class provides utility functions for tracing.</summary>
 	public class TraceUtils
 	{
-		private static IList<SpanReceiverInfo.ConfigurationPair> Empty = Sharpen.Collections
+		private static IList<SpanReceiverInfo.ConfigurationPair> Empty = Collections
 			.EmptyList();
 
 		public static HTraceConfiguration WrapHadoopConf(string prefix, Configuration conf

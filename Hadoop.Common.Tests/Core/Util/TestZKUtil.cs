@@ -4,7 +4,7 @@ using Com.Google.Common.Base;
 using Com.Google.Common.IO;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -106,11 +106,11 @@ namespace Org.Apache.Hadoop.Util
 			Assert.Equal(2, result.Count);
 			ZKUtil.ZKAuthInfo auth0 = result[0];
 			Assert.Equal("scheme", auth0.GetScheme());
-			Assert.Equal("data", Sharpen.Runtime.GetStringForBytes(auth0.GetAuth
+			Assert.Equal("data", Runtime.GetStringForBytes(auth0.GetAuth
 				()));
 			ZKUtil.ZKAuthInfo auth1 = result[1];
 			Assert.Equal("scheme2", auth1.GetScheme());
-			Assert.Equal("user:pass", Sharpen.Runtime.GetStringForBytes(auth1
+			Assert.Equal("user:pass", Runtime.GetStringForBytes(auth1
 				.GetAuth()));
 		}
 

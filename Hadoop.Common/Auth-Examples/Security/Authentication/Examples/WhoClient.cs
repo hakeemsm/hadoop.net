@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using Org.Apache.Hadoop.Security.Authentication.Client;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Examples
 {
@@ -29,7 +29,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Examples
 				if (conn.GetResponseCode() == HttpURLConnection.HttpOk)
 				{
 					BufferedReader reader = new BufferedReader(new InputStreamReader(conn.GetInputStream
-						(), Sharpen.Extensions.GetEncoding("UTF-8")));
+						(), Extensions.GetEncoding("UTF-8")));
 					string line = reader.ReadLine();
 					while (line != null)
 					{

@@ -1,7 +1,7 @@
 using System;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Service
 {
@@ -346,7 +346,7 @@ namespace Org.Apache.Hadoop.Service
 			long start = Runtime.CurrentTimeMillis();
 			lock (listener)
 			{
-				Sharpen.Runtime.Wait(listener, 20000);
+				Runtime.Wait(listener, 20000);
 			}
 			long duration = Runtime.CurrentTimeMillis() - start;
 			Assert.Equal(Service.STATE.Stopped, listener.notifyingState);
@@ -407,7 +407,7 @@ namespace Org.Apache.Hadoop.Service
 				lock (this)
 				{
 					notifyingState = service.GetServiceState();
-					Sharpen.Runtime.NotifyAll(this);
+					Runtime.NotifyAll(this);
 				}
 			}
 		}
@@ -426,7 +426,7 @@ namespace Org.Apache.Hadoop.Service
 			/// <exception cref="System.Exception"/>
 			protected internal override void ServiceStart()
 			{
-				new Sharpen.Thread(this).Start();
+				new Thread(this).Start();
 				base.ServiceStart();
 			}
 
@@ -434,7 +434,7 @@ namespace Org.Apache.Hadoop.Service
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(timeout);
+					Thread.Sleep(timeout);
 				}
 				catch (Exception)
 				{

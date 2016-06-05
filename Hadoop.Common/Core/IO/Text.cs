@@ -26,7 +26,7 @@ namespace Hadoop.Common.Core.IO
 		    protected override Encoding InitialValue()
 			{
                 
-				return Sharpen.Extensions.GetEncoding("UTF-8").NewEncoder().OnMalformedInput(CodingErrorAction
+				return Extensions.GetEncoding("UTF-8").NewEncoder().OnMalformedInput(CodingErrorAction
 					.Report).OnUnmappableCharacter(CodingErrorAction.Report);
 			}
 		}
@@ -41,7 +41,7 @@ namespace Hadoop.Common.Core.IO
 
 			protected override CharsetDecoder InitialValue()
 			{
-				return Sharpen.Extensions.GetEncoding("UTF-8").NewDecoder().OnMalformedInput(CodingErrorAction
+				return Extensions.GetEncoding("UTF-8").NewDecoder().OnMalformedInput(CodingErrorAction
 					.Report).OnUnmappableCharacter(CodingErrorAction.Report);
 			}
 		}
@@ -220,7 +220,7 @@ namespace Hadoop.Common.Core.IO
 			{
 				// not found
 				// can't get here
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				return -1;
 			}
 		}
@@ -452,13 +452,13 @@ namespace Hadoop.Common.Core.IO
 		/// UTF-8 encoding. If the input is malformed,
 		/// replace by a default value.
 		/// </remarks>
-		/// <exception cref="Sharpen.CharacterCodingException"/>
+		/// <exception cref="CharacterCodingException"/>
 		public static string Decode(byte[] utf8)
 		{
 			return Decode(ByteBuffer.Wrap(utf8), true);
 		}
 
-		/// <exception cref="Sharpen.CharacterCodingException"/>
+		/// <exception cref="CharacterCodingException"/>
 		public static string Decode(byte[] utf8, int start, int length)
 		{
 			return Decode(ByteBuffer.Wrap(utf8, start, length), true);
@@ -475,13 +475,13 @@ namespace Hadoop.Common.Core.IO
 		/// substitution character, which is U+FFFD. Otherwise the
 		/// method throws a MalformedInputException.
 		/// </remarks>
-		/// <exception cref="Sharpen.CharacterCodingException"/>
+		/// <exception cref="CharacterCodingException"/>
 		public static string Decode(byte[] utf8, int start, int length, bool replace)
 		{
 			return Decode(ByteBuffer.Wrap(utf8, start, length), replace);
 		}
 
-		/// <exception cref="Sharpen.CharacterCodingException"/>
+		/// <exception cref="CharacterCodingException"/>
 		private static string Decode(ByteBuffer utf8, bool replace)
 		{
 			CharsetDecoder decoder = DecoderFactory.Get();
@@ -513,7 +513,7 @@ namespace Hadoop.Common.Core.IO
 		/// ByteBuffer: bytes stores at ByteBuffer.array()
 		/// and length is ByteBuffer.limit()
 		/// </returns>
-		/// <exception cref="Sharpen.CharacterCodingException"/>
+		/// <exception cref="CharacterCodingException"/>
 		public static ByteBuffer Encode(string @string)
 		{
 			return Encode(@string, true);
@@ -534,7 +534,7 @@ namespace Hadoop.Common.Core.IO
 		/// ByteBuffer: bytes stores at ByteBuffer.array()
 		/// and length is ByteBuffer.limit()
 		/// </returns>
-		/// <exception cref="Sharpen.CharacterCodingException"/>
+		/// <exception cref="CharacterCodingException"/>
 		public static ByteBuffer Encode(string @string, bool replace)
 		{
 			CharsetEncoder encoder = EncoderFactory.Get();
@@ -607,7 +607,7 @@ namespace Hadoop.Common.Core.IO
 		////// states for validateUTF8
 		/// <summary>Check if a byte array contains valid utf-8</summary>
 		/// <param name="utf8">byte array</param>
-		/// <exception cref="Sharpen.MalformedInputException">if the byte array contains invalid utf-8
+		/// <exception cref="MalformedInputException">if the byte array contains invalid utf-8
 		/// 	</exception>
 		public static void ValidateUTF8(byte[] utf8)
 		{
@@ -618,7 +618,7 @@ namespace Hadoop.Common.Core.IO
 		/// <param name="utf8">the array of bytes</param>
 		/// <param name="start">the offset of the first byte in the array</param>
 		/// <param name="len">the length of the byte sequence</param>
-		/// <exception cref="Sharpen.MalformedInputException">if the byte array contains invalid bytes
+		/// <exception cref="MalformedInputException">if the byte array contains invalid bytes
 		/// 	</exception>
 		public static void ValidateUTF8(byte[] utf8, int start, int len)
 		{

@@ -1,13 +1,13 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
 	/// <summary>
 	/// A thread that has called
-	/// <see cref="Sharpen.Thread.SetDaemon(bool)"></see>
+	/// <see cref="Thread.SetDaemon(bool)"></see>
 	/// with true.
 	/// </summary>
-	public class Daemon : Sharpen.Thread
+	public class Daemon : Thread
 	{
 		/// <summary>
 		/// Provide a factory for named daemon threads,
@@ -16,7 +16,7 @@ namespace Org.Apache.Hadoop.Util
 		public class DaemonFactory : Daemon, ThreadFactory
 		{
 			// always a daemon
-			public virtual Sharpen.Thread NewThread(Runnable runnable)
+			public virtual Thread NewThread(Runnable runnable)
 			{
 				return new Daemon(runnable);
 			}

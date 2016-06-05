@@ -5,8 +5,8 @@ using System.Net.Sockets;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
-using Sharpen.File;
+
+using File;
 
 namespace Org.Apache.Hadoop.IO
 {

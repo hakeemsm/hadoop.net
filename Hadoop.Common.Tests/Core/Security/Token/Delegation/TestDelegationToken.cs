@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation
 {
@@ -275,7 +275,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				Assert.True(null != dtSecretManager.RetrievePassword(identifier
 					));
 				Log.Info("Sleep to expire the token");
-				Sharpen.Thread.Sleep(2000);
+				Thread.Sleep(2000);
 				//Token should be expired
 				try
 				{
@@ -289,7 +289,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				//Success
 				dtSecretManager.RenewToken(token, "JobTracker");
 				Log.Info("Sleep beyond the max lifetime");
-				Sharpen.Thread.Sleep(2000);
+				Thread.Sleep(2000);
 				ShouldThrow(new _PrivilegedExceptionAction_302(dtSecretManager, token), typeof(SecretManager.InvalidToken
 					));
 			}
@@ -452,7 +452,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				// wait for keys to expire
 				while (!dtSecretManager.isRemoveStoredMasterKeyCalled)
 				{
-					Sharpen.Thread.Sleep(200);
+					Thread.Sleep(200);
 				}
 			}
 			finally
@@ -506,7 +506,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				dtSecretManager.StartThreads();
 				int numThreads = 100;
 				int numTokensPerThread = 100;
-				Sharpen.Thread[] issuers = new Sharpen.Thread[numThreads];
+				Thread[] issuers = new Thread[numThreads];
 				for (int i = 0; i < numThreads; i++)
 				{
 					issuers[i] = new Daemon(new _T1720540651(this));
@@ -552,7 +552,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 					this._enclosing.GenerateDelegationToken(dtSecretManager, "auser", "arenewer");
 					try
 					{
-						Sharpen.Thread.Sleep(250);
+						Thread.Sleep(250);
 					}
 					catch (Exception)
 					{
@@ -648,11 +648,11 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		[Fact]
 		public virtual void TestDelegationKeyEqualAndHash()
 		{
-			DelegationKey key1 = new DelegationKey(1111, 2222, Sharpen.Runtime.GetBytesForString
+			DelegationKey key1 = new DelegationKey(1111, 2222, Runtime.GetBytesForString
 				("keyBytes"));
-			DelegationKey key2 = new DelegationKey(1111, 2222, Sharpen.Runtime.GetBytesForString
+			DelegationKey key2 = new DelegationKey(1111, 2222, Runtime.GetBytesForString
 				("keyBytes"));
-			DelegationKey key3 = new DelegationKey(3333, 2222, Sharpen.Runtime.GetBytesForString
+			DelegationKey key3 = new DelegationKey(3333, 2222, Runtime.GetBytesForString
 				("keyBytes"));
 			Assert.Equal(key1, key2);
 			NUnit.Framework.Assert.IsFalse(key2.Equals(key3));

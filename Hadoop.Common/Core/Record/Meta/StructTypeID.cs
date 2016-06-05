@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Org.Apache.Hadoop.Record;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Meta
 {
@@ -21,7 +21,7 @@ namespace Org.Apache.Hadoop.Record.Meta
 		public StructTypeID(RecordTypeInfo rti)
 			: base(TypeID.RIOType.Struct)
 		{
-			Sharpen.Collections.AddAll(typeInfos, rti.GetFieldTypeInfos());
+			Collections.AddAll(typeInfos, rti.GetFieldTypeInfos());
 		}
 
 		internal virtual void Add(FieldTypeInfo ti)

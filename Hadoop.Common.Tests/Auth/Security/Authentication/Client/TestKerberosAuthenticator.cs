@@ -5,7 +5,7 @@ using NUnit.Framework.Runners;
 using Org.Apache.Hadoop.Minikdc;
 using Org.Apache.Hadoop.Security.Authentication;
 using Org.Apache.Hadoop.Security.Authentication.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Client
 {
@@ -33,9 +33,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 			FilePath keytabFile = new FilePath(KerberosTestUtils.GetKeytabFile());
 			string clientPrincipal = KerberosTestUtils.GetClientPrincipal();
 			string serverPrincipal = KerberosTestUtils.GetServerPrincipal();
-			clientPrincipal = Sharpen.Runtime.Substring(clientPrincipal, 0, clientPrincipal.LastIndexOf
+			clientPrincipal = Runtime.Substring(clientPrincipal, 0, clientPrincipal.LastIndexOf
 				("@"));
-			serverPrincipal = Sharpen.Runtime.Substring(serverPrincipal, 0, serverPrincipal.LastIndexOf
+			serverPrincipal = Runtime.Substring(serverPrincipal, 0, serverPrincipal.LastIndexOf
 				("@"));
 			GetKdc().CreatePrincipal(keytabFile, clientPrincipal, serverPrincipal);
 		}

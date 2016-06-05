@@ -8,8 +8,8 @@ using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
 using Org.Mockito;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -355,7 +355,7 @@ namespace Org.Apache.Hadoop.FS
 		[Fact]
 		public virtual void TestFilterFileSystem()
 		{
-			foreach (MethodInfo m in Sharpen.Runtime.GetDeclaredMethods(typeof(FileSystem)))
+			foreach (MethodInfo m in Runtime.GetDeclaredMethods(typeof(FileSystem)))
 			{
 				if (Modifier.IsStatic(m.GetModifiers()))
 				{
@@ -371,7 +371,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				try
 				{
-					typeof(TestFilterFileSystem.DontCheck).GetMethod(m.Name, Sharpen.Runtime.GetParameterTypes
+					typeof(TestFilterFileSystem.DontCheck).GetMethod(m.Name, Runtime.GetParameterTypes
 						(m));
 					Log.Info("Skipping " + m);
 				}
@@ -380,7 +380,7 @@ namespace Org.Apache.Hadoop.FS
 					Log.Info("Testing " + m);
 					try
 					{
-						Sharpen.Runtime.GetDeclaredMethod(typeof(FilterFileSystem), m.Name, Sharpen.Runtime.GetParameterTypes
+						Runtime.GetDeclaredMethod(typeof(FilterFileSystem), m.Name, Runtime.GetParameterTypes
 							(m));
 					}
 					catch (MissingMethodException exc2)

@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Nativeio
 {

@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -10,7 +10,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 	/// range of bytes in a byte array, such as
 	/// <see cref="System.IComparable{T}"/>
 	/// or
-	/// <see cref="Sharpen.Collections.BinarySearch{T}(System.Collections.Generic.IList{E}, object, System.Collections.Generic.IComparer{T})
+	/// <see cref="Collections.BinarySearch{T}(System.Collections.Generic.IList{E}, object, System.Collections.Generic.IComparer{T})
 	/// 	"/>
 	/// The actual comparison among RawComparable's requires an external
 	/// RawComparator and it is applications' responsibility to ensure two

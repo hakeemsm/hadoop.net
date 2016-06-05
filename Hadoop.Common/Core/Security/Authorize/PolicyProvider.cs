@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authorize
 {
@@ -8,7 +8,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 	/// <see cref="Service"/>
 	/// definitions to the
 	/// security
-	/// <see cref="Sharpen.Policy"/>
+	/// <see cref="Policy"/>
 	/// in effect for Hadoop.
 	/// </summary>
 	public abstract class PolicyProvider

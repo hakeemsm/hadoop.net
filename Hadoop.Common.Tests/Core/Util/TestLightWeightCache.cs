@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.Util
 
 		static TestLightWeightCache()
 		{
-			Println("Start time = " + Sharpen.Extensions.CreateDate(starttime) + ", seed=" + 
+			Println("Start time = " + Extensions.CreateDate(starttime) + ", seed=" + 
 				seed);
 		}
 
@@ -237,7 +237,7 @@ namespace Org.Apache.Hadoop.Util
 				, long accessExpirationPeriod, int datasize, int modulus)
 			{
 				denominator = Math.Min((datasize >> 7) + 1, 1 << 16);
-				info = GetType().Name + "(" + Sharpen.Extensions.CreateDate(starttime) + "): tablelength="
+				info = GetType().Name + "(" + Extensions.CreateDate(starttime) + "): tablelength="
 					 + tablelength + ", creationExpirationPeriod=" + creationExpirationPeriod + ", accessExpirationPeriod="
 					 + accessExpirationPeriod + ", datasize=" + datasize + ", modulus=" + modulus + 
 					", denominator=" + denominator;

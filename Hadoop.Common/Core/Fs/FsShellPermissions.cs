@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.FS.Shell;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -107,7 +107,7 @@ namespace Org.Apache.Hadoop.FS
 				 + "Linux allows it. If user names have dots in them and you are " + "using local file system, you might see surprising results since "
 				 + "the shell command 'chown' is used for local files.";
 
-			private static readonly Sharpen.Pattern chownPattern = Sharpen.Pattern.Compile("^\\s*("
+			private static readonly Pattern chownPattern = Pattern.Compile("^\\s*("
 				 + allowedChars + "+)?([:](" + allowedChars + "*))?\\s*$");
 
 			protected internal string owner = null;
@@ -180,7 +180,7 @@ namespace Org.Apache.Hadoop.FS
 
 			public const string Description = "This is equivalent to -chown ... :GROUP ...";
 
-			private static readonly Sharpen.Pattern chgrpPattern = Sharpen.Pattern.Compile("^\\s*("
+			private static readonly Pattern chgrpPattern = Pattern.Compile("^\\s*("
 				 + allowedChars + "+)\\s*$");
 
 			protected internal override void ParseOwnerGroup(string groupStr)

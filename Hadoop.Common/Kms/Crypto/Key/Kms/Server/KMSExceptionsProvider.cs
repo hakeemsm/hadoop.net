@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Util;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -35,7 +35,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				int i = message.IndexOf(Enter);
 				if (i > -1)
 				{
-					message = Sharpen.Runtime.Substring(message, 0, i);
+					message = Runtime.Substring(message, 0, i);
 				}
 			}
 			return message;

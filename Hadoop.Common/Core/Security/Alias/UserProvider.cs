@@ -6,7 +6,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Alias
 {
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			{
 				throw new IOException("Credential " + name + " already exists in " + this);
 			}
-			credentials.AddSecretKey(new Text(name), Sharpen.Runtime.GetBytesForString(new string
+			credentials.AddSecretKey(new Text(name), Runtime.GetBytesForString(new string
 				(credential), "UTF-8"));
 			return new CredentialProvider.CredentialEntry(name, credential);
 		}

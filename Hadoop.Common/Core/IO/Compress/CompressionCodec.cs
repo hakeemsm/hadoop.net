@@ -19,7 +19,7 @@ using System;
 using System.IO;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress
 {

@@ -1,7 +1,7 @@
 using System.IO;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {

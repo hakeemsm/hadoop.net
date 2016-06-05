@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Org.Apache.Commons.Net.Ftp;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {

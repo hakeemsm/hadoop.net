@@ -7,7 +7,7 @@ using Com.Google.Common.Collect;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Conf
 {
@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.Conf
 		private ReconfigurationUtil reconfigurationUtil = new ReconfigurationUtil();
 
 		/// <summary>Background thread to reload configuration.</summary>
-		private Sharpen.Thread reconfigThread = null;
+		private Thread reconfigThread = null;
 
 		private volatile bool shouldRun = true;
 
@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.Conf
 		}
 
 		/// <summary>A background thread to apply configuration changes.</summary>
-		private class ReconfigurationThread : Sharpen.Thread
+		private class ReconfigurationThread : Thread
 		{
 			private ReconfigurableBase parent;
 
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.Conf
 				lock (this.parent.reconfigLock)
 				{
 					this.parent.endTime = Time.Now();
-					this.parent.status = Sharpen.Collections.UnmodifiableMap(results);
+					this.parent.status = Collections.UnmodifiableMap(results);
 					this.parent.reconfigThread = null;
 				}
 			}
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.Conf
 
 		public virtual void ShutdownReconfigurationTask()
 		{
-			Sharpen.Thread tempThread;
+			Thread tempThread;
 			lock (reconfigLock)
 			{
 				shouldRun = false;

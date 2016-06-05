@@ -6,7 +6,7 @@ using Javax.Servlet.Http;
 using Javax.WS.RS.Core;
 using NUnit.Framework;
 using Org.Codehaus.Jackson.Map;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -46,8 +46,8 @@ namespace Org.Apache.Hadoop.Util
 				.InternalServerError, ex);
 			Assert.Equal(Response.Status.InternalServerError.GetStatusCode
 				(), response.GetStatus());
-			Assert.AssertArrayEquals(Sharpen.Collections.ToArray(Arrays.AsList(MediaType.ApplicationJsonType
-				)), Sharpen.Collections.ToArray(response.GetMetadata()["Content-Type"]));
+			Assert.AssertArrayEquals(Collections.ToArray(Arrays.AsList(MediaType.ApplicationJsonType
+				)), Collections.ToArray(response.GetMetadata()["Content-Type"]));
 			IDictionary entity = (IDictionary)response.GetEntity();
 			entity = (IDictionary)entity[HttpExceptionUtils.ErrorJson];
 			Assert.Equal(typeof(IOException).FullName, entity[HttpExceptionUtils
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Util
 		public virtual void TestValidateResponseNonJsonErrorMessage()
 		{
 			string msg = "stream";
-			InputStream @is = new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString(msg)
+			InputStream @is = new ByteArrayInputStream(Runtime.GetBytesForString(msg)
 				);
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
 			Org.Mockito.Mockito.When(conn.GetErrorStream()).ThenReturn(@is);
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.Util
 			response[HttpExceptionUtils.ErrorJson] = json;
 			ObjectMapper jsonMapper = new ObjectMapper();
 			string msg = jsonMapper.WriteValueAsString(response);
-			InputStream @is = new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString(msg)
+			InputStream @is = new ByteArrayInputStream(Runtime.GetBytesForString(msg)
 				);
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
 			Org.Mockito.Mockito.When(conn.GetErrorStream()).ThenReturn(@is);
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.Util
 			response[HttpExceptionUtils.ErrorJson] = json;
 			ObjectMapper jsonMapper = new ObjectMapper();
 			string msg = jsonMapper.WriteValueAsString(response);
-			InputStream @is = new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString(msg)
+			InputStream @is = new ByteArrayInputStream(Runtime.GetBytesForString(msg)
 				);
 			HttpURLConnection conn = Org.Mockito.Mockito.Mock<HttpURLConnection>();
 			Org.Mockito.Mockito.When(conn.GetErrorStream()).ThenReturn(@is);

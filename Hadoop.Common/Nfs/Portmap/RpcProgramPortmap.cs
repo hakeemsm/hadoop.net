@@ -5,7 +5,7 @@ using Org.Jboss.Netty.Buffer;
 using Org.Jboss.Netty.Channel;
 using Org.Jboss.Netty.Channel.Group;
 using Org.Jboss.Netty.Handler.Timeout;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Portmap
 {
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Portmap
 			{
 				Log.Debug("Portmap remove key=" + key);
 			}
-			Sharpen.Collections.Remove(map, key);
+			Collections.Remove(map, key);
 			return PortmapResponse.BooleanReply(@out, xid, true);
 		}
 
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.Portmap
 		/// </remarks>
 		private XDR Dump(int xid, XDR @in, XDR @out)
 		{
-			PortmapMapping[] pmapList = Sharpen.Collections.ToArray(map.Values, new PortmapMapping
+			PortmapMapping[] pmapList = Collections.ToArray(map.Values, new PortmapMapping
 				[0]);
 			return PortmapResponse.PmapList(@out, xid, pmapList);
 		}

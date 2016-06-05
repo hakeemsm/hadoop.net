@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			catch (Exception e)
 			{
 				// noop, expecting exceptions
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 		}
 
@@ -85,7 +85,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			catch (Exception e)
 			{
 				// noop, expecting exceptions
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 		}
 
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			catch (Exception e)
 			{
 				// noop, expecting exceptions
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 		}
 

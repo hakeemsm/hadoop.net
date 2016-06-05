@@ -2,7 +2,7 @@ using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
 using Org.Apache.Commons.IO;
 using Org.Jboss.Netty.Buffer;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Oncrpc
 {
@@ -169,7 +169,7 @@ namespace Org.Apache.Hadoop.Oncrpc
 
 		public void WriteString(string s)
 		{
-			WriteVariableOpaque(Sharpen.Runtime.GetBytesForString(s, Charsets.Utf8));
+			WriteVariableOpaque(Runtime.GetBytesForString(s, Charsets.Utf8));
 		}
 
 		private void WritePadding()

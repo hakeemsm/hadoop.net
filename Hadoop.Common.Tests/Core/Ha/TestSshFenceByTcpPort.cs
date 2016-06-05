@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Org.Apache.Commons.Logging.Impl;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -23,7 +23,7 @@ namespace Org.Apache.Hadoop.HA
 		private static readonly string TestKeyfile = Runtime.GetProperty("test.TestSshFenceByTcpPort.key"
 			);
 
-		private static readonly IPEndPoint TestAddr = new IPEndPoint(TestFencingHost, Sharpen.Extensions.ValueOf
+		private static readonly IPEndPoint TestAddr = new IPEndPoint(TestFencingHost, Extensions.ValueOf
 			(TestFencingPort));
 
 		private static readonly HAServiceTarget TestTarget = new DummyHAService(HAServiceProtocol.HAServiceState

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Com.Google.Common.Collect;
 using Javax.Management;
 using Org.Apache.Hadoop.Metrics2;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -99,7 +99,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			MetricsSystemImpl.Log.Debug(attrs);
 			MBeanAttributeInfo[] attrsArray = new MBeanAttributeInfo[attrs.Count];
-			return new MBeanInfo(name, description, Sharpen.Collections.ToArray(attrs, attrsArray
+			return new MBeanInfo(name, description, Collections.ToArray(attrs, attrsArray
 				), null, null, null);
 		}
 		// no ops/ctors/notifications

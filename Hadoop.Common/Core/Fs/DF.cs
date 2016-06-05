@@ -5,7 +5,7 @@ using Com.Google.Common.Annotations;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			if (Shell.Windows)
 			{
-				this.filesystem = Sharpen.Runtime.Substring(dirFile.GetCanonicalPath(), 0, 2);
+				this.filesystem = Runtime.Substring(dirFile.GetCanonicalPath(), 0, 2);
 				return this.filesystem;
 			}
 			else
@@ -110,7 +110,7 @@ namespace Org.Apache.Hadoop.FS
 			if (Shell.Windows)
 			{
 				// Assume a drive letter for a mount point
-				this.mount = Sharpen.Runtime.Substring(dirFile.GetCanonicalPath(), 0, 2);
+				this.mount = Runtime.Substring(dirFile.GetCanonicalPath(), 0, 2);
 			}
 			else
 			{

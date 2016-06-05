@@ -5,7 +5,7 @@ using Com.Google.Common.Annotations;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.FS
 			try
 			{
 				long length = long.Parse(tokens.NextToken());
-				bool isDir = Sharpen.Runtime.EqualsIgnoreCase(tokens.NextToken(), "directory") ? 
+				bool isDir = Runtime.EqualsIgnoreCase(tokens.NextToken(), "directory") ? 
 					true : false;
 				// Convert from seconds to milliseconds
 				long modTime = long.Parse(tokens.NextToken()) * 1000;
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.FS
 				if (octalPerms.Length > 4)
 				{
 					int len = octalPerms.Length;
-					octalPerms = Sharpen.Runtime.Substring(octalPerms, len - 4, len);
+					octalPerms = Runtime.Substring(octalPerms, len - 4, len);
 				}
 				FsPermission perms = new FsPermission(short.ParseShort(octalPerms, 8));
 				string owner = tokens.NextToken();
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.FS
 				try
 				{
 					string target = parts[1];
-					target = Sharpen.Runtime.Substring(target, 1, target.Length - 1);
+					target = Runtime.Substring(target, 1, target.Length - 1);
 					if (!target.IsEmpty())
 					{
 						symlink = new Path(target);

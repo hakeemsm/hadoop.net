@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Crypto.Key;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms
 {
@@ -178,7 +178,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public virtual KeyProviderCryptoExtension.EncryptedKeyVersion GenerateEncryptedKey
 			(string encryptionKeyName)
 		{
@@ -201,7 +201,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public KeyProviderCryptoExtension.EncryptedKeyVersion Call(KMSClientProvider provider
 				)
 			{
@@ -212,7 +212,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		public virtual KeyProvider.KeyVersion DecryptEncryptedKey(KeyProviderCryptoExtension.EncryptedKeyVersion
 			 encryptedKeyVersion)
 		{
@@ -236,7 +236,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public KeyProvider.KeyVersion Call(KMSClientProvider provider)
 			{
 				return provider.DecryptEncryptedKey(encryptedKeyVersion);
@@ -411,7 +411,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			private readonly KeyProvider.Options options;
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion CreateKey(string name, KeyProvider.Options
 			 options)
@@ -436,7 +436,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+			/// <exception cref="NoSuchAlgorithmException"/>
 			public KeyProvider.KeyVersion Call(KMSClientProvider provider)
 			{
 				return provider.CreateKey(name, options);
@@ -498,7 +498,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			private readonly byte[] material;
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion RollNewVersion(string name)
 		{
@@ -521,7 +521,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+			/// <exception cref="NoSuchAlgorithmException"/>
 			public KeyProvider.KeyVersion Call(KMSClientProvider provider)
 			{
 				return provider.RollNewVersion(name);
@@ -566,8 +566,8 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms
 		private static KMSClientProvider[] Shuffle(KMSClientProvider[] providers)
 		{
 			IList<KMSClientProvider> list = Arrays.AsList(providers);
-			Sharpen.Collections.Shuffle(list);
-			return Sharpen.Collections.ToArray(list, providers);
+			Collections.Shuffle(list);
+			return Collections.ToArray(list, providers);
 		}
 	}
 }

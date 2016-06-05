@@ -1,5 +1,5 @@
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Hash
 {
@@ -37,36 +37,36 @@ namespace Org.Apache.Hadoop.Util.Hash
 			NUnit.Framework.Assert.IsNull("testHash error invalid getInstance !!!", Org.Apache.Hadoop.Util.Hash.Hash
 				.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash.InvalidHash));
 			int murmurHash = Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-				.MurmurHash).Hash(Sharpen.Runtime.GetBytesForString(Line));
+				.MurmurHash).Hash(Runtime.GetBytesForString(Line));
 			for (int i = 0; i < iterations; i++)
 			{
 				Assert.True("multiple evaluation murmur hash error !!!", murmurHash
 					 == Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-					.MurmurHash).Hash(Sharpen.Runtime.GetBytesForString(Line)));
+					.MurmurHash).Hash(Runtime.GetBytesForString(Line)));
 			}
 			murmurHash = Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-				.MurmurHash).Hash(Sharpen.Runtime.GetBytesForString(Line), 67);
+				.MurmurHash).Hash(Runtime.GetBytesForString(Line), 67);
 			for (int i_1 = 0; i_1 < iterations; i_1++)
 			{
 				Assert.True("multiple evaluation murmur hash error !!!", murmurHash
 					 == Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-					.MurmurHash).Hash(Sharpen.Runtime.GetBytesForString(Line), 67));
+					.MurmurHash).Hash(Runtime.GetBytesForString(Line), 67));
 			}
 			int jenkinsHash = Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-				.JenkinsHash).Hash(Sharpen.Runtime.GetBytesForString(Line));
+				.JenkinsHash).Hash(Runtime.GetBytesForString(Line));
 			for (int i_2 = 0; i_2 < iterations; i_2++)
 			{
 				Assert.True("multiple evaluation jenkins hash error !!!", jenkinsHash
 					 == Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-					.JenkinsHash).Hash(Sharpen.Runtime.GetBytesForString(Line)));
+					.JenkinsHash).Hash(Runtime.GetBytesForString(Line)));
 			}
 			jenkinsHash = Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-				.JenkinsHash).Hash(Sharpen.Runtime.GetBytesForString(Line), 67);
+				.JenkinsHash).Hash(Runtime.GetBytesForString(Line), 67);
 			for (int i_3 = 0; i_3 < iterations; i_3++)
 			{
 				Assert.True("multiple evaluation jenkins hash error !!!", jenkinsHash
 					 == Org.Apache.Hadoop.Util.Hash.Hash.GetInstance(Org.Apache.Hadoop.Util.Hash.Hash
-					.JenkinsHash).Hash(Sharpen.Runtime.GetBytesForString(Line), 67));
+					.JenkinsHash).Hash(Runtime.GetBytesForString(Line), 67));
 			}
 		}
 	}

@@ -7,7 +7,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Serializer;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			try
 			{
-				byte[] bytes = Base64.DecodeBase64(Sharpen.Runtime.GetBytesForString(str, "UTF-8"
+				byte[] bytes = Base64.DecodeBase64(Runtime.GetBytesForString(str, "UTF-8"
 					));
 				inBuf.Reset(bytes, bytes.Length);
 				T restored = deserializer.Deserialize(null);

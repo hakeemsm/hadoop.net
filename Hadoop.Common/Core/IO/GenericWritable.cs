@@ -5,7 +5,7 @@ using Hadoop.Common.Core.IO;
 using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -106,7 +106,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				throw new IOException("Cannot initialize the class: " + clazz);
 			}
 			instance.ReadFields(@in);

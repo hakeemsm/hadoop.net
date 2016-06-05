@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.Security
 				{
 					try
 					{
-						Sharpen.Thread.Sleep(getGroupsDelayMs);
+						Thread.Sleep(getGroupsDelayMs);
 					}
 					catch (Exception e)
 					{
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Security
 			public override void CacheGroupsAdd(IList<string> groups)
 			{
 				Log.Info("Adding " + groups + " to groups.");
-				Sharpen.Collections.AddAll(allGroups, groups);
+				Collections.AddAll(allGroups, groups);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
@@ -342,17 +342,17 @@ namespace Org.Apache.Hadoop.Security
 			groups.Refresh();
 			TestGroupsCaching.FakeGroupMapping.ClearBlackList();
 			TestGroupsCaching.FakeGroupMapping.SetGetGroupsDelayMs(100);
-			AList<Sharpen.Thread> threads = new AList<Sharpen.Thread>();
+			AList<Thread> threads = new AList<Thread>();
 			for (int i = 0; i < 10; i++)
 			{
 				threads.AddItem(new _Thread_337(groups));
 			}
 			// We start a bunch of threads who all see no cached value
-			foreach (Sharpen.Thread t in threads)
+			foreach (Thread t in threads)
 			{
 				t.Start();
 			}
-			foreach (Sharpen.Thread t_1 in threads)
+			foreach (Thread t_1 in threads)
 			{
 				t_1.Join();
 			}
@@ -361,7 +361,7 @@ namespace Org.Apache.Hadoop.Security
 				());
 		}
 
-		private sealed class _Thread_337 : Sharpen.Thread
+		private sealed class _Thread_337 : Thread
 		{
 			public _Thread_337(Groups groups)
 			{
@@ -399,18 +399,18 @@ namespace Org.Apache.Hadoop.Security
 			int startingRequestCount = TestGroupsCaching.FakeGroupMapping.GetRequestCount();
 			// Then expire that entry
 			timer.Advance(400 * 1000);
-			Sharpen.Thread.Sleep(100);
-			AList<Sharpen.Thread> threads = new AList<Sharpen.Thread>();
+			Thread.Sleep(100);
+			AList<Thread> threads = new AList<Thread>();
 			for (int i = 0; i < 10; i++)
 			{
 				threads.AddItem(new _Thread_382(groups));
 			}
 			// We start a bunch of threads who all see the cached value
-			foreach (Sharpen.Thread t in threads)
+			foreach (Thread t in threads)
 			{
 				t.Start();
 			}
-			foreach (Sharpen.Thread t_1 in threads)
+			foreach (Thread t_1 in threads)
 			{
 				t_1.Join();
 			}
@@ -419,7 +419,7 @@ namespace Org.Apache.Hadoop.Security
 				.GetRequestCount());
 		}
 
-		private sealed class _Thread_382 : Sharpen.Thread
+		private sealed class _Thread_382 : Thread
 		{
 			public _Thread_382(Groups groups)
 			{

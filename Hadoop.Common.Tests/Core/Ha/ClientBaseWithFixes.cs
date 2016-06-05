@@ -10,7 +10,7 @@ using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Server;
 using Org.Apache.Zookeeper.Server.Persistence;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -105,13 +105,13 @@ namespace Org.Apache.Hadoop.HA
 						() == Watcher.Event.KeeperState.ConnectedReadOnly)
 					{
 						connected = true;
-						Sharpen.Runtime.NotifyAll(this);
+						Runtime.NotifyAll(this);
 						clientConnected.CountDown();
 					}
 					else
 					{
 						connected = false;
-						Sharpen.Runtime.NotifyAll(this);
+						Runtime.NotifyAll(this);
 					}
 				}
 			}
@@ -125,7 +125,7 @@ namespace Org.Apache.Hadoop.HA
 			}
 
 			/// <exception cref="System.Exception"/>
-			/// <exception cref="Sharpen.TimeoutException"/>
+			/// <exception cref="TimeoutException"/>
 			[VisibleForTesting]
 			public virtual void WaitForConnected(long timeout)
 			{
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.HA
 					long left = timeout;
 					while (!connected && left > 0)
 					{
-						Sharpen.Runtime.Wait(this, left);
+						Runtime.Wait(this, left);
 						left = expire - Time.Now();
 					}
 					if (!connected)
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.HA
 			}
 
 			/// <exception cref="System.Exception"/>
-			/// <exception cref="Sharpen.TimeoutException"/>
+			/// <exception cref="TimeoutException"/>
 			[VisibleForTesting]
 			public virtual void WaitForDisconnected(long timeout)
 			{
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.HA
 					long left = timeout;
 					while (connected && left > 0)
 					{
-						Sharpen.Runtime.Wait(this, left);
+						Runtime.Wait(this, left);
 						left = expire - Time.Now();
 					}
 					if (connected)
@@ -252,11 +252,11 @@ namespace Org.Apache.Hadoop.HA
 			foreach (string hp in hplist.Split(","))
 			{
 				int idx = hp.LastIndexOf(':');
-				string host = Sharpen.Runtime.Substring(hp, 0, idx);
+				string host = Runtime.Substring(hp, 0, idx);
 				int port;
 				try
 				{
-					port = System.Convert.ToInt32(Sharpen.Runtime.Substring(hp, idx + 1));
+					port = System.Convert.ToInt32(Runtime.Substring(hp, idx + 1));
 				}
 				catch (RuntimeException e)
 				{
@@ -276,12 +276,12 @@ namespace Org.Apache.Hadoop.HA
 		public static string Send4LetterWord(string host, int port, string cmd)
 		{
 			Log.Info("connecting to " + host + " " + port);
-			Socket sock = Sharpen.Extensions.CreateSocket(host, port);
+			Socket sock = Extensions.CreateSocket(host, port);
 			BufferedReader reader = null;
 			try
 			{
 				OutputStream outstream = sock.GetOutputStream();
-				outstream.Write(Sharpen.Runtime.GetBytesForString(cmd));
+				outstream.Write(Runtime.GetBytesForString(cmd));
 				outstream.Flush();
 				// this replicates NC - close the output stream before reading
 				sock.ShutdownOutput();
@@ -330,7 +330,7 @@ namespace Org.Apache.Hadoop.HA
 				}
 				try
 				{
-					Sharpen.Thread.Sleep(250);
+					Thread.Sleep(250);
 				}
 				catch (Exception)
 				{
@@ -360,7 +360,7 @@ namespace Org.Apache.Hadoop.HA
 				}
 				try
 				{
-					Sharpen.Thread.Sleep(250);
+					Thread.Sleep(250);
 				}
 				catch (Exception)
 				{

@@ -3,7 +3,7 @@ using System.IO;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -17,7 +17,7 @@ namespace Org.Apache.Hadoop.FS
 
 		private volatile bool shouldRun = true;
 
-		private Sharpen.Thread refreshUsed;
+		private Thread refreshUsed;
 
 		private IOException duException = null;
 
@@ -89,7 +89,7 @@ namespace Org.Apache.Hadoop.FS
 				{
 					try
 					{
-						Sharpen.Thread.Sleep(this._enclosing.refreshInterval);
+						Thread.Sleep(this._enclosing.refreshInterval);
 						try
 						{
 							//update the used variable
@@ -186,7 +186,7 @@ namespace Org.Apache.Hadoop.FS
 			//only start the thread if the interval is sane
 			if (refreshInterval > 0)
 			{
-				refreshUsed = new Sharpen.Thread(new DU.DURefreshThread(this), "refreshUsed-" + dirPath
+				refreshUsed = new Thread(new DU.DURefreshThread(this), "refreshUsed-" + dirPath
 					);
 				refreshUsed.SetDaemon(true);
 				refreshUsed.Start();

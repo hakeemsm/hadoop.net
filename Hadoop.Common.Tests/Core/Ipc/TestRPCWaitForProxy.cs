@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.Ipc
 			TestRPCWaitForProxy.RpcThread worker = new TestRPCWaitForProxy.RpcThread(this, 100
 				);
 			worker.Start();
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			Assert.True("worker hasn't started", worker.waitStarted);
 			worker.Interrupt();
 			worker.Join();
@@ -76,7 +76,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// This thread waits for a proxy for the specified timeout, and retains any
 		/// throwable that was raised in the process
 		/// </summary>
-		private class RpcThread : Sharpen.Thread
+		private class RpcThread : Thread
 		{
 			private Exception caught;
 

@@ -3,7 +3,7 @@ using System.Text;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.IO
 			string s = new string(new char[] { 0 });
 			DataOutputBuffer dob = new DataOutputBuffer();
 			new UTF8(s).Write(dob);
-			Assert.Equal(s, Sharpen.Runtime.GetStringForBytes(dob.GetData(
+			Assert.Equal(s, Runtime.GetStringForBytes(dob.GetData(
 				), 2, dob.GetLength() - 2, "UTF-8"));
 		}
 
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.IO
 			// See http://www.fileformat.info/info/unicode/char/1f431/index.htm
 			string catFace = "\uD83D\uDC31";
 			// This encodes to 4 bytes in UTF-8:
-			byte[] encoded = Sharpen.Runtime.GetBytesForString(catFace, "UTF-8");
+			byte[] encoded = Runtime.GetBytesForString(catFace, "UTF-8");
 			Assert.Equal(4, encoded.Length);
 			Assert.Equal("f09f90b1", StringUtils.ByteToHexString(encoded));
 			// Decode back to String using our own decoder

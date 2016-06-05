@@ -33,7 +33,7 @@ using Org.Apache.Directory.Shared.Kerberos;
 using Org.Apache.Directory.Shared.Kerberos.Codec.Types;
 using Org.Apache.Directory.Shared.Kerberos.Components;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Minikdc
 {
@@ -153,7 +153,7 @@ namespace Org.Apache.Hadoop.Minikdc
 			}
 		}
 
-		private sealed class _Thread_170 : Sharpen.Thread
+		private sealed class _Thread_170 : Thread
 		{
 			public _Thread_170(Org.Apache.Hadoop.Minikdc.MiniKdc miniKdc)
 			{
@@ -276,15 +276,15 @@ namespace Org.Apache.Hadoop.Minikdc
 			port = System.Convert.ToInt32(conf.GetProperty(KdcPort));
 			if (port == 0)
 			{
-				Socket ss = Sharpen.Extensions.CreateServerSocket(0, 1, Sharpen.Extensions.GetAddressByName
+				Socket ss = Extensions.CreateServerSocket(0, 1, Extensions.GetAddressByName
 					(conf.GetProperty(KdcBindAddress)));
 				port = ss.GetLocalPort();
 				ss.Close();
 			}
 			string orgName = conf.GetProperty(OrgName);
 			string orgDomain = conf.GetProperty(OrgDomain);
-			realm = orgName.ToUpper(Sharpen.Extensions.GetEnglishCulture()) + "." + orgDomain
-				.ToUpper(Sharpen.Extensions.GetEnglishCulture());
+			realm = orgName.ToUpper(Extensions.GetEnglishCulture()) + "." + orgDomain
+				.ToUpper(Extensions.GetEnglishCulture());
 		}
 
 		/// <summary>Returns the port of the MiniKdc.</summary>
@@ -364,9 +364,9 @@ namespace Org.Apache.Hadoop.Minikdc
 			ds.SetDenormalizeOpAttrsEnabled(true);
 			ds.AddLast(new KeyDerivationInterceptor());
 			// create one partition
-			string orgName = conf.GetProperty(OrgName).ToLower(Sharpen.Extensions.GetEnglishCulture()
+			string orgName = conf.GetProperty(OrgName).ToLower(Extensions.GetEnglishCulture()
 				);
-			string orgDomain = conf.GetProperty(OrgDomain).ToLower(Sharpen.Extensions.GetEnglishCulture()
+			string orgDomain = conf.GetProperty(OrgDomain).ToLower(Extensions.GetEnglishCulture()
 				);
 			JdbmPartition partition = new JdbmPartition(ds.GetSchemaManager());
 			partition.SetId(orgName);
@@ -402,12 +402,12 @@ namespace Org.Apache.Hadoop.Minikdc
 			string orgDomain = conf.GetProperty(OrgDomain);
 			string bindAddress = conf.GetProperty(KdcBindAddress);
 			IDictionary<string, string> map = new Dictionary<string, string>();
-			map["0"] = orgName.ToLower(Sharpen.Extensions.GetEnglishCulture());
-			map["1"] = orgDomain.ToLower(Sharpen.Extensions.GetEnglishCulture());
-			map["2"] = orgName.ToUpper(Sharpen.Extensions.GetEnglishCulture());
-			map["3"] = orgDomain.ToUpper(Sharpen.Extensions.GetEnglishCulture());
+			map["0"] = orgName.ToLower(Extensions.GetEnglishCulture());
+			map["1"] = orgDomain.ToLower(Extensions.GetEnglishCulture());
+			map["2"] = orgName.ToUpper(Extensions.GetEnglishCulture());
+			map["3"] = orgDomain.ToUpper(Extensions.GetEnglishCulture());
 			map["4"] = bindAddress;
-			ClassLoader cl = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+			ClassLoader cl = Thread.CurrentThread().GetContextClassLoader();
 			InputStream is1 = cl.GetResourceAsStream("minikdc.ldiff");
 			SchemaManager schemaManager = ds.GetSchemaManager();
 			LdifReader reader = null;
@@ -474,7 +474,7 @@ namespace Org.Apache.Hadoop.Minikdc
 			}
 			krb5conf = new FilePath(workDir, "krb5.conf").GetAbsoluteFile();
 			FileUtils.WriteStringToFile(krb5conf, MessageFormat.Format(sb.ToString(), GetRealm
-				(), GetHost(), Sharpen.Extensions.ToString(GetPort()), Runtime.GetProperty("line.separator"
+				(), GetHost(), Extensions.ToString(GetPort()), Runtime.GetProperty("line.separator"
 				)));
 			Runtime.SetProperty(JavaSecurityKrb5Conf, krb5conf.GetAbsolutePath());
 			Runtime.SetProperty(SunSecurityKrb5Debug, conf.GetProperty(Debug, "false"));
@@ -482,11 +482,11 @@ namespace Org.Apache.Hadoop.Minikdc
 			Type classRef;
 			if (Runtime.GetProperty("java.vendor").Contains("IBM"))
 			{
-				classRef = Sharpen.Runtime.GetType("com.ibm.security.krb5.internal.Config");
+				classRef = Runtime.GetType("com.ibm.security.krb5.internal.Config");
 			}
 			else
 			{
-				classRef = Sharpen.Runtime.GetType("sun.security.krb5.Config");
+				classRef = Runtime.GetType("sun.security.krb5.Config");
 			}
 			MethodInfo refreshMethod = classRef.GetMethod("refresh", new Type[0]);
 			refreshMethod.Invoke(classRef, new object[0]);
@@ -549,8 +549,8 @@ namespace Org.Apache.Hadoop.Minikdc
 			{
 				string orgName = conf.GetProperty(OrgName);
 				string orgDomain = conf.GetProperty(OrgDomain);
-				string baseDn = "ou=users,dc=" + orgName.ToLower(Sharpen.Extensions.GetEnglishCulture()
-					) + ",dc=" + orgDomain.ToLower(Sharpen.Extensions.GetEnglishCulture());
+				string baseDn = "ou=users,dc=" + orgName.ToLower(Extensions.GetEnglishCulture()
+					) + ",dc=" + orgDomain.ToLower(Extensions.GetEnglishCulture());
 				string content = "dn: uid=" + principal + "," + baseDn + "\n" + "objectClass: top\n"
 					 + "objectClass: person\n" + "objectClass: inetOrgPerson\n" + "objectClass: krb5principal\n"
 					 + "objectClass: krb5kdcentry\n" + "cn: " + principal + "\n" + "sn: " + principal

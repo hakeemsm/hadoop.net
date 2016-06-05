@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authorize
 {
@@ -58,9 +58,9 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			//   $configPrefix.[ANY].hosts
 			//
 			string prefixRegEx = configPrefix.Replace(".", "\\.");
-			string usersGroupsRegEx = prefixRegEx + "[^.]*(" + Sharpen.Pattern.Quote(ConfUsers
-				) + "|" + Sharpen.Pattern.Quote(ConfGroups) + ")";
-			string hostsRegEx = prefixRegEx + "[^.]*" + Sharpen.Pattern.Quote(ConfHosts);
+			string usersGroupsRegEx = prefixRegEx + "[^.]*(" + Pattern.Quote(ConfUsers
+				) + "|" + Pattern.Quote(ConfGroups) + ")";
+			string hostsRegEx = prefixRegEx + "[^.]*" + Pattern.Quote(ConfHosts);
 			// get list of users and groups per proxyuser
 			IDictionary<string, string> allMatchKeys = conf.GetValByRegex(usersGroupsRegEx);
 			foreach (KeyValuePair<string, string> entry in allMatchKeys)
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			int endIndex = key.LastIndexOf(".");
 			if (endIndex != -1)
 			{
-				return Sharpen.Runtime.Substring(key, 0, endIndex);
+				return Runtime.Substring(key, 0, endIndex);
 			}
 			return key;
 		}

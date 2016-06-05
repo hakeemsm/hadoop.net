@@ -19,7 +19,7 @@ using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Annotation;
 using Org.Apache.Hadoop.Metrics2.Impl;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {

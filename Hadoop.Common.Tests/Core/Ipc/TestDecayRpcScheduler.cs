@@ -1,6 +1,6 @@
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -185,7 +185,7 @@ namespace Org.Apache.Hadoop.Ipc
 			// It should eventually decay to zero
 			while (scheduler.GetTotalCallSnapshot() > 0)
 			{
-				Sharpen.Thread.Sleep(10);
+				Thread.Sleep(10);
 			}
 		}
 	}

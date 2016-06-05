@@ -21,7 +21,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Contract
 {

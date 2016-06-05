@@ -11,7 +11,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token.Delegation;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -225,8 +225,8 @@ namespace Org.Apache.Hadoop.Util
 			// create file
 			Path tmpPath = localFs.MakeQualified(new Path(tmpFile.ToString()));
 			Org.Apache.Hadoop.Security.Token.Token<object> token = new Org.Apache.Hadoop.Security.Token.Token
-				<AbstractDelegationTokenIdentifier>(Sharpen.Runtime.GetBytesForString("identifier"
-				), Sharpen.Runtime.GetBytesForString("password"), new Text("token-kind"), new Text
+				<AbstractDelegationTokenIdentifier>(Runtime.GetBytesForString("identifier"
+				), Runtime.GetBytesForString("password"), new Text("token-kind"), new Text
 				("token-service"));
 			Credentials creds = new Credentials();
 			creds.AddToken(new Text("token-alias"), token);

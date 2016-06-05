@@ -19,7 +19,7 @@ using Org.Apache.Http.Impl.Client;
 using Org.Apache.Http.Util;
 using Org.Mortbay.Jetty;
 using Org.Mortbay.Jetty.Servlet;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Client
 {
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 		/// <exception cref="System.Exception"/>
 		protected internal virtual int GetLocalPort()
 		{
-			Socket ss = Sharpen.Extensions.CreateServerSocket(0);
+			Socket ss = Extensions.CreateServerSocket(0);
 			int ret = ss.GetLocalPort();
 			ss.Close();
 			return ret;
@@ -336,7 +336,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 				if (doPost)
 				{
 					HttpPost post = new HttpPost(GetBaseURL());
-					byte[] postBytes = Sharpen.Runtime.GetBytesForString(Post);
+					byte[] postBytes = Runtime.GetBytesForString(Post);
 					ByteArrayInputStream bis = new ByteArrayInputStream(postBytes);
 					InputStreamEntity entity = new InputStreamEntity(bis, postBytes.Length);
 					// Important that the entity is not repeatable -- this means if

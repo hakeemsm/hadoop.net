@@ -4,7 +4,7 @@ using Com.Google.Common.Base;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {

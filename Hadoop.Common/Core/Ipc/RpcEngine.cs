@@ -6,7 +6,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Retry;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {

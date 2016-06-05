@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security.Ssl;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {

@@ -3,7 +3,7 @@ using System.Text;
 using Com.Google.Common.Base;
 using Javax.Servlet;
 using Org.Apache.Hadoop.Security.Authentication.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 						sb.Append((char)c);
 						c = reader.Read();
 					}
-					secret = Sharpen.Runtime.GetBytesForString(sb.ToString(), Sharpen.Extensions.GetEncoding
+					secret = Runtime.GetBytesForString(sb.ToString(), Extensions.GetEncoding
 						("UTF-8"));
 				}
 				catch (IOException)

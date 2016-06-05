@@ -20,7 +20,7 @@ using Com.Google.Common.Collect;
 using Org.Apache.Hadoop.IO.Compress.Lz4;
 using Org.Apache.Hadoop.IO.Compress.Snappy;
 using Org.Apache.Hadoop.IO.Compress.Zlib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress
 {

@@ -197,7 +197,7 @@ namespace Hadoop.Common.Core.IO
 				string className = @in.ReadUTF();
 				try
 				{
-					AddToMap(Sharpen.Runtime.GetType(className), id);
+					AddToMap(Runtime.GetType(className), id);
 				}
 				catch (TypeLoadException e)
 				{

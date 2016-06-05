@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -11,9 +11,9 @@ namespace Org.Apache.Hadoop.IO
 		public virtual void TestSortedMapWritable()
 		{
 			Text[] keys = new Text[] { new Text("key1"), new Text("key2"), new Text("key3") };
-			BytesWritable[] values = new BytesWritable[] { new BytesWritable(Sharpen.Runtime.GetBytesForString
-				("value1")), new BytesWritable(Sharpen.Runtime.GetBytesForString("value2")), new 
-				BytesWritable(Sharpen.Runtime.GetBytesForString("value3")) };
+			BytesWritable[] values = new BytesWritable[] { new BytesWritable(Runtime.GetBytesForString
+				("value1")), new BytesWritable(Runtime.GetBytesForString("value2")), new 
+				BytesWritable(Runtime.GetBytesForString("value3")) };
 			SortedMapWritable inMap = new SortedMapWritable();
 			for (int i = 0; i < keys.Length; i++)
 			{
@@ -84,8 +84,8 @@ namespace Org.Apache.Hadoop.IO
 				mapA.Equals(mapB));
 			// Setup
 			Text[] keys = new Text[] { new Text("key1"), new Text("key2") };
-			BytesWritable[] values = new BytesWritable[] { new BytesWritable(Sharpen.Runtime.GetBytesForString
-				("value1")), new BytesWritable(Sharpen.Runtime.GetBytesForString("value2")) };
+			BytesWritable[] values = new BytesWritable[] { new BytesWritable(Runtime.GetBytesForString
+				("value1")), new BytesWritable(Runtime.GetBytesForString("value2")) };
 			mapA[keys[0]] = values[0];
 			mapB[keys[1]] = values[1];
 			// entrySets are different

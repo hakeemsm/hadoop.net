@@ -10,7 +10,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -145,16 +145,16 @@ namespace Org.Apache.Hadoop.Net
 				{
 					throw new ArgumentException(this + "is not an ancestor of " + n);
 				}
-				string name = Sharpen.Runtime.Substring(n.GetNetworkLocation(), GetPath(this).Length
+				string name = Runtime.Substring(n.GetNetworkLocation(), GetPath(this).Length
 					);
 				if (name[0] == PathSeparator)
 				{
-					name = Sharpen.Runtime.Substring(name, 1);
+					name = Runtime.Substring(name, 1);
 				}
 				int index = name.IndexOf(PathSeparator);
 				if (index != -1)
 				{
-					name = Sharpen.Runtime.Substring(name, 0, index);
+					name = Runtime.Substring(name, 0, index);
 				}
 				return name;
 			}
@@ -555,7 +555,7 @@ namespace Org.Apache.Hadoop.Net
 				loc = NodeBase.Normalize(loc);
 				if (!NodeBase.Root.Equals(loc))
 				{
-					loc = Sharpen.Runtime.Substring(loc, 1);
+					loc = Runtime.Substring(loc, 1);
 				}
 				NetworkTopology.InnerNode rack = (NetworkTopology.InnerNode)clusterMap.GetLoc(loc
 					);
@@ -651,7 +651,7 @@ namespace Org.Apache.Hadoop.Net
 				loc = NodeBase.Normalize(loc);
 				if (!NodeBase.Root.Equals(loc))
 				{
-					loc = Sharpen.Runtime.Substring(loc, 1);
+					loc = Runtime.Substring(loc, 1);
 				}
 				return clusterMap.GetLoc(loc);
 			}
@@ -845,7 +845,7 @@ namespace Org.Apache.Hadoop.Net
 			{
 				if (scope.StartsWith("~"))
 				{
-					return ChooseRandom(NodeBase.Root, Sharpen.Runtime.Substring(scope, 1));
+					return ChooseRandom(NodeBase.Root, Runtime.Substring(scope, 1));
 				}
 				else
 				{
@@ -940,7 +940,7 @@ namespace Org.Apache.Hadoop.Net
 			if (scope.StartsWith("~"))
 			{
 				isExcluded = true;
-				scope = Sharpen.Runtime.Substring(scope, 1);
+				scope = Runtime.Substring(scope, 1);
 			}
 			scope = NodeBase.Normalize(scope);
 			int excludedCountInScope = 0;
@@ -1023,7 +1023,7 @@ namespace Org.Apache.Hadoop.Net
 		public static string GetFirstHalf(string networkLocation)
 		{
 			int index = networkLocation.LastIndexOf(NodeBase.PathSeparatorStr);
-			return Sharpen.Runtime.Substring(networkLocation, 0, index);
+			return Runtime.Substring(networkLocation, 0, index);
 		}
 
 		/// <summary>
@@ -1035,7 +1035,7 @@ namespace Org.Apache.Hadoop.Net
 		public static string GetLastHalf(string networkLocation)
 		{
 			int index = networkLocation.LastIndexOf(NodeBase.PathSeparatorStr);
-			return Sharpen.Runtime.Substring(networkLocation, index);
+			return Runtime.Substring(networkLocation, index);
 		}
 
 		/// <summary>
@@ -1113,7 +1113,7 @@ namespace Org.Apache.Hadoop.Net
 			{
 				if (list_1 != null)
 				{
-					Sharpen.Collections.Shuffle(list_1, r);
+					Collections.Shuffle(list_1, r);
 					foreach (Node n in list_1)
 					{
 						nodes[idx] = n;

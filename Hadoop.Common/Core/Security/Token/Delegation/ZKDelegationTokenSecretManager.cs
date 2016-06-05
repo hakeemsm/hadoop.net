@@ -20,7 +20,7 @@ using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Client;
 using Org.Apache.Zookeeper.Data;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation
 {
@@ -228,7 +228,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				options["useTicketCache"] = "false";
 				options["refreshKrb5Config"] = "true";
 				string jaasEnvVar = Runtime.Getenv("HADOOP_JAAS_DEBUG");
-				if (jaasEnvVar != null && Sharpen.Runtime.EqualsIgnoreCase("true", jaasEnvVar))
+				if (jaasEnvVar != null && Runtime.EqualsIgnoreCase("true", jaasEnvVar))
 				{
 					options["debug"] = "true";
 				}
@@ -451,14 +451,14 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			int i = path.LastIndexOf('/');
 			if (i > 0)
 			{
-				string tokSeg = Sharpen.Runtime.Substring(path, i + 1);
+				string tokSeg = Runtime.Substring(path, i + 1);
 				int j = tokSeg.IndexOf('_');
 				if (j > 0)
 				{
-					int keyId = System.Convert.ToInt32(Sharpen.Runtime.Substring(tokSeg, j + 1));
+					int keyId = System.Convert.ToInt32(Runtime.Substring(tokSeg, j + 1));
 					lock (this)
 					{
-						Sharpen.Collections.Remove(allKeys, keyId);
+						Collections.Remove(allKeys, keyId);
 					}
 				}
 			}
@@ -483,7 +483,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				{
 					currentTokens[ident] = tokenInfo;
 					// The cancel task might be waiting
-					Sharpen.Runtime.NotifyAll(this);
+					Runtime.NotifyAll(this);
 				}
 			}
 		}
@@ -497,9 +497,9 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			ident.ReadFields(din);
 			lock (this)
 			{
-				Sharpen.Collections.Remove(currentTokens, ident);
+				Collections.Remove(currentTokens, ident);
 				// The cancel task might be waiting
-				Sharpen.Runtime.NotifyAll(this);
+				Runtime.NotifyAll(this);
 			}
 		}
 
@@ -576,7 +576,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				catch (Exception)
 				{
 					listenerThreadPool.ShutdownNow();
-					Sharpen.Thread.CurrentThread().Interrupt();
+					Thread.CurrentThread().Interrupt();
 				}
 			}
 		}
@@ -627,7 +627,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			{
 				// The ExpirationThread is just finishing.. so dont do anything..
 				Log.Debug("Thread interrupted while performing token counter increment", e);
-				Sharpen.Thread.CurrentThread().Interrupt();
+				Thread.CurrentThread().Interrupt();
 			}
 			catch (Exception e)
 			{
@@ -663,7 +663,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			{
 				// The ExpirationThread is just finishing.. so dont do anything..
 				Log.Debug("Thread interrupted while performing keyId increment", e);
-				Sharpen.Thread.CurrentThread().Interrupt();
+				Thread.CurrentThread().Interrupt();
 			}
 			catch (Exception e)
 			{
@@ -1028,7 +1028,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 
 			private SASLOwnerACLProvider(string principal)
 			{
-				this.saslACL = Sharpen.Collections.SingletonList(new ACL(ZooDefs.Perms.All, new ID
+				this.saslACL = Collections.SingletonList(new ACL(ZooDefs.Perms.All, new ID
 					("sasl", principal)));
 			}
 

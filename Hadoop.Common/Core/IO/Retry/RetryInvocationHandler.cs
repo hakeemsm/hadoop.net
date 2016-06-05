@@ -21,8 +21,8 @@ using System.Reflection;
 using Com.Google.Common.Annotations;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Ipc;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.IO.Retry
 {
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 
 		protected internal RetryInvocationHandler(FailoverProxyProvider<T> proxyProvider, 
 			RetryPolicy retryPolicy)
-			: this(proxyProvider, retryPolicy, Sharpen.Collections.EmptyMap<string, RetryPolicy
+			: this(proxyProvider, retryPolicy, Collections.EmptyMap<string, RetryPolicy
 				>())
 		{
 		}
@@ -101,17 +101,17 @@ namespace Org.Apache.Hadoop.IO.Retry
 				}
 				catch (Exception e)
 				{
-					if (Sharpen.Thread.CurrentThread().IsInterrupted())
+					if (Thread.CurrentThread().IsInterrupted())
 					{
 						// If interrupted, do not retry.
 						throw;
 					}
 					bool isIdempotentOrAtMostOnce = proxyProvider.GetInterface().GetMethod(method.Name
-						, Sharpen.Runtime.GetParameterTypes(method)).IsAnnotationPresent(typeof(Idempotent
+						, Runtime.GetParameterTypes(method)).IsAnnotationPresent(typeof(Idempotent
 						));
 					if (!isIdempotentOrAtMostOnce)
 					{
-						isIdempotentOrAtMostOnce = proxyProvider.GetInterface().GetMethod(method.Name, Sharpen.Runtime.GetParameterTypes
+						isIdempotentOrAtMostOnce = proxyProvider.GetInterface().GetMethod(method.Name, Runtime.GetParameterTypes
 							(method)).IsAnnotationPresent(typeof(AtMostOnce));
 					}
 					RetryPolicy.RetryAction action = policy.ShouldRetry(e, retries++, invocationFailoverCount
@@ -156,7 +156,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 						}
 						if (action.delayMillis > 0)
 						{
-							Sharpen.Thread.Sleep(action.delayMillis);
+							Thread.Sleep(action.delayMillis);
 						}
 						if (action.action == RetryPolicy.RetryAction.RetryDecision.FailoverAndRetry)
 						{

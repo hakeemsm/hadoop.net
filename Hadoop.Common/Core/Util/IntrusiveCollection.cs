@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using Com.Google.Common.Base;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -282,7 +282,7 @@ namespace Org.Apache.Hadoop.Util
 		{
 			if (array.Length < size)
 			{
-				return (T[])Sharpen.Collections.ToArray(this);
+				return (T[])Collections.ToArray(this);
 			}
 			else
 			{

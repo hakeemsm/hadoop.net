@@ -6,7 +6,7 @@ using Org.Apache.Log4j;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Server;
 using Org.Mockito;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -173,7 +173,7 @@ namespace Org.Apache.Hadoop.HA
 			ActiveStandbyElectorTestUtil.WaitForActiveLockData(null, zks, ParentDir, null);
 			// Double check that we don't accidentally re-join the election
 			// due to receiving the "expired" event.
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			Org.Mockito.Mockito.Verify(cb, Org.Mockito.Mockito.Never()).BecomeActive();
 			ActiveStandbyElectorTestUtil.WaitForActiveLockData(null, zks, ParentDir, null);
 			CheckFatalsAndReset();
@@ -210,7 +210,7 @@ namespace Org.Apache.Hadoop.HA
 			// by quitting elector 0 and ensuring elector 1 doesn't become active
 			electors[0].QuitElection(false);
 			// due to receiving the "expired" event.
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			Org.Mockito.Mockito.Verify(cbs[1], Org.Mockito.Mockito.Never()).BecomeActive();
 			ActiveStandbyElectorTestUtil.WaitForActiveLockData(null, zks, ParentDir, null);
 			CheckFatalsAndReset();
@@ -226,7 +226,7 @@ namespace Org.Apache.Hadoop.HA
 			StartServer();
 			WaitForServerUp(hostPort, ConnectionTimeout);
 			// Have to sleep to allow time for the clients to reconnect.
-			Sharpen.Thread.Sleep(2000);
+			Thread.Sleep(2000);
 			Org.Mockito.Mockito.Verify(cbs[0], Org.Mockito.Mockito.Never()).BecomeActive();
 			Org.Mockito.Mockito.Verify(cbs[1], Org.Mockito.Mockito.Never()).BecomeActive();
 			CheckFatalsAndReset();

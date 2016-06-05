@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authorize
 {
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 					}
 					catch (IOException e)
 					{
-						throw (AuthorizationException)Sharpen.Extensions.InitCause(new AuthorizationException
+						throw (AuthorizationException)Extensions.InitCause(new AuthorizationException
 							("Can't figure out Kerberos principal name for connection from " + addr + " for user="
 							 + user + " protocol=" + protocol), e);
 					}
@@ -166,7 +166,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			int endIndex = serviceKey.LastIndexOf(".");
 			if (endIndex != -1)
 			{
-				return Sharpen.Runtime.Substring(serviceKey, 0, endIndex) + Hosts;
+				return Runtime.Substring(serviceKey, 0, endIndex) + Hosts;
 			}
 			return serviceKey;
 		}

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Org.Apache.Commons.IO;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -93,7 +93,7 @@ namespace Org.Apache.Hadoop.Util
 								{
 									Log.Debug("Loaded IP list of size = " + lines.Count + " from file = " + fileName);
 								}
-								return (Sharpen.Collections.ToArray(lines, new string[lines.Count]));
+								return (Collections.ToArray(lines, new string[lines.Count]));
 							}
 						}
 					}

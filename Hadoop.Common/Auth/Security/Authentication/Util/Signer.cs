@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using Org.Apache.Commons.Codec.Binary;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -58,9 +58,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			{
 				throw new SignerException("Invalid signed text: " + signedStr);
 			}
-			string originalSignature = Sharpen.Runtime.Substring(signedStr, index + Signature
+			string originalSignature = Runtime.Substring(signedStr, index + Signature
 				.Length);
-			string rawValue = Sharpen.Runtime.Substring(signedStr, 0, index);
+			string rawValue = Runtime.Substring(signedStr, 0, index);
 			CheckSignatures(rawValue, originalSignature);
 			return rawValue;
 		}
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			try
 			{
 				MessageDigest md = MessageDigest.GetInstance("SHA");
-				md.Update(Sharpen.Runtime.GetBytesForString(str, Sharpen.Extensions.GetEncoding("UTF-8"
+				md.Update(Runtime.GetBytesForString(str, Extensions.GetEncoding("UTF-8"
 					)));
 				md.Update(secret);
 				byte[] digest = md.Digest();

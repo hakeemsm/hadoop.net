@@ -8,7 +8,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -106,7 +106,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				{
 					properties["Comparator"] = reader.GetComparatorName();
 				}
-				properties["Data Block Count"] = Sharpen.Extensions.ToString(blockCnt);
+				properties["Data Block Count"] = Extensions.ToString(blockCnt);
 				long dataSize = 0;
 				long dataSizeUncompressed = 0;
 				if (blockCnt > 0)
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 							 / dataSize);
 					}
 				}
-				properties["Meta Block Count"] = Sharpen.Extensions.ToString(metaBlkCnt);
+				properties["Meta Block Count"] = Extensions.ToString(metaBlkCnt);
 				long metaSize = 0;
 				long metaSizeUncompressed = 0;
 				if (metaBlkCnt > 0)

@@ -17,7 +17,7 @@
 */
 using System;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.Util
 				long timeToSleep = millis - (Time.Now() - start);
 				try
 				{
-					Sharpen.Thread.Sleep(timeToSleep);
+					Thread.Sleep(timeToSleep);
 				}
 				catch (Exception ie)
 				{

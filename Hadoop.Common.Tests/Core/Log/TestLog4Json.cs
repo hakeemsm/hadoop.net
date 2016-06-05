@@ -10,7 +10,7 @@ using Org.Apache.Log4j.Spi;
 using Org.Codehaus.Jackson;
 using Org.Codehaus.Jackson.Map;
 using Org.Codehaus.Jackson.Node;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Log
 {

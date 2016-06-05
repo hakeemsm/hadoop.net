@@ -6,7 +6,7 @@ using Hadoop.Common.Core.Util;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -41,13 +41,13 @@ namespace Org.Apache.Hadoop.HA
 	{
 		private const string ClassRe = "([a-zA-Z0-9\\.\\$]+)";
 
-		private static readonly Sharpen.Pattern ClassWithArgument = Sharpen.Pattern.Compile
+		private static readonly Pattern ClassWithArgument = Pattern.Compile
 			(ClassRe + "\\((.+?)\\)");
 
-		private static readonly Sharpen.Pattern ClassWithoutArgument = Sharpen.Pattern.Compile
+		private static readonly Pattern ClassWithoutArgument = Pattern.Compile
 			(ClassRe);
 
-		private static readonly Sharpen.Pattern HashCommentRe = Sharpen.Pattern.Compile("#.*$"
+		private static readonly Pattern HashCommentRe = Pattern.Compile("#.*$"
 			);
 
 		private static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.HA.NodeFencer
@@ -165,7 +165,7 @@ namespace Org.Apache.Hadoop.HA
 				if (clazz == null)
 				{
 					// Try to instantiate the user's custom method
-					clazz = Sharpen.Runtime.GetType(clazzName);
+					clazz = Runtime.GetType(clazzName);
 				}
 			}
 			catch (Exception e)

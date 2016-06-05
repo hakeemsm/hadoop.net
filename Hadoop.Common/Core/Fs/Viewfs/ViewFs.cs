@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.FS.Local;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -150,7 +150,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		public ViewFs(Configuration conf)
 			: this(FsConstants.ViewfsUri, conf)
 		{
@@ -158,14 +158,14 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 
 		/// <summary>
 		/// This constructor has the signature needed by
-		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(Sharpen.URI, Configuration)
+		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(URI, Configuration)
 		/// 	"/>
 		/// .
 		/// </summary>
 		/// <param name="theUri">which must be that of ViewFs</param>
 		/// <param name="conf"/>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"></exception>
+		/// <exception cref="URISyntaxException"></exception>
 		internal ViewFs(URI theUri, Configuration conf)
 			: base(theUri, FsConstants.ViewfsScheme, false, -1)
 		{
@@ -185,7 +185,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				this._enclosing = _enclosing;
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
 			protected internal override AbstractFileSystem GetTargetFileSystem(URI uri)
 			{
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					), new Path(pathString));
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			protected internal override AbstractFileSystem GetTargetFileSystem(InodeTree.INodeDir
 				<AbstractFileSystem> dir)
 			{
@@ -206,7 +206,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					.ugi, this._enclosing.GetUri());
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
 			protected internal override AbstractFileSystem GetTargetFileSystem(URI[] mergeFsURIList
 				)
@@ -667,7 +667,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					.targetFileSystem.GetDelegationTokens(renewer);
 				if (tokens != null)
 				{
-					Sharpen.Collections.AddAll(result, tokens);
+					Collections.AddAll(result, tokens);
 				}
 			}
 			return result;
@@ -787,7 +787,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 
 			internal readonly URI myUri;
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			public InternalDirOfViewFs(InodeTree.INodeDir<AbstractFileSystem> dir, long cTime
 				, UserGroupInformation ugi, URI uri)
 				: base(FsConstants.ViewfsUri, FsConstants.ViewfsScheme, false, -1)
@@ -874,7 +874,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			public override FileStatus GetFileLinkStatus(Path f)
 			{
 				// look up i internalDirs children - ignore first Slash
-				InodeTree.INode<AbstractFileSystem> inode = theInternalDir.children[Sharpen.Runtime.Substring
+				InodeTree.INode<AbstractFileSystem> inode = theInternalDir.children[Runtime.Substring
 					(f.ToUri().ToString(), 1)];
 				if (inode == null)
 				{

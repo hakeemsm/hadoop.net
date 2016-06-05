@@ -4,7 +4,7 @@ using Org.Apache.Hadoop.Util;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
 using Org.Apache.Zookeeper.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.HA
 						lastPrint = Time.Now();
 					}
 				}
-				Sharpen.Thread.Sleep(50);
+				Thread.Sleep(50);
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.HA
 				{
 					ctx.CheckException();
 				}
-				Sharpen.Thread.Sleep(50);
+				Thread.Sleep(50);
 			}
 		}
 	}

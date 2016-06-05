@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security.Authorize;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -73,7 +73,7 @@ namespace Org.Apache.Hadoop.Security
 				builder.Append(',');
 			}
 			builder.Append("127.0.1.1,");
-			builder.Append(Sharpen.Runtime.GetLocalHost().ToString());
+			builder.Append(Runtime.GetLocalHost().ToString());
 			Log.Info("Local Ip addresses: " + builder.ToString());
 			conf.SetStrings(DefaultImpersonationProvider.GetTestProvider().GetProxySuperuserIpConfKey
 				(superUserShortName), builder.ToString());
@@ -225,7 +225,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				NUnit.Framework.Assert.Fail();
 			}
 			finally
@@ -261,7 +261,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				NUnit.Framework.Assert.Fail();
 			}
 			finally
@@ -305,7 +305,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			finally
 			{
@@ -369,7 +369,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			finally
 			{
@@ -431,7 +431,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			finally
 			{
@@ -496,7 +496,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 			}
 			finally
 			{
@@ -598,7 +598,7 @@ namespace Org.Apache.Hadoop.Security
 				}
 				catch (Exception e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e);
+					Runtime.PrintStackTrace(e);
 					throw;
 				}
 				finally
@@ -679,7 +679,7 @@ namespace Org.Apache.Hadoop.Security
 				}
 				catch (Exception e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e);
+					Runtime.PrintStackTrace(e);
 					throw;
 				}
 				finally

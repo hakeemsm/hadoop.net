@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Com.Google.Protobuf;
 using Org.Apache.Hadoop.Ipc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tracing
 {

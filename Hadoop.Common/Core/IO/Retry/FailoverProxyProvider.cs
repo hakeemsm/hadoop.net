@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Retry
 {

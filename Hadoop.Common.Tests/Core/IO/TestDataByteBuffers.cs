@@ -1,6 +1,6 @@
 using System.IO;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.IO
 
 					case 5:
 					{
-						Assert.Equal(Sharpen.Runtime.FloatToIntBits(r.NextFloat()), Sharpen.Runtime.FloatToIntBits
+						Assert.Equal(Runtime.FloatToIntBits(r.NextFloat()), Runtime.FloatToIntBits
 							(@in.ReadFloat()));
 						break;
 					}

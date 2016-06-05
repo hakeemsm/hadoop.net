@@ -1,8 +1,8 @@
 using System;
 using System.IO;
 using Hadoop.Common.Core.IO;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -71,7 +71,7 @@ namespace Org.Apache.Hadoop.IO
 			object result = System.Array.CreateInstance(valueClass, values.Length);
 			for (int i = 0; i < values.Length; i++)
 			{
-				Sharpen.Runtime.SetArrayValue(result, i, values[i]);
+				Runtime.SetArrayValue(result, i, values[i]);
 			}
 			return result;
 		}

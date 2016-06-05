@@ -2,7 +2,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -75,9 +75,9 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			for (int i = start; i < (start + n); i++)
 			{
 				string key = string.Format(localFormatter, i);
-				writer.Append(Sharpen.Runtime.GetBytesForString(key), Sharpen.Runtime.GetBytesForString
+				writer.Append(Runtime.GetBytesForString(key), Runtime.GetBytesForString
 					((value + key)));
-				writer.Append(Sharpen.Runtime.GetBytesForString(key), Sharpen.Runtime.GetBytesForString
+				writer.Append(Runtime.GetBytesForString(key), Runtime.GetBytesForString
 					((value + key)));
 			}
 			return (start + n);
@@ -94,16 +94,16 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] val = ReadValue(scanner);
 				string keyStr = string.Format(localFormatter, i);
 				string valStr = value + keyStr;
-				Assert.True("btyes for keys do not match " + keyStr + " " + Sharpen.Runtime.GetStringForBytes
-					(key), Arrays.Equals(Sharpen.Runtime.GetBytesForString(keyStr), key));
-				Assert.True("bytes for vals do not match " + valStr + " " + Sharpen.Runtime.GetStringForBytes
-					(val), Arrays.Equals(Sharpen.Runtime.GetBytesForString(valStr), val));
+				Assert.True("btyes for keys do not match " + keyStr + " " + Runtime.GetStringForBytes
+					(key), Arrays.Equals(Runtime.GetBytesForString(keyStr), key));
+				Assert.True("bytes for vals do not match " + valStr + " " + Runtime.GetStringForBytes
+					(val), Arrays.Equals(Runtime.GetBytesForString(valStr), val));
 				Assert.True(scanner.Advance());
 				key = ReadKey(scanner);
 				val = ReadValue(scanner);
-				Assert.True("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("btyes for keys do not match", Arrays.Equals(Runtime.GetBytesForString
 					(keyStr), key));
-				Assert.True("bytes for vals do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("bytes for vals do not match", Arrays.Equals(Runtime.GetBytesForString
 					(valStr), val));
 				Assert.True(scanner.Advance());
 			}
@@ -119,8 +119,8 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			for (int i = start; i < (start + n); i++)
 			{
 				string key = string.Format(localFormatter, i);
-				writer.Append(Sharpen.Runtime.GetBytesForString(key), value);
-				writer.Append(Sharpen.Runtime.GetBytesForString(key), value);
+				writer.Append(Runtime.GetBytesForString(key), value);
+				writer.Append(Runtime.GetBytesForString(key), value);
 			}
 			return (start + n);
 		}
@@ -134,11 +134,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				byte[] key = ReadKey(scanner);
 				string keyStr = string.Format(localFormatter, i);
-				Assert.True("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("btyes for keys do not match", Arrays.Equals(Runtime.GetBytesForString
 					(keyStr), key));
 				scanner.Advance();
 				key = ReadKey(scanner);
-				Assert.True("btyes for keys do not match", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("btyes for keys do not match", Arrays.Equals(Runtime.GetBytesForString
 					(keyStr), key));
 				scanner.Advance();
 			}
@@ -182,18 +182,18 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		{
 			// get the length of the key
 			string key = string.Format(localFormatter, start);
-			int keyLen = Sharpen.Runtime.GetBytesForString(key).Length;
+			int keyLen = Runtime.GetBytesForString(key).Length;
 			string value = "value" + key;
-			int valueLen = Sharpen.Runtime.GetBytesForString(value).Length;
+			int valueLen = Runtime.GetBytesForString(value).Length;
 			for (int i = start; i < (start + n); i++)
 			{
 				DataOutputStream @out = writer.PrepareAppendKey(keyLen);
 				string localKey = string.Format(localFormatter, i);
-				@out.Write(Sharpen.Runtime.GetBytesForString(localKey));
+				@out.Write(Runtime.GetBytesForString(localKey));
 				@out.Close();
 				@out = writer.PrepareAppendValue(valueLen);
 				string localValue = "value" + localKey;
-				@out.Write(Sharpen.Runtime.GetBytesForString(localValue));
+				@out.Write(Runtime.GetBytesForString(localValue));
 				@out.Close();
 			}
 			return (start + n);
@@ -207,11 +207,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				string key = string.Format(localFormatter, i);
 				byte[] read = ReadKey(scanner);
-				Assert.True("keys not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("keys not equal", Arrays.Equals(Runtime.GetBytesForString
 					(key), read));
 				string value = "value" + key;
 				read = ReadValue(scanner);
-				Assert.True("values not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("values not equal", Arrays.Equals(Runtime.GetBytesForString
 					(value), read));
 				scanner.Advance();
 			}
@@ -225,11 +225,11 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				DataOutputStream @out = writer.PrepareAppendKey(-1);
 				string localKey = string.Format(localFormatter, i);
-				@out.Write(Sharpen.Runtime.GetBytesForString(localKey));
+				@out.Write(Runtime.GetBytesForString(localKey));
 				@out.Close();
 				string value = "value" + localKey;
 				@out = writer.PrepareAppendValue(-1);
-				@out.Write(Sharpen.Runtime.GetBytesForString(value));
+				@out.Write(Runtime.GetBytesForString(value));
 				@out.Close();
 			}
 			return (start + n);
@@ -243,7 +243,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				string key = string.Format(localFormatter, i);
 				byte[] read = ReadKey(scanner);
-				Assert.True("keys not equal", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("keys not equal", Arrays.Equals(Runtime.GetBytesForString
 					(key), read));
 				try
 				{
@@ -255,8 +255,8 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				}
 				// should have thrown exception
 				string value = "value" + key;
-				read = ReadLongValue(scanner, Sharpen.Runtime.GetBytesForString(value).Length);
-				Assert.True("values nto equal", Arrays.Equals(read, Sharpen.Runtime.GetBytesForString
+				read = ReadLongValue(scanner, Runtime.GetBytesForString(value).Length);
+				Assert.True("values nto equal", Arrays.Equals(read, Runtime.GetBytesForString
 					(value)));
 				scanner.Advance();
 			}
@@ -265,7 +265,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 		private byte[] GetSomeKey(int rowId)
 		{
-			return Sharpen.Runtime.GetBytesForString(string.Format(localFormatter, rowId));
+			return Runtime.GetBytesForString(string.Format(localFormatter, rowId));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
@@ -393,7 +393,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			for (int i = 0; i < n; i++)
 			{
 				DataOutputStream dout = writer.PrepareMetaBlock("TfileMeta" + i, compression);
-				byte[] b = Sharpen.Runtime.GetBytesForString(("something to test" + i));
+				byte[] b = Runtime.GetBytesForString(("something to test" + i));
 				dout.Write(b);
 				dout.Close();
 			}
@@ -420,13 +420,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <exception cref="System.IO.IOException"/>
 		private void ReadNumMetablocks(TFile.Reader reader, int n)
 		{
-			int len = Sharpen.Runtime.GetBytesForString(("something to test" + 0)).Length;
+			int len = Runtime.GetBytesForString(("something to test" + 0)).Length;
 			for (int i = 0; i < n; i++)
 			{
 				DataInputStream din = reader.GetMetaBlock("TfileMeta" + i);
 				byte[] b = new byte[len];
 				din.ReadFully(b);
-				Assert.True("faield to match metadata", Arrays.Equals(Sharpen.Runtime.GetBytesForString
+				Assert.True("faield to match metadata", Arrays.Equals(Runtime.GetBytesForString
 					(("something to test" + i)), b));
 				din.Close();
 			}

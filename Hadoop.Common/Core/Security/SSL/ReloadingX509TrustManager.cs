@@ -1,13 +1,13 @@
 using System;
 using System.IO;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
 	/// <summary>
 	/// A
-	/// <see cref="Sharpen.TrustManager"/>
+	/// <see cref="TrustManager"/>
 	/// implementation that reloads its configuration when
 	/// the truststore file on disk changes.
 	/// </summary>
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 
 		private volatile bool running;
 
-		private Sharpen.Thread reloader;
+		private Thread reloader;
 
 		/// <summary>Creates a reloadable trustmanager.</summary>
 		/// <remarks>
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		/// thrown if the truststore could not be initialized due
 		/// to an IO error.
 		/// </exception>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the truststore could not be
 		/// initialized due to a security error.
 		/// </exception>
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		/// <summary>Starts the reloader thread.</summary>
 		public void Init()
 		{
-			reloader = new Sharpen.Thread(this, "Truststore reloader thread");
+			reloader = new Thread(this, "Truststore reloader thread");
 			reloader.SetDaemon(true);
 			running = true;
 			reloader.Start();
@@ -86,7 +86,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			return reloadInterval;
 		}
 
-		/// <exception cref="Sharpen.CertificateException"/>
+		/// <exception cref="CertificateException"/>
 		public void CheckClientTrusted(X509Certificate[] chain, string authType)
 		{
 			X509TrustManager tm = trustManagerRef.Get();
@@ -101,7 +101,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			}
 		}
 
-		/// <exception cref="Sharpen.CertificateException"/>
+		/// <exception cref="CertificateException"/>
 		public void CheckServerTrusted(X509Certificate[] chain, string authType)
 		{
 			X509TrustManager tm = trustManagerRef.Get();
@@ -147,7 +147,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		internal X509TrustManager LoadTrustManager()
 		{
 			X509TrustManager trustManager = null;
@@ -184,7 +184,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(reloadInterval);
+					Thread.Sleep(reloadInterval);
 				}
 				catch (Exception)
 				{

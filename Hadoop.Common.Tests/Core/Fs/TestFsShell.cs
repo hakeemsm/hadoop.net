@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -23,7 +23,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			if (!(th is RuntimeException))
 			{
-				throw Sharpen.Extensions.InitCause(new AssertionFailedError("Expected Runtime exception, got: "
+				throw Extensions.InitCause(new AssertionFailedError("Expected Runtime exception, got: "
 					 + th), th);
 			}
 		}

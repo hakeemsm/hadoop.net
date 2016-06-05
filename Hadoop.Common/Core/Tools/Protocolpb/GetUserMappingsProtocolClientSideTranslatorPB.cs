@@ -3,7 +3,7 @@ using Com.Google.Protobuf;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Tools;
 using Org.Apache.Hadoop.Tools.Proto;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tools.ProtocolPB
 {
@@ -42,7 +42,7 @@ namespace Org.Apache.Hadoop.Tools.ProtocolPB
 			{
 				throw ProtobufHelper.GetRemoteException(se);
 			}
-			return Sharpen.Collections.ToArray(resp.GetGroupsList(), new string[resp.GetGroupsCount
+			return Collections.ToArray(resp.GetGroupsList(), new string[resp.GetGroupsCount
 				()]);
 		}
 

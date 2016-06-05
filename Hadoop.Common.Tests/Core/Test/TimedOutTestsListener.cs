@@ -4,8 +4,8 @@ using System.IO;
 using System.Text;
 using NUnit.Framework.Runner.Notification;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Test
 {
@@ -65,15 +65,15 @@ namespace Org.Apache.Hadoop.Test
 		internal static string BuildThreadDump()
 		{
 			StringBuilder dump = new StringBuilder();
-			IDictionary<Sharpen.Thread, StackTraceElement[]> stackTraces = Sharpen.Thread.GetAllStackTraces
+			IDictionary<Thread, StackTraceElement[]> stackTraces = Thread.GetAllStackTraces
 				();
-			foreach (KeyValuePair<Sharpen.Thread, StackTraceElement[]> e in stackTraces)
+			foreach (KeyValuePair<Thread, StackTraceElement[]> e in stackTraces)
 			{
-				Sharpen.Thread thread = e.Key;
+				Thread thread = e.Key;
 				dump.Append(string.Format("\"%s\" %s prio=%d tid=%d %s\njava.lang.Thread.State: %s"
 					, thread.GetName(), (thread.IsDaemon() ? "daemon" : string.Empty), thread.GetPriority
-					(), thread.GetId(), Sharpen.Thread.State.Waiting.Equals(thread.GetState()) ? "in Object.wait()"
-					 : StringUtils.ToLowerCase(thread.GetState().ToString()), Sharpen.Thread.State.Waiting
+					(), thread.GetId(), Thread.State.Waiting.Equals(thread.GetState()) ? "in Object.wait()"
+					 : StringUtils.ToLowerCase(thread.GetState().ToString()), Thread.State.Waiting
 					.Equals(thread.GetState()) ? "WAITING (on object monitor)" : thread.GetState()));
 				foreach (StackTraceElement stackTraceElement in e.Value)
 				{

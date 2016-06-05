@@ -3,7 +3,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
 using Org.Mockito.Invocation;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.HA
 					Log.Info(string.Format("Expiring session %x for svc %d", sessId, targetIdx));
 					GetServer(serverFactory).CloseSession(sessId);
 				}
-				Sharpen.Thread.Sleep(r.Next(300));
+				Thread.Sleep(r.Next(300));
 			}
 		}
 
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.HA
 			{
 				cluster.GetTestContext().CheckException();
 				serverFactory.CloseAll();
-				Sharpen.Thread.Sleep(50);
+				Thread.Sleep(50);
 			}
 		}
 

@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Security.Authentication.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Client
 {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Compiler
 {
@@ -26,8 +26,8 @@ namespace Org.Apache.Hadoop.Record.Compiler
 				this._enclosing = _enclosing;
 				this.fullName = name;
 				int idx = name.LastIndexOf('.');
-				this.name = Sharpen.Runtime.Substring(name, idx + 1);
-				this.module = Sharpen.Runtime.Substring(name, 0, idx);
+				this.name = Runtime.Substring(name, idx + 1);
+				this.module = Runtime.Substring(name, 0, idx);
 				for (IEnumerator<JField<JType>> iter = flist.GetEnumerator(); iter.HasNext(); )
 				{
 					JField<JType> f = iter.Next();
@@ -496,8 +496,8 @@ namespace Org.Apache.Hadoop.Record.Compiler
 				this._enclosing = _enclosing;
 				this.fullName = name.ReplaceAll("\\.", "::");
 				int idx = name.LastIndexOf('.');
-				this.name = Sharpen.Runtime.Substring(name, idx + 1);
-				this.module = Sharpen.Runtime.Substring(name, 0, idx).ReplaceAll("\\.", "::");
+				this.name = Runtime.Substring(name, idx + 1);
+				this.module = Runtime.Substring(name, 0, idx).ReplaceAll("\\.", "::");
 				for (IEnumerator<JField<JType>> iter = flist.GetEnumerator(); iter.HasNext(); )
 				{
 					JField<JType> f = iter.Next();
@@ -821,7 +821,7 @@ namespace Org.Apache.Hadoop.Record.Compiler
 			SetCType(new JRecord.CRecord(this));
 			// precompute signature
 			int idx = name.LastIndexOf('.');
-			string recName = Sharpen.Runtime.Substring(name, idx + 1);
+			string recName = Runtime.Substring(name, idx + 1);
 			StringBuilder sb = new StringBuilder();
 			sb.Append("L").Append(recName).Append("(");
 			for (IEnumerator<JField<JType>> i = flist.GetEnumerator(); i.HasNext(); )

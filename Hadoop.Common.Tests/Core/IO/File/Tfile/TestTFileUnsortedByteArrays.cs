@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -54,13 +54,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			fs = path.GetFileSystem(conf);
 			@out = fs.Create(path);
 			writer = new TFile.Writer(@out, BlockSize, compression, null, conf);
-			writer.Append(Sharpen.Runtime.GetBytesForString("keyZ"), Sharpen.Runtime.GetBytesForString
+			writer.Append(Runtime.GetBytesForString("keyZ"), Runtime.GetBytesForString
 				("valueZ"));
-			writer.Append(Sharpen.Runtime.GetBytesForString("keyM"), Sharpen.Runtime.GetBytesForString
+			writer.Append(Runtime.GetBytesForString("keyM"), Runtime.GetBytesForString
 				("valueM"));
-			writer.Append(Sharpen.Runtime.GetBytesForString("keyN"), Sharpen.Runtime.GetBytesForString
+			writer.Append(Runtime.GetBytesForString("keyN"), Runtime.GetBytesForString
 				("valueN"));
-			writer.Append(Sharpen.Runtime.GetBytesForString("keyA"), Sharpen.Runtime.GetBytesForString
+			writer.Append(Runtime.GetBytesForString("keyA"), Runtime.GetBytesForString
 				("valueA"));
 			CloseOutput();
 		}
@@ -81,8 +81,8 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			Assert.Equal((int)reader.GetEntryCount(), 4);
 			try
 			{
-				TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Sharpen.Runtime.GetBytesForString
-					("aaa"), Sharpen.Runtime.GetBytesForString("zzz"));
+				TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Runtime.GetBytesForString
+					("aaa"), Runtime.GetBytesForString("zzz"));
 				NUnit.Framework.Assert.Fail("Failed to catch creating scanner with keys on unsorted file."
 					);
 			}
@@ -110,24 +110,24 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] kbuf = new byte[BufSize];
 				int klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyZ");
 				byte[] vbuf = new byte[BufSize];
 				int vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueZ");
 				scanner.Advance();
 				// now try get value first
 				vbuf = new byte[BufSize];
 				vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueM");
 				kbuf = new byte[BufSize];
 				klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyM");
 			}
 			finally
@@ -152,24 +152,24 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] kbuf = new byte[BufSize];
 				int klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyZ");
 				byte[] vbuf = new byte[BufSize];
 				int vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueZ");
 				scanner.Advance();
 				// now try get value first
 				vbuf = new byte[BufSize];
 				vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					"valueM");
 				kbuf = new byte[BufSize];
 				klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Runtime.GetStringForBytes(kbuf, 0, klen), 
 					"keyM");
 			}
 			finally
@@ -190,7 +190,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				// can't find ceil
 				try
 				{
-					scanner.LowerBound(Sharpen.Runtime.GetBytesForString("keyN"));
+					scanner.LowerBound(Runtime.GetBytesForString("keyN"));
 					NUnit.Framework.Assert.Fail("Cannot search in a unsorted TFile!");
 				}
 				catch (Exception)
@@ -203,7 +203,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				// can't find higher
 				try
 				{
-					scanner.UpperBound(Sharpen.Runtime.GetBytesForString("keyA"));
+					scanner.UpperBound(Runtime.GetBytesForString("keyA"));
 					NUnit.Framework.Assert.Fail("Cannot search higher in a unsorted TFile!");
 				}
 				catch (Exception)
@@ -216,7 +216,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				// can't seek
 				try
 				{
-					scanner.SeekTo(Sharpen.Runtime.GetBytesForString("keyM"));
+					scanner.SeekTo(Runtime.GetBytesForString("keyM"));
 					NUnit.Framework.Assert.Fail("Cannot search a unsorted TFile!");
 				}
 				catch (Exception)

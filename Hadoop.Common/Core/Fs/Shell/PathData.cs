@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -33,13 +33,13 @@ namespace Org.Apache.Hadoop.FS.Shell
 		private bool inferredSchemeFromPath = false;
 
 		/// <summary>Pre-compiled regular expressions to detect path formats.</summary>
-		private static readonly Sharpen.Pattern potentialUri = Sharpen.Pattern.Compile("^[a-zA-Z][a-zA-Z0-9+-.]+:"
+		private static readonly Pattern potentialUri = Pattern.Compile("^[a-zA-Z][a-zA-Z0-9+-.]+:"
 			);
 
-		private static readonly Sharpen.Pattern windowsNonUriAbsolutePath1 = Sharpen.Pattern
+		private static readonly Pattern windowsNonUriAbsolutePath1 = Pattern
 			.Compile("^/?[a-zA-Z]:\\\\");
 
-		private static readonly Sharpen.Pattern windowsNonUriAbsolutePath2 = Sharpen.Pattern
+		private static readonly Pattern windowsNonUriAbsolutePath2 = Pattern
 			.Compile("^/?[a-zA-Z]:/");
 
 		/// <summary>Creates an object to wrap the given parameters as fields.</summary>
@@ -246,7 +246,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		public virtual bool RepresentsDirectory()
 		{
 			string uriPath = uri.GetPath();
-			string name = Sharpen.Runtime.Substring(uriPath, uriPath.LastIndexOf("/") + 1);
+			string name = Runtime.Substring(uriPath, uriPath.LastIndexOf("/") + 1);
 			// Path will munch off the chars that indicate a dir, so there's no way
 			// to perform this test except by examining the raw basename we maintain
 			return (name.IsEmpty() || name.Equals(".") || name.Equals(".."));
@@ -440,7 +440,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			// take the remaining path fragment after the ancestor
 			if (lastSep < uriPath.Length)
 			{
-				relPath.Append(Sharpen.Runtime.Substring(uriPath, lastSep + 1));
+				relPath.Append(Runtime.Substring(uriPath, lastSep + 1));
 			}
 			// if cwd has a path fragment after the ancestor, convert them to ".."
 			if (lastSep < cwdPath.Length)
@@ -509,7 +509,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 				{
 					// Strip the leading '/' added in stringToUri so users see a valid
 					// Windows path.
-					decodedRemainder = Sharpen.Runtime.Substring(decodedRemainder, 1);
+					decodedRemainder = Runtime.Substring(decodedRemainder, 1);
 				}
 				return decodedRemainder;
 			}
@@ -609,7 +609,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 			if (colon > 0 && (slash == colon + 1))
 			{
 				// has a non zero-length scheme
-				scheme = Sharpen.Runtime.Substring(pathString, 0, colon);
+				scheme = Runtime.Substring(pathString, 0, colon);
 				start = colon + 1;
 			}
 			// parse uri authority, if any
@@ -618,12 +618,12 @@ namespace Org.Apache.Hadoop.FS.Shell
 				start += 2;
 				int nextSlash = pathString.IndexOf('/', start);
 				int authEnd = nextSlash > 0 ? nextSlash : pathString.Length;
-				authority = Sharpen.Runtime.Substring(pathString, start, authEnd);
+				authority = Runtime.Substring(pathString, start, authEnd);
 				start = authEnd;
 			}
 			// uri path is the rest of the string. ? or # are not interpreted,
 			// but any occurrence of them will be quoted by the URI ctor.
-			string path = Sharpen.Runtime.Substring(pathString, start, pathString.Length);
+			string path = Runtime.Substring(pathString, start, pathString.Length);
 			// Construct the URI
 			try
 			{

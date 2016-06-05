@@ -17,7 +17,7 @@
 using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Http;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Jmx
 {
@@ -45,7 +45,7 @@ namespace Org.Apache.Hadoop.Jmx
 
 		public static void AssertReFind(string re, string value)
 		{
-			Sharpen.Pattern p = Sharpen.Pattern.Compile(re);
+			Pattern p = Pattern.Compile(re);
 			Matcher m = p.Matcher(value);
 			Assert.True("'" + p + "' does not match " + value, m.Find());
 		}

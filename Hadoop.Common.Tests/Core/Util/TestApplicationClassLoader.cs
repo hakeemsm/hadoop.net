@@ -6,8 +6,8 @@ using Com.Google.Common.Base;
 using Com.Google.Common.Collect;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.Util
 			JarOutputStream @out = new JarOutputStream(new FileOutputStream(jarFile));
 			ZipEntry entry = new ZipEntry("resource.txt");
 			@out.PutNextEntry(entry);
-			@out.Write(Sharpen.Runtime.GetBytesForString("hello"));
+			@out.Write(Runtime.GetBytesForString("hello"));
 			@out.CloseEntry();
 			@out.Close();
 			return jarFile;

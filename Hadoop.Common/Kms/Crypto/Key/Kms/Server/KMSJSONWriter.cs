@@ -5,8 +5,8 @@ using System.Text;
 using Javax.WS.RS.Core;
 using Javax.WS.RS.Ext;
 using Org.Codehaus.Jackson.Map;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -16,14 +16,14 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 	/// </summary>
 	public class KMSJSONWriter : MessageBodyWriter<object>
 	{
-		public virtual bool IsWriteable(Type aClass, Type type, Sharpen.Annotation.Annotation
+		public virtual bool IsWriteable(Type aClass, Type type, Annotation.Annotation
 			[] annotations, MediaType mediaType)
 		{
 			return typeof(IDictionary).IsAssignableFrom(aClass) || typeof(IList).IsAssignableFrom
 				(aClass);
 		}
 
-		public virtual long GetSize(object obj, Type aClass, Type type, Sharpen.Annotation.Annotation
+		public virtual long GetSize(object obj, Type aClass, Type type, Annotation.Annotation
 			[] annotations, MediaType mediaType)
 		{
 			return -1;
@@ -31,11 +31,11 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Javax.WS.RS.WebApplicationException"/>
-		public virtual void WriteTo(object obj, Type aClass, Type type, Sharpen.Annotation.Annotation
+		public virtual void WriteTo(object obj, Type aClass, Type type, Annotation.Annotation
 			[] annotations, MediaType mediaType, MultivaluedMap<string, object> stringObjectMultivaluedMap
 			, OutputStream outputStream)
 		{
-			TextWriter writer = new OutputStreamWriter(outputStream, Sharpen.Extensions.GetEncoding
+			TextWriter writer = new OutputStreamWriter(outputStream, Extensions.GetEncoding
 				("UTF-8"));
 			ObjectMapper jsonMapper = new ObjectMapper();
 			jsonMapper.WriterWithDefaultPrettyPrinter().WriteValue(writer, obj);

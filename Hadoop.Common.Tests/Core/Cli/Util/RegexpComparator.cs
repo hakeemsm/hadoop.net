@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Cli.Util
 {
@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.Cli.Util
 		public override bool Compare(string actual, string expected)
 		{
 			bool success = false;
-			Sharpen.Pattern p = Sharpen.Pattern.Compile(expected);
+			Pattern p = Pattern.Compile(expected);
 			StringTokenizer tokenizer = new StringTokenizer(actual, "\n\r");
 			while (tokenizer.HasMoreTokens() && !success)
 			{

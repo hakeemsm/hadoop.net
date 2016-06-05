@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using Org.Apache.Hadoop.Cli;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Cli.Util
 {
@@ -12,7 +12,7 @@ namespace Org.Apache.Hadoop.Cli.Util
 			, string master)
 		{
 			string regex = "\'([^\']*)\'|\"([^\"]*)\"|(\\S+)";
-			Matcher matcher = Sharpen.Pattern.Compile(regex).Matcher(cmd);
+			Matcher matcher = Pattern.Compile(regex).Matcher(cmd);
 			AList<string> args = new AList<string>();
 			string arg = null;
 			while (matcher.Find())
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Cli.Util
 				arg = arg.ReplaceAll("USERNAME", Runtime.GetProperty("user.name"));
 				args.AddItem(arg);
 			}
-			return Sharpen.Collections.ToArray(args, new string[0]);
+			return Collections.ToArray(args, new string[0]);
 		}
 
 		/// <exception cref="System.Exception"/>
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.Cli.Util
 			}
 			catch (Exception e)
 			{
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				lastException = e;
 				exitCode = -1;
 			}

@@ -13,7 +13,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Mono.Math;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -417,7 +417,7 @@ namespace Org.Apache.Hadoop.Util
 					}
 					else
 					{
-						list.AddItem(ParseItem(isDigit, Sharpen.Runtime.Substring(version, startIndex, i)
+						list.AddItem(ParseItem(isDigit, Runtime.Substring(version, startIndex, i)
 							));
 					}
 					startIndex = i + 1;
@@ -432,7 +432,7 @@ namespace Org.Apache.Hadoop.Util
 						}
 						else
 						{
-							list.AddItem(ParseItem(isDigit, Sharpen.Runtime.Substring(version, startIndex, i)
+							list.AddItem(ParseItem(isDigit, Runtime.Substring(version, startIndex, i)
 								));
 						}
 						startIndex = i + 1;
@@ -455,7 +455,7 @@ namespace Org.Apache.Hadoop.Util
 						{
 							if (!isDigit && i > startIndex)
 							{
-								list.AddItem(new ComparableVersion.StringItem(Sharpen.Runtime.Substring(version, 
+								list.AddItem(new ComparableVersion.StringItem(Runtime.Substring(version, 
 									startIndex, i), true));
 								startIndex = i;
 							}
@@ -465,7 +465,7 @@ namespace Org.Apache.Hadoop.Util
 						{
 							if (isDigit && i > startIndex)
 							{
-								list.AddItem(ParseItem(true, Sharpen.Runtime.Substring(version, startIndex, i)));
+								list.AddItem(ParseItem(true, Runtime.Substring(version, startIndex, i)));
 								startIndex = i;
 							}
 							isDigit = false;
@@ -475,7 +475,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			if (version.Length > startIndex)
 			{
-				list.AddItem(ParseItem(isDigit, Sharpen.Runtime.Substring(version, startIndex)));
+				list.AddItem(ParseItem(isDigit, Runtime.Substring(version, startIndex)));
 			}
 			while (!stack.IsEmpty())
 			{

@@ -19,7 +19,7 @@ using System.IO;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode.SharpZipLib.Zip.Compression;
 using Org.Apache.Hadoop.IO.Compress;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress.Zlib
 {

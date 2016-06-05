@@ -6,7 +6,7 @@ using System.Reflection;
 using Javax.Servlet.Http;
 using Javax.WS.RS.Core;
 using Org.Codehaus.Jackson.Map;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -89,7 +89,7 @@ namespace Org.Apache.Hadoop.Util
 				int i = message.IndexOf(Enter);
 				if (i > -1)
 				{
-					message = Sharpen.Runtime.Substring(message, 0, i);
+					message = Runtime.Substring(message, 0, i);
 				}
 			}
 			return message;

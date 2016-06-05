@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Fs;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Hadoop;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -29,10 +29,10 @@ namespace Org.Apache.Hadoop.FS
 			);
 
 		/// <summary>Pre-compiled regular expressions to detect path formats.</summary>
-		private static readonly Sharpen.Pattern hasUriScheme = Sharpen.Pattern.Compile("^[a-zA-Z][a-zA-Z0-9+-.]+:"
+		private static readonly Pattern hasUriScheme = Pattern.Compile("^[a-zA-Z][a-zA-Z0-9+-.]+:"
 			);
 
-		private static readonly Sharpen.Pattern hasDriveLetterSpecifier = Sharpen.Pattern
+		private static readonly Pattern hasDriveLetterSpecifier = Pattern
 			.Compile("^/?[a-zA-Z]:");
 
 		private URI uri;
@@ -148,7 +148,7 @@ namespace Org.Apache.Hadoop.FS
 			if ((colon != -1) && ((slash == -1) || (colon < slash)))
 			{
 				// has a scheme
-				scheme = Sharpen.Runtime.Substring(pathString, 0, colon);
+				scheme = Runtime.Substring(pathString, 0, colon);
 				start = colon + 1;
 			}
 			// parse uri authority, if any
@@ -157,11 +157,11 @@ namespace Org.Apache.Hadoop.FS
 				// has authority
 				int nextSlash = pathString.IndexOf('/', start + 2);
 				int authEnd = nextSlash > 0 ? nextSlash : pathString.Length;
-				authority = Sharpen.Runtime.Substring(pathString, start + 2, authEnd);
+				authority = Runtime.Substring(pathString, start + 2, authEnd);
 				start = authEnd;
 			}
 			// uri path is the rest of the string -- query & fragment not supported
-			string path = Sharpen.Runtime.Substring(pathString, start, pathString.Length);
+			string path = Runtime.Substring(pathString, start, pathString.Length);
 			Initialize(scheme, authority, path, null);
 		}
 
@@ -217,7 +217,7 @@ namespace Org.Apache.Hadoop.FS
 			, Org.Apache.Hadoop.FS.Path path2)
 		{
 			string path2Str = path2.ToUri().GetPath();
-			path2Str = Sharpen.Runtime.Substring(path2Str, StartPositionWithoutWindowsDrive(path2Str
+			path2Str = Runtime.Substring(path2Str, StartPositionWithoutWindowsDrive(path2Str
 				));
 			// Add path components explicitly, because simply concatenating two path
 			// string is not safe, for example:
@@ -251,7 +251,7 @@ namespace Org.Apache.Hadoop.FS
 			int minLength = StartPositionWithoutWindowsDrive(path) + 1;
 			if (path.Length > minLength && path.EndsWith(Separator))
 			{
-				path = Sharpen.Runtime.Substring(path, 0, path.Length - 1);
+				path = Runtime.Substring(path, 0, path.Length - 1);
 			}
 			return path;
 		}
@@ -349,7 +349,7 @@ namespace Org.Apache.Hadoop.FS
 		{
 			string path = uri.GetPath();
 			int slash = path.LastIndexOf(Separator);
-			return Sharpen.Runtime.Substring(path, slash + 1);
+			return Runtime.Substring(path, slash + 1);
 		}
 
 		/// <summary>Returns the parent of a path or null if at root.</summary>
@@ -371,7 +371,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 			else
 			{
-				parent = Sharpen.Runtime.Substring(path, 0, lastSlash == start ? start + 1 : lastSlash
+				parent = Runtime.Substring(path, 0, lastSlash == start ? start + 1 : lastSlash
 					);
 			}
 			return new Org.Apache.Hadoop.FS.Path(uri.GetScheme(), uri.GetAuthority(), parent);
@@ -407,7 +407,7 @@ namespace Org.Apache.Hadoop.FS
 					// has windows drive
 					// but no scheme
 					// or authority
-					path = Sharpen.Runtime.Substring(path, 1);
+					path = Runtime.Substring(path, 1);
 				}
 				// remove slash before drive
 				buffer.Append(path);
@@ -459,7 +459,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <remarks>
 		/// Returns a qualified path object.
 		/// Deprecated - use
-		/// <see cref="MakeQualified(Sharpen.URI, Path)"/>
+		/// <see cref="MakeQualified(URI, Path)"/>
 		/// </remarks>
 		[Obsolete]
 		public virtual Org.Apache.Hadoop.FS.Path MakeQualified(FileSystem fs)

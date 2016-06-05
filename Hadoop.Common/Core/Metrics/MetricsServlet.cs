@@ -6,7 +6,7 @@ using Javax.Servlet.Http;
 using Org.Apache.Hadoop.Http;
 using Org.Apache.Hadoop.Metrics.Spi;
 using Org.Mortbay.Util.Ajax;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics
 {

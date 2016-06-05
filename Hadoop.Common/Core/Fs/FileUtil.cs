@@ -13,8 +13,8 @@ using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Nativeio;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -430,7 +430,7 @@ namespace Org.Apache.Hadoop.FS
 							IOUtils.CopyBytes(@in, @out, conf, false);
 							if (addString != null)
 							{
-								@out.Write(Sharpen.Runtime.GetBytesForString(addString, "UTF-8"));
+								@out.Write(Runtime.GetBytesForString(addString, "UTF-8"));
 							}
 						}
 						finally
@@ -1038,7 +1038,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Platform independent implementation for
-		/// <see cref="Sharpen.FilePath.SetReadable(bool)"/>
+		/// <see cref="FilePath.SetReadable(bool)"/>
 		/// File#setReadable does not work as expected on Windows.
 		/// </summary>
 		/// <param name="f">input file</param>
@@ -1067,7 +1067,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Platform independent implementation for
-		/// <see cref="Sharpen.FilePath.SetWritable(bool)"/>
+		/// <see cref="FilePath.SetWritable(bool)"/>
 		/// File#setWritable does not work as expected on Windows.
 		/// </summary>
 		/// <param name="f">input file</param>
@@ -1096,7 +1096,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Platform independent implementation for
-		/// <see cref="Sharpen.FilePath.SetExecutable(bool)"/>
+		/// <see cref="FilePath.SetExecutable(bool)"/>
 		/// File#setExecutable does not work as expected on Windows.
 		/// Note: revoking execute permission on folders does not have the same
 		/// behavior on Windows as on Unix platforms. Creating, deleting or renaming
@@ -1128,12 +1128,12 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Platform independent implementation for
-		/// <see cref="Sharpen.FilePath.CanRead()"/>
+		/// <see cref="FilePath.CanRead()"/>
 		/// </summary>
 		/// <param name="f">input file</param>
 		/// <returns>
 		/// On Unix, same as
-		/// <see cref="Sharpen.FilePath.CanRead()"/>
+		/// <see cref="FilePath.CanRead()"/>
 		/// On Windows, true if process has read access on the path
 		/// </returns>
 		public static bool CanRead(FilePath f)
@@ -1158,12 +1158,12 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Platform independent implementation for
-		/// <see cref="Sharpen.FilePath.CanWrite()"/>
+		/// <see cref="FilePath.CanWrite()"/>
 		/// </summary>
 		/// <param name="f">input file</param>
 		/// <returns>
 		/// On Unix, same as
-		/// <see cref="Sharpen.FilePath.CanWrite()"/>
+		/// <see cref="FilePath.CanWrite()"/>
 		/// On Windows, true if process has write access on the path
 		/// </returns>
 		public static bool CanWrite(FilePath f)
@@ -1188,12 +1188,12 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Platform independent implementation for
-		/// <see cref="Sharpen.FilePath.CanExecute()"/>
+		/// <see cref="FilePath.CanExecute()"/>
 		/// </summary>
 		/// <param name="f">input file</param>
 		/// <returns>
 		/// On Unix, same as
-		/// <see cref="Sharpen.FilePath.CanExecute()"/>
+		/// <see cref="FilePath.CanExecute()"/>
 		/// On Windows, true if process has execute access on the path
 		/// </returns>
 		public static bool CanExecute(FilePath f)
@@ -1307,9 +1307,9 @@ namespace Org.Apache.Hadoop.FS
 		/// IOException
 		/// If a tmp file cannot created
 		/// </exception>
-		/// <seealso cref="Sharpen.FilePath.CreateTempFile(string, string, Sharpen.FilePath)"
+		/// <seealso cref="FilePath.CreateTempFile(string, string, FilePath)"
 		/// 	/>
-		/// <seealso cref="Sharpen.FilePath.DeleteOnExit()"/>
+		/// <seealso cref="FilePath.DeleteOnExit()"/>
 		/// <exception cref="System.IO.IOException"/>
 		public static FilePath CreateLocalTempFile(FilePath basefile, string prefix, bool
 			 isDeleteOnExit)
@@ -1345,7 +1345,7 @@ namespace Org.Apache.Hadoop.FS
 				{
 					try
 					{
-						Sharpen.Thread.Sleep(1000);
+						Thread.Sleep(1000);
 					}
 					catch (Exception)
 					{
@@ -1361,7 +1361,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// A wrapper for
-		/// <see cref="Sharpen.FilePath.ListFiles()"/>
+		/// <see cref="FilePath.ListFiles()"/>
 		/// . This java.io API returns null
 		/// when a dir is not a directory or for any I/O error. Instead of having
 		/// null check everywhere File#listFiles() is used, we will add utility API
@@ -1388,7 +1388,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// A wrapper for
-		/// <see cref="Sharpen.FilePath.List()"/>
+		/// <see cref="FilePath.List()"/>
 		/// . This java.io API returns null
 		/// when a dir is not a directory or for any I/O error. Instead of having
 		/// null check everywhere File#list() is used, we will add utility API

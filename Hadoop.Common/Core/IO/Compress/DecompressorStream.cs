@@ -17,7 +17,7 @@
 */
 using System;
 using System.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress
 {

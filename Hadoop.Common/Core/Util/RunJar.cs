@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
-using Sharpen.Jar;
-using Sharpen.Reflect;
+
+using Jar;
+using Reflect;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -15,7 +15,7 @@ namespace Org.Apache.Hadoop.Util
 	public class RunJar
 	{
 		/// <summary>Pattern that matches any string</summary>
-		public static readonly Sharpen.Pattern MatchAny = Sharpen.Pattern.Compile(".*");
+		public static readonly Pattern MatchAny = Pattern.Compile(".*");
 
 		/// <summary>Priority of the RunJar shutdown hook.</summary>
 		public const int ShutdownHookPriority = 10;
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <param name="toDir">the destination directory into which to unpack the jar</param>
 		/// <param name="unpackRegex">the pattern to match jar entries against</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void UnJar(FilePath jarFile, FilePath toDir, Sharpen.Pattern unpackRegex
+		public static void UnJar(FilePath jarFile, FilePath toDir, Pattern unpackRegex
 			)
 		{
 			JarFile jar = new JarFile(jarFile);
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 			catch (IOException io)
 			{
-				throw Sharpen.Extensions.InitCause(new IOException("Error opening job jar: " + fileName
+				throw Extensions.InitCause(new IOException("Error opening job jar: " + fileName
 					), io);
 			}
 			Manifest manifest = jarFile.GetManifest();
@@ -181,11 +181,11 @@ namespace Org.Apache.Hadoop.Util
 				);
 			UnJar(file, workDir);
 			ClassLoader loader = CreateClassLoader(file, workDir);
-			Sharpen.Thread.CurrentThread().SetContextClassLoader(loader);
-			Type mainClass = Sharpen.Runtime.GetType(mainClassName, true, loader);
+			Thread.CurrentThread().SetContextClassLoader(loader);
+			Type mainClass = Runtime.GetType(mainClassName, true, loader);
 			MethodInfo main = mainClass.GetMethod("main", new Type[] { System.Array.CreateInstance
 				(typeof(string), 0).GetType() });
-			string[] newArgs = Sharpen.Collections.ToArray(Arrays.AsList(args).SubList(firstArg
+			string[] newArgs = Collections.ToArray(Arrays.AsList(args).SubList(firstArg
 				, args.Length), new string[0]);
 			try
 			{
@@ -265,7 +265,7 @@ namespace Org.Apache.Hadoop.Util
 					}
 				}
 				// create a normal parent-delegating classloader
-				loader = new URLClassLoader(Sharpen.Collections.ToArray(classPath, new Uri[0]));
+				loader = new URLClassLoader(Collections.ToArray(classPath, new Uri[0]));
 			}
 			return loader;
 		}

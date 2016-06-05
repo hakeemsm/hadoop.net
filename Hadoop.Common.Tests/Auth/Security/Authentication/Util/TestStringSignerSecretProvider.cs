@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Org.Apache.Hadoop.Security.Authentication.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -15,7 +15,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			Properties secretProviderProps = new Properties();
 			secretProviderProps.SetProperty(AuthenticationFilter.SignatureSecret, "secret");
 			secretProvider.Init(secretProviderProps, null, -1);
-			byte[] secretBytes = Sharpen.Runtime.GetBytesForString(secretStr);
+			byte[] secretBytes = Runtime.GetBytesForString(secretStr);
 			Assert.AssertArrayEquals(secretBytes, secretProvider.GetCurrentSecret());
 			byte[][] allSecrets = secretProvider.GetAllSecrets();
 			Assert.Equal(1, allSecrets.Length);

@@ -23,7 +23,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Annotation;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {
@@ -129,7 +129,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 				}
 			}
 			// Create a new registry according to annotation
-			foreach (Sharpen.Annotation.Annotation annotation in cls.GetAnnotations())
+			foreach (Annotation.Annotation annotation in cls.GetAnnotations())
 			{
 				if (annotation is Metrics)
 				{
@@ -151,7 +151,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 
 		private void Add(object source, FieldInfo field)
 		{
-			foreach (Sharpen.Annotation.Annotation annotation in field.GetAnnotations())
+			foreach (Annotation.Annotation annotation in field.GetAnnotations())
 			{
 				if (!(annotation is Metric))
 				{
@@ -189,7 +189,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 
 		private void Add(object source, MethodInfo method)
 		{
-			foreach (Sharpen.Annotation.Annotation annotation in method.GetAnnotations())
+			foreach (Annotation.Annotation annotation in method.GetAnnotations())
 			{
 				if (!(annotation is Metric))
 				{

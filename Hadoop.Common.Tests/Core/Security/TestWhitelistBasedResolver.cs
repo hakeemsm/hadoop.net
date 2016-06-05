@@ -3,7 +3,7 @@ using System.Net;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -31,7 +31,7 @@ namespace Org.Apache.Hadoop.Security
 			WhitelistBasedResolver wqr = new WhitelistBasedResolver();
 			wqr.SetConf(conf);
 			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
-				(Sharpen.Extensions.GetAddressByName("10.119.103.112")));
+				(Extensions.GetAddressByName("10.119.103.112")));
 			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.119.103.113"
 				));
 			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
@@ -76,7 +76,7 @@ namespace Org.Apache.Hadoop.Security
 			WhitelistBasedResolver wqr = new WhitelistBasedResolver();
 			wqr.SetConf(conf);
 			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties
-				(Sharpen.Extensions.GetAddressByName("10.119.103.112")));
+				(Extensions.GetAddressByName("10.119.103.112")));
 			Assert.Equal(SaslPrivacyProps, wqr.GetServerProperties("10.119.103.113"
 				));
 			Assert.Equal(wqr.GetDefaultProperties(), wqr.GetServerProperties

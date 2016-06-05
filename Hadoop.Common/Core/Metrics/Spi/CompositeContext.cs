@@ -4,8 +4,8 @@ using System.Reflection;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Metrics;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Metrics.Spi
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -67,9 +67,9 @@ namespace Org.Apache.Hadoop.Util
 				this._enclosing = _enclosing;
 			}
 
-			public Sharpen.Thread NewThread(Runnable r)
+			public Thread NewThread(Runnable r)
 			{
-				return new Sharpen.Thread(this._enclosing.threadGroup, r);
+				return new Thread(this._enclosing.threadGroup, r);
 			}
 
 			private readonly AsyncDiskService _enclosing;
@@ -139,7 +139,7 @@ namespace Org.Apache.Hadoop.Util
 				IList<Runnable> list = new AList<Runnable>();
 				foreach (KeyValuePair<string, ThreadPoolExecutor> e in executors)
 				{
-					Sharpen.Collections.AddAll(list, e.Value.ShutdownNow());
+					Collections.AddAll(list, e.Value.ShutdownNow());
 				}
 				return list;
 			}

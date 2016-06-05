@@ -5,7 +5,7 @@ using Com.Google.Common.Collect;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Bloom
 {
@@ -179,19 +179,19 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				{
 					filter.Add(this.keys);
 					Assert.True(" might contain key error ", filter.MembershipTest(
-						new Key(Sharpen.Runtime.GetBytesForString("100"))));
+						new Key(Runtime.GetBytesForString("100"))));
 					Assert.True(" might contain key error ", filter.MembershipTest(
-						new Key(Sharpen.Runtime.GetBytesForString("200"))));
-					filter.Add(Sharpen.Collections.ToArray(this.keys, new Key[] {  }));
+						new Key(Runtime.GetBytesForString("200"))));
+					filter.Add(Collections.ToArray(this.keys, new Key[] {  }));
 					Assert.True(" might contain key error ", filter.MembershipTest(
-						new Key(Sharpen.Runtime.GetBytesForString("100"))));
+						new Key(Runtime.GetBytesForString("100"))));
 					Assert.True(" might contain key error ", filter.MembershipTest(
-						new Key(Sharpen.Runtime.GetBytesForString("200"))));
+						new Key(Runtime.GetBytesForString("200"))));
 					filter.Add(new _AbstractCollection_167(this));
 					Assert.True(" might contain key error ", filter.MembershipTest(
-						new Key(Sharpen.Runtime.GetBytesForString("100"))));
+						new Key(Runtime.GetBytesForString("100"))));
 					Assert.True(" might contain key error ", filter.MembershipTest(
-						new Key(Sharpen.Runtime.GetBytesForString("200"))));
+						new Key(Runtime.GetBytesForString("200"))));
 				}
 
 				private sealed class _AbstractCollection_167 : AbstractCollection<Key>
@@ -231,19 +231,19 @@ namespace Org.Apache.Hadoop.Util.Bloom
 				private void CheckOnKeyMethods()
 				{
 					string line = "werabsdbe";
-					Key key = new Key(Sharpen.Runtime.GetBytesForString(line));
+					Key key = new Key(Runtime.GetBytesForString(line));
 					Assert.True("default key weight error ", key.GetWeight() == 1d);
-					key.Set(Sharpen.Runtime.GetBytesForString(line), 2d);
+					key.Set(Runtime.GetBytesForString(line), 2d);
 					Assert.True(" setted key weight error ", key.GetWeight() == 2d);
-					Key sKey = new Key(Sharpen.Runtime.GetBytesForString(line), 2d);
+					Key sKey = new Key(Runtime.GetBytesForString(line), 2d);
 					Assert.True("equals error", key.Equals(sKey));
 					Assert.True("hashcode error", key.GetHashCode() == sKey.GetHashCode
 						());
-					sKey = new Key(Sharpen.Runtime.GetBytesForString(line.Concat("a")), 2d);
+					sKey = new Key(Runtime.GetBytesForString(line.Concat("a")), 2d);
 					NUnit.Framework.Assert.IsFalse("equals error", key.Equals(sKey));
 					NUnit.Framework.Assert.IsFalse("hashcode error", key.GetHashCode() == sKey.GetHashCode
 						());
-					sKey = new Key(Sharpen.Runtime.GetBytesForString(line), 3d);
+					sKey = new Key(Runtime.GetBytesForString(line), 3d);
 					NUnit.Framework.Assert.IsFalse("equals error", key.Equals(sKey));
 					NUnit.Framework.Assert.IsFalse("hashcode error", key.GetHashCode() == sKey.GetHashCode
 						());
@@ -258,7 +258,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					string line = "qryqeb354645rghdfvbaq23312fg";
 					DataOutputBuffer @out = new DataOutputBuffer();
 					DataInputBuffer @in = new DataInputBuffer();
-					Key originKey = new Key(Sharpen.Runtime.GetBytesForString(line), 100d);
+					Key originKey = new Key(Runtime.GetBytesForString(line), 100d);
 					try
 					{
 						originKey.Write(@out);
@@ -456,14 +456,14 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					// add all even keys
 					for (int i = 0; i < numInsertions; i += 2)
 					{
-						filter.Add(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(
+						filter.Add(new Key(Runtime.GetBytesForString(Extensions.ToString(
 							i))));
 					}
 					// check on present even key
 					for (int i_1 = 0; i_1 < numInsertions; i_1 += 2)
 					{
 						Assert.True(" filter might contains " + i_1, filter.MembershipTest
-							(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_1)))));
+							(new Key(Runtime.GetBytesForString(Extensions.ToString(i_1)))));
 					}
 					// check on absent odd in event
 					for (int i_2 = 1; i_2 < numInsertions; i_2 += 2)
@@ -471,7 +471,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						if (!falsePositives.Contains(i_2))
 						{
 							NUnit.Framework.Assert.IsFalse(" filter should not contain " + i_2, filter.MembershipTest
-								(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_2)))));
+								(new Key(Runtime.GetBytesForString(Extensions.ToString(i_2)))));
 						}
 					}
 				}
@@ -509,7 +509,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						// mark bits for later check
 						foreach (int slot in list)
 						{
-							filter.Add(new Key(Sharpen.Runtime.GetBytesForString(slot.ToString())));
+							filter.Add(new Key(Runtime.GetBytesForString(slot.ToString())));
 						}
 						filter.Write(@out);
 						@in.Reset(@out.GetData(), @out.GetLength());
@@ -517,7 +517,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						foreach (int slot_1 in list)
 						{
 							Assert.True("read/write mask check filter error on " + slot_1, 
-								filter.MembershipTest(new Key(Sharpen.Runtime.GetBytesForString(slot_1.ToString(
+								filter.MembershipTest(new Key(Runtime.GetBytesForString(slot_1.ToString(
 								)))));
 						}
 					}
@@ -551,18 +551,18 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						for (int i = 0; i < numInsertions; i++)
 						{
 							NUnit.Framework.Assert.IsFalse(" filter might contains " + i, filter.MembershipTest
-								(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i)))));
+								(new Key(Runtime.GetBytesForString(Extensions.ToString(i)))));
 						}
 						// add all even keys
 						for (int i_1 = 0; i_1 < numInsertions; i_1 += 2)
 						{
-							filter.Add(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(
+							filter.Add(new Key(Runtime.GetBytesForString(Extensions.ToString(
 								i_1))));
 						}
 						// add all odd keys
 						for (int i_2 = 0; i_2 < numInsertions; i_2 += 2)
 						{
-							symmetricFilter.Add(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString
+							symmetricFilter.Add(new Key(Runtime.GetBytesForString(Extensions.ToString
 								(i_2))));
 						}
 						filter.Xor(symmetricFilter);
@@ -571,7 +571,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						for (int i_3 = 0; i_3 < numInsertions; i_3++)
 						{
 							NUnit.Framework.Assert.IsFalse(" filter might not contains " + i_3, filter.MembershipTest
-								(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_3)))));
+								(new Key(Runtime.GetBytesForString(Extensions.ToString(i_3)))));
 						}
 					}
 					catch (NotSupportedException)
@@ -601,11 +601,11 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						), numInsertions, hashId);
 					for (int i = 0; i < numInsertions; i++)
 					{
-						string digit = Sharpen.Extensions.ToString(i);
-						filter.Add(new Key(Sharpen.Runtime.GetBytesForString(digit)));
+						string digit = Extensions.ToString(i);
+						filter.Add(new Key(Runtime.GetBytesForString(digit)));
 						if (i >= startIntersection && i <= endIntersection)
 						{
-							partialFilter.Add(new Key(Sharpen.Runtime.GetBytesForString(digit)));
+							partialFilter.Add(new Key(Runtime.GetBytesForString(digit)));
 						}
 					}
 					// do logic AND
@@ -615,7 +615,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 						if (i_1 >= startIntersection && i_1 <= endIntersection)
 						{
 							Assert.True(" filter might contains " + i_1, filter.MembershipTest
-								(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_1)))));
+								(new Key(Runtime.GetBytesForString(Extensions.ToString(i_1)))));
 						}
 					}
 				}
@@ -639,13 +639,13 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					// add all even
 					for (int i = 0; i < numInsertions; i += 2)
 					{
-						evenFilter.Add(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString
+						evenFilter.Add(new Key(Runtime.GetBytesForString(Extensions.ToString
 							(i))));
 					}
 					// add all odd
 					for (int i_1 = 1; i_1 < numInsertions; i_1 += 2)
 					{
-						filter.Add(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(
+						filter.Add(new Key(Runtime.GetBytesForString(Extensions.ToString(
 							i_1))));
 					}
 					// union odd with even
@@ -654,7 +654,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 					for (int i_2 = 0; i_2 < numInsertions; i_2++)
 					{
 						Assert.True(" filter might contains " + i_2, filter.MembershipTest
-							(new Key(Sharpen.Runtime.GetBytesForString(Sharpen.Extensions.ToString(i_2)))));
+							(new Key(Runtime.GetBytesForString(Extensions.ToString(i_2)))));
 					}
 				}
 			}

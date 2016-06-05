@@ -11,7 +11,7 @@ using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Security.Token;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -191,7 +191,7 @@ namespace Org.Apache.Hadoop.Security
 
 		public static void Init(Configuration conf)
 		{
-			Sharpen.Security.AddProvider(new SaslPlainServer.SecurityProvider());
+			Security.AddProvider(new SaslPlainServer.SecurityProvider());
 			// passing null so factory is populated with all possibilities.  the
 			// properties passed when instantiating a server are what really matter
 			saslFactory = new SaslRpcServer.FastSaslServerFactory(null);
@@ -204,7 +204,7 @@ namespace Org.Apache.Hadoop.Security
 
 		internal static byte[] DecodeIdentifier(string identifier)
 		{
-			return Base64.DecodeBase64(Sharpen.Runtime.GetBytesForString(identifier, Charsets
+			return Base64.DecodeBase64(Runtime.GetBytesForString(identifier, Charsets
 				.Utf8));
 		}
 
@@ -221,7 +221,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (IOException e)
 			{
-				throw (SecretManager.InvalidToken)Sharpen.Extensions.InitCause(new SecretManager.InvalidToken
+				throw (SecretManager.InvalidToken)Extensions.InitCause(new SecretManager.InvalidToken
 					("Can't de-serialize tokenIdentifier"), e);
 			}
 			return tokenIdentifier;
@@ -499,7 +499,7 @@ namespace Org.Apache.Hadoop.Security
 
 			public virtual string[] GetMechanismNames(IDictionary<string, object> props)
 			{
-				return Sharpen.Collections.ToArray(factoryCache.Keys, new string[0]);
+				return Collections.ToArray(factoryCache.Keys, new string[0]);
 			}
 		}
 	}

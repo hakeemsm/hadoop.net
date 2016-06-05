@@ -9,7 +9,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -425,7 +425,7 @@ namespace Org.Apache.Hadoop.HA
 			}
 			if (!Usage.Contains(cmd))
 			{
-				errOut.WriteLine(Sharpen.Runtime.Substring(cmd, 1) + ": Unknown command");
+				errOut.WriteLine(Runtime.Substring(cmd, 1) + ": Unknown command");
 				PrintUsage(errOut);
 				return -1;
 			}
@@ -552,7 +552,7 @@ namespace Org.Apache.Hadoop.HA
 			}
 			catch (ParseException)
 			{
-				errOut.WriteLine(Sharpen.Runtime.Substring(cmdName, 1) + ": incorrect arguments");
+				errOut.WriteLine(Runtime.Substring(cmdName, 1) + ": incorrect arguments");
 				PrintUsage(errOut, cmdName);
 				return null;
 			}

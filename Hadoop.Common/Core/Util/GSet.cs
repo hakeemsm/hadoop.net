@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.Util
 		/// is similar to
 		/// <see cref="System.Collections.IDictionary{K, V}.Put(object, object)"/>
 		/// but is different from
-		/// <see cref="Sharpen.Set{E}.AddItem(object)"/>
+		/// <see cref="Set{E}.AddItem(object)"/>
 		/// which does not replace the existing element if there is any.
 		/// </remarks>
 		/// <param name="element">The element being put.</param>
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <remarks>
 		/// Remove the element corresponding to the given key.
 		/// This operation is similar to
-		/// <see cref="Sharpen.Collections.Remove(object)"/>
+		/// <see cref="Collections.Remove(object)"/>
 		/// .
 		/// </remarks>
 		/// <param name="key">The key of the element being removed.</param>

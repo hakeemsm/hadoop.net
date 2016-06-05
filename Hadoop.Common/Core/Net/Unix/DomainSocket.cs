@@ -4,7 +4,7 @@ using Com.Google.Common.Annotations;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net.Unix
 {
@@ -159,7 +159,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 		{
 		}
 
-		/// <exception cref="Sharpen.ClosedChannelException"/>
+		/// <exception cref="ClosedChannelException"/>
 		private void Unreference(bool checkClosed)
 		{
 			if (checkClosed)
@@ -399,7 +399,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 				}
 				try
 				{
-					Sharpen.Thread.Sleep(10);
+					Thread.Sleep(10);
 				}
 				catch (Exception)
 				{
@@ -417,7 +417,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 			Close0(fd);
 			if (interrupted)
 			{
-				Sharpen.Thread.CurrentThread().Interrupt();
+				Thread.CurrentThread().Interrupt();
 			}
 		}
 

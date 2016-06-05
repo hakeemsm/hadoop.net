@@ -7,8 +7,8 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Ipc.Protobuf;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {

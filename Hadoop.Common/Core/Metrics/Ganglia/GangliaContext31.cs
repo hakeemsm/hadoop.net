@@ -23,7 +23,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Metrics;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Ganglia
 {
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.Metrics.Ganglia
 			int tmax = GetTmax(name);
 			int dmax = GetDmax(name);
 			offset = 0;
-			string groupName = Sharpen.Runtime.Substring(name, 0, name.LastIndexOf("."));
+			string groupName = Runtime.Substring(name, 0, name.LastIndexOf("."));
 			// The following XDR recipe was done through a careful reading of
 			// gm_protocol.x in Ganglia 3.1 and carefully examining the output of
 			// the gmetric utility with strace.

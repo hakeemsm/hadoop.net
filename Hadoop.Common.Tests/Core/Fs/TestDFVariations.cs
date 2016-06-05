@@ -2,7 +2,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestMount()
 		{
 			TestDFVariations.XXDF df = new TestDFVariations.XXDF();
-			string expectedMount = Shell.Windows ? Sharpen.Runtime.Substring(df.GetDirPath(), 
+			string expectedMount = Shell.Windows ? Runtime.Substring(df.GetDirPath(), 
 				0, 2) : "/foo/bar";
 			Assert.Equal("Invalid mount point", expectedMount, df.GetMount
 				());
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestFileSystem()
 		{
 			TestDFVariations.XXDF df = new TestDFVariations.XXDF();
-			string expectedFileSystem = Shell.Windows ? Sharpen.Runtime.Substring(df.GetDirPath
+			string expectedFileSystem = Shell.Windows ? Runtime.Substring(df.GetDirPath
 				(), 0, 2) : "/dev/sda3";
 			Assert.Equal("Invalid filesystem", expectedFileSystem, df.GetFilesystem
 				());

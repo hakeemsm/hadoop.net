@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -94,8 +94,8 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			byte[] encryptedKeyIv = eek.GetEncryptedKeyIv();
 			byte[] encryptedKeyMaterial = eek.GetEncryptedKeyVersion().GetMaterial();
 			// Decrypt it manually
-			Sharpen.Cipher cipher = Sharpen.Cipher.GetInstance("AES/CTR/NoPadding");
-			cipher.Init(Sharpen.Cipher.DecryptMode, new SecretKeySpec(encryptionKey.GetMaterial
+			Cipher cipher = Cipher.GetInstance("AES/CTR/NoPadding");
+			cipher.Init(Cipher.DecryptMode, new SecretKeySpec(encryptionKey.GetMaterial
 				(), "AES"), new IvParameterSpec(KeyProviderCryptoExtension.EncryptedKeyVersion.DeriveIV
 				(encryptedKeyIv)));
 			byte[] manualMaterial = cipher.DoFinal(encryptedKeyMaterial);

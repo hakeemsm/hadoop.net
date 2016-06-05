@@ -7,7 +7,7 @@ using Org.Apache.Commons.Codec.Binary;
 using Org.Apache.Hadoop.Security.Authentication.Util;
 using Org.Apache.Hadoop.Util;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Client
 {
@@ -332,7 +332,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 			/// <exception cref="System.Exception"/>
 			public Void Run()
 			{
-				Sharpen.GSSContext gssContext = null;
+				GSSContext gssContext = null;
 				try
 				{
 					GSSManager gssManager = GSSManager.GetInstance();
@@ -341,7 +341,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 					Oid oid = KerberosUtil.GetOidInstance("NT_GSS_KRB5_PRINCIPAL");
 					GSSName serviceName = gssManager.CreateName(servicePrincipal, oid);
 					oid = KerberosUtil.GetOidInstance("GSS_KRB5_MECH_OID");
-					gssContext = gssManager.CreateContext(serviceName, oid, null, Sharpen.GSSContext.
+					gssContext = gssManager.CreateContext(serviceName, oid, null, GSSContext.
 						DefaultLifetime);
 					gssContext.RequestCredDeleg(true);
 					gssContext.RequestMutualAuth(true);
@@ -413,7 +413,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Client
 					throw new AuthenticationException("Invalid SPNEGO sequence, '" + WwwAuthenticate 
 						+ "' header incorrect: " + authHeader);
 				}
-				string negotiation = Sharpen.Runtime.Substring(authHeader.Trim(), (Negotiate + " "
+				string negotiation = Runtime.Substring(authHeader.Trim(), (Negotiate + " "
 					).Length).Trim();
 				return base64.Decode(negotiation);
 			}

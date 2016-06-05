@@ -3,7 +3,7 @@ using Org.Apache.Commons.Configuration;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Impl;
 using Org.Apache.Hadoop.Metrics2.Lib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Filter
 {

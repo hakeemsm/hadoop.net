@@ -2,8 +2,8 @@ using System;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -153,7 +153,7 @@ namespace Org.Apache.Hadoop.Ipc
 			bool wasEmpty = q.IsEmpty();
 			try
 			{
-				Sharpen.Thread.Sleep(10);
+				Thread.Sleep(10);
 			}
 			catch (Exception)
 			{
@@ -164,7 +164,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		private string StringRepr(object o)
 		{
-			return o.GetType().FullName + '@' + Sharpen.Extensions.ToHexString(o.GetHashCode(
+			return o.GetType().FullName + '@' + Extensions.ToHexString(o.GetHashCode(
 				));
 		}
 	}

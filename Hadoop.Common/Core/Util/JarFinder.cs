@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Com.Google.Common.Base;
-using Sharpen;
-using Sharpen.Jar;
+
+using Jar;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -143,7 +143,7 @@ namespace Org.Apache.Hadoop.Util
 						string path = url.AbsolutePath;
 						if (path.StartsWith("file:"))
 						{
-							path = Sharpen.Runtime.Substring(path, "file:".Length);
+							path = Runtime.Substring(path, "file:".Length);
 						}
 						path = URLDecoder.Decode(path, "UTF-8");
 						if ("jar".Equals(url.Scheme))
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Util
 							{
 								string klassName = klass.FullName;
 								klassName = klassName.Replace(".", "/") + ".class";
-								path = Sharpen.Runtime.Substring(path, 0, path.Length - klassName.Length);
+								path = Runtime.Substring(path, 0, path.Length - klassName.Length);
 								FilePath baseDir = new FilePath(path);
 								FilePath testDir = new FilePath(Runtime.GetProperty("test.build.dir", "target/test-dir"
 									));

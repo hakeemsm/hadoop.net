@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security.Authentication.Server;
 using Org.Apache.Hadoop.Security.Ssl;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Http
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		[Fact]
 		public virtual void TestHttpsCookie()
 		{

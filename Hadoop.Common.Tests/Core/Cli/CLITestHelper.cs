@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
 using Org.Xml.Sax;
 using Org.Xml.Sax.Helpers;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Cli
 {
@@ -264,7 +264,7 @@ namespace Org.Apache.Hadoop.Cli
 				try
 				{
 					// Initialize the comparator class and run its compare method
-					comparatorClass = Sharpen.Runtime.GetType("org.apache.hadoop.cli.util." + comparatorType
+					comparatorClass = Runtime.GetType("org.apache.hadoop.cli.util." + comparatorType
 						);
 					ComparatorBase comp = (ComparatorBase)System.Activator.CreateInstance(comparatorClass
 						);
@@ -310,7 +310,7 @@ namespace Org.Apache.Hadoop.Cli
 				{
 					string comptype = cd.GetComparatorType();
 					bool compareOutput = false;
-					if (!Sharpen.Runtime.EqualsIgnoreCase(comptype, "none"))
+					if (!Runtime.EqualsIgnoreCase(comptype, "none"))
 					{
 						compareOutput = CompareTestOutput(cd, cmdResult);
 						overallTCResult &= compareOutput;

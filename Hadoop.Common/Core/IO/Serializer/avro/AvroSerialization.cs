@@ -5,7 +5,7 @@ using Org.Apache.Avro.IO;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Serializer;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Serializer.Avro
 {

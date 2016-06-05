@@ -23,9 +23,9 @@ using Javax.Servlet.Http;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Http;
 using Org.Codehaus.Jackson;
-using Sharpen;
-using Sharpen.Management;
-using Sharpen.Reflect;
+
+using Management;
+using Reflect;
 
 namespace Org.Apache.Hadoop.Jmx
 {
@@ -440,10 +440,10 @@ namespace Org.Apache.Hadoop.Jmx
 				if (c.IsArray)
 				{
 					jg.WriteStartArray();
-					int len = Sharpen.Runtime.GetArrayLength(value);
+					int len = Runtime.GetArrayLength(value);
 					for (int j = 0; j < len; j++)
 					{
-						object item = Sharpen.Runtime.GetArrayValue(value, j);
+						object item = Runtime.GetArrayValue(value, j);
 						WriteObject(jg, item);
 					}
 					jg.WriteEndArray();

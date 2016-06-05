@@ -186,11 +186,11 @@ namespace Hadoop.Common.Core.Fs
 		/// <remarks>
 		/// Return a canonicalized form of this FileSystem's URI.
 		/// The default implementation simply calls
-		/// <see cref="CanonicalizeUri(Sharpen.URI)"/>
+		/// <see cref="CanonicalizeUri(URI)"/>
 		/// on the filesystem's own URI, so subclasses typically only need to
 		/// implement that method.
 		/// </remarks>
-		/// <seealso cref="CanonicalizeUri(Sharpen.URI)"/>
+		/// <seealso cref="CanonicalizeUri(URI)"/>
 		protected internal virtual URI GetCanonicalUri()
 		{
 			return CanonicalizeUri(GetUri());
@@ -206,7 +206,7 @@ namespace Hadoop.Common.Core.Fs
 		/// not specified and if the filesystem has a default port.
 		/// </remarks>
 		/// <returns>URI</returns>
-		/// <seealso cref="Org.Apache.Hadoop.Net.NetUtils.GetCanonicalUri(Sharpen.URI, int)"/
+		/// <seealso cref="Org.Apache.Hadoop.Net.NetUtils.GetCanonicalUri(URI, int)"/
 		/// 	>
 		protected internal virtual URI CanonicalizeUri(URI uri)
 		{
@@ -261,7 +261,7 @@ namespace Hadoop.Common.Core.Fs
 		/// a service string that uniquely identifies this file system, null
 		/// if the filesystem does not implement tokens
 		/// </returns>
-		/// <seealso cref="Org.Apache.Hadoop.Security.SecurityUtil.BuildDTServiceName(Sharpen.URI, int)
+		/// <seealso cref="Org.Apache.Hadoop.Security.SecurityUtil.BuildDTServiceName(URI, int)
 		/// 	"></seealso>
 		public virtual string GetCanonicalServiceName()
 		{
@@ -365,7 +365,7 @@ namespace Hadoop.Common.Core.Fs
 		/// <remarks>
 		/// Returns the FileSystem for this URI's scheme and authority and the
 		/// passed user. Internally invokes
-		/// <see cref="NewInstance(Sharpen.URI, Configuration)"/>
+		/// <see cref="NewInstance(URI, Configuration)"/>
 		/// </remarks>
 		/// <param name="uri">of the filesystem</param>
 		/// <param name="conf">the configuration to use</param>
@@ -536,7 +536,7 @@ namespace Hadoop.Common.Core.Fs
 			IList<Org.Apache.Hadoop.Security.Token.Token<object>> tokens = new AList<Org.Apache.Hadoop.Security.Token.Token
 				<object>>();
 			CollectDelegationTokens(renewer, credentials, tokens);
-			return Sharpen.Collections.ToArray(tokens, new Org.Apache.Hadoop.Security.Token.Token
+			return Collections.ToArray(tokens, new Org.Apache.Hadoop.Security.Token.Token
 				<object>[tokens.Count]);
 		}
 
@@ -667,7 +667,7 @@ namespace Hadoop.Common.Core.Fs
 			URI thisUri = GetCanonicalUri();
 			string thisScheme = thisUri.GetScheme();
 			//authority and scheme are not case sensitive
-			if (Sharpen.Runtime.EqualsIgnoreCase(thisScheme, thatScheme))
+			if (Runtime.EqualsIgnoreCase(thisScheme, thatScheme))
 			{
 				// schemes match
 				string thisAuthority = thisUri.GetAuthority();
@@ -677,7 +677,7 @@ namespace Hadoop.Common.Core.Fs
 					// path's authority is null
 					// fs has an authority
 					URI defaultUri = GetDefaultUri(GetConf());
-					if (Sharpen.Runtime.EqualsIgnoreCase(thisScheme, defaultUri.GetScheme()))
+					if (Runtime.EqualsIgnoreCase(thisScheme, defaultUri.GetScheme()))
 					{
 						uri = defaultUri;
 					}
@@ -693,7 +693,7 @@ namespace Hadoop.Common.Core.Fs
 					// canonicalize uri before comparing with this fs
 					uri = CanonicalizeUri(uri);
 					thatAuthority = uri.GetAuthority();
-					if (thisAuthority == thatAuthority || (thisAuthority != null && Sharpen.Runtime.EqualsIgnoreCase
+					if (thisAuthority == thatAuthority || (thisAuthority != null && Runtime.EqualsIgnoreCase
 						(thisAuthority, thatAuthority)))
 					{
 						// authorities match
@@ -1719,7 +1719,7 @@ namespace Hadoop.Common.Core.Fs
 		{
 			AList<FileStatus> results = new AList<FileStatus>();
 			ListStatus(results, f, filter);
-			return Sharpen.Collections.ToArray(results, new FileStatus[results.Count]);
+			return Collections.ToArray(results, new FileStatus[results.Count]);
 		}
 
 		/// <summary>
@@ -1763,7 +1763,7 @@ namespace Hadoop.Common.Core.Fs
 			{
 				ListStatus(results, files[i], filter);
 			}
-			return Sharpen.Collections.ToArray(results, new FileStatus[results.Count]);
+			return Collections.ToArray(results, new FileStatus[results.Count]);
 		}
 
 		/// <summary>
@@ -3084,7 +3084,7 @@ namespace Hadoop.Common.Core.Fs
 				{
 					if (map.Contains(key) && fs == map[key])
 					{
-						Sharpen.Collections.Remove(map, key);
+						Collections.Remove(map, key);
 						toAutoClose.Remove(key);
 					}
 				}
@@ -3111,7 +3111,7 @@ namespace Hadoop.Common.Core.Fs
 					// Make a copy of the keys in the map since we'll be modifying
 					// the map while iterating over it, which isn't safe.
 					IList<FileSystem.Cache.Key> keys = new AList<FileSystem.Cache.Key>();
-					Sharpen.Collections.AddAll(keys, map.Keys);
+					Collections.AddAll(keys, map.Keys);
 					foreach (FileSystem.Cache.Key key in keys)
 					{
 						FileSystem fs = map[key];
@@ -3315,9 +3315,9 @@ namespace Hadoop.Common.Core.Fs
 				/// This allows us to remove StatisticsData objects that pertain to
 				/// threads that no longer exist.
 				/// </remarks>
-				internal readonly WeakReference<Sharpen.Thread> owner;
+				internal readonly WeakReference<Thread> owner;
 
-				internal StatisticsData(WeakReference<Sharpen.Thread> owner)
+				internal StatisticsData(WeakReference<Thread> owner)
 				{
 					this.owner = owner;
 				}
@@ -3447,8 +3447,8 @@ namespace Hadoop.Common.Core.Fs
 				FileSystem.Statistics.StatisticsData data = threadData.Get();
 				if (data == null)
 				{
-					data = new FileSystem.Statistics.StatisticsData(new WeakReference<Sharpen.Thread>
-						(Sharpen.Thread.CurrentThread()));
+					data = new FileSystem.Statistics.StatisticsData(new WeakReference<Thread>
+						(Thread.CurrentThread()));
 					threadData.Set(data);
 					lock (this)
 					{

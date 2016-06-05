@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using NUnit.Framework;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Conf
 {
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.Conf
 			Dictionary<string, string> retVal = new Dictionary<string, string>();
 			// Setup regexp for valid properties
 			string propRegex = "^[A-Za-z_-]+(\\.[A-Za-z_-]+)+$";
-			Sharpen.Pattern p = Sharpen.Pattern.Compile(propRegex);
+			Pattern p = Pattern.Compile(propRegex);
 			// Iterate through class member variables
 			int totalFields = 0;
 			string value;
@@ -295,7 +295,7 @@ namespace Org.Apache.Hadoop.Conf
 			configurationMemberVariables = new Dictionary<string, string>();
 			foreach (Type c in configurationClasses)
 			{
-				FieldInfo[] fields = Sharpen.Runtime.GetDeclaredFields(c);
+				FieldInfo[] fields = Runtime.GetDeclaredFields(c);
 				IDictionary<string, string> memberMap = ExtractMemberVariablesFromConfigurationFields
 					(fields);
 				if (memberMap != null)

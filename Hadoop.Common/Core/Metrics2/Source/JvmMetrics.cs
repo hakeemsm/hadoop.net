@@ -21,8 +21,8 @@ using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Impl;
 using Org.Apache.Hadoop.Metrics2.Lib;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Metrics2.Source
 {
@@ -178,38 +178,38 @@ namespace Org.Apache.Hadoop.Metrics2.Source
 				}
 				switch (threadInfo.GetThreadState())
 				{
-					case Sharpen.Thread.State.New:
+					case Thread.State.New:
 					{
 						// race protection
 						threadsNew++;
 						break;
 					}
 
-					case Sharpen.Thread.State.Runnable:
+					case Thread.State.Runnable:
 					{
 						threadsRunnable++;
 						break;
 					}
 
-					case Sharpen.Thread.State.Blocked:
+					case Thread.State.Blocked:
 					{
 						threadsBlocked++;
 						break;
 					}
 
-					case Sharpen.Thread.State.Waiting:
+					case Thread.State.Waiting:
 					{
 						threadsWaiting++;
 						break;
 					}
 
-					case Sharpen.Thread.State.TimedWaiting:
+					case Thread.State.TimedWaiting:
 					{
 						threadsTimedWaiting++;
 						break;
 					}
 
-					case Sharpen.Thread.State.Terminated:
+					case Thread.State.Terminated:
 					{
 						threadsTerminated++;
 						break;

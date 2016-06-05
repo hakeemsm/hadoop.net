@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Compress;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -204,7 +204,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					ret.AddItem(a.GetName());
 				}
 			}
-			return Sharpen.Collections.ToArray(ret, new string[ret.Count]);
+			return Collections.ToArray(ret, new string[ret.Count]);
 		}
 	}
 }

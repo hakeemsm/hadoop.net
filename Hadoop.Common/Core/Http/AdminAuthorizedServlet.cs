@@ -1,6 +1,6 @@
 using Javax.Servlet.Http;
 using Org.Mortbay.Jetty.Servlet;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {

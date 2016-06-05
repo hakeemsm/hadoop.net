@@ -3,7 +3,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authorize
 {
@@ -67,7 +67,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			Assert.Equal("user2 group2", acl.GetAclString());
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestBlockedAcl()
 		{
@@ -83,7 +83,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(Address));
+					Extensions.GetAddressByName(Address));
 			}
 			catch (AuthorizationException)
 			{
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(Address));
+					Extensions.GetAddressByName(Address));
 			}
 			catch (AuthorizationException)
 			{
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(Address));
+					Extensions.GetAddressByName(Address));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)
@@ -122,7 +122,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(Address));
+					Extensions.GetAddressByName(Address));
 			}
 			catch (AuthorizationException)
 			{
@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(Address));
+					Extensions.GetAddressByName(Address));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)
@@ -149,7 +149,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(Address));
+					Extensions.GetAddressByName(Address));
 			}
 			catch (AuthorizationException)
 			{
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			}
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestDefaultBlockedAcl()
 		{
@@ -172,7 +172,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestServiceAuthorization.TestProtocol1
-					), conf, Sharpen.Extensions.GetAddressByName(Address));
+					), conf, Extensions.GetAddressByName(Address));
 			}
 			catch (AuthorizationException)
 			{
@@ -188,7 +188,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(Address));
+					Extensions.GetAddressByName(Address));
 			}
 			catch (AuthorizationException)
 			{
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestServiceAuthorization.TestProtocol1
-					), conf, Sharpen.Extensions.GetAddressByName(Address));
+					), conf, Extensions.GetAddressByName(Address));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)
@@ -207,7 +207,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		// expects Exception
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestMachineList()
 		{
@@ -222,7 +222,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(AuthorizedIp));
+					Extensions.GetAddressByName(AuthorizedIp));
 			}
 			catch (AuthorizationException)
 			{
@@ -231,7 +231,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(UnauthorizedIp));
+					Extensions.GetAddressByName(UnauthorizedIp));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)
@@ -240,7 +240,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 		}
 
 		// expects Exception
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestDefaultMachineList()
 		{
@@ -255,7 +255,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(UnauthorizedIp));
+					Extensions.GetAddressByName(UnauthorizedIp));
 			}
 			catch (AuthorizationException)
 			{
@@ -268,7 +268,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName(UnauthorizedIp));
+					Extensions.GetAddressByName(UnauthorizedIp));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)
@@ -278,7 +278,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName("10.222.0.0"));
+					Extensions.GetAddressByName("10.222.0.0"));
 			}
 			catch (AuthorizationException)
 			{
@@ -286,7 +286,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			}
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestBlockedMachineList()
 		{
@@ -301,7 +301,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName("10.222.0.0"));
+					Extensions.GetAddressByName("10.222.0.0"));
 			}
 			catch (AuthorizationException)
 			{
@@ -314,7 +314,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName("10.222.0.0"));
+					Extensions.GetAddressByName("10.222.0.0"));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)
@@ -328,7 +328,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName("10.222.0.0"));
+					Extensions.GetAddressByName("10.222.0.0"));
 			}
 			catch (AuthorizationException)
 			{
@@ -336,7 +336,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			}
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		[Fact]
 		public virtual void TestDefaultBlockedMachineList()
 		{
@@ -351,7 +351,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestServiceAuthorization.TestProtocol1
-					), conf, Sharpen.Extensions.GetAddressByName("10.222.0.0"));
+					), conf, Extensions.GetAddressByName("10.222.0.0"));
 			}
 			catch (AuthorizationException)
 			{
@@ -366,7 +366,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName("10.222.0.0"));
+					Extensions.GetAddressByName("10.222.0.0"));
 			}
 			catch (AuthorizationException)
 			{
@@ -376,7 +376,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestRPC.TestProtocol), conf, 
-					Sharpen.Extensions.GetAddressByName("1.2.3.4"));
+					Extensions.GetAddressByName("1.2.3.4"));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)
@@ -387,7 +387,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestServiceAuthorization.TestProtocol1
-					), conf, Sharpen.Extensions.GetAddressByName("1.2.3.4"));
+					), conf, Extensions.GetAddressByName("1.2.3.4"));
 			}
 			catch (AuthorizationException)
 			{
@@ -398,7 +398,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 			try
 			{
 				serviceAuthorizationManager.Authorize(drwho, typeof(TestServiceAuthorization.TestProtocol1
-					), conf, Sharpen.Extensions.GetAddressByName("10.222.0.0"));
+					), conf, Extensions.GetAddressByName("10.222.0.0"));
 				NUnit.Framework.Assert.Fail();
 			}
 			catch (AuthorizationException)

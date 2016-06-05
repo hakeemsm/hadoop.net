@@ -22,7 +22,7 @@ using System.Net.Sockets;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Retry
 {
@@ -398,7 +398,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 				{
 					throw new ArgumentException("pairs must be neither null nor empty.");
 				}
-				this.pairs = Sharpen.Collections.UnmodifiableList(pairs);
+				this.pairs = Collections.UnmodifiableList(pairs);
 			}
 
 			/// <exception cref="System.Exception"/>

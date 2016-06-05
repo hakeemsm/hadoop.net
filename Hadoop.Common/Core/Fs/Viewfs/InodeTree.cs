@@ -6,7 +6,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			}
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="System.IO.IOException"/>
 		/// <exception cref="Org.Apache.Hadoop.FS.FileAlreadyExistsException"/>
 		/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
@@ -282,14 +282,14 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// </summary>
 		/// <exception cref="System.IO.IOException"></exception>
 		/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		protected internal abstract T GetTargetFileSystem(URI uri);
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		protected internal abstract T GetTargetFileSystem(InodeTree.INodeDir<T> dir);
 
 		/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		protected internal abstract T GetTargetFileSystem(URI[] mergeFsURIList);
 
 		/// <summary>Create Inode Tree from the specified mount-table specified in Config</summary>
@@ -300,7 +300,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 		/// <param name="viewName">- the name of the mount table - if null use defaultMT name
 		/// 	</param>
 		/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		/// <exception cref="Org.Apache.Hadoop.FS.FileAlreadyExistsException"/>
 		/// <exception cref="System.IO.IOException"/>
 		protected internal InodeTree(Configuration config, string viewName)
@@ -326,10 +326,10 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 				{
 					gotMountTableEntry = true;
 					bool isMergeLink = false;
-					string src = Sharpen.Runtime.Substring(key, mtPrefix.Length);
+					string src = Runtime.Substring(key, mtPrefix.Length);
 					if (src.StartsWith(linkPrefix))
 					{
-						src = Sharpen.Runtime.Substring(src, linkPrefix.Length);
+						src = Runtime.Substring(src, linkPrefix.Length);
 					}
 					else
 					{
@@ -337,7 +337,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 						{
 							// A merge link
 							isMergeLink = true;
-							src = Sharpen.Runtime.Substring(src, linkMergePrefix.Length);
+							src = Runtime.Substring(src, linkMergePrefix.Length);
 						}
 						else
 						{

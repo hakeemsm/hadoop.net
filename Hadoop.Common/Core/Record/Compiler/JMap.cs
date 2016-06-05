@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Compiler
 {
@@ -11,7 +11,7 @@ namespace Org.Apache.Hadoop.Record.Compiler
 
 		private static string GetLevel()
 		{
-			return Sharpen.Extensions.ToString(level);
+			return Extensions.ToString(level);
 		}
 
 		private static void IncrLevel()

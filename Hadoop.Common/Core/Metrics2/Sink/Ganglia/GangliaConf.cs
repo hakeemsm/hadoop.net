@@ -1,5 +1,5 @@
 using System.Text;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Sink.Ganglia
 {

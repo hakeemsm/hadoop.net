@@ -7,8 +7,8 @@ using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -186,11 +186,11 @@ namespace Org.Apache.Hadoop.IO
 			if (declaredClass.IsArray)
 			{
 				// non-primitive or non-compact array
-				int length = Sharpen.Runtime.GetArrayLength(instance);
+				int length = Runtime.GetArrayLength(instance);
 				@out.WriteInt(length);
 				for (int i = 0; i < length; i++)
 				{
-					WriteObject(@out, Sharpen.Runtime.GetArrayValue(instance, i), declaredClass.GetElementType
+					WriteObject(@out, Runtime.GetArrayValue(instance, i), declaredClass.GetElementType
 						(), conf, allowCompactArrays);
 				}
 			}
@@ -358,7 +358,7 @@ namespace Org.Apache.Hadoop.IO
 				if (declaredClass == typeof(bool))
 				{
 					// boolean
-					instance = Sharpen.Extensions.ValueOf(@in.ReadBoolean());
+					instance = Extensions.ValueOf(@in.ReadBoolean());
 				}
 				else
 				{
@@ -386,14 +386,14 @@ namespace Org.Apache.Hadoop.IO
 								if (declaredClass == typeof(int))
 								{
 									// int
-									instance = Sharpen.Extensions.ValueOf(@in.ReadInt());
+									instance = Extensions.ValueOf(@in.ReadInt());
 								}
 								else
 								{
 									if (declaredClass == typeof(long))
 									{
 										// long
-										instance = Sharpen.Extensions.ValueOf(@in.ReadLong());
+										instance = Extensions.ValueOf(@in.ReadLong());
 									}
 									else
 									{
@@ -438,7 +438,7 @@ namespace Org.Apache.Hadoop.IO
 					instance = System.Array.CreateInstance(declaredClass.GetElementType(), length);
 					for (int i = 0; i < length; i++)
 					{
-						Sharpen.Runtime.SetArrayValue(instance, i, ReadObject(@in, conf));
+						Runtime.SetArrayValue(instance, i, ReadObject(@in, conf));
 					}
 				}
 				else
@@ -591,7 +591,7 @@ namespace Org.Apache.Hadoop.IO
 				}
 				else
 				{
-					declaredClass = Sharpen.Runtime.GetType(className);
+					declaredClass = Runtime.GetType(className);
 				}
 			}
 			catch (TypeLoadException e)

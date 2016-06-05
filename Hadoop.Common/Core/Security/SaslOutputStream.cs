@@ -1,6 +1,6 @@
 using System.IO;
 using Javax.Security.Sasl;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -44,7 +44,7 @@ namespace Org.Apache.Hadoop.Security
 			this.saslClient = null;
 			string qop = (string)saslServer.GetNegotiatedProperty(Javax.Security.Sasl.Sasl.Qop
 				);
-			this.useWrap = qop != null && !Sharpen.Runtime.EqualsIgnoreCase("auth", qop);
+			this.useWrap = qop != null && !Runtime.EqualsIgnoreCase("auth", qop);
 			if (useWrap)
 			{
 				this.outStream = new BufferedOutputStream(outStream, 64 * 1024);
@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.Security
 			this.saslClient = saslClient;
 			string qop = (string)saslClient.GetNegotiatedProperty(Javax.Security.Sasl.Sasl.Qop
 				);
-			this.useWrap = qop != null && !Sharpen.Runtime.EqualsIgnoreCase("auth", qop);
+			this.useWrap = qop != null && !Runtime.EqualsIgnoreCase("auth", qop);
 			if (useWrap)
 			{
 				this.outStream = new BufferedOutputStream(outStream, 64 * 1024);

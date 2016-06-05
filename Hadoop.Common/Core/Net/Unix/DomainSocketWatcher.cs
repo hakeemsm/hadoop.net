@@ -8,7 +8,7 @@ using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net.Unix
 {
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 	{
 		static DomainSocketWatcher()
 		{
-			watcherThread = new Sharpen.Thread(new _Runnable_451(this));
+			watcherThread = new Thread(new _Runnable_451(this));
 			if (SystemUtils.IsOsWindows)
 			{
 				loadingFailureReason = "UNIX Domain sockets are not available on Windows.";
@@ -252,7 +252,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 		/// <exception cref="System.IO.IOException"/>
 		public DomainSocketWatcher(int interruptCheckPeriodMs, string src)
 		{
-			watcherThread = new Sharpen.Thread(new _Runnable_451(this));
+			watcherThread = new Thread(new _Runnable_451(this));
 			if (loadingFailureReason != null)
 			{
 				throw new NotSupportedException(loadingFailureReason);
@@ -266,13 +266,13 @@ namespace Org.Apache.Hadoop.Net.Unix
 			watcherThread.Start();
 		}
 
-		private sealed class _UncaughtExceptionHandler_252 : Sharpen.Thread.UncaughtExceptionHandler
+		private sealed class _UncaughtExceptionHandler_252 : Thread.UncaughtExceptionHandler
 		{
 			public _UncaughtExceptionHandler_252()
 			{
 			}
 
-			public void UncaughtException(Sharpen.Thread thread, Exception t)
+			public void UncaughtException(Thread thread, Exception t)
 			{
 				DomainSocketWatcher.Log.Error(thread + " terminating on unexpected exception", t);
 			}
@@ -367,7 +367,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 					}
 					catch (Exception)
 					{
-						Sharpen.Thread.CurrentThread().Interrupt();
+						Thread.CurrentThread().Interrupt();
 					}
 					if (!toAdd.Contains(entry))
 					{
@@ -403,7 +403,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 					}
 					catch (Exception)
 					{
-						Sharpen.Thread.CurrentThread().Interrupt();
+						Thread.CurrentThread().Interrupt();
 					}
 					if (!toRemove.Contains(sock.fd))
 					{
@@ -466,7 +466,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 					Log.Trace(this + ": " + caller + ": closing fd " + fd + " at the request of the handler."
 						);
 				}
-				if (Sharpen.Collections.Remove(toRemove, fd) != null)
+				if (Collections.Remove(toRemove, fd) != null)
 				{
 					if (Log.IsTraceEnabled())
 					{
@@ -510,7 +510,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 		{
 			if (SendCallback(caller, entries, fdSet, fd))
 			{
-				Sharpen.Collections.Remove(entries, fd);
+				Collections.Remove(entries, fd);
 			}
 		}
 
@@ -589,7 +589,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 							}
 							// Check if someone sent our thread an InterruptedException while we
 							// were waiting in poll().
-							if (Sharpen.Thread.Interrupted())
+							if (Thread.Interrupted())
 							{
 								throw new Exception();
 							}
@@ -637,7 +637,7 @@ namespace Org.Apache.Hadoop.Net.Unix
 		}
 
 		[VisibleForTesting]
-		internal readonly Sharpen.Thread watcherThread;
+		internal readonly Thread watcherThread;
 
 		private void AddNotificationSocket(SortedDictionary<int, DomainSocketWatcher.Entry
 			> entries, DomainSocketWatcher.FdSet fdSet)

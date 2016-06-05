@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Retry
 {
@@ -283,7 +283,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 			}
 		}
 
-		private class ConcurrentMethodThread : Sharpen.Thread
+		private class ConcurrentMethodThread : Thread
 		{
 			private UnreliableInterface unreliable;
 
@@ -362,7 +362,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 			Assert.Equal("renamed-impl1", result);
 		}
 
-		private sealed class _Thread_328 : Sharpen.Thread
+		private sealed class _Thread_328 : Thread
 		{
 			public _Thread_328(long millisToSleep, UnreliableImplementation impl1)
 			{

@@ -1,7 +1,7 @@
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Local
 {
@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.FS.Local
 	public class RawLocalFs : DelegateToFileSystem
 	{
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		internal RawLocalFs(Configuration conf)
 			: this(FsConstants.LocalFsUri, conf)
 		{
@@ -21,14 +21,14 @@ namespace Org.Apache.Hadoop.FS.Local
 
 		/// <summary>
 		/// This constructor has the signature needed by
-		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(Sharpen.URI, Configuration)
+		/// <see cref="Org.Apache.Hadoop.FS.AbstractFileSystem.CreateFileSystem(URI, Configuration)
 		/// 	"/>
 		/// .
 		/// </summary>
 		/// <param name="theUri">which must be that of localFs</param>
 		/// <param name="conf"/>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"></exception>
+		/// <exception cref="URISyntaxException"></exception>
 		internal RawLocalFs(URI theUri, Configuration conf)
 			: base(theUri, new RawLocalFileSystem(), conf, FsConstants.LocalFsUri.GetScheme()
 				, false)

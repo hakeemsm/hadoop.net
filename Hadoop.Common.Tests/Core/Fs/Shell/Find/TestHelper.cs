@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell.Find
 {
@@ -9,7 +9,7 @@ namespace Org.Apache.Hadoop.FS.Shell.Find
 		/// <summary>Adds an argument string to an expression</summary>
 		internal static void AddArgument(Expression expr, string arg)
 		{
-			expr.AddArguments(new List<string>(Sharpen.Collections.SingletonList(arg)));
+			expr.AddArguments(new List<string>(Collections.SingletonList(arg)));
 		}
 
 		/// <summary>Converts a command string into a list of arguments.</summary>

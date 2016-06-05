@@ -3,7 +3,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.FS
 
 		private static readonly Path Base = new Path(basePath);
 
-		private static readonly Sharpen.Pattern WinInvalidFileNamePattern = Sharpen.Pattern
+		private static readonly Pattern WinInvalidFileNamePattern = Pattern
 			.Compile("^(.*?[<>\\:\"\\|\\?\\*].*?)|(.*?[ \\.])$");
 
 		protected internal FileContext fc1;

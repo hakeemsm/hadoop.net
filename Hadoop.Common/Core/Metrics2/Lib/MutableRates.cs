@@ -5,7 +5,7 @@ using Com.Google.Common.Base;
 using Com.Google.Common.Collect;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics2;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {
@@ -41,7 +41,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 				return;
 			}
 			protocolCache.AddItem(protocol);
-			foreach (MethodInfo method in Sharpen.Runtime.GetDeclaredMethods(protocol))
+			foreach (MethodInfo method in Runtime.GetDeclaredMethods(protocol))
 			{
 				string name = method.Name;
 				Log.Debug(name);

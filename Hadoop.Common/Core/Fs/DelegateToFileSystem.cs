@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Fs;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -19,7 +19,7 @@ namespace Org.Apache.Hadoop.FS
 		protected internal readonly FileSystem fsImpl;
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		protected internal DelegateToFileSystem(URI theUri, FileSystem theFsImpl, Configuration
 			 conf, string supportedScheme, bool authorityRequired)
 			: base(theUri, supportedScheme, authorityRequired, GetDefaultPortIfDefined(theFsImpl
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.FS
 		/// is undefined.  However, the logic that consumes this value expects to
 		/// receive -1 to indicate the port is undefined, which agrees with the
 		/// contract of
-		/// <see cref="Sharpen.URI.GetPort()"/>
+		/// <see cref="URI.GetPort()"/>
 		/// .
 		/// </remarks>
 		/// <param name="theFsImpl">file system to check for default port</param>

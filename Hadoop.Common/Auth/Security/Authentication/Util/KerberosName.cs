@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -29,22 +29,22 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 		private readonly string realm;
 
 		/// <summary>A pattern that matches a Kerberos name with at most 2 components.</summary>
-		private static readonly Sharpen.Pattern nameParser = Sharpen.Pattern.Compile("([^/@]*)(/([^/@]*))?@([^/@]*)"
+		private static readonly Pattern nameParser = Pattern.Compile("([^/@]*)(/([^/@]*))?@([^/@]*)"
 			);
 
 		/// <summary>
 		/// A pattern that matches a string with out '$' and then a single
 		/// parameter with $n.
 		/// </summary>
-		private static Sharpen.Pattern parameterPattern = Sharpen.Pattern.Compile("([^$]*)(\\$(\\d*))?"
+		private static Pattern parameterPattern = Pattern.Compile("([^$]*)(\\$(\\d*))?"
 			);
 
 		/// <summary>A pattern for parsing a auth_to_local rule.</summary>
-		private static readonly Sharpen.Pattern ruleParser = Sharpen.Pattern.Compile("\\s*((DEFAULT)|(RULE:\\[(\\d*):([^\\]]*)](\\(([^)]*)\\))?"
+		private static readonly Pattern ruleParser = Pattern.Compile("\\s*((DEFAULT)|(RULE:\\[(\\d*):([^\\]]*)](\\(([^)]*)\\))?"
 			 + "(s/([^/]*)/([^/]*)/(g)?)?))/?(L)?");
 
 		/// <summary>A pattern that recognizes simple/non-simple names.</summary>
-		private static readonly Sharpen.Pattern nonSimplePattern = Sharpen.Pattern.Compile
+		private static readonly Pattern nonSimplePattern = Pattern.Compile
 			("[/@]");
 
 		/// <summary>The list of translation rules.</summary>
@@ -147,9 +147,9 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 
 			private readonly string format;
 
-			private readonly Sharpen.Pattern match;
+			private readonly Pattern match;
 
-			private readonly Sharpen.Pattern fromPattern;
+			private readonly Pattern fromPattern;
 
 			private readonly string toPattern;
 
@@ -175,8 +175,8 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				isDefault = false;
 				this.numOfComponents = numOfComponents;
 				this.format = format;
-				this.match = match == null ? null : Sharpen.Pattern.Compile(match);
-				this.fromPattern = fromPattern == null ? null : Sharpen.Pattern.Compile(fromPattern
+				this.match = match == null ? null : Pattern.Compile(match);
+				this.fromPattern = fromPattern == null ? null : Pattern.Compile(fromPattern
 					);
 				this.toPattern = toPattern;
 				this.repeat = repeat;
@@ -279,7 +279,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			/// <param name="to">the string to replace matches of the pattern with</param>
 			/// <param name="repeat">whether the substitution should be repeated</param>
 			/// <returns/>
-			internal static string ReplaceSubstitution(string @base, Sharpen.Pattern from, string
+			internal static string ReplaceSubstitution(string @base, Pattern from, string
 				 to, bool repeat)
 			{
 				Matcher match = from.Matcher(@base);
@@ -339,7 +339,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				}
 				if (toLowerCase && result != null)
 				{
-					result = result.ToLower(Sharpen.Extensions.GetEnglishCulture());
+					result = result.ToLower(Extensions.GetEnglishCulture());
 				}
 				return result;
 			}
@@ -366,7 +366,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 						.Group(5), matcher.Group(7), matcher.Group(9), matcher.Group(10), "g".Equals(matcher
 						.Group(11)), "L".Equals(matcher.Group(12))));
 				}
-				remaining = Sharpen.Runtime.Substring(remaining, matcher.End());
+				remaining = Runtime.Substring(remaining, matcher.End());
 			}
 			return result;
 		}

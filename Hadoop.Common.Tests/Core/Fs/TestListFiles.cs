@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Org.Apache.Commons.Logging.Impl;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {

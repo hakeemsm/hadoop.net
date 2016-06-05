@@ -4,7 +4,7 @@ using Javax.Servlet;
 using Javax.Servlet.Http;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Http
 {
@@ -152,7 +152,7 @@ namespace Org.Apache.Hadoop.Security.Http
 			{
 				allowedMethodsConfig = AllowedMethodsDefault;
 			}
-			Sharpen.Collections.AddAll(allowedMethods, Arrays.AsList(allowedMethodsConfig.Trim
+			Collections.AddAll(allowedMethods, Arrays.AsList(allowedMethodsConfig.Trim
 				().Split("\\s*,\\s*")));
 			Log.Info("Allowed Methods: " + GetAllowedMethodsHeader());
 		}
@@ -164,7 +164,7 @@ namespace Org.Apache.Hadoop.Security.Http
 			{
 				allowedHeadersConfig = AllowedHeadersDefault;
 			}
-			Sharpen.Collections.AddAll(allowedHeaders, Arrays.AsList(allowedHeadersConfig.Trim
+			Collections.AddAll(allowedHeaders, Arrays.AsList(allowedHeadersConfig.Trim
 				().Split("\\s*,\\s*")));
 			Log.Info("Allowed Headers: " + GetAllowedHeadersHeader());
 		}
@@ -176,7 +176,7 @@ namespace Org.Apache.Hadoop.Security.Http
 			{
 				allowedOriginsConfig = AllowedOriginsDefault;
 			}
-			Sharpen.Collections.AddAll(allowedOrigins, Arrays.AsList(allowedOriginsConfig.Trim
+			Collections.AddAll(allowedOrigins, Arrays.AsList(allowedOriginsConfig.Trim
 				().Split("\\s*,\\s*")));
 			allowAllOrigins = allowedOrigins.Contains("*");
 			Log.Info("Allowed Origins: " + StringUtils.Join(allowedOrigins, ','));
@@ -226,7 +226,7 @@ namespace Org.Apache.Hadoop.Security.Http
 					if (allowedOrigin.Contains("*"))
 					{
 						string regex = allowedOrigin.Replace(".", "\\.").Replace("*", ".*");
-						Sharpen.Pattern p = Sharpen.Pattern.Compile(regex);
+						Pattern p = Pattern.Compile(regex);
 						Matcher m = p.Matcher(origin);
 						if (m.Matches())
 						{

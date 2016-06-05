@@ -3,7 +3,7 @@ using Com.Google.Common.Collect;
 using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop;
 using Org.Apache.Hadoop.FS.Permission;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 						"t" : "T"));
 				}
 				AclStatus aclStatus = item.fs.GetAclStatus(item.path);
-				IList<AclEntry> entries = perm.GetAclBit() ? aclStatus.GetEntries() : Sharpen.Collections
+				IList<AclEntry> entries = perm.GetAclBit() ? aclStatus.GetEntries() : Collections
 					.EmptyList<AclEntry>();
 				ScopedAclEntries scopedEntries = new ScopedAclEntries(AclUtil.GetAclFromPermAndEntries
 					(perm, entries));

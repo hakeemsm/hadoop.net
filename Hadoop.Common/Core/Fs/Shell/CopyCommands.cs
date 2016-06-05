@@ -3,7 +3,7 @@ using System.IO;
 using Hadoop.Common.Core.Fs.Shell;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 							IOUtils.CopyBytes(@in, @out, GetConf(), false);
 							if (delimiter != null)
 							{
-								@out.Write(Sharpen.Runtime.GetBytesForString(delimiter, "UTF-8"));
+								@out.Write(Runtime.GetBytesForString(delimiter, "UTF-8"));
 							}
 						}
 						finally
@@ -172,7 +172,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 							}
 							else
 							{
-								string attributes = Sharpen.Runtime.Substring(cur, 2);
+								string attributes = Runtime.Substring(cur, 2);
 								for (int index = 0; index < attributes.Length; index++)
 								{
 									Preserve(CommandWithDestination.FileAttribute.GetAttribute(attributes[index]));

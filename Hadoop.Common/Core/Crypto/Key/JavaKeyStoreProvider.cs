@@ -12,7 +12,7 @@ using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			fs = path.GetFileSystem(conf);
 			// Get the password file from the conf, if not present from the user's
 			// environment var
-			if (Sharpen.Runtime.GetEnv().Contains(KeystorePasswordEnvVar))
+			if (Runtime.GetEnv().Contains(KeystorePasswordEnvVar))
 			{
 				password = Runtime.Getenv(KeystorePasswordEnvVar).ToCharArray();
 			}
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 				string pwFile = conf.Get(KeystorePasswordFileKey);
 				if (pwFile != null)
 				{
-					ClassLoader cl = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+					ClassLoader cl = Thread.CurrentThread().GetContextClassLoader();
 					Uri pwdFile = cl.GetResource(pwFile);
 					if (pwdFile == null)
 					{
@@ -179,8 +179,8 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// <param name="path">Actual path to load from</param>
 		/// <param name="backupPath">Backup path (_OLD)</param>
 		/// <returns>The permissions of the loaded file</returns>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
-		/// <exception cref="Sharpen.CertificateException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
+		/// <exception cref="CertificateException"/>
 		/// <exception cref="System.IO.IOException"/>
 		private FsPermission TryLoadFromPath(Path path, Path backupPath)
 		{
@@ -230,8 +230,8 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// <param name="newPath">the _NEW file created during flush</param>
 		/// <returns>The permissions of the loaded file</returns>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
-		/// <exception cref="Sharpen.CertificateException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
+		/// <exception cref="CertificateException"/>
 		private FsPermission TryLoadIncompleteFlush(Path oldPath, Path newPath)
 		{
 			FsPermission perm = null;
@@ -258,8 +258,8 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			return perm;
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
-		/// <exception cref="Sharpen.CertificateException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
+		/// <exception cref="CertificateException"/>
 		/// <exception cref="System.IO.IOException"/>
 		private FsPermission LoadAndReturnPerm(Path pathToLoad, Path pathToDelete)
 		{
@@ -305,8 +305,8 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
-		/// <exception cref="Sharpen.CertificateException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
+		/// <exception cref="CertificateException"/>
 		private FsPermission LoadFromPath(Path p, char[] password)
 		{
 			using (FSDataInputStream @in = fs.Open(p))
@@ -552,7 +552,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 				{
 					throw new IOException("Problem removing " + name + " from " + this, e);
 				}
-				Sharpen.Collections.Remove(cache, name);
+				Collections.Remove(cache, name);
 				changed = true;
 			}
 			finally
@@ -786,7 +786,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 		/// the metadata in a KeyStore even though isn't really a key.
 		/// </remarks>
 		[System.Serializable]
-		public class KeyMetadata : Sharpen.Key
+		public class KeyMetadata : Key
 		{
 			private KeyProvider.Metadata metadata;
 

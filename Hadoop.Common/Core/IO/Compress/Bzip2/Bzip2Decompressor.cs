@@ -18,7 +18,7 @@
 using System;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO.Compress;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress.Bzip2
 {

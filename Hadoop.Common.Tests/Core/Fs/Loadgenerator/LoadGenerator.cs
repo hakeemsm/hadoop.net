@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.LoadGenerator
 {
@@ -147,18 +147,18 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 
 		/// <summary>Constructor</summary>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public LoadGenerator()
 		{
 			// a table of file names
 			// a table of directory names
-			IPAddress addr = Sharpen.Runtime.GetLocalHost();
+			IPAddress addr = Runtime.GetLocalHost();
 			hostname = addr.GetHostName();
 			Arrays.Fill(WriteContents, unchecked((byte)'a'));
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public LoadGenerator(Configuration conf)
 			: this()
 		{
@@ -205,7 +205,7 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 		/// A thread runs for the specified elapsed time if the time isn't zero.
 		/// Otherwise, it runs forever.
 		/// </remarks>
-		private class DFSClientThread : Sharpen.Thread
+		private class DFSClientThread : Thread
 		{
 			private int id;
 
@@ -243,7 +243,7 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 				catch (Exception ioe)
 				{
 					System.Console.Error.WriteLine(ioe.GetLocalizedMessage());
-					Sharpen.Runtime.PrintStackTrace(ioe);
+					Runtime.PrintStackTrace(ioe);
 					this.failed = true;
 				}
 			}
@@ -263,7 +263,7 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 				{
 					int delay = Org.Apache.Hadoop.FS.LoadGenerator.LoadGenerator.r.Next(Org.Apache.Hadoop.FS.LoadGenerator.LoadGenerator
 						.maxDelayBetweenOps);
-					Sharpen.Thread.Sleep(delay);
+					Thread.Sleep(delay);
 				}
 			}
 
@@ -505,7 +505,7 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 					// There is a fixed run time
 					while (shouldRun)
 					{
-						Sharpen.Thread.Sleep(2000);
+						Thread.Sleep(2000);
 						totalTime += 2;
 						if (totalTime >= durations[0] || StopFileCreated())
 						{
@@ -518,7 +518,7 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 					// script run
 					while (shouldRun)
 					{
-						Sharpen.Thread.Sleep(durations[currentIndex] * 1000);
+						Thread.Sleep(durations[currentIndex] * 1000);
 						totalTime += durations[currentIndex];
 						// Are we on the final line of the script?
 						if ((currentIndex + 1) == durations.Length || StopFileCreated())
@@ -867,7 +867,7 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 			catch (IOException e)
 			{
 				System.Console.Error.WriteLine(e.GetLocalizedMessage());
-				Sharpen.Runtime.PrintStackTrace(e);
+				Runtime.PrintStackTrace(e);
 				return -1;
 			}
 			if (dirs.IsEmpty())
@@ -928,7 +928,7 @@ namespace Org.Apache.Hadoop.FS.LoadGenerator
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(sleepTime);
+					Thread.Sleep(sleepTime);
 				}
 				catch (Exception)
 				{

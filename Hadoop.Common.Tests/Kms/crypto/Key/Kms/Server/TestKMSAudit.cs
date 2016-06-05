@@ -2,7 +2,7 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			filterOut = new TestKMSAudit.FilterOut(memOut);
 			capturedOut = new TextWriter(filterOut);
 			Runtime.SetErr(capturedOut);
-			PropertyConfigurator.Configure(Sharpen.Thread.CurrentThread().GetContextClassLoader
+			PropertyConfigurator.Configure(Thread.CurrentThread().GetContextClassLoader
 				().GetResourceAsStream("log4j-kmsaudit.properties"));
 			this.kmsAudit = new KMSAudit(1000);
 		}
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		private string GetAndResetLogOutput()
 		{
 			capturedOut.Flush();
-			string logOutput = Sharpen.Runtime.GetStringForBytes(memOut.ToByteArray());
+			string logOutput = Runtime.GetStringForBytes(memOut.ToByteArray());
 			memOut = new ByteArrayOutputStream();
 			filterOut.SetOutputStream(memOut);
 			return logOutput;
@@ -75,9 +75,9 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			kmsAudit.Ok(luser, KMS.KMSOp.DecryptEek, "k1", "testmsg");
 			kmsAudit.Ok(luser, KMS.KMSOp.DecryptEek, "k1", "testmsg");
 			kmsAudit.Ok(luser, KMS.KMSOp.DecryptEek, "k1", "testmsg");
-			Sharpen.Thread.Sleep(1500);
+			Thread.Sleep(1500);
 			kmsAudit.Ok(luser, KMS.KMSOp.DecryptEek, "k1", "testmsg");
-			Sharpen.Thread.Sleep(1500);
+			Thread.Sleep(1500);
 			string @out = GetAndResetLogOutput();
 			System.Console.Out.WriteLine(@out);
 			Assert.True(@out.Matches("OK\\[op=DECRYPT_EEK, key=k1, user=luser, accessCount=1, interval=[^m]{1,4}ms\\] testmsg"
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			UserGroupInformation luser = Org.Mockito.Mockito.Mock<UserGroupInformation>();
 			Org.Mockito.Mockito.When(luser.GetShortUserName()).ThenReturn("luser");
 			kmsAudit.Unauthorized(luser, KMS.KMSOp.GenerateEek, "k2");
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			kmsAudit.Ok(luser, KMS.KMSOp.GenerateEek, "k3", "testmsg");
 			kmsAudit.Ok(luser, KMS.KMSOp.GenerateEek, "k3", "testmsg");
 			kmsAudit.Ok(luser, KMS.KMSOp.GenerateEek, "k3", "testmsg");
@@ -104,7 +104,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			kmsAudit.Ok(luser, KMS.KMSOp.GenerateEek, "k3", "testmsg");
 			kmsAudit.Unauthorized(luser, KMS.KMSOp.GenerateEek, "k3");
 			kmsAudit.Ok(luser, KMS.KMSOp.GenerateEek, "k3", "testmsg");
-			Sharpen.Thread.Sleep(2000);
+			Thread.Sleep(2000);
 			string @out = GetAndResetLogOutput();
 			System.Console.Out.WriteLine(@out);
 			Assert.True(@out.Matches("UNAUTHORIZED\\[op=GENERATE_EEK, key=k2, user=luser\\] "

@@ -4,7 +4,7 @@ using Com.Google.Common.Util.Concurrent;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {

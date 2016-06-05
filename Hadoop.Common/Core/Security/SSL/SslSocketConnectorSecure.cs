@@ -1,6 +1,6 @@
 using System.Net.Sockets;
 using Org.Mortbay.Jetty.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 					nonSSLProtocols.AddItem(p);
 				}
 			}
-			socket.SetEnabledProtocols(Sharpen.Collections.ToArray(nonSSLProtocols, new string
+			socket.SetEnabledProtocols(Collections.ToArray(nonSSLProtocols, new string
 				[nonSSLProtocols.Count]));
 			return socket;
 		}

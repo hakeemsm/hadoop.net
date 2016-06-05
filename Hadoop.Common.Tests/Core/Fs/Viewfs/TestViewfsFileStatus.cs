@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -19,14 +19,14 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			, "/tmp"), typeof(TestViewfsFileStatus).Name);
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		[Fact]
 		public virtual void TestFileStatusSerialziation()
 		{
 			string testfilename = "testFileStatusSerialziation";
 			TestDir.Mkdirs();
 			FilePath infile = new FilePath(TestDir, testfilename);
-			byte[] content = Sharpen.Runtime.GetBytesForString("dingos");
+			byte[] content = Runtime.GetBytesForString("dingos");
 			FileOutputStream fos = null;
 			try
 			{

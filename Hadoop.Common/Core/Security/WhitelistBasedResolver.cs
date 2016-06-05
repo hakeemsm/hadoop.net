@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.Security
 				saslProps;
 		}
 
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public virtual IDictionary<string, string> GetServerProperties(string clientAddress
 			)
 		{
@@ -99,7 +99,7 @@ namespace Org.Apache.Hadoop.Security
 			{
 				return saslProps;
 			}
-			return GetServerProperties(Sharpen.Extensions.GetAddressByName(clientAddress));
+			return GetServerProperties(Extensions.GetAddressByName(clientAddress));
 		}
 
 		internal static IDictionary<string, string> GetSaslProperties(Configuration conf)

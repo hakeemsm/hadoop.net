@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Org.Mortbay.Util.Ajax;
 using Org.W3c.Dom;
 using Org.Xml.Sax;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Conf
 {

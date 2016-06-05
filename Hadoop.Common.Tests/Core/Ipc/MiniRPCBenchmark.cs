@@ -12,7 +12,7 @@ using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Security.Token.Delegation;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -278,7 +278,7 @@ namespace Org.Apache.Hadoop.Ipc
 				}
 				catch (Exception e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e);
+					Runtime.PrintStackTrace(e);
 				}
 				long end = Time.Now();
 				return end - start;
@@ -443,7 +443,7 @@ namespace Org.Apache.Hadoop.Ipc
 			bool useDelegationToken = false;
 			if (args.Length > 3)
 			{
-				useDelegationToken = Sharpen.Runtime.EqualsIgnoreCase(args[3], "useToken");
+				useDelegationToken = Runtime.EqualsIgnoreCase(args[3], "useToken");
 			}
 			Level l = Level.Error;
 			if (args.Length > 4)
@@ -496,7 +496,7 @@ namespace Org.Apache.Hadoop.Ipc
 				builder.Append(',');
 			}
 			builder.Append("127.0.1.1,");
-			builder.Append(Sharpen.Runtime.GetLocalHost().ToString());
+			builder.Append(Runtime.GetLocalHost().ToString());
 			conf.SetStrings(DefaultImpersonationProvider.GetTestProvider().GetProxySuperuserIpConfKey
 				(superUserShortName), builder.ToString());
 		}

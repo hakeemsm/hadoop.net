@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Htrace;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Tracing
 {
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.Tracing
 			private readonly Org.Apache.Hadoop.Tracing.SpanReceiverHost newHost;
 		}
 
-		private static IList<SpanReceiverInfo.ConfigurationPair> Empty = Sharpen.Collections
+		private static IList<SpanReceiverInfo.ConfigurationPair> Empty = Collections
 			.EmptyList();
 
 		private static string GetUniqueLocalTraceFileName()
@@ -282,7 +282,7 @@ namespace Org.Apache.Hadoop.Tracing
 		{
 			lock (this)
 			{
-				SpanReceiver rcvr = Sharpen.Collections.Remove(receivers, spanReceiverId);
+				SpanReceiver rcvr = Collections.Remove(receivers, spanReceiverId);
 				if (rcvr == null)
 				{
 					throw new IOException("There is no span receiver with id " + spanReceiverId);

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.Util
 			string[] ips2 = new string[] { "10.119.103.112", "10.221.102.0/23", "10.222.0.0/16"
 				, "10.113.221.221", "10.113.221.222" };
 			TestFileBasedIPList.CreateFileWithEntries("ips.txt", ips2);
-			Sharpen.Thread.Sleep(101);
+			Thread.Sleep(101);
 			Assert.True("10.113.221.222 is not in the list", cipl.IsIn("10.113.221.222"
 				));
 			Assert.True("10.222.103.121 is not in the list", cipl.IsIn("10.222.103.121"
@@ -81,7 +81,7 @@ namespace Org.Apache.Hadoop.Util
 			string[] ips2 = new string[] { "10.119.103.112", "10.221.102.0/23", "10.113.221.221"
 				 };
 			TestFileBasedIPList.CreateFileWithEntries("ips.txt", ips2);
-			Sharpen.Thread.Sleep(1005);
+			Thread.Sleep(1005);
 			NUnit.Framework.Assert.IsFalse("10.113.221.222 is in the list", cipl.IsIn("10.113.221.222"
 				));
 			NUnit.Framework.Assert.IsFalse("10.222.103.121 is  in the list", cipl.IsIn("10.222.103.121"

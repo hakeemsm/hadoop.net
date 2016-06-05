@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Security.Ssl;
 using Org.Mortbay.Jetty;
 using Org.Mortbay.Jetty.Security;
 using Org.Mortbay.Jetty.Webapp;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -22,9 +22,9 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			try
 			{
 				bool ssl = keyStore != null;
-				IPAddress localhost = Sharpen.Extensions.GetAddressByName("localhost");
+				IPAddress localhost = Extensions.GetAddressByName("localhost");
 				string host = "localhost";
-				Socket ss = Sharpen.Extensions.CreateServerSocket((inPort < 0) ? 0 : inPort, 50, 
+				Socket ss = Extensions.CreateServerSocket((inPort < 0) ? 0 : inPort, 50, 
 					localhost);
 				int port = ss.GetLocalPort();
 				ss.Close();
@@ -157,7 +157,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		/// <exception cref="System.Exception"/>
 		public virtual void Start()
 		{
-			ClassLoader cl = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+			ClassLoader cl = Thread.CurrentThread().GetContextClassLoader();
 			Runtime.SetProperty(KMSConfiguration.KmsConfigDir, kmsConfDir);
 			FilePath aclsFile = new FilePath(kmsConfDir, "kms-acls.xml");
 			if (!aclsFile.Exists())

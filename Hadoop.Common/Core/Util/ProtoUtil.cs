@@ -4,7 +4,7 @@ using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Ipc.Protobuf;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Htrace;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {

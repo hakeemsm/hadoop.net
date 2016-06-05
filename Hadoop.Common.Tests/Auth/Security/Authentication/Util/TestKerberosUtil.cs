@@ -6,7 +6,7 @@ using Org.Apache.Directory.Server.Kerberos.Shared.Keytab;
 using Org.Apache.Directory.Shared.Kerberos;
 using Org.Apache.Directory.Shared.Kerberos.Codec.Types;
 using Org.Apache.Directory.Shared.Kerberos.Components;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -37,24 +37,24 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			string testHost = "FooBar";
 			// send null hostname
 			Assert.Equal("When no hostname is sent", service + "/" + localHostname
-				.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
+				.ToLower(Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, null));
 			// send empty hostname
 			Assert.Equal("When empty hostname is sent", service + "/" + localHostname
-				.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
+				.ToLower(Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, string.Empty));
 			// send 0.0.0.0 hostname
 			Assert.Equal("When 0.0.0.0 hostname is sent", service + "/" + 
-				localHostname.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
+				localHostname.ToLower(Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, "0.0.0.0"));
 			// send uppercase hostname
 			Assert.Equal("When uppercase hostname is sent", service + "/" 
-				+ testHost.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
+				+ testHost.ToLower(Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
 				(service, testHost));
 			// send lowercase hostname
 			Assert.Equal("When lowercase hostname is sent", service + "/" 
-				+ testHost.ToLower(Sharpen.Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
-				(service, testHost.ToLower(Sharpen.Extensions.GetEnglishCulture())));
+				+ testHost.ToLower(Extensions.GetEnglishCulture()), KerberosUtil.GetServicePrincipal
+				(service, testHost.ToLower(Extensions.GetEnglishCulture())));
 		}
 
 		[Fact]
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			CreateKeyTab(testKeytab, testPrincipals);
 			// read the keytab file
 			// look for principals with HTTP as the first part
-			Sharpen.Pattern httpPattern = Sharpen.Pattern.Compile("HTTP/.*");
+			Pattern httpPattern = Pattern.Compile("HTTP/.*");
 			string[] httpPrincipals = KerberosUtil.GetPrincipalNames(testKeytab, httpPattern);
 			NUnit.Framework.Assert.IsNotNull("principals cannot be null", httpPrincipals);
 			int expectedSize = 0;
@@ -141,7 +141,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				// duplicate principals
 				for (int kvno = 1; kvno <= 3; kvno++)
 				{
-					EncryptionKey key = new EncryptionKey(EncryptionType.Unknown, Sharpen.Runtime.GetBytesForString
+					EncryptionKey key = new EncryptionKey(EncryptionType.Unknown, Runtime.GetBytesForString
 						("samplekey1"), kvno);
 					KeytabEntry keytabEntry = new KeytabEntry(principal, 1, new KerberosTime(), unchecked(
 						(byte)1), key);

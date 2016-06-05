@@ -4,7 +4,7 @@ using System.Threading;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.FS
 
 		public class InitializeForeverFileSystem : LocalFileSystem
 		{
-			internal static readonly Semaphore sem = Sharpen.Extensions.CreateSemaphore(0);
+			internal static readonly Semaphore sem = Extensions.CreateSemaphore(0);
 
 			/// <exception cref="System.IO.IOException"/>
 			public override void Initialize(URI uri, Configuration conf)
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.FS
 				{
 					while (true)
 					{
-						Sharpen.Thread.Sleep(1000);
+						Thread.Sleep(1000);
 					}
 				}
 				catch (Exception)
@@ -113,7 +113,7 @@ namespace Org.Apache.Hadoop.FS
 		public virtual void TestCacheEnabledWithInitializeForeverFS()
 		{
 			Configuration conf = new Configuration();
-			Sharpen.Thread t = new _Thread_130(conf);
+			Thread t = new _Thread_130(conf);
 			t.Start();
 			// wait for InitializeForeverFileSystem to start initialization
 			TestFileSystemCaching.InitializeForeverFileSystem.sem.WaitOne();
@@ -124,7 +124,7 @@ namespace Org.Apache.Hadoop.FS
 			t.Join();
 		}
 
-		private sealed class _Thread_130 : Sharpen.Thread
+		private sealed class _Thread_130 : Thread
 		{
 			public _Thread_130(Configuration conf)
 			{
@@ -141,11 +141,11 @@ namespace Org.Apache.Hadoop.FS
 				}
 				catch (IOException e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e);
+					Runtime.PrintStackTrace(e);
 				}
 				catch (URISyntaxException e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e);
+					Runtime.PrintStackTrace(e);
 				}
 			}
 

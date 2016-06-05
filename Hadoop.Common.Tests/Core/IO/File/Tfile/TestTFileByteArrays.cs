@@ -5,7 +5,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Compress.Zlib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.File.Tfile
 {
@@ -247,12 +247,12 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
-			Locate(scanner, Sharpen.Runtime.GetBytesForString(ComposeSortedKey(Key, 2)));
-			Locate(scanner, Sharpen.Runtime.GetBytesForString(ComposeSortedKey(Key, records1stBlock
+			Locate(scanner, Runtime.GetBytesForString(ComposeSortedKey(Key, 2)));
+			Locate(scanner, Runtime.GetBytesForString(ComposeSortedKey(Key, records1stBlock
 				 - 1)));
-			Locate(scanner, Sharpen.Runtime.GetBytesForString(ComposeSortedKey(Key, records1stBlock
+			Locate(scanner, Runtime.GetBytesForString(ComposeSortedKey(Key, records1stBlock
 				)));
-			TFile.Reader.Location locX = Locate(scanner, Sharpen.Runtime.GetBytesForString("keyX"
+			TFile.Reader.Location locX = Locate(scanner, Runtime.GetBytesForString("keyX"
 				));
 			Assert.Equal(scanner.endLocation, locX);
 			scanner.Close();
@@ -294,13 +294,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				return;
 			}
-			writer.Append(Sharpen.Runtime.GetBytesForString("keyX"), Sharpen.Runtime.GetBytesForString
+			writer.Append(Runtime.GetBytesForString("keyX"), Runtime.GetBytesForString
 				("valueX"));
 			// create a new metablock
 			DataOutputStream outMeta = writer.PrepareMetaBlock("testX", Compression.Algorithm
 				.Gz.GetName());
 			outMeta.Write(123);
-			outMeta.Write(Sharpen.Runtime.GetBytesForString("foo"));
+			outMeta.Write(Runtime.GetBytesForString("foo"));
 			outMeta.Close();
 			// add the same metablock
 			try
@@ -323,13 +323,13 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			{
 				return;
 			}
-			writer.Append(Sharpen.Runtime.GetBytesForString("keyX"), Sharpen.Runtime.GetBytesForString
+			writer.Append(Runtime.GetBytesForString("keyX"), Runtime.GetBytesForString
 				("valueX"));
 			// create a new metablock
 			DataOutputStream outMeta = writer.PrepareMetaBlock("testX", Compression.Algorithm
 				.Gz.GetName());
 			outMeta.Write(123);
-			outMeta.Write(Sharpen.Runtime.GetBytesForString("foo"));
+			outMeta.Write(Runtime.GetBytesForString("foo"));
 			outMeta.Close();
 			CloseOutput();
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
@@ -358,18 +358,18 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				return;
 			}
 			// write a key/value first
-			writer.Append(Sharpen.Runtime.GetBytesForString("keyX"), Sharpen.Runtime.GetBytesForString
+			writer.Append(Runtime.GetBytesForString("keyX"), Runtime.GetBytesForString
 				("valueX"));
 			// create a new metablock
 			DataOutputStream outMeta = writer.PrepareMetaBlock("testX", Compression.Algorithm
 				.Gz.GetName());
 			outMeta.Write(123);
-			outMeta.Write(Sharpen.Runtime.GetBytesForString("dummy"));
+			outMeta.Write(Runtime.GetBytesForString("dummy"));
 			outMeta.Close();
 			// add more key/value
 			try
 			{
-				writer.Append(Sharpen.Runtime.GetBytesForString("keyY"), Sharpen.Runtime.GetBytesForString
+				writer.Append(Runtime.GetBytesForString("keyY"), Runtime.GetBytesForString
 					("valueY"));
 				NUnit.Framework.Assert.Fail("Cannot add key/value after start adding meta blocks."
 					);
@@ -396,7 +396,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			byte[] vbuf = new byte[BufSize];
 			int vlen = scanner.Entry().GetValueLength();
 			scanner.Entry().GetValue(vbuf);
-			Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+			Assert.Equal(Runtime.GetStringForBytes(vbuf, 0, vlen), 
 				Value + 0);
 			try
 			{
@@ -502,7 +502,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			rand.NextBytes(buf);
 			try
 			{
-				writer.Append(buf, Sharpen.Runtime.GetBytesForString("valueX"));
+				writer.Append(buf, Runtime.GetBytesForString("valueX"));
 			}
 			catch (IndexOutOfRangeException)
 			{
@@ -521,9 +521,9 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 			try
 			{
-				writer.Append(Sharpen.Runtime.GetBytesForString("keyM"), Sharpen.Runtime.GetBytesForString
+				writer.Append(Runtime.GetBytesForString("keyM"), Runtime.GetBytesForString
 					("valueM"));
-				writer.Append(Sharpen.Runtime.GetBytesForString("keyA"), Sharpen.Runtime.GetBytesForString
+				writer.Append(Runtime.GetBytesForString("keyA"), Runtime.GetBytesForString
 					("valueA"));
 				NUnit.Framework.Assert.Fail("Error on handling out of order keys.");
 			}
@@ -545,7 +545,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 			try
 			{
-				writer.Append(Sharpen.Runtime.GetBytesForString("keyX"), -1, 4, Sharpen.Runtime.GetBytesForString
+				writer.Append(Runtime.GetBytesForString("keyX"), -1, 4, Runtime.GetBytesForString
 					("valueX"), 0, 6);
 				NUnit.Framework.Assert.Fail("Error on handling negative offset.");
 			}
@@ -570,7 +570,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
 			try
 			{
-				scanner.LowerBound(Sharpen.Runtime.GetBytesForString("keyX"), -1, 4);
+				scanner.LowerBound(Runtime.GetBytesForString("keyX"), -1, 4);
 				NUnit.Framework.Assert.Fail("Error on handling negative offset.");
 			}
 			catch (Exception)
@@ -595,7 +595,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 			try
 			{
-				writer.Append(Sharpen.Runtime.GetBytesForString("keyX"), 0, -1, Sharpen.Runtime.GetBytesForString
+				writer.Append(Runtime.GetBytesForString("keyX"), 0, -1, Runtime.GetBytesForString
 					("valueX"), 0, 6);
 				NUnit.Framework.Assert.Fail("Error on handling negative length.");
 			}
@@ -620,7 +620,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
 			try
 			{
-				scanner.LowerBound(Sharpen.Runtime.GetBytesForString("keyX"), 0, -1);
+				scanner.LowerBound(Runtime.GetBytesForString("keyX"), 0, -1);
 				NUnit.Framework.Assert.Fail("Error on handling negative length.");
 			}
 			catch (Exception)
@@ -652,7 +652,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				// test negative array offset
 				try
 				{
-					scanner.SeekTo(Sharpen.Runtime.GetBytesForString("keyY"), -1, 4);
+					scanner.SeekTo(Runtime.GetBytesForString("keyY"), -1, 4);
 					NUnit.Framework.Assert.Fail("Failed to handle negative offset.");
 				}
 				catch (Exception)
@@ -662,7 +662,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				// test negative array length
 				try
 				{
-					scanner.SeekTo(Sharpen.Runtime.GetBytesForString("keyY"), 0, -2);
+					scanner.SeekTo(Runtime.GetBytesForString("keyY"), 0, -2);
 					NUnit.Framework.Assert.Fail("Failed to handle negative key length.");
 				}
 				catch (Exception)
@@ -686,7 +686,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				return;
 			}
 			long rawDataSize = WriteRecords(10 * records1stBlock, false);
-			if (!Sharpen.Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
+			if (!Runtime.EqualsIgnoreCase(compression, Compression.Algorithm.None.GetName
 				()))
 			{
 				Assert.True(@out.GetPos() < rawDataSize);
@@ -741,8 +741,8 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			int nx;
 			for (nx = 0; nx < count; nx++)
 			{
-				byte[] key = Sharpen.Runtime.GetBytesForString(ComposeSortedKey(Key, nx));
-				byte[] value = Sharpen.Runtime.GetBytesForString((Value + nx));
+				byte[] key = Runtime.GetBytesForString(ComposeSortedKey(Key, nx));
+				byte[] value = Runtime.GetBytesForString((Value + nx));
 				writer.Append(key, value);
 				rawDataSize += WritableUtils.GetVIntSize(key.Length) + key.Length + WritableUtils
 					.GetVIntSize(value.Length) + value.Length;
@@ -781,12 +781,12 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					byte[] kbuf = new byte[BufSize];
 					int klen = scanner.Entry().GetKeyLength();
 					scanner.Entry().GetKey(kbuf);
-					Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+					Assert.Equal(Runtime.GetStringForBytes(kbuf, 0, klen), 
 						ComposeSortedKey(Key, nx));
 					byte[] vbuf = new byte[BufSize];
 					int vlen = scanner.Entry().GetValueLength();
 					scanner.Entry().GetValue(vbuf);
-					Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+					Assert.Equal(Runtime.GetStringForBytes(vbuf, 0, vlen), 
 						Value + nx);
 				}
 				Assert.True(scanner.AtEnd());
@@ -805,7 +805,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
 			TFile.Reader.Scanner scanner = reader.CreateScanner();
-			scanner.SeekTo(Sharpen.Runtime.GetBytesForString(ComposeSortedKey(Key, recordIndex
+			scanner.SeekTo(Runtime.GetBytesForString(ComposeSortedKey(Key, recordIndex
 				)));
 			Assert.Equal(blockIndexExpected, scanner.currentLocation.GetBlockIndex
 				());
@@ -818,19 +818,19 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		{
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
-			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Sharpen.Runtime.GetBytesForString
+			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Runtime.GetBytesForString
 				(ComposeSortedKey(Key, recordIndex)), null);
 			try
 			{
 				byte[] vbuf = new byte[BufSize];
 				int vlen = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf, 0, vlen), 
+				Assert.Equal(Runtime.GetStringForBytes(vbuf, 0, vlen), 
 					Value + recordIndex);
 				byte[] kbuf = new byte[BufSize];
 				int klen = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf, 0, klen), 
+				Assert.Equal(Runtime.GetStringForBytes(kbuf, 0, klen), 
 					ComposeSortedKey(Key, recordIndex));
 			}
 			finally
@@ -845,7 +845,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		{
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
-			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Sharpen.Runtime.GetBytesForString
+			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Runtime.GetBytesForString
 				(ComposeSortedKey(Key, recordIndex)), null);
 			try
 			{
@@ -853,7 +853,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 				byte[] kbuf1 = new byte[BufSize];
 				int klen1 = scanner.Entry().GetKeyLength();
 				scanner.Entry().GetKey(kbuf1);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+				Assert.Equal(Runtime.GetStringForBytes(kbuf1, 0, klen1
 					), ComposeSortedKey(Key, recordIndex));
 				if (scanner.Advance() && !scanner.AtEnd())
 				{
@@ -861,7 +861,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 					byte[] kbuf2 = new byte[BufSize];
 					int klen2 = scanner.Entry().GetKeyLength();
 					scanner.Entry().GetKey(kbuf2);
-					Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf2, 0, klen2
+					Assert.Equal(Runtime.GetStringForBytes(kbuf2, 0, klen2
 						), ComposeSortedKey(Key, recordIndex + 1));
 				}
 			}
@@ -877,19 +877,19 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		{
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
-			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Sharpen.Runtime.GetBytesForString
+			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Runtime.GetBytesForString
 				(ComposeSortedKey(Key, recordIndex)), null);
 			byte[] vbuf1 = new byte[BufSize];
 			int vlen1 = scanner.Entry().GetValueLength();
 			scanner.Entry().GetValue(vbuf1);
-			Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf1, 0, vlen1
+			Assert.Equal(Runtime.GetStringForBytes(vbuf1, 0, vlen1
 				), Value + recordIndex);
 			if (scanner.Advance() && !scanner.AtEnd())
 			{
 				byte[] vbuf2 = new byte[BufSize];
 				int vlen2 = scanner.Entry().GetValueLength();
 				scanner.Entry().GetValue(vbuf2);
-				Assert.Equal(Sharpen.Runtime.GetStringForBytes(vbuf2, 0, vlen2
+				Assert.Equal(Runtime.GetStringForBytes(vbuf2, 0, vlen2
 					), Value + (recordIndex + 1));
 			}
 			scanner.Close();
@@ -901,21 +901,21 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		{
 			TFile.Reader reader = new TFile.Reader(fs.Open(path), fs.GetFileStatus(path).GetLen
 				(), conf);
-			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Sharpen.Runtime.GetBytesForString
+			TFile.Reader.Scanner scanner = reader.CreateScannerByKey(Runtime.GetBytesForString
 				(ComposeSortedKey(Key, recordIndex)), null);
 			// read the indexed key
 			byte[] kbuf1 = new byte[BufSize];
 			int klen1 = scanner.Entry().GetKeyLength();
 			scanner.Entry().GetKey(kbuf1);
-			Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+			Assert.Equal(Runtime.GetStringForBytes(kbuf1, 0, klen1
 				), ComposeSortedKey(Key, recordIndex));
 			klen1 = scanner.Entry().GetKeyLength();
 			scanner.Entry().GetKey(kbuf1);
-			Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+			Assert.Equal(Runtime.GetStringForBytes(kbuf1, 0, klen1
 				), ComposeSortedKey(Key, recordIndex));
 			klen1 = scanner.Entry().GetKeyLength();
 			scanner.Entry().GetKey(kbuf1);
-			Assert.Equal(Sharpen.Runtime.GetStringForBytes(kbuf1, 0, klen1
+			Assert.Equal(Runtime.GetStringForBytes(kbuf1, 0, klen1
 				), ComposeSortedKey(Key, recordIndex));
 			scanner.Close();
 			reader.Close();

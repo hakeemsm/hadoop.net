@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Com.Google.Common.Base;
 using Com.Google.Common.Collect;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -128,7 +128,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		private string HandlerName(RefreshHandler h)
 		{
-			return h.GetType().FullName + '@' + Sharpen.Extensions.ToHexString(h.GetHashCode(
+			return h.GetType().FullName + '@' + Extensions.ToHexString(h.GetHashCode(
 				));
 		}
 	}

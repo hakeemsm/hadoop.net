@@ -4,7 +4,7 @@ using Org.Apache.Hadoop.Crypto;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.IO.Compress.Bzip2;
 using Org.Apache.Hadoop.IO.Compress.Zlib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {

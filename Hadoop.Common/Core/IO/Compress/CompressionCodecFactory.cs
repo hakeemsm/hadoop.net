@@ -25,7 +25,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Compress
 {
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 			codecsByName[StringUtils.ToLowerCase(codecName)] = codec;
 			if (codecName.EndsWith("Codec"))
 			{
-				codecName = Sharpen.Runtime.Substring(codecName, 0, codecName.Length - "Codec".Length
+				codecName = Runtime.Substring(codecName, 0, codecName.Length - "Codec".Length
 					);
 				codecsByName[StringUtils.ToLowerCase(codecName)] = codec;
 			}
@@ -323,7 +323,7 @@ namespace Org.Apache.Hadoop.IO.Compress
 		{
 			if (filename.EndsWith(suffix))
 			{
-				return Sharpen.Runtime.Substring(filename, 0, filename.Length - suffix.Length);
+				return Runtime.Substring(filename, 0, filename.Length - suffix.Length);
 			}
 			return filename;
 		}

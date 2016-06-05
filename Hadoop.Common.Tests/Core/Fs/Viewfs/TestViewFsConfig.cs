@@ -1,13 +1,13 @@
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
 	public class TestViewFsConfig
 	{
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		public virtual void TestInvalidConfig()
 		{
 			Configuration conf = new Configuration();
@@ -35,21 +35,21 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			{
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
 			protected internal override _T611036023 GetTargetFileSystem(URI uri)
 			{
 				return null;
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			protected internal override _T611036023 GetTargetFileSystem(InodeTree.INodeDir<_T611036023
 				> dir)
 			{
 				return null;
 			}
 
-			/// <exception cref="Sharpen.URISyntaxException"/>
+			/// <exception cref="URISyntaxException"/>
 			/// <exception cref="Org.Apache.Hadoop.FS.UnsupportedFileSystemException"/>
 			protected internal override _T611036023 GetTargetFileSystem(URI[] mergeFsURIList)
 			{

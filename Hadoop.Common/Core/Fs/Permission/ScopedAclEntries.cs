@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Permission
 {
@@ -28,14 +28,14 @@ namespace Org.Apache.Hadoop.FS.Permission
 			int pivot = CalculatePivotOnDefaultEntries(aclEntries);
 			if (pivot != PivotNotFound)
 			{
-				accessEntries = pivot != 0 ? aclEntries.SubList(0, pivot) : Sharpen.Collections.EmptyList
+				accessEntries = pivot != 0 ? aclEntries.SubList(0, pivot) : Collections.EmptyList
 					<AclEntry>();
 				defaultEntries = aclEntries.SubList(pivot, aclEntries.Count);
 			}
 			else
 			{
 				accessEntries = aclEntries;
-				defaultEntries = Sharpen.Collections.EmptyList();
+				defaultEntries = Collections.EmptyList();
 			}
 		}
 

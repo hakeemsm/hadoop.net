@@ -19,8 +19,8 @@ using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.Ipc
 				if (typeof(VersionedProtocol).IsAssignableFrom(childInterface))
 				{
 					allInterfaces.AddItem(childInterface);
-					Sharpen.Collections.AddAll(allInterfaces, Arrays.AsList(GetSuperInterfaces(childInterface
+					Collections.AddAll(allInterfaces, Arrays.AsList(GetSuperInterfaces(childInterface
 						.GetInterfaces())));
 				}
 				else
@@ -109,7 +109,7 @@ namespace Org.Apache.Hadoop.Ipc
 						);
 				}
 			}
-			return Sharpen.Collections.ToArray(allInterfaces, new Type[allInterfaces.Count]);
+			return Collections.ToArray(allInterfaces, new Type[allInterfaces.Count]);
 		}
 
 		/// <summary>
@@ -409,7 +409,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					throw ioe;
 				}
-				if (Sharpen.Thread.CurrentThread().IsInterrupted())
+				if (Thread.CurrentThread().IsInterrupted())
 				{
 					// interrupted during some IO; this may not have been caught
 					throw new ThreadInterruptedException("Interrupted waiting for the proxy");
@@ -417,12 +417,12 @@ namespace Org.Apache.Hadoop.Ipc
 				// wait for retry
 				try
 				{
-					Sharpen.Thread.Sleep(1000);
+					Thread.Sleep(1000);
 				}
 				catch (Exception)
 				{
-					Sharpen.Thread.CurrentThread().Interrupt();
-					throw (IOException)Sharpen.Extensions.InitCause(new ThreadInterruptedException("Interrupted waiting for the proxy"
+					Thread.CurrentThread().Interrupt();
+					throw (IOException)Extensions.InitCause(new ThreadInterruptedException("Interrupted waiting for the proxy"
 						), ioe);
 				}
 			}
@@ -644,7 +644,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <see cref="System.IDisposable"/>
 		/// interface or
 		/// does not have closeable
-		/// <see cref="Sharpen.Reflect.InvocationHandler"/>
+		/// <see cref="Reflect.InvocationHandler"/>
 		/// </exception>
 		public static void StopProxy(object proxy)
 		{

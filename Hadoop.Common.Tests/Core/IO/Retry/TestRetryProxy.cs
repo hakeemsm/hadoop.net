@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Org.Apache.Hadoop.Ipc;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.IO.Retry
 {
@@ -205,7 +205,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 		[Fact]
 		public virtual void TestRetryByRemoteException()
 		{
-			IDictionary<Type, RetryPolicy> exceptionToPolicyMap = Sharpen.Collections.SingletonMap
+			IDictionary<Type, RetryPolicy> exceptionToPolicyMap = Collections.SingletonMap
 				<Type, RetryPolicy>(typeof(UnreliableInterface.FatalException), RetryPolicies.TryOnceThenFail
 				);
 			UnreliableInterface unreliable = (UnreliableInterface)RetryProxy.Create<UnreliableInterface
@@ -230,13 +230,13 @@ namespace Org.Apache.Hadoop.IO.Retry
 				>(unreliableImpl, RetryPolicies.RetryUpToMaximumTimeWithFixedSleep(10, 10, TimeUnit
 				.Seconds));
 			CountDownLatch latch = new CountDownLatch(1);
-			AtomicReference<Sharpen.Thread> futureThread = new AtomicReference<Sharpen.Thread
+			AtomicReference<Thread> futureThread = new AtomicReference<Thread
 				>();
 			ExecutorService exec = Executors.NewSingleThreadExecutor();
 			Future<Exception> future = exec.Submit(new _Callable_216(futureThread, latch, unreliable
 				));
 			latch.Await();
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			// time to fail and sleep
 			Assert.True(futureThread.Get().IsAlive());
 			futureThread.Get().Interrupt();
@@ -249,7 +249,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 
 		private sealed class _Callable_216 : Callable<Exception>
 		{
-			public _Callable_216(AtomicReference<Sharpen.Thread> futureThread, CountDownLatch
+			public _Callable_216(AtomicReference<Thread> futureThread, CountDownLatch
 				 latch, UnreliableInterface unreliable)
 			{
 				this.futureThread = futureThread;
@@ -260,7 +260,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 			/// <exception cref="System.Exception"/>
 			public Exception Call()
 			{
-				futureThread.Set(Sharpen.Thread.CurrentThread());
+				futureThread.Set(Thread.CurrentThread());
 				latch.CountDown();
 				try
 				{
@@ -273,7 +273,7 @@ namespace Org.Apache.Hadoop.IO.Retry
 				return null;
 			}
 
-			private readonly AtomicReference<Sharpen.Thread> futureThread;
+			private readonly AtomicReference<Thread> futureThread;
 
 			private readonly CountDownLatch latch;
 

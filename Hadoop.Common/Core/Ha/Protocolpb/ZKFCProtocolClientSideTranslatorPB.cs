@@ -8,7 +8,7 @@ using Org.Apache.Hadoop.HA;
 using Org.Apache.Hadoop.HA.Proto;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA.ProtocolPB
 {

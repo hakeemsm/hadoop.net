@@ -13,7 +13,7 @@ using Org.Apache.Hadoop.Security.Token.Delegation.Web;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
 using Org.Apache.Zookeeper.Server.Auth;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token.Delegation
 {
@@ -142,7 +142,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				// Cancel one token
 				tm1.CancelToken(token1, "foo");
 				// Start second node after some time..
-				Sharpen.Thread.Sleep(1000);
+				Thread.Sleep(1000);
 				DelegationTokenManager tm2 = new DelegationTokenManager(conf, new Text("bla"));
 				tm2.Init();
 				tm2.VerifyToken(token2);
@@ -166,7 +166,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				// Bring down tm2
 				VerifyDestroy(tm2, conf);
 				// Start third node after some time..
-				Sharpen.Thread.Sleep(1000);
+				Thread.Sleep(1000);
 				DelegationTokenManager tm3 = new DelegationTokenManager(conf, new Text("bla"));
 				tm3.Init();
 				tm3.VerifyToken(token2);
@@ -230,7 +230,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 				}
 				catch (SecretManager.InvalidToken it)
 				{
-					Sharpen.Runtime.PrintStackTrace(it);
+					Runtime.PrintStackTrace(it);
 				}
 				VerifyDestroy(tm1, conf);
 			}
@@ -248,7 +248,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			// wait for the pool to terminate
 			long timeout = conf.GetLong(ZKDelegationTokenSecretManager.ZkDtsmZkShutdownTimeout
 				, ZKDelegationTokenSecretManager.ZkDtsmZkShutdownTimeoutDefault);
-			Sharpen.Thread.Sleep(timeout * 3);
+			Thread.Sleep(timeout * 3);
 			Assert.True(es.IsTerminated());
 		}
 
@@ -293,7 +293,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			/// <exception cref="System.Exception"/>
 			public Void Call()
 			{
-				Sharpen.Thread.Sleep(shutdownTimeoutMillis * 2);
+				Thread.Sleep(shutdownTimeoutMillis * 2);
 				return null;
 			}
 
@@ -314,7 +314,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			ACLProvider digestAclProvider = new _ACLProvider_319(digestACL);
 			CuratorFramework curatorFramework = CuratorFrameworkFactory.Builder().ConnectString
 				(connectString).RetryPolicy(retryPolicy).AclProvider(digestAclProvider).Authorization
-				("digest", Sharpen.Runtime.GetBytesForString(userPass, "UTF-8")).Build();
+				("digest", Runtime.GetBytesForString(userPass, "UTF-8")).Build();
 			curatorFramework.Start();
 			ZKDelegationTokenSecretManager.SetCurator(curatorFramework);
 			tm1 = new DelegationTokenManager(conf, new Text("bla"));
@@ -388,7 +388,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			}
 			if (retryCount > 0)
 			{
-				Sharpen.Thread.Sleep(RetryWait);
+				Thread.Sleep(RetryWait);
 				VerifyTokenFailWithRetry(tm, token, retryCount - 1);
 			}
 		}

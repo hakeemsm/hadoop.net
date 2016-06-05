@@ -12,8 +12,8 @@ using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -219,10 +219,10 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		private long GetTotalCpuTime<_T0>(IEnumerable<_T0> threads)
-			where _T0 : Sharpen.Thread
+			where _T0 : Thread
 		{
 			long total = 0;
-			foreach (Sharpen.Thread t in threads)
+			foreach (Thread t in threads)
 			{
 				long tid = t.GetId();
 				total += threadBean.GetThreadCpuTime(tid);
@@ -294,7 +294,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					while (true)
 					{
-						Sharpen.Thread.Sleep(10000);
+						Thread.Sleep(10000);
 					}
 				}
 			}

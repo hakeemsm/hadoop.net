@@ -4,7 +4,7 @@ using System.Text;
 using Com.Google.Common.Base;
 using Com.Google.Common.Primitives;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.IO
 				// test string to utf8
 				ByteBuffer bb = Org.Apache.Hadoop.IO.Text.Encode(before);
 				byte[] utf8Text = ((byte[])bb.Array());
-				byte[] utf8Java = Sharpen.Runtime.GetBytesForString(before, "UTF-8");
+				byte[] utf8Java = Runtime.GetBytesForString(before, "UTF-8");
 				Assert.Equal(0, WritableComparator.CompareBytes(utf8Text, 0, bb
 					.Limit(), utf8Java, 0, utf8Java.Length));
 				// test utf8 to string
@@ -141,7 +141,7 @@ namespace Org.Apache.Hadoop.IO
 				// Test compatibility with Java's other decoder 
 				int strLenSize = WritableUtils.GetVIntSize(Org.Apache.Hadoop.IO.Text.Utf8Length(before
 					));
-				string after2 = Sharpen.Runtime.GetStringForBytes(@out.GetData(), strLenSize, @out
+				string after2 = Runtime.GetStringForBytes(@out.GetData(), strLenSize, @out
 					.GetLength() - strLenSize, "UTF-8");
 				Assert.True(before.Equals(after2));
 			}
@@ -252,7 +252,7 @@ namespace Org.Apache.Hadoop.IO
 		public virtual void TestFindAfterUpdatingContents()
 		{
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text("abcd");
-			text.Set(Sharpen.Runtime.GetBytesForString("a"));
+			text.Set(Runtime.GetBytesForString("a"));
 			Assert.Equal(text.GetLength(), 1);
 			Assert.Equal(text.Find("a"), 0);
 			Assert.Equal(text.Find("b"), -1);
@@ -291,14 +291,14 @@ namespace Org.Apache.Hadoop.IO
 				, 0, text.GetLength());
 		}
 
-		/// <exception cref="Sharpen.CharacterCodingException"/>
+		/// <exception cref="CharacterCodingException"/>
 		public virtual void TestTextText()
 		{
 			Org.Apache.Hadoop.IO.Text a = new Org.Apache.Hadoop.IO.Text("abc");
 			Org.Apache.Hadoop.IO.Text b = new Org.Apache.Hadoop.IO.Text("a");
 			b.Set(a);
 			Assert.Equal("abc", b.ToString());
-			a.Append(Sharpen.Runtime.GetBytesForString("xdefgxxx"), 1, 4);
+			a.Append(Runtime.GetBytesForString("xdefgxxx"), 1, 4);
 			Assert.Equal("modified aliased string", "abc", b.ToString());
 			Assert.Equal("appended string incorrectly", "abcdefg", a.ToString
 				());
@@ -308,7 +308,7 @@ namespace Org.Apache.Hadoop.IO
 			Assert.Equal(8, a.CopyBytes().Length);
 		}
 
-		private class ConcurrentEncodeDecodeThread : Sharpen.Thread
+		private class ConcurrentEncodeDecodeThread : Thread
 		{
 			public ConcurrentEncodeDecodeThread(TestText _enclosing, string name)
 				: base(name)
@@ -344,9 +344,9 @@ namespace Org.Apache.Hadoop.IO
 		/// <exception cref="System.Exception"/>
 		public virtual void TestConcurrentEncodeDecode()
 		{
-			Sharpen.Thread thread1 = new TestText.ConcurrentEncodeDecodeThread(this, "apache"
+			Thread thread1 = new TestText.ConcurrentEncodeDecodeThread(this, "apache"
 				);
-			Sharpen.Thread thread2 = new TestText.ConcurrentEncodeDecodeThread(this, "hadoop"
+			Thread thread2 = new TestText.ConcurrentEncodeDecodeThread(this, "hadoop"
 				);
 			thread1.Start();
 			thread2.Start();
@@ -381,7 +381,7 @@ namespace Org.Apache.Hadoop.IO
 		public virtual void TestReadWriteOperations()
 		{
 			string line = "adsawseeeeegqewgasddga";
-			byte[] inputBytes = Sharpen.Runtime.GetBytesForString(line);
+			byte[] inputBytes = Runtime.GetBytesForString(line);
 			inputBytes = Bytes.Concat(new byte[] { unchecked((byte)22) }, inputBytes);
 			DataInputBuffer @in = new DataInputBuffer();
 			DataOutputBuffer @out = new DataOutputBuffer();
@@ -412,7 +412,7 @@ namespace Org.Apache.Hadoop.IO
 		public virtual void TestReadWithKnownLength()
 		{
 			string line = "hello world";
-			byte[] inputBytes = Sharpen.Runtime.GetBytesForString(line, Charsets.Utf8);
+			byte[] inputBytes = Runtime.GetBytesForString(line, Charsets.Utf8);
 			DataInputBuffer @in = new DataInputBuffer();
 			Org.Apache.Hadoop.IO.Text text = new Org.Apache.Hadoop.IO.Text();
 			@in.Reset(inputBytes, inputBytes.Length);

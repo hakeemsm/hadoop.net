@@ -5,7 +5,7 @@ using Com.Google.Common.Annotations;
 using Com.Google.Common.Net;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Commons.Net.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -36,10 +36,10 @@ namespace Org.Apache.Hadoop.Util
 			internal static readonly MachineList.InetAddressFactory SInstance = new MachineList.InetAddressFactory
 				();
 
-			/// <exception cref="Sharpen.UnknownHostException"/>
+			/// <exception cref="UnknownHostException"/>
 			public virtual IPAddress GetByName(string host)
 			{
-				return Sharpen.Extensions.GetAddressByName(host);
+				return Extensions.GetAddressByName(host);
 			}
 		}
 
@@ -211,11 +211,11 @@ namespace Org.Apache.Hadoop.Util
 			{
 				if (ipAddresses != null)
 				{
-					Sharpen.Collections.AddAll(list, ipAddresses);
+					Collections.AddAll(list, ipAddresses);
 				}
 				if (hostNames != null)
 				{
-					Sharpen.Collections.AddAll(list, hostNames);
+					Collections.AddAll(list, hostNames);
 				}
 				if (cidrAddresses != null)
 				{

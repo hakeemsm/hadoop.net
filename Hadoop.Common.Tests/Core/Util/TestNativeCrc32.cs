@@ -4,7 +4,7 @@ using NUnit.Framework.Rules;
 using NUnit.Framework.Runners;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {

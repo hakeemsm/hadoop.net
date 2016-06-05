@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -106,7 +106,7 @@ namespace Org.Apache.Hadoop.Security
 			try
 			{
 				// shell command does not expect '@' at the begining of the group name
-				result = Shell.ExecCommand(Shell.GetUsersForNetgroupCommand(Sharpen.Runtime.Substring
+				result = Shell.ExecCommand(Shell.GetUsersForNetgroupCommand(Runtime.Substring
 					(netgroup, 1)));
 			}
 			catch (Shell.ExitCodeException e)

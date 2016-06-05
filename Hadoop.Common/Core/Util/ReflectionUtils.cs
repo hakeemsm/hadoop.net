@@ -149,7 +149,7 @@ namespace Hadoop.Common.Core.Util
 					}
 					stream.WriteLine("Thread " + GetTaskName(info.GetThreadId(), info.GetThreadName()
 						) + ":");
-					Sharpen.Thread.State state = info.GetThreadState();
+					Thread.State state = info.GetThreadState();
 					stream.WriteLine("  State: " + state);
 					stream.WriteLine("  Blocked count: " + info.GetBlockedCount());
 					stream.WriteLine("  Waited count: " + info.GetWaitedCount());
@@ -158,13 +158,13 @@ namespace Hadoop.Common.Core.Util
 						stream.WriteLine("  Blocked time: " + info.GetBlockedTime());
 						stream.WriteLine("  Waited time: " + info.GetWaitedTime());
 					}
-					if (state == Sharpen.Thread.State.Waiting)
+					if (state == Thread.State.Waiting)
 					{
 						stream.WriteLine("  Waiting on " + info.GetLockName());
 					}
 					else
 					{
-						if (state == Sharpen.Thread.State.Blocked)
+						if (state == Thread.State.Blocked)
 						{
 							stream.WriteLine("  Blocked on " + info.GetLockName());
 							stream.WriteLine("  Blocked by " + GetTaskName(info.GetLockOwnerId(), info.GetLockOwnerName
@@ -325,7 +325,7 @@ namespace Hadoop.Common.Core.Util
 			IList<FieldInfo> fields = new AList<FieldInfo>();
 			while (clazz != null)
 			{
-				foreach (FieldInfo field in Sharpen.Runtime.GetDeclaredFields(clazz))
+				foreach (FieldInfo field in Runtime.GetDeclaredFields(clazz))
 				{
 					fields.AddItem(field);
 				}
@@ -343,7 +343,7 @@ namespace Hadoop.Common.Core.Util
 			IList<MethodInfo> methods = new AList<MethodInfo>();
 			while (clazz != null)
 			{
-				foreach (MethodInfo method in Sharpen.Runtime.GetDeclaredMethods(clazz))
+				foreach (MethodInfo method in Runtime.GetDeclaredMethods(clazz))
 				{
 					methods.AddItem(method);
 				}

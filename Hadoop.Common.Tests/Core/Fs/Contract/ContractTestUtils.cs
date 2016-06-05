@@ -22,7 +22,7 @@ using NUnit.Framework;
 using NUnit.Framework.Internal;
 using Org.Apache.Hadoop.FS;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Contract
 {
@@ -417,7 +417,7 @@ namespace Org.Apache.Hadoop.FS.Contract
 		public static void Fail(string text, Exception thrown)
 		{
 			Exception e = new Exception(text);
-			Sharpen.Extensions.InitCause(e, thrown);
+			Extensions.InitCause(e, thrown);
 			throw e;
 		}
 

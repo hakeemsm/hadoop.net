@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security.Token.Delegation;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Token
 {
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Security.Token
 				string val = values[i];
 				System.Console.Out.WriteLine("Input = " + val);
 				orig = new Org.Apache.Hadoop.Security.Token.Token<AbstractDelegationTokenIdentifier
-					>(Sharpen.Runtime.GetBytesForString(val), Sharpen.Runtime.GetBytesForString(val)
+					>(Runtime.GetBytesForString(val), Runtime.GetBytesForString(val)
 					, new Text(val), new Text(val));
 				string encode = orig.EncodeToUrlString();
 				copy.DecodeFromUrlString(encode);

@@ -17,7 +17,7 @@
 */
 using System;
 using Org.Apache.Hadoop.Ipc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO.Retry
 {

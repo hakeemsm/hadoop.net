@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -55,8 +55,8 @@ namespace Org.Apache.Hadoop.Net
 				{
 					foreach (string str in mappings)
 					{
-						string host = Sharpen.Runtime.Substring(str, 0, str.IndexOf('='));
-						string rack = Sharpen.Runtime.Substring(str, str.IndexOf('=') + 1);
+						string host = Runtime.Substring(str, 0, str.IndexOf('='));
+						string rack = Runtime.Substring(str, str.IndexOf('=') + 1);
 						AddNodeToRack(host, rack);
 					}
 				}

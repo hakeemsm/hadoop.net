@@ -2,7 +2,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {

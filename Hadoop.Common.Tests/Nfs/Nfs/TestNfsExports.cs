@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using Org.Apache.Hadoop.Nfs.Nfs3;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Nfs
 {
@@ -201,7 +201,7 @@ namespace Org.Apache.Hadoop.Nfs
 			// address2 will hit the cache
 			Assert.Equal(AccessPrivilege.ReadWrite, matcher.GetAccessPrivilege
 				(address2, hostname2));
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			// no cache for address2 now
 			AccessPrivilege ap;
 			long startNanos = Runtime.NanoTime();
@@ -212,7 +212,7 @@ namespace Org.Apache.Hadoop.Nfs
 				{
 					break;
 				}
-				Sharpen.Thread.Sleep(500);
+				Thread.Sleep(500);
 			}
 			while ((Runtime.NanoTime() - startNanos) / NanosPerMillis < 5000);
 			Assert.Equal(AccessPrivilege.None, ap);

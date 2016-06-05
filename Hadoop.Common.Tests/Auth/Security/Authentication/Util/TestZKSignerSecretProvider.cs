@@ -1,7 +1,7 @@
 using Javax.Servlet;
 using NUnit.Framework;
 using Org.Apache.Curator.Test;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Authentication.Util
 {
@@ -38,11 +38,11 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			// use the same seed so we can predict the RNG
 			long seed = Runtime.CurrentTimeMillis();
 			Random rand = new Random(seed);
-			byte[] secret2 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
+			byte[] secret2 = Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
 				()));
-			byte[] secret1 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
+			byte[] secret1 = Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
 				()));
-			byte[] secret3 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
+			byte[] secret3 = Runtime.GetBytesForString(System.Convert.ToString(rand.NextLong
 				()));
 			ZKSignerSecretProvider secretProvider = new ZKSignerSecretProvider(seed);
 			Properties config = new Properties();
@@ -58,21 +58,21 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret1, allSecrets[0]);
 				NUnit.Framework.Assert.IsNull(allSecrets[1]);
-				Sharpen.Thread.Sleep((rolloverFrequency + 2000));
+				Thread.Sleep((rolloverFrequency + 2000));
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret2, currentSecret);
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret2, allSecrets[0]);
 				Assert.AssertArrayEquals(secret1, allSecrets[1]);
-				Sharpen.Thread.Sleep((rolloverFrequency + 2000));
+				Thread.Sleep((rolloverFrequency + 2000));
 				currentSecret = secretProvider.GetCurrentSecret();
 				allSecrets = secretProvider.GetAllSecrets();
 				Assert.AssertArrayEquals(secret3, currentSecret);
 				Assert.Equal(2, allSecrets.Length);
 				Assert.AssertArrayEquals(secret3, allSecrets[0]);
 				Assert.AssertArrayEquals(secret2, allSecrets[1]);
-				Sharpen.Thread.Sleep((rolloverFrequency + 2000));
+				Thread.Sleep((rolloverFrequency + 2000));
 			}
 			finally
 			{
@@ -89,23 +89,23 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			// use the same seed so we can predict the RNG
 			long seedA = Runtime.CurrentTimeMillis();
 			Random rand = new Random(seedA);
-			byte[] secretA2 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretA2 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
-			byte[] secretA1 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretA1 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
 			// use the same seed so we can predict the RNG
 			long seedB = Runtime.CurrentTimeMillis() + rand.NextLong();
 			rand = new Random(seedB);
-			byte[] secretB2 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretB2 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
-			byte[] secretB1 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretB1 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
 			// use the same seed so we can predict the RNG
 			long seedC = Runtime.CurrentTimeMillis() + rand.NextLong();
 			rand = new Random(seedC);
-			byte[] secretC2 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretC2 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
-			byte[] secretC1 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretC1 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
 			ZKSignerSecretProvider secretProviderA = new ZKSignerSecretProvider(seedA);
 			ZKSignerSecretProvider secretProviderB = new ZKSignerSecretProvider(seedB);
@@ -162,7 +162,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 						}
 					}
 				}
-				Sharpen.Thread.Sleep((rolloverFrequency + 2000));
+				Thread.Sleep((rolloverFrequency + 2000));
 				currentSecretA = secretProviderA.GetCurrentSecret();
 				allSecretsA = secretProviderA.GetAllSecrets();
 				currentSecretB = secretProviderB.GetCurrentSecret();
@@ -216,20 +216,20 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 			// use the same seed so we can predict the RNG
 			long seedA = Runtime.CurrentTimeMillis();
 			Random rand = new Random(seedA);
-			byte[] secretA2 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretA2 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
-			byte[] secretA1 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretA1 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
-			byte[] secretA3 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretA3 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
 			// use the same seed so we can predict the RNG
 			long seedB = Runtime.CurrentTimeMillis() + rand.NextLong();
 			rand = new Random(seedB);
-			byte[] secretB2 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretB2 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
-			byte[] secretB1 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretB1 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
-			byte[] secretB3 = Sharpen.Runtime.GetBytesForString(System.Convert.ToString(rand.
+			byte[] secretB3 = Runtime.GetBytesForString(System.Convert.ToString(rand.
 				NextLong()));
 			ZKSignerSecretProvider secretProviderA = new ZKSignerSecretProvider(seedA);
 			ZKSignerSecretProvider secretProviderB = new ZKSignerSecretProvider(seedB);
@@ -246,14 +246,14 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				Assert.Equal(2, allSecretsA.Length);
 				Assert.AssertArrayEquals(secretA1, allSecretsA[0]);
 				NUnit.Framework.Assert.IsNull(allSecretsA[1]);
-				Sharpen.Thread.Sleep((rolloverFrequency + 2000));
+				Thread.Sleep((rolloverFrequency + 2000));
 				currentSecretA = secretProviderA.GetCurrentSecret();
 				allSecretsA = secretProviderA.GetAllSecrets();
 				Assert.AssertArrayEquals(secretA2, currentSecretA);
 				Assert.Equal(2, allSecretsA.Length);
 				Assert.AssertArrayEquals(secretA2, allSecretsA[0]);
 				Assert.AssertArrayEquals(secretA1, allSecretsA[1]);
-				Sharpen.Thread.Sleep((rolloverFrequency / 5));
+				Thread.Sleep((rolloverFrequency / 5));
 				secretProviderB.Init(config, GetDummyServletContext(), rolloverFrequency);
 				byte[] currentSecretB = secretProviderB.GetCurrentSecret();
 				byte[][] allSecretsB = secretProviderB.GetAllSecrets();
@@ -261,7 +261,7 @@ namespace Org.Apache.Hadoop.Security.Authentication.Util
 				Assert.Equal(2, allSecretsA.Length);
 				Assert.AssertArrayEquals(secretA2, allSecretsB[0]);
 				Assert.AssertArrayEquals(secretA1, allSecretsB[1]);
-				Sharpen.Thread.Sleep((rolloverFrequency));
+				Thread.Sleep((rolloverFrequency));
 				currentSecretA = secretProviderA.GetCurrentSecret();
 				allSecretsA = secretProviderA.GetAllSecrets();
 				currentSecretB = secretProviderB.GetCurrentSecret();

@@ -7,8 +7,8 @@ using Org.Apache.Commons.Logging.Impl;
 using Org.Apache.Hadoop.Http;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
-using Sharpen;
-using Sharpen.Logging;
+
+using Logging;
 
 namespace Org.Apache.Hadoop.Log
 {
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.Log
 
 		internal const string Marker = "<!-- OUTPUT -->";
 
-		internal static readonly Sharpen.Pattern Tag = Sharpen.Pattern.Compile("<[^>]*>");
+		internal static readonly Pattern Tag = Pattern.Compile("<[^>]*>");
 
 		/// <summary>A servlet implementation</summary>
 		[System.Serializable]

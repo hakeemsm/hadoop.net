@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security;
 using Org.Mockito;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -345,7 +345,7 @@ namespace Org.Apache.Hadoop.Ipc
 			CountDownLatch latch = new CountDownLatch(numberOfTakes);
 			TestFairCallQueue.Taker taker = new TestFairCallQueue.Taker(this, cq, takeAttempts
 				, "default", latch);
-			Sharpen.Thread t = new Sharpen.Thread(taker);
+			Thread t = new Thread(taker);
 			t.Start();
 			latch.Await();
 			Assert.Equal(numberOfTakes, taker.callsTaken);
@@ -360,7 +360,7 @@ namespace Org.Apache.Hadoop.Ipc
 			CountDownLatch latch = new CountDownLatch(numberOfPuts);
 			TestFairCallQueue.Putter putter = new TestFairCallQueue.Putter(this, cq, putAttempts
 				, null, latch);
-			Sharpen.Thread t = new Sharpen.Thread(putter);
+			Thread t = new Thread(putter);
 			t.Start();
 			latch.Await();
 			Assert.Equal(numberOfPuts, putter.callsAdded);

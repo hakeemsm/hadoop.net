@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Metrics2.Util;
 using Org.Codehaus.Jackson.Map;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -277,7 +277,7 @@ namespace Org.Apache.Hadoop.Ipc
 				nextCache[id] = computedLevel;
 			}
 			// Swap in to activate
-			scheduleCacheRef.Set(Sharpen.Collections.UnmodifiableMap(nextCache));
+			scheduleCacheRef.Set(Collections.UnmodifiableMap(nextCache));
 		}
 
 		/// <summary>Get the number of occurrences and increment atomically.</summary>
@@ -411,7 +411,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				snapshot[entry.Key] = entry.Value.Get();
 			}
-			return Sharpen.Collections.UnmodifiableMap(snapshot);
+			return Collections.UnmodifiableMap(snapshot);
 		}
 
 		[VisibleForTesting]

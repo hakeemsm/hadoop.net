@@ -4,7 +4,7 @@ using System.IO;
 using Hadoop.Common.Core.IO;
 using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.IO
 
 		public virtual IWritable Remove(object key)
 		{
-			return Sharpen.Collections.Remove(instance, key);
+			return Collections.Remove(instance, key);
 		}
 
 		public virtual int Count

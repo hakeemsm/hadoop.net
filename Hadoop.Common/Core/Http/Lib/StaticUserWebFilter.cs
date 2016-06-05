@@ -6,7 +6,7 @@ using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Http;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http.Lib
 {

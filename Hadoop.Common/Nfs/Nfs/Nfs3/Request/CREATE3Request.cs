@@ -2,7 +2,7 @@ using System.IO;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Nfs.Nfs3;
 using Org.Apache.Hadoop.Oncrpc;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Nfs.Nfs3.Request
 {
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.Nfs.Nfs3.Request
 		{
 			handle.Serialize(xdr);
 			xdr.WriteInt(name.Length);
-			xdr.WriteFixedOpaque(Sharpen.Runtime.GetBytesForString(name, Charsets.Utf8), name
+			xdr.WriteFixedOpaque(Runtime.GetBytesForString(name, Charsets.Utf8), name
 				.Length);
 			xdr.WriteInt(mode);
 			objAttr.Serialize(xdr);

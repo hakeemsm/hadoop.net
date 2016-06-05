@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 using System;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.Util
 			{
 				throw new ArgumentException("Undefined for " + x);
 			}
-			return (32 - Sharpen.Extensions.NumberOfLeadingZeros(x - 1)) << 2;
+			return (32 - Extensions.NumberOfLeadingZeros(x - 1)) << 2;
 		}
 
 		/// <summary>Sort the given range of items using quick sort.</summary>

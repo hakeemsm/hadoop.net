@@ -3,7 +3,7 @@ using Com.Google.Common.Base;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 using Sun.Misc;
 using Sun.Nio.CH;
 

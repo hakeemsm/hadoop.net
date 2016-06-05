@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Hadoop.Common.Core.Fs.Shell;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Shell
 {
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.FS.Shell
 		{
 			CommandFormat cf = new CommandFormat(1, 1, "e", "d", "f", "s", "z");
 			cf.Parse(args);
-			string[] opts = Sharpen.Collections.ToArray(cf.GetOpts(), new string[0]);
+			string[] opts = Collections.ToArray(cf.GetOpts(), new string[0]);
 			switch (opts.Length)
 			{
 				case 0:

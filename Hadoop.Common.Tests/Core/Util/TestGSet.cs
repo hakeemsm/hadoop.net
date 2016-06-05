@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -554,7 +554,7 @@ namespace Org.Apache.Hadoop.Util
 
 		private static bool IsPowerOfTwo(int num)
 		{
-			return num == 0 || (num > 0 && Sharpen.Extensions.BitCount(num) == 1);
+			return num == 0 || (num > 0 && Extensions.BitCount(num) == 1);
 		}
 
 		/// <summary>Return capacity as percentage of total memory</summary>

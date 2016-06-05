@@ -3,8 +3,8 @@ using System.IO;
 using NUnit.Framework;
 using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Test;
-using Sharpen;
-using Sharpen.File;
+
+using File;
 
 namespace Org.Apache.Hadoop.IO
 {

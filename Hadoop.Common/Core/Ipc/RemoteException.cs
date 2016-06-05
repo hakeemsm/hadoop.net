@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using Org.Apache.Hadoop.Ipc.Protobuf;
 using Org.Xml.Sax;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -102,7 +102,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			try
 			{
-				Type realClass = Sharpen.Runtime.GetType(GetClassName());
+				Type realClass = Runtime.GetType(GetClassName());
 				return InstantiateException(realClass.AsSubclass<IOException>());
 			}
 			catch (Exception)
@@ -117,7 +117,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			Constructor<IOException> cn = cls.GetConstructor(typeof(string));
 			IOException ex = cn.NewInstance(this.Message);
-			Sharpen.Extensions.InitCause(ex, this);
+			Extensions.InitCause(ex, this);
 			return ex;
 		}
 

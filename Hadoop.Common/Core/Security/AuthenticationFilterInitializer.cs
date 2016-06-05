@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Http;
 using Org.Apache.Hadoop.Security.Authentication.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.Security
 				if (name.StartsWith(prefix))
 				{
 					string value = conf.Get(name);
-					name = Sharpen.Runtime.Substring(name, prefix.Length);
+					name = Runtime.Substring(name, prefix.Length);
 					filterConfig[name] = value;
 				}
 			}

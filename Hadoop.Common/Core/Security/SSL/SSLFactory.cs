@@ -5,7 +5,7 @@ using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security.Authentication.Client;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Ssl
 {
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 		}
 
 		/// <summary>Initializes the factory.</summary>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if an SSL initialization error
 		/// happened.
 		/// </exception>
@@ -126,7 +126,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 			hostnameVerifier = GetHostnameVerifier(conf);
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		/// <exception cref="System.IO.IOException"/>
 		private HostnameVerifier GetHostnameVerifier(Configuration conf)
 		{
@@ -134,7 +134,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 				, "DEFAULT").Trim()));
 		}
 
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public static HostnameVerifier GetHostnameVerifier(string verifier)
 		{
@@ -193,7 +193,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 
 		/// <summary>Returns a configured SSLEngine.</summary>
 		/// <returns>the configured SSLEngine.</returns>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the SSL engine could not
 		/// be initialized.
 		/// </exception>
@@ -219,7 +219,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 
 		/// <summary>Returns a configured SSLServerSocketFactory.</summary>
 		/// <returns>the configured SSLSocketFactory.</returns>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the SSLSocketFactory could not
 		/// be initialized.
 		/// </exception>
@@ -238,7 +238,7 @@ namespace Org.Apache.Hadoop.Security.Ssl
 
 		/// <summary>Returns a configured SSLSocketFactory.</summary>
 		/// <returns>the configured SSLSocketFactory.</returns>
-		/// <exception cref="Sharpen.GeneralSecurityException">
+		/// <exception cref="GeneralSecurityException">
 		/// thrown if the SSLSocketFactory could not
 		/// be initialized.
 		/// </exception>
@@ -275,23 +275,23 @@ namespace Org.Apache.Hadoop.Security.Ssl
 
 		/// <summary>
 		/// If the given
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// is an
-		/// <see cref="Sharpen.HttpsURLConnection"/>
+		/// <see cref="HttpsURLConnection"/>
 		/// configures the connection with the
-		/// <see cref="Sharpen.SSLSocketFactory"/>
+		/// <see cref="SSLSocketFactory"/>
 		/// and
-		/// <see cref="Sharpen.HostnameVerifier"/>
+		/// <see cref="HostnameVerifier"/>
 		/// of this SSLFactory, otherwise does nothing.
 		/// </summary>
 		/// <param name="conn">
 		/// the
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// instance to configure.
 		/// </param>
 		/// <returns>
 		/// the configured
-		/// <see cref="Sharpen.HttpURLConnection"/>
+		/// <see cref="HttpURLConnection"/>
 		/// instance.
 		/// </returns>
 		/// <exception cref="System.IO.IOException">if an IO error occurred.</exception>

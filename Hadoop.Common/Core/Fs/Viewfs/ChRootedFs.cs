@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Viewfs
 {
@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			return myFs.IsValidName(FullPath(new Path(src)).ToUri().ToString());
 		}
 
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		public ChRootedFs(AbstractFileSystem fs, Path theRoot)
 			: base(fs.GetUri(), fs.GetUri().GetScheme(), fs.GetUri().GetAuthority() != null, 
 				fs.GetUriDefaultPort())
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 			// Handle the two cases:
 			//              scheme:/// and scheme://authority/
 			myUri = new URI(myFs.GetUri().ToString() + (myFs.GetUri().GetAuthority() == null ? 
-				string.Empty : Path.Separator) + Sharpen.Runtime.Substring(chRootPathPart.ToUri(
+				string.Empty : Path.Separator) + Runtime.Substring(chRootPathPart.ToUri(
 				).GetPath(), 1));
 			base.CheckPath(theRoot);
 		}
@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.FS.Viewfs
 					 + myUri);
 			}
 			string pathPart = p.ToUri().GetPath();
-			return (pathPart.Length == chRootPathPartString.Length) ? string.Empty : Sharpen.Runtime.Substring
+			return (pathPart.Length == chRootPathPartString.Length) ? string.Empty : Runtime.Substring
 				(pathPart, chRootPathPartString.Length + (chRootPathPart.IsRoot() ? 0 : 1));
 		}
 

@@ -21,8 +21,8 @@ using Org.Apache.Log4j;
 using Org.Mockito;
 using Org.Mockito.Invocation;
 using Org.Mockito.Stubbing;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Ipc
 					// sleep a bit
 					try
 					{
-						Sharpen.Thread.Sleep(Random.Next(PingInterval) + MinSleepTime);
+						Thread.Sleep(Random.Next(PingInterval) + MinSleepTime);
 					}
 					catch (Exception)
 					{
@@ -123,7 +123,7 @@ namespace Org.Apache.Hadoop.Ipc
 			// echo param as result
 		}
 
-		private class SerialCaller : Sharpen.Thread
+		private class SerialCaller : Thread
 		{
 			private Client client;
 
@@ -309,7 +309,7 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				try
 				{
-					Sharpen.Thread.Sleep(WritableFaultsSleep);
+					Thread.Sleep(WritableFaultsSleep);
 				}
 				catch (Exception)
 				{
@@ -382,7 +382,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <param name="serverResponseClass">- server writes this writable for response</param>
 		/// <param name="clientResponseClass">- client reads this writable for response</param>
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.InstantiationException"/>
+		/// <exception cref="InstantiationException"/>
 		/// <exception cref="System.MemberAccessException"/>
 		private void DoErrorTest(Type clientParamClass, Type serverParamClass, Type serverResponseClass
 			, Type clientResponseClass)
@@ -706,7 +706,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <summary>Check that reader queueing works</summary>
-		/// <exception cref="Sharpen.BrokenBarrierException"></exception>
+		/// <exception cref="BrokenBarrierException"></exception>
 		/// <exception cref="System.Exception"></exception>
 		public virtual void TestIpcWithReaderQueuing()
 		{
@@ -749,10 +749,10 @@ namespace Org.Apache.Hadoop.Ipc
 			server.Start();
 			Client.SetConnectTimeout(conf, 10000);
 			// instantiate the threads, will start in batches
-			Sharpen.Thread[] threads = new Sharpen.Thread[clients];
+			Thread[] threads = new Thread[clients];
 			for (int i = 0; i < clients; i++)
 			{
-				threads[i] = new Sharpen.Thread(new _Runnable_704(conf, addr, failures, callFinishedLatch
+				threads[i] = new Thread(new _Runnable_704(conf, addr, failures, callFinishedLatch
 					));
 			}
 			// start enough clients to block up the handler, callq, and each reader;
@@ -773,19 +773,19 @@ namespace Org.Apache.Hadoop.Ipc
 						// let subsequent readers jam the callq, will happen immediately 
 						while (server.GetCallQueueLen() != i_1)
 						{
-							Sharpen.Thread.Sleep(1);
+							Thread.Sleep(1);
 						}
 					}
 				}
 			}
 			// additional threads block the readers trying to add to the callq
 			// wait till everything is slotted, should happen immediately
-			Sharpen.Thread.Sleep(10);
+			Thread.Sleep(10);
 			if (server.GetNumOpenConnections() < initialClients)
 			{
 				Log.Info("(initial clients) need:" + initialClients + " connections have:" + server
 					.GetNumOpenConnections());
-				Sharpen.Thread.Sleep(100);
+				Thread.Sleep(100);
 			}
 			Log.Info("ipc layer should be blocked");
 			Assert.Equal(callQ, server.GetCallQueueLen());
@@ -796,25 +796,25 @@ namespace Org.Apache.Hadoop.Ipc
 			{
 				threads[i_2].Start();
 			}
-			Sharpen.Thread.Sleep(10);
+			Thread.Sleep(10);
 			if (server.GetNumOpenConnections() < maxAccept)
 			{
 				Log.Info("(max clients) need:" + maxAccept + " connections have:" + server.GetNumOpenConnections
 					());
-				Sharpen.Thread.Sleep(100);
+				Thread.Sleep(100);
 			}
 			// check a few times to make sure we didn't go over
 			for (int i_3 = 0; i_3 < 4; i_3++)
 			{
 				Assert.Equal(maxAccept, server.GetNumOpenConnections());
-				Sharpen.Thread.Sleep(100);
+				Thread.Sleep(100);
 			}
 			// sanity check that no calls have finished
 			Assert.Equal(clients, callFinishedLatch.GetCount());
 			Log.Info("releasing the calls");
 			server.callBlockLatch.CountDown();
 			callFinishedLatch.Await();
-			foreach (Sharpen.Thread t in threads)
+			foreach (Thread t in threads)
 			{
 				t.Join();
 			}
@@ -838,7 +838,7 @@ namespace Org.Apache.Hadoop.Ipc
 				Client client = new Client(typeof(LongWritable), conf);
 				try
 				{
-					client.Call(new LongWritable(Sharpen.Thread.CurrentThread().GetId()), addr, null, 
+					client.Call(new LongWritable(Thread.CurrentThread().GetId()), addr, null, 
 						null, 60000, conf);
 				}
 				catch (Exception e)
@@ -884,7 +884,7 @@ namespace Org.Apache.Hadoop.Ipc
 			CountDownLatch allCallLatch = new CountDownLatch(clients);
 			AtomicBoolean error = new AtomicBoolean();
 			TestIPC.TestServer server = new TestIPC.TestServer(clients, false);
-			Sharpen.Thread[] threads = new Sharpen.Thread[clients];
+			Thread[] threads = new Thread[clients];
 			try
 			{
 				server.callListener = new _Runnable_798(allCallLatch, firstCallBarrier, callBarrier
@@ -899,7 +899,7 @@ namespace Org.Apache.Hadoop.Ipc
 					, 10000);
 				for (int i = 0; i < clients; i++)
 				{
-					threads[i] = new Sharpen.Thread(new _Runnable_824(clientConf, addr, callReturned)
+					threads[i] = new Thread(new _Runnable_824(clientConf, addr, callReturned)
 						);
 					threads[i].Start();
 				}
@@ -915,26 +915,26 @@ namespace Org.Apache.Hadoop.Ipc
 				// server won't close till maxIdle*2, so give scanning thread time to
 				// be almost ready to close idle connection.  after which it should
 				// close max connections on every cleanupInterval
-				Sharpen.Thread.Sleep(maxIdle * 2 - cleanupInterval);
+				Thread.Sleep(maxIdle * 2 - cleanupInterval);
 				for (int i_1 = clients; i_1 > 1; i_1 -= killMax)
 				{
-					Sharpen.Thread.Sleep(cleanupInterval);
+					Thread.Sleep(cleanupInterval);
 					NUnit.Framework.Assert.IsFalse(error.Get());
 					Assert.Equal(i_1, server.GetNumOpenConnections());
 				}
 				// connection for the first blocked call should still be open
-				Sharpen.Thread.Sleep(cleanupInterval);
+				Thread.Sleep(cleanupInterval);
 				NUnit.Framework.Assert.IsFalse(error.Get());
 				Assert.Equal(1, server.GetNumOpenConnections());
 				// wake up call and ensure connection times out
 				firstCallBarrier.Await();
-				Sharpen.Thread.Sleep(maxIdle * 2);
+				Thread.Sleep(maxIdle * 2);
 				NUnit.Framework.Assert.IsFalse(error.Get());
 				Assert.Equal(0, server.GetNumOpenConnections());
 			}
 			finally
 			{
-				foreach (Sharpen.Thread t in threads)
+				foreach (Thread t in threads)
 				{
 					if (t != null)
 					{
@@ -1005,10 +1005,10 @@ namespace Org.Apache.Hadoop.Ipc
 				Client client = new Client(typeof(LongWritable), clientConf);
 				try
 				{
-					client.Call(new LongWritable(Sharpen.Thread.CurrentThread().GetId()), addr, null, 
+					client.Call(new LongWritable(Thread.CurrentThread().GetId()), addr, null, 
 						null, 0, clientConf);
 					callReturned.CountDown();
-					Sharpen.Thread.Sleep(10000);
+					Thread.Sleep(10000);
 				}
 				catch (IOException e)
 				{
@@ -1091,11 +1091,11 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			Client client = new Client(typeof(LongWritable), conf);
 			Client.GetClientExecutor().Submit(new _Runnable_946());
-			Sharpen.Thread.CurrentThread().Interrupt();
+			Thread.CurrentThread().Interrupt();
 			client.Stop();
 			try
 			{
-				Assert.True(Sharpen.Thread.CurrentThread().IsInterrupted());
+				Assert.True(Thread.CurrentThread().IsInterrupted());
 				Log.Info("Expected thread interrupt during client cleanup");
 			}
 			catch (Exception)
@@ -1105,7 +1105,7 @@ namespace Org.Apache.Hadoop.Ipc
 					);
 			}
 			// Clear Thread interrupt
-			Sharpen.Thread.Interrupted();
+			Thread.Interrupted();
 		}
 
 		private sealed class _Runnable_946 : Runnable
@@ -1151,7 +1151,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void TestHttpGetResponse()
 		{
-			DoIpcVersionTest(Sharpen.Runtime.GetBytesForString("GET / HTTP/1.0\r\n\r\n"), Sharpen.Runtime.GetBytesForString
+			DoIpcVersionTest(Runtime.GetBytesForString("GET / HTTP/1.0\r\n\r\n"), Runtime.GetBytesForString
 				(Server.ReceivedHttpReqResponse));
 		}
 
@@ -1454,7 +1454,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			conf.SetInt("ipc.server.max.connections", 5);
 			Server server = null;
-			Sharpen.Thread[] connectors = new Sharpen.Thread[10];
+			Thread[] connectors = new Thread[10];
 			try
 			{
 				server = new TestIPC.TestServer(3, false);
@@ -1466,7 +1466,7 @@ namespace Org.Apache.Hadoop.Ipc
 					connectors[i] = new _Thread_1235(addr);
 					connectors[i].Start();
 				}
-				Sharpen.Thread.Sleep(1000);
+				Thread.Sleep(1000);
 				// server should only accept up to 5 connections
 				Assert.Equal(5, server.GetNumOpenConnections());
 				for (int i_1 = 0; i_1 < 10; i_1++)
@@ -1484,7 +1484,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 		}
 
-		private sealed class _Thread_1235 : Sharpen.Thread
+		private sealed class _Thread_1235 : Thread
 		{
 			public _Thread_1235(IPEndPoint addr)
 			{
@@ -1500,7 +1500,7 @@ namespace Org.Apache.Hadoop.Ipc
 					NetUtils.Connect(sock, addr, 3000);
 					try
 					{
-						Sharpen.Thread.Sleep(4000);
+						Thread.Sleep(4000);
 					}
 					catch (Exception)
 					{
@@ -1599,7 +1599,7 @@ namespace Org.Apache.Hadoop.Ipc
 			StringBuilder hexString = new StringBuilder();
 			foreach (string line in StringUtils.ToUpperCase(hexdump).Split("\n"))
 			{
-				hexString.Append(Sharpen.Runtime.Substring(line, 0, LastHexCol).Replace(" ", string.Empty
+				hexString.Append(Runtime.Substring(line, 0, LastHexCol).Replace(" ", string.Empty
 					));
 			}
 			return StringUtils.HexStringToByte(hexString.ToString());
@@ -1635,7 +1635,7 @@ namespace Org.Apache.Hadoop.Ipc
 			internal static readonly byte[] ResponseToHadoop0183Rpc = Bytes.Concat(HexDumpToBytes
 				("00 00 00 00 01 00 00 00  29 6f 72 67 2e 61 70 61 ........ )org.apa\n" + "63 68 65 2e 68 61 64 6f  6f 70 2e 69 70 63 2e 52 che.hado op.ipc.R\n"
 				 + "50 43 24 56 65 72 73 69  6f 6e 4d 69 73 6d 61 74 PC$Versi onMismat\n" + "63 68                                            ch               \n"
-				), Ints.ToByteArray(Hadoop018ErrorMsg.Length), Sharpen.Runtime.GetBytesForString
+				), Ints.ToByteArray(Hadoop018ErrorMsg.Length), Runtime.GetBytesForString
 				(Hadoop018ErrorMsg));
 
 			/// <summary>Wireshark dump of an RPC request from Hadoop 0.20.3</summary>
@@ -1655,7 +1655,7 @@ namespace Org.Apache.Hadoop.Ipc
 			internal static readonly byte[] ResponseToHadoop0203Rpc = Bytes.Concat(HexDumpToBytes
 				("ff ff ff ff ff ff ff ff  00 00 00 29 6f 72 67 2e ........ ...)org.\n" + "61 70 61 63 68 65 2e 68  61 64 6f 6f 70 2e 69 70 apache.h adoop.ip\n"
 				 + "63 2e 52 50 43 24 56 65  72 73 69 6f 6e 4d 69 73 c.RPC$Ve rsionMis\n" + "6d 61 74 63 68                                   match            \n"
-				), Ints.ToByteArray(Hadoop020ErrorMsg.Length), Sharpen.Runtime.GetBytesForString
+				), Ints.ToByteArray(Hadoop020ErrorMsg.Length), Runtime.GetBytesForString
 				(Hadoop020ErrorMsg));
 
 			internal const string Hadoop021ErrorMsg = "Server IPC version " + RpcConstants.CurrentVersion
@@ -1673,7 +1673,7 @@ namespace Org.Apache.Hadoop.Ipc
 			internal static readonly byte[] ResponseToHadoop0210Rpc = Bytes.Concat(HexDumpToBytes
 				("ff ff ff ff ff ff ff ff  00 00 00 29 6f 72 67 2e ........ ...)org.\n" + "61 70 61 63 68 65 2e 68  61 64 6f 6f 70 2e 69 70 apache.h adoop.ip\n"
 				 + "63 2e 52 50 43 24 56 65  72 73 69 6f 6e 4d 69 73 c.RPC$Ve rsionMis\n" + "6d 61 74 63 68                                   match            \n"
-				), Ints.ToByteArray(Hadoop021ErrorMsg.Length), Sharpen.Runtime.GetBytesForString
+				), Ints.ToByteArray(Hadoop021ErrorMsg.Length), Runtime.GetBytesForString
 				(Hadoop021ErrorMsg));
 			// in 0.21 it comes in two separate TCP packets
 		}

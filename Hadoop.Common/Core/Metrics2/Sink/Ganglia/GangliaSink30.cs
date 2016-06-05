@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Impl;
 using Org.Apache.Hadoop.Metrics2.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Sink.Ganglia
 {
@@ -34,7 +34,7 @@ namespace Org.Apache.Hadoop.Metrics2.Sink.Ganglia
 				string propertyName = it.Next();
 				if (propertyName.StartsWith(TagsForPrefixPropertyPrefix))
 				{
-					string contextName = Sharpen.Runtime.Substring(propertyName, TagsForPrefixPropertyPrefix
+					string contextName = Runtime.Substring(propertyName, TagsForPrefixPropertyPrefix
 						.Length);
 					string[] tags = conf.GetStringArray(propertyName);
 					bool useAllTags = false;

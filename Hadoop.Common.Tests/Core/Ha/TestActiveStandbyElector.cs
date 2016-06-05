@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Zookeeper;
 using Org.Apache.Zookeeper.Data;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -32,7 +32,7 @@ namespace Org.Apache.Hadoop.HA
 			internal ActiveStandbyElectorTester(TestActiveStandbyElector _enclosing, string hostPort
 				, int timeout, string parent, IList<ACL> acl, ActiveStandbyElector.ActiveStandbyElectorCallback
 				 app)
-				: base(hostPort, timeout, parent, acl, Sharpen.Collections.EmptyList<ZKUtil.ZKAuthInfo
+				: base(hostPort, timeout, parent, acl, Collections.EmptyList<ZKUtil.ZKAuthInfo
 					>(), app, CommonConfigurationKeys.HaFcElectorZkOpRetriesDefault)
 			{
 				this._enclosing = _enclosing;
@@ -732,7 +732,7 @@ namespace Org.Apache.Hadoop.HA
 			try
 			{
 				new ActiveStandbyElector("127.0.0.1", 2000, ZkParentName, ZooDefs.Ids.OpenAclUnsafe
-					, Sharpen.Collections.EmptyList<ZKUtil.ZKAuthInfo>(), mockApp, CommonConfigurationKeys
+					, Collections.EmptyList<ZKUtil.ZKAuthInfo>(), mockApp, CommonConfigurationKeys
 					.HaFcElectorZkOpRetriesDefault);
 				NUnit.Framework.Assert.Fail("Did not throw zookeeper connection loss exceptions!"
 					);

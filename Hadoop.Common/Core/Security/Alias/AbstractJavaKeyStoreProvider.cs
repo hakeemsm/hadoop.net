@@ -7,7 +7,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security.Alias
 {
@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			this.uri = uri;
 			InitFileSystem(uri, conf);
 			// Get the password from the user's environment
-			if (Sharpen.Runtime.GetEnv().Contains(CredentialPasswordName))
+			if (Runtime.GetEnv().Contains(CredentialPasswordName))
 			{
 				password = Runtime.Getenv(CredentialPasswordName).ToCharArray();
 			}
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 				string pwFile = conf.Get(KeystorePasswordFileKey);
 				if (pwFile != null)
 				{
-					ClassLoader cl = Sharpen.Thread.CurrentThread().GetContextClassLoader();
+					ClassLoader cl = Thread.CurrentThread().GetContextClassLoader();
 					Uri pwdFile = cl.GetResource(pwFile);
 					if (pwdFile != null)
 					{
@@ -337,7 +337,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 				{
 					throw new IOException("Problem removing " + name + " from " + this, e);
 				}
-				Sharpen.Collections.Remove(cache, name);
+				Collections.Remove(cache, name);
 				changed = true;
 			}
 			finally
@@ -353,7 +353,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 			writeLock.Lock();
 			try
 			{
-				keyStore.SetKeyEntry(alias, new SecretKeySpec(Sharpen.Runtime.GetBytesForString(new 
+				keyStore.SetKeyEntry(alias, new SecretKeySpec(Runtime.GetBytesForString(new 
 					string(material), "UTF-8"), "AES"), password, null);
 			}
 			catch (KeyStoreException e)

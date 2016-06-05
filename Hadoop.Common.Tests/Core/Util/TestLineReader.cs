@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -65,8 +65,8 @@ namespace Org.Apache.Hadoop.Util
 			}
 			// char 'a' as a filler for the test string
 			TestData = fillerString + TestPartOfInput;
-			lineReader = new LineReader(new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString
-				(TestData)), Sharpen.Runtime.GetBytesForString(Delimiter));
+			lineReader = new LineReader(new ByteArrayInputStream(Runtime.GetBytesForString
+				(TestData)), Runtime.GetBytesForString(Delimiter));
 			line = new Org.Apache.Hadoop.IO.Text();
 			lineReader.ReadLine(line);
 			Assert.Equal(fillerString.ToString(), line.ToString());
@@ -86,8 +86,8 @@ namespace Org.Apache.Hadoop.Util
 			TestStringBuilder.Append(Delimiter + "ecord" + "recor" + "core");
 			//~EOF with 're'
 			TestData = TestStringBuilder.ToString();
-			lineReader = new LineReader(new ByteArrayInputStream(Sharpen.Runtime.GetBytesForString
-				(TestData)), Sharpen.Runtime.GetBytesForString(Delimiter));
+			lineReader = new LineReader(new ByteArrayInputStream(Runtime.GetBytesForString
+				(TestData)), Runtime.GetBytesForString(Delimiter));
 			lineReader.ReadLine(line);
 			Assert.Equal(string.Empty, line.ToString());
 			lineReader.ReadLine(line);

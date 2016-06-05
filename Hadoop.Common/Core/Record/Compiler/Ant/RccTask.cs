@@ -1,7 +1,7 @@
 using Org.Apache.Hadoop.Record.Compiler.Generated;
 using Org.Apache.Tools.Ant;
 using Org.Apache.Tools.Ant.Types;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Compiler.Ant
 {

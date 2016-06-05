@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Crypto
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.GeneralSecurityException"/>
+		/// <exception cref="GeneralSecurityException"/>
 		private void CryptoCodecTest(Configuration conf, int seed, int count, string encCodecClass
 			, string decCodecClass, byte[] iv)
 		{

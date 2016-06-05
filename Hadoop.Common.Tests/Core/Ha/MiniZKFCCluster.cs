@@ -10,7 +10,7 @@ using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Zookeeper.Data;
 using Org.Apache.Zookeeper.Server;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.HA
 {
@@ -167,7 +167,7 @@ namespace Org.Apache.Hadoop.HA
 			while (svc.GetServiceState() != state)
 			{
 				ctx.CheckException();
-				Sharpen.Thread.Sleep(50);
+				Thread.Sleep(50);
 			}
 		}
 

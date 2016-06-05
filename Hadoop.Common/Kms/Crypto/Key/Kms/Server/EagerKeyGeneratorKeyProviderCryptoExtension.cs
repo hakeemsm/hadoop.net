@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Crypto.Key;
 using Org.Apache.Hadoop.Crypto.Key.Kms;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 							throw new IOException(e);
 						}
 					}
-					Sharpen.Collections.AddAll(keyQueue, retEdeks);
+					Collections.AddAll(keyQueue, retEdeks);
 				}
 
 				internal EncryptedQueueRefiller(CryptoExtension _enclosing)
@@ -103,7 +103,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public virtual KeyProviderCryptoExtension.EncryptedKeyVersion GenerateEncryptedKey
 				(string encryptionKeyName)
 			{
@@ -118,7 +118,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			/// <exception cref="Sharpen.GeneralSecurityException"/>
+			/// <exception cref="GeneralSecurityException"/>
 			public virtual KeyProvider.KeyVersion DecryptEncryptedKey(KeyProviderCryptoExtension.EncryptedKeyVersion
 				 encryptedKeyVersion)
 			{
@@ -143,7 +143,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 		{
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion RollNewVersion(string name)
 		{

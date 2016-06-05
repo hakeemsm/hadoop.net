@@ -6,9 +6,9 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.File;
-using Sharpen.File.Attribute;
+
+using File;
+using File.Attribute;
 
 namespace Org.Apache.Hadoop.Security.Alias
 {
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.Security.Alias
 				// The winutils output consists of 10 characters because of the leading
 				// directory indicator, i.e. "drwx------".  The JDK parsing method expects
 				// a 9-character string, so remove the leading character.
-				string permString = Sharpen.Runtime.Substring(t.NextToken(), 1);
+				string permString = Runtime.Substring(t.NextToken(), 1);
 				permissions = PosixFilePermissions.FromString(permString);
 			}
 		}

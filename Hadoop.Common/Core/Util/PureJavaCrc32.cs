@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -14,7 +14,7 @@ namespace Org.Apache.Hadoop.Util
 	/// The current version is ~10x to 1.8x as fast as Sun's native
 	/// java.util.zip.CRC32 in Java 1.6
 	/// </remarks>
-	/// <seealso cref="Sharpen.CRC32"/>
+	/// <seealso cref="CRC32"/>
 	public class PureJavaCrc32 : Checksum
 	{
 		/// <summary>the current CRC value, bit-flipped</summary>

@@ -1,7 +1,7 @@
 using System.IO;
 using System.Net.Sockets;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.Net
 		/// <param name="channel">
 		/// 
 		/// Channel for writing, should also be a
-		/// <see cref="Sharpen.SelectableChannel"/>
+		/// <see cref="SelectableChannel"/>
 		/// .
 		/// The channel will be configured to be non-blocking.
 		/// </param>
@@ -72,7 +72,7 @@ namespace Org.Apache.Hadoop.Net
 		/// is zero, it will be treated as infinite timeout. The socket's
 		/// channel will be configured to be non-blocking.
 		/// </remarks>
-		/// <seealso cref="SocketOutputStream(Sharpen.WritableByteChannel, long)"/>
+		/// <seealso cref="SocketOutputStream(WritableByteChannel, long)"/>
 		/// <param name="socket">should have a channel associated with it.</param>
 		/// <param name="timeout">timeout timeout in milliseconds. must not be negative.</param>
 		/// <exception cref="System.IO.IOException"/>
@@ -136,7 +136,7 @@ namespace Org.Apache.Hadoop.Net
 		/// <remarks>
 		/// Returns underlying channel used by this stream.
 		/// This is useful in certain cases like channel for
-		/// <see cref="Sharpen.FileChannel.TransferTo(long, long, Sharpen.WritableByteChannel)
+		/// <see cref="FileChannel.TransferTo(long, long, WritableByteChannel)
 		/// 	"/>
 		/// </remarks>
 		public virtual WritableByteChannel GetChannel()
@@ -161,7 +161,7 @@ namespace Org.Apache.Hadoop.Net
 		/// waits for the underlying channel to be ready for writing.
 		/// The timeout specified for this stream applies to this wait.
 		/// </remarks>
-		/// <exception cref="Sharpen.SocketTimeoutException">
+		/// <exception cref="SocketTimeoutException">
 		/// 
 		/// if select on the channel times out.
 		/// </exception>
@@ -173,7 +173,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>
 		/// Transfers data from FileChannel using
-		/// <see cref="Sharpen.FileChannel.TransferTo(long, long, Sharpen.WritableByteChannel)
+		/// <see cref="FileChannel.TransferTo(long, long, WritableByteChannel)
 		/// 	"/>
 		/// .
 		/// Updates <code>waitForWritableTime</code> and <code>transferToTime</code>
@@ -195,14 +195,14 @@ namespace Org.Apache.Hadoop.Net
 		/// If end of input file is reached before requested number of
 		/// bytes are transfered.
 		/// </exception>
-		/// <exception cref="Sharpen.SocketTimeoutException">
+		/// <exception cref="SocketTimeoutException">
 		/// 
 		/// If this channel blocks transfer longer than timeout for
 		/// this stream.
 		/// </exception>
 		/// <exception cref="System.IO.IOException">
 		/// Includes any exception thrown by
-		/// <see cref="Sharpen.FileChannel.TransferTo(long, long, Sharpen.WritableByteChannel)
+		/// <see cref="FileChannel.TransferTo(long, long, WritableByteChannel)
 		/// 	"/>
 		/// .
 		/// </exception>
@@ -267,7 +267,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>
 		/// Call
-		/// <see cref="TransferToFully(Sharpen.FileChannel, long, int, Org.Apache.Hadoop.IO.LongWritable, Org.Apache.Hadoop.IO.LongWritable)
+		/// <see cref="TransferToFully(FileChannel, long, int, Org.Apache.Hadoop.IO.LongWritable, Org.Apache.Hadoop.IO.LongWritable)
 		/// 	"/>
 		/// with null <code>waitForWritableTime</code> and <code>transferToTime</code>
 		/// </summary>

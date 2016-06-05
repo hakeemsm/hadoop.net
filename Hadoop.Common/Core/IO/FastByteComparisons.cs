@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using Com.Google.Common.Primitives;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 using Sun.Misc;
 
 namespace Org.Apache.Hadoop.IO
@@ -71,7 +71,7 @@ namespace Org.Apache.Hadoop.IO
 				}
 				try
 				{
-					Type theClass = Sharpen.Runtime.GetType(UnsafeComparerName);
+					Type theClass = Runtime.GetType(UnsafeComparerName);
 					// yes, UnsafeComparer does implement Comparer<byte[]>
 					FastByteComparisons.Comparer<byte[]> comparer = (FastByteComparisons.Comparer<byte
 						[]>)theClass.GetEnumConstants()[0];
@@ -164,7 +164,7 @@ namespace Org.Apache.Hadoop.IO
 					{
 						try
 						{
-							FieldInfo f = Sharpen.Runtime.GetDeclaredField(typeof(Unsafe), "theUnsafe");
+							FieldInfo f = Runtime.GetDeclaredField(typeof(Unsafe), "theUnsafe");
 							return f.GetValue(null);
 						}
 						catch (NoSuchFieldException)

@@ -18,7 +18,7 @@
 using System.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.Util
 			InputStream @is = null;
 			try
 			{
-				@is = Sharpen.Thread.CurrentThread().GetContextClassLoader().GetResourceAsStream(
+				@is = Thread.CurrentThread().GetContextClassLoader().GetResourceAsStream(
 					versionInfoFile);
 				if (@is == null)
 				{

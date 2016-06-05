@@ -74,8 +74,8 @@ namespace Hadoop.Common.Tests.Core.Fs
 				argv.AddItem("-chgrp");
 				argv.AddItem(group);
 			}
-			Sharpen.Collections.AddAll(argv, files);
-			Assert.Equal(exit, fsShell.Run(Sharpen.Collections.ToArray(argv
+			Collections.AddAll(argv, files);
+			Assert.Equal(exit, fsShell.Run(Collections.ToArray(argv
 				, new string[0])));
 			for (int i_1 = 0; i_1 < files.Length; i_1++)
 			{

@@ -4,7 +4,7 @@ using Com.Google.Common.Base;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Ipc.Metrics;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -114,7 +114,7 @@ namespace Org.Apache.Hadoop.Ipc
 				lock (this)
 				{
 					state = success ? Success : Failed;
-					Sharpen.Runtime.NotifyAll(this);
+					Runtime.NotifyAll(this);
 				}
 			}
 
@@ -314,12 +314,12 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					try
 					{
-						Sharpen.Runtime.Wait(mapEntry);
+						Runtime.Wait(mapEntry);
 					}
 					catch (Exception)
 					{
 						// Restore the interrupted status
-						Sharpen.Thread.CurrentThread().Interrupt();
+						Thread.CurrentThread().Interrupt();
 					}
 				}
 				// Previous request has failed, the expectation is is that it will be

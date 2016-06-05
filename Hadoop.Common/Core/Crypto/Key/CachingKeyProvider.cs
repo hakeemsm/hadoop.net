@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using Com.Google.Common.Cache;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key
 {
@@ -190,7 +190,7 @@ namespace Org.Apache.Hadoop.Crypto.Key
 			return key;
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		/// <exception cref="System.IO.IOException"/>
 		public override KeyProvider.KeyVersion RollNewVersion(string name)
 		{

@@ -18,8 +18,8 @@ using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Htrace;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -187,7 +187,7 @@ namespace Org.Apache.Hadoop.Ipc
 					(method);
 				if (Log.IsTraceEnabled())
 				{
-					Log.Trace(Sharpen.Thread.CurrentThread().GetId() + ": Call -> " + remoteId + ": "
+					Log.Trace(Thread.CurrentThread().GetId() + ": Call -> " + remoteId + ": "
 						 + method.Name + " {" + TextFormat.ShortDebugString((Message)args[1]) + "}");
 				}
 				Message theRequest = (Message)args[1];
@@ -202,7 +202,7 @@ namespace Org.Apache.Hadoop.Ipc
 				{
 					if (Log.IsTraceEnabled())
 					{
-						Log.Trace(Sharpen.Thread.CurrentThread().GetId() + ": Exception <- " + remoteId +
+						Log.Trace(Thread.CurrentThread().GetId() + ": Exception <- " + remoteId +
 							 ": " + method.Name + " {" + e + "}");
 					}
 					if (Trace.IsTracing())
@@ -239,7 +239,7 @@ namespace Org.Apache.Hadoop.Ipc
 						();
 					if (Log.IsTraceEnabled())
 					{
-						Log.Trace(Sharpen.Thread.CurrentThread().GetId() + ": Response <- " + remoteId + 
+						Log.Trace(Thread.CurrentThread().GetId() + ": Response <- " + remoteId + 
 							": " + method.Name + " {" + TextFormat.ShortDebugString(returnMessage) + "}");
 					}
 				}

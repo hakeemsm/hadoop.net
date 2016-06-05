@@ -5,7 +5,7 @@ using Org.Apache.Curator.Retry;
 using Org.Apache.Curator.Test;
 using Org.Apache.Curator.Utils;
 using Org.Apache.Zookeeper.Data;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util.Curator
 {
@@ -66,11 +66,11 @@ namespace Org.Apache.Hadoop.Util.Curator
 				int nonEmptyNodes = 0;
 				for (int i = 0; i < 10; ++i)
 				{
-					client.Create().CreatingParentsIfNeeded().ForPath("/test/" + Sharpen.Extensions.ToString
+					client.Create().CreatingParentsIfNeeded().ForPath("/test/" + Extensions.ToString
 						(i));
 					if (r.NextBoolean())
 					{
-						client.Create().ForPath("/test/" + Sharpen.Extensions.ToString(i) + "/foo");
+						client.Create().ForPath("/test/" + Extensions.ToString(i) + "/foo");
 						++nonEmptyNodes;
 					}
 				}
@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 				client.Start();
 				for (int i = 0; i < 10; ++i)
 				{
-					client.Create().CreatingParentsIfNeeded().ForPath("/test/" + Sharpen.Extensions.ToString
+					client.Create().CreatingParentsIfNeeded().ForPath("/test/" + Extensions.ToString
 						(i));
 				}
 				reaper = new ChildReaper(client, "/test", Reaper.Mode.ReapUntilDelete, 1);
@@ -129,11 +129,11 @@ namespace Org.Apache.Hadoop.Util.Curator
 				client.Start();
 				for (int i = 0; i < 10; ++i)
 				{
-					client.Create().CreatingParentsIfNeeded().ForPath("/test1/" + Sharpen.Extensions.ToString
+					client.Create().CreatingParentsIfNeeded().ForPath("/test1/" + Extensions.ToString
 						(i));
-					client.Create().CreatingParentsIfNeeded().ForPath("/test2/" + Sharpen.Extensions.ToString
+					client.Create().CreatingParentsIfNeeded().ForPath("/test2/" + Extensions.ToString
 						(i));
-					client.Create().CreatingParentsIfNeeded().ForPath("/test3/" + Sharpen.Extensions.ToString
+					client.Create().CreatingParentsIfNeeded().ForPath("/test3/" + Extensions.ToString
 						(i));
 				}
 				reaper = new ChildReaper(client, "/test2", Reaper.Mode.ReapUntilDelete, 1);
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Util.Curator
 				client.Start();
 				for (int i = 0; i < 10; ++i)
 				{
-					client.Create().CreatingParentsIfNeeded().ForPath("/test/" + Sharpen.Extensions.ToString
+					client.Create().CreatingParentsIfNeeded().ForPath("/test/" + Extensions.ToString
 						(i));
 				}
 				reaper = new ChildReaper(client, "/test", Reaper.Mode.ReapUntilDelete, 1);

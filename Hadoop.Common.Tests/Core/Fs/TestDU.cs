@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -59,7 +59,7 @@ namespace Org.Apache.Hadoop.FS
 			int slack = 4 * 1024;
 			FilePath file = new FilePath(DuDir, "data");
 			CreateFile(file, writtenSize);
-			Sharpen.Thread.Sleep(5000);
+			Thread.Sleep(5000);
 			// let the metadata updater catch up
 			DU du = new DU(file, 10000);
 			du.Start();
@@ -106,7 +106,7 @@ namespace Org.Apache.Hadoop.FS
 			// wait until the first du runs.
 			try
 			{
-				Sharpen.Thread.Sleep(5000);
+				Thread.Sleep(5000);
 			}
 			catch (Exception)
 			{

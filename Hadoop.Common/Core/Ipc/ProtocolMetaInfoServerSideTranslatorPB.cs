@@ -1,7 +1,7 @@
 using System;
 using Com.Google.Protobuf;
 using Org.Apache.Hadoop.Ipc.Protobuf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -100,7 +100,7 @@ namespace Org.Apache.Hadoop.Ipc
 		/// <exception cref="System.TypeLoadException"/>
 		private long[] GetProtocolVersionForRpcKind(RPC.RpcKind rpcKind, string protocol)
 		{
-			Type protocolClass = Sharpen.Runtime.GetType(protocol);
+			Type protocolClass = Runtime.GetType(protocol);
 			string protocolName = RPC.GetProtocolName(protocolClass);
 			RPC.Server.VerProtocolImpl[] vers = server.GetSupportedProtocolVersions(rpcKind, 
 				protocolName);

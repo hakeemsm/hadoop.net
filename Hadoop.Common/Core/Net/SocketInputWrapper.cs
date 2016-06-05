@@ -1,7 +1,7 @@
 using System.IO;
 using System.Net.Sockets;
 using Com.Google.Common.Base;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {

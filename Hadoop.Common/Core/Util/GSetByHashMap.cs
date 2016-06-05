@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -47,7 +47,7 @@ namespace Org.Apache.Hadoop.Util
 
 		public override E Remove(K k)
 		{
-			return Sharpen.Collections.Remove(m, k);
+			return Collections.Remove(m, k);
 		}
 
 		public virtual IEnumerator<E> GetEnumerator()

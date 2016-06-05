@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Security;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.Ipc
 				serverMethods = new HashSet<int>(serverMethodsCodes.Length);
 				foreach (int m in serverMethodsCodes)
 				{
-					this.serverMethods.AddItem(Sharpen.Extensions.ValueOf(m));
+					this.serverMethods.AddItem(Extensions.ValueOf(m));
 				}
 			}
 			serverMethodsFetched = true;
@@ -96,7 +96,7 @@ namespace Org.Apache.Hadoop.Ipc
 				MethodInfo method;
 				try
 				{
-					method = Sharpen.Runtime.GetDeclaredMethod(protocol, methodName, parameterTypes);
+					method = Runtime.GetDeclaredMethod(protocol, methodName, parameterTypes);
 				}
 				catch (SecurityException e)
 				{
@@ -115,7 +115,7 @@ namespace Org.Apache.Hadoop.Ipc
 					// client & server have the same protocol
 					return true;
 				}
-				return serverMethods.Contains(Sharpen.Extensions.ValueOf(ProtocolSignature.GetFingerprint
+				return serverMethods.Contains(Extensions.ValueOf(ProtocolSignature.GetFingerprint
 					(method)));
 			}
 		}

@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.IO;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Shell;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -88,7 +88,7 @@ namespace Org.Apache.Hadoop.Util
 					string tmpJarPath;
 					try
 					{
-						tmpJarPath = FileUtil.CreateJarWithClassPath(classPath, workingDir, Sharpen.Runtime.GetEnv
+						tmpJarPath = FileUtil.CreateJarWithClassPath(classPath, workingDir, Runtime.GetEnv
 							())[0];
 					}
 					catch (IOException e)

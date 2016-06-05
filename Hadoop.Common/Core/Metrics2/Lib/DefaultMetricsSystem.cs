@@ -3,7 +3,7 @@ using Javax.Management;
 using Org.Apache.Hadoop.Classification;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Impl;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Lib
 {
@@ -132,7 +132,7 @@ namespace Org.Apache.Hadoop.Metrics2.Lib
 		{
 			lock (this)
 			{
-				Sharpen.Collections.Remove(DefaultMetricsSystem.mBeanNames.map, name);
+				Collections.Remove(DefaultMetricsSystem.mBeanNames.map, name);
 			}
 		}
 

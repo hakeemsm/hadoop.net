@@ -2,26 +2,26 @@ using System;
 using System.IO;
 using System.Text;
 using Org.Apache.Commons.IO;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {
 	/// <summary>This class is responsible for quoting HTML characters.</summary>
 	public class HtmlQuoting
 	{
-		private static readonly byte[] ampBytes = Sharpen.Runtime.GetBytesForString("&amp;"
+		private static readonly byte[] ampBytes = Runtime.GetBytesForString("&amp;"
 			, Charsets.Utf8);
 
-		private static readonly byte[] aposBytes = Sharpen.Runtime.GetBytesForString("&apos;"
+		private static readonly byte[] aposBytes = Runtime.GetBytesForString("&apos;"
 			, Charsets.Utf8);
 
-		private static readonly byte[] gtBytes = Sharpen.Runtime.GetBytesForString("&gt;"
+		private static readonly byte[] gtBytes = Runtime.GetBytesForString("&gt;"
 			, Charsets.Utf8);
 
-		private static readonly byte[] ltBytes = Sharpen.Runtime.GetBytesForString("&lt;"
+		private static readonly byte[] ltBytes = Runtime.GetBytesForString("&lt;"
 			, Charsets.Utf8);
 
-		private static readonly byte[] quotBytes = Sharpen.Runtime.GetBytesForString("&quot;"
+		private static readonly byte[] quotBytes = Runtime.GetBytesForString("&quot;"
 			, Charsets.Utf8);
 
 		/// <summary>Does the given string need to be quoted?</summary>
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Http
 			{
 				return false;
 			}
-			byte[] bytes = Sharpen.Runtime.GetBytesForString(str, Charsets.Utf8);
+			byte[] bytes = Runtime.GetBytesForString(str, Charsets.Utf8);
 			return NeedsQuoting(bytes, 0, bytes.Length);
 		}
 
@@ -130,7 +130,7 @@ namespace Org.Apache.Hadoop.Http
 			{
 				return null;
 			}
-			byte[] bytes = Sharpen.Runtime.GetBytesForString(item, Charsets.Utf8);
+			byte[] bytes = Runtime.GetBytesForString(item, Charsets.Utf8);
 			if (NeedsQuoting(bytes, 0, bytes.Length))
 			{
 				ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -218,7 +218,7 @@ namespace Org.Apache.Hadoop.Http
 			StringBuilder buffer = new StringBuilder();
 			while (next != -1)
 			{
-				buffer.Append(Sharpen.Runtime.Substring(item, posn, next));
+				buffer.Append(Runtime.Substring(item, posn, next));
 				if (item.StartsWith("&amp;", next))
 				{
 					buffer.Append('&');
@@ -259,7 +259,7 @@ namespace Org.Apache.Hadoop.Http
 									{
 										end = len;
 									}
-									throw new ArgumentException("Bad HTML quoting for " + Sharpen.Runtime.Substring(item
+									throw new ArgumentException("Bad HTML quoting for " + Runtime.Substring(item
 										, next, end));
 								}
 							}
@@ -269,7 +269,7 @@ namespace Org.Apache.Hadoop.Http
 				posn = next;
 				next = item.IndexOf('&', posn);
 			}
-			buffer.Append(Sharpen.Runtime.Substring(item, posn, len));
+			buffer.Append(Runtime.Substring(item, posn, len));
 			return buffer.ToString();
 		}
 

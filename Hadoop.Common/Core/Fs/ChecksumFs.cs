@@ -3,7 +3,7 @@ using System.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.URISyntaxException"/>
+		/// <exception cref="URISyntaxException"/>
 		public ChecksumFs(AbstractFileSystem theFs)
 			: base(theFs)
 		{
@@ -604,7 +604,7 @@ namespace Org.Apache.Hadoop.FS
 					}
 				}
 			}
-			return Sharpen.Collections.ToArray(results, new FileStatus[results.Count]);
+			return Collections.ToArray(results, new FileStatus[results.Count]);
 		}
 	}
 }

@@ -4,7 +4,7 @@ using System.Text;
 using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -79,8 +79,8 @@ namespace Org.Apache.Hadoop.IO
 			{
 				// maybe too long
 				Log.Warn("truncating long string: " + @string.Length + " chars, starting with " +
-					 Sharpen.Runtime.Substring(@string, 0, 20));
-				@string = Sharpen.Runtime.Substring(@string, 0, unchecked((int)(0xffff)) / 3);
+					 Runtime.Substring(@string, 0, 20));
+				@string = Runtime.Substring(@string, 0, unchecked((int)(0xffff)) / 3);
 			}
 			length = Utf8Length(@string);
 			// compute length
@@ -238,7 +238,7 @@ namespace Org.Apache.Hadoop.IO
 		/// STATIC UTILITIES FROM HERE DOWN
 		/// These are probably not used much anymore, and might be removed...
 		/// <summary>Convert a string to a UTF-8 encoded byte array.</summary>
-		/// <seealso cref="Sharpen.Runtime.GetBytesForString(string)"/>
+		/// <seealso cref="Runtime.GetBytesForString(string)"/>
 		public static byte[] GetBytes(string @string)
 		{
 			byte[] result = new byte[Utf8Length(@string)];
@@ -372,9 +372,9 @@ namespace Org.Apache.Hadoop.IO
 			if (s.Length > unchecked((int)(0xffff)) / 3)
 			{
 				// maybe too long
-				Log.Warn("truncating long string: " + s.Length + " chars, starting with " + Sharpen.Runtime.Substring
+				Log.Warn("truncating long string: " + s.Length + " chars, starting with " + Runtime.Substring
 					(s, 0, 20));
-				s = Sharpen.Runtime.Substring(s, 0, unchecked((int)(0xffff)) / 3);
+				s = Runtime.Substring(s, 0, unchecked((int)(0xffff)) / 3);
 			}
 			int len = Utf8Length(s);
 			if (len > unchecked((int)(0xffff)))

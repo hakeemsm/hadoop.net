@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Compiler
 {
@@ -13,7 +13,7 @@ namespace Org.Apache.Hadoop.Record.Compiler
 			char firstChar = name[0];
 			if (System.Char.IsLower(firstChar))
 			{
-				return string.Empty + System.Char.ToUpper(firstChar) + Sharpen.Runtime.Substring(
+				return string.Empty + System.Char.ToUpper(firstChar) + Runtime.Substring(
 					name, 1);
 			}
 			return name;

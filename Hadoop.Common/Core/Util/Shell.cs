@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -20,7 +20,7 @@ namespace Org.Apache.Hadoop.Util
 		public static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.Util.Shell
 			));
 
-		private static bool IsJava7OrAbove = string.CompareOrdinal(Sharpen.Runtime.Substring
+		private static bool IsJava7OrAbove = string.CompareOrdinal(Runtime.Substring
 			(Runtime.GetProperty("java.version"), 0, 3), "1.7") >= 0;
 
 		public static bool IsJava7OrAbove()
@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.Util
 			if (len > WindowsMaxShellLenght)
 			{
 				throw new IOException(string.Format("The command line has a length of %d exceeds maximum allowed length of %d. "
-					 + "Command starts with: %s", len, WindowsMaxShellLenght, Sharpen.Runtime.Substring
+					 + "Command starts with: %s", len, WindowsMaxShellLenght, Runtime.Substring
 					(StringUtils.Join(string.Empty, commands), 0, 100)));
 			}
 		}
@@ -335,7 +335,7 @@ namespace Org.Apache.Hadoop.Util
 				}
 				if (home.StartsWith("\"") && home.EndsWith("\""))
 				{
-					home = Sharpen.Runtime.Substring(home, 1, home.Length - 1);
+					home = Runtime.Substring(home, 1, home.Length - 1);
 				}
 				// check that the home setting is actually a directory that exists
 				FilePath homedir = new FilePath(home);
@@ -573,7 +573,7 @@ namespace Org.Apache.Hadoop.Util
 			StringBuilder errMsg = new StringBuilder();
 			// read error and input streams as this would free up the buffers
 			// free the error stream buffer
-			Sharpen.Thread errThread = new _Thread_506(errReader, errMsg);
+			Thread errThread = new _Thread_506(errReader, errMsg);
 			try
 			{
 				errThread.Start();
@@ -661,7 +661,7 @@ namespace Org.Apache.Hadoop.Util
 			}
 		}
 
-		private sealed class _Thread_506 : Sharpen.Thread
+		private sealed class _Thread_506 : Thread
 		{
 			public _Thread_506(BufferedReader errReader, StringBuilder errMsg)
 			{
@@ -692,7 +692,7 @@ namespace Org.Apache.Hadoop.Util
 			private readonly StringBuilder errMsg;
 		}
 
-		private static void JoinThread(Sharpen.Thread t)
+		private static void JoinThread(Thread t)
 		{
 			while (t.IsAlive())
 			{

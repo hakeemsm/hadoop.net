@@ -2,7 +2,7 @@ using System;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.Security
 			}
 			catch (Exception ex)
 			{
-				Sharpen.Runtime.PrintStackTrace(ex);
+				Runtime.PrintStackTrace(ex);
 			}
 		}
 	}

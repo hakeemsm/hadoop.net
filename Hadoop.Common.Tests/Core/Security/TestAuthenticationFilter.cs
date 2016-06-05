@@ -5,7 +5,7 @@ using Org.Apache.Hadoop.Http;
 using Org.Apache.Hadoop.Security.Authentication.Server;
 using Org.Mockito.Invocation;
 using Org.Mockito.Stubbing;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Security
 {

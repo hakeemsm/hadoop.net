@@ -1,15 +1,15 @@
 using System;
 using Com.Google.Common.Annotations;
 using Org.Apache.Commons.Logging;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
 	/// <summary>
 	/// Helper class to shutdown
-	/// <see cref="Sharpen.Thread"/>
+	/// <see cref="Thread"/>
 	/// s and
-	/// <see cref="Sharpen.ExecutorService"/>
+	/// <see cref="ExecutorService"/>
 	/// s.
 	/// </summary>
 	public class ShutdownThreadsHelper
@@ -21,21 +21,21 @@ namespace Org.Apache.Hadoop.Util
 
 		/// <param name="thread">
 		/// 
-		/// <see cref="Sharpen.Thread">to be shutdown</see>
+		/// <see cref="Thread">to be shutdown</see>
 		/// </param>
 		/// <returns>
 		/// <tt>true</tt> if the thread is successfully interrupted,
 		/// <tt>false</tt> otherwise
 		/// </returns>
 		/// <exception cref="System.Exception"/>
-		public static bool ShutdownThread(Sharpen.Thread thread)
+		public static bool ShutdownThread(Thread thread)
 		{
 			return ShutdownThread(thread, ShutdownWaitMs);
 		}
 
 		/// <param name="thread">
 		/// 
-		/// <see cref="Sharpen.Thread">to be shutdown</see>
+		/// <see cref="Thread">to be shutdown</see>
 		/// </param>
 		/// <param name="timeoutInMilliSeconds">
 		/// time to wait for thread to join after being
@@ -46,7 +46,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <tt>false</tt> otherwise
 		/// </returns>
 		/// <exception cref="System.Exception"/>
-		public static bool ShutdownThread(Sharpen.Thread thread, long timeoutInMilliSeconds
+		public static bool ShutdownThread(Thread thread, long timeoutInMilliSeconds
 			)
 		{
 			if (thread == null)
@@ -68,7 +68,7 @@ namespace Org.Apache.Hadoop.Util
 
 		/// <param name="service">
 		/// 
-		/// <see cref="Sharpen.ExecutorService">to be shutdown</see>
+		/// <see cref="ExecutorService">to be shutdown</see>
 		/// </param>
 		/// <returns>
 		/// <tt>true</tt> if the service is terminated,
@@ -82,11 +82,11 @@ namespace Org.Apache.Hadoop.Util
 
 		/// <param name="service">
 		/// 
-		/// <see cref="Sharpen.ExecutorService">to be shutdown</see>
+		/// <see cref="ExecutorService">to be shutdown</see>
 		/// </param>
 		/// <param name="timeoutInMs">
 		/// time to wait for
-		/// <see cref="Sharpen.ExecutorService.AwaitTermination(long, Sharpen.TimeUnit)"/>
+		/// <see cref="ExecutorService.AwaitTermination(long, TimeUnit)"/>
 		/// calls in milli seconds.
 		/// </param>
 		/// <returns>

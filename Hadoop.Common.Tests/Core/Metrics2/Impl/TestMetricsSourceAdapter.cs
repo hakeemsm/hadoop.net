@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Javax.Management;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Lib;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -28,7 +28,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			}
 			Assert.True("The last generated metric is not exported to jmx", 
 				sawIt);
-			Sharpen.Thread.Sleep(1000);
+			Thread.Sleep(1000);
 			// skip JMX cache TTL
 			info = sa.GetMBeanInfo();
 			sawIt = false;
@@ -82,7 +82,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			MetricsRecordImpl metricsRecord = metricsRecords.GetEnumerator().Next();
 			Assert.Equal(0L, metricsRecord.Metrics().GetEnumerator().Next(
 				).Value());
-			Sharpen.Thread.Sleep(100);
+			Thread.Sleep(100);
 			// skip JMX cache TTL
 			Assert.Equal(0L, (Number)sa.GetAttribute("C1"));
 			// change metric value
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			metricsRecords = sa.GetMetrics(builder, true);
 			metricsRecord = metricsRecords.GetEnumerator().Next();
 			Assert.True(metricsRecord.Metrics().GetEnumerator().HasNext());
-			Sharpen.Thread.Sleep(100);
+			Thread.Sleep(100);
 			// skip JMX cache TTL
 			Assert.Equal(1L, (Number)sa.GetAttribute("C1"));
 		}

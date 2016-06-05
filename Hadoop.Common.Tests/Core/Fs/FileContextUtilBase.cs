@@ -2,7 +2,7 @@ using System;
 using Org.Apache.Commons.Logging.Impl;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -56,14 +56,14 @@ namespace Org.Apache.Hadoop.FS
 			string ts = "some random text";
 			Path file1 = fileContextTestHelper.GetTestRootPath(fc, "file1");
 			Path file2 = fileContextTestHelper.GetTestRootPath(fc, "file2");
-			FileContextTestHelper.WriteFile(fc, file1, Sharpen.Runtime.GetBytesForString(ts));
+			FileContextTestHelper.WriteFile(fc, file1, Runtime.GetBytesForString(ts));
 			Assert.True(fc.Util().Exists(file1));
 			fc.Util().Copy(file1, file2);
 			// verify that newly copied file2 exists
 			Assert.True("Failed to copy file2  ", fc.Util().Exists(file2));
 			// verify that file2 contains test string
-			Assert.True("Copied files does not match ", Arrays.Equals(Sharpen.Runtime.GetBytesForString
-				(ts), FileContextTestHelper.ReadFile(fc, file2, Sharpen.Runtime.GetBytesForString
+			Assert.True("Copied files does not match ", Arrays.Equals(Runtime.GetBytesForString
+				(ts), FileContextTestHelper.ReadFile(fc, file2, Runtime.GetBytesForString
 				(ts).Length)));
 		}
 
@@ -76,15 +76,15 @@ namespace Org.Apache.Hadoop.FS
 			Path dir2 = fileContextTestHelper.GetTestRootPath(fc, "dir2");
 			Path file1 = new Path(dir1, "file1");
 			fc.Mkdir(dir1, null, false);
-			FileContextTestHelper.WriteFile(fc, file1, Sharpen.Runtime.GetBytesForString(ts));
+			FileContextTestHelper.WriteFile(fc, file1, Runtime.GetBytesForString(ts));
 			Assert.True(fc.Util().Exists(file1));
 			Path file2 = new Path(dir2, "file1");
 			fc.Util().Copy(dir1, dir2);
 			// verify that newly copied file2 exists
 			Assert.True("Failed to copy file2  ", fc.Util().Exists(file2));
 			// verify that file2 contains test string
-			Assert.True("Copied files does not match ", Arrays.Equals(Sharpen.Runtime.GetBytesForString
-				(ts), FileContextTestHelper.ReadFile(fc, file2, Sharpen.Runtime.GetBytesForString
+			Assert.True("Copied files does not match ", Arrays.Equals(Runtime.GetBytesForString
+				(ts), FileContextTestHelper.ReadFile(fc, file2, Runtime.GetBytesForString
 				(ts).Length)));
 		}
 

@@ -9,7 +9,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -92,7 +92,7 @@ namespace Org.Apache.Hadoop.FS
 				if (harMetaCache == null)
 				{
 					int cacheSize = conf.GetInt(MetadataCacheEntriesKey, MetadataCacheEntriesDefault);
-					harMetaCache = Sharpen.Collections.SynchronizedMap(new HarFileSystem.LruCache<URI
+					harMetaCache = Collections.SynchronizedMap(new HarFileSystem.LruCache<URI
 						, HarFileSystem.HarMetaData>(cacheSize));
 				}
 			}
@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.FS
 					// the archive has been overwritten since we last read it
 					// remove the entry from the meta data cache
 					metadata = null;
-					Sharpen.Collections.Remove(harMetaCache, uri);
+					Collections.Remove(harMetaCache, uri);
 				}
 			}
 			if (metadata == null)
@@ -880,7 +880,7 @@ namespace Org.Apache.Hadoop.FS
 			{
 				statuses.AddItem(ToFileStatus(hstatus, null));
 			}
-			return Sharpen.Collections.ToArray(statuses, new FileStatus[statuses.Count]);
+			return Collections.ToArray(statuses, new FileStatus[statuses.Count]);
 		}
 
 		/// <summary>return the top level archive path.</summary>

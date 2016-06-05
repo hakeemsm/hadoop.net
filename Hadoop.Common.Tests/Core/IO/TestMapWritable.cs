@@ -9,9 +9,9 @@ namespace Hadoop.Common.Tests.Core.IO
 		public virtual void TestMapWritable()
 		{
 			Text[] keys = new Text[] { new Text("key1"), new Text("key2"), new Text("Key3") };
-			BytesWritable[] values = new BytesWritable[] { new BytesWritable(Sharpen.Runtime.GetBytesForString
-				("value1")), new BytesWritable(Sharpen.Runtime.GetBytesForString("value2")), new 
-				BytesWritable(Sharpen.Runtime.GetBytesForString("value3")) };
+			BytesWritable[] values = new BytesWritable[] { new BytesWritable(Runtime.GetBytesForString
+				("value1")), new BytesWritable(Runtime.GetBytesForString("value2")), new 
+				BytesWritable(Runtime.GetBytesForString("value3")) };
 			MapWritable inMap = new MapWritable();
 			for (int i = 0; i < keys.Length; i++)
 			{

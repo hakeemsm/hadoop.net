@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Org.Apache.Commons.Configuration;
 using Org.Apache.Hadoop.Metrics2;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Sink
 {

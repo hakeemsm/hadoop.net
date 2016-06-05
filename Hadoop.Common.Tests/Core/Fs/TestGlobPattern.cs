@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -26,7 +26,7 @@ namespace Org.Apache.Hadoop.FS
 				}
 				catch (PatternSyntaxException e)
 				{
-					Sharpen.Runtime.PrintStackTrace(e);
+					Runtime.PrintStackTrace(e);
 					continue;
 				}
 				Assert.True("glob " + glob + " should throw", false);

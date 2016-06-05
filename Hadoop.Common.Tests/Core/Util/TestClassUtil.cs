@@ -17,7 +17,7 @@
 */
 using NUnit.Framework;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {

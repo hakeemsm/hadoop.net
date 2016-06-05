@@ -4,7 +4,7 @@ using Hadoop.Common.Core.Fs;
 using Hadoop.Common.Core.Util;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -55,7 +55,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// Return a
-		/// <see cref="Sharpen.Runnable"/>
+		/// <see cref="Runnable"/>
 		/// that periodically empties the trash of all
 		/// users, intended to be run by the superuser.
 		/// </summary>

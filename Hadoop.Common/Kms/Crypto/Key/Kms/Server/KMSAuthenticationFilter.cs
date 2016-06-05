@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Crypto.Key.Kms;
 using Org.Apache.Hadoop.Security.Authentication.Server;
 using Org.Apache.Hadoop.Security.Token.Delegation.Web;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				if (name.StartsWith(ConfigPrefix))
 				{
 					string value = conf.Get(name);
-					name = Sharpen.Runtime.Substring(name, ConfigPrefix.Length);
+					name = Runtime.Substring(name, ConfigPrefix.Length);
 					props.SetProperty(name, value);
 				}
 			}
@@ -61,7 +61,7 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 			Configuration conf = new Configuration(false);
 			foreach (KeyValuePair<string, string> entry in proxyuserConf)
 			{
-				conf.Set(Sharpen.Runtime.Substring(entry.Key, "hadoop.kms.".Length), entry.Value);
+				conf.Set(Runtime.Substring(entry.Key, "hadoop.kms.".Length), entry.Value);
 			}
 			return conf;
 		}

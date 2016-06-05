@@ -22,8 +22,8 @@ using Com.Google.Common.Collect;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
-using Sharpen.Management;
+
+using Management;
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -66,7 +66,7 @@ namespace Org.Apache.Hadoop.Util
 
 		private long totalGcExtraSleepTime = 0;
 
-		private Sharpen.Thread monitorThread;
+		private Thread monitorThread;
 
 		private volatile bool shouldRun = true;
 
@@ -95,7 +95,7 @@ namespace Org.Apache.Hadoop.Util
 				}
 				catch (Exception)
 				{
-					Sharpen.Thread.CurrentThread().Interrupt();
+					Thread.CurrentThread().Interrupt();
 				}
 			}
 		}
@@ -203,7 +203,7 @@ namespace Org.Apache.Hadoop.Util
 					sw.Reset().Start();
 					try
 					{
-						Sharpen.Thread.Sleep(JvmPauseMonitor.SleepIntervalMs);
+						Thread.Sleep(JvmPauseMonitor.SleepIntervalMs);
 					}
 					catch (Exception)
 					{

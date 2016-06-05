@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO.Nativeio;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.IO
 {
@@ -37,7 +37,7 @@ namespace Org.Apache.Hadoop.IO
 				 })
 			{
 				FileOutputStream fos = new FileOutputStream(f);
-				fos.Write(Sharpen.Runtime.GetBytesForString("hello", "UTF-8"));
+				fos.Write(Runtime.GetBytesForString("hello", "UTF-8"));
 				fos.Close();
 			}
 			FileStatus stat = fs.GetFileStatus(new Path(testFilePathIs.ToString()));

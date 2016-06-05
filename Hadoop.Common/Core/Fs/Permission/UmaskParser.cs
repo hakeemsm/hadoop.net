@@ -1,4 +1,4 @@
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.FS.Permission
 {
@@ -14,10 +14,10 @@ namespace Org.Apache.Hadoop.FS.Permission
 	/// </remarks>
 	internal class UmaskParser : PermissionParser
 	{
-		private static Sharpen.Pattern chmodOctalPattern = Sharpen.Pattern.Compile("^\\s*[+]?()([0-7]{3})\\s*$"
+		private static Pattern chmodOctalPattern = Pattern.Compile("^\\s*[+]?()([0-7]{3})\\s*$"
 			);
 
-		private static Sharpen.Pattern umaskSymbolicPattern = Sharpen.Pattern.Compile("\\G\\s*([ugoa]*)([+=-]+)([rwx]*)([,\\s]*)\\s*"
+		private static Pattern umaskSymbolicPattern = Pattern.Compile("\\G\\s*([ugoa]*)([+=-]+)([rwx]*)([,\\s]*)\\s*"
 			);
 
 		internal readonly short umaskMode;

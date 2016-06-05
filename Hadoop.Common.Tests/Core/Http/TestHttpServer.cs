@@ -14,7 +14,7 @@ using Org.Apache.Hadoop.Security.Authorize;
 using Org.Mockito.Internal.Util.Reflection;
 using Org.Mortbay.Jetty;
 using Org.Mortbay.Util.Ajax;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Http
 {

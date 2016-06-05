@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record
 {
@@ -225,12 +225,12 @@ namespace Org.Apache.Hadoop.Record
 		/// <exception cref="System.IO.UnsupportedEncodingException"/>
 		public virtual string ToString(string charsetName)
 		{
-			return Sharpen.Runtime.GetStringForBytes(this.Get(), 0, this.GetCount(), charsetName
+			return Runtime.GetStringForBytes(this.Get(), 0, this.GetCount(), charsetName
 				);
 		}
 
 		// inherit javadoc
-		/// <exception cref="Sharpen.CloneNotSupportedException"/>
+		/// <exception cref="CloneNotSupportedException"/>
 		public virtual object Clone()
 		{
 			Org.Apache.Hadoop.Record.Buffer result = (Org.Apache.Hadoop.Record.Buffer)base.MemberwiseClone

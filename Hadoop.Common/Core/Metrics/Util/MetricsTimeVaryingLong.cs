@@ -1,7 +1,7 @@
 using System;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Metrics;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics.Util
 {

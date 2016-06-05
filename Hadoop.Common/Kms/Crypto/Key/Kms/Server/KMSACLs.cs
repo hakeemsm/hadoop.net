@@ -6,7 +6,7 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authorize;
 using Org.Slf4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 {
@@ -138,8 +138,8 @@ namespace Org.Apache.Hadoop.Crypto.Key.Kms.Server
 				else
 				{
 					string aclStr = keyAcl.Value;
-					string keyName = Sharpen.Runtime.Substring(k, keyNameStarts, keyNameEnds);
-					string keyOp = Sharpen.Runtime.Substring(k, keyNameEnds + 1);
+					string keyName = Runtime.Substring(k, keyNameStarts, keyNameEnds);
+					string keyOp = Runtime.Substring(k, keyNameEnds + 1);
 					KeyAuthorizationKeyProvider.KeyOpType aclType = null;
 					try
 					{

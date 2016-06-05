@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Sockets;
 using Javax.Net;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Net
 {
@@ -53,7 +53,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public override Socket CreateSocket(string host, int port)
 		{
 			Socket socket = CreateSocket();
@@ -62,7 +62,7 @@ namespace Org.Apache.Hadoop.Net
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		/// <exception cref="Sharpen.UnknownHostException"/>
+		/// <exception cref="UnknownHostException"/>
 		public override Socket CreateSocket(string host, int port, IPAddress localHostAddr
 			, int localPort)
 		{

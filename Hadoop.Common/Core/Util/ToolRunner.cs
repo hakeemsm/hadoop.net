@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.Conf;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Util
 {
@@ -108,14 +108,14 @@ namespace Org.Apache.Hadoop.Util
 					responseBuilder.Append((char)c);
 				}
 				string response = responseBuilder.ToString();
-				if (Sharpen.Runtime.EqualsIgnoreCase(response, "y") || Sharpen.Runtime.EqualsIgnoreCase
+				if (Runtime.EqualsIgnoreCase(response, "y") || Runtime.EqualsIgnoreCase
 					(response, "yes"))
 				{
 					return true;
 				}
 				else
 				{
-					if (Sharpen.Runtime.EqualsIgnoreCase(response, "n") || Sharpen.Runtime.EqualsIgnoreCase
+					if (Runtime.EqualsIgnoreCase(response, "n") || Runtime.EqualsIgnoreCase
 						(response, "no"))
 					{
 						return false;

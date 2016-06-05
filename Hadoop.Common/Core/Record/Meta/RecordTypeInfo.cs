@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Org.Apache.Hadoop.Record;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Record.Meta
 {
@@ -71,7 +71,7 @@ namespace Org.Apache.Hadoop.Record.Meta
 
 		private void AddAll(ICollection<FieldTypeInfo> tis)
 		{
-			Sharpen.Collections.AddAll(sTid.GetFieldTypeInfos(), tis);
+			Collections.AddAll(sTid.GetFieldTypeInfos(), tis);
 		}
 
 		/// <summary>Return a collection of field type infos</summary>

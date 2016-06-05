@@ -2,7 +2,7 @@ using System;
 using Com.Google.Common.Base;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Crypto
 {
@@ -27,7 +27,7 @@ namespace Org.Apache.Hadoop.Crypto
 		{
 			public static readonly OpensslCipher.AlgMode AesCtr = new OpensslCipher.AlgMode();
 
-			/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+			/// <exception cref="NoSuchAlgorithmException"/>
 			internal static int Get(string algorithm, string mode)
 			{
 				try
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.Crypto
 			public static readonly OpensslCipher.Padding NoPadding = new OpensslCipher.Padding
 				();
 
-			/// <exception cref="Sharpen.NoSuchPaddingException"/>
+			/// <exception cref="NoSuchPaddingException"/>
 			internal static int Get(string padding)
 			{
 				try
@@ -116,12 +116,12 @@ namespace Org.Apache.Hadoop.Crypto
 		/// AES/CTR/NoPadding.
 		/// </param>
 		/// <returns>OpensslCipher an <code>OpensslCipher<code> object</returns>
-		/// <exception cref="Sharpen.NoSuchAlgorithmException">
+		/// <exception cref="NoSuchAlgorithmException">
 		/// if <code>transformation</code> is null,
 		/// empty, in an invalid format, or if Openssl doesn't implement the
 		/// specified algorithm.
 		/// </exception>
-		/// <exception cref="Sharpen.NoSuchPaddingException">
+		/// <exception cref="NoSuchPaddingException">
 		/// if <code>transformation</code> contains
 		/// a padding scheme that is not available.
 		/// </exception>
@@ -151,7 +151,7 @@ namespace Org.Apache.Hadoop.Crypto
 			}
 		}
 
-		/// <exception cref="Sharpen.NoSuchAlgorithmException"/>
+		/// <exception cref="NoSuchAlgorithmException"/>
 		private static OpensslCipher.Transform TokenizeTransformation(string transformation
 			)
 		{
@@ -215,7 +215,7 @@ namespace Org.Apache.Hadoop.Crypto
 		/// <param name="input">the input ByteBuffer</param>
 		/// <param name="output">the output ByteBuffer</param>
 		/// <returns>int number of bytes stored in <code>output</code></returns>
-		/// <exception cref="Sharpen.ShortBufferException">
+		/// <exception cref="ShortBufferException">
 		/// if there is insufficient space in the
 		/// output buffer
 		/// </exception>
@@ -252,9 +252,9 @@ namespace Org.Apache.Hadoop.Crypto
 		/// </remarks>
 		/// <param name="output">the output ByteBuffer</param>
 		/// <returns>int number of bytes stored in <code>output</code></returns>
-		/// <exception cref="Sharpen.ShortBufferException"/>
-		/// <exception cref="Sharpen.IllegalBlockSizeException"/>
-		/// <exception cref="Sharpen.BadPaddingException"/>
+		/// <exception cref="ShortBufferException"/>
+		/// <exception cref="IllegalBlockSizeException"/>
+		/// <exception cref="BadPaddingException"/>
 		public int DoFinal(ByteBuffer output)
 		{
 			CheckState();

@@ -10,8 +10,8 @@ using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
-using Sharpen.Reflect;
+
+using Reflect;
 
 namespace Org.Apache.Hadoop.FS
 {
@@ -254,7 +254,7 @@ namespace Org.Apache.Hadoop.FS
 		/// if true then theURI must have authority, if false
 		/// then the URI must have null authority.
 		/// </param>
-		/// <exception cref="Sharpen.URISyntaxException"><code>uri</code> has syntax error</exception>
+		/// <exception cref="URISyntaxException"><code>uri</code> has syntax error</exception>
 		public AbstractFileSystem(URI uri, string supportedScheme, bool authorityNeeded, 
 			int defaultPort)
 		{
@@ -293,7 +293,7 @@ namespace Org.Apache.Hadoop.FS
 		/// <param name="defaultPort">default port to use if port is not specified in the URI.
 		/// 	</param>
 		/// <returns>URI of the file system</returns>
-		/// <exception cref="Sharpen.URISyntaxException"><code>uri</code> has syntax error</exception>
+		/// <exception cref="URISyntaxException"><code>uri</code> has syntax error</exception>
 		private URI GetUri(URI uri, string supportedScheme, bool authorityNeeded, int defaultPort
 			)
 		{
@@ -376,8 +376,8 @@ namespace Org.Apache.Hadoop.FS
 			string thatHost = uri.GetHost();
 			// Schemes and hosts must match.
 			// Allow for null Authority for file:///
-			if (!Sharpen.Runtime.EqualsIgnoreCase(thisScheme, thatScheme) || (thisHost != null
-				 && !Sharpen.Runtime.EqualsIgnoreCase(thisHost, thatHost)) || (thisHost == null 
+			if (!Runtime.EqualsIgnoreCase(thisScheme, thatScheme) || (thisHost != null
+				 && !Runtime.EqualsIgnoreCase(thisHost, thatHost)) || (thisHost == null 
 				&& thatHost != null))
 			{
 				throw new InvalidPathException("Wrong FS: " + path + ", expected: " + this.GetUri
@@ -485,7 +485,7 @@ namespace Org.Apache.Hadoop.FS
 		// default impl is to return the path
 		/// <summary>
 		/// The specification of this method matches that of
-		/// <see cref="FileContext.Create(Path, Sharpen.EnumSet{E}, CreateOpts[])"/>
+		/// <see cref="FileContext.Create(Path, EnumSet{E}, CreateOpts[])"/>
 		/// except
 		/// that the Path f must be fully qualified and the permission is absolute
 		/// (i.e. umask has been applied).
@@ -652,7 +652,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <summary>
 		/// The specification of this method matches that of
-		/// <see cref="Create(Path, Sharpen.EnumSet{E}, CreateOpts[])"/>
+		/// <see cref="Create(Path, EnumSet{E}, CreateOpts[])"/>
 		/// except that the opts
 		/// have been declared explicitly.
 		/// </summary>

@@ -7,7 +7,7 @@ using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Metrics2.Lib;
 using Org.Apache.Hadoop.Metrics2.Util;
 using Org.Apache.Hadoop.Util;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -33,7 +33,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		private readonly SinkQueue<MetricsBuffer> queue;
 
-		private readonly Sharpen.Thread sinkThread;
+		private readonly Thread sinkThread;
 
 		private volatile bool stopping = false;
 
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			sinkThread.SetDaemon(true);
 		}
 
-		private sealed class _Thread_86 : Sharpen.Thread
+		private sealed class _Thread_86 : Thread
 		{
 			public _Thread_86(MetricsSinkAdapter _enclosing)
 			{
@@ -176,7 +176,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 						retryDelay *= retryBackoff;
 						try
 						{
-							Sharpen.Thread.Sleep(awhile);
+							Thread.Sleep(awhile);
 						}
 						catch (Exception e2)
 						{
@@ -290,7 +290,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 		internal class WaitableMetricsBuffer : MetricsBuffer
 		{
-			private readonly Semaphore notificationSemaphore = Sharpen.Extensions.CreateSemaphore
+			private readonly Semaphore notificationSemaphore = Extensions.CreateSemaphore
 				(0);
 
 			public WaitableMetricsBuffer(MetricsBuffer metricsBuffer)

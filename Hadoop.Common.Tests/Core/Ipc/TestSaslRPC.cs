@@ -17,7 +17,7 @@ using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
 using Org.Apache.Log4j;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Ipc
 {
@@ -98,7 +98,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			Runtime.SetProperty("java.security.krb5.kdc", string.Empty);
 			Runtime.SetProperty("java.security.krb5.realm", "NONE");
-			Sharpen.Security.AddProvider(new SaslPlainServer.SecurityProvider());
+			Security.AddProvider(new SaslPlainServer.SecurityProvider());
 		}
 
 		[SetUp]
@@ -708,29 +708,29 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 		}
 
-		private static Sharpen.Pattern BadToken = Sharpen.Pattern.Compile(".*DIGEST-MD5: digest response format violation.*"
+		private static Pattern BadToken = Pattern.Compile(".*DIGEST-MD5: digest response format violation.*"
 			);
 
-		private static Sharpen.Pattern KrbFailed = Sharpen.Pattern.Compile(".*Failed on local exception:.* "
+		private static Pattern KrbFailed = Pattern.Compile(".*Failed on local exception:.* "
 			 + "Failed to specify server's Kerberos principal name.*");
 
-		private static Sharpen.Pattern Denied(SaslRpcServer.AuthMethod method)
+		private static Pattern Denied(SaslRpcServer.AuthMethod method)
 		{
-			return Sharpen.Pattern.Compile(".*RemoteException.*AccessControlException.*: " + 
+			return Pattern.Compile(".*RemoteException.*AccessControlException.*: " + 
 				method + " authentication is not enabled.*");
 		}
 
-		private static Sharpen.Pattern No(params SaslRpcServer.AuthMethod[] method)
+		private static Pattern No(params SaslRpcServer.AuthMethod[] method)
 		{
 			string methods = StringUtils.Join(method, ",\\s*");
-			return Sharpen.Pattern.Compile(".*Failed on local exception:.* " + "Client cannot authenticate via:\\["
+			return Pattern.Compile(".*Failed on local exception:.* " + "Client cannot authenticate via:\\["
 				 + methods + "\\].*");
 		}
 
-		private static Sharpen.Pattern NoTokenAuth = Sharpen.Pattern.Compile(".*IllegalArgumentException: "
+		private static Pattern NoTokenAuth = Pattern.Compile(".*IllegalArgumentException: "
 			 + "TOKEN authentication requires a secret manager");
 
-		private static Sharpen.Pattern NoFallback = Sharpen.Pattern.Compile(".*Failed on local exception:.* "
+		private static Pattern NoFallback = Pattern.Compile(".*Failed on local exception:.* "
 			 + "Server asks us to fall back to SIMPLE auth, " + "but this client is configured to only allow secure connections.*"
 			);
 
@@ -1058,7 +1058,7 @@ namespace Org.Apache.Hadoop.Ipc
 					case TestSaslRPC.UseToken.Invalid:
 					{
 						token = new Org.Apache.Hadoop.Security.Token.Token<TestSaslRPC.TestTokenIdentifier
-							>(tokenId.GetBytes(), Sharpen.Runtime.GetBytesForString("bad-password!"), tokenId
+							>(tokenId.GetBytes(), Runtime.GetBytesForString("bad-password!"), tokenId
 							.GetKind(), null);
 						SecurityUtil.SetTokenService(token, addr);
 						break;
@@ -1171,7 +1171,7 @@ namespace Org.Apache.Hadoop.Ipc
 			Assert.Equal(expect.ToString(), actual);
 		}
 
-		private static void AssertAuthEquals(Sharpen.Pattern expect, string actual)
+		private static void AssertAuthEquals(Pattern expect, string actual)
 		{
 			// this allows us to see the regexp and the value it didn't match
 			if (!expect.Matcher(actual).Matches())

@@ -12,7 +12,7 @@ using Org.Apache.Hadoop.Util;
 using Org.Mockito;
 using Org.Mockito.Invocation;
 using Org.Mockito.Stubbing;
-using Sharpen;
+
 
 namespace Org.Apache.Hadoop.Metrics2.Impl
 {
@@ -168,7 +168,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			ms.RegisterSink("collector", "Collector of values from all threads.", sink);
 			TestMetricsSystemImpl.TestSource[] sources = new TestMetricsSystemImpl.TestSource
 				[numThreads];
-			Sharpen.Thread[] threads = new Sharpen.Thread[numThreads];
+			Thread[] threads = new Thread[numThreads];
 			string[] results = new string[numThreads];
 			CyclicBarrier barrier1 = new CyclicBarrier(numThreads);
 			CyclicBarrier barrier2 = new CyclicBarrier(numThreads);
@@ -176,18 +176,18 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 			{
 				sources[i] = ms.Register("threadSource" + i, "A source of my threaded goodness.", 
 					new TestMetricsSystemImpl.TestSource("threadSourceRec" + i));
-				threads[i] = new Sharpen.Thread(new _Runnable_194(results, sink, barrier1, sources
+				threads[i] = new Thread(new _Runnable_194(results, sink, barrier1, sources
 					, ms, barrier2), string.Empty + i);
 			}
 			// Wait for all the threads to come here so we can hammer
 			// the system at the same time
 			// Since some other thread may have snatched my metric,
 			// I need to wait for the threads to finish before checking.
-			foreach (Sharpen.Thread t in threads)
+			foreach (Thread t in threads)
 			{
 				t.Start();
 			}
-			foreach (Sharpen.Thread t_1 in threads)
+			foreach (Thread t_1 in threads)
 			{
 				t_1.Join();
 			}
@@ -238,7 +238,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 			public void Run()
 			{
-				int mySource = System.Convert.ToInt32(Sharpen.Thread.CurrentThread().GetName());
+				int mySource = System.Convert.ToInt32(Thread.CurrentThread().GetName());
 				if (sink.collected[mySource].Get() != 0L)
 				{
 					results[mySource] = "Someone else collected my metric!";
@@ -283,7 +283,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 
 			public bool Apply(string input)
 			{
-				return Sharpen.Runtime.EqualsIgnoreCase(input, "Passed");
+				return Runtime.EqualsIgnoreCase(input, "Passed");
 			}
 		}
 
@@ -309,12 +309,12 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				string prefix = "threadSourceRec";
 				if (record.Name().StartsWith(prefix))
 				{
-					int recordNumber = System.Convert.ToInt32(Sharpen.Runtime.Substring(record.Name()
+					int recordNumber = System.Convert.ToInt32(Runtime.Substring(record.Name()
 						, prefix.Length));
 					AList<string> names = new AList<string>();
 					foreach (AbstractMetric m in record.Metrics())
 					{
-						if (Sharpen.Runtime.EqualsIgnoreCase(m.Name(), "g1"))
+						if (Runtime.EqualsIgnoreCase(m.Name(), "g1"))
 						{
 							collected[recordNumber].Set(m.Value());
 							return;
@@ -387,7 +387,7 @@ namespace Org.Apache.Hadoop.Metrics2.Impl
 				firstTime = false;
 				try
 				{
-					Sharpen.Thread.Sleep(10 * 1000);
+					Thread.Sleep(10 * 1000);
 				}
 				catch (Exception)
 				{
