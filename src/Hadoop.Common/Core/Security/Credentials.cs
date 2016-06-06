@@ -219,7 +219,7 @@ namespace Org.Apache.Hadoop.Security
 		/// <summary>Stores all the keys to BinaryWriter</summary>
 		/// <param name="out"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			// write out tokens first
 			WritableUtils.WriteVInt(@out, tokenMap.Count);
@@ -242,7 +242,7 @@ namespace Org.Apache.Hadoop.Security
 		/// <summary>Loads all the keys</summary>
 		/// <param name="in"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			secretKeysMap.Clear();
 			tokenMap.Clear();

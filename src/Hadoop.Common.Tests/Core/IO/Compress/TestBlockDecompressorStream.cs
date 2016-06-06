@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO.Compress;
 using Org.Apache.Hadoop.Conf;
 
 

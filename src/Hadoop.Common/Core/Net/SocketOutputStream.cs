@@ -1,5 +1,6 @@
 using System.IO;
 using System.Net.Sockets;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.IO;
 
 
@@ -267,7 +268,7 @@ namespace Org.Apache.Hadoop.Net
 
 		/// <summary>
 		/// Call
-		/// <see cref="TransferToFully(FileChannel, long, int, Org.Apache.Hadoop.IO.LongWritable, Org.Apache.Hadoop.IO.LongWritable)
+		/// <see cref="TransferToFully(FileChannel, long, int, LongWritable, LongWritable)
 		/// 	"/>
 		/// with null <code>waitForWritableTime</code> and <code>transferToTime</code>
 		/// </summary>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO;
@@ -34,13 +35,13 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				base.Write(@out);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				base.ReadFields(@in);
 			}

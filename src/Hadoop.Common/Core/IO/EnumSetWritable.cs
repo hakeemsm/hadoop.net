@@ -2,23 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.Conf;
-using Hadoop.Common.Core.IO;
-using Org.Apache.Hadoop.Conf;
+using Org.Apache.Hadoop.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A Writable wrapper for EnumSet.</summary>
 	public class EnumSetWritable<E> : AbstractCollection<E>, IWritable, Configurable
-		where E : Enum<E>
 	{
 		private EnumSet<E> value;
 
 		[System.NonSerialized]
-		private Type elementType;
+		private Type _elementType;
 
 		[System.NonSerialized]
-		private Configuration conf;
+		private Configuration _conf;
 
 		internal EnumSetWritable()
 		{
@@ -87,7 +84,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="elementType"/>
 		public virtual void Set(EnumSet<E> value, Type elementType)
 		{
-			if ((value == null || value.Count == 0) && (this.elementType == null && elementType
+			if ((value == null || value.Count == 0) && (this._elementType == null && elementType
 				 == null))
 			{
 				throw new ArgumentException("The EnumSet argument is null, or is an empty set but with no elementType provided."
@@ -97,13 +94,13 @@ namespace Org.Apache.Hadoop.IO
 			if (value != null && value.Count > 0)
 			{
 				IEnumerator<E> iterator = value.GetEnumerator();
-				this.elementType = iterator.Next().GetDeclaringClass();
+				this._elementType = iterator.Next().GetDeclaringClass();
 			}
 			else
 			{
 				if (elementType != null)
 				{
-					this.elementType = elementType;
+					this._elementType = elementType;
 				}
 			}
 		}
@@ -115,7 +112,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			int length = @in.ReadInt();
 			if (length == -1)
@@ -126,29 +123,29 @@ namespace Org.Apache.Hadoop.IO
 			{
 				if (length == 0)
 				{
-					this.elementType = (Type)ObjectWritable.LoadClass(conf, WritableUtils.ReadString(
+					this._elementType = (Type)ObjectWritable.LoadClass(_conf, WritableUtils.ReadString(
 						@in));
-					this.value = EnumSet.NoneOf(this.elementType);
+					this.value = EnumSet.NoneOf(this._elementType);
 				}
 				else
 				{
-					E first = (E)ObjectWritable.ReadObject(@in, conf);
+					E first = (E)ObjectWritable.ReadObject(@in, _conf);
 					this.value = (EnumSet<E>)EnumSet.Of(first);
 					for (int i = 1; i < length; i++)
 					{
-						this.value.AddItem((E)ObjectWritable.ReadObject(@in, conf));
+						this.value.AddItem((E)ObjectWritable.ReadObject(@in, _conf));
 					}
 				}
 			}
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			if (this.value == null)
 			{
 				@out.WriteInt(-1);
-				WritableUtils.WriteString(@out, this.elementType.FullName);
+				WritableUtils.WriteString(@out, this._elementType.FullName);
 			}
 			else
 			{
@@ -157,16 +154,16 @@ namespace Org.Apache.Hadoop.IO
 				@out.WriteInt(length);
 				if (length == 0)
 				{
-					if (this.elementType == null)
+					if (this._elementType == null)
 					{
 						throw new NotSupportedException("Unable to serialize empty EnumSet with no element type provided."
 							);
 					}
-					WritableUtils.WriteString(@out, this.elementType.FullName);
+					WritableUtils.WriteString(@out, this._elementType.FullName);
 				}
 				for (int i = 0; i < length; i++)
 				{
-					ObjectWritable.WriteObject(@out, array[i], array[i].GetType(), conf);
+					ObjectWritable.WriteObject(@out, array[i], array[i].GetType(), _conf);
 				}
 			}
 		}
@@ -185,7 +182,7 @@ namespace Org.Apache.Hadoop.IO
 			{
 				return false;
 			}
-			Org.Apache.Hadoop.IO.EnumSetWritable<object> other = (Org.Apache.Hadoop.IO.EnumSetWritable
+			EnumSetWritable<object> other = (EnumSetWritable
 				<object>)o;
 			if (this == o || (this.value == other.value))
 			{
@@ -207,7 +204,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <returns>the element class</returns>
 		public virtual Type GetElementType()
 		{
-			return elementType;
+			return _elementType;
 		}
 
 		public override int GetHashCode()
@@ -230,12 +227,12 @@ namespace Org.Apache.Hadoop.IO
 
 		public virtual Configuration GetConf()
 		{
-			return this.conf;
+			return this._conf;
 		}
 
 		public virtual void SetConf(Configuration conf)
 		{
-			this.conf = conf;
+			this._conf = conf;
 		}
 
 		static EnumSetWritable()

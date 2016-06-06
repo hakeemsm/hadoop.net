@@ -1,4 +1,5 @@
 using Com.Google.Protobuf;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 
 

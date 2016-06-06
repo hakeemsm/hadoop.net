@@ -1,11 +1,10 @@
 using System;
 using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
-using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
+using Org.Apache.Hadoop.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A file-based set of keys.</summary>
 	public class SetFile : MapFile
@@ -19,7 +18,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			/// <summary>Create the named set for keys of the named class.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"pass a Configuration too")]
+			[Obsolete(@"pass a Configuration too")]
 			public Writer(FileSystem fs, string dirName, Type keyClass)
 				: base(new Configuration(), fs, dirName, keyClass, typeof(NullWritable))
 			{
@@ -97,7 +96,7 @@ namespace Org.Apache.Hadoop.IO
 			/// Returns <code>key</code>, or null if no match exists.
 			/// </remarks>
 			/// <exception cref="System.IO.IOException"/>
-			public virtual WritableComparable Get(WritableComparable key)
+			public virtual IWritableComparable Get(IWritableComparable key)
 			{
 				if (Seek(key))
 				{

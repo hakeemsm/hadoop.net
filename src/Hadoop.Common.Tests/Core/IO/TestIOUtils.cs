@@ -5,6 +5,7 @@ using Org.Apache.Commons.IO;
 using Org.Apache.Hadoop.Test;
 
 using File;
+using Hadoop.Common.Core.IO;
 
 namespace Org.Apache.Hadoop.IO
 {

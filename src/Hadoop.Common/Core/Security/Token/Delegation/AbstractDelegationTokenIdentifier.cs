@@ -196,7 +196,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(BinaryReader @in)
+		public override void ReadFields(BinaryReader reader)
 		{
 			byte version = @in.ReadByte();
 			if (version != Version)
@@ -214,7 +214,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 
 		/// <exception cref="System.IO.IOException"/>
 		[VisibleForTesting]
-		internal virtual void WriteImpl(BinaryWriter @out)
+		internal virtual void WriteImpl(BinaryWriter writer)
 		{
 			@out.WriteByte(Version);
 			owner.Write(@out);
@@ -227,7 +227,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(BinaryWriter @out)
+		public override void Write(BinaryWriter writer)
 		{
 			if (owner.Length> Text.DefaultMaxLen)
 			{

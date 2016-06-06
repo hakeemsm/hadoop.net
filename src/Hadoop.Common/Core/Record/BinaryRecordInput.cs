@@ -7,7 +7,7 @@ namespace Org.Apache.Hadoop.Record
 		)]
 	public class BinaryRecordInput : RecordInput
 	{
-		private BinaryReader @in;
+		private BinaryReader reader;
 
 		private class BinaryIndex : Index
 		{

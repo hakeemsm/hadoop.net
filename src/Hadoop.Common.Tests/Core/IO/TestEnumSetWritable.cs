@@ -16,6 +16,7 @@
 * limitations under the License.
 */
 using System.Collections.Generic;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 
 using Reflect;

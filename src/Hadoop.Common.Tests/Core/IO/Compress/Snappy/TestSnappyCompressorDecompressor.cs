@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
+using Hadoop.Common.Core.IO.Compress;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Compress;

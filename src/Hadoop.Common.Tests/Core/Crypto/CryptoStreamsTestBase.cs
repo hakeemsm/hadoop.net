@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.FS;

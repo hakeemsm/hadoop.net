@@ -31,7 +31,7 @@ namespace Hadoop.Common.Core.IO
 	    }
 
 	    /// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			_value = @in.ReadBoolean();
 		}

@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Security.Token.Delegation;

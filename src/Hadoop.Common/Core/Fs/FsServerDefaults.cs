@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.FS
 		// /////////////////////////////////////////
 		/// <exception cref="System.IO.IOException"/>
 		[InterfaceAudience.Private]
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteLong(blockSize);
 			@out.WriteInt(bytesPerChecksum);
@@ -120,7 +120,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		[InterfaceAudience.Private]
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			blockSize = @in.ReadLong();
 			bytesPerChecksum = @in.ReadInt();

@@ -121,7 +121,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			length = @in.ReadUnsignedShort();
 			if (bytes == null || bytes.Length < length)
@@ -133,14 +133,14 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>Skips over one UTF8 in the input.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Skip(BinaryReader @in)
+		public static void Skip(BinaryReader reader)
 		{
 			int length = @in.ReadUnsignedShort();
 			WritableUtils.SkipFully(@in, length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteShort(length);
 			@out.Write(bytes, 0, length);
@@ -271,7 +271,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>Read a UTF-8 encoded string.</summary>
 		/// <seealso cref="System.IO.BinaryReader.ReadUTF()"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(BinaryReader @in)
+		public static string ReadString(BinaryReader reader)
 		{
 			int bytes = @in.ReadUnsignedShort();
 			StringBuilder buffer = new StringBuilder(bytes);
@@ -281,7 +281,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <exception cref="System.IO.UTFDataFormatException"/>
 		/// <exception cref="System.IO.IOException"/>
-		private static void ReadChars(BinaryReader @in, StringBuilder buffer, int nBytes)
+		private static void ReadChars(BinaryReader reader, StringBuilder buffer, int nBytes)
 		{
 			DataOutputBuffer obuf = ObufFactory.Get();
 			obuf.Reset();
@@ -367,7 +367,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>Write a UTF-8 encoded string.</summary>
 		/// <seealso cref="System.IO.BinaryWriter.WriteUTF(string)"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteString(BinaryWriter @out, string s)
+		public static int WriteString(BinaryWriter writer, string s)
 		{
 			if (s.Length > unchecked((int)(0xffff)) / 3)
 			{
@@ -415,7 +415,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static void WriteChars(BinaryWriter @out, string s, int start, int length)
+		private static void WriteChars(BinaryWriter writer, string s, int start, int length)
 		{
 			int end = start + length;
 			for (int i = start; i < end; i++)

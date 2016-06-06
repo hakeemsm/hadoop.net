@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Collections.Map;
 using Org.Apache.Commons.Compress.Archivers.Tar;
 using Org.Apache.Commons.IO;

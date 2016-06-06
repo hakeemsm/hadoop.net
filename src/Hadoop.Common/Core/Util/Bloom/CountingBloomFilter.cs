@@ -264,7 +264,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 
 		// Writable
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(BinaryWriter @out)
+		public override void Write(BinaryWriter writer)
 		{
 			base.Write(@out);
 			int sizeInWords = Buckets2words(vectorSize);
@@ -275,7 +275,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(BinaryReader @in)
+		public override void ReadFields(BinaryReader reader)
 		{
 			base.ReadFields(@in);
 			int sizeInWords = Buckets2words(vectorSize);

@@ -1,4 +1,5 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 
 
@@ -7,7 +8,7 @@ namespace Org.Apache.Hadoop.IO
 	public class TestDataByteBuffers
 	{
 		/// <exception cref="System.IO.IOException"/>
-		private static void ReadJunk(BinaryReader @in, Random r, long seed, int iter)
+		private static void ReadJunk(BinaryReader reader, Random r, long seed, int iter)
 		{
 			r.SetSeed(seed);
 			for (int i = 0; i < iter; ++i)
@@ -69,7 +70,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private static void WriteJunk(BinaryWriter @out, Random r, long seed, int iter)
+		private static void WriteJunk(BinaryWriter writer, Random r, long seed, int iter)
 		{
 			r.SetSeed(seed);
 			for (int i = 0; i < iter; ++i)

@@ -1,7 +1,4 @@
-using System.IO;
-
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>
 	/// A reusable

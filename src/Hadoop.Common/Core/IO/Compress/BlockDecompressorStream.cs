@@ -15,10 +15,11 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+
 using System.IO;
+using Org.Apache.Hadoop.IO.Compress;
 
-
-namespace Org.Apache.Hadoop.IO.Compress
+namespace Hadoop.Common.Core.IO.Compress
 {
 	/// <summary>
 	/// A

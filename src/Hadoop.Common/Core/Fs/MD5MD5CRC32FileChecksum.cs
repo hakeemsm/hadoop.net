@@ -79,7 +79,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(BinaryReader @in)
+		public override void ReadFields(BinaryReader reader)
 		{
 			bytesPerCRC = @in.ReadInt();
 			crcPerBlock = @in.ReadLong();
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(BinaryWriter @out)
+		public override void Write(BinaryWriter writer)
 		{
 			@out.WriteInt(bytesPerCRC);
 			@out.WriteLong(crcPerBlock);

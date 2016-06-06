@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;

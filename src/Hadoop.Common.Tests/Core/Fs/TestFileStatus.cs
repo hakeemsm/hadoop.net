@@ -46,13 +46,13 @@ namespace Org.Apache.Hadoop.FS
 			Log.Info("Writing FileStatuses to a ByteArrayOutputStream");
 			// Writing input list to ByteArrayOutputStream
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			BinaryWriter @out = new DataOutputStream(baos);
+			BinaryWriter writer = new DataOutputStream(baos);
 			foreach (FileStatus fs in tests)
 			{
 				fs.Write(@out);
 			}
 			Log.Info("Creating ByteArrayInputStream object");
-			BinaryReader @in = new DataInputStream(new ByteArrayInputStream(baos.ToByteArray()));
+			BinaryReader reader = new DataInputStream(new ByteArrayInputStream(baos.ToByteArray()));
 			Log.Info("Testing if read objects are equal to written ones");
 			FileStatus dest = new FileStatus();
 			int iterator = 0;

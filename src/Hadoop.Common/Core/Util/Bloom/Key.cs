@@ -111,7 +111,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 
 		// Writable
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteInt(bytes.Length);
 			@out.Write(bytes);
@@ -119,7 +119,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			this.bytes = new byte[@in.ReadInt()];
 			@in.ReadFully(this.bytes);

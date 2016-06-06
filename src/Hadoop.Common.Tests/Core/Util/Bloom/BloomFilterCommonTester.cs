@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Log4j;

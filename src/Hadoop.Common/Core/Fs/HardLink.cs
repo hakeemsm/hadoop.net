@@ -4,6 +4,7 @@ using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
 
 using File;
+using Hadoop.Common.Core.IO;
 
 namespace Org.Apache.Hadoop.FS
 {

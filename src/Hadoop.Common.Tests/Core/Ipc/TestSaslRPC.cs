@@ -195,14 +195,14 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				tokenid.ReadFields(@in);
 				realUser.ReadFields(@in);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				tokenid.Write(@out);
 				realUser.Write(@out);

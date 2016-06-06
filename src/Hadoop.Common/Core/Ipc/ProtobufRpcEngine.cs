@@ -321,7 +321,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				OutputStream os = DataOutputOutputStream.ConstructOutputStream(@out);
 				((Message)requestHeader).WriteDelimitedTo(os);
@@ -329,7 +329,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(BinaryReader @in)
+			public virtual void ReadFields(BinaryReader reader)
 			{
 				requestHeader = ParseHeaderFrom(ReadVarintBytes(@in));
 				theRequestRead = ReadMessageRequest(@in);
@@ -339,13 +339,13 @@ namespace Org.Apache.Hadoop.Ipc
 			internal abstract T ParseHeaderFrom(byte[] bytes);
 
 			/// <exception cref="System.IO.IOException"/>
-			internal virtual byte[] ReadMessageRequest(BinaryReader @in)
+			internal virtual byte[] ReadMessageRequest(BinaryReader reader)
 			{
 				return ReadVarintBytes(@in);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			private static byte[] ReadVarintBytes(BinaryReader @in)
+			private static byte[] ReadVarintBytes(BinaryReader reader)
 			{
 				int length = ProtoUtil.ReadRawVarint32(@in);
 				byte[] bytes = new byte[length];
@@ -449,7 +449,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			internal override byte[] ReadMessageRequest(BinaryReader @in)
+			internal override byte[] ReadMessageRequest(BinaryReader reader)
 			{
 				switch (requestHeader.GetStatus())
 				{
@@ -507,14 +507,14 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				OutputStream os = DataOutputOutputStream.ConstructOutputStream(@out);
 				theResponse.WriteDelimitedTo(os);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(BinaryReader @in)
+			public virtual void ReadFields(BinaryReader reader)
 			{
 				int length = ProtoUtil.ReadRawVarint32(@in);
 				theResponseRead = new byte[length];

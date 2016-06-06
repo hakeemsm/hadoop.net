@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 
 
@@ -28,7 +29,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				base.Write(@out);
 				// version.
@@ -36,7 +37,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				base.ReadFields(@in);
 				// version
@@ -44,7 +45,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public static TestVersionedWritable.SimpleVersionedWritable Read(BinaryReader @in)
+			public static TestVersionedWritable.SimpleVersionedWritable Read(BinaryReader reader)
 			{
 				TestVersionedWritable.SimpleVersionedWritable result = new TestVersionedWritable.SimpleVersionedWritable
 					();
@@ -82,7 +83,7 @@ namespace Org.Apache.Hadoop.IO
 				, "Jumped", "Over", "The", "Lazy", "Dog" };
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				base.Write(@out);
 				@out.WriteUTF(shortTestString);
@@ -95,7 +96,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				base.ReadFields(@in);
 				shortTestString = @in.ReadUTF();

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;

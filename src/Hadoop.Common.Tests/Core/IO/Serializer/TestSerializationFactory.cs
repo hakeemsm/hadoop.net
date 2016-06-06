@@ -1,3 +1,4 @@
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;

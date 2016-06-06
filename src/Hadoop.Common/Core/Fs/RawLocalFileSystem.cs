@@ -3,6 +3,7 @@ using System.IO;
 using Com.Google.Common.Annotations;
 using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;
@@ -822,7 +823,7 @@ namespace Org.Apache.Hadoop.FS
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				if (!IsPermissionLoaded())
 				{

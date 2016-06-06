@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
 
 
 namespace Org.Apache.Hadoop.IO

@@ -1,4 +1,5 @@
 using System;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Util;
 

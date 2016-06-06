@@ -173,7 +173,7 @@ namespace Hadoop.Common.Core.IO
 		}
         
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			// First write out the size of the class table and any classes that are
 			// "unknown" classes
@@ -186,7 +186,7 @@ namespace Hadoop.Common.Core.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			// Get the number of "unknown" classes
 			_newClasses = @in.ReadByte();

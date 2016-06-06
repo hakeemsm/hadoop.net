@@ -37,13 +37,13 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			value = WritableUtils.ReadVLong(@in);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			WritableUtils.WriteVLong(@out, value);
 		}

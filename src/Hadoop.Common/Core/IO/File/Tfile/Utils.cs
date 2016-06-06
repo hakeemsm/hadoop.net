@@ -25,7 +25,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="n">The integer to be encoded</param>
 		/// <exception cref="System.IO.IOException"/>
 		/// <seealso cref="WriteVLong(System.IO.BinaryWriter, long)"/>
-		public static void WriteVInt(BinaryWriter @out, int n)
+		public static void WriteVInt(BinaryWriter writer, int n)
 		{
 			WriteVLong(@out, n);
 		}
@@ -63,7 +63,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="out">output stream</param>
 		/// <param name="n">the integer number</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteVLong(BinaryWriter @out, long n)
+		public static void WriteVLong(BinaryWriter writer, long n)
 		{
 			if ((n < 128) && (n >= -32))
 			{
@@ -171,7 +171,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <returns>the decoded integer</returns>
 		/// <exception cref="System.IO.IOException"/>
 		/// <seealso cref="ReadVLong(System.IO.BinaryReader)"/>
-		public static int ReadVInt(BinaryReader @in)
+		public static int ReadVInt(BinaryReader reader)
 		{
 			long ret = ReadVLong(@in);
 			if ((ret > int.MaxValue) || (ret < int.MinValue))
@@ -198,7 +198,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="in">input stream</param>
 		/// <returns>the decoded long integer.</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static long ReadVLong(BinaryReader @in)
+		public static long ReadVLong(BinaryReader reader)
 		{
 			int firstByte = @in.ReadByte();
 			if (firstByte >= -32)
@@ -281,7 +281,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="out"/>
 		/// <param name="s"/>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteString(BinaryWriter @out, string s)
+		public static void WriteString(BinaryWriter writer, string s)
 		{
 			if (s != null)
 			{
@@ -301,7 +301,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 		/// <param name="in">The input stream.</param>
 		/// <returns>The string</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(BinaryReader @in)
+		public static string ReadString(BinaryReader reader)
 		{
 			int length = ReadVInt(@in);
 			if (length == -1)
@@ -331,7 +331,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			/// <summary>Construct the Version object by reading from the input stream.</summary>
 			/// <param name="in">input stream</param>
 			/// <exception cref="System.IO.IOException"/>
-			public Version(BinaryReader @in)
+			public Version(BinaryReader reader)
 			{
 				major = @in.ReadShort();
 				minor = @in.ReadShort();
@@ -354,7 +354,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			/// </remarks>
 			/// <param name="out">The BinaryWriter object.</param>
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(BinaryWriter @out)
+			public void Write(BinaryWriter writer)
 			{
 				@out.WriteShort(major);
 				@out.WriteShort(minor);

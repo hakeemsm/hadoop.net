@@ -1,13 +1,9 @@
 using System;
 using System.IO;
 using Hadoop.Common.Core.Conf;
-using Hadoop.Common.Core.IO;
 using Hadoop.Common.Core.Util;
-using Org.Apache.Hadoop.Conf;
-using Org.Apache.Hadoop.Util;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A wrapper for Writable instances.</summary>
 	/// <remarks>
@@ -79,8 +75,7 @@ namespace Org.Apache.Hadoop.IO
 					return;
 				}
 			}
-			throw new RuntimeException("The type of instance is: " + instance.GetType() + ", which is NOT registered."
-				);
+			throw new RuntimeException("The type of instance is: " + instance.GetType() + ", which is NOT registered.");
 		}
 
 		/// <summary>Return the wrapped instance.</summary>
@@ -96,9 +91,9 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
-			type = @in.ReadByte();
+			type = reader.ReadByte();
 			Type clazz = GetTypes()[type & unchecked((int)(0xff))];
 			try
 			{
@@ -109,19 +104,19 @@ namespace Org.Apache.Hadoop.IO
 				Runtime.PrintStackTrace(e);
 				throw new IOException("Cannot initialize the class: " + clazz);
 			}
-			instance.ReadFields(@in);
+			instance.ReadFields(reader);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			if (type == NotSet || instance == null)
 			{
 				throw new IOException("The GenericWritable has NOT been set correctly. type=" + type
 					 + ", instance=" + instance);
 			}
-			@out.WriteByte(type);
-			instance.Write(@out);
+			writer.Write(type);
+			instance.Write(writer);
 		}
 
 		/// <summary>Return all classes that may be wrapped.</summary>

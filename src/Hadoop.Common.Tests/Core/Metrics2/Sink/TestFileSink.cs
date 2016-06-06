@@ -16,6 +16,7 @@
 * limitations under the License.
 */
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Metrics2;

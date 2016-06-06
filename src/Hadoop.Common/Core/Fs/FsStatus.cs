@@ -49,7 +49,7 @@ namespace Org.Apache.Hadoop.FS
 		// Writable
 		//////////////////////////////////////////////////
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteLong(capacity);
 			@out.WriteLong(used);
@@ -57,7 +57,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			capacity = @in.ReadLong();
 			used = @in.ReadLong();

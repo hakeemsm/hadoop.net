@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using Com.Google.Common.Primitives;
+using Hadoop.Common.Core.IO;
 using Javax.Net;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;
@@ -324,7 +325,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				base.ReadFields(@in);
 				MaybeThrowIOE();
@@ -338,7 +339,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				base.ReadFields(@in);
 				MaybeThrowRTE();
@@ -352,7 +353,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				base.Write(@out);
 				MaybeThrowIOE();
@@ -366,7 +367,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				base.Write(@out);
 				MaybeThrowRTE();

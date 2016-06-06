@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using Com.Google.Common.Base;
 using Com.Google.Common.Collect;
+using Hadoop.Common.Core.IO.Compress;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.IO.Compress.Lz4;

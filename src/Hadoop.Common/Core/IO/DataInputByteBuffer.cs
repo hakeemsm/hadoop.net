@@ -1,12 +1,11 @@
 using System;
 using System.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
-	public class DataInputByteBuffer : DataInputStream
+	public class DataInputByteBuffer : MemoryStream
 	{
-		private class Buffer : InputStream
+		private class Buffer : Stream
 		{
 			private readonly byte[] scratch = new byte[1];
 

@@ -264,7 +264,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		[InterfaceAudience.Private]
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteLong(length);
 			@out.WriteLong(fileCount);
@@ -276,7 +276,7 @@ namespace Org.Apache.Hadoop.FS
 
 		/// <exception cref="System.IO.IOException"/>
 		[InterfaceAudience.Private]
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			this.length = @in.ReadLong();
 			this.fileCount = @in.ReadLong();

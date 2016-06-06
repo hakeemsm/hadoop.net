@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.IO.Compress;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO.Compress.Snappy;

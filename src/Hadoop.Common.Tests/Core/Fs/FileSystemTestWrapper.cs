@@ -1,4 +1,5 @@
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;

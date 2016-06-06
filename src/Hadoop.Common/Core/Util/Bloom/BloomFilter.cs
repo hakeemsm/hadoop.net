@@ -134,7 +134,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 
 		// Writable
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(BinaryWriter @out)
+		public override void Write(BinaryWriter writer)
 		{
 			base.Write(@out);
 			byte[] bytes = new byte[GetNBytes()];
@@ -158,7 +158,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(BinaryReader @in)
+		public override void ReadFields(BinaryReader reader)
 		{
 			base.ReadFields(@in);
 			bits = new BitSet(this.vectorSize);

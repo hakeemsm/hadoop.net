@@ -135,7 +135,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(BinaryReader @in)
+		public override void ReadFields(BinaryReader reader)
 		{
 			base.ReadFields(@in);
 			// Read the number of entries in the map
@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(BinaryWriter @out)
+		public override void Write(BinaryWriter writer)
 		{
 			base.Write(@out);
 			// Write out the number of entries in the map

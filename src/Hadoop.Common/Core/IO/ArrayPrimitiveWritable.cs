@@ -175,7 +175,7 @@ namespace Org.Apache.Hadoop.IO
 		* @see org.apache.hadoop.io.Writable#write(java.io.BinaryWriter)
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			// write componentType 
 			UTF8.WriteString(@out, componentType.FullName);
@@ -254,7 +254,7 @@ namespace Org.Apache.Hadoop.IO
 		* @see org.apache.hadoop.io.Writable#readFields(java.io.BinaryReader)
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			// read and set the component type of the array
 			string className = UTF8.ReadString(@in);
@@ -347,7 +347,7 @@ namespace Org.Apache.Hadoop.IO
 		//For efficient implementation, there's no way around
 		//the following massive code duplication.
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteBooleanArray(BinaryWriter @out)
+		private void WriteBooleanArray(BinaryWriter writer)
 		{
 			bool[] v = (bool[])value;
 			for (int i = 0; i < length; i++)
@@ -357,7 +357,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteCharArray(BinaryWriter @out)
+		private void WriteCharArray(BinaryWriter writer)
 		{
 			char[] v = (char[])value;
 			for (int i = 0; i < length; i++)
@@ -367,13 +367,13 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteByteArray(BinaryWriter @out)
+		private void WriteByteArray(BinaryWriter writer)
 		{
 			@out.Write((byte[])value, 0, length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteShortArray(BinaryWriter @out)
+		private void WriteShortArray(BinaryWriter writer)
 		{
 			short[] v = (short[])value;
 			for (int i = 0; i < length; i++)
@@ -383,7 +383,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteIntArray(BinaryWriter @out)
+		private void WriteIntArray(BinaryWriter writer)
 		{
 			int[] v = (int[])value;
 			for (int i = 0; i < length; i++)
@@ -393,7 +393,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteLongArray(BinaryWriter @out)
+		private void WriteLongArray(BinaryWriter writer)
 		{
 			long[] v = (long[])value;
 			for (int i = 0; i < length; i++)
@@ -403,7 +403,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteFloatArray(BinaryWriter @out)
+		private void WriteFloatArray(BinaryWriter writer)
 		{
 			float[] v = (float[])value;
 			for (int i = 0; i < length; i++)
@@ -413,7 +413,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void WriteDoubleArray(BinaryWriter @out)
+		private void WriteDoubleArray(BinaryWriter writer)
 		{
 			double[] v = (double[])value;
 			for (int i = 0; i < length; i++)
@@ -423,7 +423,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadBooleanArray(BinaryReader @in)
+		private void ReadBooleanArray(BinaryReader reader)
 		{
 			bool[] v = (bool[])value;
 			for (int i = 0; i < length; i++)
@@ -433,7 +433,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadCharArray(BinaryReader @in)
+		private void ReadCharArray(BinaryReader reader)
 		{
 			char[] v = (char[])value;
 			for (int i = 0; i < length; i++)
@@ -443,13 +443,13 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadByteArray(BinaryReader @in)
+		private void ReadByteArray(BinaryReader reader)
 		{
 			@in.ReadFully((byte[])value, 0, length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadShortArray(BinaryReader @in)
+		private void ReadShortArray(BinaryReader reader)
 		{
 			short[] v = (short[])value;
 			for (int i = 0; i < length; i++)
@@ -459,7 +459,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadIntArray(BinaryReader @in)
+		private void ReadIntArray(BinaryReader reader)
 		{
 			int[] v = (int[])value;
 			for (int i = 0; i < length; i++)
@@ -469,7 +469,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadLongArray(BinaryReader @in)
+		private void ReadLongArray(BinaryReader reader)
 		{
 			long[] v = (long[])value;
 			for (int i = 0; i < length; i++)
@@ -479,7 +479,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadFloatArray(BinaryReader @in)
+		private void ReadFloatArray(BinaryReader reader)
 		{
 			float[] v = (float[])value;
 			for (int i = 0; i < length; i++)
@@ -489,7 +489,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		private void ReadDoubleArray(BinaryReader @in)
+		private void ReadDoubleArray(BinaryReader reader)
 		{
 			double[] v = (double[])value;
 			for (int i = 0; i < length; i++)

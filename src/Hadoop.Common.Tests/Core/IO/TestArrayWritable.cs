@@ -16,6 +16,7 @@
 * limitations under the License.
 */
 using System;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 
 

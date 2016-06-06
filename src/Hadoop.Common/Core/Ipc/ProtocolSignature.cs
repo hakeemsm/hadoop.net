@@ -60,7 +60,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			version = @in.ReadLong();
 			bool hasMethods = @in.ReadBoolean();
@@ -76,7 +76,7 @@ namespace Org.Apache.Hadoop.Ipc
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteLong(version);
 			if (methods == null)

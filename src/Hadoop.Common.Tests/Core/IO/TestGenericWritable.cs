@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Conf;
 
@@ -39,13 +40,13 @@ namespace Org.Apache.Hadoop.IO
 			private string foo = "foo";
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(BinaryReader @in)
+			public virtual void ReadFields(BinaryReader reader)
 			{
 				foo = Text.ReadString(@in);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				Text.WriteString(@out, foo);
 			}
@@ -73,13 +74,13 @@ namespace Org.Apache.Hadoop.IO
 
 			//The Answer to The Ultimate Question Of Life, the Universe and Everything
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(BinaryReader @in)
+			public virtual void ReadFields(BinaryReader reader)
 			{
 				bar = @in.ReadInt();
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				@out.WriteInt(bar);
 			}
@@ -112,7 +113,7 @@ namespace Org.Apache.Hadoop.IO
 		public class Baz : TestGenericWritable.Bar
 		{
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				base.ReadFields(@in);
 				//needs a configuration parameter
@@ -121,7 +122,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void Write(BinaryWriter @out)
+			public override void Write(BinaryWriter writer)
 			{
 				base.Write(@out);
 			}

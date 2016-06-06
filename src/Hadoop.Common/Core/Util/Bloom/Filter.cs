@@ -154,7 +154,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		//end add()
 		// Writable interface
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteInt(Version);
 			@out.WriteInt(this.nbHash);
@@ -163,7 +163,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			int ver = @in.ReadInt();
 			if (ver > 0)

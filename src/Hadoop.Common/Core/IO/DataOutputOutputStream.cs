@@ -1,12 +1,11 @@
 using System.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>OutputStream implementation that wraps a BinaryWriter.</summary>
 	public class DataOutputOutputStream : OutputStream
 	{
-		private readonly BinaryWriter @out;
+		private readonly BinaryWriter writer;
 
 		/// <summary>Construct an OutputStream from the given BinaryWriter.</summary>
 		/// <remarks>
@@ -16,7 +15,7 @@ namespace Org.Apache.Hadoop.IO
 		/// </remarks>
 		/// <param name="out">the BinaryWriter to wrap</param>
 		/// <returns>an OutputStream instance that outputs to 'out'</returns>
-		public static OutputStream ConstructOutputStream(BinaryWriter @out)
+		public static OutputStream ConstructOutputStream(BinaryWriter writer)
 		{
 			if (@out is OutputStream)
 			{
@@ -24,11 +23,11 @@ namespace Org.Apache.Hadoop.IO
 			}
 			else
 			{
-				return new Org.Apache.Hadoop.IO.DataOutputOutputStream(@out);
+				return new DataOutputOutputStream(@out);
 			}
 		}
 
-		private DataOutputOutputStream(BinaryWriter @out)
+		private DataOutputOutputStream(BinaryWriter writer)
 		{
 			this.@out = @out;
 		}

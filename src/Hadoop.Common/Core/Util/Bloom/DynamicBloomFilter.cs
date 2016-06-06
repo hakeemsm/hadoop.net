@@ -193,7 +193,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 
 		// Writable
 		/// <exception cref="System.IO.IOException"/>
-		public override void Write(BinaryWriter @out)
+		public override void Write(BinaryWriter writer)
 		{
 			base.Write(@out);
 			@out.WriteInt(nr);
@@ -206,7 +206,7 @@ namespace Org.Apache.Hadoop.Util.Bloom
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public override void ReadFields(BinaryReader @in)
+		public override void ReadFields(BinaryReader reader)
 		{
 			base.ReadFields(@in);
 			nr = @in.ReadInt();

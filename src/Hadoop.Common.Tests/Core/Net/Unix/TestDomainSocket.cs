@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Com.Google.Common.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Commons.Lang.Exception;
 using Org.Apache.Hadoop.IO;

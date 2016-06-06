@@ -12,7 +12,7 @@ namespace Org.Apache.Hadoop.IO
 	public sealed class WritableUtils
 	{
 		/// <exception cref="System.IO.IOException"/>
-		public static byte[] ReadCompressedByteArray(BinaryReader @in)
+		public static byte[] ReadCompressedByteArray(BinaryReader reader)
 		{
 			int length = @in.ReadInt();
 			if (length == -1)
@@ -38,7 +38,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static void SkipCompressedByteArray(BinaryReader @in)
+		public static void SkipCompressedByteArray(BinaryReader reader)
 		{
 			int length = @in.ReadInt();
 			if (length != -1)
@@ -48,7 +48,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteCompressedByteArray(BinaryWriter @out, byte[] bytes)
+		public static int WriteCompressedByteArray(BinaryWriter writer, byte[] bytes)
 		{
 			if (bytes != null)
 			{
@@ -80,7 +80,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/* Ugly utility, maybe someone else can do this better  */
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadCompressedString(BinaryReader @in)
+		public static string ReadCompressedString(BinaryReader reader)
 		{
 			byte[] bytes = ReadCompressedByteArray(@in);
 			if (bytes == null)
@@ -91,7 +91,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteCompressedString(BinaryWriter @out, string s)
+		public static int WriteCompressedString(BinaryWriter writer, string s)
 		{
 			return WriteCompressedByteArray(@out, (s != null) ? Runtime.GetBytesForString
 				(s, "UTF-8") : null);
@@ -105,7 +105,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteString(BinaryWriter @out, string s)
+		public static void WriteString(BinaryWriter writer, string s)
 		{
 			if (s != null)
 			{
@@ -127,7 +127,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(BinaryReader @in)
+		public static string ReadString(BinaryReader reader)
 		{
 			int length = @in.ReadInt();
 			if (length == -1)
@@ -146,7 +146,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteStringArray(BinaryWriter @out, string[] s)
+		public static void WriteStringArray(BinaryWriter writer, string[] s)
 		{
 			@out.WriteInt(s.Length);
 			for (int i = 0; i < s.Length; i++)
@@ -162,7 +162,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteCompressedStringArray(BinaryWriter @out, string[] s)
+		public static void WriteCompressedStringArray(BinaryWriter writer, string[] s)
 		{
 			if (s == null)
 			{
@@ -182,7 +182,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static string[] ReadStringArray(BinaryReader @in)
+		public static string[] ReadStringArray(BinaryReader reader)
 		{
 			int len = @in.ReadInt();
 			if (len == -1)
@@ -203,7 +203,7 @@ namespace Org.Apache.Hadoop.IO
 		*
 		*/
 		/// <exception cref="System.IO.IOException"/>
-		public static string[] ReadCompressedStringArray(BinaryReader @in)
+		public static string[] ReadCompressedStringArray(BinaryReader reader)
 		{
 			int len = @in.ReadInt();
 			if (len == -1)
@@ -464,7 +464,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="enumType">Class type of Enum</param>
 		/// <returns>Enum represented by String read from BinaryReader</returns>
 		/// <exception cref="System.IO.IOException"/>
-		public static T ReadEnum<T>(BinaryReader @in)
+		public static T ReadEnum<T>(BinaryReader reader)
 			where T : Enum<T>
 		{
 			System.Type enumType = typeof(T);
@@ -475,7 +475,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="out">Dataoutput stream</param>
 		/// <param name="enumVal">enum value</param>
 		/// <exception cref="System.IO.IOException"/>
-		public static void WriteEnum<_T0>(BinaryWriter @out, Enum<_T0> enumVal)
+		public static void WriteEnum<_T0>(BinaryWriter writer, Enum<_T0> enumVal)
 			where _T0 : Enum<E>
 		{
 			Text.WriteString(@out, enumVal.Name());
@@ -485,7 +485,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <param name="in">input stream</param>
 		/// <param name="len">number of bytes to skip</param>
 		/// <exception cref="System.IO.IOException">when skipped less number of bytes</exception>
-		public static void SkipFully(BinaryReader @in, int len)
+		public static void SkipFully(BinaryReader reader, int len)
 		{
 			int total = 0;
 			int cur = 0;
@@ -532,7 +532,7 @@ namespace Org.Apache.Hadoop.IO
 		/// if the encoded byte size for string
 		/// is negative or larger than maxSize. Only the vint is read.
 		/// </exception>
-		public static string ReadStringSafely(BinaryReader @in, int maxLength)
+		public static string ReadStringSafely(BinaryReader reader, int maxLength)
 		{
 			int length = ReadVInt(@in);
 			if (length < 0 || length > maxLength)

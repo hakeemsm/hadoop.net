@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using Hadoop.Common.Core.Conf;
-using Org.Apache.Commons.Logging;
-using Org.Apache.Hadoop.Conf;
 
-using File;
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>An utility class for I/O related functionality.</summary>
 	public class IOUtils
@@ -233,7 +229,7 @@ namespace Org.Apache.Hadoop.IO
 		/// </summary>
 		/// <param name="log">the log to record problems to at debug level. Can be null.</param>
 		/// <param name="closeables">the objects to close</param>
-		public static void Cleanup(Log log, params IDisposable[] closeables)
+		public static void Cleanup(Org.Apache.Hadoop.Log log, params IDisposable[] closeables)
 		{
 			foreach (IDisposable c in closeables)
 			{

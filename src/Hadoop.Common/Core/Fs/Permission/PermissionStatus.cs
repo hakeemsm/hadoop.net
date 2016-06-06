@@ -56,7 +56,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				throw new NotSupportedException();
 			}
@@ -108,7 +108,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			username = Text.ReadString(@in, Text.DefaultMaxLen);
 			groupname = Text.ReadString(@in, Text.DefaultMaxLen);
@@ -116,7 +116,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			Write(@out, username, groupname, permission);
 		}
@@ -129,7 +129,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.Permission.PermissionStatus Read(BinaryReader @in
+		public static Org.Apache.Hadoop.FS.Permission.PermissionStatus Read(BinaryReader reader
 			)
 		{
 			Org.Apache.Hadoop.FS.Permission.PermissionStatus p = new Org.Apache.Hadoop.FS.Permission.PermissionStatus
@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		/// from its base components.
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Write(BinaryWriter @out, string username, string groupname, FsPermission
+		public static void Write(BinaryWriter writer, string username, string groupname, FsPermission
 			 permission)
 		{
 			Text.WriteString(@out, username, Text.DefaultMaxLen);

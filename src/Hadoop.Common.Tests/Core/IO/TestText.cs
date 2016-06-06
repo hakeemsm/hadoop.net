@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using Com.Google.Common.Base;
 using Com.Google.Common.Primitives;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 
 

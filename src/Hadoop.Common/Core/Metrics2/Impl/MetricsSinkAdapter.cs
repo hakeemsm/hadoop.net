@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Com.Google.Common.Base;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Metrics2;

@@ -2,17 +2,13 @@ using System;
 using System.IO;
 using Hadoop.Common.Core.Conf;
 using Hadoop.Common.Core.Fs;
-using Hadoop.Common.Core.IO;
 using Hadoop.Common.Core.Util;
-using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop;
-using Org.Apache.Hadoop.Conf;
-using Org.Apache.Hadoop.FS;
+using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Compress;
 using Org.Apache.Hadoop.Util;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A file-based map from keys to values.</summary>
 	/// <remarks>
@@ -33,8 +29,7 @@ namespace Org.Apache.Hadoop.IO
 	/// </remarks>
 	public class MapFile
 	{
-		private static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.IO.MapFile
-			));
+		private static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog(typeof(MapFile));
 
 		/// <summary>The name of the index file.</summary>
 		public const string IndexFileName = "index";
@@ -82,7 +77,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map for keys of the named class.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...) instead.")]
+			[Obsolete(@"Use Writer(Configuration, Path, Option...) instead.")]
 			public Writer(Configuration conf, FileSystem fs, string dirName, Type keyClass, Type
 				 valClass)
 				: this(conf, new Path(dirName), KeyClass(keyClass), ValueClass(valClass))
@@ -91,7 +86,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map for keys of the named class.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...) instead.")]
+			[Obsolete(@"Use Writer(Configuration, Path, Option...) instead.")]
 			public Writer(Configuration conf, FileSystem fs, string dirName, Type keyClass, Type
 				 valClass, SequenceFile.CompressionType compress, Org.Apache.Hadoop.Util.Progressable
 				 progress)
@@ -102,7 +97,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map for keys of the named class.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...) instead.")]
+			[Obsolete(@"Use Writer(Configuration, Path, Option...) instead.")]
 			public Writer(Configuration conf, FileSystem fs, string dirName, Type keyClass, Type
 				 valClass, SequenceFile.CompressionType compress, CompressionCodec codec, Org.Apache.Hadoop.Util.Progressable
 				 progress)
@@ -113,7 +108,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map for keys of the named class.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...) instead.")]
+			[Obsolete(@"Use Writer(Configuration, Path, Option...) instead.")]
 			public Writer(Configuration conf, FileSystem fs, string dirName, Type keyClass, Type
 				 valClass, SequenceFile.CompressionType compress)
 				: this(conf, new Path(dirName), KeyClass(keyClass), ValueClass(valClass), Compression
@@ -123,7 +118,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map using the named key comparator.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...) instead.")]
+			[Obsolete(@"Use Writer(Configuration, Path, Option...) instead.")]
 			public Writer(Configuration conf, FileSystem fs, string dirName, WritableComparator
 				 comparator, Type valClass)
 				: this(conf, new Path(dirName), Comparator(comparator), ValueClass(valClass))
@@ -132,7 +127,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map using the named key comparator.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...) instead.")]
+			[Obsolete(@"Use Writer(Configuration, Path, Option...) instead.")]
 			public Writer(Configuration conf, FileSystem fs, string dirName, WritableComparator
 				 comparator, Type valClass, SequenceFile.CompressionType compress)
 				: this(conf, new Path(dirName), Comparator(comparator), ValueClass(valClass), Compression
@@ -142,7 +137,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map using the named key comparator.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...)} instead."
+			[Obsolete(@"Use Writer(Configuration, Path, Option...)} instead."
 				)]
 			public Writer(Configuration conf, FileSystem fs, string dirName, WritableComparator
 				 comparator, Type valClass, SequenceFile.CompressionType compress, Org.Apache.Hadoop.Util.Progressable
@@ -154,7 +149,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Create the named map using the named key comparator.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute(@"Use Writer(Configuration, Path, Option...) instead.")]
+			[Obsolete(@"Use Writer(Configuration, Path, Option...) instead.")]
 			public Writer(Configuration conf, FileSystem fs, string dirName, WritableComparator
 				 comparator, Type valClass, SequenceFile.CompressionType compress, CompressionCodec
 				 codec, Org.Apache.Hadoop.Util.Progressable progress)
@@ -430,7 +425,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Construct a map reader for the named map.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute]
+			[Obsolete]
 			public Reader(FileSystem fs, string dirName, Configuration conf)
 				: this(new Path(dirName), conf)
 			{
@@ -438,7 +433,7 @@ namespace Org.Apache.Hadoop.IO
 
 			/// <summary>Construct a map reader for the named map using the named comparator.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			[System.ObsoleteAttribute]
+			[Obsolete]
 			public Reader(FileSystem fs, string dirName, WritableComparator comparator, Configuration
 				 conf)
 				: this(new Path(dirName), conf, Comparator(comparator))

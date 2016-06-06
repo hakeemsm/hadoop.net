@@ -78,7 +78,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			WritableUtils.WriteVInt(@out, keyId);
 			WritableUtils.WriteVLong(@out, expiryDate);
@@ -94,7 +94,7 @@ namespace Org.Apache.Hadoop.Security.Token.Delegation
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			keyId = WritableUtils.ReadVInt(@in);
 			expiryDate = WritableUtils.ReadVLong(@in);

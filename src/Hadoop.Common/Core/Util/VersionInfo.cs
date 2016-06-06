@@ -16,6 +16,7 @@
 * limitations under the License.
 */
 using System.IO;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO;
 

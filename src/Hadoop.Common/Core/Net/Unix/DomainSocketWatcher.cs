@@ -4,6 +4,7 @@ using System.IO;
 using Com.Google.Common.Annotations;
 using Com.Google.Common.Base;
 using Com.Google.Common.Util.Concurrent;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Commons.Lang;
 using Org.Apache.Commons.Logging;
 using Org.Apache.Hadoop.IO;

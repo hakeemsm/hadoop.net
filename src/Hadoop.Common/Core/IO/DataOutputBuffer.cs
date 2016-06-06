@@ -1,9 +1,7 @@
 using System;
 using System.IO;
-using Com.Google.Common.Base;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>
 	/// A reusable
@@ -48,7 +46,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryReader @in, int len)
+			public virtual void Write(BinaryReader reader, int len)
 			{
 				int newcount = count + len;
 				if (newcount > buf.Length)
@@ -120,7 +118,7 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>Writes bytes from a BinaryReader directly into the buffer.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryReader @in, int length)
+		public virtual void Write(BinaryReader reader, int length)
 		{
 			buffer.Write(@in, length);
 		}

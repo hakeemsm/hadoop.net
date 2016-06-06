@@ -156,13 +156,13 @@ namespace Org.Apache.Hadoop.FS.Permission
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteShort(ToShort());
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			FromShort(@in.ReadShort());
 		}
@@ -175,7 +175,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.FS.Permission.FsPermission Read(BinaryReader @in)
+		public static Org.Apache.Hadoop.FS.Permission.FsPermission Read(BinaryReader reader)
 		{
 			Org.Apache.Hadoop.FS.Permission.FsPermission p = new Org.Apache.Hadoop.FS.Permission.FsPermission
 				();
@@ -426,7 +426,7 @@ namespace Org.Apache.Hadoop.FS.Permission
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public override void ReadFields(BinaryReader @in)
+			public override void ReadFields(BinaryReader reader)
 			{
 				throw new NotSupportedException();
 			}

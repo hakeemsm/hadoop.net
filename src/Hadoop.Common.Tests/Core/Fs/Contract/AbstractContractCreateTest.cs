@@ -17,6 +17,7 @@
 */
 using System;
 using System.IO;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework.Internal;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.IO;

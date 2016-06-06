@@ -8,13 +8,13 @@ namespace Org.Apache.Hadoop.Record
 		)]
 	public class BinaryRecordOutput : RecordOutput
 	{
-		private BinaryWriter @out;
+		private BinaryWriter writer;
 
 		private BinaryRecordOutput()
 		{
 		}
 
-		private void SetDataOutput(BinaryWriter @out)
+		private void SetDataOutput(BinaryWriter writer)
 		{
 			this.@out = @out;
 		}
@@ -39,7 +39,7 @@ namespace Org.Apache.Hadoop.Record
 		/// <summary>Get a thread-local record output for the supplied BinaryWriter.</summary>
 		/// <param name="out">data output stream</param>
 		/// <returns>binary record output corresponding to the supplied BinaryWriter.</returns>
-		public static Org.Apache.Hadoop.Record.BinaryRecordOutput Get(BinaryWriter @out)
+		public static Org.Apache.Hadoop.Record.BinaryRecordOutput Get(BinaryWriter writer)
 		{
 			Org.Apache.Hadoop.Record.BinaryRecordOutput bout = (Org.Apache.Hadoop.Record.BinaryRecordOutput
 				)bOut.Get();
@@ -54,7 +54,7 @@ namespace Org.Apache.Hadoop.Record
 		}
 
 		/// <summary>Creates a new instance of BinaryRecordOutput</summary>
-		public BinaryRecordOutput(BinaryWriter @out)
+		public BinaryRecordOutput(BinaryWriter writer)
 		{
 			this.@out = @out;
 		}

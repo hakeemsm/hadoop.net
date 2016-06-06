@@ -33,14 +33,14 @@ namespace Org.Apache.Hadoop.IO
 
 		/// <summary>read the short value</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			value = @in.ReadShort();
 		}
 
 		/// <summary>write short value</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteShort(value);
 		}

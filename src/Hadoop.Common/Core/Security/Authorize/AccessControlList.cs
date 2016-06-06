@@ -315,7 +315,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 
 		/// <summary>Serializes the AccessControlList object</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			string aclString = GetAclString();
 			Text.WriteString(@out, aclString);
@@ -323,7 +323,7 @@ namespace Org.Apache.Hadoop.Security.Authorize
 
 		/// <summary>Deserializes the AccessControlList object</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			string aclString = Text.ReadString(@in);
 			BuildACL(aclString.Split(" ", 2));

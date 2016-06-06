@@ -31,19 +31,19 @@ namespace Org.Apache.Hadoop.IO
 			internal int state = Random.Next();
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				@out.WriteInt(state);
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(BinaryReader @in)
+			public virtual void ReadFields(BinaryReader reader)
 			{
 				this.state = @in.ReadInt();
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public static TestWritable.SimpleWritable Read(BinaryReader @in)
+			public static TestWritable.SimpleWritable Read(BinaryReader reader)
 			{
 				TestWritable.SimpleWritable result = new TestWritable.SimpleWritable();
 				result.ReadFields(@in);
@@ -156,12 +156,12 @@ namespace Org.Apache.Hadoop.IO
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(BinaryReader @in)
+			public virtual void ReadFields(BinaryReader reader)
 			{
 			}
 

@@ -286,14 +286,14 @@ namespace Org.Apache.Hadoop.Security
 
 			/// <summary>Read from in</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public static SaslRpcServer.AuthMethod Read(BinaryReader @in)
+			public static SaslRpcServer.AuthMethod Read(BinaryReader reader)
 			{
 				return ValueOf(@in.ReadByte());
 			}
 
 			/// <summary>Write to out</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(BinaryWriter @out)
+			public void Write(BinaryWriter writer)
 			{
 				@out.Write(SaslRpcServer.AuthMethod.code);
 			}

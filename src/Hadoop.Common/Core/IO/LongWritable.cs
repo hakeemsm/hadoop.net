@@ -1,11 +1,10 @@
 using System.IO;
-using Hadoop.Common.Core.IO;
+using Org.Apache.Hadoop.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A WritableComparable for longs.</summary>
-	public class LongWritable : IWritableComparable<Org.Apache.Hadoop.IO.LongWritable>
+	public class LongWritable : IWritableComparable<LongWritable>
 	{
 		private long value;
 
@@ -31,25 +30,25 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
-			value = @in.ReadLong();
+			value = reader.ReadInt64();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
-			@out.WriteLong(value);
+			writer.Write(value);
 		}
 
 		/// <summary>Returns true iff <code>o</code> is a LongWritable with the same value.</summary>
 		public override bool Equals(object o)
 		{
-			if (!(o is Org.Apache.Hadoop.IO.LongWritable))
+			if (!(o is LongWritable))
 			{
 				return false;
 			}
-			Org.Apache.Hadoop.IO.LongWritable other = (Org.Apache.Hadoop.IO.LongWritable)o;
+			LongWritable other = (LongWritable)o;
 			return this.value == other.value;
 		}
 
@@ -59,7 +58,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Compares two LongWritables.</summary>
-		public virtual int CompareTo(Org.Apache.Hadoop.IO.LongWritable o)
+		public virtual int CompareTo(LongWritable o)
 		{
 			long thisValue = this.value;
 			long thatValue = o.value;

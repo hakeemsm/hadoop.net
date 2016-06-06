@@ -3364,7 +3364,7 @@ match_loop_break: ;
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			Clear();
 			int size = WritableUtils.ReadVInt(@in);
@@ -3383,7 +3383,7 @@ match_loop_break: ;
 
 		//@Override
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			Properties props = GetProps();
 			WritableUtils.WriteVInt(@out, props.Count);

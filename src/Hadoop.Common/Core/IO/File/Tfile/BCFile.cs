@@ -775,7 +775,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public MetaIndex(BinaryReader @in)
+			public MetaIndex(BinaryReader reader)
 			{
 				// for read, construct the map from the file
 				int count = Utils.ReadVInt(@in);
@@ -798,7 +798,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				Utils.WriteVInt(@out, index.Count);
 				foreach (BCFile.MetaIndexEntry indexEntry in index.Values)
@@ -820,7 +820,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			private readonly BCFile.BlockRegion region;
 
 			/// <exception cref="System.IO.IOException"/>
-			public MetaIndexEntry(BinaryReader @in)
+			public MetaIndexEntry(BinaryReader reader)
 			{
 				string fullMetaName = Utils.ReadString(@in);
 				if (fullMetaName.StartsWith(defaultPrefix))
@@ -861,7 +861,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(BinaryWriter @out)
+			public void Write(BinaryWriter writer)
 			{
 				Utils.WriteString(@out, defaultPrefix + metaName);
 				Utils.WriteString(@out, compressionAlgorithm.GetName());
@@ -879,7 +879,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			private readonly AList<BCFile.BlockRegion> listRegions;
 
 			/// <exception cref="System.IO.IOException"/>
-			public DataIndex(BinaryReader @in)
+			public DataIndex(BinaryReader reader)
 			{
 				// for data blocks, each entry specifies a block's offset, compressed size
 				// and raw size
@@ -919,7 +919,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				Utils.WriteString(@out, defaultCompressionAlgorithm.GetName());
 				Utils.WriteVInt(@out, listRegions.Count);
@@ -945,7 +945,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 			// ... total of 16 bytes
 			/// <exception cref="System.IO.IOException"/>
-			public static void ReadAndVerify(BinaryReader @in)
+			public static void ReadAndVerify(BinaryReader reader)
 			{
 				byte[] abMagic = new byte[Size()];
 				@in.ReadFully(abMagic);
@@ -958,7 +958,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public static void Write(BinaryWriter @out)
+			public static void Write(BinaryWriter writer)
 			{
 				@out.Write(AbMagicBcfile);
 			}
@@ -979,7 +979,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			private readonly long rawSize;
 
 			/// <exception cref="System.IO.IOException"/>
-			public BlockRegion(BinaryReader @in)
+			public BlockRegion(BinaryReader reader)
 			{
 				offset = Utils.ReadVLong(@in);
 				compressedSize = Utils.ReadVLong(@in);
@@ -994,7 +994,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(BinaryWriter @out)
+			public void Write(BinaryWriter writer)
 			{
 				Utils.WriteVLong(@out, offset);
 				Utils.WriteVLong(@out, compressedSize);

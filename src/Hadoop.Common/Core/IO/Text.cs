@@ -331,14 +331,14 @@ namespace Hadoop.Common.Core.IO
 
 		/// <summary>deserialize</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			int newLength = WritableUtils.ReadVInt(@in);
 			ReadWithKnownLength(@in, newLength);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in, int maxLength)
+		public virtual void ReadFields(BinaryReader reader, int maxLength)
 		{
 			int newLength = WritableUtils.ReadVInt(@in);
 			if (newLength < 0)
@@ -359,7 +359,7 @@ namespace Hadoop.Common.Core.IO
 
 		/// <summary>Skips over one Text in the input.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static void Skip(BinaryReader @in)
+		public static void Skip(BinaryReader reader)
 		{
 			int length = WritableUtils.ReadVInt(@in);
 			WritableUtils.SkipFully(@in, length);
@@ -372,7 +372,7 @@ namespace Hadoop.Common.Core.IO
 		/// format.
 		/// </remarks>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadWithKnownLength(BinaryReader @in, int len)
+		public virtual void ReadWithKnownLength(BinaryReader reader, int len)
 		{
 			SetCapacity(len, false);
 			@in.ReadFully(bytes, 0, len);
@@ -386,14 +386,14 @@ namespace Hadoop.Common.Core.IO
 		/// </summary>
 		/// <seealso cref="IWritable.Write(System.IO.BinaryWriter)"/>
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			WritableUtils.WriteVInt(@out, length);
 			@out.Write(bytes, 0, length);
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out, int maxLength)
+		public virtual void Write(BinaryWriter writer, int maxLength)
 		{
 			if (length > maxLength)
 			{
@@ -556,14 +556,14 @@ namespace Hadoop.Common.Core.IO
 
 		/// <summary>Read a UTF8 encoded string from in</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(BinaryReader @in)
+		public static string ReadString(BinaryReader reader)
 		{
 			return ReadString(@in, int.MaxValue);
 		}
 
 		/// <summary>Read a UTF8 encoded string with a maximum size</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static string ReadString(BinaryReader @in, int maxLength)
+		public static string ReadString(BinaryReader reader, int maxLength)
 		{
 			int length = WritableUtils.ReadVIntInRange(@in, 0, maxLength);
 			byte[] bytes = new byte[length];
@@ -573,7 +573,7 @@ namespace Hadoop.Common.Core.IO
 
 		/// <summary>Write a UTF8 encoded string to out</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteString(BinaryWriter @out, string s)
+		public static int WriteString(BinaryWriter writer, string s)
 		{
 			ByteBuffer bytes = Encode(s);
 			int length = bytes.Limit();
@@ -584,7 +584,7 @@ namespace Hadoop.Common.Core.IO
 
 		/// <summary>Write a UTF8 encoded string with a maximum size to out</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static int WriteString(BinaryWriter @out, string s, int maxLength)
+		public static int WriteString(BinaryWriter writer, string s, int maxLength)
 		{
 			ByteBuffer bytes = Encode(s);
 			int length = bytes.Limit();

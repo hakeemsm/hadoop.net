@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Hadoop.Common.Core.Fs;
 using Hadoop.Common.Core.Fs.Shell;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.FS.Permission;
 using Org.Apache.Hadoop.IO;

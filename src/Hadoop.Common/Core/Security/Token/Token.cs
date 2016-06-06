@@ -195,7 +195,7 @@ namespace Org.Apache.Hadoop.Security.Token
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			int len = WritableUtils.ReadVInt(@in);
 			if (identifier == null || identifier.Length != len)
@@ -214,7 +214,7 @@ namespace Org.Apache.Hadoop.Security.Token
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			WritableUtils.WriteVInt(@out, identifier.Length);
 			@out.Write(identifier);

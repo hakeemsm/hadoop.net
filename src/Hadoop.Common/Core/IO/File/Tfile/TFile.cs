@@ -2234,7 +2234,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public TFileMeta(BinaryReader @in)
+			public TFileMeta(BinaryReader reader)
 			{
 				// ctor for reads
 				version = new Utils.Version(@in);
@@ -2286,7 +2286,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(BinaryWriter @out)
+			public void Write(BinaryWriter writer)
 			{
 				TFile.ApiVersion.Write(@out);
 				Utils.WriteVLong(@out, recordCount);
@@ -2341,7 +2341,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 
 			/// <summary>For reading from file.</summary>
 			/// <exception cref="System.IO.IOException"/>
-			public TFileIndex(int entryCount, BinaryReader @in, CompareUtils.BytesComparator comparator
+			public TFileIndex(int entryCount, BinaryReader reader, CompareUtils.BytesComparator comparator
 				)
 			{
 				// END: class MetaTFileMeta
@@ -2486,7 +2486,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				if (firstKey == null)
 				{
@@ -2520,7 +2520,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			internal readonly long kvEntries;
 
 			/// <exception cref="System.IO.IOException"/>
-			public TFileIndexEntry(BinaryReader @in)
+			public TFileIndexEntry(BinaryReader reader)
 			{
 				// count of <key, value> entries in the block.
 				int len = Utils.ReadVInt(@in);
@@ -2558,7 +2558,7 @@ namespace Org.Apache.Hadoop.IO.File.Tfile
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public void Write(BinaryWriter @out)
+			public void Write(BinaryWriter writer)
 			{
 				Utils.WriteVInt(@out, key.Length);
 				@out.Write(key, 0, key.Length);

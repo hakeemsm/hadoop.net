@@ -51,7 +51,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			// construct matrix
 			values = new IWritable[@in.ReadInt()][];
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.IO
 
 		// store it in values
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteInt(values.Length);
 			// write values

@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using Hadoop.Common.Core.IO;
 using NUnit.Framework;
 using Org.Apache.Hadoop.Test;
 using Org.Apache.Hadoop.Util;

@@ -144,7 +144,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void ReadFields(BinaryReader @in)
+			public virtual void ReadFields(BinaryReader reader)
 			{
 				rpcVersion = @in.ReadLong();
 				declaringClassProtocolName = UTF8.ReadString(@in);
@@ -162,7 +162,7 @@ namespace Org.Apache.Hadoop.Ipc
 			}
 
 			/// <exception cref="System.IO.IOException"/>
-			public virtual void Write(BinaryWriter @out)
+			public virtual void Write(BinaryWriter writer)
 			{
 				@out.WriteLong(rpcVersion);
 				UTF8.WriteString(@out, declaringClassProtocolName);

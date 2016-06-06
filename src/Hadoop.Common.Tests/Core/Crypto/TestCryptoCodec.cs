@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Com.Google.Common.Primitives;
+using Hadoop.Common.Core.IO;
 using Mono.Math;
 using NUnit.Framework;
 using Org.Apache.Commons.Logging;

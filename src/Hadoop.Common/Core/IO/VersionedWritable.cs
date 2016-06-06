@@ -22,7 +22,7 @@ namespace Org.Apache.Hadoop.IO
 
 		// javadoc from Writable
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.WriteByte(GetVersion());
 		}
@@ -30,7 +30,7 @@ namespace Org.Apache.Hadoop.IO
 		// store version
 		// javadoc from Writable
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			byte version = @in.ReadByte();
 			// read version

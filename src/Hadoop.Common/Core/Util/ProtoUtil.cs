@@ -15,7 +15,7 @@ namespace Org.Apache.Hadoop.Util
 		/// <param name="in">the input stream to read from</param>
 		/// <returns>the integer</returns>
 		/// <exception cref="System.IO.IOException">if it is malformed or EOF.</exception>
-		public static int ReadRawVarint32(BinaryReader @in)
+		public static int ReadRawVarint32(BinaryReader reader)
 		{
 			byte tmp = @in.ReadByte();
 			if (tmp >= 0)

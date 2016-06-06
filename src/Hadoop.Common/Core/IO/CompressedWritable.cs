@@ -1,4 +1,5 @@
 using System.IO;
+using System.IO.Compression;
 
 namespace Hadoop.Common.Core.IO
 {
@@ -33,17 +34,10 @@ namespace Hadoop.Common.Core.IO
 		{
 			if (_compressed != null)
 			{
-				try
-				{
-					ByteArrayInputStream deflated = new ByteArrayInputStream(_compressed);
-					BinaryReader inflater = new DataInputStream(new InflaterInputStream(deflated));
-					ReadFieldsCompressed(inflater);
-					_compressed = null;
-				}
-				catch (IOException e)
-				{
-					throw new RuntimeException(e);
-				}
+			    var deflated = new MemoryStream(_compressed);
+			    BinaryReader inflater = new BinaryReader(new DeflateStream(deflated, CompressionMode.Decompress));
+			    ReadFieldsCompressed(inflater);
+			    _compressed = null;
 			}
 		}
 
@@ -53,24 +47,25 @@ namespace Hadoop.Common.Core.IO
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		protected internal abstract void ReadFieldsCompressed(BinaryReader @in);
+		protected internal abstract void ReadFieldsCompressed(BinaryReader reader);
 
 		/// <exception cref="System.IO.IOException"/>
-		public void Write(BinaryWriter @out)
+		public void Write(BinaryWriter writer)
 		{
 			if (_compressed == null)
 			{
-				ByteArrayOutputStream deflated = new ByteArrayOutputStream();
-				Deflater deflater = new Deflater(Deflater.BestSpeed);
-				DataOutputStream dout = new DataOutputStream(new DeflaterOutputStream(deflated, deflater
-					));
-				WriteCompressed(dout);
+                
+			    MemoryStream deflated = new MemoryStream();
+			    var deflateStream = new DeflateStream(deflated, CompressionMode.Decompress);
+			    
+			    BinaryWriter dout = new BinaryWriter(deflateStream);
+			    WriteCompressed(dout);
 				dout.Close();
-				deflater.Finish();
-				_compressed = deflated.ToByteArray();
+
+			    _compressed = deflated.ToArray();
 			}
-			@out.WriteInt(_compressed.Length);
-			@out.Write(_compressed);
+			writer.Write(_compressed.Length);
+			writer.Write(_compressed);
 		}
 
 		/// <summary>
@@ -79,6 +74,6 @@ namespace Hadoop.Common.Core.IO
 		/// .
 		/// </summary>
 		/// <exception cref="System.IO.IOException"/>
-		protected internal abstract void WriteCompressed(BinaryWriter @out);
+		protected internal abstract void WriteCompressed(BinaryWriter writer);
 	}
 }

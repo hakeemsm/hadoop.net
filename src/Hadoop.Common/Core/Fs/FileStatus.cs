@@ -279,7 +279,7 @@ namespace Org.Apache.Hadoop.FS
 		// Writable
 		//////////////////////////////////////////////////
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			Text.WriteString(@out, GetPath().ToString(), Text.DefaultMaxLen);
 			@out.WriteLong(GetLen());
@@ -299,7 +299,7 @@ namespace Org.Apache.Hadoop.FS
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			string strPath = Text.ReadString(@in, Text.DefaultMaxLen);
 			this.path = new Path(strPath);

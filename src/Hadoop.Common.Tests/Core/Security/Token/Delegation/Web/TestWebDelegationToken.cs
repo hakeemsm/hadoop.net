@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using Hadoop.Common.Core.IO;
 using Javax.Security.Auth;
 using Javax.Security.Auth.Kerberos;
 using Javax.Security.Auth.Login;

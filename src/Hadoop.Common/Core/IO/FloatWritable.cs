@@ -1,11 +1,10 @@
 using System.IO;
-using Hadoop.Common.Core.IO;
+using Org.Apache.Hadoop.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A WritableComparable for floats.</summary>
-	public class FloatWritable : IWritableComparable<Org.Apache.Hadoop.IO.FloatWritable
+	public class FloatWritable : IWritableComparable<FloatWritable
 		>
 	{
 		private float value;
@@ -32,25 +31,25 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
-			value = @in.ReadFloat();
+			value = reader.ReadSingle();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
-			@out.WriteFloat(value);
+			writer.Write(value);
 		}
 
 		/// <summary>Returns true iff <code>o</code> is a FloatWritable with the same value.</summary>
 		public override bool Equals(object o)
 		{
-			if (!(o is Org.Apache.Hadoop.IO.FloatWritable))
+			if (!(o is FloatWritable))
 			{
 				return false;
 			}
-			Org.Apache.Hadoop.IO.FloatWritable other = (Org.Apache.Hadoop.IO.FloatWritable)o;
+			FloatWritable other = (FloatWritable)o;
 			return this.value == other.value;
 		}
 
@@ -60,7 +59,7 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <summary>Compares two FloatWritables.</summary>
-		public virtual int CompareTo(Org.Apache.Hadoop.IO.FloatWritable o)
+		public virtual int CompareTo(FloatWritable o)
 		{
 			float thisValue = this.value;
 			float thatValue = o.value;
@@ -69,7 +68,7 @@ namespace Org.Apache.Hadoop.IO
 
 		public override string ToString()
 		{
-			return float.ToString(value);
+			return value.ToString();
 		}
 
 		/// <summary>A Comparator optimized for FloatWritable.</summary>

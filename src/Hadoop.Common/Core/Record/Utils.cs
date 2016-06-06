@@ -386,7 +386,7 @@ namespace Org.Apache.Hadoop.Record
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		internal static void ToBinaryString(BinaryWriter @out, string str)
+		internal static void ToBinaryString(BinaryWriter writer, string str)
 		{
 			int strlen = str.Length;
 			byte[] bytes = new byte[strlen * 4];
@@ -543,7 +543,7 @@ namespace Org.Apache.Hadoop.Record
 		/// <param name="in">input stream</param>
 		/// <exception cref="System.IO.IOException"/>
 		/// <returns>deserialized long</returns>
-		public static long ReadVLong(BinaryReader @in)
+		public static long ReadVLong(BinaryReader reader)
 		{
 			return WritableUtils.ReadVLong(@in);
 		}
@@ -552,7 +552,7 @@ namespace Org.Apache.Hadoop.Record
 		/// <param name="in">input stream</param>
 		/// <exception cref="System.IO.IOException"/>
 		/// <returns>deserialized integer</returns>
-		public static int ReadVInt(BinaryReader @in)
+		public static int ReadVInt(BinaryReader reader)
 		{
 			return WritableUtils.ReadVInt(@in);
 		}

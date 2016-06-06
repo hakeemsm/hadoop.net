@@ -58,14 +58,14 @@ namespace Org.Apache.Hadoop.IO
 
 		// javadoc from Writable
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
 			@in.ReadFully(digest);
 		}
 
 		/// <summary>Constructs, reads and returns an instance.</summary>
 		/// <exception cref="System.IO.IOException"/>
-		public static Org.Apache.Hadoop.IO.MD5Hash Read(BinaryReader @in)
+		public static Org.Apache.Hadoop.IO.MD5Hash Read(BinaryReader reader)
 		{
 			Org.Apache.Hadoop.IO.MD5Hash result = new Org.Apache.Hadoop.IO.MD5Hash();
 			result.ReadFields(@in);
@@ -74,7 +74,7 @@ namespace Org.Apache.Hadoop.IO
 
 		// javadoc from Writable
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
 			@out.Write(digest);
 		}

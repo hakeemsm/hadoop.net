@@ -1,13 +1,12 @@
 using System.IO;
-using Hadoop.Common.Core.IO;
+using Org.Apache.Hadoop.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A WritableComparable for ints.</summary>
-	public class IntWritable : IWritableComparable<Org.Apache.Hadoop.IO.IntWritable>
+	public class IntWritable : IWritableComparable<IntWritable>
 	{
-		private int value;
+		private int _value;
 
 		public IntWritable()
 		{
@@ -21,54 +20,54 @@ namespace Org.Apache.Hadoop.IO
 		/// <summary>Set the value of this IntWritable.</summary>
 		public virtual void Set(int value)
 		{
-			this.value = value;
+			this._value = value;
 		}
 
 		/// <summary>Return the value of this IntWritable.</summary>
 		public virtual int Get()
 		{
-			return value;
+			return _value;
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
-			value = @in.ReadInt();
+			_value = reader.ReadInt32();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
-			@out.WriteInt(value);
+			writer.Write(_value);
 		}
 
 		/// <summary>Returns true iff <code>o</code> is a IntWritable with the same value.</summary>
 		public override bool Equals(object o)
 		{
-			if (!(o is Org.Apache.Hadoop.IO.IntWritable))
+			if (!(o is IntWritable))
 			{
 				return false;
 			}
-			Org.Apache.Hadoop.IO.IntWritable other = (Org.Apache.Hadoop.IO.IntWritable)o;
-			return this.value == other.value;
+			IntWritable other = (IntWritable)o;
+			return this._value == other._value;
 		}
 
 		public override int GetHashCode()
 		{
-			return value;
+			return _value;
 		}
 
 		/// <summary>Compares two IntWritables.</summary>
-		public virtual int CompareTo(Org.Apache.Hadoop.IO.IntWritable o)
+		public virtual int CompareTo(IntWritable o)
 		{
-			int thisValue = this.value;
-			int thatValue = o.value;
+			int thisValue = this._value;
+			int thatValue = o._value;
 			return (thisValue < thatValue ? -1 : (thisValue == thatValue ? 0 : 1));
 		}
 
 		public override string ToString()
 		{
-			return Extensions.ToString(value);
+			return _value.ToString();
 		}
 
 		/// <summary>A Comparator optimized for IntWritable.</summary>

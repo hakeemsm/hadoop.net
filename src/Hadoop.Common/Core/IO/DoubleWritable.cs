@@ -1,14 +1,12 @@
 using System.IO;
-using Hadoop.Common.Core.IO;
+using Org.Apache.Hadoop.IO;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>Writable for Double values.</summary>
-	public class DoubleWritable : IWritableComparable<Org.Apache.Hadoop.IO.DoubleWritable
-		>
+	public class DoubleWritable : IWritableComparable<DoubleWritable>
 	{
-		private double value = 0.0;
+		private double _value;
 
 		public DoubleWritable()
 		{
@@ -20,53 +18,53 @@ namespace Org.Apache.Hadoop.IO
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void ReadFields(BinaryReader @in)
+		public virtual void ReadFields(BinaryReader reader)
 		{
-			value = @in.ReadDouble();
+			_value = reader.ReadDouble();
 		}
 
 		/// <exception cref="System.IO.IOException"/>
-		public virtual void Write(BinaryWriter @out)
+		public virtual void Write(BinaryWriter writer)
 		{
-			@out.WriteDouble(value);
+			writer.Write(_value);
 		}
 
 		public virtual void Set(double value)
 		{
-			this.value = value;
+			this._value = value;
 		}
 
 		public virtual double Get()
 		{
-			return value;
+			return _value;
 		}
 
 		/// <summary>Returns true iff <code>o</code> is a DoubleWritable with the same value.
 		/// 	</summary>
 		public override bool Equals(object o)
 		{
-			if (!(o is Org.Apache.Hadoop.IO.DoubleWritable))
+			if (!(o is DoubleWritable))
 			{
 				return false;
 			}
-			Org.Apache.Hadoop.IO.DoubleWritable other = (Org.Apache.Hadoop.IO.DoubleWritable)
+			DoubleWritable other = (DoubleWritable)
 				o;
-			return this.value == other.value;
+			return this._value == other._value;
 		}
 
 		public override int GetHashCode()
 		{
-			return (int)double.DoubleToLongBits(value);
+			return (int)double.DoubleToLongBits(_value);
 		}
 
-		public virtual int CompareTo(Org.Apache.Hadoop.IO.DoubleWritable o)
+		public virtual int CompareTo(DoubleWritable o)
 		{
-			return (value < o.value ? -1 : (value == o.value ? 0 : 1));
+			return (_value < o._value ? -1 : (_value == o._value ? 0 : 1));
 		}
 
 		public override string ToString()
 		{
-			return double.ToString(value);
+			return _value.ToString();
 		}
 
 		/// <summary>A Comparator optimized for DoubleWritable.</summary>
@@ -88,8 +86,7 @@ namespace Org.Apache.Hadoop.IO
 		static DoubleWritable()
 		{
 			// register this comparator
-			WritableComparator.Define(typeof(DoubleWritable), new DoubleWritable.Comparator()
-				);
+			WritableComparator.Define(typeof(DoubleWritable), new Comparator());
 		}
 	}
 }

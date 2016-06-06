@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Hadoop.Common.Core.IO;
 using Junit.Textui;
 using NUnit.Framework;
 using Org.Apache.Commons.Lang;
