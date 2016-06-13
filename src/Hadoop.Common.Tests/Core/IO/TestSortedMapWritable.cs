@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Hadoop.Common.Core.IO;
 
 
 namespace Org.Apache.Hadoop.IO

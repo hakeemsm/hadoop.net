@@ -3,33 +3,30 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using Com.Google.Protobuf;
-using Javax.Net;
-using NUnit.Framework;
-using Org.Apache.Commons.Logging;
+using System.Threading;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Core.IO;
 using Org.Apache.Hadoop;
-using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
-using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.IO.Retry;
+using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Metrics2;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authorize;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Test;
+using Should.Core.Assertions;
+using Xunit;
 
-using Management;
-using Reflect;
-
-namespace Org.Apache.Hadoop.Ipc
+namespace Hadoop.Common.Tests.Core.Ipc
 {
 	/// <summary>Unit tests for RPC.</summary>
 	public class TestRPC
 	{
 		private const string Address = "0.0.0.0";
 
-		public static readonly Log Log = LogFactory.GetLog(typeof(TestRPC));
+		public static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog(typeof(TestRPC));
 
 		private static Configuration conf;
 
@@ -589,9 +586,9 @@ namespace Org.Apache.Hadoop.Ipc
 		private class TestPolicyProvider : PolicyProvider
 		{
 			//this is what we expected
-			public override Service[] GetServices()
+			public override Org.Apache.Hadoop.Service[] GetServices()
 			{
-				return new Service[] { new Service(AclConfig, typeof(TestRPC.TestProtocol)) };
+				return new Org.Apache.Hadoop.Service[] { new Org.Apache.Hadoop.Service(AclConfig, typeof(TestRPC.TestProtocol)) };
 			}
 		}
 

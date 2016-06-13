@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Hadoop.Common.Tests.Core.Ipc;
 using Javax.Security.Auth;
 using Javax.Security.Auth.Kerberos;
 using Javax.Security.Auth.Login;

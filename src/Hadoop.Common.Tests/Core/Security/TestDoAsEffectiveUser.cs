@@ -1,16 +1,18 @@
 using System;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
-using NUnit.Framework;
-using Org.Apache.Commons.Logging;
-using Org.Apache.Hadoop.Conf;
+using Hadoop.Common.Core.Conf;
+using Hadoop.Common.Tests.Core.Ipc;
 using Org.Apache.Hadoop.FS;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Net;
+using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Authorize;
+using Should.Core.Assertions;
+using Xunit;
 
-
-namespace Org.Apache.Hadoop.Security
+namespace Hadoop.Common.Tests.Core.Security
 {
 	public class TestDoAsEffectiveUser
 	{
@@ -33,7 +35,7 @@ namespace Org.Apache.Hadoop.Security
 
 		private static readonly Configuration masterConf = new Configuration();
 
-		public static readonly Log Log = LogFactory.GetLog(typeof(TestDoAsEffectiveUser));
+		public static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog(typeof(TestDoAsEffectiveUser));
 
 		static TestDoAsEffectiveUser()
 		{

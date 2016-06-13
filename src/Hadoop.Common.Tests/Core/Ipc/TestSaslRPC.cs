@@ -3,23 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using Javax.Security.Auth.Callback;
-using Javax.Security.Sasl;
-using NUnit.Framework;
-using NUnit.Framework.Runners;
-using Org.Apache.Commons.Lang;
-using Org.Apache.Commons.Logging;
-using Org.Apache.Commons.Logging.Impl;
-using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;
+using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Net;
 using Org.Apache.Hadoop.Security;
 using Org.Apache.Hadoop.Security.Token;
 using Org.Apache.Hadoop.Util;
-using Org.Apache.Log4j;
 
-
-namespace Org.Apache.Hadoop.Ipc
+namespace Hadoop.Common.Tests.Core.Ipc
 {
 	/// <summary>Unit tests for using Sasl over RPC.</summary>
 	public class TestSaslRPC
@@ -60,7 +51,7 @@ namespace Org.Apache.Hadoop.Ipc
 
 		private const string Address = "0.0.0.0";
 
-		public static readonly Log Log = LogFactory.GetLog(typeof(Org.Apache.Hadoop.Ipc.TestSaslRPC
+		public static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog(typeof(TestSaslRPC
 			));
 
 		internal const string ErrorMessage = "Token is invalid";
@@ -98,7 +89,7 @@ namespace Org.Apache.Hadoop.Ipc
 		{
 			Runtime.SetProperty("java.security.krb5.kdc", string.Empty);
 			Runtime.SetProperty("java.security.krb5.realm", "NONE");
-			Security.AddProvider(new SaslPlainServer.SecurityProvider());
+			Org.Apache.Hadoop.Security.AddProvider(new SaslPlainServer.SecurityProvider());
 		}
 
 		[SetUp]

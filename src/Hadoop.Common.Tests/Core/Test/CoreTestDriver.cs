@@ -1,10 +1,10 @@
 using System;
+using Hadoop.Common.Tests.Core.Ipc;
 using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Util;
 
-
-namespace Org.Apache.Hadoop.Test
+namespace Hadoop.Common.Tests.Core.Test
 {
 	/// <summary>Driver for core tests.</summary>
 	public class CoreTestDriver
@@ -50,7 +50,7 @@ namespace Org.Apache.Hadoop.Test
 
 		public static void Main(string[] argv)
 		{
-			new Org.Apache.Hadoop.Test.CoreTestDriver().Run(argv);
+			new CoreTestDriver().Run(argv);
 		}
 	}
 }

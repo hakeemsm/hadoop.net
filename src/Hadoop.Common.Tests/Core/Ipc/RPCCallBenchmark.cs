@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using Com.Google.Common.Base;
 using Com.Google.Protobuf;
+using Hadoop.Common.Tests.Core.Ipc;
 using Org.Apache.Commons.Cli;
 using Org.Apache.Hadoop.Conf;
 using Org.Apache.Hadoop.FS;

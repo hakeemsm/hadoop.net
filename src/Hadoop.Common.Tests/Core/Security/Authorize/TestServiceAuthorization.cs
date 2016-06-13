@@ -1,11 +1,9 @@
-using System.Net;
-using Org.Apache.Hadoop.Conf;
+using Hadoop.Common.Tests.Core.Ipc;
 using Org.Apache.Hadoop.FS;
-using Org.Apache.Hadoop.Ipc;
 using Org.Apache.Hadoop.Security;
+using Org.Apache.Hadoop.Security.Authorize;
 
-
-namespace Org.Apache.Hadoop.Security.Authorize
+namespace Hadoop.Common.Tests.Core.Security.Authorize
 {
 	public class TestServiceAuthorization
 	{

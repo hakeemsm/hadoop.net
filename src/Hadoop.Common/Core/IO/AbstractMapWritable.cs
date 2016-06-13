@@ -177,11 +177,11 @@ namespace Hadoop.Common.Core.IO
 		{
 			// First write out the size of the class table and any classes that are
 			// "unknown" classes
-			@out.WriteByte(_newClasses);
+			writer.Write(_newClasses);
 			for (byte i = 1; ((sbyte)i) <= _newClasses; i++)
 			{
-				@out.WriteByte(i);
-				@out.WriteUTF(GetClass(i).FullName);
+				writer.Write(i);
+				writer.WriteUTF(GetClass(i).FullName);
 			}
 		}
 
@@ -189,12 +189,12 @@ namespace Hadoop.Common.Core.IO
 		public virtual void ReadFields(BinaryReader reader)
 		{
 			// Get the number of "unknown" classes
-			_newClasses = @in.ReadByte();
+			_newClasses = reader.ReadByte();
 			// Then read in the class names and add them to our tables
 			for (int i = 0; i < _newClasses; i++)
 			{
-				byte id = @in.ReadByte();
-				string className = @in.ReadUTF();
+				byte id = reader.ReadByte();
+				string className = reader.ReadUTF();
 				try
 				{
 					AddToMap(Runtime.GetType(className), id);

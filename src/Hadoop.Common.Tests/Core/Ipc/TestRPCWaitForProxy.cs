@@ -1,13 +1,11 @@
 using System;
 using System.Net;
 using System.Threading;
-using NUnit.Framework;
-using Org.Apache.Hadoop.Conf;
+using Hadoop.Common.Core.Conf;
 using Org.Apache.Hadoop.FS;
-using Org.Slf4j;
+using Org.Apache.Hadoop.Ipc;
 
-
-namespace Org.Apache.Hadoop.Ipc
+namespace Hadoop.Common.Tests.Core.Ipc
 {
 	/// <summary>tests that the proxy can be interrupted</summary>
 	public class TestRPCWaitForProxy : Assert

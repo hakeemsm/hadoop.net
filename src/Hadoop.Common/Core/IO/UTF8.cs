@@ -1,12 +1,11 @@
 using System;
 using System.IO;
 using System.Text;
-using Hadoop.Common.Core.IO;
-using Org.Apache.Commons.Logging;
+using System.Threading;
+using Org.Apache.Hadoop.IO;
 using Org.Apache.Hadoop.Util;
 
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A WritableComparable for strings that uses the UTF8 encoding.</summary>
 	/// <remarks>
@@ -15,10 +14,10 @@ namespace Org.Apache.Hadoop.IO
 	/// Note that this decodes UTF-8 but actually encodes CESU-8, a variant of
 	/// UTF-8: see http://en.wikipedia.org/wiki/CESU-8
 	/// </remarks>
-	[System.ObsoleteAttribute(@"replaced by Text")]
+	[Obsolete(@"replaced by Text")]
 	public class UTF8 : IWritableComparable<UTF8>
 	{
-		private static readonly Log Log = LogFactory.GetLog(typeof(UTF8));
+		private static readonly Org.Apache.Hadoop.Log Log = LogFactory.GetLog(typeof(UTF8));
 
 		private static readonly DataInputBuffer Ibuf = new DataInputBuffer();
 
@@ -369,7 +368,7 @@ namespace Org.Apache.Hadoop.IO
 		/// <exception cref="System.IO.IOException"/>
 		public static int WriteString(BinaryWriter writer, string s)
 		{
-			if (s.Length > unchecked((int)(0xffff)) / 3)
+			if (s.Length > 0xffff / 3)
 			{
 				// maybe too long
 				Log.Warn("truncating long string: " + s.Length + " chars, starting with " + Runtime.Substring
@@ -382,8 +381,8 @@ namespace Org.Apache.Hadoop.IO
 				// double-check length
 				throw new IOException("string too long!");
 			}
-			@out.WriteShort(len);
-			WriteChars(@out, s, 0, s.Length);
+			writer.Write(len);
+			WriteChars(writer, s, 0, s.Length);
 			return len;
 		}
 
