@@ -1,10 +1,7 @@
 using System;
 using System.IO;
-using Hadoop.Common.Core.IO;
 
-using Reflect;
-
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A Writable for arrays containing instances of a class.</summary>
 	/// <remarks>
@@ -68,11 +65,8 @@ namespace Org.Apache.Hadoop.IO
 
 		public virtual object ToArray()
 		{
-			object result = System.Array.CreateInstance(valueClass, values.Length);
-			for (int i = 0; i < values.Length; i++)
-			{
-				Runtime.SetArrayValue(result, i, values[i]);
-			}
+			var result = System.Array.CreateInstance(valueClass, values.Length);
+            values.CopyTo(result, 0);            
 			return result;
 		}
 
@@ -89,12 +83,12 @@ namespace Org.Apache.Hadoop.IO
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void ReadFields(BinaryReader reader)
 		{
-			values = new IWritable[@in.ReadInt()];
+			values = new IWritable[reader.Read()];
 			// construct values
 			for (int i = 0; i < values.Length; i++)
 			{
 				IWritable value = WritableFactories.NewInstance(valueClass);
-				value.ReadFields(@in);
+				value.ReadFields(reader);
 				// read a value
 				values[i] = value;
 			}
@@ -104,11 +98,11 @@ namespace Org.Apache.Hadoop.IO
 		/// <exception cref="System.IO.IOException"/>
 		public virtual void Write(BinaryWriter writer)
 		{
-			@out.WriteInt(values.Length);
+			writer.Write(values.Length);
 			// write values
 			for (int i = 0; i < values.Length; i++)
 			{
-				values[i].Write(@out);
+				values[i].Write(writer);
 			}
 		}
 	}

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	/// <summary>A byte array backed output stream with a limit.</summary>
 	/// <remarks>
@@ -10,7 +10,7 @@ namespace Org.Apache.Hadoop.IO
 	/// than the buffer capacity. The object can be reused through <code>reset</code>
 	/// API and choose different limits in each round.
 	/// </remarks>
-	public class BoundedByteArrayOutputStream : OutputStream
+	public class BoundedByteArrayOutputStream : BinaryWriter
 	{
 		private byte[] buffer;
 
@@ -65,7 +65,7 @@ namespace Org.Apache.Hadoop.IO
 		{
 			if (currentPointer >= limit)
 			{
-				throw new EOFException("Reaching the limit of the buffer.");
+				throw new EndOfStreamException("Reaching the limit of the buffer.");
 			}
 			buffer[currentPointer++] = unchecked((byte)b);
 		}
@@ -87,7 +87,7 @@ namespace Org.Apache.Hadoop.IO
 			}
 			if (currentPointer + len > limit)
 			{
-				throw new EOFException("Reach the limit of the buffer");
+				throw new EndOfStreamException("Reach the limit of the buffer");
 			}
 			System.Array.Copy(b, off, buffer, currentPointer, len);
 			currentPointer += len;

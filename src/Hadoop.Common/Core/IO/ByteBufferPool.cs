@@ -1,6 +1,6 @@
 
 
-namespace Org.Apache.Hadoop.IO
+namespace Hadoop.Common.Core.IO
 {
 	public interface ByteBufferPool
 	{
